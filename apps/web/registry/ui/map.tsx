@@ -11,6 +11,40 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-map.css";
 
+interface MapLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-map-1-height": number;
+  "--mc-dynamic-map-1-width": number;
+}
+
+interface MapLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-map-2-height": number;
+  "--mc-dynamic-map-2-left": number;
+  "--mc-dynamic-map-2-top": number;
+  "--mc-dynamic-map-2-transform": string;
+  "--mc-dynamic-map-2-width": number;
+}
+
+interface MapLayoutStyle3 extends React.CSSProperties {
+  "--mc-dynamic-map-3-visibility": string;
+}
+
+interface MapLayoutStyle4 extends React.CSSProperties {
+  "--mc-dynamic-map-4-height": number;
+  "--mc-dynamic-map-4-width": number;
+}
+
+interface MapLayoutStyle5 extends React.CSSProperties {
+  "--mc-dynamic-map-5-height": number;
+  "--mc-dynamic-map-5-left": number;
+  "--mc-dynamic-map-5-top": number;
+  "--mc-dynamic-map-5-width": number;
+}
+
+interface MapLayoutStyle6 extends React.CSSProperties {
+  "--mc-dynamic-map-6-left": number;
+  "--mc-dynamic-map-6-top": number;
+}
+
 interface MapScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -207,34 +241,49 @@ const MinecraftMap = ({
         height={128}
         role="img"
         aria-label={props["aria-label"] ?? "Map terrain"}
-        style={{ height: 128 * scale, width: 128 * scale }}
+        className="mc-dynamic-layout-map-1"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-map-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-map-1-height": 128 * scale,
+            "--mc-dynamic-map-1-width": 128 * scale,
+          } satisfies MapLayoutStyle1 as MapLayoutStyle1
+        }
       />
       {markers.map((marker) => (
         <button
           type="button"
           key={marker.id}
-          className="mc-map-marker"
+          className="mc-map-marker mc-dynamic-layout-map-2"
           aria-label={marker.label}
           onClick={(event) => {
             if (!event.defaultPrevented) {
               onMarkerSelect?.(marker.id);
             }
           }}
-          style={{
-            height: 8 * scale,
-            left: (64 + marker.x / 2 - 4) * scale,
-            top: (64 + marker.y / 2 - 4) * scale,
-            transform: `rotate(${(marker.rotation ?? 0) * 22.5}deg) translate(${-scale * 0.5}px,${scale * 0.5}px)`,
-            width: 8 * scale,
-          }}
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-map-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-map-2-height": 8 * scale,
+              "--mc-dynamic-map-2-left": (64 + marker.x / 2 - 4) * scale,
+              "--mc-dynamic-map-2-top": (64 + marker.y / 2 - 4) * scale,
+              "--mc-dynamic-map-2-transform": `rotate(${(marker.rotation ?? 0) * 22.5}deg) translate(${-scale * 0.5}px,${scale * 0.5}px)`,
+              "--mc-dynamic-map-2-width": 8 * scale,
+            } satisfies MapLayoutStyle2 as MapLayoutStyle2
+          }
         >
           <AdventureImage
             texture={`map/decorations/${marker.decoration ?? "player"}`}
             scale={scale}
-            className="mc-layout-map-3"
-            style={{
-              visibility: gpuReady ? "hidden" : "visible",
-            }}
+            className="mc-layout-map-3 mc-dynamic-layout-map-3"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-map-3 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-map-3-visibility": gpuReady
+                  ? "hidden"
+                  : "visible",
+              } satisfies MapLayoutStyle3 as MapLayoutStyle3
+            }
           />
         </button>
       ))}
@@ -305,12 +354,14 @@ const LocatorDot = ({
       width={9}
       height={9}
       aria-hidden="true"
-      className="mc-layout-map-4"
-      style={{
-        height: 9 * scale,
-
-        width: 9 * scale,
-      }}
+      className="mc-layout-map-4 mc-dynamic-layout-map-4"
+      style={
+        /* SAFETY: The owned mc-dynamic-layout-map-4 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+        {
+          "--mc-dynamic-map-4-height": 9 * scale,
+          "--mc-dynamic-map-4-width": 9 * scale,
+        } satisfies MapLayoutStyle4 as MapLayoutStyle4
+      }
     />
   );
 };
@@ -376,13 +427,16 @@ const LocatorBar = ({
               onMarkerSelect?.(marker.id);
             }
           }}
-          className="mc-locator-marker"
-          style={{
-            height: 9 * scale,
-            left: x * scale,
-            top: -2 * scale,
-            width: 9 * scale,
-          }}
+          className="mc-locator-marker mc-dynamic-layout-map-5"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-map-5 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-map-5-height": 9 * scale,
+              "--mc-dynamic-map-5-left": x * scale,
+              "--mc-dynamic-map-5-top": -2 * scale,
+              "--mc-dynamic-map-5-width": 9 * scale,
+            } satisfies MapLayoutStyle5 as MapLayoutStyle5
+          }
         >
           <LocatorDot
             shape={marker.shape ?? "default_0"}
@@ -393,12 +447,15 @@ const LocatorBar = ({
             <AdventureImage
               texture={`gui/sprites/hud/locator_bar_arrow_${marker.direction}`}
               scale={scale}
-              className="mc-layout-map-6"
-              style={{
-                left: scale,
-
-                top: (marker.direction === "up" ? -4 : 8) * scale,
-              }}
+              className="mc-layout-map-6 mc-dynamic-layout-map-6"
+              style={
+                /* SAFETY: The owned mc-dynamic-layout-map-6 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                {
+                  "--mc-dynamic-map-6-left": scale,
+                  "--mc-dynamic-map-6-top":
+                    (marker.direction === "up" ? -4 : 8) * scale,
+                } satisfies MapLayoutStyle6 as MapLayoutStyle6
+              }
             />
           )}
         </button>

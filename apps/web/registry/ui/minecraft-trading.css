@@ -124,3 +124,82 @@
     position: absolute;
   }
 }
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-trading-1 {
+    height: calc(var(--mc-dynamic-trading-1-height) * 1px);
+    width: calc(var(--mc-dynamic-trading-1-width) * 1px);
+  }
+  .mc-dynamic-layout-trading-2 {
+    left: calc(var(--mc-dynamic-trading-2-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-2-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-3 {
+    left: calc(var(--mc-dynamic-trading-3-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-3-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-4 {
+    left: calc(var(--mc-dynamic-trading-4-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-4-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-5 {
+    height: calc(var(--mc-dynamic-trading-5-height) * 1px);
+    left: calc(var(--mc-dynamic-trading-5-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-5-top) * 1px);
+    width: calc(var(--mc-dynamic-trading-5-width) * 1px);
+  }
+  .mc-dynamic-layout-trading-6 {
+    height: calc(var(--mc-dynamic-trading-6-height) * 1px);
+    width: calc(var(--mc-dynamic-trading-6-width) * 1px);
+  }
+  .mc-dynamic-layout-trading-7 {
+    left: calc(var(--mc-dynamic-trading-7-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-7-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-8 {
+    left: calc(var(--mc-dynamic-trading-8-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-8-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-9 {
+    left: calc(var(--mc-dynamic-trading-9-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-9-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-10 {
+    left: calc(var(--mc-dynamic-trading-10-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-10-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-11 {
+    height: calc(var(--mc-dynamic-trading-11-height) * 1px);
+    left: calc(var(--mc-dynamic-trading-11-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-11-top) * 1px);
+    width: calc(var(--mc-dynamic-trading-11-width) * 1px);
+  }
+  .mc-dynamic-layout-trading-12 {
+    top: calc(var(--mc-dynamic-trading-12-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-13 {
+    left: calc(var(--mc-dynamic-trading-13-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-13-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-14 {
+    left: calc(var(--mc-dynamic-trading-14-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-14-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-15 {
+    height: calc(var(--mc-dynamic-trading-15-height) * 1px);
+    left: calc(var(--mc-dynamic-trading-15-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-15-top) * 1px);
+    width: calc(var(--mc-dynamic-trading-15-width) * 1px);
+  }
+  .mc-dynamic-layout-trading-16 {
+    left: calc(var(--mc-dynamic-trading-16-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-16-top) * 1px);
+  }
+  .mc-dynamic-layout-trading-17 {
+    height: calc(var(--mc-dynamic-trading-17-height) * 1px);
+    left: calc(var(--mc-dynamic-trading-17-left) * 1px);
+    top: calc(var(--mc-dynamic-trading-17-top) * 1px);
+    width: calc(var(--mc-dynamic-trading-17-width) * 1px);
+  }
+}

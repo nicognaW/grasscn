@@ -44,3 +44,10 @@
     width: 100%;
   }
 }
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-player-preview-1 {
+    visibility: var(--mc-dynamic-player-preview-1-visibility);
+  }
+}

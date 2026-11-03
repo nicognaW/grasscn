@@ -17,6 +17,18 @@ import { Separator } from "./separator";
 import "./minecraft-menu.css";
 import "./minecraft-combobox.css";
 
+interface ComboboxLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-combobox-1-width": number;
+}
+
+interface ComboboxLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-combobox-2-width": number;
+}
+
+interface ComboboxLayoutStyle3 extends React.CSSProperties {
+  "--mc-dynamic-combobox-3-width": number;
+}
+
 type Scale = 1 | 2 | 3;
 
 interface ComboboxScaleStyle extends React.CSSProperties {
@@ -85,7 +97,20 @@ const ComboboxTrigger = ({
     <Primitive.Trigger
       data-slot="combobox-trigger"
       className={classes("mc-combobox-trigger", className)}
-      render={render ?? <Button scale={scale} style={{ width: 20 * scale }} />}
+      render={
+        render ?? (
+          <Button
+            scale={scale}
+            className="mc-dynamic-layout-combobox-1"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-combobox-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-combobox-1-width": 20 * scale,
+              } satisfies ComboboxLayoutStyle1 as ComboboxLayoutStyle1
+            }
+          />
+        )
+      }
       {...props}
     >
       {children ?? "..."}
@@ -106,7 +131,20 @@ const ComboboxClear = ({
       data-slot="combobox-clear"
       aria-label="Clear selection"
       className={classes("mc-combobox-clear", className)}
-      render={render ?? <Button scale={scale} style={{ width: 20 * scale }} />}
+      render={
+        render ?? (
+          <Button
+            scale={scale}
+            className="mc-dynamic-layout-combobox-2"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-combobox-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-combobox-2-width": 20 * scale,
+              } satisfies ComboboxLayoutStyle2 as ComboboxLayoutStyle2
+            }
+          />
+        )
+      }
       {...props}
     >
       {children ?? "X"}
@@ -419,7 +457,20 @@ const ComboboxChipRemove = ({
       data-slot="combobox-chip-remove"
       aria-label="Remove selection"
       className={classes("mc-combobox-chip-remove", className)}
-      render={render ?? <Button scale={scale} style={{ width: 20 * scale }} />}
+      render={
+        render ?? (
+          <Button
+            scale={scale}
+            className="mc-dynamic-layout-combobox-3"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-combobox-3 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-combobox-3-width": 20 * scale,
+              } satisfies ComboboxLayoutStyle3 as ComboboxLayoutStyle3
+            }
+          />
+        )
+      }
       {...props}
     >
       {children ?? "X"}

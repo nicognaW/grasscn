@@ -17,6 +17,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
 
+interface MinecraftProseLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-minecraft-prose-1-padding-left": number;
+}
+
 interface MinecraftProseScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -147,17 +151,20 @@ const MinecraftProse = ({
       {lines.map((line, index) => (
         <span
           aria-hidden="true"
-          className="mc-label-line"
+          className="mc-label-line mc-dynamic-layout-minecraft-prose-1"
           key={index}
-          style={{
-            paddingLeft:
-              align === "center"
-                ? (Math.floor((width - widest) / 2) +
-                    Math.floor(widest / 2) -
-                    Math.floor(textWidth(line) / 2)) *
-                  scale
-                : 0,
-          }}
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-minecraft-prose-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-minecraft-prose-1-padding-left":
+                align === "center"
+                  ? (Math.floor((width - widest) / 2) +
+                      Math.floor(widest / 2) -
+                      Math.floor(textWidth(line) / 2)) *
+                    scale
+                  : 0,
+            } satisfies MinecraftProseLayoutStyle1 as MinecraftProseLayoutStyle1
+          }
         >
           {/^[\u0020-\u007E]*$/u.test(line) ? (
             <MinecraftText>{line}</MinecraftText>
