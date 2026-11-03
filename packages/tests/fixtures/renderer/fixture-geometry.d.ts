@@ -2,6 +2,9 @@ import "react";
 
 declare module "react" {
   interface CSSProperties {
+    "--fixture-collapse-left"?: string;
+    "--fixture-collapse-top"?: string;
+    "--fixture-collapse-width"?: string;
     "--fixture-sidebar-native-height"?: string;
     "--fixture-sidebar-native-left"?: string;
     "--fixture-sidebar-native-top"?: string;

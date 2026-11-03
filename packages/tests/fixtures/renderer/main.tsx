@@ -168,6 +168,7 @@ import { TextWidgetsFixture } from "./text-widgets";
 import { ToastFixture } from "./toast";
 import { ToggleFixture } from "./toggle";
 import { ToggleGroupFixture } from "./toggle-group";
+import { cn } from "./utils";
 
 import "./style.css";
 
@@ -294,11 +295,14 @@ const SelectFixture = () => {
             collisionAvoidance={
               capture ? { align: "none", side: "none" } : undefined
             }
+            className={cn({
+              "fixture-geometry-height fixture-geometry-width": capture,
+            })}
             style={
               capture
                 ? {
-                    height: Number(params.get("height")) * scale,
-                    width: width * scale,
+                    "--fixture-height": `${Number(params.get("height")) * scale}px`,
+                    "--fixture-width": `${width * scale}px`,
                   }
                 : undefined
             }
@@ -777,11 +781,14 @@ const ContextFixture = () => {
       surface={
         params.get("surface") === "suggestions" ? "suggestions" : "popup"
       }
+      className={cn({
+        "fixture-geometry-height fixture-geometry-width": native,
+      })}
       style={
         native
           ? {
-              height: Number(params.get("height")) * scale,
-              width: Number(params.get("width")) * scale,
+              "--fixture-height": `${Number(params.get("height")) * scale}px`,
+              "--fixture-width": `${Number(params.get("width")) * scale}px`,
             }
           : params.has("maxHeight")
             ? { maxHeight: Number(params.get("maxHeight")) }
@@ -869,7 +876,9 @@ const CollapsibleFixture = () => {
         {...(native && !body && params.get("state") === "disabled"
           ? { disabled: true }
           : {})}
-        style={native && body ? { left: -10000, position: "fixed" } : undefined}
+        className={cn({
+          "fixture-native-collapse-hidden-trigger": native && body,
+        })}
         onClick={
           params.has("prevent")
             ? (event) => {
@@ -895,14 +904,16 @@ const CollapsibleFixture = () => {
           params.has("wrapWidth") ? Number(params.get("wrapWidth")) : undefined
         }
         keepMounted={params.has("forceMount") ? true : undefined}
+        className={cn({
+          "fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-native-collapse-padding":
+            native && body,
+        })}
         style={
           native && body
             ? {
-                height: Number(params.get("height")) * scale,
-                left: Number(params.get("x") ?? 16) * scale,
-                padding: 0,
-                position: "fixed",
-                top: Number(params.get("y") ?? 16) * scale,
+                "--fixture-height": `${Number(params.get("height")) * scale}px`,
+                "--fixture-x": `${Number(params.get("x") ?? 16) * scale}px`,
+                "--fixture-y": `${Number(params.get("y") ?? 16) * scale}px`,
                 width: Number(params.get("width")) * scale,
               }
             : undefined
@@ -963,13 +974,13 @@ const CollapsibleFixture = () => {
             setOpen(next);
           }
         }}
+        className={cn({ "fixture-native-collapse-root": native })}
         style={
           native
             ? {
-                left: Number(params.get("x") ?? 16) * scale,
-                position: "fixed",
-                top: Number(params.get("y") ?? 16) * scale,
-                width: Number(params.get("width") ?? 200) * scale,
+                "--fixture-collapse-left": `${Number(params.get("x") ?? 16) * scale}px`,
+                "--fixture-collapse-top": `${Number(params.get("y") ?? 16) * scale}px`,
+                "--fixture-collapse-width": `${Number(params.get("width") ?? 200) * scale}px`,
               }
             : undefined
         }
@@ -1176,11 +1187,14 @@ const MenubarFixture = () => {
       surface={
         params.get("surface") === "suggestions" ? "suggestions" : "popup"
       }
+      className={cn({
+        "fixture-geometry-height fixture-geometry-width": native,
+      })}
       style={
         native
           ? {
-              height: Number(params.get("height")) * scale,
-              width: Number(params.get("width")) * scale,
+              "--fixture-height": `${Number(params.get("height")) * scale}px`,
+              "--fixture-width": `${Number(params.get("width")) * scale}px`,
             }
           : params.has("maxHeight")
             ? { maxHeight: Number(params.get("maxHeight")) }
@@ -1468,11 +1482,14 @@ const DropdownFixture = () => {
       surface={
         params.get("surface") === "suggestions" ? "suggestions" : "popup"
       }
+      className={cn({
+        "fixture-geometry-height fixture-geometry-width": native,
+      })}
       style={
         native
           ? {
-              height: Number(params.get("height")) * scale,
-              width: Number(params.get("width")) * scale,
+              "--fixture-height": `${Number(params.get("height")) * scale}px`,
+              "--fixture-width": `${Number(params.get("width")) * scale}px`,
             }
           : params.has("maxHeight")
             ? { maxHeight: Number(params.get("maxHeight")) }
@@ -2269,7 +2286,10 @@ const FixtureTabs = () => {
           value={`tab-${index}`}
           ref={index === 0 ? tabsContentRef : undefined}
           keepMounted={params.has("forceMount") ? true : undefined}
-          style={{ height: panel > 0 ? panel * scale : undefined }}
+          className={cn({ "fixture-geometry-height": panel > 0 })}
+          style={{
+            "--fixture-height": panel > 0 ? `${panel * scale}px` : undefined,
+          }}
         >
           {panel > 0 && !params.has("panelText") ? null : (
             <span>{title} content</span>
@@ -2588,9 +2608,10 @@ const FixtureLabel = () => {
           params.has("wrapWidth") ? Number(params.get("wrapWidth")) : undefined
         }
         align={params.get("alignment") === "center" ? "center" : "left"}
+        className="fixture-geometry-height"
         style={{
+          "--fixture-height": `${Number(params.get("height") ?? 9) * scale}px`,
           width: width * scale,
-          height: Number(params.get("height") ?? 9) * scale,
         }}
         onClick={() => {
           setCount((current) => current + 1);
@@ -2968,10 +2989,11 @@ const FixtureSlider = () => {
           orientation={
             params.get("orientation") === "vertical" ? "vertical" : "horizontal"
           }
+          className="fixture-main-slider-width"
           style={
             params.get("orientation") === "vertical"
               ? undefined
-              : { width: width * scale }
+              : { "--fixture-width": `${width * scale}px` }
           }
           onValueCommitted={() => {
             setCommits((current) => current + 1);
