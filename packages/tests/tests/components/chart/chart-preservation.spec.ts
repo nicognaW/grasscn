@@ -109,7 +109,7 @@ for (const scale of [2] as const) {
           frameCompletion.reject(error);
         }
 
-        return frameCompletion.promise;
+        await frameCompletion.promise;
       });
       // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
       const after = (await popup.boundingBox())!;

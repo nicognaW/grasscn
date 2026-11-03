@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 
 import type { AdventureFixtureSample } from "./fixture-query-protocol";
 
-const DraftDemos = React.lazy(async () => import("./draft-demos"));
+const DraftDemos = React.lazy(async () => await import("./draft-demos"));
 
 const params = new URLSearchParams(location.search);
 

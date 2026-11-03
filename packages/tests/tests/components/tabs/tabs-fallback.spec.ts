@@ -33,7 +33,7 @@ for (const reason of ["disabled", "missing"]) {
         frameCompletion.reject(error);
       }
 
-      return frameCompletion.promise;
+      await frameCompletion.promise;
     });
     expect(await page.evaluate(() => (window as any).voices)).toBe(0);
   });
