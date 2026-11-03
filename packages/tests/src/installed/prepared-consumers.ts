@@ -1,5 +1,3 @@
-import type * as VerificationTypes from "../runtime/verification-types";
-
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
@@ -10,6 +8,7 @@ import { repoRoot } from "@grasscn/tests/paths";
 import { packageBin } from "@grasscn/tests/tooling";
 
 import { serveOwnedHttpProcess } from "../runtime/owned-http-process";
+import type * as VerificationTypes from "../runtime/verification-types";
 import {
   parseConsumerSnapshot,
   parseCollectedSnapshot,

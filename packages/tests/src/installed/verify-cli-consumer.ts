@@ -1,6 +1,3 @@
-import type * as PlaywrightTypes from "@playwright/test";
-import type * as ConsumerValidationTypes from "./consumer-validation-types";
-
 import assert from "node:assert/strict";
 import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
@@ -15,6 +12,7 @@ import {
 } from "@grasscn/tests/next-production";
 import { repoRoot, testRoot } from "@grasscn/tests/paths";
 import { packageBin } from "@grasscn/tests/tooling";
+import type * as PlaywrightTypes from "@playwright/test";
 
 import {
   assertExternalProject,
@@ -27,6 +25,7 @@ import {
   fetchPublicRegistry,
   assertRegistryInstallation,
 } from "./consumer-registry";
+import type * as ConsumerValidationTypes from "./consumer-validation-types";
 import {
   parseWebsiteIdentity,
   parseCliReceipt,

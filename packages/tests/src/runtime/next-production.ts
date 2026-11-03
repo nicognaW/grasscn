@@ -1,5 +1,3 @@
-import type * as VerificationTypes from "./verification-types";
-
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -11,6 +9,7 @@ import { packageBin } from "@tests/tooling";
 
 import { installedDependencyIdentity } from "./dependency-identity";
 import { serveOwnedHttpProcess } from "./owned-http-process";
+import type * as VerificationTypes from "./verification-types";
 import { parseProductionIdentity } from "./verification-types";
 
 type SourceIdentity = VerificationTypes.SourceIdentity;

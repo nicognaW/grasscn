@@ -1,5 +1,3 @@
-import type * as ConsumerValidationTypes from "./consumer-validation-types";
-
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile, stat } from "node:fs/promises";
@@ -14,6 +12,7 @@ import {
   directoryIdentity,
 } from "./consumer-boundary";
 import { consumerBuildIdentity } from "./consumer-build-identity";
+import type * as ConsumerValidationTypes from "./consumer-validation-types";
 import { encodeConsumerFile } from "./consumer-validation-types";
 
 type PreparedManualConsumer = ConsumerValidationTypes.PreparedManualConsumer;

@@ -1,6 +1,3 @@
-import type * as PlaywrightTypes from "@playwright/test";
-import type * as VerificationTypes from "../runtime/verification-types";
-
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
@@ -9,10 +6,12 @@ import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 
 import { sourceIdentity } from "@grasscn/tests/next-production";
+import type * as PlaywrightTypes from "@playwright/test";
 import { chromium, expect } from "@playwright/test";
 import { repoRoot, webRoot } from "@tests/paths";
 
 import { assertConsumerPortAvailable } from "../installed/consumer-boundary";
+import type * as VerificationTypes from "../runtime/verification-types";
 import { documentationInventory } from "./documentation-inventory";
 
 // Ordinary root dev command, fresh generated inputs, expanded public routes.

@@ -1,9 +1,9 @@
-import type * as PlaywrightTypes from "@playwright/test";
-
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
+
+import type * as PlaywrightTypes from "@playwright/test";
 
 interface ConsumerPageObservation {
   consumerPage: PlaywrightTypes.Page;

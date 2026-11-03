@@ -1,5 +1,3 @@
-import type * as VerificationTypes from "../runtime/verification-types";
-
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { randomUUID, createHash } from "node:crypto";
@@ -22,6 +20,7 @@ import {
 import { repoRoot, webRoot } from "@tests/paths";
 import { packageBin } from "@tests/tooling";
 
+import type * as VerificationTypes from "../runtime/verification-types";
 import {
   workspaceNames,
   packageManager,

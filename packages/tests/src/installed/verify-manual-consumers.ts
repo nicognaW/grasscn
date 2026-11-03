@@ -1,7 +1,3 @@
-import type * as PlaywrightTypes from "@playwright/test";
-import type * as ConsumerValidationTypes from "./consumer-validation-types";
-import type * as ManualPreparationTypes from "./manual-consumer-preparation";
-
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import {
@@ -23,6 +19,7 @@ import {
   productionBuildIdentity,
 } from "@grasscn/tests/next-production";
 import { repoRoot, testRoot } from "@grasscn/tests/paths";
+import type * as PlaywrightTypes from "@playwright/test";
 
 import {
   assertExternalProject,
@@ -32,6 +29,7 @@ import {
   directoryIdentity,
 } from "./consumer-boundary";
 import { consumerBuildIdentity } from "./consumer-build-identity";
+import type * as ConsumerValidationTypes from "./consumer-validation-types";
 import {
   parseWebsiteIdentity,
   parsePublicInputs,
@@ -39,6 +37,7 @@ import {
   parseManualManifest,
 } from "./consumer-validation-types";
 import { assertExamplePrerequisites } from "./example-prerequisites";
+import type * as ManualPreparationTypes from "./manual-consumer-preparation";
 import { prepareManualConsumer } from "./manual-consumer-preparation";
 import {
   verifyInstalledButton,

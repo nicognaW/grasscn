@@ -1,5 +1,3 @@
-import type * as RegistryFileTypes from "./registry-file";
-
 import assert from "node:assert/strict";
 import { readFile, stat, realpath } from "node:fs/promises";
 import path from "node:path";
@@ -8,6 +6,7 @@ import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
 
 import { sha256 } from "./consumer-boundary";
 import { isRegistryPayload } from "./consumer-metadata";
+import type * as RegistryFileTypes from "./registry-file";
 
 interface RegistryFile {
   path: string;
