@@ -225,6 +225,360 @@ const kinds = new Set([
   "platform-limited",
 ]);
 
+const verifyUtilityEvidence = async (component: (typeof map.components)[number], verification: Extract<(typeof map.components)[number]["pixelVerification"], {status: "not-applicable-unskinned-utility"}>, registryItemName: string | undefined) => {
+  assert.equal(
+    component.mapping.kind,
+    "layout",
+    `${component.name}: visible skins require native evidence`
+  );
+  assert.equal(
+    verification.manifest,
+    null,
+    `${component.name}: unskinned utility must not claim native pixels`
+  );
+
+  const behavior = await readUtilityBehavior(verification.behaviorReport);
+
+  const installation = await readUtilityInstallation(
+    verification.installationReport
+  );
+
+  assert.equal(behavior.kind, "unskinned-web-utility");
+  assert.ok(behavior.nativeReferenceNotApplicable && behavior.scope);
+  assert.ok(
+    behavior.cases.length && behavior.cases.every((c) => c.passed),
+    `${component.name}: utility behavior proof incomplete`
+  );
+  assert.deepEqual(installation.pageErrors, []);
+  assert.equal(installation.typecheck?.passed, true);
+  assert.equal(installation.consumerRsc, false);
+  assert.match(installation.command, /shadcn.*add/u);
+
+  // SAFETY: the authored utility mapping names its installable registry item, checked above.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const item = registryItems.get(registryItemName) as EvidenceRegistryItem;
+
+  const filenameValues = item.files.map((file) => path.basename(file.path));
+  filenameValues.sort();
+  const filenames = filenameValues;
+
+  const installedFilePaths = installation.files.map((file) => file.path);
+
+  installedFilePaths.sort();
+
+  assert.deepEqual(installedFilePaths, filenames);
+  const behaviorFilePaths = behavior.files.map((file) => file.path);
+
+  behaviorFilePaths.sort();
+
+  assert.deepEqual(behaviorFilePaths, filenames);
+  assertHistoricalUtilitySources(
+    JSON.stringify(behavior),
+    JSON.stringify(installation)
+  );
+
+  for (const file of installation.files) {
+    hash(file.installedSha256);
+    assert.ok(
+      file.comparison,
+      `${component.name}: missing CLI source comparison`
+    );
+  }
+};
+
+const verifyDeclaredInstallation = async (component: (typeof map.components)[number], verification: Extract<(typeof map.components)[number]["pixelVerification"], {status: "verified-declared-cases"}>, registryItemName: string | undefined, manifestFile: string, manifest: Awaited<ReturnType<typeof readNativeCaptureManifest>>) => {
+  const primary = manifestFile === verification.manifest;
+
+  const report = await readInstallationEvidence(
+    primary
+      ? verification.installationReport
+      : (verification.additionalInstallationReports?.[manifestFile] ??
+          path.join(
+            path.dirname(manifestFile),
+            "installation-verification.json"
+          ))
+  );
+
+  const repeat = await readRepeatabilityEvidence(
+    primary
+      ? verification.repeatabilityReport
+      : path.join(path.dirname(manifestFile), "repeatability.json")
+  );
+
+  assert.equal(report.sourceJarSha256, map.sourceJarSha256);
+  assert.equal(repeat.sourceJarSha256, map.sourceJarSha256);
+  assert.equal(repeat.captureSourceSha256, manifest.captureSourceSha256);
+  assert.equal(repeat.caseDefinitionSha256, manifest.caseDefinitionSha256);
+  assert.deepEqual(report.pageErrors, []);
+  const reportedCaseNames = report.cases.map((c) => c.name);
+
+  reportedCaseNames.sort();
+
+  const manifestCaseNames = manifest.cases.map((c) => c.name);
+
+  manifestCaseNames.sort();
+
+  assert.deepEqual(reportedCaseNames, manifestCaseNames);
+  const repeatedCaseNames = repeat.cases.map((c) => c.name);
+
+  repeatedCaseNames.sort();
+
+  const manifestCaseNames2 = manifest.cases.map((c) => c.name);
+
+  manifestCaseNames2.sort();
+
+  assert.deepEqual(repeatedCaseNames, manifestCaseNames2);
+
+  for (const file of report.files) {
+    const sourcePath =
+      file.sourcePath ?? path.posix.join("registry/ui", file.path);
+
+    // SAFETY: the verified mapping names its installable item; the original lookup throws if absent.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const registryItem = registryItems.get(
+      registryItemName
+    ) as EvidenceRegistryItem;
+
+    assert.ok(
+      registryItem.files.some((entry) => entry.path === sourcePath),
+      `Installed proof source is not part of the item: ${sourcePath}`
+    );
+    // Exact historical report/source integrity and recognized current applicability are checked by the shared resolver above.
+  }
+
+  for (const reference of manifest.cases) {
+    // SAFETY: the case-name arrays were just asserted equal to the reference matrix.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const installed = report.cases.find(
+      (c) => c.name === reference.name
+    ) as PixelEvidenceCase;
+
+    // SAFETY: the repeatability case names were likewise asserted equal above.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const repeated = repeat.cases.find(
+      (c) => c.name === reference.name
+    ) as RepeatedEvidenceCase;
+
+    assert.equal(installed.mismatchedPixels, 0);
+    assert.equal(repeated.mismatchedPixels, 0);
+    assert.equal(installed.decodedRgbaSha256, repeated.decodedRgbaSha256);
+
+    for (const reuse of verification.appearanceReuses ?? []) {
+      if (
+        reuse.manifest !== manifestFile ||
+        !Object.entries(reuse.where).every(([field, value]) => {
+          // SAFETY: authored appearance reuse predicates select native case state or element.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+          const fieldName = field as AppearanceField;
+
+          return reference[fieldName] === value;
+        })
+      ) {
+        continue;
+      }
+
+      assert.equal(
+        installed[reuse.reportField],
+        repeated.decodedRgbaSha256,
+        `${component.name}: missing or unequal ${reuse.reportField}: ${reference.name}`
+      );
+    }
+
+    const referenceFile = path.join(
+      path.dirname(manifestFile),
+      "captures",
+      reference.name
+    );
+
+    assert.equal(
+      digest(
+        PNG.sync.read(await readFile(evidenceFile(referenceFile))).data
+      ),
+      repeated.decodedRgbaSha256
+    );
+    assert.equal(repeated.runOnePngSha256, reference.sha256);
+    assert.equal(repeated.runTwoPngSha256, reference.sha256);
+  }
+};
+
+const verifyGlyphEvidence = async (component: (typeof map.components)[number], manifestFile: string, manifest: Awaited<ReturnType<typeof readNativeCaptureManifest>>, effectiveAssets: NonNullable<Awaited<ReturnType<typeof readNativeCaptureManifest>>["effectiveAssets"]>) => {
+  const provenance = await readGlyphProvenance(
+    path.join(path.dirname(manifestFile), "asset-provenance.json")
+  );
+
+  for (const [resource, pin] of Object.entries(
+    effectiveAssets.resources
+  )) {
+    assert.ok(
+      provenance.sources[resource],
+      `${component.name}: missing indexed provenance for ${resource} in ${manifestFile}`
+    );
+    assert.equal(
+      pin.sha1,
+      provenance.sources[resource].sha1,
+      `Indexed resource identity: ${resource}`
+    );
+    assert.equal(
+      pin.sha256,
+      provenance.sources[resource].sha256,
+      `Indexed resource integrity: ${resource}`
+    );
+  }
+
+  assert.equal(
+    digest(
+      await readFile(
+        evidenceFile(
+          path.join(path.dirname(manifestFile), "glyph-atlas.json")
+        )
+      )
+    ),
+    provenance.glyphAtlasSha256
+  );
+  assert.equal(
+    digest(
+      await readFile(
+        evidenceFile(
+          path.join(
+            provenance.glyphProbeSource ??
+              "tests/reference/GlyphProbeMain.java"
+          )
+        )
+      )
+    ),
+    provenance.glyphProbeSourceSha256
+  );
+
+  if (
+    provenance.glyphObservationVerification !== undefined &&
+    provenance.glyphObservationVerification !== ""
+  ) {
+    const observation = await readGlyphObservation(
+      path.join(
+        path.dirname(manifestFile),
+        provenance.glyphObservationVerification
+      )
+    );
+
+    assert.deepEqual(observation.glyphObservationEnabled, {
+      runOne: true,
+      runTwo: false,
+    });
+    assert.equal(
+      observation.captureSourceSha256,
+      manifest.captureSourceSha256
+    );
+    assert.equal(
+      observation.caseDefinitionSha256,
+      manifest.caseDefinitionSha256
+    );
+    const observedCaseNames = observation.cases.map((c) => c.name);
+
+    observedCaseNames.sort();
+
+    const nativeCaseNames = manifest.cases.map((c) => c.name);
+
+    nativeCaseNames.sort();
+
+    assert.deepEqual(observedCaseNames, nativeCaseNames);
+    assert.ok(
+      observation.cases.every((c) => c.mismatchedPixels === 0),
+      "Glyph observation changed native pixels"
+    );
+  }
+
+  if (
+    provenance.glyphAtlasCaptureManifest !== undefined &&
+    provenance.glyphAtlasCaptureManifest !== ""
+  ) {
+    const observationPath = path.join(
+      path.dirname(manifestFile),
+      provenance.glyphAtlasCaptureManifest
+    );
+
+    assert.equal(
+      digest(await readFile(evidenceFile(observationPath))),
+      provenance.glyphAtlasCaptureManifestSha256
+    );
+
+    const observation =
+      await readNativeGlyphCaptureManifest(observationPath);
+
+    const observedAtlasPath = path.join(
+      path.dirname(manifestFile),
+      provenance.glyphAtlasObservationFile
+    );
+
+    assert.equal(
+      digest(await readFile(evidenceFile(observedAtlasPath))),
+      provenance.glyphAtlasSha256
+    );
+    assert.equal(
+      observation.captureSourceSha256,
+      provenance.glyphProbeSourceSha256
+    );
+    assert.equal(observation.sourceJarSha256, manifest.sourceJarSha256);
+    assert.equal(
+      observation.caseDefinitionSha256,
+      manifest.caseDefinitionSha256
+    );
+
+    for (const frame of observation.frames) {
+      const framePath = path.join(
+        path.dirname(observationPath),
+        observation.framesDirectory,
+        frame.name
+      );
+
+      assert.equal(
+        digest(await readFile(evidenceFile(framePath))),
+        frame.sha256
+      );
+    }
+
+    for (const reference of manifest.cases) {
+      const observed = observation.cases.find(
+        (c) => c.name === reference.name
+      );
+
+      assert.ok(
+        observed,
+        `Missing glyph-observation native case: ${reference.name}`
+      );
+
+      const observedBytes = await readFile(
+        evidenceFile(
+          path.join(
+            path.dirname(observationPath),
+            "captures",
+            observed.name
+          )
+        )
+      );
+
+      assert.equal(digest(observedBytes), observed.sha256);
+
+      const referenceBytes = await readFile(
+        evidenceFile(
+          path.join(path.dirname(manifestFile), "captures", reference.name)
+        )
+      );
+
+      assert.ok(
+        PNG.sync
+          .read(observedBytes)
+          .data.equals(PNG.sync.read(referenceBytes).data),
+        `Glyph probe changed native rendering: ${reference.name}`
+      );
+    }
+  }
+
+  assert.equal(
+    await embeddedFontZipDigest(),
+    effectiveAssets.resources["minecraft/font/unifont.zip"].sha256
+  );
+};
+
 for (const component of map.components) {
   const verification = component.pixelVerification;
   const registryItemName = component.implementation.registryItem;
@@ -264,64 +618,7 @@ for (const component of map.components) {
   }
 
   if (verification.status === "not-applicable-unskinned-utility") {
-    assert.equal(
-      component.mapping.kind,
-      "layout",
-      `${component.name}: visible skins require native evidence`
-    );
-    assert.equal(
-      verification.manifest,
-      null,
-      `${component.name}: unskinned utility must not claim native pixels`
-    );
-
-    const behavior = await readUtilityBehavior(verification.behaviorReport);
-
-    const installation = await readUtilityInstallation(
-      verification.installationReport
-    );
-
-    assert.equal(behavior.kind, "unskinned-web-utility");
-    assert.ok(behavior.nativeReferenceNotApplicable && behavior.scope);
-    assert.ok(
-      behavior.cases.length && behavior.cases.every((c) => c.passed),
-      `${component.name}: utility behavior proof incomplete`
-    );
-    assert.deepEqual(installation.pageErrors, []);
-    assert.equal(installation.typecheck?.passed, true);
-    assert.equal(installation.consumerRsc, false);
-    assert.match(installation.command, /shadcn.*add/u);
-
-    // SAFETY: the authored utility mapping names its installable registry item, checked above.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const item = registryItems.get(registryItemName) as EvidenceRegistryItem;
-
-    const filenameValues = item.files.map((file) => path.basename(file.path));
-    filenameValues.sort();
-    const filenames = filenameValues;
-
-    const installedFilePaths = installation.files.map((file) => file.path);
-
-    installedFilePaths.sort();
-
-    assert.deepEqual(installedFilePaths, filenames);
-    const behaviorFilePaths = behavior.files.map((file) => file.path);
-
-    behaviorFilePaths.sort();
-
-    assert.deepEqual(behaviorFilePaths, filenames);
-    assertHistoricalUtilitySources(
-      JSON.stringify(behavior),
-      JSON.stringify(installation)
-    );
-
-    for (const file of installation.files) {
-      hash(file.installedSha256);
-      assert.ok(
-        file.comparison,
-        `${component.name}: missing CLI source comparison`
-      );
-    }
+    await verifyUtilityEvidence(component, verification, registryItemName);
   }
 
   for (const manifestFile of [
@@ -393,118 +690,7 @@ for (const component of map.components) {
     }
 
     if (verification.status === "verified-declared-cases") {
-      const primary = manifestFile === verification.manifest;
-
-      const report = await readInstallationEvidence(
-        primary
-          ? verification.installationReport
-          : (verification.additionalInstallationReports?.[manifestFile] ??
-              path.join(
-                path.dirname(manifestFile),
-                "installation-verification.json"
-              ))
-      );
-
-      const repeat = await readRepeatabilityEvidence(
-        primary
-          ? verification.repeatabilityReport
-          : path.join(path.dirname(manifestFile), "repeatability.json")
-      );
-
-      assert.equal(report.sourceJarSha256, map.sourceJarSha256);
-      assert.equal(repeat.sourceJarSha256, map.sourceJarSha256);
-      assert.equal(repeat.captureSourceSha256, manifest.captureSourceSha256);
-      assert.equal(repeat.caseDefinitionSha256, manifest.caseDefinitionSha256);
-      assert.deepEqual(report.pageErrors, []);
-      const reportedCaseNames = report.cases.map((c) => c.name);
-
-      reportedCaseNames.sort();
-
-      const manifestCaseNames = manifest.cases.map((c) => c.name);
-
-      manifestCaseNames.sort();
-
-      assert.deepEqual(reportedCaseNames, manifestCaseNames);
-      const repeatedCaseNames = repeat.cases.map((c) => c.name);
-
-      repeatedCaseNames.sort();
-
-      const manifestCaseNames2 = manifest.cases.map((c) => c.name);
-
-      manifestCaseNames2.sort();
-
-      assert.deepEqual(repeatedCaseNames, manifestCaseNames2);
-
-      for (const file of report.files) {
-        const sourcePath =
-          file.sourcePath ?? path.posix.join("registry/ui", file.path);
-
-        // SAFETY: the verified mapping names its installable item; the original lookup throws if absent.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        const registryItem = registryItems.get(
-          registryItemName
-        ) as EvidenceRegistryItem;
-
-        assert.ok(
-          registryItem.files.some((entry) => entry.path === sourcePath),
-          `Installed proof source is not part of the item: ${sourcePath}`
-        );
-        // Exact historical report/source integrity and recognized current applicability are checked by the shared resolver above.
-      }
-
-      for (const reference of manifest.cases) {
-        // SAFETY: the case-name arrays were just asserted equal to the reference matrix.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        const installed = report.cases.find(
-          (c) => c.name === reference.name
-        ) as PixelEvidenceCase;
-
-        // SAFETY: the repeatability case names were likewise asserted equal above.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        const repeated = repeat.cases.find(
-          (c) => c.name === reference.name
-        ) as RepeatedEvidenceCase;
-
-        assert.equal(installed.mismatchedPixels, 0);
-        assert.equal(repeated.mismatchedPixels, 0);
-        assert.equal(installed.decodedRgbaSha256, repeated.decodedRgbaSha256);
-
-        for (const reuse of verification.appearanceReuses ?? []) {
-          if (
-            reuse.manifest !== manifestFile ||
-            !Object.entries(reuse.where).every(([field, value]) => {
-              // SAFETY: authored appearance reuse predicates select native case state or element.
-              // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-              const fieldName = field as AppearanceField;
-
-              return reference[fieldName] === value;
-            })
-          ) {
-            continue;
-          }
-
-          assert.equal(
-            installed[reuse.reportField],
-            repeated.decodedRgbaSha256,
-            `${component.name}: missing or unequal ${reuse.reportField}: ${reference.name}`
-          );
-        }
-
-        const referenceFile = path.join(
-          path.dirname(manifestFile),
-          "captures",
-          reference.name
-        );
-
-        assert.equal(
-          digest(
-            PNG.sync.read(await readFile(evidenceFile(referenceFile))).data
-          ),
-          repeated.decodedRgbaSha256
-        );
-        assert.equal(repeated.runOnePngSha256, reference.sha256);
-        assert.equal(repeated.runTwoPngSha256, reference.sha256);
-      }
+      await verifyDeclaredInstallation(component, verification, registryItemName, manifestFile, manifest);
     }
 
     const includesUnihex = registryItems
@@ -543,181 +729,7 @@ for (const component of map.components) {
           file.path.endsWith("/minecraft-unifont-data.ts")
         ) === true
     ) {
-      const provenance = await readGlyphProvenance(
-        path.join(path.dirname(manifestFile), "asset-provenance.json")
-      );
-
-      for (const [resource, pin] of Object.entries(
-        manifest.effectiveAssets.resources
-      )) {
-        assert.ok(
-          provenance.sources[resource],
-          `${component.name}: missing indexed provenance for ${resource} in ${manifestFile}`
-        );
-        assert.equal(
-          pin.sha1,
-          provenance.sources[resource].sha1,
-          `Indexed resource identity: ${resource}`
-        );
-        assert.equal(
-          pin.sha256,
-          provenance.sources[resource].sha256,
-          `Indexed resource integrity: ${resource}`
-        );
-      }
-
-      assert.equal(
-        digest(
-          await readFile(
-            evidenceFile(
-              path.join(path.dirname(manifestFile), "glyph-atlas.json")
-            )
-          )
-        ),
-        provenance.glyphAtlasSha256
-      );
-      assert.equal(
-        digest(
-          await readFile(
-            evidenceFile(
-              path.join(
-                provenance.glyphProbeSource ??
-                  "tests/reference/GlyphProbeMain.java"
-              )
-            )
-          )
-        ),
-        provenance.glyphProbeSourceSha256
-      );
-
-      if (
-        provenance.glyphObservationVerification !== undefined &&
-        provenance.glyphObservationVerification !== ""
-      ) {
-        const observation = await readGlyphObservation(
-          path.join(
-            path.dirname(manifestFile),
-            provenance.glyphObservationVerification
-          )
-        );
-
-        assert.deepEqual(observation.glyphObservationEnabled, {
-          runOne: true,
-          runTwo: false,
-        });
-        assert.equal(
-          observation.captureSourceSha256,
-          manifest.captureSourceSha256
-        );
-        assert.equal(
-          observation.caseDefinitionSha256,
-          manifest.caseDefinitionSha256
-        );
-        const observedCaseNames = observation.cases.map((c) => c.name);
-
-        observedCaseNames.sort();
-
-        const nativeCaseNames = manifest.cases.map((c) => c.name);
-
-        nativeCaseNames.sort();
-
-        assert.deepEqual(observedCaseNames, nativeCaseNames);
-        assert.ok(
-          observation.cases.every((c) => c.mismatchedPixels === 0),
-          "Glyph observation changed native pixels"
-        );
-      }
-
-      if (
-        provenance.glyphAtlasCaptureManifest !== undefined &&
-        provenance.glyphAtlasCaptureManifest !== ""
-      ) {
-        const observationPath = path.join(
-          path.dirname(manifestFile),
-          provenance.glyphAtlasCaptureManifest
-        );
-
-        assert.equal(
-          digest(await readFile(evidenceFile(observationPath))),
-          provenance.glyphAtlasCaptureManifestSha256
-        );
-
-        const observation =
-          await readNativeGlyphCaptureManifest(observationPath);
-
-        const observedAtlasPath = path.join(
-          path.dirname(manifestFile),
-          provenance.glyphAtlasObservationFile
-        );
-
-        assert.equal(
-          digest(await readFile(evidenceFile(observedAtlasPath))),
-          provenance.glyphAtlasSha256
-        );
-        assert.equal(
-          observation.captureSourceSha256,
-          provenance.glyphProbeSourceSha256
-        );
-        assert.equal(observation.sourceJarSha256, manifest.sourceJarSha256);
-        assert.equal(
-          observation.caseDefinitionSha256,
-          manifest.caseDefinitionSha256
-        );
-
-        for (const frame of observation.frames) {
-          const framePath = path.join(
-            path.dirname(observationPath),
-            observation.framesDirectory,
-            frame.name
-          );
-
-          assert.equal(
-            digest(await readFile(evidenceFile(framePath))),
-            frame.sha256
-          );
-        }
-
-        for (const reference of manifest.cases) {
-          const observed = observation.cases.find(
-            (c) => c.name === reference.name
-          );
-
-          assert.ok(
-            observed,
-            `Missing glyph-observation native case: ${reference.name}`
-          );
-
-          const observedBytes = await readFile(
-            evidenceFile(
-              path.join(
-                path.dirname(observationPath),
-                "captures",
-                observed.name
-              )
-            )
-          );
-
-          assert.equal(digest(observedBytes), observed.sha256);
-
-          const referenceBytes = await readFile(
-            evidenceFile(
-              path.join(path.dirname(manifestFile), "captures", reference.name)
-            )
-          );
-
-          assert.ok(
-            PNG.sync
-              .read(observedBytes)
-              .data.equals(PNG.sync.read(referenceBytes).data),
-            `Glyph probe changed native rendering: ${reference.name}`
-          );
-        }
-      }
-
-      assert.equal(
-        await embeddedFontZipDigest(),
-        manifest.effectiveAssets.resources["minecraft/font/unifont.zip"].sha256
-      );
+      await verifyGlyphEvidence(component, manifestFile, manifest, manifest.effectiveAssets);
     }
   }
 }
