@@ -69,8 +69,18 @@ test("Label uses the UVs observed in its native font-atlas context", () => {
       (typeof BoundaryReference1)[keyof typeof BoundaryReference1]
     >;
 
-  expect(Object.keys(labelUnihexAtlas).sort()).toEqual(
-    Object.keys(observed).sort()
+  const atlasCodepoints = Object.keys(labelUnihexAtlas);
+
+  atlasCodepoints.sort();
+
+  const atlasComparison = expect(atlasCodepoints);
+
+  const observedCodepoints = Object.keys(observed);
+
+  observedCodepoints.sort();
+
+  atlasComparison.toEqual(
+    observedCodepoints
   );
 
   for (const [code, uv] of Object.entries(labelUnihexAtlas)) {

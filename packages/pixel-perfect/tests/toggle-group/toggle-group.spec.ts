@@ -88,10 +88,19 @@ test("Toggle Group embeds the original four opaque recipe-filter PNGs", () => {
   ].map((m) => Buffer.from(m[1], "base64"));
 
   expect(images).toHaveLength(4);
-  expect(images.map(sha).sort()).toEqual(
-    Object.values(pins.assets)
-      .map((pin) => pin.sha256)
-      .sort()
+  const imageHashes = images.map(sha);
+
+  imageHashes.sort();
+
+  const hashComparison = expect(imageHashes);
+
+  const provenanceHashes = Object.values(pins.assets)
+      .map((pin) => pin.sha256);
+
+  provenanceHashes.sort();
+
+  hashComparison.toEqual(
+    provenanceHashes
   );
 
   for (const bytes of images) {
