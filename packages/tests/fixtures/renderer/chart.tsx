@@ -24,7 +24,6 @@ const scale = c.scale ?? 2;
 const style = {
   "--fixture-x": `${(c.x ?? 16) * scale}px`,
   "--fixture-y": `${(c.y ?? 16) * scale}px`,
-  position: "fixed" as const,
 };
 
 const ApiFixture = () => {
@@ -275,7 +274,7 @@ export const ChartFixture = () => {
           .slice(Math.max(0, 240 - ((c.width ?? 242) - 2)))
           .map((value: number) => ({ value: value / 1e6 }))}
         framerateLimit={c.value}
-        className="fixture-geometry-x fixture-geometry-y"
+        className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
         style={style}
         data-subject="true"
       />
@@ -294,7 +293,7 @@ export const ChartFixture = () => {
           name,
           percentage: c.percentages[i],
         }))}
-        className="fixture-geometry-x fixture-geometry-y"
+        className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
         style={style}
         data-subject="true"
       />

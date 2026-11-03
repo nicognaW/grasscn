@@ -80,7 +80,7 @@ test("Resizable responds to pointer dragging and reports layouts", async ({
   await expect
     .poll(async () => Number(await handle.getAttribute("aria-valuenow")))
     .toBeGreaterThan(50);
-  await expect.poll(() => layoutLeft(page)).toBeGreaterThan(50);
+  await expect.poll(async () => await layoutLeft(page)).toBeGreaterThan(50);
 });
 
 test("Resizable supports keyboard arrows and Home/End constraints", async ({
@@ -120,13 +120,13 @@ test("Resizable forwards imperative panel/group refs and element refs", async ({
   await page.locator("#read-ref").click();
   await expect(page.locator("#refs")).toHaveText("DIV/DIV/left,right");
   await page.locator("#set-layout").click();
-  await expect.poll(() => layoutLeft(page)).toBeCloseTo(25, 0);
+  await expect.poll(async () => await layoutLeft(page)).toBeCloseTo(25, 0);
   await page.locator("#resize").click();
-  await expect.poll(() => layoutLeft(page)).toBeCloseTo(35, 0);
+  await expect.poll(async () => await layoutLeft(page)).toBeCloseTo(35, 0);
   await page.locator("#collapse").click();
-  await expect.poll(() => layoutLeft(page)).toBe(0);
+  await expect.poll(async () => await layoutLeft(page)).toBe(0);
   await page.locator("#expand").click();
-  await expect.poll(() => layoutLeft(page)).toBeGreaterThan(0);
+  await expect.poll(async () => await layoutLeft(page)).toBeGreaterThan(0);
 });
 
 test("Resizable honors disabled separators and disabled groups", async ({

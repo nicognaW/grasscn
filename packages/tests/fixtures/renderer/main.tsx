@@ -1213,6 +1213,9 @@ const MenubarFixture = () => {
     </MenubarContent>
   );
 
+  const nativeTriggerPositioned =
+    triggerPixels && (!native || params.has("nativeButtonChild"));
+
   return (
     <>
       <Menubar ref={rootRef} scale={scale}>
@@ -1251,13 +1254,15 @@ const MenubarFixture = () => {
               params.has("disabled") ||
               (triggerPixels && params.get("state") === "disabled")
             }
+            className={cn({
+              "fixture-native-menu-trigger": nativeTriggerPositioned,
+            })}
             style={
-              triggerPixels && (!native || params.has("nativeButtonChild"))
+              nativeTriggerPositioned
                 ? {
-                    position: "fixed",
-                    left: Number(params.get("x") ?? 16) * scale,
-                    top: Number(params.get("y") ?? 16) * scale,
-                    width: Number(params.get("width") ?? 200) * scale,
+                    "--fixture-trigger-left": `${Number(params.get("x") ?? 16) * scale}px`,
+                    "--fixture-trigger-top": `${Number(params.get("y") ?? 16) * scale}px`,
+                    "--fixture-trigger-width": `${Number(params.get("width") ?? 200) * scale}px`,
                   }
                 : undefined
             }
@@ -1508,6 +1513,9 @@ const DropdownFixture = () => {
     </DropdownMenuContent>
   );
 
+  const nativeTriggerPositioned =
+    triggerPixels && (!native || params.has("nativeButtonChild"));
+
   return (
     <>
       <DropdownMenu
@@ -1541,13 +1549,15 @@ const DropdownFixture = () => {
             params.has("disabled") ||
             (triggerPixels && params.get("state") === "disabled")
           }
+          className={cn({
+            "fixture-native-menu-trigger": nativeTriggerPositioned,
+          })}
           style={
-            triggerPixels && (!native || params.has("nativeButtonChild"))
+            nativeTriggerPositioned
               ? {
-                  position: "fixed",
-                  left: Number(params.get("x") ?? 16) * scale,
-                  top: Number(params.get("y") ?? 16) * scale,
-                  width: Number(params.get("width") ?? 200) * scale,
+                  "--fixture-trigger-left": `${Number(params.get("x") ?? 16) * scale}px`,
+                  "--fixture-trigger-top": `${Number(params.get("y") ?? 16) * scale}px`,
+                  "--fixture-trigger-width": `${Number(params.get("width") ?? 200) * scale}px`,
                 }
               : undefined
           }

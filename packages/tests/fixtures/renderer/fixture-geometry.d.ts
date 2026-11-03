@@ -2,6 +2,10 @@ import "react";
 
 declare module "react" {
   interface CSSProperties {
+    "--fixture-locator-top"?: string;
+    "--fixture-trigger-left"?: string;
+    "--fixture-trigger-top"?: string;
+    "--fixture-trigger-width"?: string;
     "--fixture-collapse-left"?: string;
     "--fixture-collapse-top"?: string;
     "--fixture-collapse-width"?: string;
