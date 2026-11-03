@@ -1,3 +1,4 @@
+import type { Page } from "@playwright/test";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 import type { RecordedPitchedPlayback } from "@tests/harness/audio-playback";
@@ -10,11 +11,7 @@ interface PaginationArrowSourceState {
   sounds: string[];
 }
 
-test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
-  page,
-}) => {
-  for (const ratio of [1, 4 / 3, 16 / 9]) {
-    for (const width of [160, 320, 640]) {
+const verifyAspectRatioGeometry = async (page: Page, ratio: number, width: number) => {
       await page.goto(
         `/?component=aspect-ratio&ratio=${ratio}&containerWidth=${width}`
       );
@@ -26,31 +23,9 @@ test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
       expect(rect.height).toBeCloseTo(width / ratio, 1);
       const art = (await page.locator("#art").boundingBox())!;
       expect([art.width, art.height]).toEqual([40, 40]);
-    }
-  }
-});
+    };
 
-test("Aspect Ratio supports explicit clipping without resampling its content", async ({
-  page,
-}) => {
-  await page.goto(
-    "/?component=aspect-ratio&ratio=16&containerWidth=160&clip=1"
-  );
-  expect(
-    await page
-      .locator("#ratio")
-      .evaluate((node) => getComputedStyle(node).overflow)
-  ).toBe("hidden");
-  const art = (await page.locator("#art").boundingBox())!;
-  expect([art.width, art.height]).toEqual([40, 40]);
-  const box = (await page.locator("#ratio").boundingBox())!;
-  expect(box.height).toBe(10);
-});
-
-test("Button Group preserves horizontal/vertical geometry and independent activations", async ({
-  page,
-}) => {
-  for (const orientation of ["horizontal", "vertical"]) {
+const verifyButtonGroupOrientation = async (page: Page, orientation: string) => {
     await page.goto(`/?component=button-group&orientation=${orientation}`);
     const group = page.getByRole("group", { name: "Game actions" });
     await expect(group).toHaveAttribute("data-orientation", orientation);
@@ -78,7 +53,107 @@ test("Button Group preserves horizontal/vertical geometry and independent activa
     await expect(page.locator("#variant")).toHaveClass(
       /mc-button-group-vertical/
     );
+  };
+
+const verifyBlockedPaginationAction = async (page: Page, suffix: string) => {
+    await page.goto(`/?component=pagination&${suffix}`);
+    await page.locator("[data-subject]").dispatchEvent("click");
+    await expect(page.locator("#events")).toHaveText("0");
+    expect(new URL(page.url()).hash).toBe("");
+  };
+
+const verifyCanceledPaginationAudio = async (page: Page, suffix: string) => {
+    await page.goto(`/?component=pagination&${suffix}`);
+    await page.locator("[data-subject]").dispatchEvent("click");
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+          (window as typeof window & PaginationPlaybackState).sounds
+      )
+    ).toEqual([]);
+  };
+
+const verifyPaginationArrowKeyboard = async (page: Page, forward: boolean) => {
+    await page.goto(`/?component=pagination&part=arrow&checked=${forward}`);
+
+    const arrow = page.getByRole("link", {
+      name: forward ? "Go to next page" : "Go to previous page",
+    });
+
+    await expect(arrow).toHaveAttribute("href", "#next");
+    await arrow.hover();
+    await arrow.focus();
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+          (window as typeof window & PaginationPlaybackState).sounds
+      )
+    ).toEqual([]);
+    await page.keyboard.press("Enter");
+    expect(new URL(page.url()).hash).toBe("#next");
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+          (window as typeof window & PaginationPlaybackState).sounds
+      )
+    ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
+  };
+
+const verifySuppressedPaginationArrow = async (page: Page, suffix: string) => {
+    await page.goto(`/?component=pagination&part=arrow&text=World&${suffix}`);
+    const arrow = page.locator("[data-subject]");
+    await expect(arrow).toContainText("World");
+    await arrow.dispatchEvent("click");
+    expect(new URL(page.url()).hash).toBe("");
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: This Pagination arrow silence reader runs after navigation initializes its paired sounds trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+          (window as typeof window & PaginationArrowSourceState).sounds
+      )
+    ).toEqual([]);
+  };
+
+test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
+  page,
+}) => {
+  for (const ratio of [1, 4 / 3, 16 / 9]) {
+    for (const width of [160, 320, 640]) {
+await verifyAspectRatioGeometry(page, ratio, width);
+}
   }
+});
+
+test("Aspect Ratio supports explicit clipping without resampling its content", async ({
+  page,
+}) => {
+  await page.goto(
+    "/?component=aspect-ratio&ratio=16&containerWidth=160&clip=1"
+  );
+  expect(
+    await page
+      .locator("#ratio")
+      .evaluate((node) => getComputedStyle(node).overflow)
+  ).toBe("hidden");
+  const art = (await page.locator("#art").boundingBox())!;
+  expect([art.width, art.height]).toEqual([40, 40]);
+  const box = (await page.locator("#ratio").boundingBox())!;
+  expect(box.height).toBe(10);
+});
+
+test("Button Group preserves horizontal/vertical geometry and independent activations", async ({
+  page,
+}) => {
+  for (const orientation of ["horizontal", "vertical"]) {
+await verifyButtonGroupOrientation(page, orientation);
+}
 });
 
 test("Button Group disabled buttons stay disabled and keyboard focus stays independent", async ({
@@ -128,11 +203,8 @@ test("Pagination cancellation and disabled links prevent activation and navigati
   page,
 }) => {
   for (const suffix of ["cancel=1", "state=disabled"]) {
-    await page.goto(`/?component=pagination&${suffix}`);
-    await page.locator("[data-subject]").dispatchEvent("click");
-    await expect(page.locator("#events")).toHaveText("0");
-    expect(new URL(page.url()).hash).toBe("");
-  }
+await verifyBlockedPaginationAction(page, suffix);
+}
 });
 
 test("Pagination uses original audio once per accepted action and stays silent when canceled", async ({
@@ -176,17 +248,8 @@ test("Pagination uses original audio once per accepted action and stays silent w
   ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
 
   for (const suffix of ["cancel=1", "state=disabled"]) {
-    await page.goto(`/?component=pagination&${suffix}`);
-    await page.locator("[data-subject]").dispatchEvent("click");
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-          (window as typeof window & PaginationPlaybackState).sounds
-      )
-    ).toEqual([]);
-  }
+await verifyCanceledPaginationAudio(page, suffix);
+}
 });
 
 test("Pagination original arrows retain native links and keyboard activation with original click audio", async ({
@@ -210,34 +273,8 @@ test("Pagination original arrows retain native links and keyboard activation wit
   });
 
   for (const forward of [false, true]) {
-    await page.goto(`/?component=pagination&part=arrow&checked=${forward}`);
-
-    const arrow = page.getByRole("link", {
-      name: forward ? "Go to next page" : "Go to previous page",
-    });
-
-    await expect(arrow).toHaveAttribute("href", "#next");
-    await arrow.hover();
-    await arrow.focus();
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-          (window as typeof window & PaginationPlaybackState).sounds
-      )
-    ).toEqual([]);
-    await page.keyboard.press("Enter");
-    expect(new URL(page.url()).hash).toBe("#next");
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-          (window as typeof window & PaginationPlaybackState).sounds
-      )
-    ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
-  }
+await verifyPaginationArrowKeyboard(page, forward);
+}
 });
 
 test("Pagination original arrows preserve custom content and cancel disabled or prevented actions", async ({
@@ -259,18 +296,6 @@ test("Pagination original arrows preserve custom content and cancel disabled or 
   });
 
   for (const suffix of ["cancel=1", "state=disabled"]) {
-    await page.goto(`/?component=pagination&part=arrow&text=World&${suffix}`);
-    const arrow = page.locator("[data-subject]");
-    await expect(arrow).toContainText("World");
-    await arrow.dispatchEvent("click");
-    expect(new URL(page.url()).hash).toBe("");
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: This Pagination arrow silence reader runs after navigation initializes its paired sounds trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-          (window as typeof window & PaginationArrowSourceState).sounds
-      )
-    ).toEqual([]);
-  }
+await verifySuppressedPaginationArrow(page, suffix);
+}
 });
