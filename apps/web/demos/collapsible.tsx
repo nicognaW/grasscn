@@ -45,7 +45,7 @@ const CollapsibleDemo = ({ scale }: DemoProps) => {
             onChange={(event) => {
               setMessage(event.target.value);
             }}
-            style={{ width: 160 * scale, maxWidth: "100%", height: 50 * scale }}
+            style={{ height: 50 * scale, maxWidth: "100%", width: 160 * scale }}
           />
         </label>
         <Button

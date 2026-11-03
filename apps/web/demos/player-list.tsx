@@ -35,10 +35,10 @@ const PlayerListDemo = ({ scale }: DemoProps) => {
     >
       <div
         style={{
-          display: "flex",
-          gap: 28,
-          flexWrap: "wrap",
           alignItems: "start",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 28,
           maxWidth: "100%",
         }}
       >

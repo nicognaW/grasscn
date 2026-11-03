@@ -30,7 +30,7 @@ const SheetDemo = ({ scale }: DemoProps) => {
             onChange={(e) => {
               setMessage(e.target.value);
             }}
-            style={{ width: 320, height: 100 }}
+            style={{ height: 100, width: 320 }}
           />
         </label>
       </div>

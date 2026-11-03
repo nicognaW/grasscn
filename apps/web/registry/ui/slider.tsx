@@ -221,7 +221,7 @@ const Slider = ({
                 key={index}
                 className="mc-slider-position"
                 style={
-                  {
+                  /* SAFETY: --mc-thumb-fraction is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
                     "--mc-thumb-fraction": reverse ? 1 - fraction : fraction,
                   } as React.CSSProperties
                 }

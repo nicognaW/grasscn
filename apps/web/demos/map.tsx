@@ -18,10 +18,10 @@ const MapDemo = ({ scale }: DemoProps) => {
     >
       <div
         style={{
-          display: "flex",
-          gap: 24,
-          flexWrap: "wrap",
           alignItems: "start",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 24,
         }}
       >
         <MinecraftMap

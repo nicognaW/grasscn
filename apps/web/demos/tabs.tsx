@@ -48,7 +48,7 @@ const TabsDemo = ({ scale }: DemoProps) => {
           scale={scale}
           value={value}
           onValueChange={setValue}
-          style={{ width: 303 * scale, minWidth: 152 * scale, flexShrink: 0 }}
+          style={{ flexShrink: 0, minWidth: 152 * scale, width: 303 * scale }}
         >
           <TabsList aria-label="World settings" activateOnFocus>
             <TabsTrigger value="game">{title || " "}</TabsTrigger>

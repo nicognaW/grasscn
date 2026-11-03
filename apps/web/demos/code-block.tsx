@@ -26,7 +26,7 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
             onChange={(event) => {
               setCode(event.target.value);
             }}
-            style={{ width: 340, height: 120 }}
+            style={{ height: 120, width: 340 }}
           />
         </label>
         <label className="demo-option">
@@ -51,7 +51,7 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
         </label>
       </div>
       <div className="demo-stage" data-stage="code-block">
-        <CodeBlock scale={scale} style={{ width: "100%", maxWidth: 620 }}>
+        <CodeBlock scale={scale} style={{ maxWidth: 620, width: "100%" }}>
           <CodeBlockHeader>
             <CodeBlockTitle>greeting.ts</CodeBlockTitle>
             <CodeBlockActions>

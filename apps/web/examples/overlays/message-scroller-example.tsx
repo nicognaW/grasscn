@@ -63,7 +63,7 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
             onChange={(event) => {
               setText(event.target.value);
             }}
-            style={{ width: 180 * scale, maxWidth: "100%" }}
+            style={{ maxWidth: "100%", width: 180 * scale }}
           />
         </label>
         <Button
@@ -85,7 +85,7 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
       <div data-stage="message">
         <MessageScroller
           scale={scale}
-          style={{ width: 320 * scale, maxWidth: "100%", height: 94 * scale }}
+          style={{ height: 94 * scale, maxWidth: "100%", width: 320 * scale }}
         >
           <MessageScrollerViewport
             aria-label="Player chat"
@@ -120,14 +120,14 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
               direction="end"
               behavior="instant"
               style={{
-                position: "relative",
+                bottom: "auto",
                 left: "auto",
+                maxWidth: "100%",
+                position: "relative",
                 right: "auto",
                 top: "auto",
-                bottom: "auto",
                 transform: "none",
                 width: 100 * scale,
-                maxWidth: "100%",
               }}
             >
               Latest

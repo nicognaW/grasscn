@@ -113,7 +113,11 @@ const Table = ({
     <div
       data-slot="table-container"
       className="mc-table-container"
-      style={{ "--mc-scale": scale } as React.CSSProperties}
+      style={
+        /* SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
+          "--mc-scale": scale,
+        } as React.CSSProperties
+      }
     >
       <table
         data-slot="table"

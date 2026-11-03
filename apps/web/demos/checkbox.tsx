@@ -11,7 +11,11 @@ const CheckboxDemo = ({ scale }: DemoProps) => {
       <div
         className="demo-stage checkbox-stage"
         data-stage="checkbox"
-        style={{ "--preview-scale": scale } as React.CSSProperties}
+        style={
+          /* SAFETY: --preview-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
+            "--preview-scale": scale,
+          } as React.CSSProperties
+        }
       >
         <div className="checkbox-row">
           <Checkbox

@@ -77,7 +77,7 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
           aria-label="Filter worlds"
           placeholder="Search worlds"
           scale={scale}
-          style={{ width: 160 * scale, maxWidth: "100%" }}
+          style={{ maxWidth: "100%", width: 160 * scale }}
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(e) =>
             table.getColumn("name")?.setFilterValue(e.target.value)
