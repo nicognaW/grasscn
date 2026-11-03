@@ -1,12 +1,10 @@
-import type { DemoVariables } from "../demo-variables";
-import type { CarouselApi } from "../registry/ui/carousel";
-import type { DemoProps } from "../types";
 import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
-
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../registry/ui/card";
+import type { CarouselApi } from "../registry/ui/carousel";
 import {
   Carousel,
   CarouselContent,
@@ -14,6 +12,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "../registry/ui/carousel";
+import type { DemoProps } from "../types";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-demos-carousel-1-padding": `${number}px`;

@@ -1,9 +1,8 @@
-import type { TradeOffer } from "../registry/ui/trading";
-import type { DemoProps } from "../types";
-
 import * as React from "react";
 
+import type { TradeOffer } from "../registry/ui/trading";
 import { Trading } from "../registry/ui/trading";
+import type { DemoProps } from "../types";
 import { tradingIcons } from "./trading-icons";
 
 const TradingDemo = ({ scale }: DemoProps) => {

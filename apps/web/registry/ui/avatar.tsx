@@ -1,14 +1,13 @@
 "use client";
 
-import type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
-import type { MinecraftProps } from "./minecraft-render";
-
 import { Avatar as AvatarPrimitive } from "@base-ui/react/avatar";
 import * as React from "react";
 
 import { Label } from "./label";
+import type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
 import { minecraftAvatarSkins } from "./minecraft-avatar-assets";
 import { paintMinecraftAvatar } from "./minecraft-avatar-paint";
+import type { MinecraftProps } from "./minecraft-render";
 import {
   isMinecraftTextContent,
   minecraftClasses as cn,

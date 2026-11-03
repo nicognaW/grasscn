@@ -1,9 +1,6 @@
-import type { DemoVariables } from "../demo-variables";
-import type { SignWood } from "../registry/ui/sign";
-import type { DemoProps } from "../types";
-
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
 import { Input } from "../registry/ui/input";
 import {
   Select,
@@ -12,7 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../registry/ui/select";
+import type { SignWood } from "../registry/ui/sign";
 import { Sign, HangingSign } from "../registry/ui/sign";
+import type { DemoProps } from "../types";
 
 const woods: SignWood[] = [
   "oak",

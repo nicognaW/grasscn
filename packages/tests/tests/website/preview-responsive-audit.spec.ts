@@ -1,5 +1,4 @@
 import type { Page, Locator } from "@grasscn/tests/test";
-
 import { test, expect } from "@grasscn/tests/test";
 
 const origin = (
