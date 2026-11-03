@@ -368,13 +368,17 @@ const SelectFixture = () => {
 const RadioFixture = () => {
   const single = params.get("component") === "radio-group-item";
 
-  const initial = single
-    ? params.get("checked") === "true"
-      ? "subject"
-      : "other"
-    : params.has("none")
-      ? ""
-      : (params.get("value") ?? "survival");
+  let selectedInitial: string;
+
+  if (single) {
+    selectedInitial = params.get("checked") === "true" ? "subject" : "other";
+  } else if (params.has("none")) {
+    selectedInitial = "";
+  } else {
+    selectedInitial = params.get("value") ?? "survival";
+  }
+
+  const initial = selectedInitial;
 
   const [value, setValue] = React.useState(initial);
   const [changes, setChanges] = React.useState(0);
@@ -645,41 +649,54 @@ const ContextFixture = () => {
     }
   };
 
-  const nativeBody =
-    part === "menu-checkbox" ? (
+  let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
+
+  if (part === "menu-checkbox") {
+    selectedNativeBody = (
       <ContextMenuCheckboxItem
         checked={nativeChecked}
         disabled={nativeDisabled}
       >
         {nativeLabel}
       </ContextMenuCheckboxItem>
-    ) : part === "menu-radio" ? (
+    );
+  } else if (part === "menu-radio") {
+    selectedNativeBody = (
       <ContextMenuRadioGroup value={nativeChecked ? "on" : "off"}>
         <ContextMenuRadioItem value="on" disabled={nativeDisabled}>
           {nativeLabel}
         </ContextMenuRadioItem>
       </ContextMenuRadioGroup>
-    ) : part === "menu-label" || part === "menu-label-inset" ? (
+    );
+  } else if (part === "menu-label" || part === "menu-label-inset") {
+    selectedNativeBody = (
       <ContextMenuGroup>
         <ContextMenuLabel inset={part === "menu-label-inset"}>
           {nativeLabel}
         </ContextMenuLabel>
       </ContextMenuGroup>
-    ) : part === "menu-separator" ? (
-      <ContextMenuSeparator />
-    ) : part === "menu-sub-trigger" ? (
+    );
+  } else if (part === "menu-separator") {
+    selectedNativeBody = <ContextMenuSeparator />;
+  } else if (part === "menu-sub-trigger") {
+    selectedNativeBody = (
       <ContextMenuSub>
         <ContextMenuSubTrigger>{nativeLabel}</ContextMenuSubTrigger>
       </ContextMenuSub>
-    ) : part === "menu-disabled" ? (
-      <ContextMenuItem disabled>{nativeLabel}</ContextMenuItem>
-    ) : (
-      labels.map((contextItemLabel, index) => (
-        <ContextMenuItem key={index} data-native-index={index}>
-          {contextItemLabel}
-        </ContextMenuItem>
-      ))
     );
+  } else if (part === "menu-disabled") {
+    selectedNativeBody = (
+      <ContextMenuItem disabled>{nativeLabel}</ContextMenuItem>
+    );
+  } else {
+    selectedNativeBody = labels.map((contextItemLabel, index) => (
+      <ContextMenuItem key={index} data-native-index={index}>
+        {contextItemLabel}
+      </ContextMenuItem>
+    ));
+  }
+
+  const nativeBody = selectedNativeBody;
 
   const handleOpen = (
     next: boolean,
@@ -1038,38 +1055,49 @@ const MenubarFixture = () => {
     }
   };
 
-  const nativeBody =
-    part === "menu-checkbox" ? (
+  let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
+
+  if (part === "menu-checkbox") {
+    selectedNativeBody = (
       <MenubarCheckboxItem checked={nativeChecked} disabled={nativeDisabled}>
         {nativeLabel}
       </MenubarCheckboxItem>
-    ) : part === "menu-radio" ? (
+    );
+  } else if (part === "menu-radio") {
+    selectedNativeBody = (
       <MenubarRadioGroup value={nativeChecked ? "on" : "off"}>
         <MenubarRadioItem value="on" disabled={nativeDisabled}>
           {nativeLabel}
         </MenubarRadioItem>
       </MenubarRadioGroup>
-    ) : part === "menu-label" || part === "menu-label-inset" ? (
+    );
+  } else if (part === "menu-label" || part === "menu-label-inset") {
+    selectedNativeBody = (
       <MenubarGroup>
         <MenubarLabel inset={part === "menu-label-inset"}>
           {nativeLabel}
         </MenubarLabel>
       </MenubarGroup>
-    ) : part === "menu-separator" ? (
-      <MenubarSeparator />
-    ) : part === "menu-sub-trigger" ? (
+    );
+  } else if (part === "menu-separator") {
+    selectedNativeBody = <MenubarSeparator />;
+  } else if (part === "menu-sub-trigger") {
+    selectedNativeBody = (
       <MenubarSub>
         <MenubarSubTrigger>{nativeLabel}</MenubarSubTrigger>
       </MenubarSub>
-    ) : part === "menu-disabled" ? (
-      <MenubarItem disabled>{nativeLabel}</MenubarItem>
-    ) : (
-      labels.map((menubarItemLabel, index) => (
-        <MenubarItem key={index} data-native-index={index}>
-          {menubarItemLabel}
-        </MenubarItem>
-      ))
     );
+  } else if (part === "menu-disabled") {
+    selectedNativeBody = <MenubarItem disabled>{nativeLabel}</MenubarItem>;
+  } else {
+    selectedNativeBody = labels.map((menubarItemLabel, index) => (
+      <MenubarItem key={index} data-native-index={index}>
+        {menubarItemLabel}
+      </MenubarItem>
+    ));
+  }
+
+  const nativeBody = selectedNativeBody;
 
   const handleOpen = (
     next: boolean,
@@ -1314,41 +1342,54 @@ const DropdownFixture = () => {
     }
   };
 
-  const nativeBody =
-    part === "menu-checkbox" ? (
+  let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
+
+  if (part === "menu-checkbox") {
+    selectedNativeBody = (
       <DropdownMenuCheckboxItem
         checked={nativeChecked}
         disabled={nativeDisabled}
       >
         {nativeLabel}
       </DropdownMenuCheckboxItem>
-    ) : part === "menu-radio" ? (
+    );
+  } else if (part === "menu-radio") {
+    selectedNativeBody = (
       <DropdownMenuRadioGroup value={nativeChecked ? "on" : "off"}>
         <DropdownMenuRadioItem value="on" disabled={nativeDisabled}>
           {nativeLabel}
         </DropdownMenuRadioItem>
       </DropdownMenuRadioGroup>
-    ) : part === "menu-label" || part === "menu-label-inset" ? (
+    );
+  } else if (part === "menu-label" || part === "menu-label-inset") {
+    selectedNativeBody = (
       <DropdownMenuGroup>
         <DropdownMenuLabel inset={part === "menu-label-inset"}>
           {nativeLabel}
         </DropdownMenuLabel>
       </DropdownMenuGroup>
-    ) : part === "menu-separator" ? (
-      <DropdownMenuSeparator />
-    ) : part === "menu-sub-trigger" ? (
+    );
+  } else if (part === "menu-separator") {
+    selectedNativeBody = <DropdownMenuSeparator />;
+  } else if (part === "menu-sub-trigger") {
+    selectedNativeBody = (
       <DropdownMenuSub>
         <DropdownMenuSubTrigger>{nativeLabel}</DropdownMenuSubTrigger>
       </DropdownMenuSub>
-    ) : part === "menu-disabled" ? (
-      <DropdownMenuItem disabled>{nativeLabel}</DropdownMenuItem>
-    ) : (
-      labels.map((dropdownItemLabel, index) => (
-        <DropdownMenuItem key={index} data-native-index={index}>
-          {dropdownItemLabel}
-        </DropdownMenuItem>
-      ))
     );
+  } else if (part === "menu-disabled") {
+    selectedNativeBody = (
+      <DropdownMenuItem disabled>{nativeLabel}</DropdownMenuItem>
+    );
+  } else {
+    selectedNativeBody = labels.map((dropdownItemLabel, index) => (
+      <DropdownMenuItem key={index} data-native-index={index}>
+        {dropdownItemLabel}
+      </DropdownMenuItem>
+    ));
+  }
+
+  const nativeBody = selectedNativeBody;
 
   const handleOpen = (
     next: boolean,
@@ -2012,11 +2053,15 @@ const DialogFixture = () => {
     : ["Cancel", "Continue"];
   // oxlint-enable typescript/no-unsafe-type-assertion
 
-  const description = native
-    ? params.has("text")
-      ? params.get("text")
-      : null
-    : (params.get("text") ?? "A helpful description.");
+  let selectedDescription: string | null;
+
+  if (native) {
+    selectedDescription = params.has("text") ? params.get("text") : null;
+  } else {
+    selectedDescription = params.get("text") ?? "A helpful description.";
+  }
+
+  const description = selectedDescription;
 
   return (
     <>
