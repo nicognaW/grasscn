@@ -55,7 +55,7 @@ for (const [folder, part] of [
         );
         query.set("selectedIndex", String(c.selectedIndex));
       } else {
-        query.set("text", c.text!);
+        query.set("text", String(c.text));
         query.set("placeholder", c.placeholder ?? "");
 
         const caseMaxLength = c.maxLength;

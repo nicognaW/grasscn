@@ -54,7 +54,7 @@ const commandParameters = (
     query.set("surface", c.element === "menu-panel" ? "popup" : "suggestions");
     query.set("selectedIndex", String(c.selectedIndex));
   } else {
-    query.set("text", c.text!);
+    query.set("text", String(c.text));
     query.set("placeholder", c.placeholder ?? "");
 
     const optionalMaxLength = c.maxLength;

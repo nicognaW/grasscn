@@ -5,7 +5,6 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { normalizeCasePath } from "@grasscn/tests/case-paths";
-import type { BrowserVerification } from "@grasscn/tests/checkpoints";
 import {
   fullRoot,
   readRunPlan,
@@ -563,15 +562,13 @@ export const completedRunReport = function completedRunReport(
         const key = caseKey({ file, titlePath: declaration.title.slice(2) });
         accounted.add(key);
 
-        const artifacts = (record.verification?.artifacts ?? []).map(
-          (artifact) => {
+        const verification = record.verification;
+
+        const artifacts =
+          verification?.artifacts.map((artifact) => {
             if (path.basename(artifact.file) !== artifact.file) {
               throw new Error("Invalid artifact filename");
             }
-
-            // SAFETY: artifact iteration comes from this same checkpoint verification attachment.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-            const verification = record.verification as BrowserVerification;
 
             const result = evidence(
               attempt.directory,
@@ -583,8 +580,7 @@ export const completedRunReport = function completedRunReport(
             }
 
             return result;
-          }
-        );
+          }) ?? [];
 
         // SAFETY: these ordered entries define exactly the owned Full case-record protocol.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion
