@@ -4,7 +4,10 @@ import { Button, buttonVariants } from "@grasscn/web/ui/button";
 export const ButtonApiContract = function ButtonApiContract() {
   const supported = (
     <Button
-      render={<a href="#inventory" />}
+      render={
+        // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Button supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+        <a href="#inventory" />
+      }
       variant="default"
       size="default"
       scale={3}

@@ -285,7 +285,10 @@ const SelectFixture = () => {
       >
         <SelectTrigger
           render={
-            params.has("triggerAsChild") ? <button type="button" /> : undefined
+            params.has("triggerAsChild") ? (
+              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- SelectTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+              <button type="button" />
+            ) : undefined
           }
           id={single ? "subject" : "select-trigger"}
           aria-label="Game mode"
@@ -415,8 +418,10 @@ const RadioFixture = () => {
 
     if (params.has("itemAsChild")) {
       selectedFixtureBranch2 = params.has("anchor") ? (
+        // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- RadioGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
         <a href="#radio" />
       ) : (
+        // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- RadioGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
         <button type="submit" />
       );
     } else {
@@ -545,8 +550,10 @@ const SwitchFixture = () => {
 
   if (params.has("asChild")) {
     selectedFixtureBranch3 = params.has("anchor") ? (
+      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Switch supplies its actual name through explicit aria-labelledby when labelled and aria-label otherwise; keep this receiver empty to verify real forwarding.
       <a href="#switch" />
     ) : (
+      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Switch supplies its actual name through explicit aria-labelledby when labelled and aria-label otherwise; keep this receiver empty to verify real forwarding.
       <button type="submit" />
     );
   } else {
@@ -799,7 +806,13 @@ const ContextFixture = () => {
 
   if (params.has("contentAsChild")) {
     selectedFixtureBranch4 = (
-      <ContextMenuItem render={<a href="#menu-composed" />} onClick={choose}>
+      <ContextMenuItem
+        render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ContextMenuItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href="#menu-composed" />
+        }
+        onClick={choose}
+      >
         Composed action
       </ContextMenuItem>
     );
@@ -854,7 +867,10 @@ const ContextFixture = () => {
       >
         <ContextMenuTrigger
           render={
-            params.has("triggerAsChild") ? <button type="button" /> : undefined
+            params.has("triggerAsChild") ? (
+              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ContextMenuTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+              <button type="button" />
+            ) : undefined
           }
           id="context-hit"
           ref={trigger}
@@ -954,7 +970,12 @@ const CollapsibleFixture = () => {
   const child = (
     <>
       <CollapsibleTrigger
-        render={params.has("asChild") ? <button type="button" /> : undefined}
+        render={
+          params.has("asChild") ? (
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- CollapsibleTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+            <button type="button" />
+          ) : undefined
+        }
         ref={trigger}
         {...(native && !body ? { "data-subject": "true", id: "subject" } : {})}
         {...(native && !body && params.get("state") === "disabled"
@@ -1226,7 +1247,13 @@ const MenubarFixture = () => {
 
   if (params.has("contentAsChild")) {
     selectedFixtureBranch8 = (
-      <MenubarItem render={<a href="#menu-composed" />} onClick={choose}>
+      <MenubarItem
+        render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- MenubarItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href="#menu-composed" />
+        }
+        onClick={choose}
+      >
         Composed action
       </MenubarItem>
     );
@@ -1543,7 +1570,13 @@ const DropdownFixture = () => {
 
   if (params.has("contentAsChild")) {
     selectedFixtureBranch11 = (
-      <DropdownMenuItem render={<a href="#menu-composed" />} onClick={choose}>
+      <DropdownMenuItem
+        render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- DropdownMenuItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href="#menu-composed" />
+        }
+        onClick={choose}
+      >
         Composed action
       </DropdownMenuItem>
     );
@@ -2075,7 +2108,10 @@ const AlertDialogCompositionFixture = () => {
             <AlertDialogAction
               ref={action}
               nativeButton={false}
-              render={<a href="#confirmed" />}
+              render={
+                // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- AlertDialogAction supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+                <a href="#confirmed" />
+              }
             >
               {"Confirm link"}
             </AlertDialogAction>
@@ -2925,6 +2961,7 @@ const FixtureTooltip = () => {
       >
         <TooltipTrigger
           render={
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- TooltipTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
             <button
               type="button"
               id="tooltip-trigger"
@@ -3200,7 +3237,14 @@ const FixtureButton = () => {
         {label}
       </Button>
       <output aria-label="Activations">{count}</output>
-      <Button render={<a href="#destination" />}>Continue</Button>
+      <Button
+        render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Button supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href="#destination" />
+        }
+      >
+        Continue
+      </Button>
       <Button
         disabled
         onClick={() => {

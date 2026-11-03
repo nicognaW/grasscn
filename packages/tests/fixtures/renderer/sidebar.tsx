@@ -424,6 +424,7 @@ export const SidebarFixture = () => {
                 <SidebarMenuItem>
                   <SidebarMenuButton
                     render={
+                      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- SidebarMenuButton supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
                       <a id="settings" href="#settings" onClick={click} />
                     }
                     tooltip="Settings"
@@ -434,6 +435,7 @@ export const SidebarFixture = () => {
                 <SidebarMenuItem>
                   <SidebarMenuButton
                     render={
+                      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- SidebarMenuButton supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
                       <a
                         href="#disabled"
                         onClick={() => {

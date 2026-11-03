@@ -13,7 +13,14 @@ import * as React from "react";
 const imageRef = React.createRef<HTMLImageElement>();
 const rootRef = React.createRef<HTMLSpanElement>();
 
-<Avatar render={<a href="#profile" />} ref={rootRef} size="sm">
+<Avatar
+  render={
+    // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Avatar supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+    <a href="#profile" />
+  }
+  ref={rootRef}
+  size="sm"
+>
   <>
     <AvatarImage
       ref={imageRef}

@@ -34,7 +34,14 @@ const label = React.createRef<HTMLLabelElement>();
   >
     {undefined}
   </AttachmentTrigger>
-  <AttachmentAction render={<a href="#remove" />}>X</AttachmentAction>
+  <AttachmentAction
+    render={
+      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- AttachmentAction supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+      <a href="#remove" />
+    }
+  >
+    X
+  </AttachmentAction>
 </Attachment>;
 
 <Questionnaire
