@@ -1,13 +1,25 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
+interface SelectPlaybackState extends Window {
+  __selectVoices?: number;
+}
+
+interface InitializedSelectPlaybackState extends SelectPlaybackState {
+  __selectVoices: number;
+}
+
 test("Select respects cancelled opening and closing in uncontrolled mode", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).__selectVoices = 0;
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as SelectPlaybackState).__selectVoices = 0;
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).__selectVoices += 1;
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedSelectPlaybackState).__selectVoices += 1;
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
@@ -18,14 +30,28 @@ test("Select respects cancelled opening and closing in uncontrolled mode", async
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
   await trigger.press("ArrowDown");
   await expect(page.getByRole("listbox")).toHaveCount(0);
-  expect(await page.evaluate(() => (window as any).__selectVoices)).toBe(0);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedSelectPlaybackState).__selectVoices
+    )
+  ).toBe(0);
+  // oxlint-enable typescript/no-unsafe-type-assertion
   await page.goto("/?component=select&cancelClose=1");
   await trigger.click();
   await expect(page.getByRole("listbox")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("listbox")).toBeVisible();
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  expect(await page.evaluate(() => (window as any).__selectVoices)).toBe(1);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedSelectPlaybackState).__selectVoices
+    )
+  ).toBe(1);
+  // oxlint-enable typescript/no-unsafe-type-assertion
 });
 
 test("Select keyboard navigation visits disabled options without committing them", async ({

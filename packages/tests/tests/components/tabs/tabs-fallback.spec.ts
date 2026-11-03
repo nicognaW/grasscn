@@ -1,11 +1,23 @@
 import { test, expect } from "@grasscn/tests/test";
 
+interface TabsFallbackPlaybackState extends Window {
+  voices?: number;
+}
+
+interface InitializedTabsFallbackPlaybackState extends TabsFallbackPlaybackState {
+  voices: number;
+}
+
 for (const reason of ["disabled", "missing"]) {
   test(`Tabs automatic ${reason} fallback stays silent`, async ({ page }) => {
     await page.addInitScript(() => {
-      (window as any).voices = 0;
+      // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+      (window as TabsFallbackPlaybackState).voices = 0;
       HTMLMediaElement.prototype.play = function play() {
-        (window as any).voices += 1;
+        // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+        // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+        (window as InitializedTabsFallbackPlaybackState).voices += 1;
+        // oxlint-enable typescript/no-unsafe-type-assertion
 
         return Promise.resolve();
       };
@@ -35,6 +47,13 @@ for (const reason of ["disabled", "missing"]) {
 
       await frameCompletion.promise;
     });
-    expect(await page.evaluate(() => (window as any).voices)).toBe(0);
+    // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+    expect(
+      await page.evaluate(
+        () => (window as InitializedTabsFallbackPlaybackState).voices
+      )
+    ).toBe(0);
+    // oxlint-enable typescript/no-unsafe-type-assertion
   });
 }

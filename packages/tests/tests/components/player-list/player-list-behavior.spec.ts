@@ -1,5 +1,13 @@
 import { test, expect } from "@grasscn/tests/test";
 
+interface PlayerListPlaybackState extends Window {
+  played?: number;
+}
+
+interface InitializedPlayerListPlaybackState extends PlayerListPlaybackState {
+  played: number;
+}
+
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 
@@ -10,10 +18,14 @@ test("player list supports pointer and keyboard selection without UI sound", asy
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).played = 0;
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as PlayerListPlaybackState).played = 0;
     (window as any).Audio = class {
       play() {
-        (window as any).played += 1;
+        // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+        // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+        (window as InitializedPlayerListPlaybackState).played += 1;
+        // oxlint-enable typescript/no-unsafe-type-assertion
 
         return;
       }
@@ -32,7 +44,14 @@ test("player list supports pointer and keyboard selection without UI sound", asy
   await kai.focus();
   await kai.press("Enter");
   await expect(page.getByLabel("Demo value")).toHaveText("0 / 2 / 0");
-  expect(await page.evaluate(() => (window as any).played)).toBe(0);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedPlayerListPlaybackState).played
+    )
+  ).toBe(0);
+  // oxlint-enable typescript/no-unsafe-type-assertion
 });
 
 test("player list uses at most eighty entries and twenty rows per column", async ({

@@ -2,6 +2,14 @@ import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 import type { Layout } from "react-resizable-panels";
 
+interface ResizablePlaybackState extends Window {
+  sounds?: number;
+}
+
+interface InitializedResizablePlaybackState extends ResizablePlaybackState {
+  sounds: number;
+}
+
 const layoutLeft = async function layoutLeft(page: Page) {
   const text = await page.locator("#layout").textContent();
 
@@ -120,9 +128,13 @@ test("Resizable preserves optional grip and never synthesizes interaction audio"
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = 0;
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as ResizablePlaybackState).sounds = 0;
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds += 1;
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedResizablePlaybackState).sounds += 1;
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
@@ -132,7 +144,14 @@ test("Resizable preserves optional grip and never synthesizes interaction audio"
   const handle = page.getByRole("separator", { name: "Resize panels" });
   await handle.focus();
   await page.keyboard.press("ArrowRight");
-  expect(await page.evaluate(() => (window as any).sounds)).toBe(0);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedResizablePlaybackState).sounds
+    )
+  ).toBe(0);
+  // oxlint-enable typescript/no-unsafe-type-assertion
 });
 
 for (const orientation of ["horizontal", "vertical"]) {
