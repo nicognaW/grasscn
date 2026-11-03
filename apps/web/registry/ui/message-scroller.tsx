@@ -2,8 +2,6 @@
 
 import { MessageScroller as Primitive } from "@shadcn/react/message-scroller";
 
-
-
 import "./minecraft-message-scroller.css";
 import * as React from "react";
 

@@ -6,9 +6,6 @@ import * as React from "react";
 import { Label } from "./label";
 import { minecraftAvatarSkins } from "./minecraft-avatar-assets";
 import type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
-
-
-
 import { paintMinecraftAvatar } from "./minecraft-avatar-paint";
 import {
   isMinecraftTextContent,

@@ -1,7 +1,7 @@
-import type { DemoVariables } from "../demo-variables";
 import { createColumnHelper, useTable } from "@tanstack/react-table";
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
 import { features } from "../registry/blocks/data-table-features";
 import type { DataTableFeatures } from "../registry/blocks/data-table-features";
 import { Button } from "../registry/ui/button";

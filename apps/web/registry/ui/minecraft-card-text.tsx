@@ -128,11 +128,11 @@ export const MinecraftCardText = ({
                     minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32];
 
                   const glyphStyle: CardBoldGlyphStyle = {
-                          "--mc-advance": advance + 1,
-                          "--mc-glyph-x": x,
-                          "--mc-glyph-y": y,
-                          visibility: char === " " ? "hidden" : undefined,
-                        };
+                    "--mc-advance": advance + 1,
+                    "--mc-glyph-x": x,
+                    "--mc-glyph-y": y,
+                    visibility: char === " " ? "hidden" : undefined,
+                  };
 
                   return (
                     <span

@@ -186,7 +186,13 @@ export const OverlayFixture = () => {
                 Name
                 <Input aria-label="World name" defaultValue="Minecraft" />
               </label>
-              <div className={p.has("scroll") ? "fixture-overlay-scroll-spacer" : "fixture-overlay-empty-spacer"} />
+              <div
+                className={
+                  p.has("scroll")
+                    ? "fixture-overlay-scroll-spacer"
+                    : "fixture-overlay-empty-spacer"
+                }
+              />
               <Footer>
                 {p.has("snap") && (
                   <Button

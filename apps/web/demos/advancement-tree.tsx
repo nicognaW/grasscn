@@ -1,6 +1,6 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
 import {
   AdvancementTree,
   type AdvancementNode,

@@ -1,7 +1,7 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
 
 import grass from "../assets/grass-block-48.png";
+import type { DemoVariables } from "../demo-variables";
 import { AspectRatio } from "../registry/ui/aspect-ratio";
 import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
