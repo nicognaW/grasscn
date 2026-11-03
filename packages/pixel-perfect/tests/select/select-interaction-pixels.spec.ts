@@ -1,16 +1,34 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectTruthy } from "@grasscn/tests/assertions";
+import type { SelectReferenceCase } from "@ppt/installed/reference-case";
 import { compareSelectPixels } from "@ppt/harness/families/select-pixel-compare";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+type SelectInteractionCase =
+  | (Omit<SelectReferenceCase, "element" | "labels"> & {
+      element: "select-trigger";
+      labels?: string[];
+    })
+  | (Omit<SelectReferenceCase, "element" | "labels"> & {
+      element: "select-list";
+      labels: string[];
+    });
+
+interface SelectInteractionManifest {
+  cases: SelectInteractionCase[];
+}
+
+// SAFETY: The retained Select producer emits432trigger cases and366list cases; every list supplies its labels, and the source renderer reads labels only for select-list.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact fixed retained Select producer; preserve this original fresh read and parse.
 const manifest = JSON.parse(
   readFileSync(
     pixelPerfectFile("tests/reference/select/manifest.json"),
     "utf-8"
   )
-);
+) as SelectInteractionManifest;
 
 for (const scale of [1, 2, 3]) {
   for (const mode of ["pointer", "keyboard"]) {
@@ -18,7 +36,7 @@ for (const scale of [1, 2, 3]) {
       page,
     }, testInfo) => {
       const c = manifest.cases.find(
-        (selectListCase: any) =>
+        (selectListCase) =>
           selectListCase.element === "select-list" &&
           selectListCase.width === 300 &&
           selectListCase.height === 80 &&
@@ -30,7 +48,7 @@ for (const scale of [1, 2, 3]) {
           selectListCase.scale === scale
       );
 
-      expect(c).toBeTruthy();
+      expectTruthy(c);
       await page.setViewportSize({ width: 1536, height: 900 });
       await page.goto(`/?component=select&popper=1&scale=${scale}`);
       const trigger = page.getByRole("combobox");

@@ -5,6 +5,14 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { referenceFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+interface NativeExpansionManifest {
+  cases: {
+    name: string;
+    scale: number;
+    element: string;
+  }[];
+}
+
 const corpora = process.env.GRASSCN_EXPANSION_REFERENCE
   ? [path.resolve(process.env.GRASSCN_EXPANSION_REFERENCE)]
   : [
@@ -24,12 +32,14 @@ const corpora = process.env.GRASSCN_EXPANSION_REFERENCE
     ].map((name) => referenceFile(name));
 
 const specimens = corpora.flatMap((reference) =>
-  JSON.parse(
+  // SAFETY: All489cases in the13retained native-expansion manifests emit name, numeric scale and element; an override supplies the same capture-consumer contract at this original read boundary.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact native capture manifest consumer projection; no new validation or generic JSON caster.
+  (JSON.parse(
     readFileSync(
       pixelPerfectFile(path.join(reference, "manifest.json")),
       "utf-8"
     )
-  ).cases.map((sample: any) => ({ reference, sample }))
+  ) as NativeExpansionManifest).cases.map((sample) => ({ reference, sample }))
 );
 
 for (const { reference, sample } of specimens) {
