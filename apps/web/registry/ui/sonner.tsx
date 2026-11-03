@@ -59,7 +59,7 @@ type ToasterProps = Omit<SonnerProps, "richColors" | "expand"> & {
   ref?: React.Ref<HTMLElement>;
 };
 
-const ActionGraphic = function ActionGraphic({
+const ActionGraphic = ({
   action,
   model,
   scale,
@@ -67,7 +67,7 @@ const ActionGraphic = function ActionGraphic({
   action: ActionModel;
   model: Model;
   scale: 1 | 2 | 3;
-}) {
+}) => {
   const [fontReady, setFontReady] = React.useState(false);
   React.useLayoutEffect(() => {
     let live = true;
@@ -144,13 +144,7 @@ const ActionGraphic = function ActionGraphic({
   );
 };
 
-const ModelGraphic = function ModelGraphic({
-  model,
-  scale,
-}: {
-  model: Model;
-  scale: 1 | 2 | 3;
-}) {
+const ModelGraphic = ({ model, scale }: { model: Model; scale: 1 | 2 | 3 }) => {
   const [height, setHeight] = React.useState(model.height);
 
   const update = React.useCallback(
@@ -208,7 +202,7 @@ const ModelGraphic = function ModelGraphic({
   );
 };
 
-const Toaster = function Toaster({
+const Toaster = ({
   scale = 2,
   richColors = false,
   expand = true,
@@ -221,7 +215,7 @@ const Toaster = function Toaster({
   toastOptions,
   ref,
   ...props
-}: ToasterProps) {
+}: ToasterProps) => {
   if (richColors || !expand) {
     throw new Error(
       "Minecraft notifications support the native palette and expanded stack only"

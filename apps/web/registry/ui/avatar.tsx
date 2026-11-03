@@ -34,13 +34,13 @@ type AvatarProps = MinecraftProps<typeof AvatarPrimitive.Root> & {
   scale?: 1 | 2 | 3;
 };
 
-const Avatar = function Avatar({
+const Avatar = ({
   size = "default",
   scale: providedScale,
   className,
   style,
   ...props
-}: AvatarProps) {
+}: AvatarProps) => {
   const inherited = React.useContext(AvatarContext);
   const scale = providedScale ?? inherited;
 
@@ -65,7 +65,7 @@ const Avatar = function Avatar({
   );
 };
 
-const MinecraftAvatarFace = function MinecraftAvatarFace({
+const MinecraftAvatarFace = ({
   skin,
   hat,
   upsideDown,
@@ -73,7 +73,7 @@ const MinecraftAvatarFace = function MinecraftAvatarFace({
   skin: MinecraftAvatarSkin;
   hat: boolean;
   upsideDown: boolean;
-}) {
+}) => {
   const scale = React.useContext(AvatarContext);
   const ref = React.useRef<HTMLCanvasElement>(null);
 
@@ -119,7 +119,7 @@ type AvatarImageProps = MinecraftProps<typeof AvatarPrimitive.Image> & {
   upsideDown?: boolean;
 };
 
-const AvatarImage = function AvatarImage({
+const AvatarImage = ({
   skin,
   hat = true,
   upsideDown = false,
@@ -128,7 +128,7 @@ const AvatarImage = function AvatarImage({
   onLoadingStatusChange,
   src,
   ...props
-}: AvatarImageProps) {
+}: AvatarImageProps) => {
   const [loaded, setLoaded] = React.useState(false);
 
   return (
@@ -154,7 +154,7 @@ const AvatarImage = function AvatarImage({
   );
 };
 
-const AvatarFallback = function AvatarFallback({
+const AvatarFallback = ({
   children,
   className,
   maxWidth,
@@ -163,7 +163,7 @@ const AvatarFallback = function AvatarFallback({
 }: MinecraftProps<typeof AvatarPrimitive.Fallback> & {
   maxWidth?: number;
   align?: "left" | "center";
-}) {
+}) => {
   const scale = React.useContext(AvatarContext);
 
   return (
@@ -185,10 +185,7 @@ const AvatarFallback = function AvatarFallback({
   );
 };
 
-const AvatarBadge = function AvatarBadge({
-  className,
-  ...props
-}: MinecraftProps<"span">) {
+const AvatarBadge = ({ className, ...props }: MinecraftProps<"span">) => {
   return (
     <span
       data-slot="avatar-badge"
@@ -225,7 +222,7 @@ const groupScale = function groupScale(
   }
 };
 
-const AvatarGroup = function AvatarGroup({
+const AvatarGroup = ({
   className,
   scale: providedScale,
   style,
@@ -233,7 +230,7 @@ const AvatarGroup = function AvatarGroup({
   ...props
 }: MinecraftProps<"div"> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   const inherited = React.useContext(AvatarContext);
   const scale = providedScale ?? groupScale(children) ?? inherited;
 
@@ -254,11 +251,11 @@ const AvatarGroup = function AvatarGroup({
   );
 };
 
-const AvatarGroupCount = function AvatarGroupCount({
+const AvatarGroupCount = ({
   children,
   className,
   ...props
-}: MinecraftProps<"div">) {
+}: MinecraftProps<"div">) => {
   const scale = React.useContext(AvatarContext);
 
   return (

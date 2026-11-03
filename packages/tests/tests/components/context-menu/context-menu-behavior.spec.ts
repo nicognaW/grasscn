@@ -6,12 +6,12 @@ import {
   recordedAudioPlayback,
 } from "@tests/harness/audio-playback";
 
-async function openMenu(page: Page, query = "") {
+const openMenu = async function openMenu(page: Page, query = "") {
   await page.goto(`/?component=context-menu&${query}`);
   await page
     .locator("#context-hit")
     .click({ button: "right", position: { x: 24, y: 24 } });
-}
+};
 
 test("Context Menu uses pointer anchoring and skips disabled items with the keyboard", async ({
   page,

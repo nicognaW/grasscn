@@ -6,7 +6,10 @@ const angle = f(-0.34906584);
 const rotationCos = f(Math.cos(angle));
 const rotationSin = f(Math.sin(angle));
 
-export function splashMotion(timeMillis: number, textWidth: number) {
+export const splashMotion = function splashMotion(
+  timeMillis: number,
+  textWidth: number
+) {
   const phase = f(f(f(Math.trunc(timeMillis) % 1000) / f(1000)) * f(6.2831855));
   const index = Math.trunc(phase * sineIndexScale) & 65535;
   // Compute the selected entry of the vanilla 65,536-entry float sine table.
@@ -24,11 +27,11 @@ export function splashMotion(timeMillis: number, textWidth: number) {
     originX: -Math.trunc(textWidth / 2),
     originY: -8,
   };
-}
+};
 
-export function splashTransform(
+export const splashTransform = function splashTransform(
   motion: ReturnType<typeof splashMotion>,
   guiScale: number
 ) {
   return `matrix(${motion.a * guiScale},${motion.b * guiScale},${motion.c * guiScale},${motion.d * guiScale},0,0)`;
-}
+};

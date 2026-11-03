@@ -13,12 +13,12 @@ const types = [
   ["radial", "Radial"],
 ] as const;
 
-async function select(page: Page, label: string, value: string) {
+const select = async function select(page: Page, label: string, value: string) {
   await page.getByRole("combobox", { exact: true, name: label }).click();
   await page.getByRole("option", { exact: true, name: value }).click();
-}
+};
 
-async function open(page: Page, scale: number, mobile = false) {
+const open = async function open(page: Page, scale: number, mobile = false) {
   await page.setViewportSize({ height: 1000, width: mobile ? 390 : 1440 });
   await page.goto(
     `${process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"}docs/components/chart`
@@ -27,7 +27,7 @@ async function open(page: Page, scale: number, mobile = false) {
   await expect(
     page.locator('[data-stage="chart"] [data-slot="chart-example"] canvas')
   ).toHaveAttribute("data-mc-ready", "true");
-}
+};
 
 for (const scale of [2]) {
   for (const mobile of [false, true]) {

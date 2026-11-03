@@ -13,7 +13,7 @@ const scratchRoot = path.join(testRoot, "test-results", "unit");
 
 fs.mkdirSync(scratchRoot, { recursive: true });
 
-function setup() {
+const setup = function setup() {
   const root = fs.mkdtempSync(path.join(scratchRoot, "grasscn-fixture-"));
   const directory = path.join(root, "dist");
   const fallback = path.join(root, "inputs");
@@ -38,7 +38,7 @@ function setup() {
     directory,
     fallback,
   };
-}
+};
 
 test("production fixture serves bundle assets and skin inputs without exposing other paths", async () => {
   const fixture = setup();

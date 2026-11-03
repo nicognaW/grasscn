@@ -27,7 +27,7 @@ const RadioContext = React.createContext<{
   disabled: boolean;
 }>({ disabled: false, scale: 2 });
 
-const RadioGroup = function RadioGroup<Value = string>({
+const RadioGroup = <Value = string,>({
   className,
   scale = 2,
   disabled = false,
@@ -38,7 +38,7 @@ const RadioGroup = function RadioGroup<Value = string>({
   ...props
 }: MinecraftProps<typeof RadioGroupPrimitive<Value>> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   const keyboardSelection = React.useRef(false);
 
   return (

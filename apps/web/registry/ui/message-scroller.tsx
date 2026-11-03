@@ -28,20 +28,20 @@ interface MessageScrollerPaintStyle extends React.CSSProperties {
 
 const ScrollerScale = React.createContext<1 | 2 | 3>(2);
 
-const MessageScrollerProvider = function MessageScrollerProvider(
+const MessageScrollerProvider = (
   props: React.ComponentProps<typeof Primitive.Provider>
-) {
+) => {
   return <Primitive.Provider {...props} />;
 };
 
-const MessageScroller = function MessageScroller({
+const MessageScroller = ({
   className,
   scale = 2,
   style,
   ...props
 }: React.ComponentProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   return (
     <ScrollerScale value={scale}>
       <MessageScale value={scale}>
@@ -64,10 +64,10 @@ const MessageScroller = function MessageScroller({
   );
 };
 
-const MessageScrollerViewport = function MessageScrollerViewport({
+const MessageScrollerViewport = ({
   className,
   ...props
-}: React.ComponentProps<typeof Primitive.Viewport>) {
+}: React.ComponentProps<typeof Primitive.Viewport>) => {
   return (
     <Primitive.Viewport
       data-slot="message-scroller-viewport"
@@ -77,10 +77,10 @@ const MessageScrollerViewport = function MessageScrollerViewport({
   );
 };
 
-const MessageScrollerContent = function MessageScrollerContent({
+const MessageScrollerContent = ({
   className,
   ...props
-}: React.ComponentProps<typeof Primitive.Content>) {
+}: React.ComponentProps<typeof Primitive.Content>) => {
   return (
     <Primitive.Content
       data-slot="message-scroller-content"
@@ -90,12 +90,12 @@ const MessageScrollerContent = function MessageScrollerContent({
   );
 };
 
-const MessageScrollerItem = function MessageScrollerItem({
+const MessageScrollerItem = ({
   className,
   scrollAnchor = false,
   children,
   ...props
-}: React.ComponentProps<typeof Primitive.Item>) {
+}: React.ComponentProps<typeof Primitive.Item>) => {
   return (
     <Primitive.Item
       data-slot="message-scroller-item"
@@ -112,7 +112,7 @@ const MessageScrollerItem = function MessageScrollerItem({
   );
 };
 
-const MessageScrollerButton = function MessageScrollerButton({
+const MessageScrollerButton = ({
   direction = "end",
   className,
   children,
@@ -121,7 +121,7 @@ const MessageScrollerButton = function MessageScrollerButton({
   size = "default",
   ...props
 }: React.ComponentProps<typeof Primitive.Button> &
-  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
+  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) => {
   const scale = React.useContext(ScrollerScale);
 
   return (
