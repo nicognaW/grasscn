@@ -154,7 +154,9 @@ test("default installation controls match their captured Minecraft content and s
     inventory.files.length
   );
 
-  const verifyManualFileRow = async (file: (typeof inventory.files)[number]) => {
+  const verifyManualFileRow = async (
+    file: (typeof inventory.files)[number]
+  ) => {
     const label = file.source.split("/").at(-1);
 
     if (label === undefined) {
