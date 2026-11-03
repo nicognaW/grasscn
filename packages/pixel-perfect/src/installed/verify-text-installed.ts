@@ -7,7 +7,7 @@ import path from "node:path";
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
 import type { InstalledComponentSettings } from "@grasscn/tests/installed-registry-file";
 import { packageBin } from "@grasscn/tests/tooling";
-import type { Browser } from "@playwright/test";
+import type { Browser, Page } from "@playwright/test";
 import { chromium, expect } from "@playwright/test";
 import type {
   InstalledTextRegistry,
@@ -229,6 +229,152 @@ const compare = function compare(expected: PNG, actual: PNG) {
   return { diff, mismatchedPixels };
 };
 
+interface InstalledTextCase {
+  c: TextCaptureGroup["manifest"]["cases"][number];
+  consumer: string;
+  group: TextCaptureGroup;
+  name: string;
+  page: Page;
+  part: string;
+  url: string;
+}
+
+const textParameters = (c: TextCaptureGroup["manifest"]["cases"][number], componentName: string, part: string) => {
+  const params = new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background ?? "#202020",
+    component: componentName,
+    height: String(c.height ?? 20),
+    label: c.label ?? c.text ?? "Button",
+    native: "1",
+    part,
+    scale: String(c.scale),
+    state: c.state,
+    text: c.label ?? c.text ?? "Button",
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
+  const optionalWrapWidth = c.wrapWidth;
+
+  if (optionalWrapWidth !== null && optionalWrapWidth !== undefined) {
+    params.set("wrapWidth", String(c.wrapWidth));
+  }
+  return params;
+};
+
+const verifyTextReferenceCase = async ({ c, consumer: consumerDirectory, group, name: componentName, page, part, url: fixtureUrl }: InstalledTextCase): Promise<InstalledTextResult> => {
+  const params = textParameters(c, componentName, part);
+
+  await page.goto(`${fixtureUrl}?${params}`);
+  const subject = page.locator("#subject");
+  await expect(subject).toBeVisible();
+  await page.mouse.move(0, 0);
+
+  if (componentName === "kbd") {
+    if (c.state === "hover") {
+      await subject.hover();
+    }
+
+    if (c.state === "focus") {
+      await subject.focus();
+      await page.keyboard.press("Tab");
+      await page.keyboard.press("Shift+Tab");
+      await expect(subject).toBeFocused();
+    }
+  }
+
+  if (componentName === "badge") {
+    await expect(
+      subject.locator("[data-mc-tooltip-painted]")
+    ).toHaveAttribute("data-mc-tooltip-painted", "true");
+  } else if (componentName !== "kbd" && !(componentName === "empty" && part === "default")) {
+    await expect(subject).toHaveAttribute(
+      "data-mc-label-layout-ready",
+      "true"
+    );
+  }
+
+  for (const line of await subject.locator("[data-mc-label-ready]").all()) {
+    await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
+  await page.evaluate(async () => {
+    const frameCompletion = Promise.withResolvers();
+
+    try {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(frameCompletion.resolve);
+      });
+    } catch (error) {
+      frameCompletion.reject(error);
+    }
+
+    return await frameCompletion.promise;
+  });
+
+  const bytes = await readFile(
+    pixelPerfectFile(
+      path.join(path.dirname(group.manifestFile), "captures", c.name)
+    )
+  );
+
+  assert.equal(sha(bytes), c.sha256);
+
+  const expected = PNG.sync.read(bytes);
+
+  const actualBytes = await (
+    componentName === "badge"
+      ? subject.locator('[data-slot="badge-surface"]')
+      : subject
+  ).screenshot();
+
+  const actual = PNG.sync.read(actualBytes);
+  const { mismatchedPixels, diff } = compare(expected, actual);
+
+  const mutation = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
+  mutation.data[0] ^= 1;
+  assert.equal(
+    compare(expected, mutation).mismatchedPixels,
+    1,
+    "Comparator failed one-pixel negative control"
+  );
+
+  if (mismatchedPixels) {
+    const directory = path.join(consumerDirectory, ".grasscn-verification", componentName);
+    await mkdir(directory, { recursive: true });
+    const id = `${part}-${c.name}`;
+    await writeFile(path.join(directory, `actual-${id}`), actualBytes);
+    await writeFile(
+      path.join(directory, `diff-${id}`),
+      PNG.sync.write(diff)
+    );
+    await writeFile(
+      path.join(directory, `${id}.json`),
+      JSON.stringify({
+        case: c.name,
+        manifest: group.manifestFile,
+        mismatchedPixels,
+        part,
+        tolerance: 0,
+      })
+    );
+    throw new Error(
+      `Installed ${componentName}/${part}/${c.name}: ${mismatchedPixels} pixels differ`
+    );
+  }
+
+  return {
+    decodedRgbaSha256: sha(actual.data),
+    manifest: group.manifestFile,
+    mismatchedPixels,
+    name: c.name,
+    part,
+  };
+};
+
 const tasks = groups.flatMap((group) =>
   group.parts.flatMap((part) =>
     group.manifest.cases.map((c) => ({ c, group, part }))
@@ -286,134 +432,7 @@ const worker = async function worker() {
 
       count += 1;
 
-      const params = new URLSearchParams({
-        align: c.alignment ?? "left",
-        background: c.background ?? "#202020",
-        component: name,
-        height: String(c.height ?? 20),
-        label: c.label ?? c.text ?? "Button",
-        native: "1",
-        part,
-        scale: String(c.scale),
-        state: c.state,
-        text: c.label ?? c.text ?? "Button",
-        width: String(c.width),
-        x: String(c.x ?? 16),
-        y: String(c.y ?? 16),
-      });
-
-      const optionalWrapWidth = c.wrapWidth;
-
-      if (optionalWrapWidth !== null && optionalWrapWidth !== undefined) {
-        params.set("wrapWidth", String(c.wrapWidth));
-      }
-
-      await page.goto(`${url}?${params}`);
-      const subject = page.locator("#subject");
-      await expect(subject).toBeVisible();
-      await page.mouse.move(0, 0);
-
-      if (name === "kbd") {
-        if (c.state === "hover") {
-          await subject.hover();
-        }
-
-        if (c.state === "focus") {
-          await subject.focus();
-          await page.keyboard.press("Tab");
-          await page.keyboard.press("Shift+Tab");
-          await expect(subject).toBeFocused();
-        }
-      }
-
-      if (name === "badge") {
-        await expect(
-          subject.locator("[data-mc-tooltip-painted]")
-        ).toHaveAttribute("data-mc-tooltip-painted", "true");
-      } else if (name !== "kbd" && !(name === "empty" && part === "default")) {
-        await expect(subject).toHaveAttribute(
-          "data-mc-label-layout-ready",
-          "true"
-        );
-      }
-
-      for (const line of await subject.locator("[data-mc-label-ready]").all()) {
-        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
-      }
-
-      await page.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers();
-
-        try {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(frameCompletion.resolve);
-          });
-        } catch (error) {
-          frameCompletion.reject(error);
-        }
-
-        return await frameCompletion.promise;
-      });
-
-      const bytes = await readFile(
-        pixelPerfectFile(
-          path.join(path.dirname(group.manifestFile), "captures", c.name)
-        )
-      );
-
-      assert.equal(sha(bytes), c.sha256);
-
-      const expected = PNG.sync.read(bytes);
-
-      const actualBytes = await (
-        name === "badge"
-          ? subject.locator('[data-slot="badge-surface"]')
-          : subject
-      ).screenshot();
-
-      const actual = PNG.sync.read(actualBytes);
-      const { mismatchedPixels, diff } = compare(expected, actual);
-
-      const mutation = PNG.sync.read(PNG.sync.write(expected));
-      // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
-      mutation.data[0] ^= 1;
-      assert.equal(
-        compare(expected, mutation).mismatchedPixels,
-        1,
-        "Comparator failed one-pixel negative control"
-      );
-
-      if (mismatchedPixels) {
-        const directory = path.join(consumer, ".grasscn-verification", name);
-        await mkdir(directory, { recursive: true });
-        const id = `${part}-${c.name}`;
-        await writeFile(path.join(directory, `actual-${id}`), actualBytes);
-        await writeFile(
-          path.join(directory, `diff-${id}`),
-          PNG.sync.write(diff)
-        );
-        await writeFile(
-          path.join(directory, `${id}.json`),
-          JSON.stringify({
-            case: c.name,
-            manifest: group.manifestFile,
-            mismatchedPixels,
-            part,
-            tolerance: 0,
-          })
-        );
-        throw new Error(
-          `Installed ${name}/${part}/${c.name}: ${mismatchedPixels} pixels differ`
-        );
-      }
-
-      results.push({
-        decodedRgbaSha256: sha(actual.data),
-        manifest: group.manifestFile,
-        mismatchedPixels,
-        name: c.name,
-        part,
-      });
+      results.push(await verifyTextReferenceCase({ c, consumer, group, name, page, part, url }));
     }
   } finally {
     if (browser) {
