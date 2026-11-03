@@ -281,8 +281,6 @@ const CodeBlockContent = ({
   </pre>
 );
 
-
-
 const CodeBlockFooter = ({
   className,
   children,
