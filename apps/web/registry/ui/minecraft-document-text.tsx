@@ -36,9 +36,9 @@ const documentTextWidth = function documentTextWidth(text: string) {
 
   for (const advanceCharacter of text) {
     accumulatedGlyphAdvance +=
-      (asciiGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
-        getUnihexGlyph(advanceCharacter)?.advance ??
-        6);
+      asciiGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+      getUnihexGlyph(advanceCharacter)?.advance ??
+      6;
   }
 
   return accumulatedGlyphAdvance;

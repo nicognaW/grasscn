@@ -237,9 +237,9 @@ export const ChartAxisTick = ({
 
   for (const advanceCharacter of text) {
     accumulatedGlyphAdvance +=
-      (minecraftGlyphs[advanceCharacter.charCodeAt(0) - 32]?.[2] ??
-        getUnihexGlyph(advanceCharacter)?.advance ??
-        10);
+      minecraftGlyphs[advanceCharacter.charCodeAt(0) - 32]?.[2] ??
+      getUnihexGlyph(advanceCharacter)?.advance ??
+      10;
   }
 
   const width = accumulatedGlyphAdvance;

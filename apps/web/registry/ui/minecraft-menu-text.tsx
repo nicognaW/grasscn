@@ -76,9 +76,9 @@ export const MinecraftMenuText = ({
 
   for (const advanceCharacter of text) {
     accumulatedGlyphAdvance +=
-      (minecraftGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
-        getUnihexGlyph(advanceCharacter)?.advance ??
-        6);
+      minecraftGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+      getUnihexGlyph(advanceCharacter)?.advance ??
+      6;
   }
 
   const width = Math.ceil(accumulatedGlyphAdvance);

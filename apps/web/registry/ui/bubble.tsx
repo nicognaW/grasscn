@@ -224,10 +224,10 @@ const BubbleContent = ({
 
       for (const advanceCharacter of line) {
         accumulatedGlyphAdvance +=
-          (minecraftGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
-            getUnihexGlyph(advanceCharacter)?.advance ??
-            disclosureAdvance(advanceCharacter) ??
-            6);
+          minecraftGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+          getUnihexGlyph(advanceCharacter)?.advance ??
+          disclosureAdvance(advanceCharacter) ??
+          6;
       }
 
       return Math.ceil(accumulatedGlyphAdvance);

@@ -10,7 +10,7 @@ export const minecraftTextWidth = (text: string) => {
       throw new Error("Expected a non-empty tooltip glyph character");
     }
 
-    accumulatedGlyphAdvance += (minecraftGlyphs[codePoint - 32]?.[2] ?? 6);
+    accumulatedGlyphAdvance += minecraftGlyphs[codePoint - 32]?.[2] ?? 6;
   }
 
   return accumulatedGlyphAdvance;

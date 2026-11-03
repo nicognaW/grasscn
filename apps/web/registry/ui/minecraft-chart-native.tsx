@@ -33,7 +33,7 @@ const widthOf = (value: string) => {
       throw new Error("Expected a non-empty chart glyph character");
     }
 
-    accumulatedGlyphAdvance += (asciiGlyphs[codePoint - 32]?.[2] ?? 6);
+    accumulatedGlyphAdvance += asciiGlyphs[codePoint - 32]?.[2] ?? 6;
   }
 
   return accumulatedGlyphAdvance;
