@@ -1216,7 +1216,7 @@ const MenubarFixture = () => {
               (triggerPixels && params.get("state") === "disabled")
             }
             style={
-              triggerPixels
+              triggerPixels && (!native || params.has("nativeButtonChild"))
                 ? {
                     position: "fixed",
                     left: Number(params.get("x") ?? 16) * scale,
@@ -1490,7 +1490,7 @@ const DropdownFixture = () => {
             (triggerPixels && params.get("state") === "disabled")
           }
           style={
-            triggerPixels
+            triggerPixels && (!native || params.has("nativeButtonChild"))
               ? {
                   position: "fixed",
                   left: Number(params.get("x") ?? 16) * scale,
