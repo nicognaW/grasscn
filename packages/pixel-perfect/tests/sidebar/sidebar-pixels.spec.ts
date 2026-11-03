@@ -328,7 +328,8 @@ test.describe("Sidebar original native constituent cases", () => {
 
             if (kind !== "input") {
               await page.evaluate(async () => {
-                const frameCompletion = Promise.withResolvers<void>();
+                const frameCompletion: PromiseWithResolvers<void> =
+                  Promise.withResolvers();
 
                 try {
                   requestAnimationFrame(() => {

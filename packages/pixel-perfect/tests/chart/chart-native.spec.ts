@@ -56,7 +56,8 @@ for (const kind of ["fps", "pie"]) {
       }
 
       await page.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers<void>();
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
 
         try {
           requestAnimationFrame(() => {

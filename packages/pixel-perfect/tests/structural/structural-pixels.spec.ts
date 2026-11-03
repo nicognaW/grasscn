@@ -185,7 +185,8 @@ test.describe("Structural native constituents", () => {
               }
 
               await page.evaluate(async () => {
-                const frameCompletion = Promise.withResolvers<void>();
+                const frameCompletion: PromiseWithResolvers<void> =
+                  Promise.withResolvers();
 
                 try {
                   requestAnimationFrame(() => {
