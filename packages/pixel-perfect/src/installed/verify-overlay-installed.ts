@@ -140,13 +140,13 @@ const captureOverlayPart = async (
   const optionalLabel = c.label;
 
   if (optionalLabel !== null && optionalLabel !== undefined) {
-    q.set("label", c.label!);
+    q.set("label", optionalLabel);
   }
 
   const optionalText = c.text;
 
   if (optionalText !== null && optionalText !== undefined) {
-    q.set("text", c.text!);
+    q.set("text", optionalText);
   }
 
   const optionalWrapWidth = c.wrapWidth;

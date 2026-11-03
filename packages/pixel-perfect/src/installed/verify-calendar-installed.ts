@@ -111,7 +111,7 @@ const buildCalendarQuery = (
   const optionalText = c.text;
 
   if (optionalText !== null && optionalText !== undefined) {
-    q.text = c.text!;
+    q.text = optionalText;
   }
 
   if (c.wrapWidth ?? 0) {
