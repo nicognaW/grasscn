@@ -1,7 +1,18 @@
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
+
+import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { compare } from "@ppt/harness/families/text-components-test-utils";
+import { pixelPerfectFile } from "@ppt/paths";
+import { PNG } from "pngjs";
+
+import type CapturedData0 from "../reference/empty/manifest.json";
 import type labelReference from "../reference/label/manifest.json";
+
 type EmptySource =
   | (typeof CapturedData0)["cases"][number]
   | (typeof labelReference)["cases"][number];
+
 type EmptyCase = Pick<
   EmptySource,
   | "name"
@@ -17,17 +28,10 @@ type EmptyCase = Pick<
   alignment?: string;
   wrapWidth?: number;
 };
-type EmptyReference = { cases: EmptyCase[] };
 
-import { createHash } from "node:crypto";
-import { readFileSync, writeFileSync } from "node:fs";
-
-import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { compare } from "@ppt/harness/families/text-components-test-utils";
-import { pixelPerfectFile } from "@ppt/paths";
-import { PNG } from "pngjs";
-
-import type CapturedData0 from "../reference/empty/manifest.json";
+interface EmptyReference {
+  cases: EmptyCase[];
+}
 
 test.describe.configure({ mode: "parallel" });
 

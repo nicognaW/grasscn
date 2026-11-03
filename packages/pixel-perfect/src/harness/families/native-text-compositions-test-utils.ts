@@ -1,7 +1,3 @@
-import type messageReference from "../../../tests/reference/message/manifest.json";
-import type spinnerReference from "../../../tests/reference/spinner/manifest.json";
-type CompositionReference = typeof messageReference | typeof spinnerReference;
-
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -9,6 +5,11 @@ import { test, expect } from "@grasscn/pixel-perfect/test";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
+import type messageReference from "../../../tests/reference/message/manifest.json";
+import type spinnerReference from "../../../tests/reference/spinner/manifest.json";
+
+type CompositionReference = typeof messageReference | typeof spinnerReference;
 
 export const nativeTextCompositionTests = function nativeTextCompositionTests(
   component: "code-block" | "trace" | "message-scroller" | "spinner"

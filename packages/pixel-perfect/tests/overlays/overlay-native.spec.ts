@@ -1,7 +1,17 @@
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
+
+import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { pixelPerfectFile } from "@ppt/paths";
+import { PNG } from "pngjs";
+
+import type CapturedData0 from "../reference/card/manifest.json";
 import type labelReference from "../reference/label/manifest.json";
+
 type OverlaySource =
   | (typeof CapturedData0)["cases"][number]
   | (typeof labelReference)["cases"][number];
+
 type OverlayCase = Pick<
   OverlaySource,
   "name" | "background" | "height" | "scale" | "width" | "x" | "y" | "sha256"
@@ -11,16 +21,10 @@ type OverlayCase = Pick<
   text?: string;
   wrapWidth?: number;
 };
-type OverlayReference = { cases: OverlayCase[] };
 
-import { createHash } from "node:crypto";
-import { readFileSync, writeFileSync } from "node:fs";
-
-import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectFile } from "@ppt/paths";
-import { PNG } from "pngjs";
-
-import type CapturedData0 from "../reference/card/manifest.json";
+interface OverlayReference {
+  cases: OverlayCase[];
+}
 
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([

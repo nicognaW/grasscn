@@ -1,27 +1,3 @@
-import type labelReference from "../reference/label/manifest.json";
-import type separatorReference from "../reference/separator/manifest.json";
-type MarkerSource =
-  | (typeof labelReference)["cases"][number]
-  | (typeof separatorReference)["cases"][number];
-type MarkerCase = Pick<
-  MarkerSource,
-  | "name"
-  | "background"
-  | "height"
-  | "scale"
-  | "state"
-  | "width"
-  | "x"
-  | "y"
-  | "sha256"
-> & {
-  alignment?: string;
-  label?: string;
-  wrapWidth?: number;
-  timeMs?: number;
-};
-type MarkerReference = { cases: MarkerCase[] };
-
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -30,14 +6,12 @@ import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 for (const dir of ["label", "separator"]) {
-  // SAFETY: Only retained label/separator cases reach this read; the owned consumed protocol preserves their optional label/alignment/wrapWidth and original timeMs fallback.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
       "utf-8"
     )
-  ) as MarkerReference;
+  );
 
   test.describe(`Marker ${dir} native constituents`, () => {
     test.describe.configure({ mode: "parallel" });

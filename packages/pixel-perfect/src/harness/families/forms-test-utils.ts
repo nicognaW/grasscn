@@ -1,9 +1,3 @@
-type FormsReference = {
-  cases: ((typeof labelReference)["cases"][number] & {
-    text?: string | null;
-  })[];
-};
-
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -12,6 +6,12 @@ import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 import type labelReference from "../../../tests/reference/label/manifest.json";
+
+interface FormsReference {
+  cases: ((typeof labelReference)["cases"][number] & {
+    text?: string | null;
+  })[];
+}
 
 export const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
