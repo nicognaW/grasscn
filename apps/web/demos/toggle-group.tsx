@@ -5,7 +5,7 @@ import { Label } from "../registry/ui/label";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
-export default function ToggleGroupDemo({ scale }: DemoProps) {
+const ToggleGroupDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);
   const id = React.useId();
 
@@ -119,4 +119,6 @@ export default function ToggleGroupDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { ToggleGroupDemo as default };

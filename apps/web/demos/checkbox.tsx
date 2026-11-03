@@ -3,7 +3,7 @@ import * as React from "react";
 import { Checkbox } from "../registry/ui/checkbox";
 import type { DemoProps } from "../types";
 
-export default function CheckboxDemo({ scale }: DemoProps) {
+const CheckboxDemo = ({ scale }: DemoProps) => {
   const [checked, setChecked] = React.useState(false);
 
   return (
@@ -43,4 +43,6 @@ export default function CheckboxDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { CheckboxDemo as default };

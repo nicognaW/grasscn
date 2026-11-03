@@ -82,7 +82,7 @@ const platformName =
       ? "osx"
       : "linux";
 
-function permitted(library: MinecraftCaptureLibrary) {
+const permitted = function permitted(library: MinecraftCaptureLibrary) {
   if (!library.rules) {
     return true;
   }
@@ -108,7 +108,7 @@ function permitted(library: MinecraftCaptureLibrary) {
   }
 
   return allowed;
-}
+};
 
 const libraries = metadata.libraries
   .filter(permitted)
@@ -130,7 +130,10 @@ const executable = (command: "java" | "javac") =>
 const quoteArgfile = (argument: string) =>
   `"${argument.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`;
 
-async function javaCommand(command: "java" | "javac", args: string[]) {
+const javaCommand = async function javaCommand(
+  command: "java" | "javac",
+  args: string[]
+) {
   const argsFile = path.join(runtime, `${command}.args`);
   await writeFile(argsFile, args.map(quoteArgfile).join("\n"));
 
@@ -154,7 +157,7 @@ async function javaCommand(command: "java" | "javac", args: string[]) {
   }
 
   return result.stdout;
-}
+};
 
 await javaCommand("javac", [
   "-encoding",

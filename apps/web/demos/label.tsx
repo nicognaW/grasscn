@@ -4,7 +4,7 @@ import { Label } from "../registry/ui/label"
 import { Input } from "../registry/ui/input"
 import type { DemoProps } from "../types"
 
-export default function LabelDemo({ scale }: DemoProps) {
+const LabelDemo = ({ scale }: DemoProps) => {
   const [text, setText] = React.useState("Player Name");
 
   return (
@@ -65,4 +65,6 @@ export default function LabelDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { LabelDemo as default };

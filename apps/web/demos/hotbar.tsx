@@ -16,7 +16,7 @@ const tools = [
   "Publish",
 ];
 
-export default function HotbarDemo({ scale }: DemoProps) {
+const HotbarDemo = ({ scale }: DemoProps) => {
   const [value, setValue] = React.useState(0);
 
   return (
@@ -47,4 +47,6 @@ export default function HotbarDemo({ scale }: DemoProps) {
       </p>
     </div>
   );
-}
+};
+
+export { HotbarDemo as default };

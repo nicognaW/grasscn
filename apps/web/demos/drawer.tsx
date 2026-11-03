@@ -14,7 +14,7 @@ import { Input } from "../registry/ui/input";
 import { Textarea } from "../registry/ui/textarea";
 import type { DemoProps } from "../types";
 
-export default function DrawerDemo({ scale }: DemoProps) {
+const DrawerDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World settings");
   const [message, setMessage] = React.useState("Hello Minecraft\n你好，世界");
 
@@ -60,4 +60,6 @@ export default function DrawerDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { DrawerDemo as default };

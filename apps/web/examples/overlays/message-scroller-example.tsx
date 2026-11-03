@@ -32,7 +32,7 @@ const history: Line[] = [
   { system: true, text: "Changes saved." },
 ];
 
-function History({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
+const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   const [messages, setMessages] = React.useState(history);
   const [text, setText] = React.useState("The updated design looks great.");
   const api = useMessageScroller();
@@ -141,17 +141,17 @@ function History({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       </div>
     </>
   );
-}
+};
 
-export default function MessageDemo(props: { scale?: 1 | 2 | 3 }) {
-  return (
-    <MessageScrollerProvider
-      autoScroll
-      defaultScrollPosition="end"
-      scrollMargin={0}
-      scrollPreviousItemPeek={0}
-    >
-      <History {...props} />
-    </MessageScrollerProvider>
-  );
-}
+const MessageDemo = (props: { scale?: 1 | 2 | 3 }) => (
+  <MessageScrollerProvider
+    autoScroll
+    defaultScrollPosition="end"
+    scrollMargin={0}
+    scrollPreviousItemPeek={0}
+  >
+    <History {...props} />
+  </MessageScrollerProvider>
+);
+
+export { MessageDemo as default };

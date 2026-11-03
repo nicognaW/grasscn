@@ -12,7 +12,7 @@ const people = [
   { name: "Jamie Chen", role: "Project lead", skin: "wide/sunny" },
 ] as const;
 
-export default function AvatarDemo({ scale }: DemoProps) {
+const AvatarDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("Nyanki");
   const [player, setPlayer] = React.useState("Nyanki");
   const [status, setStatus] = React.useState("loading");
@@ -116,4 +116,6 @@ export default function AvatarDemo({ scale }: DemoProps) {
       <p>6 people in this workspace</p>
     </div>
   );
-}
+};
+
+export { AvatarDemo as default };

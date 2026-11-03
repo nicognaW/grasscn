@@ -42,13 +42,13 @@ interface Sample {
   background?: string;
 }
 
-export default function DraftDemos({
+const DraftDemos = ({
   sample,
   scale,
 }: {
   sample: Sample;
   scale: 1 | 2 | 3;
-}) {
+}) => {
   const [value, setValue] = React.useState(sample.value ?? 0);
   const [selected, setSelected] = React.useState(String(sample.value ?? 0));
   const [trades, setTrades] = React.useState(0);
@@ -451,4 +451,6 @@ export default function DraftDemos({
       </output>
     </>
   );
-}
+};
+
+export { DraftDemos as default };

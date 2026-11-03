@@ -20,7 +20,7 @@ import {
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 
-export default function DropdownMenuDemo({ scale }: DemoProps) {
+const DropdownMenuDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World Settings");
   const [action, setAction] = React.useState("Resume game");
   const [coordinates, setCoordinates] = React.useState(false);
@@ -128,4 +128,6 @@ export default function DropdownMenuDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { DropdownMenuDemo as default };

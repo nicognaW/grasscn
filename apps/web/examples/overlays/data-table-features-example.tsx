@@ -30,7 +30,7 @@ const worlds: World[] = [
   { id: "d", name: "Deep Dark", players: 1 },
 ];
 
-export default function DataTableDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
+const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   const columns = React.useMemo(
     () =>
       helper.columns([
@@ -175,4 +175,6 @@ export default function DataTableDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       </div>
     </div>
   );
-}
+};
+
+export { DataTableDemo as default };

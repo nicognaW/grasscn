@@ -47,7 +47,7 @@ const milestones: AdvancementNode[] = [
   },
 ];
 
-export default function AdvancementDemo({ scale }: DemoProps) {
+const AdvancementDemo = ({ scale }: DemoProps) => {
   const [nodes, setNodes] = React.useState(milestones);
   const [selected, setSelected] = React.useState("plan");
   const [reset, setReset] = React.useState(0);
@@ -112,4 +112,6 @@ export default function AdvancementDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { AdvancementDemo as default };

@@ -4,7 +4,7 @@ import { Trading, type TradeOffer } from "../registry/ui/trading";
 import type { DemoProps } from "../types";
 import { tradingIcons } from "./trading-icons";
 
-export default function TradingDemo({ scale }: DemoProps) {
+const TradingDemo = ({ scale }: DemoProps) => {
   const [completed, setCompleted] = React.useState(0);
   const [selected, setSelected] = React.useState("0");
 
@@ -59,4 +59,6 @@ export default function TradingDemo({ scale }: DemoProps) {
       </p>
     </div>
   );
-}
+};
+
+export { TradingDemo as default };

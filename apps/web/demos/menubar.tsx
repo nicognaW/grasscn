@@ -3,7 +3,7 @@ import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarGroup, Men
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 
-export default function MenubarDemo({ scale }: DemoProps) {
+const MenubarDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("Game");
   const [action, setAction] = React.useState("Resume game");
   const [coordinates, setCoordinates] = React.useState(false);
@@ -138,4 +138,6 @@ export default function MenubarDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { MenubarDemo as default };

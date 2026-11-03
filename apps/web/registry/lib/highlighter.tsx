@@ -71,7 +71,7 @@ const nativePalette = [
   "#FFFFFF",
 ];
 
-function nativeTokenColor(value?: string) {
+const nativeTokenColor = function nativeTokenColor(value?: string) {
   if (!value || !/^#[0-9a-f]{6}$/iu.test(value)) {
     return "#FFFFFF";
   }
@@ -88,12 +88,12 @@ function nativeTokenColor(value?: string) {
 
     return distance(color) < distance(best) ? color : best;
   }, nativePalette[0]);
-}
+};
 
 let highlighter: Promise<HighlighterCore> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached highlighter Promise itself; async would wrap its identity and settlement.
-function getHighlighter() {
+const getHighlighter = function getHighlighter() {
   highlighter ??= createHighlighterCore({
     engine: createJavaScriptRegexEngine({ forgiving: true }),
     langs: [],
@@ -101,9 +101,9 @@ function getHighlighter() {
   });
 
   return highlighter;
-}
+};
 
-function getLanguage(language: string) {
+const getLanguage = function getLanguage(language: string) {
   const name = language.toLowerCase();
 
   if (name === "ansi") {
@@ -115,11 +115,13 @@ function getLanguage(language: string) {
   }
 
   return aliases[name] ?? null;
-}
+};
 
 // Loads a language and returns a highlighter for it, or null for a language
 // that is not listed.
-export async function loadHighlighter(language: string) {
+export const loadHighlighter = async function loadHighlighter(
+  language: string
+) {
   const lang = getLanguage(language);
 
   if (!lang) {
@@ -167,11 +169,14 @@ export async function loadHighlighter(language: string) {
       };
     },
   };
-}
+};
 
 // Returns one React node per line, or null for a language that is not listed.
-export async function highlightCode(code: string, language: string) {
+export const highlightCode = async function highlightCode(
+  code: string,
+  language: string
+) {
   const resolvedHighlighter = await loadHighlighter(language);
 
   return resolvedHighlighter ? resolvedHighlighter.highlight(code).lines : null;
-}
+};

@@ -127,7 +127,7 @@ const errors: string[] = [];
 
 let next = 0;
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   assert.deepEqual(
     [actual.width, actual.height],
     [expected.width, expected.height]
@@ -141,9 +141,9 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return count;
-}
+};
 
-async function worker() {
+const worker = async function worker() {
   let page = await browser.newPage({
     deviceScaleFactor: 1,
     viewport: { height: 900, width: 1536 },
@@ -303,7 +303,7 @@ async function worker() {
   }
 
   await page.close();
-}
+};
 
 try {
   await Promise.all([worker(), worker()]);

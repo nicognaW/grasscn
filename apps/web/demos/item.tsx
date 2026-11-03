@@ -6,7 +6,7 @@ import { Textarea } from "../registry/ui/textarea";
 import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 
-export default function ItemDemo({ scale }: DemoProps) {
+const ItemDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("New World");
 
   const [description, setDescription] = React.useState(
@@ -119,4 +119,6 @@ export default function ItemDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { ItemDemo as default };

@@ -7,7 +7,7 @@ import type {DemoProps} from "../types"
 
 import {useDemoWidth} from "../use-demo-width"
 
-export default function ToggleDemo({ scale }: DemoProps) {
+const ToggleDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);
 
   const [pressed, setPressed] = React.useState(false);
@@ -69,4 +69,6 @@ export default function ToggleDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { ToggleDemo as default };

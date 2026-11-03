@@ -5,7 +5,7 @@ import {Label} from "../registry/ui/label"
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
 
-export default function QuestionnaireDemo({ scale }: DemoProps) {
+const QuestionnaireDemo = ({ scale }: DemoProps) => {
   const [result, setResult] = React.useState("");
   const [session, setSession] = React.useState(0);
   const [width, setWidth] = React.useState(180);
@@ -141,4 +141,6 @@ export default function QuestionnaireDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { QuestionnaireDemo as default };

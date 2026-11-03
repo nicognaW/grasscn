@@ -47,7 +47,7 @@ const types: {
   { value: "radial", label: "Radial" },
 ];
 
-export default function ChartDemo({ scale }: DemoProps) {
+const ChartDemo = ({ scale }: DemoProps) => {
   const stage = React.useRef<HTMLDivElement>(null);
   const [contentWidth, setContentWidth] = React.useState(80);
 
@@ -471,4 +471,6 @@ export default function ChartDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { ChartDemo as default };

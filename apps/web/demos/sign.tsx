@@ -20,7 +20,7 @@ const woods: SignWood[] = [
   "pale_oak",
 ];
 
-export default function SignDemo({ scale }: DemoProps) {
+const SignDemo = ({ scale }: DemoProps) => {
   const [wood, setWood] = React.useState<SignWood>("oak");
   const [title, setTitle] = React.useState("Welcome");
 
@@ -84,4 +84,6 @@ export default function SignDemo({ scale }: DemoProps) {
       </div>
     </div>
   );
-}
+};
+
+export { SignDemo as default };

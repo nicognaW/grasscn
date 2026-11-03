@@ -166,7 +166,7 @@ const failures = repositoryFile(
 
 fs.mkdirSync(failures, { recursive: true });
 
-function compare(a: DecodedPixels, b: DecodedPixels) {
+const compare = function compare(a: DecodedPixels, b: DecodedPixels) {
   if (a.width !== b.width || a.height !== b.height) {
     throw new Error(`Dimensions ${a.width}x${a.height}/${b.width}x${b.height}`);
   }
@@ -194,9 +194,9 @@ function compare(a: DecodedPixels, b: DecodedPixels) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
-async function worker() {
+const worker = async function worker() {
   let page = await browser.newPage({
     deviceScaleFactor: 1,
     viewport: { height: 900, width: 1536 },
@@ -391,7 +391,7 @@ async function worker() {
   }
 
   await page.close();
-}
+};
 
 await Promise.all([worker(), worker()]);
 

@@ -37,7 +37,7 @@ const splashWidth = Array.from(splash).reduce(
   0
 );
 
-export function TitleScene() {
+export const TitleScene = () => {
   const ref = React.useRef<HTMLDivElement>(null);
   React.useLayoutEffect(() => {
     const node = ref.current!;
@@ -119,4 +119,4 @@ export function TitleScene() {
       </span>
     </div>
   );
-}
+};

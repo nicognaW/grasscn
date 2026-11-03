@@ -42,7 +42,7 @@ const sortDirection = (
   return "none";
 };
 
-export default function DataTableDemo({ scale }: DemoProps) {
+const DataTableDemo = ({ scale }: DemoProps) => {
   const columns = React.useMemo(
     () =>
       helper.columns([
@@ -220,4 +220,6 @@ export default function DataTableDemo({ scale }: DemoProps) {
       </div>
     </div>
   );
-}
+};
+
+export { DataTableDemo as default };

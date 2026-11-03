@@ -11,7 +11,7 @@ import {
 } from "../registry/ui/command";
 import type { DemoProps } from "../types";
 
-export default function CommandDemo({ scale }: DemoProps) {
+const CommandDemo = ({ scale }: DemoProps) => {
   const [value, setValue] = React.useState("");
 
   return (
@@ -51,4 +51,6 @@ export default function CommandDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { CommandDemo as default };

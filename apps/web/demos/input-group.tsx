@@ -10,7 +10,7 @@ import {
 } from "../registry/ui/input-group";
 import type { DemoProps } from "../types";
 
-export default function InputGroupDemo({ scale }: DemoProps) {
+const InputGroupDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("Player");
   const [message, setMessage] = React.useState("你好，Minecraft!");
   const [sent, setSent] = React.useState("");
@@ -65,4 +65,6 @@ export default function InputGroupDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { InputGroupDemo as default };

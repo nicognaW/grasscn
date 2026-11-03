@@ -58,7 +58,7 @@ const team = [
   { name: "Sam Rivera", role: "Product designer", skin: "wide/kai" },
 ] as const;
 
-function Controls() {
+const Controls = () => {
   const [clicks, setClicks] = React.useState(0);
   const [checked, setChecked] = React.useState(true);
   const [enabled, setEnabled] = React.useState(true);
@@ -116,9 +116,9 @@ function Controls() {
       </div>
     </Panel>
   );
-}
+};
 
-function Analytics() {
+const Analytics = () => {
   const [type, setType] = React.useState<AnalyticsChartType>("bar");
 
   return (
@@ -188,9 +188,9 @@ function Analytics() {
       </Link>
     </Panel>
   );
-}
+};
 
-function Project() {
+const Project = () => {
   const [name, setName] = React.useState("Website redesign");
   const [budget, setBudget] = React.useState("2400");
   const [category, setCategory] = React.useState("design");
@@ -283,9 +283,9 @@ function Project() {
       </form>
     </Panel>
   );
-}
+};
 
-function Team() {
+const Team = () => {
   const [invited, setInvited] = React.useState(false);
 
   return (
@@ -326,9 +326,9 @@ function Team() {
       )}
     </Panel>
   );
-}
+};
 
-function Tasks() {
+const Tasks = () => {
   const [done, setDone] = React.useState([true, true, false, false]);
 
   const tasks = [
@@ -372,66 +372,64 @@ function Tasks() {
       </div>
     </Panel>
   );
-}
+};
 
-function Revenue() {
-  return (
-    <Panel title="Your work, paying off." tag="THIS MONTH">
-      <div className="grass-stat-line">
-        <strong>
+const Revenue = () => (
+  <Panel title="Your work, paying off." tag="THIS MONTH">
+    <div className="grass-stat-line">
+      <strong>
+        <DocumentText>$8,420.00</DocumentText>
+      </strong>
+    </div>
+    <p className="grass-positive">
+      <DocumentText>+$1,284.50 from last month</DocumentText>
+    </p>
+    <dl className="grass-ledger">
+      <div>
+        <dt>
+          <DocumentText>Subscriptions</DocumentText>
+        </dt>
+        <dd>
+          <DocumentText>$6,240.00</DocumentText>
+        </dd>
+      </div>
+      <div>
+        <dt>
+          <DocumentText>One-time sales</DocumentText>
+        </dt>
+        <dd>
+          <DocumentText>$2,460.00</DocumentText>
+        </dd>
+      </div>
+      <div>
+        <dt>
+          <DocumentText>Refunds & fees</DocumentText>
+        </dt>
+        <dd>
+          <DocumentText>−$280.00</DocumentText>
+        </dd>
+      </div>
+      <div>
+        <dt>
+          <DocumentText>Net revenue</DocumentText>
+        </dt>
+        <dd>
           <DocumentText>$8,420.00</DocumentText>
-        </strong>
+        </dd>
       </div>
-      <p className="grass-positive">
-        <DocumentText>+$1,284.50 from last month</DocumentText>
-      </p>
-      <dl className="grass-ledger">
-        <div>
-          <dt>
-            <DocumentText>Subscriptions</DocumentText>
-          </dt>
-          <dd>
-            <DocumentText>$6,240.00</DocumentText>
-          </dd>
-        </div>
-        <div>
-          <dt>
-            <DocumentText>One-time sales</DocumentText>
-          </dt>
-          <dd>
-            <DocumentText>$2,460.00</DocumentText>
-          </dd>
-        </div>
-        <div>
-          <dt>
-            <DocumentText>Refunds & fees</DocumentText>
-          </dt>
-          <dd>
-            <DocumentText>−$280.00</DocumentText>
-          </dd>
-        </div>
-        <div>
-          <dt>
-            <DocumentText>Net revenue</DocumentText>
-          </dt>
-          <dd>
-            <DocumentText>$8,420.00</DocumentText>
-          </dd>
-        </div>
-      </dl>
-      <div className="grass-panel-foot">
-        <span>
-          <DocumentText>USD</DocumentText>
-        </span>
-        <Link href="/docs/components/table">
-          <DocumentText>View tables</DocumentText>
-        </Link>
-      </div>
-    </Panel>
-  );
-}
+    </dl>
+    <div className="grass-panel-foot">
+      <span>
+        <DocumentText>USD</DocumentText>
+      </span>
+      <Link href="/docs/components/table">
+        <DocumentText>View tables</DocumentText>
+      </Link>
+    </div>
+  </Panel>
+);
 
-function Preferences() {
+const Preferences = () => {
   const [email, setEmail] = React.useState(true);
   const [release, setRelease] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
@@ -500,9 +498,9 @@ function Preferences() {
       </output>
     </Panel>
   );
-}
+};
 
-function Chat() {
+const Chat = () => {
   const [draft, setDraft] = React.useState("");
 
   const [messages, setMessages] = React.useState([
@@ -571,9 +569,9 @@ function Chat() {
       </p>
     </Panel>
   );
-}
+};
 
-function Performance() {
+const Performance = () => {
   const [sample, setSample] = React.useState(0);
 
   const data = React.useMemo(
@@ -638,9 +636,9 @@ function Performance() {
       </div>
     </Panel>
   );
-}
+};
 
-function Payout() {
+const Payout = () => {
   const [amount, setAmount] = React.useState(250);
   const [saved, setSaved] = React.useState(false);
 
@@ -698,9 +696,9 @@ function Payout() {
       </output>
     </Panel>
   );
-}
+};
 
-function Install() {
+const Install = () => {
   const [item, setItem] = React.useState("button");
 
   return (
@@ -749,7 +747,7 @@ function Install() {
       </p>
     </section>
   );
-}
+};
 
 // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Base UI's polymorphic Button needs its Next Link adapter to retain native link semantics.
 const installationLink = <Link href="/#install" role="link" />;
@@ -757,76 +755,76 @@ const installationLink = <Link href="/#install" role="link" />;
 // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Base UI's polymorphic Button needs its Next Link adapter to retain native link semantics.
 const documentationLink = <Link href="/docs" role="link" />;
 
-export default function HomePageShowcase() {
-  return (
-    <div className="grass-home" id="home">
-      <Link className="grass-skip" href="/#examples">
-        <DocumentText>Skip to examples</DocumentText>
-      </Link>
-      <main id="content">
-        <section className="grass-hero" aria-labelledby="grass-title">
-          <Link href="/#install" className="grass-announcement">
-            <DocumentText>grasscn </DocumentText>
-            <span>
-              <DocumentText>0.2</DocumentText>
-            </span>
-          </Link>
-          <TitleScene />
-          <p className="grass-title-tagline">
-            <DocumentText>Pixel-perfect Minecraft UI.</DocumentText>
-          </p>
-          <p>
-            <DocumentText>shadcn components. Yours to build.</DocumentText>
-          </p>
-          <div className="grass-hero-actions">
-            <Button nativeButton={false} render={installationLink} scale={2}>
-              {"Get started"}
-            </Button>
-            <Button nativeButton={false} render={documentationLink} scale={2}>
-              {"Browse components"}
-            </Button>
+const HomePageShowcase = () => (
+  <div className="grass-home" id="home">
+    <Link className="grass-skip" href="/#examples">
+      <DocumentText>Skip to examples</DocumentText>
+    </Link>
+    <main id="content">
+      <section className="grass-hero" aria-labelledby="grass-title">
+        <Link href="/#install" className="grass-announcement">
+          <DocumentText>grasscn </DocumentText>
+          <span>
+            <DocumentText>0.2</DocumentText>
+          </span>
+        </Link>
+        <TitleScene />
+        <p className="grass-title-tagline">
+          <DocumentText>Pixel-perfect Minecraft UI.</DocumentText>
+        </p>
+        <p>
+          <DocumentText>shadcn components. Yours to build.</DocumentText>
+        </p>
+        <div className="grass-hero-actions">
+          <Button nativeButton={false} render={installationLink} scale={2}>
+            {"Get started"}
+          </Button>
+          <Button nativeButton={false} render={documentationLink} scale={2}>
+            {"Browse components"}
+          </Button>
+        </div>
+      </section>
+      <section
+        className="grass-examples"
+        id="examples"
+        aria-label="Interactive application examples"
+      >
+        <div className="grass-examples-heading">
+          <span>
+            <DocumentText>BUILT WITH GRASSCN</DocumentText>
+          </span>
+          <span>
+            <DocumentText>Interactive examples</DocumentText>
+          </span>
+        </div>
+        <div className="grass-showcase-grid">
+          <div className="grass-showcase-column">
+            <Controls />
+            <Tasks />
+            <Performance />
+            <Feedback />
           </div>
-        </section>
-        <section
-          className="grass-examples"
-          id="examples"
-          aria-label="Interactive application examples"
-        >
-          <div className="grass-examples-heading">
-            <span>
-              <DocumentText>BUILT WITH GRASSCN</DocumentText>
-            </span>
-            <span>
-              <DocumentText>Interactive examples</DocumentText>
-            </span>
+          <div className="grass-showcase-column">
+            <Analytics />
+            <Revenue />
+            <Savings />
           </div>
-          <div className="grass-showcase-grid">
-            <div className="grass-showcase-column">
-              <Controls />
-              <Tasks />
-              <Performance />
-              <Feedback />
-            </div>
-            <div className="grass-showcase-column">
-              <Analytics />
-              <Revenue />
-              <Savings />
-            </div>
-            <div className="grass-showcase-column">
-              <Project />
-              <Payout />
-              <Schedule />
-            </div>
-            <div className="grass-showcase-column">
-              <Team />
-              <Chat />
-              <Preferences />
-              <Plan />
-            </div>
+          <div className="grass-showcase-column">
+            <Project />
+            <Payout />
+            <Schedule />
           </div>
-        </section>
-        <Install />
-      </main>
-    </div>
-  );
-}
+          <div className="grass-showcase-column">
+            <Team />
+            <Chat />
+            <Preferences />
+            <Plan />
+          </div>
+        </div>
+      </section>
+      <Install />
+    </main>
+  </div>
+);
+
+export { HomePageShowcase as default };

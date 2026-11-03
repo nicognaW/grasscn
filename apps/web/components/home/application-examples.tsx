@@ -9,7 +9,7 @@ import { Textarea } from "../../registry/ui/textarea";
 import { DocumentText } from "../document-text";
 import { Panel, Action } from "./showcase-panel";
 
-export function Savings() {
+export const Savings = () => {
   const [value, setValue] = React.useState(3250);
 
   return (
@@ -52,7 +52,7 @@ export function Savings() {
       </p>
     </Panel>
   );
-}
+};
 
 const ScheduleDay = (props: React.ComponentProps<typeof CalendarDayButton>) => (
   <CalendarDayButton
@@ -110,7 +110,7 @@ export const Schedule = () => {
   );
 };
 
-export function Feedback() {
+export const Feedback = () => {
   const [text, setText] = React.useState("");
   const [sent, setSent] = React.useState(false);
 
@@ -159,9 +159,9 @@ export function Feedback() {
       </form>
     </Panel>
   );
-}
+};
 
-export function Plan() {
+export const Plan = () => {
   const [plan, setPlan] = React.useState("monthly");
   const [saved, setSaved] = React.useState(false);
 
@@ -216,4 +216,4 @@ export function Plan() {
       </output>
     </Panel>
   );
-}
+};

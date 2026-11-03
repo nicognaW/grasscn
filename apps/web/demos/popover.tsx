@@ -6,7 +6,7 @@ import { Input } from "../registry/ui/input"
 import { Textarea } from "../registry/ui/textarea"
 import type { DemoProps } from "../types"
 
-export default function PopoverDemo({ scale }: DemoProps) {
+const PopoverDemo = ({ scale }: DemoProps) => {
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState("World Settings");
   const [message, setMessage] = React.useState("Configure your world.");
@@ -88,4 +88,6 @@ export default function PopoverDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { PopoverDemo as default };

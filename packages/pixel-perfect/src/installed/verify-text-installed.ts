@@ -194,7 +194,7 @@ for (const manifestFile of manifests.filter(
   });
 }
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   assert.deepEqual(
     [actual.width, actual.height],
     [expected.width, expected.height]
@@ -222,7 +222,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 const tasks = groups.flatMap((group) =>
   group.parts.flatMap((part) =>
@@ -236,7 +236,7 @@ const browserVersions = new Set<string>();
 
 let next = 0;
 
-async function worker() {
+const worker = async function worker() {
   let browser: Browser | undefined;
   let count = 0;
 
@@ -415,7 +415,7 @@ async function worker() {
       await browser.close();
     }
   }
-}
+};
 
 const settled = await Promise.allSettled([worker(), worker()]);
 

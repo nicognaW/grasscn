@@ -37,13 +37,13 @@ const types = new Map([
   [".woff2", "font/woff2"],
 ]);
 
-export function fixtureManifest(
+export const fixtureManifest = function fixtureManifest(
   directory = fixtureDirectory,
   fallback = fallbackDirectory
 ) {
   const files: { path: string; sha256: string }[] = [];
 
-  function visit(folder: string) {
+  const visit = function visit(folder: string) {
     const nativeSortValues = fs.readdirSync(folder);
     nativeSortValues.sort();
 
@@ -65,7 +65,7 @@ export function fixtureManifest(
         });
       }
     }
-  }
+  };
 
   visit(directory);
 
@@ -87,9 +87,9 @@ export function fixtureManifest(
       )
     ),
   };
-}
+};
 
-export async function buildProductionFixture() {
+export const buildProductionFixture = async function buildProductionFixture() {
   // Vite empties this output directory. Check its resolved target before allowing that.
   const intended = repositoryFile(path.join(".pixel-perfect-test")) + path.sep;
   assert.ok(path.resolve(fixtureDirectory).startsWith(intended));
@@ -121,9 +121,9 @@ export async function buildProductionFixture() {
   });
 
   return fixtureManifest();
-}
+};
 
-export async function serveProductionFixture({
+export const serveProductionFixture = async function serveProductionFixture({
   directory = fixtureDirectory,
   fallback = fallbackDirectory,
   port = 5178,
@@ -199,4 +199,4 @@ export async function serveProductionFixture({
     server,
     url: `http://127.0.0.1:${address.port}`,
   };
-}
+};

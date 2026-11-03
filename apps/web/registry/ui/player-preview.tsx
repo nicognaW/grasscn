@@ -354,7 +354,10 @@ const buildRenderer = function buildRenderer(
 };
 
 // Match JOML's float quaternion construction, including the exact half-turn.
-function nativeCosFromSin(sine: number, angle: number) {
+const nativeCosFromSin = function nativeCosFromSin(
+  sine: number,
+  angle: number
+) {
   const f = Math.fround;
   const pi = f(Math.PI);
   const tau = f(Math.PI * 2);
@@ -369,7 +372,7 @@ function nativeCosFromSin(sine: number, angle: number) {
   const magnitude = f(Math.sqrt(f(1 - f(sine * sine))));
 
   return wrapped >= pi ? -magnitude : magnitude;
-}
+};
 
 const PlayerPreview = ({
   skin = "wide/steve",

@@ -2,7 +2,10 @@ import * as React from "react";
 
 import { loadHighlighter } from "../lib/highlighter";
 
-export function useHighlightedCode(value: string, language: string) {
+export const useHighlightedCode = function useHighlightedCode(
+  value: string,
+  language: string
+) {
   // A trailing newline would render as an extra empty line.
   const code = value.endsWith("\n") ? value.slice(0, -1) : value;
 
@@ -76,4 +79,4 @@ export function useHighlightedCode(value: string, language: string) {
 
     return [...next.lines, highlighter.highlight(tail, next.state).lines[0]];
   }, [code, highlighter, next, tail]);
-}
+};

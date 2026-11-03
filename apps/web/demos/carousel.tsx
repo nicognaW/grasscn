@@ -5,7 +5,7 @@ import{Card,CardHeader,CardTitle,CardContent}from"../registry/ui/card"
 import{Button}from"../registry/ui/button"
 import type{DemoProps}from"../types"
 
-export default function CarouselDemo({ scale }: DemoProps) {
+const CarouselDemo = ({ scale }: DemoProps) => {
   const [api, setApi] = React.useState<CarouselApi>();
   const [selected, setSelected] = React.useState(0);
   const [vertical, setVertical] = React.useState(false);
@@ -94,4 +94,6 @@ export default function CarouselDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { CarouselDemo as default };

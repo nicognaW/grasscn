@@ -16,7 +16,7 @@ const largerCrew: PlayerListEntry[] = Array.from({ length: 24 }, (_, i) => ({
   score: 90 + i * 3,
 }));
 
-export default function PlayerListDemo({ scale }: DemoProps) {
+const PlayerListDemo = ({ scale }: DemoProps) => {
   const [players, setPlayers] = React.useState(initial);
   const [selected, setSelected] = React.useState("alex");
   const [large, setLarge] = React.useState(false);
@@ -94,4 +94,6 @@ export default function PlayerListDemo({ scale }: DemoProps) {
       </div>
     </div>
   );
-}
+};
+
+export { PlayerListDemo as default };

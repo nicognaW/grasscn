@@ -141,7 +141,7 @@ const browserVersion = browser.version();
 const pageErrors: string[] = [];
 const cases: (InstalledCaseResult | undefined)[] = [];
 
-async function preparePage() {
+const preparePage = async function preparePage() {
   const page = await browser.newPage({
     deviceScaleFactor: 1,
     viewport: { height: 900, width: 1280 },
@@ -180,7 +180,7 @@ async function preparePage() {
   }
 
   return page;
-}
+};
 
 try {
   let page = await preparePage();

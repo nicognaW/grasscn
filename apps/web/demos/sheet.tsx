@@ -4,7 +4,7 @@ import {Input} from "../registry/ui/input"
 import {Textarea} from "../registry/ui/textarea"
 import type {DemoProps} from "../types"
 
-export default function SheetDemo({ scale }: DemoProps) {
+const SheetDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World settings");
   const [message, setMessage] = React.useState("Hello Minecraft\n你好，世界");
 
@@ -50,4 +50,6 @@ export default function SheetDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { SheetDemo as default };

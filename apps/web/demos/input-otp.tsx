@@ -5,7 +5,7 @@ import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
 import {useDemoWidth} from "../use-demo-width"
 
-export default function InputOTPDemo({ scale }: DemoProps) {
+const InputOTPDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);
 
   const slotWidth = Math.min(
@@ -126,4 +126,6 @@ export default function InputOTPDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { InputOTPDemo as default };

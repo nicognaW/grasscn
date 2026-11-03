@@ -3,7 +3,7 @@ import * as React from "react";
 import { Calendar } from "../registry/ui/calendar";
 import { Label } from "../registry/ui/label";
 
-export function Demo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
+export const Demo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(2026, 9, 30)
   );
@@ -38,6 +38,6 @@ export function Demo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       />
     </div>
   );
-}
+};
 
 export default Demo;

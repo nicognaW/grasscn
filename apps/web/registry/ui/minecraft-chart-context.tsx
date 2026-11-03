@@ -91,7 +91,7 @@ interface GeometryContext {
 
 const Context = React.createContext<GeometryContext | null>(null);
 
-export function chartColorChannels(
+export const chartColorChannels = function chartColorChannels(
   color: string,
   element?: Element | null
 ): number[] {
@@ -129,7 +129,7 @@ export function chartColorChannels(
   context.fillRect(0, 0, 1, 1);
 
   return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
-}
+};
 
 export const ChartGeometryProvider = ({
   scale,
@@ -172,7 +172,7 @@ export const ChartGeometryProvider = ({
   return <Context.Provider value={context}>{children}</Context.Provider>;
 };
 
-function useStore() {
+const useStore = function useStore() {
   const store = React.useContext(Context);
 
   if (!store) {
@@ -180,7 +180,7 @@ function useStore() {
   }
 
   return store;
-}
+};
 
 export const ChartAxisTick = ({
   x = 0,
@@ -247,7 +247,7 @@ export const ChartAxisTick = ({
   );
 };
 
-export function useChartGeometry() {
+export const useChartGeometry = function useChartGeometry() {
   const { scale, store } = useStore();
 
   const snapshot = React.useSyncExternalStore(
@@ -260,9 +260,9 @@ export function useChartGeometry() {
     ...snapshot,
     scale,
   };
-}
+};
 
-function useRegister(geometry: Geometry) {
+const useRegister = function useRegister(geometry: Geometry) {
   const { store } = useStore();
   const id = React.useId();
   const serialized = JSON.stringify(geometry);
@@ -275,7 +275,7 @@ function useRegister(geometry: Geometry) {
       store.remove(id);
     };
   }, [store, id, serialized]);
-}
+};
 
 /** Recharts owns the coordinates, scales, stacking, hit testing and tooltip state. */
 // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts renderer-prop contract.

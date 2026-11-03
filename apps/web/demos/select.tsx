@@ -16,7 +16,7 @@ const initial = [
   "Hard",
 ];
 
-export default function SelectDemo({ scale }: DemoProps) {
+const SelectDemo = ({ scale }: DemoProps) => {
   const [value, setValue] = React.useState("mode-0");
   const [disabled, setDisabled] = React.useState(false);
   const [title, setTitle] = React.useState("Survival");
@@ -111,4 +111,6 @@ export default function SelectDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { SelectDemo as default };

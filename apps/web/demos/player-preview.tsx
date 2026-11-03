@@ -5,7 +5,7 @@ import { Button } from '../registry/ui/button';
 import { Input } from '../registry/ui/input';
 import type { DemoProps } from '../types';
 
-export default function PlayerDemo({ scale }: DemoProps) {
+const PlayerDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("Nyanki");
   const [username, setUsername] = React.useState<string>();
 
@@ -124,4 +124,6 @@ export default function PlayerDemo({ scale }: DemoProps) {
       </p>
     </div>
   );
-}
+};
+
+export { PlayerDemo as default };

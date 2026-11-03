@@ -4,7 +4,7 @@ import{Button}from"../registry/ui/button"
 import{useDemoWidth}from"../use-demo-width"
 import type{DemoProps}from"../types"
 
-export default function TableDemo({ scale }: DemoProps) {
+const TableDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);
   const textWidth = Math.max(16, Math.floor((stage.width - 24) / 3));
 
@@ -81,4 +81,6 @@ export default function TableDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { TableDemo as default };

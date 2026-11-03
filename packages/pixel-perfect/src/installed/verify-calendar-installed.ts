@@ -100,7 +100,7 @@ const runtimeIdentity = {
   viewport: [1536, 900, 1],
 };
 
-function differences(a: DecodedPixels, b: DecodedPixels) {
+const differences = function differences(a: DecodedPixels, b: DecodedPixels) {
   assert.deepEqual([a.width, a.height], [b.width, b.height]);
   let count = 0;
 
@@ -111,7 +111,7 @@ function differences(a: DecodedPixels, b: DecodedPixels) {
   }
 
   return count;
-}
+};
 
 try {
   for (const [part, dir] of [
@@ -257,7 +257,9 @@ try {
           (calendarFields) =>
             // SAFETY: the retained Calendar bridge receives string query fields, updates history/background and renders the keyed marker.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Calendar consumer bridge invocation boundary.
-            (window as LegacyCalendarConsumerWindow).renderCalendarCase(calendarFields),
+            (window as LegacyCalendarConsumerWindow).renderCalendarCase(
+              calendarFields
+            ),
           q
         );
         await expect(page!.locator("#marker")).toHaveAttribute(

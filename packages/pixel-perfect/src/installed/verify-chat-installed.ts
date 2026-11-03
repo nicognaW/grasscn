@@ -116,7 +116,7 @@ let next = 0;
 
 fs.mkdirSync(path.join(pixelPerfectTestRoot, "chat"), { recursive: true });
 
-function compare(a: PNG, b: PNG) {
+const compare = function compare(a: PNG, b: PNG) {
   if (a.width !== b.width || a.height !== b.height) {
     throw new Error("dimensions");
   }
@@ -128,9 +128,9 @@ function compare(a: PNG, b: PNG) {
   }
 
   return count;
-}
+};
 
-async function worker() {
+const worker = async function worker() {
   let page = await browser.newPage({
     deviceScaleFactor: 1,
     viewport: { height: 900, width: 1536 },
@@ -239,7 +239,7 @@ async function worker() {
   }
 
   await page.close();
-}
+};
 
 await Promise.all([worker(), worker()]);
 

@@ -5,7 +5,7 @@ import { Input } from "../registry/ui/input"
 import { Button } from "../registry/ui/button"
 import type { DemoProps } from "../types"
 
-export default function RadioGroupDemo({ scale }: DemoProps) {
+const RadioGroupDemo = ({ scale }: DemoProps) => {
   const [value, setValue] = React.useState("survival");
   const [first, setFirst] = React.useState("Survival");
   const [disabled, setDisabled] = React.useState(false);
@@ -94,4 +94,6 @@ export default function RadioGroupDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { RadioGroupDemo as default };

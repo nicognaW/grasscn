@@ -48,13 +48,12 @@ const root =
 const sourceRoot = rootArgument === -1 ? webRoot : root;
 const resolve = (...names: string[]) => path.resolve(root, ...names);
 
-const readManifest = async (name: string, directory = root) => {
+const readManifest = async (name: string, directory = root) =>
   // SAFETY: these files are the selected workspace package manifests; only standard dependency fields are consumed.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve the actual manifest bytes and existing dependency policy checks.
-  return JSON.parse(
+  JSON.parse(
     await readFile(path.resolve(directory, name), "utf-8")
   ) as PackageManifest;
-};
 
 const radix = (name: string) =>
   /^(?:@radix-ui\/|radix-ui(?:@|\/|$))/u.test(name);
@@ -86,7 +85,10 @@ const metadata = (location: string): DependencyFields =>
 
 // Bun records nested resolutions under parent/package keys. Walk ancestors,
 // retaining package identity instead of relying on the developer's node_modules.
-function resolveDependency(location: string, name: string) {
+const resolveDependency = function resolveDependency(
+  location: string,
+  name: string
+) {
   let base = location;
 
   for (;;) {
@@ -103,7 +105,7 @@ function resolveDependency(location: string, name: string) {
     const parent = base.lastIndexOf("/");
     base = parent === -1 ? "" : base.slice(0, parent);
   }
-}
+};
 
 const packageName = (location: string) => {
   const identity = packages[location]?.[0] ?? location;
@@ -258,7 +260,7 @@ for (const item of registry.items) {
   }
 }
 
-async function inspect(directory: string, absolute: string) {
+const inspect = async function inspect(directory: string, absolute: string) {
   for (const entry of await readdir(absolute, {
     withFileTypes: true,
   })) {
@@ -290,7 +292,7 @@ async function inspect(directory: string, absolute: string) {
       }
     }
   }
-}
+};
 
 await inspect("registry", path.join(sourceRoot, "registry"));
 

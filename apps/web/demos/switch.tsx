@@ -5,7 +5,7 @@ import { Input } from "../registry/ui/input"
 import { Button } from "../registry/ui/button"
 import type { DemoProps } from "../types"
 
-export default function SwitchDemo({ scale }: DemoProps) {
+const SwitchDemo = ({ scale }: DemoProps) => {
   const [checked, setChecked] = React.useState(false);
   const [disabled, setDisabled] = React.useState(false);
   const [label, setLabel] = React.useState("Enable clouds");
@@ -60,4 +60,6 @@ export default function SwitchDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { SwitchDemo as default };

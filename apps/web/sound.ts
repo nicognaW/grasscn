@@ -7,10 +7,12 @@ import {
 // Keep the registry's default gain intact; the preview starts at 50% master.
 setMinecraftSoundVolume(0.5);
 
-export function getPreviewSoundVolume() {
+export const getPreviewSoundVolume = function getPreviewSoundVolume() {
   return Math.round(getMinecraftSoundVolume() * 100);
-}
+};
 
-export function setPreviewSoundVolume(percent: number) {
+export const setPreviewSoundVolume = function setPreviewSoundVolume(
+  percent: number
+) {
   setMinecraftSoundVolume(percent / 100);
-}
+};

@@ -3,7 +3,7 @@ import * as React from "react";
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 
-export default function InputDemo({ scale }: DemoProps) {
+const InputDemo = ({ scale }: DemoProps) => {
   const [value, setValue] = React.useState("Hello Minecraft");
 
   return (
@@ -58,4 +58,6 @@ export default function InputDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { InputDemo as default };

@@ -103,7 +103,7 @@ const pageErrors: string[] = [];
 
 let next = 0;
 
-async function worker() {
+const worker = async function worker() {
   while (next < manifest.cases.length) {
     const taskIndex = next;
     next += 1;
@@ -193,7 +193,7 @@ async function worker() {
       await page.close();
     }
   }
-}
+};
 
 try {
   await Promise.all([worker(), worker()]);

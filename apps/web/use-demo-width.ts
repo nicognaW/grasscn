@@ -1,7 +1,7 @@
 import * as React from "react";
 
 /** Logical pixels available inside a preview stage, excluding its padding. */
-export function useDemoWidth(scale: 1 | 2 | 3) {
+export const useDemoWidth = function useDemoWidth(scale: 1 | 2 | 3) {
   const ref = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState(200);
   React.useLayoutEffect(() => {
@@ -32,4 +32,4 @@ export function useDemoWidth(scale: 1 | 2 | 3) {
   }, [scale]);
 
   return { ref, width };
-}
+};

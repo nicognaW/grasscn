@@ -7,10 +7,10 @@ const pages = [
   "Next adventure\n\nYou have reached the last page.\n\nWhat will you build next?",
 ];
 
-export default function BookDemo({ scale }: DemoProps) {
-  return (
-    <div className="demo-stage" data-stage="book">
-      <Book pages={pages} scale={scale} aria-label="Book" />
-    </div>
-  );
-}
+const BookDemo = ({ scale }: DemoProps) => (
+  <div className="demo-stage" data-stage="book">
+    <Book pages={pages} scale={scale} aria-label="Book" />
+  </div>
+);
+
+export { BookDemo as default };

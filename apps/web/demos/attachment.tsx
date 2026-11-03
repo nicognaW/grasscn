@@ -5,7 +5,7 @@ import {Input} from "../registry/ui/input"
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
 
-export default function AttachmentDemo({ scale }: DemoProps) {
+const AttachmentDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("New World.zip");
   const [opened, setOpened] = React.useState(0);
   const [removed, setRemoved] = React.useState(false);
@@ -85,4 +85,6 @@ export default function AttachmentDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { AttachmentDemo as default };

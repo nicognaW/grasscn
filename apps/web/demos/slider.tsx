@@ -4,7 +4,7 @@ import { Slider } from "../registry/ui/slider";
 import { getPreviewSoundVolume, setPreviewSoundVolume } from "../sound";
 import type { DemoProps } from "../types";
 
-export default function SliderDemo({ scale }: DemoProps) {
+const SliderDemo = ({ scale }: DemoProps) => {
   const [value, setValue] = React.useState(() => [getPreviewSoundVolume()]);
 
   return (
@@ -41,4 +41,6 @@ export default function SliderDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { SliderDemo as default };

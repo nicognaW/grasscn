@@ -185,7 +185,7 @@ const platformName =
       ? "osx"
       : "linux";
 
-function permitted(library: MinecraftCaptureLibrary) {
+const permitted = function permitted(library: MinecraftCaptureLibrary) {
   if (!library.rules) {
     return true;
   }
@@ -211,7 +211,7 @@ function permitted(library: MinecraftCaptureLibrary) {
   }
 
   return allowed;
-}
+};
 
 const libraries = metadata.libraries
   .filter(permitted)
@@ -236,7 +236,7 @@ const executable = (command: "java" | "javac") =>
 const quoteArgfile = (argument: string) =>
   `"${argument.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`;
 
-async function javaCommand(
+const javaCommand = async function javaCommand(
   command: "java" | "javac",
   args: string[],
   timeout = 240_000
@@ -277,7 +277,7 @@ async function javaCommand(
   }
 
   return result.stdout;
-}
+};
 
 await javaCommand("javac", [
   "-J-Xmx128m",

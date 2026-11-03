@@ -31,7 +31,7 @@ const viewportAnchored = (start: HTMLElement | null) => {
   return true;
 };
 
-export function useConfirmationSnapshot(
+export const useConfirmationSnapshot = function useConfirmationSnapshot(
   canvas: React.RefObject<HTMLCanvasElement | null>,
   identity: string,
   radius: number
@@ -579,4 +579,4 @@ export function useConfirmationSnapshot(
   }, [canvas, identity, radius]);
 
   return ready;
-}
+};

@@ -23,7 +23,7 @@ const history: Line[] = [
   { system: true, text: "Changes saved." },
 ];
 
-function History({ scale }: DemoProps) {
+const History = ({ scale }: DemoProps) => {
   const [messages, setMessages] = React.useState(history);
   const [text, setText] = React.useState("The updated design looks great.");
   const api = useMessageScroller();
@@ -153,17 +153,17 @@ function History({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
 
-export default function MessageDemo(props: DemoProps) {
-  return (
-    <MessageScrollerProvider
-      autoScroll
-      defaultScrollPosition="end"
-      scrollMargin={0}
-      scrollPreviousItemPeek={0}
-    >
-      <History {...props} />
-    </MessageScrollerProvider>
-  );
-}
+const MessageDemo = (props: DemoProps) => (
+  <MessageScrollerProvider
+    autoScroll
+    defaultScrollPosition="end"
+    scrollMargin={0}
+    scrollPreviousItemPeek={0}
+  >
+    <History {...props} />
+  </MessageScrollerProvider>
+);
+
+export { MessageDemo as default };

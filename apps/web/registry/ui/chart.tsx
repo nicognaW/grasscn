@@ -22,9 +22,19 @@ import type { TooltipValueType } from "recharts";
 
 import { ChartGeometryProvider } from "./minecraft-chart-context";
 
-export { NativeChartFpsFrame as ChartFpsFrame, NativeChartProfilerFrame as ChartProfilerFrame, nativeChartFpsColor as chartFpsColor, nativeChartProfilerColor as chartProfilerColor };
+export {
+  NativeChartFpsFrame as ChartFpsFrame,
+  NativeChartProfilerFrame as ChartProfilerFrame,
+  nativeChartFpsColor as chartFpsColor,
+  nativeChartProfilerColor as chartProfilerColor,
+};
 
-export { NativeChartPixelBar as ChartPixelBar, NativeChartProfilerSector as ChartProfilerSector, NativeChartPixelSurface as ChartPixelSurface, NativeChartAxisTick as ChartAxisTick };
+export {
+  NativeChartPixelBar as ChartPixelBar,
+  NativeChartProfilerSector as ChartProfilerSector,
+  NativeChartPixelSurface as ChartPixelSurface,
+  NativeChartAxisTick as ChartAxisTick,
+};
 
 interface ChartScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
@@ -419,7 +429,7 @@ const ChartLegendContent = ({
 };
 
 // Helper to extract item config from a payload.
-function getPayloadConfigFromPayload(
+const getPayloadConfigFromPayload = function getPayloadConfigFromPayload(
   config: ChartConfig,
   payload: unknown,
   key: string
@@ -451,7 +461,7 @@ function getPayloadConfigFromPayload(
   }
 
   return configLabelKey in config ? config[configLabelKey] : config[key];
-}
+};
 
 export {
   ChartContainer,

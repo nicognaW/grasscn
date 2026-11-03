@@ -213,7 +213,7 @@ export const MinecraftColorUnicodeLabel = ({
   );
 };
 
-function paintUnihex(
+const paintUnihex = function paintUnihex(
   context: CanvasRenderingContext2D,
   glyph: UnihexGlyph,
   x: number,
@@ -262,4 +262,4 @@ function paintUnihex(
       }
     }
   }
-}
+};

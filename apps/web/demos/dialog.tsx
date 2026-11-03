@@ -5,7 +5,7 @@ import { Input } from "../registry/ui/input"
 import { Textarea } from "../registry/ui/textarea"
 import type { DemoProps } from "../types"
 
-export default function DialogDemo({ scale }: DemoProps) {
+const DialogDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World settings");
   const [message, setMessage] = React.useState("A helpful description.");
   const [saved, setSaved] = React.useState(0);
@@ -68,4 +68,6 @@ export default function DialogDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { DialogDemo as default };

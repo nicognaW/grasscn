@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from "../registry/ui/car
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 
-export default function ContextMenuDemo({ scale }: DemoProps) {
+const ContextMenuDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World Settings");
   const [action, setAction] = React.useState("Resume game");
   const [coordinates, setCoordinates] = React.useState(false);
@@ -136,4 +136,6 @@ export default function ContextMenuDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { ContextMenuDemo as default };

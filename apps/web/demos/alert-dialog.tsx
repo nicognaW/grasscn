@@ -15,7 +15,7 @@ import { Input } from "../registry/ui/input";
 import { Textarea } from "../registry/ui/textarea";
 import type { DemoProps } from "../types";
 
-export default function AlertDialogDemo({ scale }: DemoProps) {
+const AlertDialogDemo = ({ scale }: DemoProps) => {
   const [open, setOpen] = React.useState(false);
 
   const [title, setTitle] = React.useState("Are you sure?");
@@ -77,4 +77,6 @@ export default function AlertDialogDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { AlertDialogDemo as default };

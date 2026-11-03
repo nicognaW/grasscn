@@ -5,7 +5,7 @@ import type { DemoProps } from "../types";
 
 const initialText = "Line one\nLine two\nLine three";
 
-export default function TextareaDemo({ scale }: DemoProps) {
+const TextareaDemo = ({ scale }: DemoProps) => {
   const [value, setValue] = React.useState(initialText);
 
   return (
@@ -60,4 +60,6 @@ export default function TextareaDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { TextareaDemo as default };
