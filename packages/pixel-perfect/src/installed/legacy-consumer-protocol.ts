@@ -25,6 +25,10 @@ interface LegacyAvatarBridge {
 
 export type LegacyAvatarConsumerWindow = typeof window & LegacyAvatarBridge;
 
+/** The readiness probe has not observed this owned bridge member yet. */
+export type LoadingAvatarConsumerWindow = typeof window &
+  Partial<LegacyAvatarBridge>;
+
 /** The retained Calendar bridge forwards the query to URLSearchParams and reads its keyed marker/background. */
 export interface LegacyCalendarQuery {
   [field: string]: string;
@@ -38,6 +42,10 @@ interface LegacyCalendarBridge {
 }
 
 export type LegacyCalendarConsumerWindow = typeof window & LegacyCalendarBridge;
+
+/** The readiness probe has not observed this owned bridge member yet. */
+export type LoadingCalendarConsumerWindow = typeof window &
+  Partial<LegacyCalendarBridge>;
 
 export type CalendarConsumerSettings = Pick<
   InstalledComponentSettings,

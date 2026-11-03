@@ -18,6 +18,7 @@ import type {
   CalendarConsumerSettings,
   LegacyCalendarQuery,
   LegacyCalendarConsumerWindow,
+  LoadingCalendarConsumerWindow,
 } from "@ppt/installed/legacy-consumer-protocol";
 import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
 import {
@@ -353,9 +354,8 @@ try {
           await page.goto(url);
           await page.waitForFunction(
             () =>
-              // SAFETY: the hash-bound retained Calendar standalone consumer installs the required renderCalendarCase ABI.
-              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Calendar consumer bridge boundary.
-              !!(window as LegacyCalendarConsumerWindow).renderCalendarCase
+              // SAFETY: this readiness read observes only the retained producer's owned bridge member before its installation has been observed.
+              !!(window as LoadingCalendarConsumerWindow).renderCalendarCase
           );
         }
 
