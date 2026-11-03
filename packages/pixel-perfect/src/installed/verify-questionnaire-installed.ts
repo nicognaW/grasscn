@@ -62,6 +62,158 @@ const files = item!.files.map((f) => {
 });
 
 const pageErrors: string[] = [];
+const buildQuestionnaireQuery = (c: QuestionnaireCaptureManifest["cases"][number], part: string, action: string, m: QuestionnaireCaptureManifest) => {
+  const q = new URLSearchParams({
+    action,
+    align: c.alignment ?? "left",
+    background: c.background ?? m.background ?? "#202020",
+    checked: String(c.checked ?? false),
+    height: String(c.height ?? 20),
+    label: c.label ?? "",
+    native: "1",
+    part,
+    placeholder: c.placeholder ?? "",
+    scale: String(c.scale),
+    state: c.state,
+    text: c.text ?? "",
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
+  if (action === "radio") {
+    q.set("radio", "1");
+  }
+
+  if (c.wrapWidth ?? 0) {
+    q.set("wrapWidth", String(c.wrapWidth));
+  }
+
+  const optionalMaxLength = c.maxLength;
+
+  if (optionalMaxLength !== null && optionalMaxLength !== undefined) {
+    q.set("maxLength", String(c.maxLength));
+  }
+
+  return q;
+};
+
+const captureQuestionnaireAction = async (c: QuestionnaireCaptureManifest["cases"][number], part: string, action: string, m: QuestionnaireCaptureManifest, dir: string, fixturePage: Page | undefined) => {
+  const q = buildQuestionnaireQuery(c, part, action, m);
+
+  await fixturePage!.goto(`${urlArg}?${q}`);
+  const subject = fixturePage!.locator("#subject");
+  await expect(subject).toBeVisible();
+
+  if (["title", "description", "error", "progress"].includes(part)) {
+    await expect(subject).toHaveAttribute(
+      "data-mc-label-layout-ready",
+      "true"
+    );
+  }
+
+  if (part === "input") {
+    await expect(subject).toHaveAttribute("data-mc-ready", "true");
+  }
+
+  await fixturePage!.mouse.move(0, 0);
+
+  if (c.state.startsWith("focus")) {
+    await (
+      part === "checkbox" ? subject.locator("input") : subject
+    ).focus();
+  }
+
+  if (c.state === "hover") {
+    await (
+      part === "checkbox" ? subject.locator("input") : subject
+    ).hover();
+  }
+
+  if (part === "input") {
+    const cursor = c.cursor ?? c.text!.length;
+    const anchor = c.anchor ?? cursor;
+
+    await subject.evaluate(
+      (input: HTMLInputElement, p) => {
+        // SAFETY: the input constituent fixture renders #subject as an HTML input with selection support.
+        input.setSelectionRange(
+          Math.min(p.cursor, p.anchor),
+          Math.max(p.cursor, p.anchor),
+          p.cursor < p.anchor ? "backward" : "forward"
+        );
+      },
+      { anchor, cursor }
+    );
+    await fixturePage!.clock.runFor(c.caretMs!);
+    await expect(subject).toHaveAttribute("data-mc-ready", "true");
+  } else {
+    for (const glyph of await subject
+      .locator("[data-mc-label-ready]")
+      .all()) {
+      await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+    }
+
+    await fixturePage!.evaluate(async () => {
+      const frameCompletion = Promise.withResolvers();
+
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(frameCompletion.resolve);
+        });
+      } catch (error) {
+        frameCompletion.reject(error);
+      }
+
+      return await frameCompletion.promise;
+    });
+  }
+
+  const bytes = fs.readFileSync(
+    `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${
+      c.name
+    }`
+  );
+
+  if (hash(bytes) !== c.sha256) {
+    throw new Error(`Native reference hash changed ${c.name}`);
+  }
+
+  const actualBytes = await subject.screenshot({
+    animations: "disabled",
+  });
+
+  const a = PNG.sync.read(actualBytes);
+  const b = PNG.sync.read(bytes);
+
+  if (a.width !== b.width || a.height !== b.height) {
+    throw new Error(
+      `Dimensions ${part} ${c.name} ${[a.width, a.height]} expected ${[
+        b.width,
+        b.height,
+      ]}`
+    );
+  }
+
+  let n = 0;
+
+  for (let i = 0; i < b.data.length; i += 4) {
+    n += Number(
+      !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
+    );
+  }
+
+  if (n) {
+    fs.writeFileSync(
+      path.join(pixelPerfectTestRoot, "questionnaire-actual.png"),
+      actualBytes
+    );
+    throw new Error(`${part} ${c.name} ${n} pixels`);
+  }
+
+  return a;
+};
+
 const browser = await chromium.launch({ channel: "msedge" });
 
 let count = 0;
@@ -143,147 +295,7 @@ try {
           }
         }
 
-        const q = new URLSearchParams({
-          action,
-          align: c.alignment ?? "left",
-          background: c.background ?? m.background ?? "#202020",
-          checked: String(c.checked ?? false),
-          height: String(c.height ?? 20),
-          label: c.label ?? "",
-          native: "1",
-          part,
-          placeholder: c.placeholder ?? "",
-          scale: String(c.scale),
-          state: c.state,
-          text: c.text ?? "",
-          width: String(c.width),
-          x: String(c.x ?? 16),
-          y: String(c.y ?? 16),
-        });
-
-        if (action === "radio") {
-          q.set("radio", "1");
-        }
-
-        if (c.wrapWidth ?? 0) {
-          q.set("wrapWidth", String(c.wrapWidth));
-        }
-
-        const optionalMaxLength = c.maxLength;
-
-        if (optionalMaxLength !== null && optionalMaxLength !== undefined) {
-          q.set("maxLength", String(c.maxLength));
-        }
-
-        await page!.goto(`${urlArg}?${q}`);
-        const subject = page!.locator("#subject");
-        await expect(subject).toBeVisible();
-
-        if (["title", "description", "error", "progress"].includes(part)) {
-          await expect(subject).toHaveAttribute(
-            "data-mc-label-layout-ready",
-            "true"
-          );
-        }
-
-        if (part === "input") {
-          await expect(subject).toHaveAttribute("data-mc-ready", "true");
-        }
-
-        await page!.mouse.move(0, 0);
-
-        if (c.state.startsWith("focus")) {
-          await (
-            part === "checkbox" ? subject.locator("input") : subject
-          ).focus();
-        }
-
-        if (c.state === "hover") {
-          await (
-            part === "checkbox" ? subject.locator("input") : subject
-          ).hover();
-        }
-
-        if (part === "input") {
-          const cursor = c.cursor ?? c.text!.length;
-          const anchor = c.anchor ?? cursor;
-
-          await subject.evaluate(
-            (input: HTMLInputElement, p) => {
-              // SAFETY: the input constituent fixture renders #subject as an HTML input with selection support.
-              input.setSelectionRange(
-                Math.min(p.cursor, p.anchor),
-                Math.max(p.cursor, p.anchor),
-                p.cursor < p.anchor ? "backward" : "forward"
-              );
-            },
-            { anchor, cursor }
-          );
-          await page!.clock.runFor(c.caretMs!);
-          await expect(subject).toHaveAttribute("data-mc-ready", "true");
-        } else {
-          for (const glyph of await subject
-            .locator("[data-mc-label-ready]")
-            .all()) {
-            await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
-          }
-
-          await page!.evaluate(async () => {
-            const frameCompletion = Promise.withResolvers();
-
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(frameCompletion.resolve);
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
-
-            return await frameCompletion.promise;
-          });
-        }
-
-        const bytes = fs.readFileSync(
-          `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${
-            c.name
-          }`
-        );
-
-        if (hash(bytes) !== c.sha256) {
-          throw new Error(`Native reference hash changed ${c.name}`);
-        }
-
-        const actualBytes = await subject.screenshot({
-          animations: "disabled",
-        });
-
-        const a = PNG.sync.read(actualBytes);
-        const b = PNG.sync.read(bytes);
-
-        if (a.width !== b.width || a.height !== b.height) {
-          throw new Error(
-            `Dimensions ${part} ${c.name} ${[a.width, a.height]} expected ${[
-              b.width,
-              b.height,
-            ]}`
-          );
-        }
-
-        let n = 0;
-
-        for (let i = 0; i < b.data.length; i += 4) {
-          n += Number(
-            !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
-          );
-        }
-
-        if (n) {
-          fs.writeFileSync(
-            path.join(pixelPerfectTestRoot, "questionnaire-actual.png"),
-            actualBytes
-          );
-          throw new Error(`${part} ${c.name} ${n} pixels`);
-        }
+        const a = await captureQuestionnaireAction(c, part, action, m, dir, page);
 
         const field: keyof QuestionnaireCaseResult =
           action === "next"

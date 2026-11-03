@@ -82,6 +82,134 @@ const files = item!.files.map((f) => {
   };
 });
 
+const buildCalendarQuery = (c: CalendarCaptureManifest["cases"][number], part: string, alias: string, manifest: CalendarCaptureManifest) => {
+  const q: LegacyCalendarQuery = {
+    align: c.alignment ?? "left",
+    background: c.background ?? manifest.background ?? "#202020",
+    case: component + part + c.name + alias,
+    checked: String(c.checked ?? false),
+    component,
+    height: String(c.height),
+    label: c.label ?? "",
+    native: "1",
+    part,
+    range: alias.startsWith("range-") ? alias.slice(6) : "",
+    scale: String(c.scale),
+    selected: String(alias === "selected"),
+    state: alias === "base" ? c.state : "normal",
+    today: String(alias === "today"),
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  };
+
+  const optionalText = c.text;
+
+  if (optionalText !== null && optionalText !== undefined) {
+    q.text = c.text!;
+  }
+
+  if (c.wrapWidth ?? 0) {
+    q.wrapWidth = String(c.wrapWidth);
+  }
+
+  return q;
+};
+
+const captureCalendarAlias = async (c: CalendarCaptureManifest["cases"][number], part: string, alias: string, manifest: CalendarCaptureManifest, dir: string, fixturePage: Page | undefined) => {
+  const q = buildCalendarQuery(c, part, alias, manifest);
+
+  await fixturePage!.evaluate((calendarFields) => {
+    // SAFETY: the retained Calendar bridge receives string query fields, updates history/background and renders the keyed marker.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Calendar consumer bridge invocation boundary.
+    (window as LegacyCalendarConsumerWindow).renderCalendarCase(
+      calendarFields
+    );
+  }, q);
+  await expect(fixturePage!.locator("#marker")).toHaveAttribute(
+    "data-case",
+    q.case
+  );
+  await expect(fixturePage!.locator("#subject")).toBeVisible();
+
+  if (part === "label") {
+    await expect(fixturePage!.locator("#subject")).toHaveAttribute(
+      "data-mc-label-layout-ready",
+      "true"
+    );
+
+    for (const canvas of await fixturePage!
+      .locator("#subject [data-mc-label-ready]")
+      .all()) {
+      await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+    }
+  }
+
+  if (part === "trigger-cjk") {
+    for (const canvas of await fixturePage!
+      .locator("#subject [data-mc-label-ready]")
+      .all()) {
+      await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+    }
+  }
+
+  await fixturePage!.mouse.move(0, 0);
+
+  if (
+    alias === "base" &&
+    (c.state === "hover" || c.state === "disabled-hover")
+  ) {
+    await fixturePage!.locator("#subject").hover({ force: true });
+  }
+
+  if (alias === "base" && c.state === "focus") {
+    await fixturePage!.locator("#subject").focus();
+  }
+
+  await fixturePage!.evaluate(async () => {
+    const frameCompletion = Promise.withResolvers();
+
+    try {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(frameCompletion.resolve);
+      });
+    } catch (error) {
+      frameCompletion.reject(error);
+    }
+
+    return await frameCompletion.promise;
+  });
+
+  const bytes = fs.readFileSync(
+    pixelPerfectFile(
+      path.join("tests/reference", dir, "captures", c.name)
+    )
+  );
+
+  assert.equal(hash(bytes), c.sha256);
+
+  const expected = PNG.sync.read(bytes);
+
+  const actualBytes = await fixturePage!
+    .locator("#subject")
+    .screenshot({ animations: "disabled" });
+
+  const actual = PNG.sync.read(actualBytes);
+  const mismatch = differences(expected, actual);
+
+  if (mismatch) {
+    fs.writeFileSync(
+      path.join(pixelPerfectTestRoot, `${component}-actual.png`),
+      actualBytes
+    );
+    throw new Error(
+      `${component} ${part} ${c.name} ${alias}: ${mismatch} pixels`
+    );
+  }
+
+  return { actual, actualBytes };
+};
+
 const browser = await chromium.launch({ channel: "msedge" });
 const pageErrors: string[] = [];
 
@@ -223,123 +351,7 @@ try {
           );
         }
 
-        const q: LegacyCalendarQuery = {
-          align: c.alignment ?? "left",
-          background: c.background ?? manifest.background ?? "#202020",
-          case: component + part + c.name + alias,
-          checked: String(c.checked ?? false),
-          component,
-          height: String(c.height),
-          label: c.label ?? "",
-          native: "1",
-          part,
-          range: alias.startsWith("range-") ? alias.slice(6) : "",
-          scale: String(c.scale),
-          selected: String(alias === "selected"),
-          state: alias === "base" ? c.state : "normal",
-          today: String(alias === "today"),
-          width: String(c.width),
-          x: String(c.x ?? 16),
-          y: String(c.y ?? 16),
-        };
-
-        const optionalText = c.text;
-
-        if (optionalText !== null && optionalText !== undefined) {
-          q.text = c.text!;
-        }
-
-        if (c.wrapWidth ?? 0) {
-          q.wrapWidth = String(c.wrapWidth);
-        }
-
-        await page!.evaluate((calendarFields) => {
-          // SAFETY: the retained Calendar bridge receives string query fields, updates history/background and renders the keyed marker.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Calendar consumer bridge invocation boundary.
-          (window as LegacyCalendarConsumerWindow).renderCalendarCase(
-            calendarFields
-          );
-        }, q);
-        await expect(page!.locator("#marker")).toHaveAttribute(
-          "data-case",
-          q.case
-        );
-        await expect(page!.locator("#subject")).toBeVisible();
-
-        if (part === "label") {
-          await expect(page!.locator("#subject")).toHaveAttribute(
-            "data-mc-label-layout-ready",
-            "true"
-          );
-
-          for (const canvas of await page!
-            .locator("#subject [data-mc-label-ready]")
-            .all()) {
-            await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
-          }
-        }
-
-        if (part === "trigger-cjk") {
-          for (const canvas of await page!
-            .locator("#subject [data-mc-label-ready]")
-            .all()) {
-            await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
-          }
-        }
-
-        await page!.mouse.move(0, 0);
-
-        if (
-          alias === "base" &&
-          (c.state === "hover" || c.state === "disabled-hover")
-        ) {
-          await page!.locator("#subject").hover({ force: true });
-        }
-
-        if (alias === "base" && c.state === "focus") {
-          await page!.locator("#subject").focus();
-        }
-
-        await page!.evaluate(async () => {
-          const frameCompletion = Promise.withResolvers();
-
-          try {
-            requestAnimationFrame(() => {
-              requestAnimationFrame(frameCompletion.resolve);
-            });
-          } catch (error) {
-            frameCompletion.reject(error);
-          }
-
-          return await frameCompletion.promise;
-        });
-
-        const bytes = fs.readFileSync(
-          pixelPerfectFile(
-            path.join("tests/reference", dir, "captures", c.name)
-          )
-        );
-
-        assert.equal(hash(bytes), c.sha256);
-
-        const expected = PNG.sync.read(bytes);
-
-        const actualBytes = await page!
-          .locator("#subject")
-          .screenshot({ animations: "disabled" });
-
-        const actual = PNG.sync.read(actualBytes);
-        const mismatch = differences(expected, actual);
-
-        if (mismatch) {
-          fs.writeFileSync(
-            path.join(pixelPerfectTestRoot, `${component}-actual.png`),
-            actualBytes
-          );
-          throw new Error(
-            `${component} ${part} ${c.name} ${alias}: ${mismatch} pixels`
-          );
-        }
+        const { actual, actualBytes } = await captureCalendarAlias(c, part, alias, manifest, dir, page);
 
         record[
           alias === "base"

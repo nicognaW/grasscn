@@ -6,6 +6,7 @@ import path from "node:path";
 
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import type { OtpCaptureManifest } from "@ppt/installed/constituent-capture-protocol";
 import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
 import { webFile, pixelPerfectFile } from "@ppt/paths";
@@ -103,6 +104,81 @@ const pageErrors: string[] = [];
 
 let next = 0;
 
+const verifyInputOtpCase = async (c: OtpCaptureManifest["cases"][number], page: Page) => {
+  await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
+  await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
+
+  const q = new URLSearchParams({
+    background: c.background,
+    component: "input-otp",
+    height: String(c.height),
+    native: "1",
+    scale: String(c.scale),
+    state: c.state,
+    text: c.text,
+    width: String(c.width),
+    x: String(c.x),
+    y: String(c.y),
+  });
+
+  await page.goto(`${url}?${q}`);
+
+  const subject = page.locator("#subject");
+  const mirror = subject.locator("input");
+  const input = page.getByRole("textbox", { name: "One-time code" });
+
+  await expect(mirror).toHaveAttribute("data-mc-ready", "true");
+
+  if (/\P{ASCII}/u.test(c.text)) {
+    await expect(mirror).toHaveAttribute("data-mc-bitmap", "true");
+  }
+
+  if (c.state.startsWith("focus")) {
+    await input.focus();
+  }
+
+  await page.mouse.move(0, 0);
+  await page.clock.runFor(c.caretMs);
+  await expect(subject).toHaveAttribute(
+    "data-active",
+    String(c.state.startsWith("focus"))
+  );
+  await expect(mirror).toHaveAttribute("data-mc-ready", "true");
+  const bytes = await readFile(path.join(reference, "captures", c.name));
+  assert.equal(sha(bytes), c.sha256);
+
+  const expected = PNG.sync.read(bytes);
+  const actual = PNG.sync.read(await subject.screenshot());
+
+  assert.deepEqual(
+    [actual.width, actual.height],
+    [expected.width, expected.height]
+  );
+  assert.ok(
+    actual.data.equals(expected.data),
+    `Installed InputOTP ${c.name}: pixels differ`
+  );
+  const changed = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
+  changed.data[0] ^= 1;
+  let mutations = 0;
+
+  for (let i = 0; i < expected.data.length; i += 4) {
+    mutations += Number(
+      !expected.data
+        .subarray(i, i + 4)
+        .equals(changed.data.subarray(i, i + 4))
+    );
+  }
+
+  assert.equal(mutations, 1);
+  return {
+    decodedRgbaSha256: sha(actual.data),
+    mismatchedPixels: 0,
+    name: c.name,
+  };
+};
+
 const worker = async function worker() {
   while (next < manifest.cases.length) {
     const taskIndex = next;
@@ -117,78 +193,7 @@ const worker = async function worker() {
     page.on("pageerror", (e) => pageErrors.push(e.message));
 
     try {
-      await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
-      await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
-
-      const q = new URLSearchParams({
-        background: c.background,
-        component: "input-otp",
-        height: String(c.height),
-        native: "1",
-        scale: String(c.scale),
-        state: c.state,
-        text: c.text,
-        width: String(c.width),
-        x: String(c.x),
-        y: String(c.y),
-      });
-
-      await page.goto(`${url}?${q}`);
-
-      const subject = page.locator("#subject");
-      const mirror = subject.locator("input");
-      const input = page.getByRole("textbox", { name: "One-time code" });
-
-      await expect(mirror).toHaveAttribute("data-mc-ready", "true");
-
-      if (/\P{ASCII}/u.test(c.text)) {
-        await expect(mirror).toHaveAttribute("data-mc-bitmap", "true");
-      }
-
-      if (c.state.startsWith("focus")) {
-        await input.focus();
-      }
-
-      await page.mouse.move(0, 0);
-      await page.clock.runFor(c.caretMs);
-      await expect(subject).toHaveAttribute(
-        "data-active",
-        String(c.state.startsWith("focus"))
-      );
-      await expect(mirror).toHaveAttribute("data-mc-ready", "true");
-      const bytes = await readFile(path.join(reference, "captures", c.name));
-      assert.equal(sha(bytes), c.sha256);
-
-      const expected = PNG.sync.read(bytes);
-      const actual = PNG.sync.read(await subject.screenshot());
-
-      assert.deepEqual(
-        [actual.width, actual.height],
-        [expected.width, expected.height]
-      );
-      assert.ok(
-        actual.data.equals(expected.data),
-        `Installed InputOTP ${c.name}: pixels differ`
-      );
-      const changed = PNG.sync.read(PNG.sync.write(expected));
-      // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
-      changed.data[0] ^= 1;
-      let mutations = 0;
-
-      for (let i = 0; i < expected.data.length; i += 4) {
-        mutations += Number(
-          !expected.data
-            .subarray(i, i + 4)
-            .equals(changed.data.subarray(i, i + 4))
-        );
-      }
-
-      assert.equal(mutations, 1);
-      cases.push({
-        decodedRgbaSha256: sha(actual.data),
-        mismatchedPixels: 0,
-        name: c.name,
-      });
+      cases.push(await verifyInputOtpCase(c, page));
     } finally {
       await page.close();
     }
