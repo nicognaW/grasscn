@@ -1,3 +1,5 @@
+import type inputOtpReference from "../reference/input-otp/manifest.json";
+
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -14,7 +16,7 @@ const dir = "tests/reference/input-otp";
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained-manifest contract at JSON.parse; no runtime loader, validation or generic caster.
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf-8")
-) as typeof import("../reference/input-otp/manifest.json").default;
+) as typeof inputOtpReference;
 
 for (const c of manifest.cases) {
   test(`InputOTP actual native EditBox slot ${c.name}`, async ({
