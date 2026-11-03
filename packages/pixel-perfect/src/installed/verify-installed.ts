@@ -1111,17 +1111,17 @@ try {
       });
       await expect(subject).toHaveAttribute("data-mc-select-ready", "true");
 
-      if (selectedCase.state === "focus") {
-        await subject.focus();
-      } else {
-        await page.evaluate(() => {
+      await (selectedCase.state === "focus" ?
+        subject.focus()
+      :
+        page.evaluate(() => {
           // SAFETY: the consumer fixture renders native HTML focus targets; null preserves the original optional blur.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual authored HTML focus target boundary.
           const active = document.activeElement as HTMLElement | null;
 
           return active?.blur();
-        });
-      }
+        })
+      );
 
       if (selectedCase.state.endsWith("hover")) {
         await (

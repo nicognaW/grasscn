@@ -71,7 +71,7 @@ test("Textarea comparator catches a one-pixel mutation", async () => {
 for (const c of manifest.cases) {
   test(`Textarea native pixels: ${c.name}`, async ({ page }, testInfo) => {
     if (c.referenceDirectory === "textarea-cjk") {
-      await page.setViewportSize({ width: 1536, height: 900 });
+      await page.setViewportSize({ height: 900, width: 1536 });
     }
 
     await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });

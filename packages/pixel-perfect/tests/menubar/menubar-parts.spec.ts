@@ -50,7 +50,7 @@ for (const c of manifest.cases) {
     ? ["menu-checkbox", "menu-radio"]
     : [c.element]) {
     test(`Menubar slot pixels: ${c.name} ${kind}`, async ({ page }, info) => {
-      await page.setViewportSize({ width: 1536, height: 900 });
+      await page.setViewportSize({ height: 900, width: 1536 });
 
       const query = new URLSearchParams({
         component: "menubar",

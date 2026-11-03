@@ -90,13 +90,13 @@ test.describe("Select native matrix", () => {
       await expect(subject).toHaveAttribute("data-mc-select-ready", "true");
       await page.mouse.move(0, 0);
 
-      if (c.state === "focus") {
-        await subject.focus();
-      } else {
-        await page.evaluate(() => {
+      await (c.state === "focus" ?
+        subject.focus()
+      :
+        page.evaluate(() => {
           (document.activeElement as HTMLElement)?.blur();
-        });
-      }
+        })
+      );
 
       if (c.state.endsWith("hover")) {
         await (

@@ -89,13 +89,13 @@ for (const dir of ["label", "separator"]) {
 
         await page.mouse.move(0, 0);
 
-        if (c.state === "focus") {
-          await page.locator("[data-subject]").focus();
-        } else {
-          await page.evaluate(() => {
+        await (c.state === "focus" ?
+          page.locator("[data-subject]").focus()
+        :
+          page.evaluate(() => {
             (document.activeElement as HTMLElement)?.blur();
-          });
-        }
+          })
+        );
 
         if (c.state.endsWith("hover")) {
           await page.locator("[data-subject]").hover({ force: true });

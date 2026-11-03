@@ -156,15 +156,15 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
         await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
         await subject.focus();
 
-        if (c.state.endsWith("hover")) {
+        await (c.state.endsWith("hover") ?
           // SAFETY: Within the Suggestions route, the existing hover-state guard selects exactly the retained hover cases, all with numeric targetIndex.
-          await subject
+          subject
             .getByRole("option")
             .nth((c as ComboboxHoveredSuggestionCase).targetIndex)
-            .hover();
-        } else {
-          await page.mouse.move(0, 0);
-        }
+            .hover()
+        :
+          page.mouse.move(0, 0)
+        );
 
         await subject.evaluate(
           (node, value) => {
@@ -227,11 +227,11 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
           await subject.focus();
         }
 
-        if (c.state === "hover") {
-          await subject.hover();
-        } else {
-          await page.mouse.move(0, 0);
-        }
+        await (c.state === "hover" ?
+          subject.hover()
+        :
+          page.mouse.move(0, 0)
+        );
 
         // SAFETY: This existing non-Suggestions branch contains only Input/Input CJK cases with required string text; the cursor read and short-circuit default stay in place.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual closed-route/variant contract at the existing guard; no added property read or validation.

@@ -86,7 +86,7 @@ const cjk = JSON.parse(
 for (const mode of ["split", "fragments", "empty"]) {
   for (const c of cjk.cases) {
     test(`Button ${mode} CJK runs: ${c.name}`, async ({ page }, info) => {
-      await page.setViewportSize({ width: 1536, height: 900 });
+      await page.setViewportSize({ height: 900, width: 1536 });
 
       const params = new URLSearchParams({
         component: "button-composition",

@@ -50,7 +50,7 @@ const nativePixels = async function nativePixels(
 
 for (const scale of [2]) {
   test(`Preview native pixels at scale ${scale}`, async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.setViewportSize({ height: 1000, width: 1440 });
     await page.goto(`${origin}docs/components/button`);
 
     const button = page
@@ -271,7 +271,7 @@ for (const scale of [2]) {
   test(`Tabs preview preserves native tab bar at scale ${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     await page.goto(`${origin}docs/components/tabs`);
 
     const list = page
@@ -291,7 +291,7 @@ for (const scale of [2]) {
   test(`Select preview preserves native cycle button at scale ${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     await page.goto(`${origin}docs/components/select`);
 
     const trigger = page

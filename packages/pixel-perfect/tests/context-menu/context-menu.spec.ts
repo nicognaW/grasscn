@@ -93,18 +93,18 @@ for (const c of manifest.cases) {
       await subject.getByRole("menuitem").nth(c.selectedIndex).focus();
     }
 
-    if (c.state.endsWith("hover")) {
-      await subject
+    await (c.state.endsWith("hover") ?
+      subject
         .getByRole("menuitem")
         .nth(
           // SAFETY: all 24 pinned hover cases have numeric targets; ReferenceSuggestions unboxes targetIndex only when state ends with hover.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion
           (c as typeof c & { targetIndex: number }).targetIndex
         )
-        .hover();
-    } else {
-      await page.mouse.move(0, 0);
-    }
+        .hover()
+    :
+      page.mouse.move(0, 0)
+    );
 
     await subject.evaluate(
       (node, value) => {

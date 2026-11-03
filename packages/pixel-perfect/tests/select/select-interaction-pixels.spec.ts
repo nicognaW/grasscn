@@ -49,7 +49,7 @@ for (const scale of [1, 2, 3]) {
       );
 
       expectTruthy(c);
-      await page.setViewportSize({ width: 1536, height: 900 });
+      await page.setViewportSize({ height: 900, width: 1536 });
       await page.goto(`/?component=select&popper=1&scale=${scale}`);
       const trigger = page.getByRole("combobox");
 

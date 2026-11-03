@@ -68,7 +68,7 @@ for (const [part, dir] of parts) {
 
       for (const action of questionnaireActions) {
         test(`${c.name} ${action}`, async ({ page }, info) => {
-          await page.setViewportSize({ width: 1536, height: 900 });
+          await page.setViewportSize({ height: 900, width: 1536 });
 
           if (part === "input") {
             await page.clock.install({
