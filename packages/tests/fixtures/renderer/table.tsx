@@ -48,31 +48,50 @@ export const TableFixture = () => {
     return (
       <Table
         scale={scale}
+        className="fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width"
         style={{
-          position: "fixed",
-          left: Number(p.get("x") ?? 16) * scale,
-          top: Number(p.get("y") ?? 16) * scale,
-          width: width * scale,
+          "--fixture-width": `${width * scale}px`,
+          "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+          "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
           tableLayout: "fixed",
         }}
       >
         {part === "header" ? (
           <TableHeader id="subject" data-subject="true">
-            <TableRow style={{ height: height * scale }}>
-              <TableHead style={{ padding: 0, height: height * scale }} />
+            <TableRow
+              className="fixture-geometry-height"
+              style={{ "--fixture-height": `${height * scale}px` }}
+            >
+              <TableHead
+                className="fixture-geometry-height"
+                style={{
+                  "--fixture-height": `${height * scale}px`,
+                  padding: 0,
+                }}
+              />
             </TableRow>
           </TableHeader>
         ) : part === "footer" ? (
           <TableFooter id="subject" data-subject="true">
-            <TableRow style={{ height: height * scale }}>
-              <TableCell style={{ padding: 0, height: height * scale }} />
+            <TableRow
+              className="fixture-geometry-height"
+              style={{ "--fixture-height": `${height * scale}px` }}
+            >
+              <TableCell
+                className="fixture-geometry-height"
+                style={{
+                  "--fixture-height": `${height * scale}px`,
+                  padding: 0,
+                }}
+              />
             </TableRow>
           </TableFooter>
         ) : part === "caption" ? (
           <TableCaption
             id="subject"
             {...layout}
-            style={{ padding: 0, height: height * scale }}
+            className="fixture-geometry-height"
+            style={{ "--fixture-height": `${height * scale}px`, padding: 0 }}
             data-subject="true"
           >
             {label}
@@ -81,13 +100,17 @@ export const TableFixture = () => {
           <TableHeader
             style={{ "--mc-table-header": "none" } as React.CSSProperties}
           >
-            <TableRow style={{ height: height * scale }}>
+            <TableRow
+              className="fixture-geometry-height"
+              style={{ "--fixture-height": `${height * scale}px` }}
+            >
               <TableHead
                 id="subject"
                 {...layout}
+                className="fixture-geometry-height"
                 style={{
+                  "--fixture-height": `${height * scale}px`,
                   padding: 0,
-                  height: height * scale,
                   verticalAlign: "top",
                 }}
                 data-subject="true"
@@ -102,13 +125,17 @@ export const TableFixture = () => {
               backgroundImage: p.has("backgroundOnly") ? undefined : "none",
             }}
           >
-            <TableRow style={{ height: height * scale }}>
+            <TableRow
+              className="fixture-geometry-height"
+              style={{ "--fixture-height": `${height * scale}px` }}
+            >
               <TableCell
                 id="subject"
                 {...layout}
+                className="fixture-geometry-height"
                 style={{
+                  "--fixture-height": `${height * scale}px`,
                   padding: 0,
-                  height: height * scale,
                   verticalAlign: "top",
                 }}
                 data-subject="true"
@@ -151,7 +178,8 @@ export const TableFixture = () => {
               <Button
                 scale={scale}
                 type="button"
-                style={{ width: 60 * scale }}
+                className="fixture-geometry-width"
+                style={{ "--fixture-width": `${60 * scale}px` }}
                 onClick={(event) => {
                   event.stopPropagation();
                   setCount((v) => v + 1);

@@ -26,11 +26,10 @@ export const AttachmentFixture = () => {
   }, []);
 
   const bounds = {
-    height: Number(q.get("height") ?? 36) * scale,
-    left: Number(q.get("x") ?? 16) * scale,
-    position: "fixed",
-    top: Number(q.get("y") ?? 16) * scale,
-    width: Number(q.get("width") ?? 270) * scale,
+    "--fixture-height": `${Number(q.get("height") ?? 36) * scale}px`,
+    "--fixture-width": `${Number(q.get("width") ?? 270) * scale}px`,
+    "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
+    "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
   } satisfies React.CSSProperties;
 
   if (q.has("native")) {
@@ -40,6 +39,7 @@ export const AttachmentFixture = () => {
           id="subject"
           scale={scale}
           disabled={state.startsWith("disabled")}
+          className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
           style={bounds}
           data-subject="true"
         >
@@ -54,6 +54,7 @@ export const AttachmentFixture = () => {
         scale={scale}
         selected={q.get("selected") === "true"}
         tabIndex={state === "focus" ? 0 : undefined}
+        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
         style={bounds}
         data-subject="true"
       >

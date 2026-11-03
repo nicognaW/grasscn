@@ -57,11 +57,13 @@ export const ButtonCompositionFixture = () => {
         id="subject"
         scale={scale}
         disabled={p.get("state") === "disabled"}
+        className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
         style={{
-          left: Number(p.get("x") ?? 16) * scale,
-          position: "fixed",
-          top: Number(p.get("y") ?? 16) * scale,
-          width: Number(p.get("width") ?? 200) * scale,
+          "--fixture-width": `${Number(p.get("width") ?? 200) * scale}px`,
+
+          "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+
+          "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
         }}
         data-subject="true"
       >

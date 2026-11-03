@@ -13,11 +13,13 @@ export const BadgeAdvancementFixture = () => {
         (p.get("achievement") ?? "challenge") as "challenge" | "goal" | "task"
       }
       earned={p.get("earned") !== "false"}
+      className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width"
       style={{
-        left: 24 * scale,
-        position: "absolute",
-        top: 16 * scale,
-        width: 117 * scale,
+        "--fixture-width": `${117 * scale}px`,
+
+        "--fixture-x": `${24 * scale}px`,
+
+        "--fixture-y": `${16 * scale}px`,
       }}
       data-subject="true"
     >

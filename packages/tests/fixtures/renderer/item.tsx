@@ -16,6 +16,8 @@ import {
 } from "@grasscn/web/ui/minecraft-sound";
 import * as React from "react";
 
+import { cn } from "./utils";
+
 const q = new URLSearchParams(location.search);
 const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
 const state = q.get("state") ?? "normal";
@@ -98,10 +100,10 @@ const ItemFixture = () => {
   );
 
   const commonStyle = {
-    height: Number(q.get("height") ?? 36) * scale,
-    left: Number(q.get("x") ?? 16) * scale,
-    position: "fixed",
-    top: Number(q.get("y") ?? 16) * scale,
+    "--fixture-height": `${Number(q.get("height") ?? 36) * scale}px`,
+    "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
+
+    "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
     width: width * scale,
   } satisfies React.CSSProperties;
 
@@ -113,6 +115,7 @@ const ItemFixture = () => {
         scale={scale}
         maxWidth={q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined}
         align={q.get("align") === "center" ? "center" : "left"}
+        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
         style={commonStyle}
         data-subject="true"
       >
@@ -125,6 +128,7 @@ const ItemFixture = () => {
         scale={scale}
         edge={state === "footer" ? "footer" : "header"}
         role={q.has("semantic") ? "separator" : "none"}
+        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
         style={commonStyle}
         data-subject="true"
       />
@@ -154,9 +158,15 @@ const ItemFixture = () => {
         ref={ref}
         scale={scale}
         selected={q.get("selected") === "true"}
+        className={cn(
+          { "fixture-geometry-height": !rich },
+          "fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
+        )}
         style={{
           ...commonStyle,
-          height: rich ? undefined : commonStyle.height,
+          "--fixture-height": rich
+            ? undefined
+            : commonStyle["--fixture-height"],
         }}
         tabIndex={state === "focus" ? 0 : undefined}
         onClick={(event) => {

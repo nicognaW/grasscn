@@ -42,7 +42,7 @@ const ScrollerFixture = () => {
       <MessageScroller
         scale={Number(q.get("scale") ?? 2) as 1 | 2 | 3}
         id="subject"
-        style={{ height: 200, width: 520 }}
+        className="fixture-height-200 fixture-width-520"
         data-testid="scroller-root"
         data-subject="true"
       >
@@ -191,7 +191,7 @@ export const TextWidgetsFixture = () => {
     <Trace
       id="subject"
       scale={Number(q.get("scale") ?? 2) as 1 | 2 | 3}
-      style={{ width: 500 }}
+      className="fixture-width-500"
       data-subject="true"
     >
       <TraceLine status="running" data-testid="running">

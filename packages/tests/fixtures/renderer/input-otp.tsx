@@ -48,11 +48,16 @@ export const InputOTPFixture = () => {
             <InputOTPSlot
               id={native ? "subject" : undefined}
               index={i}
+              className={
+                native
+                  ? "fixture-geometry-height fixture-geometry-width"
+                  : undefined
+              }
               style={
                 native
                   ? {
-                      height: Number(q.get("height") ?? 20) * scale,
-                      width: Number(q.get("width") ?? 20) * scale,
+                      "--fixture-height": `${Number(q.get("height") ?? 20) * scale}px`,
+                      "--fixture-width": `${Number(q.get("width") ?? 20) * scale}px`,
                     }
                   : undefined
               }
@@ -71,12 +76,12 @@ export const InputOTPFixture = () => {
   if (native) {
     return (
       <div
+        className="fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width fixture-geometry-height"
         style={{
-          position: "fixed",
-          left: Number(q.get("x") ?? 16) * scale,
-          top: Number(q.get("y") ?? 16) * scale,
-          width: Number(q.get("width") ?? 20) * scale,
-          height: Number(q.get("height") ?? 20) * scale,
+          "--fixture-height": `${Number(q.get("height") ?? 20) * scale}px`,
+          "--fixture-width": `${Number(q.get("width") ?? 20) * scale}px`,
+          "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
+          "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
         }}
       >
         {root}

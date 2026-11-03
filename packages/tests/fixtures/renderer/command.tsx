@@ -12,6 +12,8 @@ import {
 } from "@grasscn/web/ui/command";
 import * as React from "react";
 
+import { cn } from "./utils";
+
 const p = new URLSearchParams(location.search);
 const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
 const native = p.has("native");
@@ -42,10 +44,11 @@ export const CommandFixture = () => {
   const [open, setOpen] = React.useState(p.has("open"));
 
   const position: React.CSSProperties = {
-    left: Number(p.get("x") ?? 16) * scale,
-    position: "absolute",
-    top: Number(p.get("y") ?? 16) * scale,
-    width: Number(p.get("width") ?? 200) * scale,
+    "--fixture-width": `${Number(p.get("width") ?? 200) * scale}px`,
+
+    "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+
+    "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
     ...(part === "list" && native
       ? {
           height: Number(p.get("height") ?? 36) * scale,
@@ -53,6 +56,8 @@ export const CommandFixture = () => {
         }
       : {}),
   };
+
+  const nativeInput = native && part === "input";
 
   const inputControl = (
     <CommandInput
@@ -65,7 +70,11 @@ export const CommandFixture = () => {
       disabled={p.get("state")?.startsWith("disabled")}
       readOnly={p.get("state")?.includes("readonly")}
       maxLength={p.has("maxLength") ? Number(p.get("maxLength")) : undefined}
-      style={native && part === "input" ? position : undefined}
+      className={cn({
+        "fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width":
+          nativeInput,
+      })}
+      style={nativeInput ? position : undefined}
       data-subject={
         (native && part === "input" ? "subject" : undefined) === "subject"
           ? "true"
@@ -148,6 +157,7 @@ export const CommandFixture = () => {
             tabIndex={-1}
             label="Native command rows"
             surface={p.get("surface") === "popup" ? "popup" : "suggestions"}
+            className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width"
             style={position}
             data-subject="true"
           >

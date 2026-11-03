@@ -1,0 +1,60 @@
+.fixture-geometry-height {
+  height: var(--fixture-height);
+}
+.fixture-geometry-width {
+  width: var(--fixture-width);
+}
+.fixture-geometry-x {
+  left: var(--fixture-x);
+}
+.fixture-geometry-y {
+  top: var(--fixture-y);
+}
+.fixture-height-1 {
+  height: 1px;
+}
+.fixture-height-160 {
+  height: 160px;
+}
+.fixture-height-180 {
+  height: 180px;
+}
+.fixture-height-200 {
+  height: 200px;
+}
+.fixture-height-300 {
+  height: 300px;
+}
+.fixture-left-0 {
+  left: 0px;
+}
+.fixture-placement-absolute {
+  position: absolute;
+}
+.fixture-placement-fixed {
+  position: fixed;
+}
+.fixture-placement-static {
+  position: static;
+}
+.fixture-top-0 {
+  top: 0px;
+}
+.fixture-width-1 {
+  width: 1px;
+}
+.fixture-width-300 {
+  width: 300px;
+}
+.fixture-width-320 {
+  width: 320px;
+}
+.fixture-width-500 {
+  width: 500px;
+}
+.fixture-width-520 {
+  width: 520px;
+}
+.fixture-width-180 {
+  width: 180px;
+}

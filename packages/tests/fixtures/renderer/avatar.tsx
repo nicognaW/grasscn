@@ -43,12 +43,12 @@ export const AvatarFixture = () => {
               ? "lg"
               : "default"
         }
+        className="fixture-geometry-height fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width"
         style={{
-          height: Number(q.get("height") ?? 16) * scale,
-          left: Number(q.get("x") ?? 8) * scale,
-          position: "absolute",
-          top: Number(q.get("y") ?? 8) * scale,
-          width: Number(q.get("width") ?? 16) * scale,
+          "--fixture-height": `${Number(q.get("height") ?? 16) * scale}px`,
+          "--fixture-width": `${Number(q.get("width") ?? 16) * scale}px`,
+          "--fixture-x": `${Number(q.get("x") ?? 8) * scale}px`,
+          "--fixture-y": `${Number(q.get("y") ?? 8) * scale}px`,
         }}
         data-subject="true"
       >

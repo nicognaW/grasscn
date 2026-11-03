@@ -60,10 +60,11 @@ export const ComboboxFixture = () => {
   const anchor = useComboboxAnchor();
 
   const pos = {
-    left: Number(p.get("x") ?? 16) * scale,
-    position: "fixed" as const,
-    top: Number(p.get("y") ?? 16) * scale,
-    width: Number(p.get("width") ?? 200) * scale,
+    "--fixture-width": `${Number(p.get("width") ?? 200) * scale}px`,
+
+    "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+
+    "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
     ...(part === "list"
       ? {
           height: Number(p.get("height") ?? 36) * scale,
@@ -90,6 +91,7 @@ export const ComboboxFixture = () => {
           maxLength={
             p.has("maxLength") ? Number(p.get("maxLength")) : undefined
           }
+          className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
           style={pos}
           data-subject="true"
         />
@@ -106,12 +108,8 @@ export const ComboboxFixture = () => {
       >
         <ComboboxInput
           showTrigger={false}
+          className="fixture-placement-fixed fixture-left-0 fixture-top-0 fixture-width-1 fixture-height-1"
           style={{
-            position: "fixed",
-            left: 0,
-            top: 0,
-            width: 1,
-            height: 1,
             opacity: 0,
           }}
         />
@@ -121,6 +119,7 @@ export const ComboboxFixture = () => {
           tabIndex={-1}
           aria-label="Native options"
           surface={p.get("surface") === "popup" ? "popup" : "suggestions"}
+          className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
           style={pos}
           data-subject="true"
         >

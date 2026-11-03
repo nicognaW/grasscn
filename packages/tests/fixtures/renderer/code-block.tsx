@@ -56,7 +56,8 @@ export const CodeBlockFixture = () => {
           wrap={q.has("wrap")}
           lineNumbers={q.has("numbers")}
           startLine={7}
-          style={{ maxHeight: 400, width: q.has("wrap") ? 180 : undefined }}
+          className={q.has("wrap") ? "fixture-width-180" : undefined}
+          style={{ maxHeight: 400 }}
           data-subject="true"
         >
           {q.has("highlight") ? (

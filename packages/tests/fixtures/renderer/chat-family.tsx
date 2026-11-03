@@ -15,6 +15,8 @@ import {
 } from "@grasscn/web/ui/message";
 import * as React from "react";
 
+import { cn } from "./utils";
+
 interface ChatFamilyReferenceStyle extends React.CSSProperties {
   "--mc-scale": number;
   "--mc-pixel": string;
@@ -33,10 +35,9 @@ export const ChatFamilyFixture = () => {
   const width = Number(q.get("width") ?? 172);
 
   const common: ChatFamilyReferenceStyle = {
-    position: "fixed",
-    left: Number(q.get("x") ?? 16) * scale,
-    top: Number(q.get("y") ?? 16) * scale,
-    width: width * scale,
+    "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
+    "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
+    "--fixture-width": `${width * scale}px`,
     ...(native ? { height: Number(q.get("height") ?? 9) * scale } : {}),
     color: q.get("color") ?? "#ffffff",
     "--mc-scale": scale,
@@ -53,6 +54,10 @@ export const ChatFamilyFixture = () => {
     component === "bubble" ? (
       <BubbleGroup
         data-testid="bubble-group"
+        className={cn({
+          "fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width":
+            !native,
+        })}
         style={native ? undefined : common}
       >
         <Bubble
@@ -74,6 +79,10 @@ export const ChatFamilyFixture = () => {
             }
             id="subject"
             ref={ref}
+            className={cn({
+              "fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width":
+                native,
+            })}
             style={native ? common : { color: common.color }}
             onClick={(event) => {
               setEvents((n) => n + 1);
@@ -122,6 +131,7 @@ export const ChatFamilyFixture = () => {
           <MessageContent
             id="subject"
             ref={ref}
+            className="fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width"
             style={common}
             data-subject="true"
           >

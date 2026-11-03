@@ -3,6 +3,7 @@
 @import "./structural.css";
 @import "./draft-demos.css";
 @import "../../../../apps/web/registry/ui/minecraft-components.css";
+@import "./native-fixture-geometry.css";
 @source "../../../../apps/web/registry/ui";
 html,
 body {

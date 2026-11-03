@@ -30,14 +30,16 @@ export const InputGroupFixture = () => {
   const button = React.useRef<HTMLButtonElement>(null);
 
   const position: React.CSSProperties = {
-    left: Number(p.get("x") ?? 16) * scale,
-    position: "absolute",
-    top: Number(p.get("y") ?? 16) * scale,
-    width: width * scale,
+    "--fixture-width": `${width * scale}px`,
+
+    "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+
+    "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
   };
 
   const shared = {
     "aria-label": "Group field",
+    className: "fixture-geometry-height fixture-geometry-width",
     "data-subject": "true",
     disabled: state.startsWith("disabled"),
     id: "subject",
@@ -50,15 +52,19 @@ export const InputGroupFixture = () => {
     placeholder: p.get("placeholder") ?? "",
     readOnly: state.includes("readonly"),
     style: {
-      height: Number(p.get("height") ?? 20) * scale,
-      width: width * scale,
+      "--fixture-height": `${Number(p.get("height") ?? 20) * scale}px`,
+      "--fixture-width": `${width * scale}px`,
     },
     value,
   };
 
   if (native) {
     return (
-      <InputGroup scale={scale} style={position}>
+      <InputGroup
+        scale={scale}
+        className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width"
+        style={position}
+      >
         {part === "text" ? (
           <InputGroupText
             id="subject"
@@ -66,9 +72,10 @@ export const InputGroupFixture = () => {
               p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
             }
             align={p.get("align") === "center" ? "center" : "left"}
+            className="fixture-geometry-height"
             style={{
+              "--fixture-height": `${Number(p.get("height") ?? 9) * scale}px`,
               width: width * scale,
-              height: Number(p.get("height") ?? 9) * scale,
             }}
             data-subject="true"
           >
@@ -79,9 +86,10 @@ export const InputGroupFixture = () => {
             id="subject"
             ref={button}
             disabled={state.startsWith("disabled")}
+            className="fixture-geometry-height"
             style={{
+              "--fixture-height": `${Number(p.get("height") ?? 20) * scale}px`,
               width: width * scale,
-              height: Number(p.get("height") ?? 20) * scale,
             }}
             data-subject="true"
           >

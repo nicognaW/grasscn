@@ -57,18 +57,19 @@ export const CarouselFixture = () => {
     return (
       <Carousel
         scale={scale}
+        className="fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width fixture-geometry-height"
         style={{
-          position: "fixed",
-          left: Number(p.get("x") ?? 16) * scale,
-          top: Number(p.get("y") ?? 16) * scale,
-          width: 12 * scale,
-          height: 17 * scale,
+          "--fixture-height": `${17 * scale}px`,
+          "--fixture-width": `${12 * scale}px`,
+          "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+          "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
         }}
       >
         <Arrow
           id="subject"
           disabled={(p.get("state") ?? "").startsWith("disabled")}
-          style={{ position: "static", transform: "none" }}
+          className="fixture-placement-static"
+          style={{ transform: "none" }}
           data-subject="true"
         />
       </Carousel>
@@ -88,7 +89,11 @@ export const CarouselFixture = () => {
           loop: p.has("loop"),
         }}
         dir={p.has("rtl") ? "rtl" : undefined}
-        style={{ height: vertical ? 180 : undefined, width: 300 }}
+        className={
+          vertical
+            ? "fixture-width-300 fixture-height-180"
+            : "fixture-width-300"
+        }
         onKeyDownCapture={(event) => {
           if (p.has("cancelKeys")) {
             event.preventDefault();
@@ -99,10 +104,11 @@ export const CarouselFixture = () => {
           {Array.from({ length: count }, (_, i) => (
             <CarouselItem
               key={i}
+              className="fixture-height-180"
               style={{
                 background: ["#505050", "#303030", "#707070"][i % 3],
                 display: "grid",
-                height: 180,
+
                 placeItems: "center",
               }}
             >

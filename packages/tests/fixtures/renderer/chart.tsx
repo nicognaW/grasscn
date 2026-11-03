@@ -22,9 +22,9 @@ const c = JSON.parse(p.get("case") ?? "{}") as ChartFixtureQuery;
 const scale = c.scale ?? 2;
 
 const style = {
-  left: (c.x ?? 16) * scale,
+  "--fixture-x": `${(c.x ?? 16) * scale}px`,
+  "--fixture-y": `${(c.y ?? 16) * scale}px`,
   position: "fixed" as const,
-  top: (c.y ?? 16) * scale,
 };
 
 const ApiFixture = () => {
@@ -73,7 +73,8 @@ const ApiFixture = () => {
         config={config}
         scale={apiScale}
         initialDimension={{ height: 300, width: 480 }}
-        style={{ height: 300, width: wide ? 600 : 480 }}
+        className="fixture-height-300 fixture-geometry-width"
+        style={{ "--fixture-width": `${wide ? 600 : 480}px` }}
       >
         <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
@@ -136,7 +137,7 @@ const ApiFixture = () => {
         id="themed-pixels"
         config={config}
         scale={2}
-        style={{ height: 160, width: 320 }}
+        className="fixture-height-160 fixture-width-320"
       >
         <BarChart data={data}>
           <Bar
@@ -271,6 +272,7 @@ export const ChartFixture = () => {
         .slice(Math.max(0, 240 - ((c.width ?? 242) - 2)))
         .map((value: number) => ({ value: value / 1e6 }))}
       framerateLimit={c.value}
+      className="fixture-geometry-x fixture-geometry-y"
       style={style}
       data-subject="true"
     />
@@ -285,6 +287,7 @@ export const ChartFixture = () => {
         name,
         percentage: c.percentages[i],
       }))}
+      className="fixture-geometry-x fixture-geometry-y"
       style={style}
       data-subject="true"
     />

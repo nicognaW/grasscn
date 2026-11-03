@@ -17,6 +17,8 @@ import {
 } from "@grasscn/web/ui/pagination";
 import * as React from "react";
 
+import { cn } from "./utils";
+
 const p = new URLSearchParams(location.search);
 const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
 const kind = p.get("component") ?? "button-group";
@@ -27,9 +29,9 @@ const width = Number(p.get("width") ?? 200);
 const height = Number(p.get("height") ?? 20);
 
 const position: React.CSSProperties = {
-  left: Number(p.get("x") ?? 16) * scale,
-  position: "absolute",
-  top: Number(p.get("y") ?? 16) * scale,
+  "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+
+  "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
 };
 
 export const StructuralFixture = () => {
@@ -49,7 +51,11 @@ export const StructuralFixture = () => {
       id="subject"
       scale={scale}
       disabled={state === "disabled"}
-      style={{ height: height * scale, width: width * scale }}
+      className="fixture-geometry-height fixture-geometry-width"
+      style={{
+        "--fixture-height": `${height * scale}px`,
+        "--fixture-width": `${width * scale}px`,
+      }}
       onClick={() => {
         setEvents((v) => v + 1);
       }}
@@ -64,7 +70,11 @@ export const StructuralFixture = () => {
       <>
         <div
           id="container"
-          style={{ ...position, width: Number(p.get("containerWidth") ?? 320) }}
+          className="fixture-geometry-width fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
+          style={{
+            ...position,
+            "--fixture-width": `${Number(p.get("containerWidth") ?? 320)}px`,
+          }}
         >
           <AspectRatio
             id="ratio"
@@ -94,6 +104,7 @@ export const StructuralFixture = () => {
             p.get("orientation") === "vertical" ? "vertical" : "horizontal"
           }
           scale={scale}
+          className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
           style={position}
         >
           {p.get("part") === "text" ? (
@@ -104,11 +115,12 @@ export const StructuralFixture = () => {
                 p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
               }
               align={p.get("alignment") === "center" ? "center" : "left"}
+              className="fixture-geometry-width fixture-geometry-height"
               style={{
-                padding: 0,
-                width: width * scale,
-                height: height * scale,
+                "--fixture-height": `${height * scale}px`,
+                "--fixture-width": `${width * scale}px`,
                 display: "block",
+                padding: 0,
               }}
               data-subject="true"
             >
@@ -120,7 +132,8 @@ export const StructuralFixture = () => {
               scale={scale}
               orientation="horizontal"
               edge={p.get("edge") === "footer" ? "footer" : "header"}
-              style={{ width: width * scale, minWidth: 0 }}
+              className="fixture-geometry-width"
+              style={{ "--fixture-width": `${width * scale}px`, minWidth: 0 }}
               data-subject="true"
             />
           ) : (
@@ -135,7 +148,8 @@ export const StructuralFixture = () => {
               </ButtonGroupText>
               <Button
                 scale={scale}
-                style={{ width: 80 * scale }}
+                className="fixture-geometry-width"
+                style={{ "--fixture-width": `${80 * scale}px` }}
                 onClick={() => {
                   setEvents((v) => v + 1);
                 }}
@@ -166,6 +180,7 @@ export const StructuralFixture = () => {
         scale={scale}
         aria-disabled={state.startsWith("disabled") || undefined}
         href="#next"
+        className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
         style={position}
         onClick={(event) => {
           if (p.has("cancel")) {
@@ -184,11 +199,15 @@ export const StructuralFixture = () => {
       <>
         <Pagination
           aria-label="World pages"
+          className={cn({
+            "fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width":
+              native,
+          })}
           style={
             native
               ? {
                   ...position,
-                  width: width * scale,
+                  "--fixture-width": `${width * scale}px`,
                   justifyContent: "flex-start",
                 }
               : undefined
@@ -203,7 +222,11 @@ export const StructuralFixture = () => {
                 id="subject"
                 ref={ref}
                 scale={scale}
-                style={{ width: width * scale, height: height * scale }}
+                className="fixture-geometry-height"
+                style={{
+                  "--fixture-height": `${height * scale}px`,
+                  width: width * scale,
+                }}
                 href="#next"
                 aria-disabled={state === "disabled" || undefined}
                 isActive={p.has("active")}

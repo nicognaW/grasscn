@@ -36,10 +36,11 @@ export const ToggleFixture = () => {
         id="subject"
         ref={ref}
         scale={scale}
+        className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
         style={{
-          left: Number(p.get("x") ?? 16) * scale,
-          position: "absolute",
-          top: Number(p.get("y") ?? 16) * scale,
+          "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+
+          "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
         }}
         aria-label={label}
         disabled={state.startsWith("disabled")}

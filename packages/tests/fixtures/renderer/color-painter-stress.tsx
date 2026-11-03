@@ -58,13 +58,13 @@ export const ColorPainterStressFixture = () => {
           >
             <BubbleContent
               id="subject"
+              className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
               style={{
+                "--fixture-height": `${9 * scale}px`,
+                "--fixture-width": `${252 * scale}px`,
+                "--fixture-x": `${16 * scale}px`,
+                "--fixture-y": `${16 * scale}px`,
                 color: "#ff5555",
-                height: 9 * scale,
-                left: 16 * scale,
-                position: "fixed",
-                top: 16 * scale,
-                width: 252 * scale,
               }}
               data-subject="true"
             >
@@ -75,14 +75,14 @@ export const ColorPainterStressFixture = () => {
                   <span
                     data-stress-label
                     key={index}
+                    className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
                     style={{
+                      "--fixture-x": `${700 + index}px`,
+                      "--fixture-y": `${300 + index}px`,
                       color: ["#55ff55", "#ff55ff", "#ffaa00", "#55ffff"][
                         index % 4
                       ],
-                      left: 700 + index,
                       opacity: 0,
-                      position: "fixed",
-                      top: 300 + index,
                     }}
                   >
                     <MinecraftColorUnicodeLabel

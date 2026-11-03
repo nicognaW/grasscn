@@ -64,6 +64,8 @@ export const ToggleGroupFixture = () => {
 
   const props = {
     "aria-label": "Recipe filters",
+    className:
+      "fixture-placement-absolute fixture-geometry-x fixture-geometry-y",
     dir: p.get("dir") === "rtl" ? ("rtl" as const) : ("ltr" as const),
     disabled: state.startsWith("disabled"),
     loopFocus: !p.has("noLoop"),
@@ -74,10 +76,9 @@ export const ToggleGroupFixture = () => {
     ref: root,
     scale,
     style: {
-      position: "absolute",
-      left: Number(p.get("x") ?? 16) * scale,
-      top: Number(p.get("y") ?? 16) * scale,
-    } satisfies React.CSSProperties,
+      "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+      "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
+    },
   };
 
   return (

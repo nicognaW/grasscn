@@ -26,14 +26,15 @@ export const NativeSelectFixture = () => {
         disabled={q.get("state")?.startsWith("disabled")}
         wrapperProps={{
           style: {
-            position: "fixed",
             left: Number(q.get("x") ?? 16) * scale,
+            position: "fixed",
             top: Number(q.get("y") ?? 16) * scale,
           },
         }}
+        className="fixture-geometry-width fixture-geometry-height"
         style={{
-          width: Number(q.get("width") ?? 200) * scale,
-          height: Number(q.get("height") ?? 20) * scale,
+          "--fixture-height": `${Number(q.get("height") ?? 20) * scale}px`,
+          "--fixture-width": `${Number(q.get("width") ?? 200) * scale}px`,
         }}
         data-subject="true"
       >
