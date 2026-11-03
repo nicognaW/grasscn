@@ -240,7 +240,7 @@ const worker = async function worker() {
         const images = [...document.querySelectorAll(".mc-surface>span")]
           .map(
             (node) =>
-              /url\(["']?(.*?)["']?\)/.exec(
+              /url\(["']?(?<imageUrl>.*?)["']?\)/.exec(
                 getComputedStyle(node).backgroundImage
               )?.[1]
           )

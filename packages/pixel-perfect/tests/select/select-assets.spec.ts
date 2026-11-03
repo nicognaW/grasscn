@@ -28,7 +28,7 @@ test("Select retains original list texture bytes", () => {
 
   for (const [name, uri] of Object.entries(minecraftSelectAssets)) {
     const bytes = Buffer.from(
-      /base64,([A-Za-z0-9+/=]+)/u.exec(uri)![1],
+      /base64,(?<pngBase64>[A-Za-z0-9+/=]+)/u.exec(uri)![1],
       "base64"
     );
 
