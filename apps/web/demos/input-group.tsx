@@ -19,10 +19,17 @@ interface PresentationLayoutStyle2 extends IntrinsicLayoutCSSProperties {
   "--mc-presentation-demos-input-group-2-width": `${number}px`;
 }
 
+interface SendButtonStyle extends IntrinsicLayoutCSSProperties {
+  "--input-group-send-width": `${number}px`;
+}
+
 const InputGroupDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("Player");
   const [message, setMessage] = React.useState("你好，Minecraft!");
   const [sent, setSent] = React.useState("");
+  const sendButtonStyle: SendButtonStyle = {
+    "--input-group-send-width": `${60 * scale}px`,
+  };
 
   return (
     <>
@@ -74,7 +81,8 @@ const InputGroupDemo = ({ scale }: DemoProps) => {
               onClick={() => {
                 setSent(name + ": " + message);
               }}
-              style={{ width: 60 * scale }}
+              className="w-(--input-group-send-width)"
+              style={sendButtonStyle}
             >
               Send
             </InputGroupButton>
