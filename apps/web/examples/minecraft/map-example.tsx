@@ -14,7 +14,7 @@ const MapExample = () => {
   const [selected, setSelected] = useState("Choose a marker");
 
   return (
-    <div className="grid [gap:16px]">
+    <div className="grid gap-4">
       <MinecraftMap
         pixels={pixels}
         markers={[

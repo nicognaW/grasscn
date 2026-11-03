@@ -19,7 +19,7 @@ const ResizableExample = () => {
   const [layout, setLayout] = useState("50% / 50%");
 
   return (
-    <div className="grid [gap:24px]">
+    <div className="grid gap-6">
       <ResizablePanelGroup
         orientation="horizontal"
         groupRef={group}

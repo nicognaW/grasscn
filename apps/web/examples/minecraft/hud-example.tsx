@@ -15,7 +15,7 @@ const HudExample = () => {
   const [health, setHealth] = useState(17);
 
   return (
-    <div className="grid [gap:16px]">
+    <div className="grid gap-4">
       <HealthMeter value={health} />
       <ArmorMeter value={14} />
       <HungerMeter value={18} />

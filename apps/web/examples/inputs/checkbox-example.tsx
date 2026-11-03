@@ -10,7 +10,7 @@ const CheckboxExample = () => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <div className="items-center flex [gap:12px]">
+    <div className="items-center flex gap-3">
       <Checkbox id={id} checked={checked} onCheckedChange={setChecked} />
       <Label htmlFor={id}>Enable shadows</Label>
     </div>

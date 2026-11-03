@@ -15,7 +15,7 @@ const AdvancementTreeExample = () => {
   const [selected, setSelected] = useState("plan");
 
   return (
-    <div className="grid [gap:16px]">
+    <div className="grid gap-4">
       <AdvancementTree
         nodes={nodes}
         selectedId={selected}

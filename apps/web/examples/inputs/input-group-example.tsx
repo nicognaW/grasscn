@@ -22,7 +22,7 @@ const InputGroupExample = () => {
         setMessage("");
       }}
 
-      className="grid [gap:12px]"
+      className="grid gap-3"
     >
       <InputGroup>
         <InputGroupInput

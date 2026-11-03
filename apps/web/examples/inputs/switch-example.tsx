@@ -10,7 +10,7 @@ const SwitchExample = () => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <div className="items-center flex [gap:12px]">
+    <div className="items-center flex gap-3">
       <Switch id={id} checked={checked} onCheckedChange={setChecked} />
       <Label htmlFor={id}>Enable clouds</Label>
     </div>

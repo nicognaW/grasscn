@@ -42,7 +42,7 @@ const TradingExample = () => {
 
   return (
     <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      className="grid [gap:16px]"
+      className="grid gap-4"
       style={{ maxWidth: "100%" }}
       /* eslint-enable shadcn/no-inline-styles */
     >

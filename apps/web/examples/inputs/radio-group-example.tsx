@@ -15,7 +15,7 @@ const RadioGroupExample = () => {
         <div
           key={value}
 
-          className="items-center flex [gap:12px]"
+          className="items-center flex gap-3"
         >
           <RadioGroupItem id={`${id}-${value}`} value={value} />
           <Label htmlFor={`${id}-${value}`}>

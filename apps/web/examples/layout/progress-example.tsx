@@ -9,7 +9,7 @@ const ProgressExample = () => {
   const [value, setValue] = useState(50);
 
   return (
-    <div className="grid [gap:24px]">
+    <div className="grid gap-6">
       <Progress aria-label="World loading" value={value} />
       <Button
         onClick={() => {

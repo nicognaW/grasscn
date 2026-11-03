@@ -15,7 +15,7 @@ const PlayerListExample = () => {
   const [selected, setSelected] = useState("Alex");
 
   return (
-    <div className="grid [gap:16px]">
+    <div className="grid gap-4">
       <PlayerList
         players={players}
         header="Build crew"
