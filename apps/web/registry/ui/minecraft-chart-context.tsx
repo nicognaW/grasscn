@@ -561,6 +561,7 @@ export const ChartPixelSurface = ({
           mask.strokeStyle = ink.ink;
           mask.lineWidth = Math.max(
             scale,
+            // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
             Math.round(Number.parseFloat(style.strokeWidth) / scale) * scale
           );
           mask.setLineDash(
@@ -568,6 +569,7 @@ export const ChartPixelSurface = ({
               ? []
               : style.strokeDasharray
                   .split(/[ ,]+/u)
+                  // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
                   .map((dashToken) => Number.parseFloat(dashToken))
           );
           mask.stroke(path);

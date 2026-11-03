@@ -132,13 +132,16 @@ const BubbleContent = ({
       let pixels = fixed
         ? element.clientWidth
         : parent.clientWidth -
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           Number.parseFloat(parentStyle.paddingLeft) -
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           Number.parseFloat(parentStyle.paddingRight);
 
       if (bubble) {
         const maximum = getComputedStyle(bubble).maxWidth;
 
         if (maximum.endsWith("px")) {
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           pixels = Math.min(pixels, parseFloat(maximum));
         }
 
@@ -152,7 +155,9 @@ const BubbleContent = ({
           1,
           Math.floor(
             (pixels -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               Number.parseFloat(ownStyle.paddingLeft) -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               Number.parseFloat(ownStyle.paddingRight)) /
               scale
           )

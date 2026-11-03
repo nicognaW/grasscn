@@ -137,7 +137,9 @@ const PopoverContent = ({
           1,
           Math.floor(
             (node.clientWidth -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               Number.parseFloat(computed.paddingLeft) -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               Number.parseFloat(computed.paddingRight)) /
               scale
           )

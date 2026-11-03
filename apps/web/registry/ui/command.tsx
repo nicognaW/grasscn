@@ -183,7 +183,9 @@ const CommandList = ({
       element.dataset.mcMenuBelow = String(element.scrollTop < maximum - 0.5);
 
       const padding =
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(getComputedStyle(element).paddingTop) +
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(getComputedStyle(element).paddingBottom);
 
       for (const [key, value] of Object.entries({

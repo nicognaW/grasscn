@@ -130,6 +130,7 @@ test("calendar family and native select have inset preview stages", async ({
     await expect(stage).toHaveClass(/demo-stage/);
     expect(
       await stage.evaluate((el) =>
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(getComputedStyle(el).paddingLeft)
       )
     ).toBeGreaterThan(0);

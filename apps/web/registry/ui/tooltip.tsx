@@ -89,6 +89,7 @@ const TooltipContent = ({
 
     const measure = () => {
       const physical =
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(
           getComputedStyle(node).getPropertyValue("--available-width")
         ) || window.innerWidth;

@@ -136,7 +136,9 @@ const useMenuFrame = function useMenuFrame(
       const style = getComputedStyle(node);
 
       const padding =
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(style.paddingTop) +
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(style.paddingBottom);
 
       const maximum = Math.max(0, node.scrollHeight - node.clientHeight);

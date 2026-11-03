@@ -128,6 +128,7 @@ const CollapsibleContent = ({
       const physical =
         (element.clientWidth ||
           (computed.width.endsWith("px")
+            // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
             ? Number.parseFloat(computed.width)
             : 0) ||
           root?.clientWidth) ??
@@ -135,7 +136,9 @@ const CollapsibleContent = ({
 
       const logical = Math.floor(
         (physical -
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           Number.parseFloat(computed.paddingLeft) -
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           Number.parseFloat(computed.paddingRight)) /
           scale
       );

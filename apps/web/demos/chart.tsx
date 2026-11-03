@@ -68,7 +68,9 @@ const ChartDemo = ({ scale }: DemoProps) => {
           40,
           Math.floor(
             (node.clientWidth -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               parseFloat(css.paddingLeft) -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               parseFloat(css.paddingRight)) /
               scale
           )
