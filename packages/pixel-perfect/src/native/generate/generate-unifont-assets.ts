@@ -175,10 +175,10 @@ for (const line of hexSource.split("\n")) {
 
   planeGlyphs.push(
     new Glyph({
-      name: `uni${raw}`,
-      unicode: code,
       advanceWidth: ((right - left + 1) / 2 + 1) * 128,
+      name: `uni${raw}`,
       path: new Path(),
+      unicode: code,
     })
   );
   count += 1;
@@ -193,11 +193,9 @@ for (const [plane, glyphs] of groups) {
   }
 
   const font = new Font({
-    familyName: "Minecraft Unihex Metrics",
-    styleName: "Regular",
-    unitsPerEm: 1024,
     ascender: 896,
     descender: -128,
+    familyName: "Minecraft Unihex Metrics",
     glyphs: [
       new Glyph({
         name: ".notdef",
@@ -206,6 +204,8 @@ for (const [plane, glyphs] of groups) {
       }),
       ...glyphs,
     ],
+    styleName: "Regular",
+    unitsPerEm: 1024,
   });
 
   css += `@font-face { font-family: "Minecraft Unihex Metrics"; src: url("data:font/otf;base64,${stableFont(font.toArrayBuffer()).toString("base64")}") format("opentype"); font-weight: 400; font-style: normal; font-display: block; unicode-range: U+${(plane * 65_536).toString(16)}-${(plane * 65_536 + 65_535).toString(16)}; }\n`;
