@@ -1,1 +1,1 @@
-import "@ppt/installed/verify-button-consumers";
+import "@ppt/installed/verify-button-consumers.mjs";

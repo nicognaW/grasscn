@@ -6,4 +6,7 @@ import { pixelPerfectRoot } from "@ppt/paths";
 export const bunRuntimeVersion: string = Bun.version;
 
 /** @type {string} */
-export const capturedReferenceOwner: string = path.join(pixelPerfectRoot, "tests");
+export const capturedReferenceOwner: string = path.join(
+  pixelPerfectRoot,
+  "tests"
+);

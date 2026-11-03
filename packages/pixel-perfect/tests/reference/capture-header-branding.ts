@@ -3,13 +3,12 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { PNG } from "pngjs";
 import type { NativeLibrary } from "@ppt/runtime/docs-reference-types";
-
 import {
   parseHeaderCase,
   parseMinecraftMetadata,
 } from "@ppt/runtime/docs-reference-types";
+import { PNG } from "pngjs";
 
 const here = import.meta.dirname;
 
@@ -39,7 +38,8 @@ for (const directory of [work, output]) {
       );
     }
   } catch (error) {
-    // SAFETY: this catch observes the owned Node readdir API's Error/errno object; the optional code read and original rethrow remain unchanged.
+    // SAFETY: this try reports filesystem errno errors or its own ordinary Error; the Node error interface keeps code optional and preserves the original read/rethrow.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Node filesystem/ordinary Error boundary; retain optional errno access.
     if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
       throw error;
     }
@@ -58,7 +58,9 @@ const minecraftRoot = path.resolve(version, "../..");
 const jar = path.join(version, `${instance}.jar`);
 
 /** @param bytes - Original input accepted by the owned hash-update SDK. */
-const hash = (bytes: Parameters<ReturnType<typeof createHash>["update"]>[0]) => createHash("sha256").update(bytes).digest("hex");
+const hash = (bytes: Parameters<ReturnType<typeof createHash>["update"]>[0]) =>
+  createHash("sha256").update(bytes).digest("hex");
+
 const sourceJarSha256 = hash(await readFile(jar));
 
 if (

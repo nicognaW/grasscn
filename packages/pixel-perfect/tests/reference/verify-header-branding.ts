@@ -3,26 +3,33 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { PNG } from "pngjs";
-import type { HeaderCapture, ImageIdentity } from "@ppt/runtime/docs-reference-types";
-
+import type {
+  HeaderCapture,
+  ImageIdentity,
+} from "@ppt/runtime/docs-reference-types";
 import {
   parseHeaderCase,
   parseHeaderCapture,
   parseImageIdentity,
 } from "@ppt/runtime/docs-reference-types";
+import { PNG } from "pngjs";
 
 const root = path.resolve(
   process.argv[2] ?? fileURLToPath(new URL("branding-header", import.meta.url))
 );
 
 /** @param bytes - Original reference input accepted by the owned hash-update SDK. */
-const hash = (bytes: Parameters<ReturnType<typeof createHash>["update"]>[0]) => createHash("sha256").update(bytes).digest("hex");
+const hash = (bytes: Parameters<ReturnType<typeof createHash>["update"]>[0]) =>
+  createHash("sha256").update(bytes).digest("hex");
+
 const definitions = await readFile(path.join(root, "case.json"));
 const definition = parseHeaderCase(definitions.toString("utf-8"));
 
 /** @type {(import("@ppt/runtime/docs-reference-types").HeaderCapture & {images: Record<string, import("@ppt/runtime/docs-reference-types").ImageIdentity>, launch: string})[]} */
-const captures: (HeaderCapture & { images: Record<string, ImageIdentity>; launch: string })[] = [];
+const captures: (HeaderCapture & {
+  images: Record<string, ImageIdentity>;
+  launch: string;
+})[] = [];
 
 for (const launch of ["native-one", "native-two"]) {
   const directory = path.join(root, launch);
