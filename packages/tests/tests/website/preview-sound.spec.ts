@@ -7,6 +7,10 @@ import {
 } from "@grasscn/web/ui/minecraft-sound";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
+interface PreviewSoundFixtureWindow extends Window {
+  __previewVoices: Voice[];
+}
+
 declare global {
   interface Window {
     __previewVoices?: Voice[];
@@ -36,7 +40,9 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
     window.__previewVoices = [];
     HTMLMediaElement.prototype.play = function play() {
-      window.__previewVoices!.push({
+      // SAFETY: this init script assigns the recorder before installing play; every later clear/navigation write preserves an array of these actual Voice records.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized page-local sound recorder protocol, including subsequent field resets.
+      (window as PreviewSoundFixtureWindow).__previewVoices.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,

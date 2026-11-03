@@ -1,6 +1,10 @@
 import { test, expect } from "@grasscn/tests/test";
 import { expectLength } from "@grasscn/tests/assertions";
 
+interface BookAudioFixtureWindow extends Window {
+  bookAudio: { src: string; volume: number; rate: number }[];
+}
+
 declare global {
   interface Window {
     bookAudio?: { src: string; volume: number; rate: number }[];
@@ -66,7 +70,14 @@ test("book navigation and native page-turn sound", async ({ page }) => {
   await expect(
     page.getByRole("document", { exact: true, name: "Page 2" })
   ).toBeVisible();
-  expect(await page.evaluate(() => window.bookAudio!.length)).toBe(1);
+  // SAFETY: this page's init script installs the same recorded-book array before app code; Page 2/3 assertions above establish the mounted fixture before this read.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact page-local recorded-book playback protocol; no extra check or changed read.
+  expect(
+    await page.evaluate(
+      () => (window as BookAudioFixtureWindow).bookAudio.length
+    )
+  ).toBe(1);
+  // oxlint-enable typescript/no-unsafe-type-assertion
 });
 
 test("hotbar pointer, keyboard and wheel selection", async ({ page }) => {
