@@ -3,6 +3,10 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 
+import type * as Playwright from "@playwright/test";
+import type * as PngJs from "pngjs";
+import type { NativeButtonCase } from "@ppt/installed/button-consumer-types";
+
 import { sha256 } from "@grasscn/tests/consumer-boundary";
 import { parseWebsiteIdentity } from "@grasscn/tests/consumer-validation";
 import {
@@ -20,11 +24,11 @@ import {
   pixelPerfectRoot,
   pixelPerfectTestRoot,
   referenceFile,
-} from "../paths.ts";
+} from "@ppt/paths";
 import {
   parseNativeManifest,
   parseBaseCatalogue,
-} from "./button-consumer-types.ts";
+} from "@ppt/installed/button-consumer-types";
 
 // The caller explicitly selects this one existing website-default Base case.
 assert.equal(
@@ -123,6 +127,8 @@ const nativeCase = manifest.cases.find(
   (entry) => entry.name === "normal-w200-s2.png"
 );
 
+assert.ok(nativeCase, "Missing required Button capture normal-w200-s2.png");
+
 assert.deepEqual(
   {
     height: nativeCase.height,
@@ -152,18 +158,18 @@ assert.equal(sha256(referenceBytes), nativeCase.sha256);
 
 const observer = createRequire(path.join(pixelPerfectRoot, "package.json"));
 
-/** @type {typeof import("@playwright/test")} */
+// SAFETY: createRequire is bound to the owned PPT package and resolves the pinned Playwright observer at this original load phase.
 // eslint-disable-next-line typescript/no-unsafe-assignment -- Preserve the pinned observer module selected through its own package resolution.
-const playwrightModule = observer("@playwright/test");
+const playwrightModule: typeof Playwright = observer("@playwright/test");
 const { chromium } = playwrightModule;
 
-/** @type {typeof import("pngjs")} */
+// SAFETY: the same owned observer resolves the installed pngjs decoder/comparator API at this original load phase.
 // eslint-disable-next-line typescript/no-unsafe-assignment -- Preserve the pinned observer module selected through its own package resolution.
-const pngModule = observer("pngjs");
+const pngModule: typeof PngJs = observer("pngjs");
 const { PNG } = pngModule;
 
 /** @param {import("pngjs").PNG} actual @param {import("pngjs").PNG} expected */
-const compare = (actual, expected) => {
+const compare = (actual: PngJs.PNG, expected: PngJs.PNG) => {
   assert.deepEqual(
     [actual.width, actual.height],
     [expected.width, expected.height]
@@ -198,7 +204,38 @@ assert.equal(
   "Actual comparator must reject one-pixel corruption"
 );
 
-const report = {
+interface ConsumerPptResult {
+  actualSha256: string;
+  host: Awaited<ReturnType<typeof servePreparedConsumer>>["identity"];
+  id: string;
+  mismatchedPixels: number;
+  preparedArtifacts: string;
+  referenceSha256: string;
+  totalPixels: number;
+}
+
+interface ConsumerPptReport {
+  consumers: ConsumerPptResult[];
+  environment: ReturnType<typeof consumerVerificationEnvironment> & {
+    arch: typeof process.arch;
+    browserVersion?: string;
+    bun: string;
+    deviceScaleFactor: number;
+    platform: typeof process.platform;
+    viewport: { height: number; width: number };
+  };
+  error?: string;
+  nonPptIncluded: boolean;
+  onePixelCorruptionDetected: boolean;
+  pptOnly: boolean;
+  reference: NativeButtonCase & { manifestSha256: string; sourceJarSha256: string };
+  selection: string;
+  source: typeof source;
+  status: "incomplete" | "passed" | "failed";
+  websiteIdentity: typeof websiteIdentity;
+}
+
+const report: ConsumerPptReport = {
   consumers: [],
   environment: {
     ...consumerVerificationEnvironment(),
@@ -222,8 +259,8 @@ const report = {
   websiteIdentity,
 };
 
-let browser;
-let host;
+let browser: Playwright.Browser | undefined;
+let host: Awaited<ReturnType<typeof servePreparedConsumer>> | undefined;
 
 try {
   browser = await chromium.launch({ channel: "msedge", headless: true });
@@ -242,7 +279,7 @@ try {
       viewport: report.environment.viewport,
     });
 
-    const errors = [];
+    const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto(host.url);
     await page.mouse.move(1000, 800);
