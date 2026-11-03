@@ -62,10 +62,17 @@ export const test = base.extend<{ grasscnVerificationArtifacts: void }>({
         renderedUrl = page.url();
         const subject = page.locator("[data-subject]");
 
-        if ((await subject.count()) === 1) {
-          subjectSlot = await subject.getAttribute("data-slot");
-          subjectElement = await subject.evaluate((element) => element.tagName);
-        }
+        const subjectSnapshot = await subject.evaluateAll((elements) =>
+          elements.length === 1
+            ? {
+                dataSlot: elements[0].dataset.slot ?? null,
+                tagName: elements[0].tagName,
+              }
+            : undefined
+        );
+
+        subjectSlot = subjectSnapshot?.dataSlot;
+        subjectElement = subjectSnapshot?.tagName;
       }
 
       await info.attach("grasscn-verification-artifacts", {
