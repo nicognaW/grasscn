@@ -86,16 +86,16 @@ test.describe("DataTable original native label constituents", () => {
         await page.setViewportSize({ height: 900, width: 1536 });
 
         const q = new URLSearchParams({
+          alignment: c.alignment ?? "left",
+          background: c.background,
+          height: String(c.height),
+          label: c.label,
           native: "1",
           part,
-          label: c.label,
-          width: String(c.width),
-          height: String(c.height),
           scale: String(c.scale),
+          width: String(c.width),
           x: String(c.x),
           y: String(c.y),
-          background: c.background,
-          alignment: c.alignment ?? "left",
         });
 
         if (c.wrapWidth !== undefined) {

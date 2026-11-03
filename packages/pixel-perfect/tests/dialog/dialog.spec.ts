@@ -98,12 +98,12 @@ for (const constituentDirectory of [
 
         const query = new URLSearchParams({
           component: "dialog",
+          label: c.label,
+          labels: JSON.stringify(c.labels),
           native: "1",
           scale: String(c.scale),
-          label: c.label,
-          wrapWidth: String(c.wrapWidth),
-          labels: JSON.stringify(c.labels),
           state: c.state,
+          wrapWidth: String(c.wrapWidth),
         });
 
         if (c.text !== null) {

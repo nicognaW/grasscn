@@ -174,15 +174,15 @@ test.describe("Sidebar original native constituent cases", () => {
             }
 
             const params = new URLSearchParams({
+              background: c.background ?? manifest.background ?? "#202020",
+              height: String(c.height ?? 20),
               native: "1",
               part,
-              state: c.state,
               scale: String(c.scale),
+              state: c.state,
               width: String(c.width),
-              height: String(c.height ?? 20),
               x: String(c.x ?? 16),
               y: String(c.y ?? 16),
-              background: c.background ?? manifest.background ?? "#202020",
             });
 
             for (const field of [

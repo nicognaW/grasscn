@@ -122,15 +122,15 @@ test.describe("Toggle Group native recipe-filter matrix", () => {
         await page.setViewportSize({ height: 900, width: 1536 });
 
         const params = new URLSearchParams({
+          background: c.background,
+          checked: String(c.checked),
           component: "toggle-group",
           native: "1",
-          type,
           scale: String(c.scale),
           state: c.state,
-          checked: String(c.checked),
+          type,
           x: String(c.x),
           y: String(c.y),
-          background: c.background,
         });
 
         await page.goto(`/?${params}`);

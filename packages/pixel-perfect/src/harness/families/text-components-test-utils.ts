@@ -141,19 +141,19 @@ export const nativeTextTests = function nativeTextTests(
           await page.setViewportSize({ height: 900, width: 1536 });
 
           const params = new URLSearchParams({
+            align: c.alignment ?? "left",
+            background: c.background ?? "#202020",
             component,
+            height: String(c.height ?? 20),
+            label: c.label ?? c.text ?? "Button",
             native: "1",
             part,
-            label: c.label ?? c.text ?? "Button",
-            text: c.label ?? c.text ?? "Button",
             scale: String(c.scale),
             state: c.state,
+            text: c.label ?? c.text ?? "Button",
             width: String(c.width),
-            height: String(c.height ?? 20),
             x: String(c.x ?? 16),
             y: String(c.y ?? 16),
-            background: c.background ?? "#202020",
-            align: c.alignment ?? "left",
           });
 
           if (c.wrapWidth !== undefined) {

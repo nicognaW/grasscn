@@ -91,13 +91,13 @@ for (const constituentDirectory of [
         await page.setViewportSize({ height: 900, width: 1536 });
 
         const query = new URLSearchParams({
+          blur: String(c.value),
           component: "alert-dialog",
+          label: c.label,
+          labels: JSON.stringify(c.labels),
           native: "1",
           scale: String(c.scale),
-          blur: String(c.value),
-          label: c.label,
           text: c.text,
-          labels: JSON.stringify(c.labels),
         });
 
         if (c.checked === true) {

@@ -54,19 +54,19 @@ for (const c of manifest.cases) {
       await page.setViewportSize({ height: 900, width: 1536 });
 
       const query = new URLSearchParams({
+        checked: String(c.checked ?? false),
         component: "menubar",
-        native: "1",
-        part: kind,
+        height: String(c.height),
         label: c.label ?? "",
         labels: JSON.stringify(c.labels ?? []),
-        checked: String(c.checked ?? false),
-        state: c.state,
+        native: "1",
+        part: kind,
         scale: String(c.scale),
+        state: c.state,
+        surface: c.element === "suggestion-list" ? "suggestions" : "popup",
         width: String(c.width),
-        height: String(c.height),
         x: String(c.x),
         y: String(c.y),
-        surface: c.element === "suggestion-list" ? "suggestions" : "popup",
       });
 
       await page.goto(`/?${query}`);
