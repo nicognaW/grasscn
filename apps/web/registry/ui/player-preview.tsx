@@ -90,7 +90,7 @@ const buildRenderer = function buildRenderer(
     );
     gl.compileShader(result);
 
-    if (!gl.getShaderParameter(result, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(result, gl.COMPILE_STATUS) !== true) {
       const message = gl.getShaderInfoLog(result);
       gl.deleteShader(result);
       throw new Error(message ?? "Player shader failed");
@@ -107,7 +107,7 @@ const buildRenderer = function buildRenderer(
   gl.attachShader(program, fragment);
   gl.linkProgram(program);
 
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+  if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
     throw new Error(
       gl.getProgramInfoLog(program) ?? "Player shader link failed"
     );

@@ -23,6 +23,28 @@ interface AttachmentComparisonManifest {
   cases: AttachmentComparisonCase[];
 }
 
+const attachmentReferenceParameters = (
+  c: AttachmentComparisonCase,
+  manifest: AttachmentComparisonManifest,
+  part: string
+) =>
+  new URLSearchParams({
+    background: c.background ?? manifest.background ?? "#202020",
+    component: "attachment",
+    description: c.placeholder ?? "Survival Mode",
+    height: String(c.height ?? 20),
+    label: c.label,
+    native: "1",
+    part,
+    scale: String(c.scale),
+    selected: String(c.selected ?? false),
+    state: c.state,
+    text: c.text ?? "world-1",
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
 for (const [part, dir] of [
   ["row", "item"],
   ["action", "."],
@@ -44,22 +66,7 @@ for (const [part, dir] of [
       test(c.name, async ({ page }, info) => {
         await page.setViewportSize({ height: 900, width: 1536 });
 
-        const q = new URLSearchParams({
-          background: c.background ?? manifest.background ?? "#202020",
-          component: "attachment",
-          description: c.placeholder ?? "Survival Mode",
-          height: String(c.height ?? 20),
-          label: c.label,
-          native: "1",
-          part,
-          scale: String(c.scale),
-          selected: String(c.selected ?? false),
-          state: c.state,
-          text: c.text ?? "world-1",
-          width: String(c.width),
-          x: String(c.x ?? 16),
-          y: String(c.y ?? 16),
-        });
+        const q = attachmentReferenceParameters(c, manifest, part);
 
         await page.goto(`/?${q}`);
         const subject = page.locator("[data-subject]");
@@ -71,13 +78,27 @@ for (const [part, dir] of [
             subject.locator("[data-slot=attachment-content]")
           ).toHaveAttribute("data-mc-item-content-ready", "true");
 
-          for (const label of await subject
-            .locator("[data-mc-label-layout-ready]")
-            .all()) {
-            await expect(label).toHaveAttribute(
-              "data-mc-label-layout-ready",
-              "true"
+          {
+            const readyElements = await subject
+              .locator("[data-mc-label-layout-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (label) => {
+                await expect(label).toHaveAttribute(
+                  "data-mc-label-layout-ready",
+                  "true"
+                );
+              })
             );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
           }
 
           await expect(
@@ -124,10 +145,27 @@ for (const [part, dir] of [
           }
         }
 
-        for (const glyph of await subject
-          .locator("[data-mc-label-ready]")
-          .all()) {
-          await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+        {
+          const readyElements = await subject
+            .locator("[data-mc-label-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (glyph) => {
+              await expect(glyph).toHaveAttribute(
+                "data-mc-label-ready",
+                "true"
+              );
+            })
+          );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
         await page.evaluate(async () => {

@@ -95,7 +95,7 @@ const create = function create(): Painter | null {
       gl.shaderSource(shader, source);
       gl.compileShader(shader);
 
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) !== true) {
         throw new Error(
           gl.getShaderInfoLog(shader) ?? "Native font shader failed"
         );

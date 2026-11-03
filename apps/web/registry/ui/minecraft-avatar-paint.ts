@@ -41,7 +41,7 @@ export const paintMinecraftAvatar = function paintMinecraftAvatar(
       gl.shaderSource(s, source);
       gl.compileShader(s);
 
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      if (gl.getShaderParameter(s, gl.COMPILE_STATUS) !== true) {
         throw new Error(gl.getShaderInfoLog(s) ?? "Avatar shader");
       }
 

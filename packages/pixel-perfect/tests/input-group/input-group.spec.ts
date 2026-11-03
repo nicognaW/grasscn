@@ -11,6 +11,42 @@ import type {
 } from "@ppt/installed/control-capture-protocol";
 import { PNG } from "pngjs";
 
+const inputGroupReferenceParameters = (
+  c: InputGroupCaptureManifest["cases"][number],
+  part: string
+) => {
+  const q = new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background ?? "#202020",
+    component: "input-group",
+    height: String(c.height ?? (part === "text" ? 9 : 20)),
+    label: c.label ?? "Button",
+    native: "1",
+    part,
+    placeholder: c.placeholder ?? "",
+    scale: String(c.scale),
+    state: c.state ?? "normal",
+    text: c.text ?? "",
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
+  const caseWrapWidth = c.wrapWidth;
+
+  if (caseWrapWidth !== null && caseWrapWidth !== undefined) {
+    q.set("wrapWidth", String(caseWrapWidth));
+  }
+
+  const caseMaxLength = c.maxLength;
+
+  if (caseMaxLength !== null && caseMaxLength !== undefined) {
+    q.set("maxLength", String(caseMaxLength));
+  }
+
+  return q;
+};
+
 test.describe.configure({ mode: "parallel" });
 
 const sha = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
@@ -44,34 +80,7 @@ for (const [folder, part] of [
 
       const entry = part === "input" || part === "textarea";
 
-      const q = new URLSearchParams({
-        align: c.alignment ?? "left",
-        background: c.background ?? "#202020",
-        component: "input-group",
-        height: String(c.height ?? (part === "text" ? 9 : 20)),
-        label: c.label ?? "Button",
-        native: "1",
-        part,
-        placeholder: c.placeholder ?? "",
-        scale: String(c.scale),
-        state: c.state ?? "normal",
-        text: c.text ?? "",
-        width: String(c.width),
-        x: String(c.x ?? 16),
-        y: String(c.y ?? 16),
-      });
-
-      const caseWrapWidth = c.wrapWidth;
-
-      if (caseWrapWidth !== null && caseWrapWidth !== undefined) {
-        q.set("wrapWidth", String(caseWrapWidth));
-      }
-
-      const caseMaxLength = c.maxLength;
-
-      if (caseMaxLength !== null && caseMaxLength !== undefined) {
-        q.set("maxLength", String(caseMaxLength));
-      }
+      const q = inputGroupReferenceParameters(c, part);
 
       if (entry) {
         await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });

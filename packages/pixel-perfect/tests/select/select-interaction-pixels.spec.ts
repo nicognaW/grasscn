@@ -111,11 +111,11 @@ for (const scale of [1, 2, 3]) {
       writeFileSync(
         testInfo.outputPath("metrics.json"),
         JSON.stringify({
+          alias: mode,
+          case: c.name,
           component: "select",
           manifest: "tests/reference/select/manifest.json",
-          case: c.name,
           part: "list",
-          alias: mode,
         })
       );
       await testInfo.attach("actual", {

@@ -38,6 +38,66 @@ interface SidebarReferenceManifest {
   cases: SidebarReferenceCase[];
 }
 
+const sidebarReferenceParameters = (
+  c: SidebarReferenceCase,
+  manifest: SidebarReferenceManifest,
+  part: string,
+  active: boolean
+) => {
+  const params = new URLSearchParams({
+    background: c.background ?? manifest.background ?? "#202020",
+    height: String(c.height ?? 20),
+    native: "1",
+    part,
+    scale: String(c.scale),
+    state: c.state,
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
+  for (const field of [
+    "label",
+    "text",
+    "placeholder",
+    "maxLength",
+    "wrapWidth",
+    "alignment",
+    "contentHeight",
+    "value",
+  ] as const) {
+    if (c[field] !== undefined) {
+      params.set(field, String(c[field]));
+    }
+  }
+
+  if (active) {
+    params.set("active", "1");
+  }
+
+  return params;
+};
+
+const sidebarSlotForPart = (part: string) => {
+  let slotSelection: string;
+
+  if (part === "sub-button") {
+    slotSelection = "sidebar-menu-sub-button";
+  } else if (part === "label") {
+    slotSelection = "sidebar-group-label";
+  } else if (part === "badge") {
+    slotSelection = "sidebar-menu-badge";
+  } else if (part === "panel") {
+    slotSelection = "sidebar";
+  } else if (part === "scroll") {
+    slotSelection = "sidebar-content";
+  } else {
+    slotSelection = `sidebar-${part}`;
+  }
+
+  return slotSelection;
+};
+
 const repo = path.resolve(".");
 
 const hash = (value: Buffer) =>
@@ -173,55 +233,16 @@ test.describe("Sidebar original native constituent cases", () => {
               await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
             }
 
-            const params = new URLSearchParams({
-              background: c.background ?? manifest.background ?? "#202020",
-              height: String(c.height ?? 20),
-              native: "1",
+            const params = sidebarReferenceParameters(
+              c,
+              manifest,
               part,
-              scale: String(c.scale),
-              state: c.state,
-              width: String(c.width),
-              x: String(c.x ?? 16),
-              y: String(c.y ?? 16),
-            });
-
-            for (const field of [
-              "label",
-              "text",
-              "placeholder",
-              "maxLength",
-              "wrapWidth",
-              "alignment",
-              "contentHeight",
-              "value",
-            ] as const) {
-              if (c[field] !== undefined) {
-                params.set(field, String(c[field]));
-              }
-            }
-
-            if (active) {
-              params.set("active", "1");
-            }
+              active
+            );
 
             await page.goto(`/?component=sidebar&${params}`);
             const subject = page.locator("[data-subject]");
-            let slotSelection: string;
-
-            if (part === "sub-button") {
-              slotSelection = "sidebar-menu-sub-button";
-            } else if (part === "label") {
-              slotSelection = "sidebar-group-label";
-            } else if (part === "badge") {
-              slotSelection = "sidebar-menu-badge";
-            } else if (part === "panel") {
-              slotSelection = "sidebar";
-            } else if (part === "scroll") {
-              slotSelection = "sidebar-content";
-            } else {
-              slotSelection = `sidebar-${part}`;
-            }
-
+            const slotSelection = sidebarSlotForPart(part);
             await expect(subject).toHaveAttribute("data-slot", slotSelection);
             await page.addStyleTag({
               content:
@@ -311,13 +332,27 @@ test.describe("Sidebar original native constituent cases", () => {
               );
             }
 
-            for (const label of await subject
-              .locator("[data-mc-label-ready]")
-              .all()) {
-              await expect(label).toHaveAttribute(
-                "data-mc-label-ready",
-                "true"
+            {
+              const readyElements = await subject
+                .locator("[data-mc-label-ready]")
+                .all();
+
+              const readinessResults = await Promise.allSettled(
+                readyElements.map(async (label) => {
+                  await expect(label).toHaveAttribute(
+                    "data-mc-label-ready",
+                    "true"
+                  );
+                })
               );
+
+              const rejectedReadiness = readinessResults.find(
+                (result) => result.status === "rejected"
+              );
+
+              if (rejectedReadiness) {
+                throw rejectedReadiness.reason;
+              }
             }
 
             if (kind !== "input") {
@@ -355,10 +390,10 @@ test.describe("Sidebar original native constituent cases", () => {
             writeFileSync(
               info.outputPath("metrics.json"),
               JSON.stringify({
-                case: c.name,
-                part,
                 active,
+                case: c.name,
                 mismatchedPixels,
+                part,
                 tolerance: 0,
               })
             );

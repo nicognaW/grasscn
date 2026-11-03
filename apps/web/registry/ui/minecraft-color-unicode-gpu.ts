@@ -95,7 +95,7 @@ const create = function create(): Painter | null {
       gl.shaderSource(shader, source);
       gl.compileShader(shader);
 
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) !== true) {
         throw new Error(
           gl.getShaderInfoLog(shader) ?? "Native font shader failed"
         );
@@ -120,7 +120,7 @@ const create = function create(): Painter | null {
     gl.linkProgram(program);
     gl.useProgram(program);
 
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
       throw new Error(
         gl.getProgramInfoLog(program) ?? "Native font program failed"
       );

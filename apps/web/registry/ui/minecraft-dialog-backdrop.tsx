@@ -35,7 +35,7 @@ export const MinecraftDialogBackdrop = () => {
       gl.shaderSource(value, source);
       gl.compileShader(value);
 
-      if (!gl.getShaderParameter(value, gl.COMPILE_STATUS)) {
+      if (gl.getShaderParameter(value, gl.COMPILE_STATUS) !== true) {
         throw new Error(gl.getShaderInfoLog(value) ?? "Backdrop shader failed");
       }
 

@@ -171,13 +171,27 @@ for (const [part, dir] of parts) {
             await page.clock.runFor((c as QuestionnaireInputCase).caretMs);
             await expect(subject).toHaveAttribute("data-mc-ready", "true");
           } else {
-            for (const glyph of await subject
-              .locator("[data-mc-label-ready]")
-              .all()) {
-              await expect(glyph).toHaveAttribute(
-                "data-mc-label-ready",
-                "true"
+            {
+              const readyElements = await subject
+                .locator("[data-mc-label-ready]")
+                .all();
+
+              const readinessResults = await Promise.allSettled(
+                readyElements.map(async (glyph) => {
+                  await expect(glyph).toHaveAttribute(
+                    "data-mc-label-ready",
+                    "true"
+                  );
+                })
               );
+
+              const rejectedReadiness = readinessResults.find(
+                (result) => result.status === "rejected"
+              );
+
+              if (rejectedReadiness) {
+                throw rejectedReadiness.reason;
+              }
             }
 
             await page.evaluate(async () => {
@@ -221,16 +235,16 @@ for (const [part, dir] of parts) {
           writeFileSync(
             info.outputPath("metrics.json"),
             JSON.stringify({
+              action,
+              alias: action,
+              case: c.name,
               component: "questionnaire",
               manifest:
                 dir === "."
                   ? "tests/reference/manifest.json"
                   : `tests/reference/${dir}/manifest.json`,
-              alias: action,
-              part,
-              action,
-              case: c.name,
               mismatchedPixels,
+              part,
               tolerance: 0,
             })
           );

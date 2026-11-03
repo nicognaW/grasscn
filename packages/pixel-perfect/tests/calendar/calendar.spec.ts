@@ -153,24 +153,50 @@ for (const component of ["calendar", "date-picker"]) {
                 "true"
               );
 
-              for (const canvas of await page
-                .locator("[data-subject] [data-mc-label-ready]")
-                .all()) {
-                await expect(canvas).toHaveAttribute(
-                  "data-mc-label-ready",
-                  "true"
+              {
+                const readyElements = await page
+                  .locator("[data-subject] [data-mc-label-ready]")
+                  .all();
+
+                const readinessResults = await Promise.allSettled(
+                  readyElements.map(async (canvas) => {
+                    await expect(canvas).toHaveAttribute(
+                      "data-mc-label-ready",
+                      "true"
+                    );
+                  })
                 );
+
+                const rejectedReadiness = readinessResults.find(
+                  (result) => result.status === "rejected"
+                );
+
+                if (rejectedReadiness) {
+                  throw rejectedReadiness.reason;
+                }
               }
             }
 
             if (part === "trigger-cjk") {
-              for (const text of await page
+              const readyElements = await page
                 .locator("[data-subject] [data-mc-label-ready]")
-                .all()) {
-                await expect(text).toHaveAttribute(
-                  "data-mc-label-ready",
-                  "true"
-                );
+                .all();
+
+              const readinessResults = await Promise.allSettled(
+                readyElements.map(async (text) => {
+                  await expect(text).toHaveAttribute(
+                    "data-mc-label-ready",
+                    "true"
+                  );
+                })
+              );
+
+              const rejectedReadiness = readinessResults.find(
+                (result) => result.status === "rejected"
+              );
+
+              if (rejectedReadiness) {
+                throw rejectedReadiness.reason;
               }
             }
 
@@ -221,15 +247,15 @@ for (const component of ["calendar", "date-picker"]) {
             writeFileSync(
               info.outputPath("metrics.json"),
               JSON.stringify({
+                alias,
+                case: c.name,
                 component,
                 manifest:
                   dir === "."
                     ? "tests/reference/manifest.json"
                     : `tests/reference/${dir}/manifest.json`,
-                part,
-                case: c.name,
-                alias,
                 mismatchedPixels,
+                part,
                 tolerance: 0,
               })
             );

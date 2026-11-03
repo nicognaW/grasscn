@@ -133,13 +133,27 @@ for (const constituentDirectory of [
             dialog.locator("[data-mc-dialog-unicode-ready]")
           ).toHaveCount(3);
 
-          for (const line of await dialog
-            .locator("[data-mc-dialog-unicode-ready]")
-            .all()) {
-            await expect(line).toHaveAttribute(
-              "data-mc-dialog-unicode-ready",
-              "true"
+          {
+            const readyElements = await dialog
+              .locator("[data-mc-dialog-unicode-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (line) => {
+                await expect(line).toHaveAttribute(
+                  "data-mc-dialog-unicode-ready",
+                  "true"
+                );
+              })
             );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
           }
         }
 
@@ -215,8 +229,8 @@ for (const constituentDirectory of [
           JSON.stringify({
             case: c.name,
             mismatchedPixels,
-            totalPixels: 1536 * 900,
             tolerance: 0,
+            totalPixels: 1536 * 900,
           })
         );
         expect(mismatchedPixels).toBe(0);

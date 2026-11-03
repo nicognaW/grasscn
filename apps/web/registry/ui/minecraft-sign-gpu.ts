@@ -39,7 +39,7 @@ export const paintSignGpu = function paintSignGpu(
     gl.shaderSource(s, text);
     gl.compileShader(s);
 
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(s, gl.COMPILE_STATUS) !== true) {
       throw new Error(gl.getShaderInfoLog(s) ?? "Sign shader failed");
     }
 

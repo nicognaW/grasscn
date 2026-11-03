@@ -3,7 +3,6 @@ import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 import type {
   MinecraftCaptureLibrary,
@@ -11,7 +10,7 @@ import type {
 } from "@ppt/native/capture-types";
 import { pixelPerfectTestRoot } from "@ppt/paths";
 
-const here = path.dirname(fileURLToPath(import.meta.url));
+const here = import.meta.dirname;
 
 const versionDir = path.resolve(
   process.argv[2] ?? process.env.MINECRAFT_VERSION_DIR ?? ""
@@ -255,7 +254,7 @@ for (const scale of [1, 2, 3]) {
     }
   }
 
-  for (let group = 0; group < 3; group++) {
+  for (let group = 0; group < 3; group += 1) {
     const start = 32 + group * 32;
     const end = Math.min(126, start + 31);
 

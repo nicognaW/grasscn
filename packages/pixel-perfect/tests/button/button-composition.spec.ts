@@ -51,11 +51,11 @@ for (const mode of ["split", "fragments", "empty", "numeric"]) {
       writeFileSync(
         info.outputPath("metrics.json"),
         JSON.stringify({
+          alias: mode,
+          case: c.name,
           component: "button",
           manifest: "tests/reference/manifest.json",
-          case: c.name,
           part: "label",
-          alias: mode,
         })
       );
 
@@ -123,11 +123,11 @@ for (const mode of ["split", "fragments", "empty"]) {
       writeFileSync(
         info.outputPath("metrics.json"),
         JSON.stringify({
+          alias: mode,
+          case: c.name,
           component: "button",
           manifest: "tests/reference/button-cjk/manifest.json",
-          case: c.name,
           part: "label",
-          alias: mode,
         })
       );
 

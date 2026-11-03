@@ -8,6 +8,23 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import type { CommandCaptureManifest } from "@ppt/installed/control-capture-protocol";
 import { PNG } from "pngjs";
 
+const commandBaseParameters = (
+  c: CommandCaptureManifest["cases"][number],
+  menu: boolean
+) =>
+  new URLSearchParams({
+    background: c.background ?? "#202020",
+    component: "command",
+    height: String(c.height),
+    native: "1",
+    part: menu ? "list" : "input",
+    scale: String(c.scale),
+    state: c.state,
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
 test.describe.configure({ mode: "parallel" });
 
 const sha = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
@@ -34,18 +51,7 @@ for (const [folder, part] of [
 
       const menu = folder === "suggestions";
 
-      const query = new URLSearchParams({
-        background: c.background ?? "#202020",
-        component: "command",
-        height: String(c.height),
-        native: "1",
-        part: menu ? "list" : "input",
-        scale: String(c.scale),
-        state: c.state,
-        width: String(c.width),
-        x: String(c.x ?? 16),
-        y: String(c.y ?? 16),
-      });
+      const query = commandBaseParameters(c, menu);
 
       if (menu) {
         query.set("labels", JSON.stringify(c.labels));
@@ -92,13 +98,27 @@ for (const [folder, part] of [
           subject.locator('[data-mc-menu-text-ready="false"]')
         ).toHaveCount(0, { timeout: 15_000 });
 
-        for (const line of await subject
-          .locator("[data-mc-menu-unicode-ready]")
-          .all()) {
-          await expect(line).toHaveAttribute(
-            "data-mc-menu-unicode-ready",
-            "true"
+        {
+          const readyElements = await subject
+            .locator("[data-mc-menu-unicode-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (line) => {
+              await expect(line).toHaveAttribute(
+                "data-mc-menu-unicode-ready",
+                "true"
+              );
+            })
           );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
         await page.evaluate(async () => {

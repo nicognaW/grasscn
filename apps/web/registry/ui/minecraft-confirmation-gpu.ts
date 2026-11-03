@@ -19,7 +19,7 @@ export const createConfirmationPainter = function createConfirmationPainter(
     gl.shaderSource(value, source);
     gl.compileShader(value);
 
-    if (!gl.getShaderParameter(value, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(value, gl.COMPILE_STATUS) !== true) {
       throw new Error(
         gl.getShaderInfoLog(value) ?? "Confirmation shader failed"
       );
@@ -49,7 +49,7 @@ export const createConfirmationPainter = function createConfirmationPainter(
     gl.attachShader(program, pixel);
     gl.linkProgram(program);
 
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
       throw new Error(
         gl.getProgramInfoLog(program) ?? "Confirmation program failed"
       );

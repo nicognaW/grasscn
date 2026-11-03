@@ -34,6 +34,27 @@ interface TextReferenceManifest {
   cases: TextReferenceCase[];
 }
 
+const textReferenceParameters = (
+  c: TextReferenceCase,
+  component: string,
+  part: string
+) =>
+  new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background ?? "#202020",
+    component,
+    height: String(c.height ?? 20),
+    label: c.label ?? c.text ?? "Button",
+    native: "1",
+    part,
+    scale: String(c.scale),
+    state: c.state,
+    text: c.label ?? c.text ?? "Button",
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
 export const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
@@ -140,21 +161,7 @@ export const nativeTextTests = function nativeTextTests(
         }, info) => {
           await page.setViewportSize({ height: 900, width: 1536 });
 
-          const params = new URLSearchParams({
-            align: c.alignment ?? "left",
-            background: c.background ?? "#202020",
-            component,
-            height: String(c.height ?? 20),
-            label: c.label ?? c.text ?? "Button",
-            native: "1",
-            part,
-            scale: String(c.scale),
-            state: c.state,
-            text: c.label ?? c.text ?? "Button",
-            width: String(c.width),
-            x: String(c.x ?? 16),
-            y: String(c.y ?? 16),
-          });
+          const params = textReferenceParameters(c, component, part);
 
           if (c.wrapWidth !== undefined) {
             params.set("wrapWidth", String(c.wrapWidth));
@@ -200,10 +207,27 @@ export const nativeTextTests = function nativeTextTests(
             );
           }
 
-          for (const line of await subject
-            .locator("[data-mc-label-ready]")
-            .all()) {
-            await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+          {
+            const readyElements = await subject
+              .locator("[data-mc-label-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (line) => {
+                await expect(line).toHaveAttribute(
+                  "data-mc-label-ready",
+                  "true"
+                );
+              })
+            );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
           }
 
           await page.evaluate(async () => {
@@ -243,12 +267,12 @@ export const nativeTextTests = function nativeTextTests(
           writeFileSync(
             info.outputPath("metrics.json"),
             JSON.stringify({
-              component,
-              manifest: `${directory}/manifest.json`,
-              part,
               alias: part,
               case: c.name,
+              component,
+              manifest: `${directory}/manifest.json`,
               mismatchedPixels,
+              part,
               tolerance: 0,
             })
           );

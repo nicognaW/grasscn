@@ -47,6 +47,19 @@ interface ComboboxComparisonManifest {
   cases: ComboboxComparisonCase[];
 }
 
+const comboboxBaseParameters = (c: ComboboxComparisonCase, kind: string) =>
+  new URLSearchParams({
+    background: c.background ?? "#202020",
+    height: String(c.height),
+    native: "1",
+    part: kind === "suggestions" ? "list" : "input",
+    scale: String(c.scale),
+    state: c.state,
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
 const repo = path.resolve(".");
 const audits = new WeakMap<object, string[]>();
 
@@ -118,17 +131,7 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
         await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
       }
 
-      const q = new URLSearchParams({
-        background: c.background ?? "#202020",
-        height: String(c.height),
-        native: "1",
-        part: kind === "suggestions" ? "list" : "input",
-        scale: String(c.scale),
-        state: c.state,
-        width: String(c.width),
-        x: String(c.x ?? 16),
-        y: String(c.y ?? 16),
-      });
+      const q = comboboxBaseParameters(c, kind);
 
       if (kind === "suggestions") {
         // SAFETY: The captured kind suggestions route reads only its retained Suggestions cases, all with string-array labels.
@@ -181,22 +184,50 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
           unicodeCount
         );
 
-        for (const label of await subject
-          .locator("[data-mc-menu-text-ready]")
-          .all()) {
-          await expect(label).toHaveAttribute(
-            "data-mc-menu-text-ready",
-            "true"
+        {
+          const readyElements = await subject
+            .locator("[data-mc-menu-text-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (label) => {
+              await expect(label).toHaveAttribute(
+                "data-mc-menu-text-ready",
+                "true"
+              );
+            })
           );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
-        for (const line of await subject
-          .locator("[data-mc-menu-unicode-ready]")
-          .all()) {
-          await expect(line).toHaveAttribute(
-            "data-mc-menu-unicode-ready",
-            "true"
+        {
+          const readyElements = await subject
+            .locator("[data-mc-menu-unicode-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (line) => {
+              await expect(line).toHaveAttribute(
+                "data-mc-menu-unicode-ready",
+                "true"
+              );
+            })
           );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
         await page.evaluate(async () => {
