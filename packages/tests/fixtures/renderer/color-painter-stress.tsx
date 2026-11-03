@@ -5,6 +5,11 @@ import { MinecraftColorUnicodeLabel } from "@grasscn/web/ui/minecraft-color-unic
 import { minecraftItemAtlas } from "@grasscn/web/ui/minecraft-item-atlas";
 import * as React from "react";
 
+interface ColorPainterReferenceStyle extends React.CSSProperties {
+  "--mc-pixel": string;
+  "--mc-scale": 1 | 2 | 3;
+}
+
 export const ColorPainterStressFixture = () => {
   const [scale, setScale] = React.useState<1 | 2 | 3>(3);
   const [noise, setNoise] = React.useState(true);
@@ -15,6 +20,7 @@ export const ColorPainterStressFixture = () => {
       "#202020";
   }, []);
 
+  // SAFETY: Minecraft component styles consume this exact pixel/scale map from the fixture's 1/2/3 state; satisfies checks it before the CSSProperties view is passed to React.
   return (
     <>
       <div className="fixture-painter-stress-controls">
@@ -53,7 +59,7 @@ export const ColorPainterStressFixture = () => {
               {
                 "--mc-pixel": `${scale}px`,
                 "--mc-scale": scale,
-              } as React.CSSProperties
+              } satisfies ColorPainterReferenceStyle as ColorPainterReferenceStyle
             }
           >
             <BubbleContent

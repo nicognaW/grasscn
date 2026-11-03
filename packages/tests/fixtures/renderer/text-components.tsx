@@ -35,6 +35,13 @@ import * as React from "react";
 
 import "./native-reference.css";
 
+interface TextReferenceStyle extends React.CSSProperties {
+  "--reference-height": string | undefined;
+  "--reference-width": string | undefined;
+  "--reference-x": string;
+  "--reference-y": string;
+}
+
 const q = new URLSearchParams(location.search);
 
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
@@ -64,6 +71,7 @@ const TextComponentsFixture = () => {
     text
   );
 
+  // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
   const common = {
     className: "native-reference-geometry",
     "data-native-height": q.has("height") || undefined,
@@ -83,7 +91,7 @@ const TextComponentsFixture = () => {
       "--reference-height": q.has("height")
         ? `${Number(q.get("height")) * scale}px`
         : undefined,
-    } as React.CSSProperties,
+    } satisfies TextReferenceStyle as TextReferenceStyle,
   };
 
   let subject: React.ReactNode;
@@ -132,6 +140,7 @@ const TextComponentsFixture = () => {
       </Empty>
     );
   } else if (component === "badge") {
+    // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
     subject = (
       <Badge
         render={q.has("asChild") ? <a href="#destination" /> : undefined}
@@ -149,7 +158,7 @@ const TextComponentsFixture = () => {
                 "--reference-height": q.has("height")
                   ? `${(Number(q.get("height")) - 16) * scale}px`
                   : undefined,
-              } as React.CSSProperties)
+              } satisfies TextReferenceStyle as TextReferenceStyle)
             : ({
                 "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
                 "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
@@ -159,7 +168,7 @@ const TextComponentsFixture = () => {
                 "--reference-height": q.has("height")
                   ? `${Number(q.get("height")) * scale}px`
                   : undefined,
-              } as React.CSSProperties)
+              } satisfies TextReferenceStyle as TextReferenceStyle)
         }
       >
         {rich}
