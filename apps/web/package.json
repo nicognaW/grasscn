@@ -108,11 +108,11 @@
     "./ui/typography": "./registry/ui/typography.tsx"
   },
   "scripts": {
-    "generate": "bun x --bun --no-install fumadocs-mdx && bun scripts/generate-component-symbols.mjs && bun --bun next typegen",
-    "dev": "bun scripts/generate-component-symbols.mjs && BUN_OPTIONS=\"--smol $BUN_OPTIONS\" bun --bun next dev --webpack --hostname 127.0.0.1 --port 5176",
+    "generate": "bun x --bun --no-install fumadocs-mdx && bun scripts/generate-component-symbols.ts && bun --bun next typegen",
+    "dev": "bun scripts/generate-component-symbols.ts && BUN_OPTIONS=\"--smol $BUN_OPTIONS\" bun --bun next dev --webpack --hostname 127.0.0.1 --port 5176",
     "build": "BUN_OPTIONS=\"--smol $BUN_OPTIONS\" bun --bun next build --webpack",
     "registry:build": "bun x --bun --no-install shadcn build",
-    "registry:serve": "bun run registry:build && bun scripts/serve.mjs",
+    "registry:serve": "bun run registry:build && bun scripts/serve.ts",
     "start": "bun --bun next start --hostname 127.0.0.1 --port 5176"
   },
   "dependencies": {

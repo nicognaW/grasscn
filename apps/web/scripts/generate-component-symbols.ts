@@ -11,12 +11,15 @@ import registry from "../registry.json" with { type: "json" };
 const webRoot = fileURLToPath(new URL("../", import.meta.url));
 const config = path.resolve(webRoot, "tsconfig.json");
 
-/** @type {Record<string,string[]>} */
-const groupedEntries = groups;
+const groupedEntries: Record<string, string[]> = groups;
 const api = new API({ cwd: webRoot });
 
-/** @type {Record<string,{registryItem:string,exports:string[]}>} */
-const symbols = {};
+interface RegistryPublicSymbols {
+  registryItem: string;
+  exports: string[];
+}
+
+const symbols: Record<string, RegistryPublicSymbols> = {};
 
 try {
   const snapshot = api.updateSnapshot({ openProjects: [config] });

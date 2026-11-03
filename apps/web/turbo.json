@@ -5,7 +5,7 @@
       "inputs": [
         "content/docs/**",
         "source.config.ts",
-        "scripts/generate-component-symbols.mjs",
+        "scripts/generate-component-symbols.ts",
         "registry.json",
         "registry/**/*.ts",
         "registry/**/*.tsx",

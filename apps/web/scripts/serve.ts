@@ -1,11 +1,21 @@
-import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
+import type { IncomingMessage } from "node:http";
+import { readFile } from "node:fs/promises";
+
+interface RegistryServerRequest extends IncomingMessage {
+  url: string;
+}
 
 const port = Number(process.env.PORT || 5173);
 const root = new URL("../public/r/", import.meta.url);
 
 createServer(async (request, response) => {
-  const pathname = new URL(request.url, "http://localhost").pathname;
+  const pathname = new URL(
+    // SAFETY: Node's Server request event supplies the request-target URL; client response messages are the variant without this field.
+    // eslint-disable-next-line typescript/no-unsafe-type-assertion -- This local server-request view expresses the actual Node producer contract without changing URL parsing.
+    (request as RegistryServerRequest).url,
+    "http://localhost"
+  ).pathname;
 
   if (request.method !== "GET" && request.method !== "HEAD") {
     response.writeHead(405, { Allow: "GET, HEAD" }).end();
@@ -32,7 +42,11 @@ createServer(async (request, response) => {
     });
     response.end(request.method === "HEAD" ? undefined : content);
   } catch (error) {
-    const status = error.code === "ENOENT" ? 404 : 500;
+    const status =
+      // SAFETY: Native readFile/ServerResponse errors carry an optional errno code; missing codes retain the existing 500 path.
+      // eslint-disable-next-line typescript/no-unsafe-type-assertion -- This local view is the actual Node operation error contract; no runtime validation or catch behavior changes.
+      (error as NodeJS.ErrnoException).code === "ENOENT" ? 404 : 500;
+
     response.writeHead(status, { "Content-Type": "application/json" });
     response.end(
       JSON.stringify({

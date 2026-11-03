@@ -51,7 +51,7 @@
     "examples/**/*.tsx",
     "demos/**/*.ts",
     "demos/**/*.tsx",
-    "scripts/*.mjs",
+    "scripts/*.ts",
     "scripts/*.test.tsx",
     "scripts/*.test.ts",
     "next.config.mjs",
