@@ -18,6 +18,7 @@ const fixture =
 
 // SAFETY: This owned General fixture records the retained producer's wheel/press/drag shapes
 // for exactly eight offer counts; wheel has amount, drag has y, and press has neither.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained MerchantScreen probe JSON boundary; preserve the original parse and discriminated gesture assertions.
 const probes = JSON.parse(
   readFileSync(
     referenceFile(`trading/scrollbar/trading-scroll-events.json`),
