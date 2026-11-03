@@ -175,7 +175,11 @@ import "./style.css";
 const params = new URLSearchParams(location.search);
 
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
-const scale = Number(params.get("scale") ?? 2) as 1 | 2 | 3;
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(params.get("scale") ?? 2) as 1 | 2 | 3;
+
 const width = Number(params.get("width") ?? 200);
 const state = params.get("state") ?? "normal";
 const label = params.get("label") ?? "Button";
@@ -538,7 +542,11 @@ const SwitchFixture = () => {
       id="subject"
       ref={ref}
       scale={scale}
-      size={(params.get("size") ?? undefined) as "default" | undefined}
+      size={
+        // SAFETY: owned fixture callers serialize the size option from the actual component protocol ("default" | undefined); preserve this URL read, original default and component handling.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+        (params.get("size") ?? undefined) as "default" | undefined
+      }
       checked={params.has("controlled") ? checked : undefined}
       defaultChecked={params.get("checked") === "true"}
       disabled={state === "disabled"}
@@ -774,9 +782,15 @@ const ContextFixture = () => {
       data-subject="true"
       ref={content}
       side={
+        // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
         (params.get("side") ?? "right") as "top" | "right" | "bottom" | "left"
       }
-      align={(params.get("align") ?? "start") as "start" | "center" | "end"}
+      align={
+        // SAFETY: owned fixture callers serialize the align option from the actual component protocol ("start" | "center" | "end"); preserve this URL read, original default and component handling.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+        (params.get("align") ?? "start") as "start" | "center" | "end"
+      }
       sideOffset={native ? 0 : 4}
       surface={
         params.get("surface") === "suggestions" ? "suggestions" : "popup"
@@ -1175,9 +1189,13 @@ const MenubarFixture = () => {
       data-subject="true"
       ref={content}
       side={
+        // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
         (params.get("side") ?? "bottom") as "top" | "right" | "bottom" | "left"
       }
       align={
+        // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "start" | "center" | "end"); preserve this URL read, original default and component handling.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
         (params.get("align") ?? (native ? "start" : "center")) as
           | "start"
           | "center"
@@ -1475,9 +1493,13 @@ const DropdownFixture = () => {
       data-subject="true"
       ref={content}
       side={
+        // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
         (params.get("side") ?? "bottom") as "top" | "right" | "bottom" | "left"
       }
       align={
+        // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "start" | "center" | "end"); preserve this URL read, original default and component handling.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
         (params.get("align") ?? (native ? "start" : "center")) as
           | "start"
           | "center"
@@ -1644,6 +1666,8 @@ const PopoverFixture = () => {
           ref={content}
           aria-label={native ? "Test popover" : undefined}
           side={
+            // SAFETY: owned fixture callers serialize the side option from the actual component protocol (| "bottom" | "top" | "left" | "right"); preserve this URL read, original default and component handling.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
             (params.get("side") ?? "bottom") as
               | "bottom"
               | "top"
@@ -1651,6 +1675,8 @@ const PopoverFixture = () => {
               | "right"
           }
           align={
+            // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "start" | "center" | "end"); preserve this URL read, original default and component handling.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
             (params.get("align") ?? (native ? "start" : "center")) as
               | "start"
               | "center"
@@ -2385,8 +2411,16 @@ const FixtureProgress = () => {
         scale={scale}
         value={progressValue}
         max={Number(params.get("max") ?? 100)}
-        color={(params.get("color") ?? "pink") as BossBarColor}
-        overlay={(params.get("overlay") ?? "progress") as BossBarOverlay}
+        color={
+          // SAFETY: owned fixture callers serialize the color option from the actual component protocol (BossBarColor); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("color") ?? "pink") as BossBarColor
+        }
+        overlay={
+          // SAFETY: owned fixture callers serialize the overlay option from the actual component protocol (BossBarOverlay); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("overlay") ?? "progress") as BossBarOverlay
+        }
         aria-label="Test progress"
         onClick={() => {
           setCount((current) => current + 1);
@@ -2832,6 +2866,8 @@ const FixtureTooltip = () => {
           scale={scale}
           maxWidth={Number(params.get("wrapWidth") ?? 170)}
           side={
+            // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "bottom" | "left" | "right"); preserve this URL read, original default and component handling.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
             (params.get("side") ?? "top") as "top" | "bottom" | "left" | "right"
           }
           sideOffset={Number(params.get("offset") ?? 0)}

@@ -19,8 +19,13 @@ import * as React from "react";
 
 export const QuestionnaireFixture = () => {
   const q = new URLSearchParams(location.search);
+
   // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const [result, setResult] = React.useState("");
   const [item, setItem] = React.useState("");
   const [tag, setTag] = React.useState("");
@@ -51,7 +56,10 @@ export const QuestionnaireFixture = () => {
     const text = q.get("label") ?? "Hello Minecraft";
 
     const textProps = {
-      align: (q.get("align") ?? "left") as "left" | "center",
+      align:
+        // SAFETY: owned fixture callers serialize the align option from the actual component protocol ("left" | "center"); preserve this URL read, original default and component handling.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+        (q.get("align") ?? "left") as "left" | "center",
       "data-subject": "true",
       id: "subject",
       maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,

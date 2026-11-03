@@ -25,8 +25,13 @@ interface ChatFamilyReferenceStyle extends React.CSSProperties {
 export const ChatFamilyFixture = () => {
   const q = new URLSearchParams(location.search);
   const component = q.get("component") ?? q.get("part") ?? "message";
+
   // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const native = q.has("native");
   const label = q.get("label") ?? "Hello Minecraft!";
   const [text, setText] = React.useState(label);

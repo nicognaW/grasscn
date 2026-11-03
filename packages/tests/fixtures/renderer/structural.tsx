@@ -22,7 +22,11 @@ import { cn } from "./utils";
 const p = new URLSearchParams(location.search);
 
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
 const kind = p.get("component") ?? "button-group";
 const state = p.get("state") ?? "normal";
 const native = p.has("native");

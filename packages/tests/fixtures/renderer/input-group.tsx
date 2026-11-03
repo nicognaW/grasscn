@@ -13,7 +13,11 @@ const native = p.has("native");
 const part = p.get("part") ?? "input";
 
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
 const state = p.get("state") ?? "normal";
 const width = Number(p.get("width") ?? 200);
 
@@ -115,11 +119,14 @@ export const InputGroupFixture = () => {
     );
   }
 
-  const align = (p.get("align") ?? "inline-start") as
-    | "inline-start"
-    | "inline-end"
-    | "block-start"
-    | "block-end";
+  const align =
+    // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "inline-start" | "inline-end" | "block-start" | "block-end"); preserve this URL read, original default and component handling.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    (p.get("align") ?? "inline-start") as
+      | "inline-start"
+      | "inline-end"
+      | "block-start"
+      | "block-end";
 
   return (
     <form

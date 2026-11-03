@@ -8,8 +8,13 @@ import * as React from "react";
 
 export const MarkerFixture = () => {
   const q = new URLSearchParams(location.search);
+
   // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const [count, setCount] = React.useState(0);
   const [tag, setTag] = React.useState("");
   const ref = React.useRef<HTMLDivElement>(null);
