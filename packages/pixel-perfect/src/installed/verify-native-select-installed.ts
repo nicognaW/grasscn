@@ -28,7 +28,12 @@ const { chromium, expect } =
 // SAFETY: createRequire resolves the actual installed PNG decoder used by this comparator.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed pngjs module API boundary.
 const { PNG } = require("pngjs") as typeof PngJs;
-const verifyNativeSelectCase = async (c: NativeSelectCaptureManifest["cases"][number], dir: string, fixturePage: Page | undefined) => {
+
+const verifyNativeSelectCase = async (
+  c: NativeSelectCaptureManifest["cases"][number],
+  dir: string,
+  fixturePage: Page | undefined
+) => {
   const q = new URLSearchParams({
     background: c.background,
     height: String(c.height),
@@ -86,7 +91,9 @@ const verifyNativeSelectCase = async (c: NativeSelectCaptureManifest["cases"][nu
   });
 
   const actual = PNG.sync.read(
-    await fixturePage!.locator("#subject").screenshot({ animations: "disabled" })
+    await fixturePage!
+      .locator("#subject")
+      .screenshot({ animations: "disabled" })
   );
 
   const expected = PNG.sync.read(
@@ -104,9 +111,7 @@ const verifyNativeSelectCase = async (c: NativeSelectCaptureManifest["cases"][nu
   assert.equal(
     hash(
       fs.readFileSync(
-        pixelPerfectFile(
-          path.join("tests/reference", dir, "captures", c.name)
-        )
+        pixelPerfectFile(path.join("tests/reference", dir, "captures", c.name))
       )
     ),
     c.sha256
@@ -115,9 +120,7 @@ const verifyNativeSelectCase = async (c: NativeSelectCaptureManifest["cases"][nu
 
   for (let i = 0; i < expected.data.length; i += 4) {
     if (
-      !actual.data
-        .subarray(i, i + 4)
-        .equals(expected.data.subarray(i, i + 4))
+      !actual.data.subarray(i, i + 4).equals(expected.data.subarray(i, i + 4))
     ) {
       different += 1;
     }
@@ -132,9 +135,7 @@ const verifyNativeSelectCase = async (c: NativeSelectCaptureManifest["cases"][nu
   }
 
   return {
-    decodedRgbaSha256: createHash("sha256")
-      .update(actual.data)
-      .digest("hex"),
+    decodedRgbaSha256: createHash("sha256").update(actual.data).digest("hex"),
     mismatchedPixels: 0,
     name: c.name,
   };

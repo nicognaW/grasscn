@@ -131,7 +131,11 @@ const compare = function compare(a: PNG, b: PNG) {
   return count;
 };
 
-const verifyChatCase = async (c: MessageCaptureManifest["cases"][number], part: string, page: Page) => {
+const verifyChatCase = async (
+  c: MessageCaptureManifest["cases"][number],
+  part: string,
+  page: Page
+) => {
   const q = new URLSearchParams();
 
   for (const [key, value] of Object.entries(c)) {
@@ -146,9 +150,10 @@ const verifyChatCase = async (c: MessageCaptureManifest["cases"][number], part: 
   await expect(subject).toBeVisible();
 
   if (part === "selectable") {
-    await expect(
-      subject.locator("[data-mc-selectable-ready]")
-    ).toHaveAttribute("data-mc-selectable-ready", "true");
+    await expect(subject.locator("[data-mc-selectable-ready]")).toHaveAttribute(
+      "data-mc-selectable-ready",
+      "true"
+    );
   } else {
     await expect(subject).toHaveAttribute("data-mc-chat-ready", "true");
     await expect(
@@ -156,9 +161,7 @@ const verifyChatCase = async (c: MessageCaptureManifest["cases"][number], part: 
     ).toHaveAttribute("data-mc-label-layout-ready", "true");
   }
 
-  for (const glyph of await subject
-    .locator("[data-mc-label-ready]")
-    .all()) {
+  for (const glyph of await subject.locator("[data-mc-label-ready]").all()) {
     await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
   }
 
@@ -181,9 +184,7 @@ const verifyChatCase = async (c: MessageCaptureManifest["cases"][number], part: 
   const count = compare(
     PNG.sync.read(
       fs.readFileSync(
-        pixelPerfectFile(
-          path.join("tests/reference/message/captures", c.name)
-        )
+        pixelPerfectFile(path.join("tests/reference/message/captures", c.name))
       )
     ),
     PNG.sync.read(actual)
