@@ -73,15 +73,10 @@ export const Schedule = () => {
       title="Find a day that works."
       tag="TEAM CALENDAR"
       description="Choose a date for the design review."
-      /* eslint-disable shadcn/no-unknown-classes -- Defined in the parent homepage.css composition stylesheet. */
+
       className="grass-schedule-panel"
-      /* eslint-enable shadcn/no-unknown-classes */
     >
-      <div
-        /* eslint-disable shadcn/no-unknown-classes -- Defined in the parent homepage.css composition stylesheet. */
-        className="grass-calendar-viewport"
-        /* eslint-enable shadcn/no-unknown-classes */
-      >
+      <div className="grass-calendar-viewport">
         <Calendar
           scale={2}
           components={{ DayButton: ScheduleDay }}

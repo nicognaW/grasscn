@@ -106,5 +106,21 @@ export default defineConfig({
       },
     },
   ],
-  settings: jsPluginSettings,
+  settings: {
+    // React delivers the real stylesheet through HomePage; exact owners preserve all other unknown-class checks.
+    ...jsPluginSettings,
+    shadcn: {
+      additionalCssSources: [
+        {
+          file: "components/home/homepage.css",
+          owners: [
+            "components/home/homepage.tsx",
+            "components/home/application-examples.tsx",
+            "components/home/showcase-panel.tsx",
+            "components/home/title-scene.tsx",
+          ],
+        },
+      ],
+    },
+  },
 });
