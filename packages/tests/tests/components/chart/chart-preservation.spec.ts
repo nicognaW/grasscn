@@ -97,7 +97,8 @@ for (const scale of [2] as const) {
       }
 
       await page.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers<void>();
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
 
         try {
           requestAnimationFrame(() => {

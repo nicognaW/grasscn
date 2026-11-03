@@ -4,9 +4,10 @@ interface TabsFallbackPlaybackState extends Window {
   voices?: number;
 }
 
-type InitializedTabsFallbackPlaybackState = typeof window & TabsFallbackPlaybackState & {
-  voices: number;
-};
+type InitializedTabsFallbackPlaybackState = typeof window &
+  TabsFallbackPlaybackState & {
+    voices: number;
+  };
 
 for (const reason of ["disabled", "missing"]) {
   test(`Tabs automatic ${reason} fallback stays silent`, async ({ page }) => {
@@ -33,7 +34,8 @@ for (const reason of ["disabled", "missing"]) {
       page.getByRole("tab", { exact: true, name: "First" })
     ).toHaveAttribute("aria-selected", "true");
     await page.evaluate(async () => {
-      const frameCompletion = Promise.withResolvers<void>();
+      const frameCompletion: PromiseWithResolvers<void> =
+        Promise.withResolvers();
 
       try {
         requestAnimationFrame(() => {

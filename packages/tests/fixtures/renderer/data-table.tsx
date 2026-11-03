@@ -41,8 +41,11 @@ const label = p.get("label") ?? "Minecraft";
 export const DataTableFixture = () => {
   React.useLayoutEffect(() => {
     const bg = p.get("background") ?? "#202020";
-    document.documentElement.style.background = document.body.style.background =
-      bg;
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = bg;
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
   const [events, setEvents] = React.useState(0);
 
