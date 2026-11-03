@@ -45,7 +45,10 @@ test("overlay documentation exposes exact examples, own grouped source and retai
     errors.push(`${page.url()}: ${error.message}`)
   );
 
-  for (const slug of slugs) {
+  const overlaySlugs = slugs;
+  const verifyOverlayDocumentation = async (
+    slug: (typeof overlaySlugs)[number]
+  ) => {
     await page.goto(`${origin}/docs/components/${slug}`);
 
     if (slug === "calendar") {
@@ -110,6 +113,10 @@ test("overlay documentation exposes exact examples, own grouped source and retai
     await expect(
       page.locator(".minecraft-prose").getByRole("alert")
     ).toHaveCount(0);
+  };
+
+  for (const slug of overlaySlugs) {
+    await verifyOverlayDocumentation(slug);
   }
 
   expect(errors).toEqual([]);
@@ -156,7 +163,10 @@ test("documentation confirmation callbacks update once and close their actual mo
 test("documentation edge panels expose labelled Done actions", async ({
   page,
 }) => {
-  for (const slug of ["sheet", "drawer"]) {
+  const edgePanelSlugs = ["sheet", "drawer"];
+  const verifyEdgePanelComposition = async (
+    slug: (typeof edgePanelSlugs)[number]
+  ) => {
     await page.goto(`${origin}/docs/components/${slug}`);
     const example = page.locator(".documentation-example").first();
 
@@ -176,6 +186,10 @@ test("documentation edge panels expose labelled Done actions", async ({
     await dialog.getByRole("button", { exact: true, name: "Done" }).click();
     await expect(dialog).toHaveCount(0);
     await expect(trigger).toBeFocused();
+  };
+
+  for (const slug of edgePanelSlugs) {
+    await verifyEdgePanelComposition(slug);
   }
 });
 
@@ -377,7 +391,15 @@ test("overlay documentation remains usable at its default mobile width", async (
 }, info) => {
   await page.setViewportSize({ height: 844, width: 390 });
 
-  for (const slug of ["dialog", "data-table", "message-scroller", "chart"]) {
+  const mobileOverlaySlugs = [
+    "dialog",
+    "data-table",
+    "message-scroller",
+    "chart",
+  ];
+  const verifyMobileOverlayDocumentation = async (
+    slug: (typeof mobileOverlaySlugs)[number]
+  ) => {
     await page.goto(`${origin}/docs/components/${slug}`);
     await expect(page.locator(".documentation-example").first()).toBeVisible();
     expect(
@@ -387,5 +409,9 @@ test("overlay documentation remains usable at its default mobile width", async (
       fullPage: true,
       path: info.outputPath(`${slug}-390-actual.png`),
     });
+  };
+
+  for (const slug of mobileOverlaySlugs) {
+    await verifyMobileOverlayDocumentation(slug);
   }
 });

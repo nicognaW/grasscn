@@ -28,6 +28,117 @@ const { chromium, expect } =
 // SAFETY: createRequire resolves the actual installed PNG decoder used by this comparator.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed pngjs module API boundary.
 const { PNG } = require("pngjs") as typeof PngJs;
+
+const verifyNativeSelectCase = async (
+  c: NativeSelectCaptureManifest["cases"][number],
+  dir: string,
+  fixturePage: Page
+) => {
+  const q = new URLSearchParams({
+    background: c.background,
+    height: String(c.height),
+    label: c.label,
+    native: "1",
+    scale: String(c.scale),
+    state: c.state,
+    timeMs: String(c.timeMs ?? 0),
+    width: String(c.width),
+    x: String(c.x),
+    y: String(c.y),
+  });
+
+  await fixturePage.goto(`${urlArg}?${q}`);
+  await expect(fixturePage.locator(".mc-select-trigger")).toHaveAttribute(
+    "data-mc-select-ready",
+    "true"
+  );
+  await expect(fixturePage.locator(".mc-select-trigger-label")).toHaveText(
+    c.label
+  );
+
+  for (const label of await fixturePage
+    .locator(".mc-native-select-art [data-mc-label-ready]")
+    .all()) {
+    await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
+  await fixturePage.mouse.move(0, 0);
+
+  await (c.state === "focus"
+    ? fixturePage.locator("#subject").focus()
+    : fixturePage.evaluate(() =>
+        // SAFETY: the native-select fixture focuses HTML controls; preserve the existing optional blur call.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Focused HTML fixture element DOM API boundary.
+        (document.activeElement as HTMLElement | null)?.blur()
+      ));
+
+  if (c.state.endsWith("hover")) {
+    await fixturePage.locator("#subject").hover({ force: true });
+  }
+
+  await fixturePage.evaluate(async () => {
+    const frameCompletion = Promise.withResolvers();
+
+    try {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(frameCompletion.resolve);
+      });
+    } catch (error) {
+      frameCompletion.reject(error);
+    }
+
+    return await frameCompletion.promise;
+  });
+
+  const actual = PNG.sync.read(
+    await fixturePage.locator("#subject").screenshot({ animations: "disabled" })
+  );
+
+  const expected = PNG.sync.read(
+    fs.readFileSync(
+      `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${
+        c.name
+      }`
+    )
+  );
+
+  assert.deepEqual(
+    [actual.width, actual.height],
+    [expected.width, expected.height]
+  );
+  assert.equal(
+    hash(
+      fs.readFileSync(
+        pixelPerfectFile(path.join("tests/reference", dir, "captures", c.name))
+      )
+    ),
+    c.sha256
+  );
+  let different = 0;
+
+  for (let i = 0; i < expected.data.length; i += 4) {
+    if (
+      !actual.data.subarray(i, i + 4).equals(expected.data.subarray(i, i + 4))
+    ) {
+      different += 1;
+    }
+  }
+
+  if (different) {
+    fs.writeFileSync(
+      path.join(pixelPerfectTestRoot, "native-select-actual.png"),
+      PNG.sync.write(actual)
+    );
+    throw new Error(`${c.name} ${different} pixels`);
+  }
+
+  return {
+    decodedRgbaSha256: createHash("sha256").update(actual.data).digest("hex"),
+    mismatchedPixels: 0,
+    name: c.name,
+  };
+};
+
 const browser = await chromium.launch({ channel: "msedge" });
 
 // SAFETY: the initialized shadcn consumer configuration owns its optional rsc setting.
@@ -111,115 +222,7 @@ try {
         );
       }
 
-      const q = new URLSearchParams({
-        background: c.background,
-        height: String(c.height),
-        label: c.label,
-        native: "1",
-        scale: String(c.scale),
-        state: c.state,
-        timeMs: String(c.timeMs ?? 0),
-        width: String(c.width),
-        x: String(c.x),
-        y: String(c.y),
-      });
-
-      await page!.goto(`${urlArg}?${q}`);
-      await expect(page!.locator(".mc-select-trigger")).toHaveAttribute(
-        "data-mc-select-ready",
-        "true"
-      );
-      await expect(page!.locator(".mc-select-trigger-label")).toHaveText(
-        c.label
-      );
-
-      for (const label of await page!
-        .locator(".mc-native-select-art [data-mc-label-ready]")
-        .all()) {
-        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
-      }
-
-      await page!.mouse.move(0, 0);
-
-      await (c.state === "focus"
-        ? page!.locator("#subject").focus()
-        : page!.evaluate(() =>
-            // SAFETY: the native-select fixture focuses HTML controls; preserve the existing optional blur call.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Focused HTML fixture element DOM API boundary.
-            (document.activeElement as HTMLElement | null)?.blur()
-          ));
-
-      if (c.state.endsWith("hover")) {
-        await page!.locator("#subject").hover({ force: true });
-      }
-
-      await page!.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers();
-
-        try {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(frameCompletion.resolve);
-          });
-        } catch (error) {
-          frameCompletion.reject(error);
-        }
-
-        return await frameCompletion.promise;
-      });
-
-      const actual = PNG.sync.read(
-        await page!.locator("#subject").screenshot({ animations: "disabled" })
-      );
-
-      const expected = PNG.sync.read(
-        fs.readFileSync(
-          `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${
-            c.name
-          }`
-        )
-      );
-
-      assert.deepEqual(
-        [actual.width, actual.height],
-        [expected.width, expected.height]
-      );
-      assert.equal(
-        hash(
-          fs.readFileSync(
-            pixelPerfectFile(
-              path.join("tests/reference", dir, "captures", c.name)
-            )
-          )
-        ),
-        c.sha256
-      );
-      let different = 0;
-
-      for (let i = 0; i < expected.data.length; i += 4) {
-        if (
-          !actual.data
-            .subarray(i, i + 4)
-            .equals(expected.data.subarray(i, i + 4))
-        ) {
-          different += 1;
-        }
-      }
-
-      if (different) {
-        fs.writeFileSync(
-          path.join(pixelPerfectTestRoot, "native-select-actual.png"),
-          PNG.sync.write(actual)
-        );
-        throw new Error(`${c.name} ${different} pixels`);
-      }
-
-      results.push({
-        decodedRgbaSha256: createHash("sha256")
-          .update(actual.data)
-          .digest("hex"),
-        mismatchedPixels: 0,
-        name: c.name,
-      });
+      results.push(await verifyNativeSelectCase(c, dir, page!));
 
       if (results.length % 128 === 0) {
         console.log(dir, results.length, "exact");

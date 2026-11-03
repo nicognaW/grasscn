@@ -87,11 +87,14 @@ const rows = new Map<number, number[]>();
 for (const key of fine) {
   const [x, y] = key.split(",").map(Number);
 
-  if (!rows.has(y)) {
-    rows.set(y, []);
+  let rowPixels = rows.get(y);
+
+  if (rowPixels === undefined) {
+    rowPixels = [];
+    rows.set(y, rowPixels);
   }
 
-  rows.get(y)!.push(x);
+  rowPixels.push(x);
 }
 
 let light = "";

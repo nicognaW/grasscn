@@ -39,6 +39,66 @@ const m = JSON.parse(
     .toString()
 ) as AvatarCaptureManifest;
 
+const verifyAvatarCase = async (
+  c: AvatarCaptureManifest["cases"][number],
+  fixturePage: Page
+) => {
+  await fixturePage.evaluate((avatarCase) => {
+    // SAFETY: the retained Avatar bridge consumes these actual captured case fields and returns void.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Avatar consumer bridge invocation boundary.
+    (window as LegacyAvatarConsumerWindow).renderCase(avatarCase);
+  }, c);
+  await expect(fixturePage.locator("[data-mc-avatar-face]")).toHaveAttribute(
+    "data-ready",
+    "true"
+  );
+  await fixturePage.evaluate(async () => {
+    const frameCompletion = Promise.withResolvers();
+
+    try {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(frameCompletion.resolve);
+      });
+    } catch (error) {
+      frameCompletion.reject(error);
+    }
+
+    return await frameCompletion.promise;
+  });
+
+  const got = PNG.sync.read(
+    await fixturePage.locator("#subject").screenshot({ animations: "disabled" })
+  );
+
+  const want = PNG.sync.read(
+    fs.readFileSync(
+      pixelPerfectFile(path.join("tests/reference/avatar/captures", c.name))
+    )
+  );
+
+  let diff = 0;
+
+  for (let n = 0; n < want.data.length; n += 4) {
+    if (!want.data.subarray(n, n + 4).equals(got.data.subarray(n, n + 4))) {
+      diff += 1;
+    }
+  }
+
+  if (diff) {
+    fs.writeFileSync(
+      path.join(pixelPerfectTestRoot, "avatar-actual.png"),
+      PNG.sync.write(got)
+    );
+    throw new Error(`${c.name} ${diff} differing pixels`);
+  }
+
+  return {
+    decodedRgbaSha256: hash(got.data),
+    mismatchedPixels: 0,
+    name: c.name,
+  };
+};
+
 const browser = await chromium.launch({ channel: "msedge" });
 const results = [];
 
@@ -67,60 +127,7 @@ try {
     }
 
     const c = m.cases[i];
-    await page!.evaluate((avatarCase) => {
-      // SAFETY: the retained Avatar bridge consumes these actual captured case fields and returns void.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Avatar consumer bridge invocation boundary.
-      (window as LegacyAvatarConsumerWindow).renderCase(avatarCase);
-    }, c);
-    await expect(page!.locator("[data-mc-avatar-face]")).toHaveAttribute(
-      "data-ready",
-      "true"
-    );
-    await page!.evaluate(async () => {
-      const frameCompletion = Promise.withResolvers();
-
-      try {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(frameCompletion.resolve);
-        });
-      } catch (error) {
-        frameCompletion.reject(error);
-      }
-
-      return await frameCompletion.promise;
-    });
-
-    const got = PNG.sync.read(
-      await page!.locator("#subject").screenshot({ animations: "disabled" })
-    );
-
-    const want = PNG.sync.read(
-      fs.readFileSync(
-        pixelPerfectFile(path.join("tests/reference/avatar/captures", c.name))
-      )
-    );
-
-    let diff = 0;
-
-    for (let n = 0; n < want.data.length; n += 4) {
-      if (!want.data.subarray(n, n + 4).equals(got.data.subarray(n, n + 4))) {
-        diff += 1;
-      }
-    }
-
-    if (diff) {
-      fs.writeFileSync(
-        path.join(pixelPerfectTestRoot, "avatar-actual.png"),
-        PNG.sync.write(got)
-      );
-      throw new Error(`${c.name} ${diff} differing pixels`);
-    }
-
-    results.push({
-      decodedRgbaSha256: hash(got.data),
-      mismatchedPixels: 0,
-      name: c.name,
-    });
+    results.push(await verifyAvatarCase(c, page!));
 
     if (i % 128 === 127) {
       console.log(`${i + 1} matched`);

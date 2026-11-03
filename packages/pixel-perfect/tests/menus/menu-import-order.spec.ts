@@ -4,12 +4,16 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type menuParts from "../reference/menu-parts/manifest.json";
+
+// SAFETY: the fixed retained menu-parts manifest owns these separator case fields; keep the original fresh read and missing-result TypeError.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture producer boundary; no new validation.
 const manifest = JSON.parse(
   readFileSync(
     pixelPerfectFile("tests/reference/menu-parts/manifest.json"),
     "utf-8"
   )
-);
+) as typeof menuParts;
 
 for (const component of ["dropdown-menu", "context-menu", "menubar"]) {
   for (const scale of [1, 2, 3]) {
@@ -19,12 +23,12 @@ for (const component of ["dropdown-menu", "context-menu", "menubar"]) {
       await page.setViewportSize({ height: 900, width: 1536 });
 
       const c = manifest.cases.find(
-        (menuSeparatorCase: any) =>
+        (menuSeparatorCase) =>
           menuSeparatorCase.element === "menu-separator" &&
           menuSeparatorCase.width === 200 &&
           menuSeparatorCase.background === "#202020" &&
           menuSeparatorCase.scale === scale
-      );
+      )!;
 
       const params = new URLSearchParams({
         component,

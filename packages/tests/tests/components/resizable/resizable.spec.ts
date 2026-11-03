@@ -23,28 +23,41 @@ const layoutLeft = async function layoutLeft(page: Page) {
   return (JSON.parse(text) as Layout).left;
 };
 
+const verifyResizableOrientation = async (page: Page, orientation: string) => {
+  await page.goto(`/?component=resizable&orientation=${orientation}`);
+
+  const group = page.locator("#group");
+  const handle = page.getByRole("separator", { name: "Resize panels" });
+
+  await expect(group).toHaveAttribute("data-slot", "resizable-panel-group");
+  await expect(handle).toHaveAttribute(
+    "aria-orientation",
+    orientation === "horizontal" ? "vertical" : "horizontal"
+  );
+  await expect(handle).toHaveAttribute("aria-valuenow", "50");
+
+  const left = (await page.locator("#left").boundingBox())!;
+  const right = (await page.locator("#right").boundingBox())!;
+
+  expect(
+    orientation === "horizontal" ? right.x > left.x : right.y > left.y
+  ).toBe(true);
+};
+
+const verifyDisabledResizable = async (page: Page, disabled: string) => {
+  await page.goto(`/?component=resizable&${disabled}=1`);
+  const handle = page.getByRole("separator", { name: "Resize panels" });
+  const before = await handle.getAttribute("aria-valuenow");
+  await handle.focus();
+  await page.keyboard.press("ArrowRight");
+  expect(await handle.getAttribute("aria-valuenow")).toBe(before);
+};
+
 test("Resizable preserves horizontal and vertical geometry and standard separator semantics", async ({
   page,
 }) => {
   for (const orientation of ["horizontal", "vertical"]) {
-    await page.goto(`/?component=resizable&orientation=${orientation}`);
-
-    const group = page.locator("#group");
-    const handle = page.getByRole("separator", { name: "Resize panels" });
-
-    await expect(group).toHaveAttribute("data-slot", "resizable-panel-group");
-    await expect(handle).toHaveAttribute(
-      "aria-orientation",
-      orientation === "horizontal" ? "vertical" : "horizontal"
-    );
-    await expect(handle).toHaveAttribute("aria-valuenow", "50");
-
-    const left = (await page.locator("#left").boundingBox())!;
-    const right = (await page.locator("#right").boundingBox())!;
-
-    expect(
-      orientation === "horizontal" ? right.x > left.x : right.y > left.y
-    ).toBe(true);
+    await verifyResizableOrientation(page, orientation);
   }
 });
 
@@ -116,12 +129,7 @@ test("Resizable honors disabled separators and disabled groups", async ({
   page,
 }) => {
   for (const disabled of ["disabled", "groupDisabled"]) {
-    await page.goto(`/?component=resizable&${disabled}=1`);
-    const handle = page.getByRole("separator", { name: "Resize panels" });
-    const before = await handle.getAttribute("aria-valuenow");
-    await handle.focus();
-    await page.keyboard.press("ArrowRight");
-    expect(await handle.getAttribute("aria-valuenow")).toBe(before);
+    await verifyDisabledResizable(page, disabled);
   }
 });
 

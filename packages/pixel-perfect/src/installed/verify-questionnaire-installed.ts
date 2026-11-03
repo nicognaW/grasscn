@@ -110,12 +110,12 @@ const captureQuestionnaireAction = async (
   action: string,
   m: QuestionnaireCaptureManifest,
   dir: string,
-  fixturePage: Page | undefined
+  fixturePage: Page
 ) => {
   const q = buildQuestionnaireQuery(c, part, action, m);
 
-  await fixturePage!.goto(`${urlArg}?${q}`);
-  const subject = fixturePage!.locator("#subject");
+  await fixturePage.goto(`${urlArg}?${q}`);
+  const subject = fixturePage.locator("#subject");
   await expect(subject).toBeVisible();
 
   if (["title", "description", "error", "progress"].includes(part)) {
@@ -126,7 +126,7 @@ const captureQuestionnaireAction = async (
     await expect(subject).toHaveAttribute("data-mc-ready", "true");
   }
 
-  await fixturePage!.mouse.move(0, 0);
+  await fixturePage.mouse.move(0, 0);
 
   if (c.state.startsWith("focus")) {
     await (part === "checkbox" ? subject.locator("input") : subject).focus();
@@ -151,14 +151,14 @@ const captureQuestionnaireAction = async (
       },
       { anchor, cursor }
     );
-    await fixturePage!.clock.runFor(c.caretMs!);
+    await fixturePage.clock.runFor(c.caretMs!);
     await expect(subject).toHaveAttribute("data-mc-ready", "true");
   } else {
     for (const glyph of await subject.locator("[data-mc-label-ready]").all()) {
       await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
     }
 
-    await fixturePage!.evaluate(async () => {
+    await fixturePage.evaluate(async () => {
       const frameCompletion = Promise.withResolvers();
 
       try {
@@ -301,7 +301,7 @@ try {
           action,
           m,
           dir,
-          page
+          page!
         );
 
         const field: keyof QuestionnaireCaseResult =

@@ -100,9 +100,7 @@ for (const component of ["sheet", "drawer"]) {
         }, info) => {
           await page.setViewportSize({ height: 900, width: 1536 });
 
-          for (const part of directory === "label"
-            ? ["title", "description"]
-            : ["surface"]) {
+          const verifyOverlayConstituent = async (part: string) => {
             const q = new URLSearchParams({
               align: c.alignment ?? "left",
               background: c.background,
@@ -212,6 +210,12 @@ for (const component of ["sheet", "drawer"]) {
               })
             );
             expect(mismatchedPixels).toBe(0);
+          };
+
+          for (const part of directory === "label"
+            ? ["title", "description"]
+            : ["surface"]) {
+            await verifyOverlayConstituent(part);
           }
         });
       }

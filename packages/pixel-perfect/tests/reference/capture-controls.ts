@@ -161,16 +161,20 @@ const permitted = function permitted(library: MinecraftCaptureLibrary) {
   let allowed = false;
 
   for (const rule of library.rules) {
-    if (rule.os?.name && rule.os.name !== platformName) {
+    const osName = rule.os?.name ?? "";
+
+    if (osName !== "" && osName !== platformName) {
       continue;
     }
 
+    const osArch = rule.os?.arch ?? "";
+
     if (
-      rule.os?.arch &&
+      osArch !== "" &&
       ![
         process.arch,
         process.arch === "x64" ? "x86_64" : process.arch,
-      ].includes(rule.os.arch)
+      ].includes(osArch)
     ) {
       continue;
     }

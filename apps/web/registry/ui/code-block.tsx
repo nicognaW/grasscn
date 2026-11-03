@@ -193,45 +193,6 @@ const selectable = function selectable(
   return value;
 };
 
-const CodeBlockContent = ({
-  className,
-  children,
-  style,
-  wrap = false,
-  lineNumbers = false,
-  startLine = 1,
-  ...props
-}: React.ComponentProps<"pre"> & {
-  wrap?: boolean;
-  lineNumbers?: boolean;
-  startLine?: number;
-}) => (
-  <pre
-    data-slot="code-block-content"
-    data-wrap={wrap || undefined}
-    data-numbered={lineNumbers || undefined}
-    dir="ltr"
-    tabIndex={0}
-    style={minecraftStyle(style, (__style) => ({
-      counterReset: `line ${startLine - 1}`,
-      ...__style,
-    }))}
-    className={cn(`mc-code-block-content`, className)}
-    {...props}
-  >
-    <code data-slot="code-block-code">
-      {lineNumbers && typeof children === "string"
-        ? children
-            .replace(/\n$/u, "")
-            .split("\n")
-            .map((line, index) => (
-              <CodeBlockLine key={index}>{line}</CodeBlockLine>
-            ))
-        : selectable(children)}
-    </code>
-  </pre>
-);
-
 const CodeLineMarker = ({ variant }: { variant: "added" | "removed" }) => {
   const glyph = minecraftLoadingGlyphs[variant === "added" ? "+" : "-"];
 
@@ -280,6 +241,45 @@ const CodeBlockLine = ({
     </span>
   );
 };
+
+const CodeBlockContent = ({
+  className,
+  children,
+  style,
+  wrap = false,
+  lineNumbers = false,
+  startLine = 1,
+  ...props
+}: React.ComponentProps<"pre"> & {
+  wrap?: boolean;
+  lineNumbers?: boolean;
+  startLine?: number;
+}) => (
+  <pre
+    data-slot="code-block-content"
+    data-wrap={wrap || undefined}
+    data-numbered={lineNumbers || undefined}
+    dir="ltr"
+    tabIndex={0}
+    style={minecraftStyle(style, (__style) => ({
+      counterReset: `line ${startLine - 1}`,
+      ...__style,
+    }))}
+    className={cn(`mc-code-block-content`, className)}
+    {...props}
+  >
+    <code data-slot="code-block-code">
+      {lineNumbers && typeof children === "string"
+        ? children
+            .replace(/\n$/u, "")
+            .split("\n")
+            .map((line, index) => (
+              <CodeBlockLine key={index}>{line}</CodeBlockLine>
+            ))
+        : selectable(children)}
+    </code>
+  </pre>
+);
 
 const CodeBlockFooter = ({
   className,

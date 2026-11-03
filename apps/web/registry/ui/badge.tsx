@@ -18,6 +18,16 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-badge.css";
 
+const requiresUnicodeGlyphs = function requiresUnicodeGlyphs(text: string) {
+  for (const character of text) {
+    if (character.codePointAt(0)! > 127) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 interface BadgePaintStyle extends React.CSSProperties {
   "--mc-badge-emblem": string;
   "--mc-badge-natural": string;
@@ -85,10 +95,7 @@ const Badge = ({
 
   const [, refreshFont] = React.useState(0);
   React.useEffect((): ReturnType<React.EffectCallback> => {
-    if (
-      plain === undefined ||
-      ![...plain].some((char) => char.codePointAt(0)! > 127)
-    ) {
+    if (plain === undefined || !requiresUnicodeGlyphs(plain)) {
       return;
     }
 

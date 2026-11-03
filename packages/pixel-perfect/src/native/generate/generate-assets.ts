@@ -75,12 +75,18 @@ for (let code = 32; code <= 126; code += 1) {
     }
   }
 
-  glyphs.push([column * cell, row * cell, code === 32 ? 4 : rightmost + 2]);
+  const glyphMetrics: (typeof glyphs)[number] = [
+    column * cell,
+    row * cell,
+    code === 32 ? 4 : rightmost + 2,
+  ];
+
+  glyphs.push(glyphMetrics);
   outlineGlyphs.push(
     new Glyph({
       name: `uni${code.toString(16).padStart(4, "0")}`,
       unicode: code,
-      advanceWidth: glyphs.at(-1)![2] * unit,
+      advanceWidth: glyphMetrics[2] * unit,
       path: outline,
     })
   );

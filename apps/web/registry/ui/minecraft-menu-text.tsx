@@ -6,6 +6,21 @@ import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+const hasSupportedLineGlyphs = function hasSupportedLineGlyphs(text: string) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 export const MenuScaleContext = React.createContext<1 | 2 | 3>(2);
 
 export const MinecraftMenuText = ({
@@ -49,11 +64,7 @@ export const MinecraftMenuText = ({
     );
   }
 
-  if (
-    ![...text].every(
-      (char) => /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
-    )
-  ) {
+  if (!hasSupportedLineGlyphs(text)) {
     return (
       <span className="mc-menu-text" data-mc-menu-text-ready="false">
         {text}

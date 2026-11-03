@@ -119,7 +119,7 @@ test("default installation controls match their captured Minecraft content and s
 
   await expect(managers).toHaveAttribute("data-mc-tabs-ready", "true");
 
-  for (const manager of ["npm", "pnpm", "Yarn", "Bun"]) {
+  const verifyManagerSelection = async (manager: string) => {
     await managers.getByRole("tab", { exact: true, name: manager }).click();
     // Continue to the copy action: the reference declares an unfocused strip.
     await page.keyboard.press("Tab");
@@ -128,6 +128,10 @@ test("default installation controls match their captured Minecraft content and s
       await managers.screenshot(),
       `install-pm-${manager.toLowerCase()}`
     );
+  };
+
+  for (const manager of ["npm", "pnpm", "Yarn", "Bun"]) {
+    await verifyManagerSelection(manager);
   }
 
   await methods.getByRole("tab", { exact: true, name: "Manual" }).click();
@@ -150,7 +154,9 @@ test("default installation controls match their captured Minecraft content and s
     inventory.files.length
   );
 
-  for (const file of inventory.files) {
+  const verifyManualFileRow = async (
+    file: (typeof inventory.files)[number]
+  ) => {
     const label = file.source.split("/").at(-1);
 
     if (label === undefined) {
@@ -200,6 +206,10 @@ test("default installation controls match their captured Minecraft content and s
       .toBe(true);
     await page.mouse.move(0, 0);
     await pixels(await button.screenshot(), reference.name);
+  };
+
+  for (const file of inventory.files) {
+    await verifyManualFileRow(file);
   }
 
   await selectors

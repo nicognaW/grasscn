@@ -103,14 +103,14 @@ try {
     part: string,
     dir: string,
     m: AttachmentCaptureManifest,
-    fixturePage: Page | undefined
+    fixturePage: Page
   ) => {
     const q = buildAttachmentQuery(c, part, m);
 
-    await fixturePage!.goto(`${urlArg}?${q}`);
-    const subject = fixturePage!.locator("#subject");
+    await fixturePage.goto(`${urlArg}?${q}`);
+    const subject = fixturePage.locator("#subject");
     await expect(subject).toBeVisible();
-    await fixturePage!.mouse.move(0, 0);
+    await fixturePage.mouse.move(0, 0);
 
     if (part === "row") {
       await expect(
@@ -136,13 +136,13 @@ try {
 
       if (c.state === "icon-hover") {
         const b = await subject.boundingBox();
-        await fixturePage!.mouse.move(b!.x + 18 * c.scale, b!.y + 18 * c.scale);
+        await fixturePage.mouse.move(b!.x + 18 * c.scale, b!.y + 18 * c.scale);
       }
 
       if (c.state === "focus") {
         await subject.focus();
-        await fixturePage!.keyboard.press("Tab");
-        await fixturePage!.keyboard.press("Shift+Tab");
+        await fixturePage.keyboard.press("Tab");
+        await fixturePage.keyboard.press("Shift+Tab");
         await expect(subject).toBeFocused();
       }
 
@@ -173,7 +173,7 @@ try {
       await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
     }
 
-    await fixturePage!.evaluate(async () => {
+    await fixturePage.evaluate(async () => {
       const frameCompletion = Promise.withResolvers();
 
       try {
@@ -262,7 +262,7 @@ try {
 
       const c = m.cases[i];
 
-      cases.push(await verifyAttachmentCase(c, part, dir, m, page));
+      cases.push(await verifyAttachmentCase(c, part, dir, m, page!));
     }
 
     const expected = PNG.sync.read(

@@ -7,6 +7,7 @@ import path from "node:path";
 import type { InstalledComponentSettings } from "@grasscn/tests/installed-registry-file";
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import type {
   InstalledTextRegistry,
   InstalledTextItem,
@@ -130,6 +131,81 @@ const compare = function compare(a: PNG, b: PNG) {
   return count;
 };
 
+const verifyChatCase = async (
+  c: MessageCaptureManifest["cases"][number],
+  part: string,
+  page: Page
+) => {
+  const q = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(c)) {
+    if (typeof value === "string" || typeof value === "number") {
+      q.set(key, String(value));
+    }
+  }
+
+  q.set("part", part);
+  await page.goto(`${origin}?${q}`);
+  const subject = page.locator("#subject");
+  await expect(subject).toBeVisible();
+
+  if (part === "selectable") {
+    await expect(subject.locator("[data-mc-selectable-ready]")).toHaveAttribute(
+      "data-mc-selectable-ready",
+      "true"
+    );
+  } else {
+    await expect(subject).toHaveAttribute("data-mc-chat-ready", "true");
+    await expect(
+      subject.locator("[data-mc-label-layout-ready]")
+    ).toHaveAttribute("data-mc-label-layout-ready", "true");
+  }
+
+  for (const glyph of await subject.locator("[data-mc-label-ready]").all()) {
+    await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
+  await page.evaluate(async () => {
+    const frameCompletion = Promise.withResolvers();
+
+    try {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(frameCompletion.resolve);
+      });
+    } catch (error) {
+      frameCompletion.reject(error);
+    }
+
+    return await frameCompletion.promise;
+  });
+
+  const actual = await subject.screenshot();
+
+  const count = compare(
+    PNG.sync.read(
+      fs.readFileSync(
+        pixelPerfectFile(path.join("tests/reference/message/captures", c.name))
+      )
+    ),
+    PNG.sync.read(actual)
+  );
+
+  results.push({
+    decodedRgbaSha256: sha(PNG.sync.read(actual).data),
+    mismatchedPixels: count,
+    name: c.name,
+    part,
+  });
+
+  if (count) {
+    console.log(c.name, part, count);
+    fs.writeFileSync(
+      path.join(pixelPerfectTestRoot, "chat", `${part}-${c.name}`),
+      actual
+    );
+  }
+};
+
 const worker = async function worker() {
   let page = await browser.newPage({
     deviceScaleFactor: 1,
@@ -158,77 +234,7 @@ const worker = async function worker() {
         page.on("pageerror", (e) => errors.push({ error: e.message }));
       }
 
-      const q = new URLSearchParams();
-
-      for (const [key, value] of Object.entries(c)) {
-        if (typeof value === "string" || typeof value === "number") {
-          q.set(key, String(value));
-        }
-      }
-
-      q.set("part", part);
-      await page.goto(`${origin}?${q}`);
-      const subject = page.locator("#subject");
-      await expect(subject).toBeVisible();
-
-      if (part === "selectable") {
-        await expect(
-          subject.locator("[data-mc-selectable-ready]")
-        ).toHaveAttribute("data-mc-selectable-ready", "true");
-      } else {
-        await expect(subject).toHaveAttribute("data-mc-chat-ready", "true");
-        await expect(
-          subject.locator("[data-mc-label-layout-ready]")
-        ).toHaveAttribute("data-mc-label-layout-ready", "true");
-      }
-
-      for (const glyph of await subject
-        .locator("[data-mc-label-ready]")
-        .all()) {
-        await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
-      }
-
-      await page.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers();
-
-        try {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(frameCompletion.resolve);
-          });
-        } catch (error) {
-          frameCompletion.reject(error);
-        }
-
-        return await frameCompletion.promise;
-      });
-
-      const actual = await subject.screenshot();
-
-      const count = compare(
-        PNG.sync.read(
-          fs.readFileSync(
-            pixelPerfectFile(
-              path.join("tests/reference/message/captures", c.name)
-            )
-          )
-        ),
-        PNG.sync.read(actual)
-      );
-
-      results.push({
-        decodedRgbaSha256: sha(PNG.sync.read(actual).data),
-        mismatchedPixels: count,
-        name: c.name,
-        part,
-      });
-
-      if (count) {
-        console.log(c.name, part, count);
-        fs.writeFileSync(
-          path.join(pixelPerfectTestRoot, "chat", `${part}-${c.name}`),
-          actual
-        );
-      }
+      await verifyChatCase(c, part, page);
     } catch (failure) {
       // SAFETY: the owned Node/PNG and Playwright operations expose message; keep the original property access and failure coercion.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Narrow message projection at this concrete verifier failure boundary.

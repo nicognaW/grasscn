@@ -10,12 +10,14 @@ import type BoundaryReference2 from "../reference/avatar/manifest.json";
 import type BoundaryReference1 from "../reference/avatar/provenance.json";
 
 test("All18 original skins retain their PNG bytes and rawRGBA including hat transparency", () => {
+  // SAFETY: this fixed Avatar provenance read consumes the same retained producer already represented by BoundaryReference1; preserve the original asset search and read phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained asset-provenance boundary; no runtime validation.
   const provenance = JSON.parse(
     readFileSync(
       pixelPerfectFile("tests/reference/avatar/provenance.json"),
       "utf-8"
     )
-  );
+  ) as typeof BoundaryReference1;
 
   expect(Object.keys(minecraftAvatarSkins)).toHaveLength(18);
 
@@ -25,9 +27,8 @@ test("All18 original skins retain their PNG bytes and rawRGBA including hat tran
 
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       provenance.assets.find(
-        (a: any) =>
-          a.path === `assets/minecraft/textures/entity/player/${name}.png`
-      ).sha256
+        (a) => a.path === `assets/minecraft/textures/entity/player/${name}.png`
+      )!.sha256
     );
     expect([png.width, png.height]).toEqual([64, 64]);
     expect(Buffer.from(asset.rgba, "base64").equals(png.data)).toBe(true);

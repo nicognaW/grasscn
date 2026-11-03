@@ -1,14 +1,12 @@
-import type { DemoVariables } from "../demo-variables";
-import type { AnalyticsChartType } from "../registry/blocks/chart-analytics";
-import type { ChartConfig } from "../registry/ui/chart";
-import type { DemoProps } from "../types";
-
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
+import type { AnalyticsChartType } from "../registry/blocks/chart-analytics";
 import { AnalyticsChartExample } from "../registry/blocks/chart-analytics";
 import { FpsChartExample } from "../registry/blocks/chart-fps";
 import { ProfilerChartExample } from "../registry/blocks/chart-profiler";
 import { Button } from "../registry/ui/button";
+import type { ChartConfig } from "../registry/ui/chart";
 import { MinecraftDisclosureText } from "../registry/ui/minecraft-disclosure-text";
 import {
   Select,
@@ -17,6 +15,7 @@ import {
   SelectContent,
   SelectItem,
 } from "../registry/ui/select";
+import type { DemoProps } from "../types";
 
 // Official shadcn chart-bar-multiple and chart-pie-donut example datasets.
 const visitors = [

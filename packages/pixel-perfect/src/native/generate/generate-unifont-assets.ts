@@ -166,11 +166,14 @@ for (const line of hexSource.split("\n")) {
 
   const plane = Math.floor(code / 65_536);
 
-  if (!groups.has(plane)) {
-    groups.set(plane, []);
+  let planeGlyphs = groups.get(plane);
+
+  if (planeGlyphs === undefined) {
+    planeGlyphs = [];
+    groups.set(plane, planeGlyphs);
   }
 
-  groups.get(plane)!.push(
+  planeGlyphs.push(
     new Glyph({
       name: `uni${raw}`,
       unicode: code,

@@ -396,7 +396,10 @@ test("Every component has a working dedicated preview and navigation", async ({
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
 
-  for (const component of documentationInventory().pages) {
+  const documentationPages = documentationInventory().pages;
+  const verifyDocumentationPage = async (
+    component: (typeof documentationPages)[number]
+  ) => {
     await page.goto(`${origin}${component.route.slice(1)}`);
     await expect(
       page.getByRole("heading", { exact: true, name: component.title }).first()
@@ -405,6 +408,10 @@ test("Every component has a working dedicated preview and navigation", async ({
     if (component.playground) {
       await expect(page.locator(".documentation-playground")).toBeVisible();
     }
+  };
+
+  for (const component of documentationPages) {
+    await verifyDocumentationPage(component);
   }
 
   await page.goto(`${origin}docs/components/button`);
@@ -600,7 +607,10 @@ test("Mobile component pages contain default previews before and after paragraph
   test.setTimeout(180_000);
   await page.setViewportSize({ height: 844, width: 390 });
 
-  for (const component of catalog.components) {
+  const previewComponents = catalog.components;
+  const verifyMobilePreviewComponent = async (
+    component: (typeof previewComponents)[number]
+  ) => {
     await page.goto(`${origin}docs/components/${component.name}`);
     expect(
       await page.evaluate(
@@ -616,6 +626,10 @@ test("Mobile component pages contain default previews before and after paragraph
         () => document.documentElement.scrollWidth <= innerWidth
       )
     ).toBe(true);
+  };
+
+  for (const component of previewComponents) {
+    await verifyMobilePreviewComponent(component);
   }
 });
 
@@ -688,7 +702,10 @@ test("Text entry defaults disable browser spelling and correction", async ({
 }) => {
   test.setTimeout(120_000);
 
-  for (const component of catalog.components) {
+  const textControlComponents = catalog.components;
+  const verifyTextControlComponent = async (
+    component: (typeof textControlComponents)[number]
+  ) => {
     await page.goto(`${origin}docs/components/${component.name}`);
 
     for (const field of await page
@@ -697,6 +714,10 @@ test("Text entry defaults disable browser spelling and correction", async ({
       await expect(field).toHaveAttribute("spellcheck", "false");
       await expect(field).toHaveAttribute("autocorrect", "off");
     }
+  };
+
+  for (const component of textControlComponents) {
+    await verifyTextControlComponent(component);
   }
 });
 

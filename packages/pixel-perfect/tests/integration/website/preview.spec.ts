@@ -242,8 +242,7 @@ test("Preview text fields share the native focused Input pixels", async ({
     { name: "Find a component", path: "input" },
   ];
 
-  // Match a captured vanilla case so preview CSS cannot add a second focus ring.
-  for (const entry of fields) {
+  const verifyFocusedField = async (entry: (typeof fields)[number]) => {
     await page.goto(`${origin}docs/components/${entry.path}`);
 
     const field = page
@@ -264,6 +263,11 @@ test("Preview text fields share the native focused Input pixels", async ({
       field,
       "tests/reference/input/captures/input-w103-focus-c3-s2.png"
     );
+  };
+
+  // Match a captured vanilla case so preview CSS cannot add a second focus ring.
+  for (const entry of fields) {
+    await verifyFocusedField(entry);
   }
 });
 

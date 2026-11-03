@@ -124,62 +124,6 @@ const CalendarWeekday = ({
   );
 };
 
-const Calendar = ({
-  scale = 2,
-  buttonVariant = "default",
-  showOutsideDays = true,
-  captionLayout = "label",
-  className,
-  classNames,
-  components,
-  captionTextProps,
-  ...props
-}: CalendarProps) => {
-  const appearance = React.useMemo(
-    () => ({ captionTextProps, scale }),
-    [scale, captionTextProps]
-  );
-
-  if (buttonVariant !== "default") {
-    throw new Error(
-      "Minecraft Calendar supports the native default button appearance only"
-    );
-  }
-
-  const defaults = getDefaultClassNames();
-
-  const merged = Object.fromEntries(
-    Object.entries(defaults).map(([key, value]) => [
-      key,
-      `${value} ${(classNames as Record<string, string> | undefined)?.[key] ?? ""}`,
-    ])
-  );
-
-  return (
-    <CalendarContext.Provider value={appearance}>
-      <DayPicker
-        showOutsideDays={showOutsideDays}
-        captionLayout={captionLayout}
-        className={cn(`mc-calendar`, className)}
-        classNames={merged}
-        components={{
-          CaptionLabel: CalendarCaptionLabel,
-          Chevron: CalendarChevron,
-          DayButton: CalendarDayButton,
-          Dropdown: CalendarDropdown,
-          NextMonthButton: CalendarNextMonthButton,
-          PreviousMonthButton: CalendarPreviousMonthButton,
-          Root: CalendarRoot,
-          WeekNumber: CalendarWeekNumber,
-          Weekday: CalendarWeekday,
-          ...components,
-        }}
-        {...props}
-      />
-    </CalendarContext.Provider>
-  );
-};
-
 const CalendarDropdown = ({
   options,
   className,
@@ -331,6 +275,62 @@ const CalendarDayButton = ({
     >
       {children}
     </Button>
+  );
+};
+
+const Calendar = ({
+  scale = 2,
+  buttonVariant = "default",
+  showOutsideDays = true,
+  captionLayout = "label",
+  className,
+  classNames,
+  components,
+  captionTextProps,
+  ...props
+}: CalendarProps) => {
+  const appearance = React.useMemo(
+    () => ({ captionTextProps, scale }),
+    [scale, captionTextProps]
+  );
+
+  if (buttonVariant !== "default") {
+    throw new Error(
+      "Minecraft Calendar supports the native default button appearance only"
+    );
+  }
+
+  const defaults = getDefaultClassNames();
+
+  const merged = Object.fromEntries(
+    Object.entries(defaults).map(([key, value]) => [
+      key,
+      `${value} ${(classNames as Record<string, string> | undefined)?.[key] ?? ""}`,
+    ])
+  );
+
+  return (
+    <CalendarContext.Provider value={appearance}>
+      <DayPicker
+        showOutsideDays={showOutsideDays}
+        captionLayout={captionLayout}
+        className={cn(`mc-calendar`, className)}
+        classNames={merged}
+        components={{
+          CaptionLabel: CalendarCaptionLabel,
+          Chevron: CalendarChevron,
+          DayButton: CalendarDayButton,
+          Dropdown: CalendarDropdown,
+          NextMonthButton: CalendarNextMonthButton,
+          PreviousMonthButton: CalendarPreviousMonthButton,
+          Root: CalendarRoot,
+          WeekNumber: CalendarWeekNumber,
+          Weekday: CalendarWeekday,
+          ...components,
+        }}
+        {...props}
+      />
+    </CalendarContext.Provider>
   );
 };
 

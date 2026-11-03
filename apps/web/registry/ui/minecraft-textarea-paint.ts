@@ -22,8 +22,15 @@ const glyphAdvance = (char: string) =>
   getUnihexGlyph(char)?.advance ??
   6;
 
-const advance = (text: string) =>
-  Math.ceil([...text].reduce((sum, char) => sum + glyphAdvance(char), 0));
+const advance = (text: string) => {
+  let measuredGlyphWidth = 0;
+
+  for (const glyphCharacter of text) {
+    measuredGlyphWidth += glyphAdvance(glyphCharacter);
+  }
+
+  return Math.ceil(measuredGlyphWidth);
+};
 
 const wrap = function wrap(value: string, width: number): Line[] {
   const lines: Line[] = [];

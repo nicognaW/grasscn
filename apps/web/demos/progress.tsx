@@ -1,12 +1,11 @@
-import type { DemoVariables } from "../demo-variables";
-import type { BossBarColor, BossBarOverlay } from "../registry/ui/progress";
-import type { DemoProps } from "../types";
-
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
+import type { BossBarColor, BossBarOverlay } from "../registry/ui/progress";
 import { Progress } from "../registry/ui/progress";
 import { Slider } from "../registry/ui/slider";
+import type { DemoProps } from "../types";
 
 const colors: BossBarColor[] = [
   "pink",

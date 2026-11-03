@@ -111,7 +111,7 @@ const buildCalendarQuery = (
   const optionalText = c.text;
 
   if (optionalText !== null && optionalText !== undefined) {
-    q.text = c.text!;
+    q.text = optionalText;
   }
 
   if (c.wrapWidth ?? 0) {
@@ -158,28 +158,28 @@ const captureCalendarAlias = async (
   alias: string,
   manifest: CalendarCaptureManifest,
   dir: string,
-  fixturePage: Page | undefined
+  fixturePage: Page
 ) => {
   const q = buildCalendarQuery(c, part, alias, manifest);
 
-  await fixturePage!.evaluate((calendarFields) => {
+  await fixturePage.evaluate((calendarFields) => {
     // SAFETY: the retained Calendar bridge receives string query fields, updates history/background and renders the keyed marker.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Calendar consumer bridge invocation boundary.
     (window as LegacyCalendarConsumerWindow).renderCalendarCase(calendarFields);
   }, q);
-  await expect(fixturePage!.locator("#marker")).toHaveAttribute(
+  await expect(fixturePage.locator("#marker")).toHaveAttribute(
     "data-case",
     q.case
   );
-  await expect(fixturePage!.locator("#subject")).toBeVisible();
+  await expect(fixturePage.locator("#subject")).toBeVisible();
 
   if (part === "label") {
-    await expect(fixturePage!.locator("#subject")).toHaveAttribute(
+    await expect(fixturePage.locator("#subject")).toHaveAttribute(
       "data-mc-label-layout-ready",
       "true"
     );
 
-    for (const canvas of await fixturePage!
+    for (const canvas of await fixturePage
       .locator("#subject [data-mc-label-ready]")
       .all()) {
       await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
@@ -187,27 +187,27 @@ const captureCalendarAlias = async (
   }
 
   if (part === "trigger-cjk") {
-    for (const canvas of await fixturePage!
+    for (const canvas of await fixturePage
       .locator("#subject [data-mc-label-ready]")
       .all()) {
       await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
     }
   }
 
-  await fixturePage!.mouse.move(0, 0);
+  await fixturePage.mouse.move(0, 0);
 
   if (
     alias === "base" &&
     (c.state === "hover" || c.state === "disabled-hover")
   ) {
-    await fixturePage!.locator("#subject").hover({ force: true });
+    await fixturePage.locator("#subject").hover({ force: true });
   }
 
   if (alias === "base" && c.state === "focus") {
-    await fixturePage!.locator("#subject").focus();
+    await fixturePage.locator("#subject").focus();
   }
 
-  await fixturePage!.evaluate(async () => {
+  await fixturePage.evaluate(async () => {
     const frameCompletion = Promise.withResolvers();
 
     try {
@@ -229,7 +229,7 @@ const captureCalendarAlias = async (
 
   const expected = PNG.sync.read(bytes);
 
-  const actualBytes = await fixturePage!
+  const actualBytes = await fixturePage
     .locator("#subject")
     .screenshot({ animations: "disabled" });
 
@@ -365,7 +365,7 @@ try {
           alias,
           manifest,
           dir,
-          page
+          page!
         );
 
         record[
