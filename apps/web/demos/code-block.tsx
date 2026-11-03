@@ -27,7 +27,7 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Code
           <Textarea
             aria-label="Code block source"
@@ -39,7 +39,7 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
             style={{ height: 120, width: 340 }}
           />
         </label>
-        <label className="demo-option">
+        <label>
           <Checkbox
             scale={scale}
             checked={wrap}
@@ -49,7 +49,7 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
           />
           Wrap
         </label>
-        <label className="demo-option">
+        <label>
           <Checkbox
             scale={scale}
             checked={numbers}
@@ -77,7 +77,7 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
         </CodeBlock>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <span>Select the code or copy it</span>
       </div>
     </>

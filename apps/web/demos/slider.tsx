@@ -11,7 +11,7 @@ const SliderDemo = ({ scale }: DemoProps) => {
     <>
       <div className="demo-stage slider-stage" data-stage="slider">
         <div className="demo-pair">
-          <span className="sample-caption">INTERACTIVE</span>
+          <span>INTERACTIVE</span>
           <Slider
             scale={scale}
             value={value}
@@ -24,7 +24,7 @@ const SliderDemo = ({ scale }: DemoProps) => {
           />
         </div>
         <div className="demo-pair">
-          <span className="sample-caption">DISABLED</span>
+          <span>DISABLED</span>
           <Slider
             scale={scale}
             value={[50]}
@@ -35,7 +35,7 @@ const SliderDemo = ({ scale }: DemoProps) => {
         </div>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Slider value">{value[0]}%</output>
         <span>Interaction sound volume</span>
       </div>

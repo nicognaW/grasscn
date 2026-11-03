@@ -12,7 +12,7 @@ const TextareaDemo = ({ scale }: DemoProps) => {
     <>
       <div className="demo-stage" data-stage="textarea">
         <div className="demo-pair">
-          <label className="sample-caption" htmlFor="preview-textarea">
+          <label htmlFor="preview-textarea">
             EDITABLE
           </label>
           <Textarea
@@ -27,7 +27,7 @@ const TextareaDemo = ({ scale }: DemoProps) => {
           />
         </div>
         <div className="demo-pair">
-          <label className="sample-caption" htmlFor="preview-textarea-readonly">
+          <label htmlFor="preview-textarea-readonly">
             READ ONLY
           </label>
           <Textarea
@@ -39,7 +39,7 @@ const TextareaDemo = ({ scale }: DemoProps) => {
           />
         </div>
         <div className="demo-pair">
-          <label className="sample-caption" htmlFor="preview-textarea-disabled">
+          <label htmlFor="preview-textarea-disabled">
             DISABLED
           </label>
           <Textarea
@@ -52,7 +52,7 @@ const TextareaDemo = ({ scale }: DemoProps) => {
         </div>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Textarea character count">
           {value.length} characters
         </output>

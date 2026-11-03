@@ -10,7 +10,7 @@ const InputDemo = ({ scale }: DemoProps) => {
     <>
       <div className="demo-stage" data-stage="input">
         <div className="demo-pair">
-          <label className="sample-caption" htmlFor="preview-input">
+          <label htmlFor="preview-input">
             EDITABLE
           </label>
           <Input
@@ -25,7 +25,7 @@ const InputDemo = ({ scale }: DemoProps) => {
           />
         </div>
         <div className="demo-pair">
-          <label className="sample-caption" htmlFor="preview-input-readonly">
+          <label htmlFor="preview-input-readonly">
             READ ONLY
           </label>
           <Input
@@ -37,7 +37,7 @@ const InputDemo = ({ scale }: DemoProps) => {
           />
         </div>
         <div className="demo-pair">
-          <label className="sample-caption" htmlFor="preview-input-disabled">
+          <label htmlFor="preview-input-disabled">
             DISABLED
           </label>
           <Input
@@ -50,7 +50,7 @@ const InputDemo = ({ scale }: DemoProps) => {
         </div>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Input character count">
           {value.length} characters
         </output>

@@ -35,7 +35,7 @@ const ButtonDemo = ({ scale }: DemoProps) => {
       </div>
       <div className="demo-stage" data-stage="button">
         <div className="demo-pair">
-          <span className="sample-caption">
+          <span>
             <MinecraftText>INTERACTIVE</MinecraftText>
           </span>
           <Button
@@ -49,7 +49,7 @@ const ButtonDemo = ({ scale }: DemoProps) => {
           </Button>
         </div>
         <div className="demo-pair">
-          <span className="sample-caption">
+          <span>
             <MinecraftText>DISABLED</MinecraftText>
           </span>
           <Button scale={scale} style={{ width: width * scale }} disabled>
@@ -58,7 +58,7 @@ const ButtonDemo = ({ scale }: DemoProps) => {
         </div>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />{" "}
+        <span />{" "}
         <output aria-label="Button activations">
           <MinecraftText>
             {count === 0

@@ -95,10 +95,11 @@ export const chartColorChannels = function chartColorChannels(
   color: string,
   element?: Element | null
 ): number[] {
-  const variable = /^var\(\s*(--[^,)]+)(?:,\s*([^)]*))?\)/u.exec(color);
+  let resolvedColor = color;
+  const variable = /^var\(\s*(--[^,)]+)(?:,\s*([^)]*))?\)/u.exec(resolvedColor);
 
   if (variable) {
-    color =
+    resolvedColor =
       (element
         ? getComputedStyle(element).getPropertyValue(variable[1]).trim()
         : "") ||
@@ -106,26 +107,26 @@ export const chartColorChannels = function chartColorChannels(
       "#55ff55";
   }
 
-  if (/^#[\da-f]{6}$/iu.test(color)) {
+  if (/^#[\da-f]{6}$/iu.test(resolvedColor)) {
     return [1, 3, 5].map((index) =>
-      Number.parseInt(color.slice(index, index + 2), 16)
+      Number.parseInt(resolvedColor.slice(index, index + 2), 16)
     );
   }
 
-  if (/^#[\da-f]{3}$/iu.test(color)) {
+  if (/^#[\da-f]{3}$/iu.test(resolvedColor)) {
     return [1, 2, 3].map((index) =>
-      Number.parseInt(color[index] + color[index], 16)
+      Number.parseInt(resolvedColor[index] + resolvedColor[index], 16)
     );
   }
 
-  if (color.startsWith("rgb")) {
-    return (color.match(/[\d.]+/gu) ?? []).slice(0, 3).map(Number);
+  if (resolvedColor.startsWith("rgb")) {
+    return (resolvedColor.match(/[\d.]+/gu) ?? []).slice(0, 3).map(Number);
   }
 
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d")!;
 
-  context.fillStyle = color;
+  context.fillStyle = resolvedColor;
   context.fillRect(0, 0, 1, 1);
 
   return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);

@@ -84,7 +84,7 @@ const TableDemo = ({ scale }: DemoProps) => {
         </Table>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Selected world">
           {selected || "Choose a world"}
         </output>

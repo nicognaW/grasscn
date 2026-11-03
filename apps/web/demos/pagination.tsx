@@ -56,7 +56,7 @@ const PaginationDemo = ({ scale }: DemoProps) => {
         </Pagination>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Pagination current page">Page {page} / 3</output>
       </div>
     </>

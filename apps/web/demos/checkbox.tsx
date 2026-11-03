@@ -39,7 +39,7 @@ const CheckboxDemo = ({ scale }: DemoProps) => {
         </div>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Checkbox value">
           {checked ? "Checked" : "Unchecked"}
         </output>

@@ -112,7 +112,7 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Single recipe station">{single || "None"}</output>
         <output aria-label="Multiple recipe stations">
           {multiple.join(", ") || "None"}

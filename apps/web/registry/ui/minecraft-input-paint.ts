@@ -87,20 +87,20 @@ const scrollTo = function scrollTo(
   position: number,
   width: number
 ) {
-  start = Math.min(start, text.length);
-  const end = start + trimToWidth(text.slice(start), width).length;
+  let scrollStart = Math.min(start, text.length);
+  const end = scrollStart + trimToWidth(text.slice(scrollStart), width).length;
 
-  if (position === start) {
-    start -= trimToWidth(text, width, true).length;
+  if (position === scrollStart) {
+    scrollStart -= trimToWidth(text, width, true).length;
   }
 
   if (position > end) {
-    start += position - end;
-  } else if (position <= start) {
-    start = position;
+    scrollStart += position - end;
+  } else if (position <= scrollStart) {
+    scrollStart = position;
   }
 
-  return Math.max(0, Math.min(text.length, start));
+  return Math.max(0, Math.min(text.length, scrollStart));
 };
 
 const field = function field(

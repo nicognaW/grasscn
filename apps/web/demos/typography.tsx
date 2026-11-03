@@ -19,7 +19,7 @@ const TypographyDemo = ({ scale }: DemoProps) => {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Text
           <Textarea
             aria-label="Typography text"
@@ -34,7 +34,7 @@ const TypographyDemo = ({ scale }: DemoProps) => {
       </div>
       <div ref={stage.ref} className="demo-stage" data-stage="typography">
         <div className="demo-pair">
-          <span className="sample-caption">HEADING</span>
+          <span>HEADING</span>
           <TypographyH1 scale={scale} maxWidth={Math.min(200, stage.width)}>
             A new adventure
           </TypographyH1>
@@ -43,13 +43,13 @@ const TypographyDemo = ({ scale }: DemoProps) => {
           </TypographyH2>
         </div>
         <div className="demo-pair">
-          <span className="sample-caption">MULTILINE</span>
+          <span>MULTILINE</span>
           <TypographyP scale={scale} maxWidth={Math.min(200, stage.width)}>
             {text}
           </TypographyP>
         </div>
         <div className="demo-pair">
-          <span className="sample-caption">PROSE / CODE</span>
+          <span>PROSE / CODE</span>
           <TypographyBlockquote
             scale={scale}
             maxWidth={Math.min(200, stage.width)}

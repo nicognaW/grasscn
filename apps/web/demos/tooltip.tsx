@@ -11,7 +11,7 @@ const TooltipDemo = ({ scale }: DemoProps) => (
   <TooltipProvider>
     <div className="demo-stage" data-stage="tooltip">
       <div className="demo-pair">
-        <span className="sample-caption">ITEM INFORMATION</span>
+        <span>ITEM INFORMATION</span>
         <Tooltip>
           <TooltipTrigger
             render={<Button scale={scale} aria-label="Inspect tooltip" />}
@@ -22,7 +22,7 @@ const TooltipDemo = ({ scale }: DemoProps) => (
         </Tooltip>
       </div>
       <div className="demo-pair">
-        <span className="sample-caption">MULTILINE</span>
+        <span>MULTILINE</span>
         <Tooltip>
           <TooltipTrigger render={<Button scale={scale} />}>
             {"More information"}
@@ -34,7 +34,7 @@ const TooltipDemo = ({ scale }: DemoProps) => (
       </div>
     </div>
     <div className="demo-result">
-      <span className="status-dot" />
+      <span />
       <span>Hover or use your keyboard</span>
       <span>Escape to dismiss</span>
     </div>
