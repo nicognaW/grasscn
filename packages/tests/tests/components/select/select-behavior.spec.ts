@@ -5,9 +5,9 @@ interface SelectPlaybackState extends Window {
   __selectVoices?: number;
 }
 
-interface InitializedSelectPlaybackState extends SelectPlaybackState {
+type InitializedSelectPlaybackState = typeof window & SelectPlaybackState & {
   __selectVoices: number;
-}
+};
 
 test("Select respects cancelled opening and closing in uncontrolled mode", async ({
   page,

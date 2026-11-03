@@ -6,9 +6,9 @@ interface ResizablePlaybackState extends Window {
   sounds?: number;
 }
 
-interface InitializedResizablePlaybackState extends ResizablePlaybackState {
+type InitializedResizablePlaybackState = typeof window & ResizablePlaybackState & {
   sounds: number;
-}
+};
 
 const layoutLeft = async function layoutLeft(page: Page) {
   const text = await page.locator("#layout").textContent();

@@ -4,9 +4,9 @@ interface TabsFallbackPlaybackState extends Window {
   voices?: number;
 }
 
-interface InitializedTabsFallbackPlaybackState extends TabsFallbackPlaybackState {
+type InitializedTabsFallbackPlaybackState = typeof window & TabsFallbackPlaybackState & {
   voices: number;
-}
+};
 
 for (const reason of ["disabled", "missing"]) {
   test(`Tabs automatic ${reason} fallback stays silent`, async ({ page }) => {

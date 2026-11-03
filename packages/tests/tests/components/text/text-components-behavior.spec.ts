@@ -4,9 +4,9 @@ interface TextPlaybackState extends Window {
   sounds?: string[];
 }
 
-interface InitializedTextPlaybackState extends TextPlaybackState {
+type InitializedTextPlaybackState = typeof window & TextPlaybackState & {
   sounds: string[];
-}
+};
 
 test("Typography retains native text inside semantic headings and prose elements", async ({
   page,
