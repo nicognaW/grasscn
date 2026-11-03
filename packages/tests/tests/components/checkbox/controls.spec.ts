@@ -24,7 +24,7 @@ test("Disabled checkbox cannot change and is skipped by Tab", async ({
   const checkbox = page.getByRole("checkbox");
   await expect(checkbox).toBeDisabled();
   const bounds = await checkbox.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.click(
     bounds.x + bounds.width / 2,
     bounds.y + bounds.height / 2

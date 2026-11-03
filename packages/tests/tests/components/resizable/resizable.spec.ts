@@ -38,9 +38,9 @@ const verifyResizableOrientation = async (page: Page, orientation: string) => {
   await expect(handle).toHaveAttribute("aria-valuenow", "50");
 
   const left = await page.locator("#left").boundingBox();
-expectNotNull(left, "Missing required bounding box: left");
+  expectNotNull(left, "Missing required bounding box: left");
   const right = await page.locator("#right").boundingBox();
-expectNotNull(right, "Missing required bounding box: right");
+  expectNotNull(right, "Missing required bounding box: right");
 
   expect(
     orientation === "horizontal" ? right.x > left.x : right.y > left.y
@@ -70,7 +70,7 @@ test("Resizable responds to pointer dragging and reports layouts", async ({
   await page.goto("/?component=resizable");
   const handle = page.getByRole("separator", { name: "Resize panels" });
   const box = await handle.boundingBox();
-expectNotNull(box, "Missing required bounding box: box");
+  expectNotNull(box, "Missing required bounding box: box");
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2 + 80, box.y + box.height / 2, {
@@ -176,7 +176,7 @@ for (const orientation of ["horizontal", "vertical"]) {
     const handle = page.getByRole("separator", { name: "Resize panels" });
     const arrow = handle.locator("[data-slot=resizable-arrow]").first();
     const bounds = await arrow.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+    expectNotNull(bounds, "Missing required bounding box: bounds");
 
     expect(bounds.width < bounds.height).toBe(orientation === "horizontal");
     expect(await handle.evaluate((node) => getComputedStyle(node).cursor)).toBe(

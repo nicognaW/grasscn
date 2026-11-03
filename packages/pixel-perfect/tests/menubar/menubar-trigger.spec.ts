@@ -1,8 +1,8 @@
-import { expectNotNull } from "@grasscn/tests/assertions";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -131,7 +131,7 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
           await frameCompletion.promise;
         });
         const bounds = await trigger.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+        expectNotNull(bounds, "Missing required bounding box: bounds");
         expect([bounds.x, bounds.y]).toEqual([
           (c.x ?? 16) * c.scale,
           (c.y ?? 16) * c.scale,

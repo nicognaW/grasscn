@@ -1,6 +1,6 @@
-import { expectNotNull } from "@grasscn/tests/assertions";
 import { createHash } from "node:crypto";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 import {
@@ -68,7 +68,7 @@ test("Slider plays on pointer release, with no press, drag or keyboard tick soun
 }) => {
   await page.goto("/?component=slider");
   const bounds = await page.locator("[data-subject]").boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.move(
     bounds.x + bounds.width / 2,
     bounds.y + bounds.height / 2

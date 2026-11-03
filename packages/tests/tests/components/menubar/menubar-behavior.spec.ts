@@ -86,7 +86,7 @@ test("Menubar pointer hover switches open menus without opening disabled menus",
   });
 
   const rect = await disabled.boundingBox();
-expectNotNull(rect, "Missing required bounding box: rect");
+  expectNotNull(rect, "Missing required bounding box: rect");
   await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
   await expect(world(page)).toHaveAttribute("data-popup-open", "");
   await expect(disabled).not.toHaveAttribute("data-popup-open");

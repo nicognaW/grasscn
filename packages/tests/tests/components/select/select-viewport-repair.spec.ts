@@ -38,9 +38,9 @@ for (const scale of [2] as const) {
         await expect(popup).toHaveAttribute("data-mc-select-ready", "true");
 
         const before = await popup.boundingBox();
-expectNotNull(before, "Missing required bounding box: before");
+        expectNotNull(before, "Missing required bounding box: before");
         const anchor = await trigger.boundingBox();
-expectNotNull(anchor, "Missing required bounding box: anchor");
+        expectNotNull(anchor, "Missing required bounding box: anchor");
 
         expect(before.x).toBeGreaterThanOrEqual(0);
         expect(before.x + before.width).toBeLessThanOrEqual(width);
@@ -89,7 +89,7 @@ expectNotNull(anchor, "Missing required bounding box: anchor");
           return await frameCompletion.promise;
         });
         const after = await popup.boundingBox();
-expectNotNull(after, "Missing required bounding box: after");
+        expectNotNull(after, "Missing required bounding box: after");
 
         if ((await popup.getAttribute("data-align-trigger")) !== "true") {
           expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(scale);
@@ -128,7 +128,7 @@ expectNotNull(after, "Missing required bounding box: after");
 
         if (settledMaximum > 0) {
           const bounds = await bar.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+          expectNotNull(bounds, "Missing required bounding box: bounds");
           expect(bounds.x + bounds.width).toBeLessThanOrEqual(
             after.x + after.width
           );

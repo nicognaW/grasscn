@@ -14,7 +14,7 @@ test("CJK pointer hit-testing uses the original glyph advances", async ({
     await expect(input).toHaveAttribute("data-mc-bitmap", "true");
     await page.evaluate(async () => await document.fonts.ready);
     const bounds = await input.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+    expectNotNull(bounds, "Missing required bounding box: bounds");
     await page.mouse.click(
       bounds.x + (4 + advance * 2) * 2,
       bounds.y + bounds.height / 2

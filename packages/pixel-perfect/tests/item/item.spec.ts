@@ -1,8 +1,8 @@
-import { expectNotNull } from "@grasscn/tests/assertions";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
 import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
@@ -127,7 +127,7 @@ for (const [part, directory] of [
 
           if (c.state === "icon-hover") {
             const box = await subject.boundingBox();
-expectNotNull(box, "Missing required bounding box: box");
+            expectNotNull(box, "Missing required bounding box: box");
             await page.mouse.move(box.x + 18 * c.scale, box.y + 18 * c.scale);
           }
 
@@ -187,7 +187,7 @@ expectNotNull(box, "Missing required bounding box: box");
           await frameCompletion.promise;
         });
         const box = await subject.boundingBox();
-expectNotNull(box, "Missing required bounding box: box");
+        expectNotNull(box, "Missing required bounding box: box");
         expect([box.x, box.y]).toEqual([c.x * c.scale, c.y * c.scale]);
 
         const bytes = readFileSync(

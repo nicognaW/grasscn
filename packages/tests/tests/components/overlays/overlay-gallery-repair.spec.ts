@@ -43,12 +43,14 @@ for (const scale of [2]) {
           .locator("[data-slot=avatar]")
           .first()
           .boundingBox();
-expectNotNull(face, "Missing required bounding box: face");
+
+        expectNotNull(face, "Missing required bounding box: face");
 
         const count = await group
           .locator("[data-slot=avatar-group-count]")
           .boundingBox();
-expectNotNull(count, "Missing required bounding box: count");
+
+        expectNotNull(count, "Missing required bounding box: count");
 
         return Math.abs(face.height - count.height);
       })
@@ -87,7 +89,7 @@ expectNotNull(count, "Missing required bounding box: count");
     await expect
       .poll(async () => {
         const r = await dialog.boundingBox();
-expectNotNull(r, "Missing required bounding box: r");
+        expectNotNull(r, "Missing required bounding box: r");
 
         return (
           r.x >= 0 && r.y >= 0 && r.x + r.width <= 390 && r.y + r.height <= 844
@@ -99,7 +101,8 @@ expectNotNull(r, "Missing required bounding box: r");
       const r = await dialog
         .getByRole("button", { exact: true, name })
         .boundingBox();
-expectNotNull(r, "Missing required bounding box: r");
+
+      expectNotNull(r, "Missing required bounding box: r");
 
       expect(r.x).toBeGreaterThanOrEqual(0);
       expect(r.x + r.width).toBeLessThanOrEqual(390);
@@ -114,13 +117,14 @@ expectNotNull(r, "Missing required bounding box: r");
       await expect
         .poll(async () => {
           const a = await header.boundingBox();
-expectNotNull(a, "Missing required bounding box: a");
+          expectNotNull(a, "Missing required bounding box: a");
 
           const b = await dialog
             .locator(".mc-alert-dialog-description .mc-card-text-line")
             .last()
             .boundingBox();
-expectNotNull(b, "Missing required bounding box: b");
+
+          expectNotNull(b, "Missing required bounding box: b");
 
           return b.y >= a.y && b.y + b.height <= a.y + a.height + 1;
         })
@@ -149,7 +153,7 @@ test("Short viewport AlertDialog layout remains stable while resizing", async ({
   await expect
     .poll(async () => {
       const b = await dialog.boundingBox();
-expectNotNull(b, "Missing required bounding box: b");
+      expectNotNull(b, "Missing required bounding box: b");
 
       return b.y >= 0 && b.y + b.height <= 240;
     })

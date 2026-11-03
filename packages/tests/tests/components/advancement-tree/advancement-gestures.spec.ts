@@ -74,7 +74,7 @@ test("small pointer movement still selects an advancement", async ({
   const plane = page.locator(".mc-advancement-plane");
   const before = await plane.getAttribute("style");
   const box = await node.boundingBox();
-expectNotNull(box, "Missing required bounding box: box");
+  expectNotNull(box, "Missing required bounding box: box");
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2 + 5, box.y + box.height / 2);
@@ -98,7 +98,7 @@ test("dragging from a node pans without selecting and does not block keyboard se
   const plane = page.locator(".mc-advancement-plane");
   const before = await plane.getAttribute("style");
   const box = await node.boundingBox();
-expectNotNull(box, "Missing required bounding box: box");
+  expectNotNull(box, "Missing required bounding box: box");
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(
@@ -130,7 +130,7 @@ test("cancelled drag permits the next click and keyboard selection", async ({
   const tree = page.getByRole("group", { name: "Advancement tree" });
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
   const box = await node.boundingBox();
-expectNotNull(box, "Missing required bounding box: box");
+  expectNotNull(box, "Missing required bounding box: box");
   const plane = page.locator(".mc-advancement-plane");
   await node.hover();
   await expect(page.locator('[data-slot="tooltip-content"]')).toBeVisible();

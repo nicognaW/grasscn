@@ -238,7 +238,7 @@ for (const name of ["map", "trading", "player-list"]) {
     ).toBe(true);
     const card = page.locator(".documentation-playground");
     const bounds = await card.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+    expectNotNull(bounds, "Missing required bounding box: bounds");
     expect(bounds.x + bounds.width).toBeLessThanOrEqual(390);
     await page.screenshot({
       path: info.outputPath(`${name}-website-mobile.png`),

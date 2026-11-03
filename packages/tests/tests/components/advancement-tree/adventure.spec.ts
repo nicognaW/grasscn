@@ -51,7 +51,7 @@ test("advancement tree selection, keyboard, details and panning", async ({
   await tree.press("Home");
   expect(await plane.getAttribute("style")).toEqual(before);
   const box = await tree.boundingBox();
-expectNotNull(box, "Missing required bounding box: box");
+  expectNotNull(box, "Missing required bounding box: box");
   await page.mouse.move(box.x + 10, box.y + 10);
   await page.mouse.down();
   await page.mouse.move(box.x + 40, box.y + 30, { steps: 4 });

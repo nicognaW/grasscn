@@ -156,7 +156,7 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
   await player.blur();
   expect(await player.screenshot()).toEqual(before);
   const box = await player.boundingBox();
-expectNotNull(box, "Missing required bounding box: box");
+  expectNotNull(box, "Missing required bounding box: box");
   await page.mouse.move(box.x + 40, box.y + 40);
   await page.mouse.down();
   await page.mouse.move(box.x + 80, box.y + 200, { steps: 5 });

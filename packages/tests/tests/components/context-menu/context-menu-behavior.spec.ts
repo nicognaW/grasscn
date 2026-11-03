@@ -21,7 +21,7 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
   const menu = page.getByRole("menu");
   await expect(menu).toBeVisible();
   const trigger = await page.locator("#context-hit").boundingBox();
-expectNotNull(trigger, "Missing required bounding box: trigger");
+  expectNotNull(trigger, "Missing required bounding box: trigger");
 
   const border = await page.locator("#context-hit").evaluate((node) => {
     const style = getComputedStyle(node);
@@ -33,7 +33,7 @@ expectNotNull(trigger, "Missing required bounding box: trigger");
   });
 
   const bounds = await menu.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   expect([bounds.x, bounds.y]).toEqual([
     trigger.x + border[0] + 24 + 4,
     trigger.y + border[1] + 24,

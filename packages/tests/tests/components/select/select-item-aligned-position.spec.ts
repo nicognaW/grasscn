@@ -39,9 +39,9 @@ for (const scale of [1, 2, 3] as const) {
       await expect
         .poll(async () => {
           const row = await selected.boundingBox();
-expectNotNull(row, "Missing required bounding box: row");
+          expectNotNull(row, "Missing required bounding box: row");
           const anchor = await trigger.boundingBox();
-expectNotNull(anchor, "Missing required bounding box: anchor");
+          expectNotNull(anchor, "Missing required bounding box: anchor");
 
           return Math.abs(
             row.y + row.height / 2 - anchor.y - anchor.height / 2
@@ -49,7 +49,7 @@ expectNotNull(anchor, "Missing required bounding box: anchor");
         })
         .toBeLessThanOrEqual(1);
       const before = await popup.boundingBox();
-expectNotNull(before, "Missing required bounding box: before");
+      expectNotNull(before, "Missing required bounding box: before");
       expect(before.x).toBeGreaterThanOrEqual(0);
       expect(before.x + before.width).toBeLessThanOrEqual(width);
       expect(before.y).toBeGreaterThanOrEqual(0);
@@ -74,7 +74,7 @@ expectNotNull(before, "Missing required bounding box: before");
         return await frameCompletion.promise;
       });
       const after = await popup.boundingBox();
-expectNotNull(after, "Missing required bounding box: after");
+      expectNotNull(after, "Missing required bounding box: after");
       expect(after.x).toBeGreaterThanOrEqual(0);
       expect(after.y).toBeGreaterThanOrEqual(0);
       expect(after.x + after.width).toBeLessThanOrEqual(width);

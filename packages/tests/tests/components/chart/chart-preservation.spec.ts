@@ -66,7 +66,7 @@ for (const scale of [2] as const) {
       const popup = page.locator("[data-slot=select-content]");
       await expect(popup).toBeVisible();
       const before = await popup.boundingBox();
-expectNotNull(before, "Missing required bounding box: before");
+      expectNotNull(before, "Missing required bounding box: before");
       expect(before.x).toBeGreaterThanOrEqual(0);
       expect(before.x + before.width).toBeLessThanOrEqual(width);
       expect(before.y).toBeGreaterThanOrEqual(0);
@@ -93,7 +93,7 @@ expectNotNull(before, "Missing required bounding box: before");
         // Base UI may show the entire list when item alignment has enough room.
         for (const option of await popup.getByRole("option").all()) {
           const bounds = await option.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+          expectNotNull(bounds, "Missing required bounding box: bounds");
           expect(bounds.y).toBeGreaterThanOrEqual(before.y);
           expect(bounds.y + bounds.height).toBeLessThanOrEqual(
             before.y + before.height
@@ -119,7 +119,7 @@ expectNotNull(bounds, "Missing required bounding box: bounds");
       });
       // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
       const after = await popup.boundingBox();
-expectNotNull(after, "Missing required bounding box: after");
+      expectNotNull(after, "Missing required bounding box: after");
       expect(after.y).toBeGreaterThanOrEqual(0);
       expect(after.y + after.height).toBeLessThanOrEqual(height);
       await page.keyboard.press("End");

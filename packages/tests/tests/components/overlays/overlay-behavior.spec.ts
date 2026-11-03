@@ -63,7 +63,7 @@ for (const component of ["sheet", "drawer"]) {
       await expect
         .poll(async () => {
           const r = await panel.boundingBox();
-expectNotNull(r, "Missing required bounding box: r");
+          expectNotNull(r, "Missing required bounding box: r");
 
           return Math.round(
             side === "top"
@@ -186,7 +186,7 @@ test("Drawer dismisses through Base UI swipe details", async ({ page }) => {
   await expect(panel).toBeVisible();
 
   const bounds = await panel.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.move(bounds.x + 8, bounds.y + 8);
   await page.mouse.down();
   await page.mouse.move(bounds.x + 8, bounds.y + bounds.height * 0.8, {

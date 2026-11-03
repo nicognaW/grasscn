@@ -135,7 +135,7 @@ test("Input pointer position uses the same original font advances", async ({
   const input = page.getByRole("textbox", { name: "Test input" });
   await page.evaluate(async () => await document.fonts.ready);
   const bounds = await input.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.click(
     bounds.x + (4 + 6 * 3) * 2,
     bounds.y + bounds.height / 2

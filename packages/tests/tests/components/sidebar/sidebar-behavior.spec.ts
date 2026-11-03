@@ -1,6 +1,6 @@
-import { expectNotNull } from "@grasscn/tests/assertions";
 import { writeFileSync } from "node:fs";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 import type { RecordedPitchedPlayback } from "@tests/harness/audio-playback";
@@ -130,17 +130,18 @@ test("Sidebar right-side positioning reserves the matching inset space", async (
   const provider = await page
     .locator('[data-slot="sidebar-wrapper"]')
     .boundingBox();
-expectNotNull(provider, "Missing required bounding box: provider");
+
+  expectNotNull(provider, "Missing required bounding box: provider");
 
   const container = await page
     .locator('[data-slot="sidebar-container"]')
     .boundingBox();
-expectNotNull(container, "Missing required bounding box: container");
 
-  const inset = await page
-    .locator('[data-slot="sidebar-inset"]')
-    .boundingBox();
-expectNotNull(inset, "Missing required bounding box: inset");
+  expectNotNull(container, "Missing required bounding box: container");
+
+  const inset = await page.locator('[data-slot="sidebar-inset"]').boundingBox();
+
+  expectNotNull(inset, "Missing required bounding box: inset");
 
   expect(container.x + container.width).toBe(provider.x + provider.width);
   expect(inset.x + inset.width).toBe(container.x);
@@ -238,10 +239,11 @@ test("Sidebar skeleton is deterministic and optional action placement does not c
   const action = await page
     .getByRole("button", { exact: true, name: "World actions" })
     .boundingBox();
-expectNotNull(action, "Missing required bounding box: action");
+
+  expectNotNull(action, "Missing required bounding box: action");
 
   const button = await page.locator("#menu-worlds").boundingBox();
-expectNotNull(button, "Missing required bounding box: button");
+  expectNotNull(button, "Missing required bounding box: button");
 
   expect(action.y).toBe(button.y);
   expect(action.x).toBeGreaterThan(button.x);

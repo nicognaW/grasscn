@@ -162,7 +162,7 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
       await expect(content).toHaveAttribute("data-side", side);
       await expect(content).toHaveAttribute("data-align", align);
       const bounds = await content.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+      expectNotNull(bounds, "Missing required bounding box: bounds");
 
       const anchorX = 400;
       const anchorY = 300;
@@ -209,7 +209,7 @@ test("Popover collision handling keeps its surface inside a narrow viewport", as
 
   await expect(content).toHaveAttribute("data-mc-popover-ready", "true");
   const bounds = await content.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   expect(bounds.x).toBeGreaterThanOrEqual(0);
   expect(bounds.y).toBeGreaterThanOrEqual(0);
   expect(bounds.x + bounds.width).toBeLessThanOrEqual(480);
@@ -238,7 +238,7 @@ test("Popover asChild preserves the trigger, content, anchor, refs and form", as
   await expect(dialog).toHaveAttribute("id", "composed-popover");
   await expect(dialog).toHaveAttribute("data-side", "bottom");
   const bounds = await dialog.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   expect(bounds.x).toBe(240);
   expect(bounds.y).toBe(204);
   expect(await page.locator('[data-slot="popover-trigger"]').count()).toBe(1);

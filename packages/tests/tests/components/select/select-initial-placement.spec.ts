@@ -59,11 +59,11 @@ for (const scale of [2] as const) {
           const popup = page.locator("[data-slot=select-content][data-open]");
           await expect(popup).toBeVisible();
           const anchor = await trigger.boundingBox();
-expectNotNull(anchor, "Missing required bounding box: anchor");
+          expectNotNull(anchor, "Missing required bounding box: anchor");
           await expect
             .poll(async () => {
               const p = await popup.boundingBox();
-expectNotNull(p, "Missing required bounding box: p");
+              expectNotNull(p, "Missing required bounding box: p");
 
               return Math.max(
                 p.y - anchor.y - anchor.height,
@@ -81,7 +81,7 @@ expectNotNull(p, "Missing required bounding box: p");
             await expect
               .poll(async () => {
                 const row = await selected.boundingBox();
-expectNotNull(row, "Missing required bounding box: row");
+                expectNotNull(row, "Missing required bounding box: row");
 
                 return Math.abs(
                   row.y + row.height / 2 - anchor.y - anchor.height / 2
@@ -90,7 +90,7 @@ expectNotNull(row, "Missing required bounding box: row");
               .toBeLessThanOrEqual(scale);
           } else {
             const bounds = await popup.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+            expectNotNull(bounds, "Missing required bounding box: bounds");
             expect(
               bounds.y >= anchor.y + anchor.height - 1 ||
                 bounds.y + bounds.height <= anchor.y + 1
@@ -98,7 +98,7 @@ expectNotNull(bounds, "Missing required bounding box: bounds");
           }
 
           const p = await popup.boundingBox();
-expectNotNull(p, "Missing required bounding box: p");
+          expectNotNull(p, "Missing required bounding box: p");
 
           let expectedX = Math.min(
             Math.max(anchor.x, 10),
@@ -112,12 +112,14 @@ expectNotNull(p, "Missing required bounding box: p");
             const value = await trigger
               .locator("[data-slot=select-value]")
               .boundingBox();
-expectNotNull(value, "Missing required bounding box: value");
+
+            expectNotNull(value, "Missing required bounding box: value");
 
             const text = await popup
               .locator("[data-selected] .mc-select-item-label")
               .boundingBox();
-expectNotNull(text, "Missing required bounding box: text");
+
+            expectNotNull(text, "Missing required bounding box: text");
 
             expectedX = Math.min(
               Math.max(p.x + value.x - text.x, 5),

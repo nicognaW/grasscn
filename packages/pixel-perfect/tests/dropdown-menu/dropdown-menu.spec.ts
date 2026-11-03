@@ -1,8 +1,8 @@
-import { expectNotNull } from "@grasscn/tests/assertions";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -134,7 +134,7 @@ for (const c of manifest.cases) {
       await frameCompletion.promise;
     });
     const bounds = await subject.boundingBox();
-expectNotNull(bounds, "Missing required bounding box: bounds");
+    expectNotNull(bounds, "Missing required bounding box: bounds");
     expect(bounds.x).toBe(c.x * c.scale);
     expect(bounds.y).toBe(c.y * c.scale);
 
