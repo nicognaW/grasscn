@@ -10,9 +10,11 @@ test.describe.configure({ mode: "parallel" });
 
 const dir = "tests/reference/input-otp";
 
+// SAFETY: this fixed read consumes the retained input-otp manifest represented by the exact type-only JSON import; its case-definition and capture-source hashes match the retained producers. Keep the existing fresh read and parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained-manifest contract at JSON.parse; no runtime loader, validation or generic caster.
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf-8")
-);
+) as typeof import("../reference/input-otp/manifest.json").default;
 
 for (const c of manifest.cases) {
   test(`InputOTP actual native EditBox slot ${c.name}`, async ({
