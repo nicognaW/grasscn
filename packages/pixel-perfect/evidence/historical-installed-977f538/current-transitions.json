@@ -473,7 +473,7 @@
     {
       "sourcePath": "registry/ui/collapsible.tsx",
       "historicalSha256": "821cdfd14d64a834c5fd99e19ff7c91043fcc078065f03bf112935839212a06a",
-      "currentSha256": "5a28d6c8b50585a7dab1b8d549e78d8049d923f0e21a10751944e354aadaf9df",
+      "currentSha256": "e85f1815dfc0b9c33b14a8ef83dd988e2fed7e4a53a688b197f7bb64f63f6c2d",
       "classification": "reviewed-source-transition",
       "reason": "Reviewed formatting of registry/ui/collapsible.tsx from source 75c568a to 6b0838f, preserved byte-for-byte in combined source 4b9cbb7. The actual full module AST, import declaration order and class expressions are unchanged; actual complete Bun and browser emitted JavaScript bytes match for this formatting step. Prior reviewed source and policy lineage is retained. Complete Main-to-current emitted/runtime semantic equivalence is not asserted. Historical proof remains bound to its original archived source; no current behavior or pixel verification is granted. Owner-dispatch follow-up: genuine React ref/cleanup predicates preserve original union handling, and the existing inline-node classifier has its actual recursive type. Current hashes recognize source drift only; archived evidence and pixel coverage remain unchanged. Current formatter follow-up: canonical import and class-token ordering is recorded as current source drift. Historical captured-reference bytes and coverage are unchanged; combined current-source checks remain separate. Current comment-only follow-up documents approved CSS numeric-prefix parser applicability; emitted JavaScript is unchanged and historical pixel coverage is not extended.",
       "reviewedSourceSnapshot": "4b9cbb75f83e8712f1a4ac78cf59e07c04931c93",
