@@ -13,7 +13,8 @@ import { MinecraftText } from "./minecraft-text";
 
 import "./minecraft-chart.css";
 
-const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
 
 interface NativeChartTextStyle extends React.CSSProperties {
   "--mc-ink": string;

@@ -13,7 +13,8 @@ import {
   setUnihexAtlas,
 } from "./minecraft-unifont-gpu";
 
-const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
 
 interface Images {
   normal: HTMLImageElement;

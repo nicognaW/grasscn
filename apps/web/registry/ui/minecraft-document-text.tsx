@@ -8,7 +8,8 @@ import { minecraftInputAssets } from "./minecraft-input-assets";
 import { minecraftStyle } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
 
-const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-registry-ui-minecraft-document-text-1-visibility": string;

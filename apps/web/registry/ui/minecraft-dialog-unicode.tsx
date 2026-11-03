@@ -11,7 +11,8 @@ import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
-const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
 
 let alpha: Promise<Uint8ClampedArray> | undefined;
 

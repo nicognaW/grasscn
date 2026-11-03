@@ -8,7 +8,8 @@ import { minecraftInputAssets } from "./minecraft-input-assets";
 import { paintSignGpu } from "./minecraft-sign-gpu";
 import { loadUnihex, getUnihexGlyph, paintUnihex } from "./minecraft-unifont";
 
-const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
 
 const images = new Map<string, Promise<HTMLImageElement>>();
 

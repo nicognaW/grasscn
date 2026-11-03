@@ -9,7 +9,8 @@ import {
 } from "./minecraft-unifont";
 import { positionUnihex, disposeUnihex } from "./minecraft-unifont-gpu";
 
-const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
 
 interface Line {
   begin: number;

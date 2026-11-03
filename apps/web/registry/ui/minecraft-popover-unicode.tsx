@@ -12,8 +12,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-unicode.css";
 
-const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
-const observedPopoverGlyphs: Partial<typeof popoverGlyphAtlas> = popoverGlyphAtlas;
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
+const observedPopoverGlyphs: Partial<typeof popoverGlyphAtlas> =
+  popoverGlyphAtlas;
 
 interface PopoverUnicodeStyle extends React.CSSProperties {
   "--mc-popover-unicode-height": string;

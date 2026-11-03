@@ -14,7 +14,8 @@ import type { UnihexAtlas } from "./minecraft-unifont-gpu";
 
 import "./minecraft-unicode.css";
 
-const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
 
 interface UnicodeLabelStyle extends React.CSSProperties {
   "--mc-unicode-width": string;

@@ -6,7 +6,8 @@ import { PopoverUnicodeLine } from "./minecraft-popover-unicode";
 import { isMinecraftTextContent } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
-const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
 
 export const PopoverTextContext = React.createContext({ scale: 2, width: 214 });
 

@@ -16,7 +16,8 @@ import type { UnihexGlyph } from "./minecraft-unifont";
 
 import "./minecraft-unicode.css";
 
-const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
 
 interface ColorUnicodeLabelStyle extends React.CSSProperties {
   "--mc-unicode-width": string;
