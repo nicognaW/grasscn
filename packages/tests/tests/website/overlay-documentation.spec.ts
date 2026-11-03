@@ -46,7 +46,9 @@ test("overlay documentation exposes exact examples, own grouped source and retai
   );
 
   const overlaySlugs = slugs;
-const verifyOverlayDocumentation = async (slug: (typeof overlaySlugs)[number]) => {
+  const verifyOverlayDocumentation = async (
+    slug: (typeof overlaySlugs)[number]
+  ) => {
     await page.goto(`${origin}/docs/components/${slug}`);
 
     if (slug === "calendar") {
@@ -113,9 +115,9 @@ const verifyOverlayDocumentation = async (slug: (typeof overlaySlugs)[number]) =
     ).toHaveCount(0);
   };
 
-for (const slug of overlaySlugs) {
-await verifyOverlayDocumentation(slug);
-}
+  for (const slug of overlaySlugs) {
+    await verifyOverlayDocumentation(slug);
+  }
 
   expect(errors).toEqual([]);
 });
@@ -162,7 +164,9 @@ test("documentation edge panels expose labelled Done actions", async ({
   page,
 }) => {
   const edgePanelSlugs = ["sheet", "drawer"];
-const verifyEdgePanelComposition = async (slug: (typeof edgePanelSlugs)[number]) => {
+  const verifyEdgePanelComposition = async (
+    slug: (typeof edgePanelSlugs)[number]
+  ) => {
     await page.goto(`${origin}/docs/components/${slug}`);
     const example = page.locator(".documentation-example").first();
 
@@ -184,9 +188,9 @@ const verifyEdgePanelComposition = async (slug: (typeof edgePanelSlugs)[number])
     await expect(trigger).toBeFocused();
   };
 
-for (const slug of edgePanelSlugs) {
-await verifyEdgePanelComposition(slug);
-}
+  for (const slug of edgePanelSlugs) {
+    await verifyEdgePanelComposition(slug);
+  }
 });
 
 test("documentation menu and command examples dispatch real selections", async ({
@@ -387,8 +391,15 @@ test("overlay documentation remains usable at its default mobile width", async (
 }, info) => {
   await page.setViewportSize({ height: 844, width: 390 });
 
-  const mobileOverlaySlugs = ["dialog", "data-table", "message-scroller", "chart"];
-const verifyMobileOverlayDocumentation = async (slug: (typeof mobileOverlaySlugs)[number]) => {
+  const mobileOverlaySlugs = [
+    "dialog",
+    "data-table",
+    "message-scroller",
+    "chart",
+  ];
+  const verifyMobileOverlayDocumentation = async (
+    slug: (typeof mobileOverlaySlugs)[number]
+  ) => {
     await page.goto(`${origin}/docs/components/${slug}`);
     await expect(page.locator(".documentation-example").first()).toBeVisible();
     expect(
@@ -400,7 +411,7 @@ const verifyMobileOverlayDocumentation = async (slug: (typeof mobileOverlaySlugs
     });
   };
 
-for (const slug of mobileOverlaySlugs) {
-await verifyMobileOverlayDocumentation(slug);
-}
+  for (const slug of mobileOverlaySlugs) {
+    await verifyMobileOverlayDocumentation(slug);
+  }
 });

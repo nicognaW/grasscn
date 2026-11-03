@@ -397,7 +397,9 @@ test("Every component has a working dedicated preview and navigation", async ({
   page.on("pageerror", (error) => errors.push(error.message));
 
   const documentationPages = documentationInventory().pages;
-const verifyDocumentationPage = async (component: (typeof documentationPages)[number]) => {
+  const verifyDocumentationPage = async (
+    component: (typeof documentationPages)[number]
+  ) => {
     await page.goto(`${origin}${component.route.slice(1)}`);
     await expect(
       page.getByRole("heading", { exact: true, name: component.title }).first()
@@ -408,9 +410,9 @@ const verifyDocumentationPage = async (component: (typeof documentationPages)[nu
     }
   };
 
-for (const component of documentationPages) {
-await verifyDocumentationPage(component);
-}
+  for (const component of documentationPages) {
+    await verifyDocumentationPage(component);
+  }
 
   await page.goto(`${origin}docs/components/button`);
   await page
@@ -606,7 +608,9 @@ test("Mobile component pages contain default previews before and after paragraph
   await page.setViewportSize({ height: 844, width: 390 });
 
   const previewComponents = catalog.components;
-const verifyMobilePreviewComponent = async (component: (typeof previewComponents)[number]) => {
+  const verifyMobilePreviewComponent = async (
+    component: (typeof previewComponents)[number]
+  ) => {
     await page.goto(`${origin}docs/components/${component.name}`);
     expect(
       await page.evaluate(
@@ -624,9 +628,9 @@ const verifyMobilePreviewComponent = async (component: (typeof previewComponents
     ).toBe(true);
   };
 
-for (const component of previewComponents) {
-await verifyMobilePreviewComponent(component);
-}
+  for (const component of previewComponents) {
+    await verifyMobilePreviewComponent(component);
+  }
 });
 
 test("Tooltip padding preserves the controls underneath it", async ({
@@ -699,7 +703,9 @@ test("Text entry defaults disable browser spelling and correction", async ({
   test.setTimeout(120_000);
 
   const textControlComponents = catalog.components;
-const verifyTextControlComponent = async (component: (typeof textControlComponents)[number]) => {
+  const verifyTextControlComponent = async (
+    component: (typeof textControlComponents)[number]
+  ) => {
     await page.goto(`${origin}docs/components/${component.name}`);
 
     for (const field of await page
@@ -710,9 +716,9 @@ const verifyTextControlComponent = async (component: (typeof textControlComponen
     }
   };
 
-for (const component of textControlComponents) {
-await verifyTextControlComponent(component);
-}
+  for (const component of textControlComponents) {
+    await verifyTextControlComponent(component);
+  }
 });
 
 test("Dialog preview supports editable CJK titles, multiline messages and footer actions", async ({
