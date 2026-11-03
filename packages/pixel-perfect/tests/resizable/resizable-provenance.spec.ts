@@ -124,6 +124,7 @@ test("Resizable ships unchanged original recipe-book arrow PNG artwork", () => {
     const images = [
       ...match[2].matchAll(/data:image\/png;base64,(?<pngBase64>[^")]+)/gu),
     ];
+
     expect(images).toHaveLength(2);
 
     for (const [index, image] of images.entries()) {

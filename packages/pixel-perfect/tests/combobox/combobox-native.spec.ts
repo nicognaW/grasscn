@@ -156,9 +156,9 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
         await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
         await subject.focus();
 
+        // SAFETY: Within the Suggestions route, the existing hover-state guard selects exactly the retained hover cases, all with numeric targetIndex.
         await (c.state.endsWith("hover")
-          ? // SAFETY: Within the Suggestions route, the existing hover-state guard selects exactly the retained hover cases, all with numeric targetIndex.
-            subject
+          ? subject
               .getByRole("option")
               .nth((c as ComboboxHoveredSuggestionCase).targetIndex)
               .hover()
