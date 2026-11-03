@@ -170,7 +170,7 @@ for (let row = 0, y = 12; row < 3; row += 1) {
 let x = 68;
 
 for (const [index, char] of [..."grass cn"].entries()) {
-  const [gx, gy, advance] = minecraftGlyphs[char.codePointAt(0) - 32];
+  const [gx, gy, advance] = minecraftGlyphs[char.codePointAt(0)! - 32];
   const color = index > 5 ? "#55ff55" : "#ffffff";
   const shadow = index > 5 ? "#153f15" : "#3f3f3f";
 

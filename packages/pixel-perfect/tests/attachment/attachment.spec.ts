@@ -88,7 +88,7 @@ for (const [part, dir] of [
           }
 
           if (c.state === "icon-hover") {
-            const b = (await subject.boundingBox());
+            const b = (await subject.boundingBox())!;
             await page.mouse.move(b.x + 18 * c.scale, b.y + 18 * c.scale);
           }
 

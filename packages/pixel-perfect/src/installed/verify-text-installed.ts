@@ -268,11 +268,11 @@ const worker = async function worker() {
       const { group, part, c } = tasks[taskIndex];
 
       if (count && count % 128 === 0) {
-        await browser.close();
+        await browser!.close();
         page = await open();
       } else if (count && count % 50 === 0) {
         await page.close();
-        page = await browser.newPage({
+        page = await browser!.newPage({
           deviceScaleFactor: 1,
           viewport: { height: 900, width: 1536 },
         });

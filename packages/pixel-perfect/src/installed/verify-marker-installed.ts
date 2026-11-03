@@ -55,7 +55,7 @@ const canonical = (b: Buffer) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item.files.map((f) => {
+const files = item!.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
@@ -124,26 +124,26 @@ try {
         ...((c.wrapWidth ?? 0) ? { wrapWidth: String(c.wrapWidth) } : {}),
       });
 
-      await page.goto(`${urlArg}?${q}`);
+      await page!.goto(`${urlArg}?${q}`);
 
       if (dir === "label") {
         await expect(
-          page.locator("[data-mc-label-layout-ready]")
+          page!.locator("[data-mc-label-layout-ready]")
         ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-        for (const label of await page
+        for (const label of await page!
           .locator("[data-mc-label-ready]")
           .all()) {
           await expect(label).toHaveAttribute("data-mc-label-ready", "true");
         }
       }
 
-      await page.mouse.move(0, 0);
+      await page!.mouse.move(0, 0);
 
       if (c.state === "focus") {
-        await page.locator("#subject").focus();
+        await page!.locator("#subject").focus();
       } else {
-        await page.evaluate(() =>
+        await page!.evaluate(() =>
           // SAFETY: this fixture focuses HTML subject controls; preserve the existing optional active-element blur.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Focused HTML fixture element DOM API boundary.
           (document.activeElement as HTMLElement | null)?.blur()
@@ -151,10 +151,10 @@ try {
       }
 
       if (c.state.endsWith("hover")) {
-        await page.locator("#subject").hover({ force: true });
+        await page!.locator("#subject").hover({ force: true });
       }
 
-      await page.evaluate(async () => {
+      await page!.evaluate(async () => {
         const frameCompletion = Promise.withResolvers();
 
         try {
@@ -169,7 +169,7 @@ try {
       });
 
       const actual = PNG.sync.read(
-        await page.locator("#subject").screenshot({ animations: "disabled" })
+        await page!.locator("#subject").screenshot({ animations: "disabled" })
       );
 
       const expected = PNG.sync.read(

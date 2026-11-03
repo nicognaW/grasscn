@@ -120,7 +120,7 @@ try {
   await Promise.all(
     Array.from({ length: Math.min(2, names.length) }, async () => {
       while (pending.length) {
-        const name = pending.shift();
+        const name = pending.shift()!;
         const errors: string[] = [];
 
         let page = await browser.newPage({
@@ -180,13 +180,13 @@ try {
               const optionalLabel = c.label;
 
               if (optionalLabel !== null && optionalLabel !== undefined) {
-                q.set("label", c.label);
+                q.set("label", c.label!);
               }
 
               const optionalText = c.text;
 
               if (optionalText !== null && optionalText !== undefined) {
-                q.set("text", c.text);
+                q.set("text", c.text!);
               }
 
               const optionalWrapWidth = c.wrapWidth;

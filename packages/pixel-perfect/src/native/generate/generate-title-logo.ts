@@ -47,7 +47,7 @@ const pixels = [];
 let cursor = 0;
 
 for (const char of "GRASSCN") {
-  const [gx, gy, advance] = minecraftGlyphs[char.codePointAt(0) - 32];
+  const [gx, gy, advance] = minecraftGlyphs[char.codePointAt(0)! - 32];
 
   for (let y = 0; y < 8; y += 1) {
     for (let x = 0; x < advance; x += 1) {
@@ -91,7 +91,7 @@ for (const key of fine) {
     rows.set(y, []);
   }
 
-  rows.get(y).push(x);
+  rows.get(y)!.push(x);
 }
 
 let light = "";

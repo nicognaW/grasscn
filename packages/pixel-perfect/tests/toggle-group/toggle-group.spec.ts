@@ -157,7 +157,7 @@ test.describe("Toggle Group native recipe-filter matrix", () => {
 
           return await frameCompletion.promise;
         });
-        const bounds = (await subject.boundingBox());
+        const bounds = (await subject.boundingBox())!;
         expect([bounds.x, bounds.y]).toEqual([c.x * c.scale, c.y * c.scale]);
 
         const expectedBytes = readFileSync(

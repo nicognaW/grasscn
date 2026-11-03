@@ -359,7 +359,7 @@ try {
         });
 
         if (Number(c.selectedIndex) >= 0) {
-          await subject.getByRole("menuitem").nth(c.selectedIndex).focus();
+          await subject.getByRole("menuitem").nth(c.selectedIndex!).focus();
         }
 
         if (c.state === "focus") {
@@ -372,7 +372,7 @@ try {
         }
 
         if (c.state.endsWith("hover")) {
-          await subject.getByRole("menuitem").nth(c.targetIndex).hover();
+          await subject.getByRole("menuitem").nth(c.targetIndex!).hover();
         }
 
         await subject.evaluate(
@@ -416,7 +416,7 @@ try {
 
           return frameCompletion2.promise;
         });
-        const bounds = (await subject.boundingBox());
+        const bounds = (await subject.boundingBox())!;
         assert.equal(bounds.x, c.x * c.scale);
         assert.equal(bounds.y, c.y * c.scale);
 
@@ -513,7 +513,7 @@ try {
 
           return frameCompletion3.promise;
         });
-        const bounds = (await trigger.boundingBox());
+        const bounds = (await trigger.boundingBox())!;
         assert.deepEqual(
           [bounds.x, bounds.y],
           [(c.x ?? 16) * c.scale, (c.y ?? 16) * c.scale]
@@ -573,7 +573,7 @@ try {
 
       if (optionalText !== null && optionalText !== undefined) {
         params.set("text", optionalText);
-        params.set("label", c.label);
+        params.set("label", c.label!);
       }
 
       await page.goto(`${url}?${params}`);
@@ -609,7 +609,7 @@ try {
 
         return frameCompletion4.promise;
       });
-      const bounds = (await subject.boundingBox());
+      const bounds = (await subject.boundingBox())!;
       assert.equal(bounds.x, c.x * c.scale);
       assert.equal(bounds.y, c.y * c.scale);
 
@@ -693,7 +693,7 @@ try {
 
       if (confirmation) {
         // The AlertDialog capture producer always emits text; Dialog alone also records null text cases.
-        const confirmationText = c.text;
+        const confirmationText = c.text!;
 
         const count =
           Number(/\P{ASCII}/u.test(c.label)) +
@@ -965,7 +965,7 @@ try {
             top: `${position.y}px`,
           });
         },
-        { x: c.x * c.scale, y: c.y * c.scale }
+        { x: c.x! * c.scale, y: c.y! * c.scale }
       );
       await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
     }
@@ -982,7 +982,7 @@ try {
             top: `${position.y}px`,
           });
         },
-        { x: c.x * c.scale, y: c.y * c.scale }
+        { x: c.x! * c.scale, y: c.y! * c.scale }
       );
       await expect(subject.locator("[data-mc-label-ready]")).toHaveAttribute(
         "data-mc-label-ready",

@@ -48,7 +48,7 @@ for (const [name, sprite] of Object.entries(menuCheckboxAtlas.sprites)) {
 
     const placement = Object.entries(native).find(([key]) =>
       key.includes(`texture=minecraft:widget/${name}]`)
-    )[1] as Record<string, number>;
+    )![1] as Record<string, number>;
 
     for (const key of ["u0", "u1", "v0", "v1"] as const) {
       expect(Math.fround(sprite[key])).toBe(Math.fround(placement[key]));
