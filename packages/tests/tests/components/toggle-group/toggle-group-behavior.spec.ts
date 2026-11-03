@@ -1,6 +1,14 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
+interface ToggleGroupPlaybackState extends Window {
+  sounds?: { rate: number; source: string; volume: number }[];
+}
+
+interface InitializedToggleGroupPlaybackState extends ToggleGroupPlaybackState {
+  sounds: { rate: number; source: string; volume: number }[];
+}
+
 const base = "/?component=toggle-group";
 
 test("Toggle Group single selection and deselection", async ({ page }) => {
@@ -129,13 +137,17 @@ test("Toggle Group uses original click audio and silent focus navigation", async
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as ToggleGroupPlaybackState).sounds = [];
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedToggleGroupPlaybackState).sounds.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
       });
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
@@ -144,11 +156,23 @@ test("Toggle Group uses original click audio and silent focus navigation", async
   await page.locator("[data-subject]").hover();
   await page.locator("[data-subject]").focus();
   await page.keyboard.press("ArrowRight");
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedToggleGroupPlaybackState).sounds
+    )
+  ).toEqual([]);
+  // oxlint-enable typescript/no-unsafe-type-assertion
   await page.keyboard.press("Space");
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([
-    { rate: 1, source: minecraftClickSound, volume: 0.25 },
-  ]);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedToggleGroupPlaybackState).sounds
+    )
+  ).toEqual([{ rate: 1, source: minecraftClickSound, volume: 0.25 }]);
+  // oxlint-enable typescript/no-unsafe-type-assertion
 
   for (const extra of [
     "cancel=1",
@@ -157,6 +181,13 @@ test("Toggle Group uses original click audio and silent focus navigation", async
   ]) {
     await page.goto(`${base}&${extra}`);
     await page.locator("[data-subject]").dispatchEvent("click");
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+    expect(
+      await page.evaluate(
+        () => (window as InitializedToggleGroupPlaybackState).sounds
+      )
+    ).toEqual([]);
+    // oxlint-enable typescript/no-unsafe-type-assertion
   }
 });

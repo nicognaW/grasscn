@@ -1,5 +1,13 @@
 import { test, expect } from "@grasscn/tests/test";
 
+interface TextPlaybackState extends Window {
+  sounds?: string[];
+}
+
+interface InitializedTextPlaybackState extends TextPlaybackState {
+  sounds: string[];
+}
+
 test("Typography retains native text inside semantic headings and prose elements", async ({
   page,
 }) => {
@@ -147,9 +155,13 @@ test("Text and passive keyboard components remain silent on pointer and keyboard
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as TextPlaybackState).sounds = [];
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push(this.src);
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedTextPlaybackState).sounds.push(this.src);
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
@@ -161,6 +173,11 @@ test("Text and passive keyboard components remain silent on pointer and keyboard
     );
     await page.locator("[data-subject]").hover();
     await page.locator("[data-subject]").click();
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+    expect(
+      await page.evaluate(() => (window as InitializedTextPlaybackState).sounds)
+    ).toEqual([]);
+    // oxlint-enable typescript/no-unsafe-type-assertion
   }
 });
