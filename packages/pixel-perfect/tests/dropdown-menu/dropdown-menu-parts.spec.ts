@@ -118,7 +118,7 @@ for (const c of manifest.cases) {
 
         return await frameCompletion.promise;
       });
-      const bounds = (await subject.boundingBox())!;
+      const bounds = (await subject.boundingBox());
       expect(bounds.x).toBe(c.x * c.scale);
       expect(bounds.y).toBe(c.y * c.scale);
 

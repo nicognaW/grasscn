@@ -69,7 +69,7 @@ const canonical = (bytes: Buffer) => {
   return text.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item!.files.map((file) => {
+const files = item.files.map((file) => {
   const filename = path.basename(file.path);
 
   const directory =
@@ -242,7 +242,7 @@ const worker = async function worker() {
               const image = new Image();
               image.onload = image.onerror = imageCompletion.resolve;
               // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
-              image.src = src!;
+              image.src = src;
             } catch (error) {
               imageCompletion.reject(error);
             }

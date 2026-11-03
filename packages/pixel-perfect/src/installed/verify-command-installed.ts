@@ -54,7 +54,7 @@ const canonical = (bytes: Buffer) => {
   return text.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-for (const entry of item!.files) {
+for (const entry of item.files) {
   const name = path.basename(entry.path);
   const source = await readFile(webFile(path.join(entry.path)));
 
@@ -164,7 +164,7 @@ try {
           );
           query.set("selectedIndex", String(c.selectedIndex));
         } else {
-          query.set("text", c.text!);
+          query.set("text", c.text);
           query.set("placeholder", c.placeholder ?? "");
 
           const optionalMaxLength = c.maxLength;
@@ -188,7 +188,7 @@ try {
           await subject.focus();
 
           if (c.state.endsWith("hover")) {
-            await subject.getByRole("option").nth(c.targetIndex!).hover();
+            await subject.getByRole("option").nth(c.targetIndex).hover();
           } else {
             await page.mouse.move(0, 0);
           }
@@ -242,7 +242,7 @@ try {
             await page.mouse.move(0, 0);
           }
 
-          const cursor = c.cursor ?? c.text!.length;
+          const cursor = c.cursor ?? c.text.length;
           const anchor = c.anchor ?? cursor;
 
           await subject.evaluate(
@@ -259,7 +259,7 @@ try {
             },
             { anchor, cursor }
           );
-          await page.clock.runFor(c.caretMs!);
+          await page.clock.runFor(c.caretMs);
           await expect(subject).toHaveAttribute("data-mc-ready", "true");
         }
 

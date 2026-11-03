@@ -55,7 +55,7 @@ for (const [folder, part] of [
         );
         query.set("selectedIndex", String(c.selectedIndex));
       } else {
-        query.set("text", c.text!);
+        query.set("text", c.text);
         query.set("placeholder", c.placeholder ?? "");
 
         const caseMaxLength = c.maxLength;
@@ -79,7 +79,7 @@ for (const [folder, part] of [
         await subject.focus();
 
         if (c.state.endsWith("hover")) {
-          await subject.getByRole("option").nth(c.targetIndex!).hover();
+          await subject.getByRole("option").nth(c.targetIndex).hover();
         } else {
           await page.mouse.move(0, 0);
         }
@@ -133,7 +133,7 @@ for (const [folder, part] of [
           await page.mouse.move(0, 0);
         }
 
-        const cursor = c.cursor ?? c.text!.length;
+        const cursor = c.cursor ?? c.text.length;
         const anchor = c.anchor ?? cursor;
 
         await subject.evaluate(
@@ -149,7 +149,7 @@ for (const [folder, part] of [
             ),
           { anchor, cursor }
         );
-        await page.clock.runFor(c.caretMs!);
+        await page.clock.runFor(c.caretMs);
         await expect(subject).toHaveAttribute("data-mc-ready", "true");
       }
 

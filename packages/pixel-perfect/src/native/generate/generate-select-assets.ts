@@ -41,12 +41,27 @@ const sources: Record<string, SpriteSource> = {};
 const hash = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 
+const assetInputNames = [
+  "menu_list_background.png",
+  "header_separator.png",
+  "footer_separator.png",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(directory, filename)))
+);
+
 for (const name of [
   "menu_list_background",
   "header_separator",
   "footer_separator",
 ] as const) {
-  const bytes = await readFile(path.join(directory, `${name}.png`));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(`${name}.png`)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
   const member = `assets/minecraft/textures/gui/${name}.png` as const;
 
   assert.equal(hash(bytes), inventory.assets[member].sha256);

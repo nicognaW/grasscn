@@ -157,7 +157,7 @@ for (const scale of [1, 2, 3]) {
     const c = manifest.cases.find(
       (scrollAreaCase) =>
         scrollAreaCase.name === `scroll-area-c67-s${scale}.png`
-    )!;
+    );
 
     await page.goto(
       `/?component=scroll-area&width=${c.width}&height=${c.height}&contentHeight=${c.contentHeight}&scroll=${c.value}&scale=${scale}&asChild=1&defaults=1`

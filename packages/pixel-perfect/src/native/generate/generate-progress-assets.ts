@@ -33,11 +33,22 @@ const assets: Record<string, string> = {};
 
 const rgba: Record<string, string> = {};
 
+const assetInputNames = Object.keys(inventory.assets).filter((member) => member.includes("/sprites/boss_bar/")).map((member) => path.basename(member));
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(directory, filename)))
+);
+
 for (const [member, pin] of Object.entries(inventory.assets).filter(
   ([assetMember]) => assetMember.includes("/sprites/boss_bar/")
 )) {
   const filename = path.basename(member);
-  const bytes = await readFile(path.join(directory, filename));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(filename)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
 
   const sha256 = createHash("sha256").update(bytes).digest("hex");
   assert.equal(sha256, pin.sha256);

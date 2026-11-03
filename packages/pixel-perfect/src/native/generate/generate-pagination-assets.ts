@@ -35,13 +35,29 @@ const sources: Record<
   { sha256: string; width: number; height: number; alphaValues: number[] }
 > = {};
 
+const assetInputNames = [
+  "page_backward.png",
+  "page_backward_highlighted.png",
+  "page_forward.png",
+  "page_forward_highlighted.png",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(directory, filename)))
+);
+
 for (const direction of ["backward", "forward"]) {
   css += `.mc-pagination-arrow[data-direction="${direction}"] {\n`;
 
   for (const highlighted of [false, true]) {
     const name = `page_${direction}${highlighted ? "_highlighted" : ""}.png`;
     const member = `assets/minecraft/textures/gui/sprites/recipe_book/${name}`;
-    const bytes = await readFile(path.join(directory, name));
+    const bytesRead = assetInputReads[assetInputNames.indexOf(name)];
+
+    if (bytesRead.status === "rejected") {
+      throw bytesRead.reason;
+    }
+
+    const bytes = bytesRead.value;
     const image = PNG.sync.read(bytes);
 
     assert.equal(hash(bytes), inventory.assets[member].sha256);

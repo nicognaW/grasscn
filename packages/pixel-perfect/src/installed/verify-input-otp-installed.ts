@@ -54,7 +54,7 @@ const canonical = (bytes: Buffer) => {
   return text.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-for (const entry of item!.files) {
+for (const entry of item.files) {
   const name = path.basename(entry.path);
   const source = await readFile(webFile(path.join(entry.path)));
 

@@ -50,9 +50,9 @@ assert.equal(manifest.caseDefinitionSha256, again.caseDefinitionSha256);
 for (const scale of [1, 2, 3]) {
   const sourceCase = manifest.cases.find(
     (c) => c.name === `scroll-area-c54-s${scale}.png`
-  )!;
+  );
 
-  const repeatCase = again.cases.find((c) => c.name === sourceCase.name)!;
+  const repeatCase = again.cases.find((c) => c.name === sourceCase.name);
 
   const sourceBytes = fs.readFileSync(
     path.join(primary, "captures", sourceCase.name)

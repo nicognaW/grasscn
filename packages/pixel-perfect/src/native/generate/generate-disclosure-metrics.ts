@@ -11,14 +11,14 @@ const source = await readFile(
 );
 
 const zip = Buffer.from(
-  /export const unifontZip = "([^"]+)"/.exec(source)![1],
+  /export const unifontZip = "([^"]+)"/.exec(source)[1],
   "base64"
 );
 
 // SAFETY: generate-unifont-assets emits this exact array of native provider [from, to, left, right] ranges.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const overrides = JSON.parse(
-  /export const unifontOverrides = (\[.*\]) as const/.exec(source)![1]
+  /export const unifontOverrides = (\[.*\]) as const/.exec(source)[1]
 ) as [number, number, number, number][];
 
 const cjk = (code: number) =>

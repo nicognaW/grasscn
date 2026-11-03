@@ -287,7 +287,7 @@ const worker = async function worker() {
 
         if (c.state === "icon-hover") {
           const box = await subject.boundingBox();
-          await page.mouse.move(box!.x + 18 * c.scale, box!.y + 18 * c.scale);
+          await page.mouse.move(box.x + 18 * c.scale, box.y + 18 * c.scale);
         }
 
         if (c.state === "focus") {

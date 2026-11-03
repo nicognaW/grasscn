@@ -60,6 +60,16 @@ const sources: Record<
 let height: number | undefined;
 let width: number | undefined;
 
+const assetInputNames = [
+  "checkbox.png",
+  "checkbox_highlighted.png",
+  "checkbox_selected.png",
+  "checkbox_selected_highlighted.png",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(input, filename)))
+);
+
 for (const name of [
   "checkbox",
   "checkbox_highlighted",
@@ -67,7 +77,13 @@ for (const name of [
   "checkbox_selected_highlighted",
 ]) {
   const member = `assets/minecraft/textures/gui/sprites/widget/${name}.png`;
-  const bytes = await readFile(path.join(input, `${name}.png`));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(`${name}.png`)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
 
   assert.equal(hash(bytes), inventory.assets[member].sha256);
 

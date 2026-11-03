@@ -50,6 +50,16 @@ const hash = (data: Uint8Array) =>
 const uri = (data: Buffer) =>
   `url("data:image/png;base64,${data.toString("base64")}")`;
 
+const assetInputNames = [
+  "checkbox.png",
+  "checkbox_selected.png",
+  "checkbox_highlighted.png",
+  "checkbox_selected_highlighted.png",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(input, filename)))
+);
+
 for (const name of [
   "checkbox",
   "checkbox_selected",
@@ -57,7 +67,13 @@ for (const name of [
   "checkbox_selected_highlighted",
 ]) {
   const member = `assets/minecraft/textures/gui/sprites/widget/${name}.png`;
-  const bytes = await readFile(path.join(input, `${name}.png`));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(`${name}.png`)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
 
   if (hash(bytes) !== inventory.assets[member].sha256) {
     throw new Error(`Original asset digest changed: ${member}`);

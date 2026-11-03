@@ -120,7 +120,7 @@ for (const [folder, part] of [
       }
 
       if (entry) {
-        const cursor = c.cursor ?? c.text!.length;
+        const cursor = c.cursor ?? c.text.length;
         const anchor = c.anchor ?? cursor;
 
         await subject.evaluate(
@@ -144,7 +144,7 @@ for (const [folder, part] of [
           );
         }
 
-        await page.clock.runFor(c.caretMs!);
+        await page.clock.runFor(c.caretMs);
         await expect(subject).toHaveAttribute("data-mc-ready", "true");
       } else {
         await page.evaluate(async () => {

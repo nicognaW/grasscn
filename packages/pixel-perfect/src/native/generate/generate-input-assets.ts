@@ -34,6 +34,17 @@ const hash = (bytes: Uint8Array) =>
 const assets: Record<string, string> = {};
 const provenance: Record<string, EmbeddedAssetSource> = {};
 
+const assetInputNames = [
+  "text_field.png",
+  "text_field.png.mcmeta",
+  "text_field_highlighted.png",
+  "text_field_highlighted.png.mcmeta",
+  "ascii.png",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(input, filename)))
+);
+
 for (const [key, file, member] of [
   [
     "normal",
@@ -47,7 +58,13 @@ for (const [key, file, member] of [
   ],
   ["atlas", "ascii.png", "assets/minecraft/textures/font/ascii.png"],
 ]) {
-  const bytes = await readFile(path.join(input, file));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(file)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
 
   // SAFETY: these literal sprite/font members belong to the complete pinned native inventory.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion
@@ -69,7 +86,13 @@ for (const [key, file, member] of [
   provenance[member] = fields as typeof fields & EmbeddedAssetSource;
 
   if (key !== "atlas") {
-    const metadata = await readFile(path.join(input, `${file}.mcmeta`));
+    const metadataRead = assetInputReads[assetInputNames.indexOf(`${file}.mcmeta`)];
+
+    if (metadataRead.status === "rejected") {
+      throw metadataRead.reason;
+    }
+
+    const metadata = metadataRead.value;
 
     if (hash(metadata) !== original.metadataSha256) {
       throw new Error(`Metadata changed: ${member}`);
