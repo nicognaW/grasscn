@@ -84,7 +84,7 @@ const ContextMenuDemo = ({ scale }: DemoProps) => {
               />
             }
           >
-            {
+            
               <>
                 <CardHeader>
                   <CardTitle>{title || " "}</CardTitle>
@@ -93,7 +93,7 @@ const ContextMenuDemo = ({ scale }: DemoProps) => {
                   </CardDescription>
                 </CardHeader>
               </>
-            }
+            
           </ContextMenuTrigger>
           <ContextMenuContent collisionPadding={8}>
             <ContextMenuGroup>
@@ -112,7 +112,7 @@ const ContextMenuDemo = ({ scale }: DemoProps) => {
             <ContextMenuCheckboxItem
               checked={coordinates}
               onCheckedChange={setCoordinates}
-              onClick={(event) => event.preventDefault()}
+              onClick={(event) =>{  event.preventDefault(); }}
               closeOnClick={false}
             >
               Show coordinates
@@ -120,14 +120,14 @@ const ContextMenuDemo = ({ scale }: DemoProps) => {
             <ContextMenuRadioGroup value={mode} onValueChange={setMode}>
               <ContextMenuRadioItem
                 value="world"
-                onClick={(event) => event.preventDefault()}
+                onClick={(event) =>{  event.preventDefault(); }}
                 closeOnClick={false}
               >
                 World
               </ContextMenuRadioItem>
               <ContextMenuRadioItem
                 value="game"
-                onClick={(event) => event.preventDefault()}
+                onClick={(event) =>{  event.preventDefault(); }}
                 closeOnClick={false}
               >
                 Game

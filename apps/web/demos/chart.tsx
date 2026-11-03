@@ -1,10 +1,8 @@
 import * as React from "react";
 
 import type { DemoVariables } from "../demo-variables";
-import {
-  AnalyticsChartExample,
-  type AnalyticsChartType,
-} from "../registry/blocks/chart-analytics";
+import { AnalyticsChartExample } from '../registry/blocks/chart-analytics';
+import type { AnalyticsChartType } from '../registry/blocks/chart-analytics';
 import { FpsChartExample } from "../registry/blocks/chart-fps";
 import { ProfilerChartExample } from "../registry/blocks/chart-profiler";
 import { Button } from "../registry/ui/button";
@@ -21,12 +19,12 @@ import type { DemoProps } from "../types";
 
 // Official shadcn chart-bar-multiple and chart-pie-donut example datasets.
 const visitors = [
-  { name: "January", desktop: 186, mobile: 80 },
-  { name: "February", desktop: 305, mobile: 200 },
-  { name: "March", desktop: 237, mobile: 120 },
-  { name: "April", desktop: 73, mobile: 190 },
-  { name: "May", desktop: 209, mobile: 130 },
-  { name: "June", desktop: 214, mobile: 140 },
+  { desktop: 186, mobile: 80, name: "January" },
+  { desktop: 305, mobile: 200, name: "February" },
+  { desktop: 237, mobile: 120, name: "March" },
+  { desktop: 73, mobile: 190, name: "April" },
+  { desktop: 209, mobile: 130, name: "May" },
+  { desktop: 214, mobile: 140, name: "June" },
 ];
 
 const browsers = [
@@ -38,23 +36,23 @@ const browsers = [
 ];
 
 const config: ChartConfig = {
-  desktop: { label: "Desktop", color: "#55ff55" },
-  mobile: { label: "Mobile", color: "#5555ff" },
-  visitors: { label: "Visitors", color: "#55ff55" },
+  desktop: { color: "#55ff55", label: "Desktop" },
+  mobile: { color: "#5555ff", label: "Mobile" },
+  visitors: { color: "#55ff55", label: "Visitors" },
 };
 
 const types: {
   value: AnalyticsChartType;
   label: string;
 }[] = [
-  { value: "bar", label: "Bar" },
-  { value: "stacked-bar", label: "Stacked bar" },
-  { value: "line", label: "Line" },
-  { value: "area", label: "Area" },
-  { value: "pie", label: "Pie" },
-  { value: "donut", label: "Donut" },
-  { value: "radar", label: "Radar" },
-  { value: "radial", label: "Radial" },
+  { label: "Bar", value: "bar" },
+  { label: "Stacked bar", value: "stacked-bar" },
+  { label: "Line", value: "line" },
+  { label: "Area", value: "area" },
+  { label: "Pie", value: "pie" },
+  { label: "Donut", value: "donut" },
+  { label: "Radar", value: "radar" },
+  { label: "Radial", value: "radial" },
 ];
 
 const ChartDemo = ({ scale }: DemoProps) => {
@@ -70,8 +68,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
           40,
           Math.floor(
             (node.clientWidth -
-              parseFloat(css.paddingLeft) -
-              parseFloat(css.paddingRight)) /
+              Number.parseFloat(css.paddingLeft) -
+              Number.parseFloat(css.paddingRight)) /
               scale
           )
         )
@@ -82,7 +80,7 @@ const ChartDemo = ({ scale }: DemoProps) => {
     const observer = new ResizeObserver(measure);
     observer.observe(stage.current!);
 
-    return () => observer.disconnect();
+    return () =>{  observer.disconnect(); };
   }, [scale]);
 
   const copy = (text: string) => (
@@ -174,8 +172,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
         style={
           /* SAFETY: satisfies checks --mc-scale, --demo-stage-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
           {
-            "--mc-scale": scale,
             "--demo-stage-gap": `${10 * scale}px`,
+            "--mc-scale": scale,
           } satisfies DemoVariables as DemoVariables
         }
       >
@@ -215,8 +213,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
               <SelectTrigger
                 aria-label="F3 metric"
                 style={{
-                  width: Math.min(116, contentWidth) * scale,
                   maxWidth: "100%",
+                  width: Math.min(116, contentWidth) * scale,
                 }}
               >
                 <SelectValue />
@@ -230,8 +228,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
               scale={scale}
               type="button"
               style={{
-                width: Math.min(100, contentWidth) * scale,
                 maxWidth: "100%",
+                width: Math.min(100, contentWidth) * scale,
               }}
               onClick={() => {
                 setWebStep((value) => value + 1);
@@ -266,12 +264,12 @@ const ChartDemo = ({ scale }: DemoProps) => {
               guides={
                 metric === "latency"
                   ? [
-                      { value: 300, label: "300 ms" },
-                      { value: 150, label: "150 ms" },
+                      { label: "300 ms", value: 300 },
+                      { label: "150 ms", value: 150 },
                     ]
                   : [
-                      { value: 80, label: "80 req" },
-                      { value: 40, label: "40 req" },
+                      { label: "80 req", value: 80 },
+                      { label: "40 req", value: 40 },
                     ]
               }
               scale={scale}
@@ -313,8 +311,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
               scale={scale}
               type="button"
               style={{
-                width: Math.min(120, contentWidth) * scale,
                 maxWidth: "100%",
+                width: Math.min(120, contentWidth) * scale,
               }}
               onClick={() => {
                 setStep((v) => v + 1);
@@ -326,8 +324,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
               scale={scale}
               type="button"
               style={{
-                width: Math.min(100, contentWidth) * scale,
                 maxWidth: "100%",
+                width: Math.min(100, contentWidth) * scale,
               }}
               onClick={() => {
                 setLimit((v) => (v === 120 ? 260 : 120));
@@ -388,8 +386,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
             <SelectTrigger
               aria-label="Chart type"
               style={{
-                width: Math.min(116, contentWidth) * scale,
                 maxWidth: "100%",
+                width: Math.min(116, contentWidth) * scale,
               }}
             >
               <SelectValue />
@@ -405,7 +403,7 @@ const ChartDemo = ({ scale }: DemoProps) => {
           {!circular && (
             <>
               <Select
-                items={{ "6": "Last 6 months", "3": "Last 3 months" }}
+                items={{ "3": "Last 3 months", "6": "Last 6 months" }}
                 scale={scale}
                 value={period}
                 onValueChange={(value) => {
@@ -415,8 +413,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
                 <SelectTrigger
                   aria-label="Chart period"
                   style={{
-                    width: Math.min(116, contentWidth) * scale,
                     maxWidth: "100%",
+                    width: Math.min(116, contentWidth) * scale,
                   }}
                 >
                   <SelectValue />
@@ -441,8 +439,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
                 <SelectTrigger
                   aria-label="Chart devices"
                   style={{
-                    width: Math.min(116, contentWidth) * scale,
                     maxWidth: "100%",
+                    width: Math.min(116, contentWidth) * scale,
                   }}
                 >
                   <SelectValue />

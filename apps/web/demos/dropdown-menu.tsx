@@ -73,7 +73,7 @@ const DropdownMenuDemo = ({ scale }: DemoProps) => {
             <DropdownMenuCheckboxItem
               checked={coordinates}
               onCheckedChange={setCoordinates}
-              onClick={(event) => event.preventDefault()}
+              onClick={(event) =>{  event.preventDefault(); }}
               closeOnClick={false}
             >
               Show coordinates
@@ -81,14 +81,14 @@ const DropdownMenuDemo = ({ scale }: DemoProps) => {
             <DropdownMenuRadioGroup value={mode} onValueChange={setMode}>
               <DropdownMenuRadioItem
                 value="world"
-                onClick={(event) => event.preventDefault()}
+                onClick={(event) =>{  event.preventDefault(); }}
                 closeOnClick={false}
               >
                 World
               </DropdownMenuRadioItem>
               <DropdownMenuRadioItem
                 value="game"
-                onClick={(event) => event.preventDefault()}
+                onClick={(event) =>{  event.preventDefault(); }}
                 closeOnClick={false}
               >
                 Game

@@ -21,13 +21,13 @@ const ScrollAreaDemo = ({ scale }: DemoProps) => {
   return (
     <>
       <div className="demo-options">
-        <Button aria-label="Scroll to top" onClick={() => jump(0)}>
+        <Button aria-label="Scroll to top" onClick={() => {  jump(0); }}>
           Top
         </Button>
-        <Button aria-label="Scroll to middle" onClick={() => jump(0.5)}>
+        <Button aria-label="Scroll to middle" onClick={() => {  jump(0.5); }}>
           Middle
         </Button>
-        <Button aria-label="Scroll to bottom" onClick={() => jump(1)}>
+        <Button aria-label="Scroll to bottom" onClick={() => {  jump(1); }}>
           Bottom
         </Button>
         <Button

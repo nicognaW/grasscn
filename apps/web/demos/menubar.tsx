@@ -75,7 +75,7 @@ const MenubarDemo = ({ scale }: DemoProps) => {
               <MenubarCheckboxItem
                 checked={coordinates}
                 onCheckedChange={setCoordinates}
-                onClick={(event) => event.preventDefault()}
+                onClick={(event) =>{  event.preventDefault(); }}
                 closeOnClick={false}
               >
                 Show coordinates
@@ -83,14 +83,14 @@ const MenubarDemo = ({ scale }: DemoProps) => {
               <MenubarRadioGroup value={mode} onValueChange={setMode}>
                 <MenubarRadioItem
                   value="world"
-                  onClick={(event) => event.preventDefault()}
+                  onClick={(event) =>{  event.preventDefault(); }}
                   closeOnClick={false}
                 >
                   World
                 </MenubarRadioItem>
                 <MenubarRadioItem
                   value="game"
-                  onClick={(event) => event.preventDefault()}
+                  onClick={(event) =>{  event.preventDefault(); }}
                   closeOnClick={false}
                 >
                   Game
