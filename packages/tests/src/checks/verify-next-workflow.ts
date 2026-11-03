@@ -349,7 +349,7 @@ try {
           bytes,
           Buffer.from("\n// Workflow cache invalidation sentinel.\n"),
         ]),
-      file: path.join(webRoot, "next.config.mjs"),
+      file: path.join(webRoot, "next.config.ts"),
       name: "config",
       run: [turbo, "run", "generate"],
       task: "@grasscn/web#generate",

@@ -5,7 +5,7 @@ import {
   generatedCode,
   retainedEvidenceData,
   retainedSourceInputs,
-} from "./tooling-scope.mjs";
+} from "./tooling-scope";
 
 export default defineConfig({
   ...ultracite,

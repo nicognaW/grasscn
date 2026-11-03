@@ -48,7 +48,7 @@ Keep the explicit `--bun`: the repository's Uncheck dependency patch also ensure
 
 Keep existing Ultracite imports, framework presets, plugin selection and local overrides in the Oxlint/Oxfmt configuration. Respect the configured formatter settings. Uncheck orchestrates tools; its optional presets do not replace the repository's selected Ultracite presets.
 
-When adding, moving or removing generated outputs, update the shared exact-path list in `tooling-scope.mjs` using generation or derivation evidence. Keep authored generators checked and generated outputs typechecked; preserve the flat shadcn registry layout.
+When adding, moving or removing generated outputs, update the shared exact-path list in `tooling-scope.ts` using generation or derivation evidence. Keep authored generators checked and generated outputs typechecked; preserve the flat shadcn registry layout.
 
 For requested setup changes, add the necessary devDependencies with Bun and edit the existing configuration directly. Consult `bun x --bun uncheck init --help` if initial setup is needed; review its script and preset choices against the repository convention of direct Uncheck commands. Existing projects use `prepare` for hook maintenance.
 

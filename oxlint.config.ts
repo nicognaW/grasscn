@@ -9,7 +9,7 @@ import react from "ultracite/oxlint/react";
 import shadcn from "ultracite/oxlint/shadcn";
 import vitest from "ultracite/oxlint/vitest";
 
-import { generatedCode, retainedSourceInputs } from "./tooling-scope.mjs";
+import { generatedCode, retainedSourceInputs } from "./tooling-scope";
 
 // Next-only rules target the application directories introduced by #23,
 // never reusable registry components or test fixtures.
