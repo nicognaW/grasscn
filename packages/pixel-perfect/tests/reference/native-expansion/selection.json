@@ -17,17 +17,13 @@
     },
     {
       "name": "map",
-      "includes": [
-        "LocatorBar"
-      ],
+      "includes": ["LocatorBar"],
       "status": "verified-installed",
       "manifest": "tests/reference/map/manifest.json"
     },
     {
       "name": "sign",
-      "includes": [
-        "HangingSign"
-      ],
+      "includes": ["HangingSign"],
       "status": "verified-installed",
       "manifest": "tests/reference/sign/manifest.json"
     },
@@ -48,9 +44,7 @@
     },
     {
       "name": "player-list",
-      "includes": [
-        "Scoreboard"
-      ],
+      "includes": ["Scoreboard"],
       "status": "verified-installed",
       "manifest": "tests/reference/player-list/manifest.json"
     }
