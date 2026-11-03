@@ -78,7 +78,7 @@ test.describe("Actual original PlayerFaceExtractor", () => {
           frameCompletion.reject(error);
         }
 
-        return frameCompletion.promise;
+        return await frameCompletion.promise;
       });
 
       const expected = readFileSync(
@@ -167,7 +167,7 @@ test.describe("AvatarFallback original Label constituents", () => {
           frameCompletion2.reject(error);
         }
 
-        return frameCompletion2.promise;
+        return await frameCompletion2.promise;
       });
 
       const expected = readFileSync(

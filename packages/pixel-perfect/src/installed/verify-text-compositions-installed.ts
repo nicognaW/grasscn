@@ -247,7 +247,7 @@ const worker = async function worker() {
               imageCompletion.reject(error);
             }
 
-            return imageCompletion.promise;
+            return await imageCompletion.promise;
           })
         );
         const frameCompletion = Promise.withResolvers();

@@ -175,7 +175,7 @@ for (const component of ["sheet", "drawer"]) {
                 frameCompletion.reject(error);
               }
 
-              return frameCompletion.promise;
+              return await frameCompletion.promise;
             });
 
             const expectedBytes = readFileSync(

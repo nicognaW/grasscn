@@ -10,7 +10,7 @@ test("website loads Dream with slim arms after both presets", async ({
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.route("https://mc-heads.net/skin/Dream", async (route) =>
-    route.fulfill({
+    await route.fulfill({
       body: readFileSync(fixtureFile("dream-skin.png")),
       contentType: "image/png",
       headers: { "access-control-allow-origin": "*" },

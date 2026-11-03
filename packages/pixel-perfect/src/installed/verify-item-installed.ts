@@ -330,7 +330,7 @@ const worker = async function worker() {
           frameCompletion.reject(error);
         }
 
-        return frameCompletion.promise;
+        return await frameCompletion.promise;
       });
 
       const bytes = fs.readFileSync(

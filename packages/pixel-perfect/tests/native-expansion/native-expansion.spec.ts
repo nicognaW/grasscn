@@ -63,7 +63,7 @@ for (const { reference, sample } of specimens) {
           )
       )
       .toBe(true);
-    await page.evaluate(async () => document.fonts.ready);
+    await page.evaluate(async () => await document.fonts.ready);
     await page.waitForTimeout(100);
 
     const actual = await subject.screenshot();

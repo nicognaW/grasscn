@@ -85,7 +85,7 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
         frameCompletion.reject(error);
       }
 
-      return frameCompletion.promise;
+      return await frameCompletion.promise;
     });
 
     const expected = PNG.sync.read(
@@ -295,7 +295,7 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
         frameCompletion2.reject(error);
       }
 
-      return frameCompletion2.promise;
+      return await frameCompletion2.promise;
     });
 
     const bytes = await page.locator("#subject").screenshot();

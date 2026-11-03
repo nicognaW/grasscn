@@ -135,7 +135,7 @@ test.describe("Select native matrix", () => {
           frameCompletion.reject(error);
         }
 
-        return frameCompletion.promise;
+        return await frameCompletion.promise;
       });
 
       for (const label of await subject

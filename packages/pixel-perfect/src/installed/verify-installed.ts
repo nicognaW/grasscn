@@ -241,7 +241,7 @@ try {
             frameCompletion.reject(error);
           }
 
-          return frameCompletion.promise;
+          return await frameCompletion.promise;
         });
 
         const expectedBytes = await readFile(
@@ -414,7 +414,7 @@ try {
             frameCompletion2.reject(error);
           }
 
-          return frameCompletion2.promise;
+          return await frameCompletion2.promise;
         });
         const bounds = (await subject.boundingBox())!;
         assert.equal(bounds.x, c.x * c.scale);
@@ -511,7 +511,7 @@ try {
             frameCompletion3.reject(error);
           }
 
-          return frameCompletion3.promise;
+          return await frameCompletion3.promise;
         });
         const bounds = (await trigger.boundingBox())!;
         assert.deepEqual(
@@ -607,7 +607,7 @@ try {
           frameCompletion4.reject(error);
         }
 
-        return frameCompletion4.promise;
+        return await frameCompletion4.promise;
       });
       const bounds = (await subject.boundingBox())!;
       assert.equal(bounds.x, c.x * c.scale);
@@ -760,7 +760,7 @@ try {
           frameCompletion5.reject(error);
         }
 
-        return frameCompletion5.promise;
+        return await frameCompletion5.promise;
       });
 
       const bytes = await readFile(
@@ -1165,7 +1165,7 @@ try {
           frameCompletion6.reject(error);
         }
 
-        return frameCompletion6.promise;
+        return await frameCompletion6.promise;
       });
 
       for (const label of await subject

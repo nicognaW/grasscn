@@ -110,7 +110,7 @@ test.describe("Pagination native recipe-book page arrows", () => {
           frameCompletion.reject(error);
         }
 
-        return frameCompletion.promise;
+        return await frameCompletion.promise;
       });
 
       const expectedBytes = readFileSync(
