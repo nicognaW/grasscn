@@ -179,8 +179,6 @@ const ChartContainer = ({
   );
 };
 
-
-
 const ChartText = ({
   children,
   scale: explicitScale,
@@ -471,8 +469,6 @@ const ChartLegendContent = ({
     </div>
   );
 };
-
-
 
 export {
   ChartContainer,

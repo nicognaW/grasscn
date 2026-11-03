@@ -378,8 +378,6 @@ const buildRenderer = function buildRenderer(
   };
 };
 
-
-
 const PlayerPreview = ({
   skin = "wide/steve",
   src,

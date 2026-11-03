@@ -263,8 +263,6 @@ export const ChartAxisTick = ({
   );
 };
 
-
-
 const useRegister = function useRegister(geometry: Geometry) {
   const { store } = useStore();
   const id = React.useId();
@@ -302,8 +300,6 @@ export const ChartPixelBar = (props: BarShapeProps) => (
   <PixelBarGeometry {...props} />
 );
 
-
-
 // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts sector renderer-prop contract.
 const ProfilerSectorGeometry = (props: PieSectorShapeProps) => {
   useRegister({
@@ -336,8 +332,6 @@ const ProfilerSectorGeometry = (props: PieSectorShapeProps) => {
 export const ChartProfilerSector = (props: PieSectorShapeProps) => (
   <ProfilerSectorGeometry {...props} />
 );
-
-
 
 /** Quantize Recharts' rendered SVG geometry; Recharts retains every data and layout API. */
 export const ChartPixelSurface = ({
