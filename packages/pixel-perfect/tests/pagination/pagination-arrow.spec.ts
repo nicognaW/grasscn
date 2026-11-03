@@ -1,3 +1,5 @@
+import type paginationArrowReference from "../reference/pagination-arrow/manifest.json";
+
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -7,9 +9,11 @@ import { PNG } from "pngjs";
 
 const directory = "tests/reference/pagination-arrow";
 
+// SAFETY: this fixed read consumes the retained pagination-arrow manifest represented by the exact type-only JSON import; its case-definition and capture-source hashes match the retained producers. Keep the existing fresh read and parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained-manifest contract at JSON.parse; no runtime loader, validation or generic caster.
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as typeof paginationArrowReference;
 
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
