@@ -159,7 +159,7 @@ for (const directory of [
 
             return await frameCompletion.promise;
           });
-          const bounds = (await subject.boundingBox())!;
+          const bounds = (await subject.boundingBox());
           expect([bounds.x, bounds.y]).toEqual([
             (c.x ?? 16) * c.scale,
             (c.y ?? 16) * c.scale,

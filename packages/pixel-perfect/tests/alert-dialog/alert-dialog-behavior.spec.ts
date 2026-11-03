@@ -46,7 +46,7 @@ test("AlertDialog refreshes native backdrop pixels when the underlying backgroun
   );
   const frame = await overlay.getAttribute("data-mc-confirmation-frame");
   await page.waitForTimeout(650);
-  await expect(overlay).toHaveAttribute("data-mc-confirmation-frame", frame!);
+  await expect(overlay).toHaveAttribute("data-mc-confirmation-frame", frame);
 });
 
 test("AlertDialog preserves fixed native UI while the page underneath scrolls", async ({
@@ -77,7 +77,7 @@ test("AlertDialog preserves fixed native UI while the page underneath scrolls", 
   await page.evaluate(() => {
     const spacer = document.createElement("div");
     spacer.style.height = "2200px";
-    document.querySelector("#root")!.append(spacer);
+    document.querySelector("#root").append(spacer);
     scrollTo(0, 400);
   });
   await expect.poll(async () => await page.evaluate(() => scrollY)).toBe(400);

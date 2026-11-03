@@ -125,7 +125,7 @@ for (const [part, directory] of [
           }
 
           if (c.state === "icon-hover") {
-            const box = (await subject.boundingBox())!;
+            const box = (await subject.boundingBox());
             await page.mouse.move(box.x + 18 * c.scale, box.y + 18 * c.scale);
           }
 
@@ -173,7 +173,7 @@ for (const [part, directory] of [
 
           return await frameCompletion.promise;
         });
-        const box = (await subject.boundingBox())!;
+        const box = (await subject.boundingBox());
         expect([box.x, box.y]).toEqual([c.x * c.scale, c.y * c.scale]);
 
         const bytes = readFileSync(

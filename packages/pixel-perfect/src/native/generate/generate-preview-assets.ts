@@ -31,13 +31,28 @@ const css = [
 
 const sources: Record<string, { sha256: string; embeddedBytes: string }> = {};
 
+const assetInputNames = [
+  "menu_background.png",
+  "header_separator.png",
+  "footer_separator.png",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(input, filename)))
+);
+
 for (const [variable, filename] of [
   ["menu", "menu_background.png"],
   ["header", "header_separator.png"],
   ["footer", "footer_separator.png"],
 ]) {
   const member = `assets/minecraft/textures/gui/${filename}`;
-  const bytes = await readFile(path.join(input, filename));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(filename)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
   const sha256 = createHash("sha256").update(bytes).digest("hex");
 
   if (sha256 !== inventory.assets[member].sha256) {

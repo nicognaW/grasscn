@@ -41,6 +41,20 @@ const uri = (data: Buffer) =>
 const sprites: Record<string, SliderSprite> = {};
 const sources: Record<string, SpriteSource> = {};
 
+const assetInputNames = [
+  "slider.png",
+  "slider.png.mcmeta",
+  "slider_highlighted.png",
+  "slider_highlighted.png.mcmeta",
+  "slider_handle.png",
+  "slider_handle.png.mcmeta",
+  "slider_handle_highlighted.png",
+  "slider_handle_highlighted.png.mcmeta",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(input, filename)))
+);
+
 for (const name of [
   "slider",
   "slider_highlighted",
@@ -48,8 +62,20 @@ for (const name of [
   "slider_handle_highlighted",
 ]) {
   const member = `assets/minecraft/textures/gui/sprites/widget/${name}.png`;
-  const bytes = await readFile(path.join(input, `${name}.png`));
-  const metadata = await readFile(path.join(input, `${name}.png.mcmeta`));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(`${name}.png`)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
+  const metadataRead = assetInputReads[assetInputNames.indexOf(`${name}.png.mcmeta`)];
+
+  if (metadataRead.status === "rejected") {
+    throw metadataRead.reason;
+  }
+
+  const metadata = metadataRead.value;
 
   // SAFETY: these original slider members are present in the pinned native inventory.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion

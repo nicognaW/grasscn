@@ -58,7 +58,7 @@ const canonical = (b: Buffer) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item!.files.map((f) => {
+const files = item.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
@@ -124,27 +124,27 @@ try {
         y: String(c.y),
       });
 
-      await page!.goto(`${urlArg}?${q}`);
-      await expect(page!.locator(".mc-select-trigger")).toHaveAttribute(
+      await page.goto(`${urlArg}?${q}`);
+      await expect(page.locator(".mc-select-trigger")).toHaveAttribute(
         "data-mc-select-ready",
         "true"
       );
-      await expect(page!.locator(".mc-select-trigger-label")).toHaveText(
+      await expect(page.locator(".mc-select-trigger-label")).toHaveText(
         c.label
       );
 
-      for (const label of await page!
+      for (const label of await page
         .locator(".mc-native-select-art [data-mc-label-ready]")
         .all()) {
         await expect(label).toHaveAttribute("data-mc-label-ready", "true");
       }
 
-      await page!.mouse.move(0, 0);
+      await page.mouse.move(0, 0);
 
       if (c.state === "focus") {
-        await page!.locator("#subject").focus();
+        await page.locator("#subject").focus();
       } else {
-        await page!.evaluate(() =>
+        await page.evaluate(() =>
           // SAFETY: the native-select fixture focuses HTML controls; preserve the existing optional blur call.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Focused HTML fixture element DOM API boundary.
           (document.activeElement as HTMLElement | null)?.blur()
@@ -152,10 +152,10 @@ try {
       }
 
       if (c.state.endsWith("hover")) {
-        await page!.locator("#subject").hover({ force: true });
+        await page.locator("#subject").hover({ force: true });
       }
 
-      await page!.evaluate(async () => {
+      await page.evaluate(async () => {
         const frameCompletion = Promise.withResolvers();
 
         try {
@@ -170,7 +170,7 @@ try {
       });
 
       const actual = PNG.sync.read(
-        await page!.locator("#subject").screenshot({ animations: "disabled" })
+        await page.locator("#subject").screenshot({ animations: "disabled" })
       );
 
       const expected = PNG.sync.read(

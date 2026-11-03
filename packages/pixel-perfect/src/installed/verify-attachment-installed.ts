@@ -55,7 +55,7 @@ const canonical = (b: Buffer) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item!.files.map((f) => {
+const files = item.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
@@ -102,7 +102,7 @@ try {
         });
       }
 
-      page!.on("pageerror", (e) => pageErrors.push(e.message));
+      page.on("pageerror", (e) => pageErrors.push(e.message));
 
       const c = m.cases[i];
 
@@ -122,10 +122,10 @@ try {
         y: String(c.y ?? 16),
       });
 
-      await page!.goto(`${urlArg}?${q}`);
-      const subject = page!.locator("#subject");
+      await page.goto(`${urlArg}?${q}`);
+      const subject = page.locator("#subject");
       await expect(subject).toBeVisible();
-      await page!.mouse.move(0, 0);
+      await page.mouse.move(0, 0);
 
       if (part === "row") {
         await expect(
@@ -151,13 +151,13 @@ try {
 
         if (c.state === "icon-hover") {
           const b = await subject.boundingBox();
-          await page!.mouse.move(b!.x + 18 * c.scale, b!.y + 18 * c.scale);
+          await page.mouse.move(b.x + 18 * c.scale, b.y + 18 * c.scale);
         }
 
         if (c.state === "focus") {
           await subject.focus();
-          await page!.keyboard.press("Tab");
-          await page!.keyboard.press("Shift+Tab");
+          await page.keyboard.press("Tab");
+          await page.keyboard.press("Shift+Tab");
           await expect(subject).toBeFocused();
         }
 
@@ -183,7 +183,7 @@ try {
         await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
       }
 
-      await page!.evaluate(async () => {
+      await page.evaluate(async () => {
         const frameCompletion = Promise.withResolvers();
 
         try {

@@ -64,7 +64,7 @@ const canonical = (b: Buffer) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item!.files.map((f) => {
+const files = item.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(installedRegistryFile(f, consumer, settings));
@@ -246,14 +246,14 @@ try {
         const optionalText = c.text;
 
         if (optionalText !== null && optionalText !== undefined) {
-          q.text = c.text!;
+          q.text = c.text;
         }
 
         if (c.wrapWidth ?? 0) {
           q.wrapWidth = String(c.wrapWidth);
         }
 
-        await page!.evaluate(
+        await page.evaluate(
           (calendarFields) =>
             // SAFETY: the retained Calendar bridge receives string query fields, updates history/background and renders the keyed marker.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Calendar consumer bridge invocation boundary.
@@ -262,19 +262,19 @@ try {
             ),
           q
         );
-        await expect(page!.locator("#marker")).toHaveAttribute(
+        await expect(page.locator("#marker")).toHaveAttribute(
           "data-case",
           q.case
         );
-        await expect(page!.locator("#subject")).toBeVisible();
+        await expect(page.locator("#subject")).toBeVisible();
 
         if (part === "label") {
-          await expect(page!.locator("#subject")).toHaveAttribute(
+          await expect(page.locator("#subject")).toHaveAttribute(
             "data-mc-label-layout-ready",
             "true"
           );
 
-          for (const canvas of await page!
+          for (const canvas of await page
             .locator("#subject [data-mc-label-ready]")
             .all()) {
             await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
@@ -282,27 +282,27 @@ try {
         }
 
         if (part === "trigger-cjk") {
-          for (const canvas of await page!
+          for (const canvas of await page
             .locator("#subject [data-mc-label-ready]")
             .all()) {
             await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
           }
         }
 
-        await page!.mouse.move(0, 0);
+        await page.mouse.move(0, 0);
 
         if (
           alias === "base" &&
           (c.state === "hover" || c.state === "disabled-hover")
         ) {
-          await page!.locator("#subject").hover({ force: true });
+          await page.locator("#subject").hover({ force: true });
         }
 
         if (alias === "base" && c.state === "focus") {
-          await page!.locator("#subject").focus();
+          await page.locator("#subject").focus();
         }
 
-        await page!.evaluate(async () => {
+        await page.evaluate(async () => {
           const frameCompletion = Promise.withResolvers();
 
           try {
@@ -326,7 +326,7 @@ try {
 
         const expected = PNG.sync.read(bytes);
 
-        const actualBytes = await page!
+        const actualBytes = await page
           .locator("#subject")
           .screenshot({ animations: "disabled" });
 

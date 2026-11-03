@@ -35,6 +35,22 @@ const sprites: Record<string, { original: string; pieces: string[] }> = {};
 const hash = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 
+const assetInputNames = [
+  "tab.png",
+  "tab.png.mcmeta",
+  "tab_highlighted.png",
+  "tab_highlighted.png.mcmeta",
+  "tab_selected.png",
+  "tab_selected.png.mcmeta",
+  "tab_selected_highlighted.png",
+  "tab_selected_highlighted.png.mcmeta",
+  "menu_background.png",
+  "header_separator.png",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(directory, filename)))
+);
+
 for (const name of [
   "tab",
   "tab_highlighted",
@@ -43,8 +59,20 @@ for (const name of [
 ]) {
   const member = `assets/minecraft/textures/gui/sprites/widget/${name}.png`;
 
-  const bytes = await readFile(path.join(directory, `${name}.png`));
-  const metadata = await readFile(path.join(directory, `${name}.png.mcmeta`));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(`${name}.png`)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
+  const metadataRead = assetInputReads[assetInputNames.indexOf(`${name}.png.mcmeta`)];
+
+  if (metadataRead.status === "rejected") {
+    throw metadataRead.reason;
+  }
+
+  const metadata = metadataRead.value;
 
   assert.equal(hash(bytes), inventory.assets[member].sha256);
   assert.equal(hash(metadata), inventory.assets[member].metadataSha256);
@@ -105,7 +133,13 @@ const textures: Record<string, string> = {};
 
 for (const name of ["menu_background", "header_separator"]) {
   const member = `assets/minecraft/textures/gui/${name}.png`;
-  const bytes = await readFile(path.join(directory, `${name}.png`));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(`${name}.png`)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
 
   assert.equal(hash(bytes), inventory.assets[member].sha256);
   sources[member] = { sha256: hash(bytes) };

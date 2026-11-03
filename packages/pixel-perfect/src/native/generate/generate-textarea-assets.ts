@@ -34,11 +34,33 @@ const sources: Record<string, SpriteSource> = {};
 const hash = (data: Uint8Array) =>
   createHash("sha256").update(data).digest("hex");
 
+const assetInputNames = [
+  "scroller.png",
+  "scroller.png.mcmeta",
+  "scroller_background.png",
+  "scroller_background.png.mcmeta",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(directory, filename)))
+);
+
 for (const name of ["scroller", "scroller_background"]) {
   const member = `assets/minecraft/textures/gui/sprites/widget/${name}.png`;
 
-  const bytes = await readFile(path.join(directory, `${name}.png`));
-  const metadata = await readFile(path.join(directory, `${name}.png.mcmeta`));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(`${name}.png`)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
+  const metadataRead = assetInputReads[assetInputNames.indexOf(`${name}.png.mcmeta`)];
+
+  if (metadataRead.status === "rejected") {
+    throw metadataRead.reason;
+  }
+
+  const metadata = metadataRead.value;
 
   // SAFETY: these original scroller members are present in the pinned native inventory.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion

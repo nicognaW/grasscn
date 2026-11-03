@@ -213,7 +213,7 @@ for (const scale of [1, 2, 3]) {
   }, testInfo) => {
     const c = manifest.cases.find(
       (progressCase) => progressCase.name === `progress-c18-s${scale}.png`
-    )!;
+    );
 
     await page.goto(
       `/?component=progress&value=0.5&max=1&overlay=notched_6&asChild=1&scale=${scale}`

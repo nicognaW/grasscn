@@ -66,11 +66,33 @@ let atlasWidth: number | undefined;
 const uri = (data: Buffer) =>
   `url("data:image/png;base64,${data.toString("base64")}")`;
 
+const assetInputNames = [
+  "background.png",
+  "background.png.mcmeta",
+  "frame.png",
+  "frame.png.mcmeta",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(input, filename)))
+);
+
 for (const name of ["background", "frame"]) {
   const member = `assets/minecraft/textures/gui/sprites/tooltip/${name}.png`;
 
-  const bytes = await readFile(path.join(input, `${name}.png`));
-  const metadata = await readFile(path.join(input, `${name}.png.mcmeta`));
+  const bytesRead = assetInputReads[assetInputNames.indexOf(`${name}.png`)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
+  const metadataRead = assetInputReads[assetInputNames.indexOf(`${name}.png.mcmeta`)];
+
+  if (metadataRead.status === "rejected") {
+    throw metadataRead.reason;
+  }
+
+  const metadata = metadataRead.value;
 
   if (
     hash(bytes) !== inventory.assets[member].sha256 ||

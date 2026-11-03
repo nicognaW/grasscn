@@ -57,7 +57,7 @@ const canonical = (bytes: Buffer) => {
   return s.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-for (const entry of item!.files) {
+for (const entry of item.files) {
   const name = path.basename(entry.path);
   const source = await readFile(webFile(path.join(entry.path)));
 
@@ -232,7 +232,7 @@ try {
         }
 
         if (entry) {
-          const cursor = c.cursor ?? c.text!.length;
+          const cursor = c.cursor ?? c.text.length;
           const anchor = c.anchor ?? cursor;
 
           await subject.evaluate(
@@ -257,7 +257,7 @@ try {
             );
           }
 
-          await page.clock.runFor(c.caretMs!);
+          await page.clock.runFor(c.caretMs);
           await expect(subject).toHaveAttribute("data-mc-ready", "true");
         } else {
           await page.evaluate(async () => {

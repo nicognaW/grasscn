@@ -29,11 +29,27 @@ const inventory = JSON.parse(
 const sources: Record<string, SeparatorSource> = {};
 const assets: Record<string, string> = {};
 
+const assetInputNames = [
+  "header_separator.png",
+  "footer_separator.png",
+  "inworld_header_separator.png",
+  "inworld_footer_separator.png",
+];
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map((filename) => readFile(path.join(directory, filename)))
+);
+
 for (const prefix of ["", "inworld_"]) {
   for (const edge of ["header", "footer"]) {
     const filename = `${prefix}${edge}_separator.png`;
     const member = `assets/minecraft/textures/gui/${filename}`;
-    const bytes = await readFile(path.join(directory, filename));
+    const bytesRead = assetInputReads[assetInputNames.indexOf(filename)];
+
+    if (bytesRead.status === "rejected") {
+      throw bytesRead.reason;
+    }
+
+    const bytes = bytesRead.value;
     const sha256 = createHash("sha256").update(bytes).digest("hex");
     // SAFETY: these four original separator members are pinned by the native inventory.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
