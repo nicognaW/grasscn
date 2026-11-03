@@ -19,8 +19,11 @@ const width = Number(p.get("width") ?? 200);
 
 export const InputGroupFixture = () => {
   React.useLayoutEffect(() => {
-    document.documentElement.style.background = document.body.style.background =
-      p.get("background") ?? "#202020";
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = p.get("background") ?? "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
   const [value, setValue] = React.useState(p.get("text") ?? "Hello Minecraft");

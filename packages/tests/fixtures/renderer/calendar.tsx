@@ -43,8 +43,11 @@ export const CalendarFixture = () => {
   const [dateOpen, setDateOpen] = React.useState(false);
   const [multiple, setMultiple] = React.useState<Date[] | undefined>();
   React.useLayoutEffect(() => {
-    document.documentElement.style.background = document.body.style.background =
-      q.get("background") ?? "#202020";
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = q.get("background") ?? "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
   React.useLayoutEffect(() => {
     if (q.get("native") !== "1") {

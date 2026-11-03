@@ -16,8 +16,11 @@ export const ColorPainterStressFixture = () => {
   const [mounted, setMounted] = React.useState(true);
 
   React.useLayoutEffect(() => {
-    document.body.style.background = document.documentElement.style.background =
-      "#202020";
+    const chainedBackgroundOuter = document.body.style;
+    const chainedBackgroundInner = document.documentElement.style;
+    const chainedBackgroundValue = "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
   // SAFETY: Minecraft component styles consume this exact pixel/scale map from the fixture's 1/2/3 state; satisfies checks it before the CSSProperties view is passed to React.
