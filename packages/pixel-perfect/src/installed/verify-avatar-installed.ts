@@ -67,18 +67,18 @@ try {
     }
 
     const c = m.cases[i];
-    await page.evaluate(
+    await page!.evaluate(
       (avatarCase) =>
         // SAFETY: the retained Avatar bridge consumes these actual captured case fields and returns void.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Avatar consumer bridge invocation boundary.
         (window as LegacyAvatarConsumerWindow).renderCase(avatarCase),
       c
     );
-    await expect(page.locator("[data-mc-avatar-face]")).toHaveAttribute(
+    await expect(page!.locator("[data-mc-avatar-face]")).toHaveAttribute(
       "data-ready",
       "true"
     );
-    await page.evaluate(async () => {
+    await page!.evaluate(async () => {
       const frameCompletion = Promise.withResolvers();
 
       try {
@@ -93,7 +93,7 @@ try {
     });
 
     const got = PNG.sync.read(
-      await page.locator("#subject").screenshot({ animations: "disabled" })
+      await page!.locator("#subject").screenshot({ animations: "disabled" })
     );
 
     const want = PNG.sync.read(
@@ -160,7 +160,7 @@ try {
     return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
   };
 
-  const files = item.files.map((f) => {
+  const files = item!.files.map((f) => {
     const name = path.basename(f.path);
     const a = fs.readFileSync(webFile(path.join(f.path)));
     const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));

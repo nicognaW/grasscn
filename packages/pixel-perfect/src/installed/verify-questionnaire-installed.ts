@@ -48,7 +48,7 @@ const canonical = (b: Buffer) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item.files.map((f) => {
+const files = item!.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
@@ -163,8 +163,8 @@ try {
           q.set("maxLength", String(c.maxLength));
         }
 
-        await page.goto(`${urlArg}?${q}`);
-        const subject = page.locator("#subject");
+        await page!.goto(`${urlArg}?${q}`);
+        const subject = page!.locator("#subject");
         await expect(subject).toBeVisible();
 
         if (["title", "description", "error", "progress"].includes(part)) {
@@ -178,7 +178,7 @@ try {
           await expect(subject).toHaveAttribute("data-mc-ready", "true");
         }
 
-        await page.mouse.move(0, 0);
+        await page!.mouse.move(0, 0);
 
         if (c.state.startsWith("focus")) {
           await (
@@ -193,7 +193,7 @@ try {
         }
 
         if (part === "input") {
-          const cursor = c.cursor ?? c.text.length;
+          const cursor = c.cursor ?? c.text!.length;
           const anchor = c.anchor ?? cursor;
 
           await subject.evaluate(
@@ -207,7 +207,7 @@ try {
             },
             { anchor, cursor }
           );
-          await page.clock.runFor(c.caretMs);
+          await page!.clock.runFor(c.caretMs!);
           await expect(subject).toHaveAttribute("data-mc-ready", "true");
         } else {
           for (const glyph of await subject
@@ -216,7 +216,7 @@ try {
             await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
           }
 
-          await page.evaluate(async () => {
+          await page!.evaluate(async () => {
             const frameCompletion = Promise.withResolvers();
 
             try {
@@ -405,8 +405,8 @@ if (
     );
 
     for (const record of records) {
-      assert.equal(record.mismatchedPixels, 0);
-      assert.equal(record.decodedRgbaSha256, expected);
+      assert.equal(record!.mismatchedPixels, 0);
+      assert.equal(record!.decodedRgbaSha256, expected);
     }
 
     return {
@@ -416,7 +416,7 @@ if (
           .slice(1)
           .map((part, index) => [
             `${part}DecodedRgbaSha256`,
-            records[index + 1].decodedRgbaSha256,
+            records[index + 1]!.decodedRgbaSha256,
           ])
       ),
     };

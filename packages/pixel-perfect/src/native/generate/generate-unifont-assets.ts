@@ -98,10 +98,10 @@ if (
 }
 
 const overrides = providers.providers
-  .find((provider) => provider.hex_file === "minecraft:font/unifont.zip")
+  .find((provider) => provider.hex_file === "minecraft:font/unifont.zip")!
   .size_overrides.map((range) => [
-    range.from.codePointAt(0),
-    range.to.codePointAt(0),
+    range.from.codePointAt(0)!,
+    range.to.codePointAt(0)!,
     range.left,
     range.right,
   ]);
@@ -170,7 +170,7 @@ for (const line of hexSource.split("\n")) {
     groups.set(plane, []);
   }
 
-  groups.get(plane).push(
+  groups.get(plane)!.push(
     new Glyph({
       name: `uni${raw}`,
       unicode: code,

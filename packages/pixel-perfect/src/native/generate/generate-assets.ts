@@ -28,7 +28,7 @@ const definitions = JSON.parse(
 
 const provider = definitions.providers.find(
   (p) => p.file === "minecraft:font/ascii.png"
-);
+)!;
 
 const cell = atlas.width / 16;
 const glyphs: [number, number, number][] = [];
@@ -80,7 +80,7 @@ for (let code = 32; code <= 126; code += 1) {
     new Glyph({
       name: `uni${code.toString(16).padStart(4, "0")}`,
       unicode: code,
-      advanceWidth: glyphs.at(-1)[2] * unit,
+      advanceWidth: glyphs.at(-1)![2] * unit,
       path: outline,
     })
   );

@@ -44,7 +44,7 @@ assert.deepEqual(
 const cases = [];
 
 for (const reference of first.cases) {
-  const repeated = second.cases.find((c) => c.name === reference.name);
+  const repeated = second.cases.find((c) => c.name === reference.name)!;
   const a = await readFile(path.join(firstDir, "captures", reference.name));
   const b = await readFile(path.join(secondDir, "captures", reference.name));
   assert.equal(hash(a), reference.sha256);

@@ -128,7 +128,7 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
 
           return await frameCompletion.promise;
         });
-        const bounds = (await trigger.boundingBox());
+        const bounds = (await trigger.boundingBox())!;
         expect([bounds.x, bounds.y]).toEqual([
           (c.x ?? 16) * c.scale,
           (c.y ?? 16) * c.scale,
