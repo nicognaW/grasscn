@@ -56,6 +56,7 @@ const assetInputNames = [
   "checkbox_highlighted.png",
   "checkbox_selected_highlighted.png",
 ];
+
 const assetInputReads = await Promise.allSettled(
   assetInputNames.map(
     async (filename) => await readFile(path.join(input, filename))

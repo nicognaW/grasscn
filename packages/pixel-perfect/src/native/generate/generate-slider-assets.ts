@@ -51,6 +51,7 @@ const assetInputNames = [
   "slider_handle_highlighted.png",
   "slider_handle_highlighted.png.mcmeta",
 ];
+
 const assetInputReads = await Promise.allSettled(
   assetInputNames.map(
     async (filename) => await readFile(path.join(input, filename))
@@ -71,6 +72,7 @@ for (const name of [
   }
 
   const bytes = bytesRead.value;
+
   const metadataRead =
     assetInputReads[assetInputNames.indexOf(`${name}.png.mcmeta`)];
 

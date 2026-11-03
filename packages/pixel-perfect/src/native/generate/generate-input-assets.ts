@@ -41,6 +41,7 @@ const assetInputNames = [
   "text_field_highlighted.png.mcmeta",
   "ascii.png",
 ];
+
 const assetInputReads = await Promise.allSettled(
   assetInputNames.map(
     async (filename) => await readFile(path.join(input, filename))

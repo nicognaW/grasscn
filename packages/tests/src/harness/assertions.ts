@@ -1,6 +1,7 @@
 import { expect } from "@playwright/test";
 
 type ExpectMessage = [message?: Parameters<typeof expect>[1]];
+
 type LengthValue = { readonly length: number } | null | undefined;
 
 // These helpers retain the original hard matcher and its diagnostic value.
