@@ -6,6 +6,23 @@ import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
+  text: string
+) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E\n]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
   minecraftGlyphs;
 
@@ -102,9 +119,7 @@ export const MinecraftDialogText = ({
 
   if (
     !isMinecraftTextContent(children) ||
-    ![...String(children)].every(
-      (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
-    )
+    !hasSupportedParagraphGlyphs(String(children))
   ) {
     return <span data-mc-dialog-item={item || undefined}>{children}</span>;
   }

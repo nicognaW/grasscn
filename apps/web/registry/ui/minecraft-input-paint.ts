@@ -57,8 +57,15 @@ const glyphAdvance = (char: string) =>
   getUnihexGlyph(char)?.advance ??
   0;
 
-const advance = (text: string) =>
-  Math.ceil([...text].reduce((sum, char) => sum + glyphAdvance(char), 0));
+const advance = (text: string) => {
+  let measuredGlyphWidth = 0;
+
+  for (const glyphCharacter of text) {
+    measuredGlyphWidth += glyphAdvance(glyphCharacter);
+  }
+
+  return Math.ceil(measuredGlyphWidth);
+};
 
 const trimToWidth = function trimToWidth(
   text: string,

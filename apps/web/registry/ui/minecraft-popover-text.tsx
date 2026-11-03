@@ -6,6 +6,23 @@ import { PopoverUnicodeLine } from "./minecraft-popover-unicode";
 import { isMinecraftTextContent } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
+  text: string
+) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E\n]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
   minecraftGlyphs;
 
@@ -20,8 +37,15 @@ const advance = (char: string, bold: boolean) => {
   );
 };
 
-const textWidth = (text: string, bold: boolean) =>
-  Math.ceil([...text].reduce((sum, char) => sum + advance(char, bold), 0));
+const textWidth = (text: string, bold: boolean) => {
+  let measuredGlyphWidth = 0;
+
+  for (const glyphCharacter of text) {
+    measuredGlyphWidth += advance(glyphCharacter, bold);
+  }
+
+  return Math.ceil(measuredGlyphWidth);
+};
 
 const wrap = function wrap(text: string, maximum: number, bold: boolean) {
   const lines: string[] = [];
@@ -109,11 +133,7 @@ export const MinecraftPopoverText = ({
     );
   }
 
-  if (
-    ![...text].every(
-      (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
-    )
-  ) {
+  if (!hasSupportedParagraphGlyphs(text)) {
     return <span data-mc-popover-text-ready="false">{text}</span>;
   }
 

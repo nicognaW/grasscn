@@ -16,6 +16,24 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
 
+const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
+  text: string
+) {
+  for (const character of text) {
+    if (
+      !(
+        character === "\n" ||
+        /^[\u0020-\u007E]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 interface MinecraftItemTextLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-minecraft-item-text-1-padding-left": number;
 }
@@ -29,8 +47,15 @@ const advance = (char: string) =>
   getUnihexGlyph(char)?.advance ??
   6;
 
-const textWidth = (text: string) =>
-  Math.ceil([...text].reduce((width, char) => width + advance(char), 0));
+const textWidth = (text: string) => {
+  let measuredGlyphWidth = 0;
+
+  for (const glyphCharacter of text) {
+    measuredGlyphWidth += advance(glyphCharacter);
+  }
+
+  return Math.ceil(measuredGlyphWidth);
+};
 
 const splitLines = function splitLines(text: string, width?: number) {
   const lines: string[] = [];
@@ -41,29 +66,41 @@ const splitLines = function splitLines(text: string, width?: number) {
       width !== undefined &&
       textWidth(remaining) > width
     ) {
-      const chars = [...remaining];
-
       let count = 0;
       let used = 0;
       let space = -1;
+      let consumedOffset = 0;
+      let firstCharacterEnd = 0;
+      let lastSpaceOffset = -1;
+      let nextAfterSpace = -1;
 
-      while (count < chars.length) {
-        if (chars[count] === " ") {
-          space = count;
+      for (const currentCharacter of remaining) {
+        if (count === 0) {
+          firstCharacterEnd = currentCharacter.length;
         }
 
-        if (used + advance(chars[count]) > width && count > 0) {
+        if (currentCharacter === " ") {
+          space = count;
+          lastSpaceOffset = consumedOffset;
+          nextAfterSpace = consumedOffset + currentCharacter.length;
+        }
+
+        if (used + advance(currentCharacter) > width && count > 0) {
           break;
         }
 
-        const currentCharacter = chars[count];
         count += 1;
         used += advance(currentCharacter);
+        consumedOffset += currentCharacter.length;
       }
 
-      const end = space < 0 ? Math.max(1, count) : space;
-      lines.push(chars.slice(0, end).join(""));
-      remaining = chars.slice(end + Number(space >= 0)).join("");
+      const end =
+        space < 0
+          ? Math.max(firstCharacterEnd, consumedOffset)
+          : lastSpaceOffset;
+
+      lines.push(remaining.slice(0, end));
+      remaining = remaining.slice(space >= 0 ? nextAfterSpace : end);
     }
 
     lines.push(remaining);
@@ -174,10 +211,7 @@ const MinecraftItemText = ({
   const supported =
     text !== null &&
     (!unicode || fontReady) &&
-    [...text].every(
-      (char) =>
-        char === "\n" || /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
-    );
+    hasSupportedParagraphGlyphs(text);
 
   const lines = supported && text !== null ? splitLines(text, maxWidth) : [];
   const widest = Math.max(0, ...lines.map(textWidth));

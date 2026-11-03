@@ -7,6 +7,23 @@ import { MinecraftText } from "./minecraft-text";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
+  text: string
+) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E\n]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 export const ConfirmationTextContext = React.createContext<{
   scale: number;
   contentWidth: number;
@@ -19,8 +36,15 @@ const advance = (char: string) =>
   getUnihexGlyph(char)?.advance ??
   0;
 
-const widthOf = (text: string) =>
-  Math.ceil([...text].reduce((sum, char) => sum + advance(char), 0));
+const widthOf = (text: string) => {
+  let measuredGlyphWidth = 0;
+
+  for (const glyphCharacter of text) {
+    measuredGlyphWidth += advance(glyphCharacter);
+  }
+
+  return Math.ceil(measuredGlyphWidth);
+};
 
 const wrap = function wrap(text: string, maximum: number) {
   const lines: string[] = [];
@@ -108,9 +132,7 @@ export const MinecraftConfirmationText = ({
 
   if (
     !isMinecraftTextContent(children) ||
-    ![...String(children)].every(
-      (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
-    )
+    !hasSupportedParagraphGlyphs(String(children))
   ) {
     return <span>{children}</span>;
   }

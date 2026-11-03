@@ -80,7 +80,7 @@ export const MenuUnicodeLine = ({
         return;
       }
 
-      const glyphs = [...input.text].map((char) => {
+      const glyphs = Array.from(input.text, (char) => {
         const code = char.codePointAt(0)!;
         const ascii = asciiGlyphs[code - 32];
         const uni = getUnihexGlyph(char);

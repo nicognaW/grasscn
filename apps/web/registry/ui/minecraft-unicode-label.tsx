@@ -14,6 +14,21 @@ import type { UnihexAtlas } from "./minecraft-unifont-gpu";
 
 import "./minecraft-unicode.css";
 
+const hasSupportedLineGlyphs = function hasSupportedLineGlyphs(text: string) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
   minecraftGlyphs;
 
@@ -73,11 +88,7 @@ export const MinecraftUnicodeLabel = ({
           return;
         }
 
-        if (
-          ![...text].every(
-            (char) => /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
-          )
-        ) {
+        if (!hasSupportedLineGlyphs(text)) {
           setWidth(undefined);
 
           return;
