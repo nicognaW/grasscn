@@ -47,12 +47,6 @@ output {
   right: 0;
 }
 
-.fixture-demo-value {
-  color: white;
-  display: block;
-  margin-top: 20px;
-}
-
 .fixture-item-read-control {
   position: absolute;
   top: 1500px;

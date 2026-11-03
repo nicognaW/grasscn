@@ -18,6 +18,8 @@ import { Sign, HangingSign } from "@grasscn/web/ui/sign";
 import { Trading } from "@grasscn/web/ui/trading";
 import * as React from "react";
 
+import "./draft-demos.css";
+
 interface Sample {
   element: string;
   uncontrolled?: boolean;
