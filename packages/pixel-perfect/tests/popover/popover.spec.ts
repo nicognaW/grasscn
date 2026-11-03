@@ -165,8 +165,8 @@ for (const directory of [
           JSON.stringify({
             case: c.name,
             mismatchedPixels,
-            totalPixels: c.width * c.height * c.scale * c.scale,
             tolerance: 0,
+            totalPixels: c.width * c.height * c.scale * c.scale,
           })
         );
         expect(mismatchedPixels).toBe(0);

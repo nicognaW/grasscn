@@ -243,12 +243,12 @@ export const nativeTextTests = function nativeTextTests(
           writeFileSync(
             info.outputPath("metrics.json"),
             JSON.stringify({
-              component,
-              manifest: `${directory}/manifest.json`,
-              part,
               alias: part,
               case: c.name,
+              component,
+              manifest: `${directory}/manifest.json`,
               mismatchedPixels,
+              part,
               tolerance: 0,
             })
           );

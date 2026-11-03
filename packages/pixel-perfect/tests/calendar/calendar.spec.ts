@@ -221,15 +221,15 @@ for (const component of ["calendar", "date-picker"]) {
             writeFileSync(
               info.outputPath("metrics.json"),
               JSON.stringify({
+                alias,
+                case: c.name,
                 component,
                 manifest:
                   dir === "."
                     ? "tests/reference/manifest.json"
                     : `tests/reference/${dir}/manifest.json`,
-                part,
-                case: c.name,
-                alias,
                 mismatchedPixels,
+                part,
                 tolerance: 0,
               })
             );

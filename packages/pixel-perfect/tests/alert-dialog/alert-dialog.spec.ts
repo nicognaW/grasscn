@@ -190,8 +190,8 @@ for (const constituentDirectory of [
           JSON.stringify({
             case: c.name,
             mismatchedPixels,
-            totalPixels: 1536 * 900,
             tolerance: 0,
+            totalPixels: 1536 * 900,
           })
         );
         expect(mismatchedPixels).toBe(0);

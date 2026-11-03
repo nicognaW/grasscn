@@ -159,10 +159,10 @@ export const formsNativeTests = function formsNativeTests(
           writeFileSync(
             info.outputPath("metrics.json"),
             JSON.stringify({
-              component,
-              part,
               case: c.name,
+              component,
               mismatchedPixels,
+              part,
               tolerance: 0,
             })
           );

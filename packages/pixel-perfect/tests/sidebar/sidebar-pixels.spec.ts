@@ -355,10 +355,10 @@ test.describe("Sidebar original native constituent cases", () => {
             writeFileSync(
               info.outputPath("metrics.json"),
               JSON.stringify({
-                case: c.name,
-                part,
                 active,
+                case: c.name,
                 mismatchedPixels,
+                part,
                 tolerance: 0,
               })
             );

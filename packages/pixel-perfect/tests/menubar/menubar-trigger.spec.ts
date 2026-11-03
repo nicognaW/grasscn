@@ -156,7 +156,12 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
         writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
         writeFileSync(
           info.outputPath("metrics.json"),
-          JSON.stringify({ case: c.name, open, mismatchedPixels, tolerance: 0 })
+          JSON.stringify({
+            case: c.name,
+            mismatchedPixels,
+            open,
+            tolerance: 0,
+          })
         );
         expect(mismatchedPixels).toBe(0);
       });

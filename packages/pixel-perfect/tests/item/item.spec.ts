@@ -208,10 +208,10 @@ for (const [part, directory] of [
         writeFileSync(
           info.outputPath("metrics.json"),
           JSON.stringify({
-            part,
-            mode,
             case: c.name,
             mismatchedPixels,
+            mode,
+            part,
             tolerance: 0,
           })
         );

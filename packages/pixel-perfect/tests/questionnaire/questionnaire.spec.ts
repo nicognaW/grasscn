@@ -221,16 +221,16 @@ for (const [part, dir] of parts) {
           writeFileSync(
             info.outputPath("metrics.json"),
             JSON.stringify({
+              action,
+              alias: action,
+              case: c.name,
               component: "questionnaire",
               manifest:
                 dir === "."
                   ? "tests/reference/manifest.json"
                   : `tests/reference/${dir}/manifest.json`,
-              alias: action,
-              part,
-              action,
-              case: c.name,
               mismatchedPixels,
+              part,
               tolerance: 0,
             })
           );

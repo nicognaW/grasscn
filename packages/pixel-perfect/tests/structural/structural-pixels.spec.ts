@@ -216,11 +216,11 @@ test.describe("Structural native constituents", () => {
               writeFileSync(
                 info.outputPath("metrics.json"),
                 JSON.stringify({
-                  component,
-                  case: c.name,
-                  orientation,
                   active,
+                  case: c.name,
+                  component,
                   mismatchedPixels,
+                  orientation,
                   tolerance: 0,
                 })
               );
