@@ -156,15 +156,23 @@ const TooltipContent = ({
     );
   };
 
-  const plain = isMinecraftTextContent(children)
-    ? String(children)
-    : render &&
-        React.isValidElement<{
-          children?: React.ReactNode;
-        }>(children) &&
-        typeof children.props.children === "string"
-      ? children.props.children
-      : undefined;
+  let selectedPlain: string | undefined;
+
+  if (isMinecraftTextContent(children)) {
+    selectedPlain = String(children);
+  } else if (
+    render &&
+    React.isValidElement<{
+      children?: React.ReactNode;
+    }>(children) &&
+    typeof children.props.children === "string"
+  ) {
+    selectedPlain = children.props.children;
+  } else {
+    selectedPlain = undefined;
+  }
+
+  const plain = selectedPlain;
 
   const lines =
     plain == null || !/^[\u0020-\u007E\n]*$/u.test(plain)

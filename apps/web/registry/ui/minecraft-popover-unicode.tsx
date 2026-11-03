@@ -71,24 +71,37 @@ export const PopoverUnicodeLine = ({
         const uni = getUnihexGlyph(char);
         const observed = popoverGlyphAtlas[code.toString(16)];
 
-        const w = observed
-          ? Math.round((observed.u1 - observed.u0) * 256 + 0.02)
-          : ascii
-            ? 8
-            : (uni?.width ?? 0);
+        let selectedW: number;
+
+        if (observed) {
+          selectedW = Math.round((observed.u1 - observed.u0) * 256 + 0.02);
+        } else if (ascii) {
+          selectedW = 8;
+        } else {
+          selectedW = uni?.width ?? 0;
+        }
+
+        const w = selectedW;
 
         const h = ascii ? 8 : 16;
         const pixels = new Uint8Array(w * h * 4);
 
         for (let y = 0; y < h; y += 1) {
           for (let x = 0; x < w; x += 1) {
-            const on = ascii
-              ? source[((ascii[1] + y) * 128 + ascii[0] + x) * 4 + 3]
-              : uni
-                ? // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
-                  ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) *
-                  255
-                : 0;
+            let selectedOn: number;
+
+            if (ascii) {
+              selectedOn =
+                source[((ascii[1] + y) * 128 + ascii[0] + x) * 4 + 3];
+            } else if (uni) {
+              selectedOn =
+                // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
+                ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) * 255;
+            } else {
+              selectedOn = 0;
+            }
+
+            const on = selectedOn;
 
             pixels.set([255, 255, 255, on], (y * w + x) * 4);
           }

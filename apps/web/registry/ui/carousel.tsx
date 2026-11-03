@@ -141,19 +141,29 @@ const Carousel = ({
             return;
           }
 
-          const prev =
-            orientation === "vertical"
-              ? "ArrowUp"
-              : opts?.direction === "rtl"
-                ? "ArrowRight"
-                : "ArrowLeft";
+          let selectedPrev: "ArrowUp" | "ArrowRight" | "ArrowLeft";
 
-          const next =
-            orientation === "vertical"
-              ? "ArrowDown"
-              : opts?.direction === "rtl"
-                ? "ArrowLeft"
-                : "ArrowRight";
+          if (orientation === "vertical") {
+            selectedPrev = "ArrowUp";
+          } else if (opts?.direction === "rtl") {
+            selectedPrev = "ArrowRight";
+          } else {
+            selectedPrev = "ArrowLeft";
+          }
+
+          const prev = selectedPrev;
+
+          let selectedNext: "ArrowDown" | "ArrowLeft" | "ArrowRight";
+
+          if (orientation === "vertical") {
+            selectedNext = "ArrowDown";
+          } else if (opts?.direction === "rtl") {
+            selectedNext = "ArrowLeft";
+          } else {
+            selectedNext = "ArrowRight";
+          }
+
+          const next = selectedNext;
 
           if (event.key === prev) {
             event.preventDefault();

@@ -52,11 +52,17 @@ export const toastLayout = async function toastLayout(
     const uni = getUnihexGlyph(char);
     const observed = toastGlyphAtlas[code.toString(16)];
 
-    const width = observed
-      ? Math.round((observed.u1 - observed.u0) * 256 + 0.02)
-      : ascii
-        ? 8
-        : (uni?.width ?? 0);
+    let selectedWidth: number;
+
+    if (observed) {
+      selectedWidth = Math.round((observed.u1 - observed.u0) * 256 + 0.02);
+    } else if (ascii) {
+      selectedWidth = 8;
+    } else {
+      selectedWidth = uni?.width ?? 0;
+    }
+
+    const width = selectedWidth;
 
     const height = ascii ? 8 : 16;
     const pixels = new Uint8Array(width * height * 4);
@@ -67,12 +73,19 @@ export const toastLayout = async function toastLayout(
 
     for (let y = 0; y < height; y += 1) {
       for (let x = 0; x < width; x += 1) {
-        const on = ascii
-          ? bitmap[((ascii[1] + y) * 128 + ascii[0] + x) * 4 + 3]
-          : uni
-            ? // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
-              ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) * 255
-            : 0;
+        let selectedOn: number;
+
+        if (ascii) {
+          selectedOn = bitmap[((ascii[1] + y) * 128 + ascii[0] + x) * 4 + 3];
+        } else if (uni) {
+          selectedOn =
+            // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
+            ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) * 255;
+        } else {
+          selectedOn = 0;
+        }
+
+        const on = selectedOn;
 
         pixels.set([255, 255, 255, on], (y * width + x) * 4);
       }

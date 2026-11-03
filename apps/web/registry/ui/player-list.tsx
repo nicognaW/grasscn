@@ -104,18 +104,23 @@ const renderRosterEntry = (
 ): React.ReactElement => {
   const latency = player.latency ?? 0;
 
-  const bars =
-    latency < 0
-      ? "unknown"
-      : latency < 150
-        ? "5"
-        : latency < 300
-          ? "4"
-          : latency < 600
-            ? "3"
-            : latency < 1000
-              ? "2"
-              : "1";
+  let selectedBars: "unknown" | "5" | "4" | "3" | "2" | "1";
+
+  if (latency < 0) {
+    selectedBars = "unknown";
+  } else if (latency < 150) {
+    selectedBars = "5";
+  } else if (latency < 300) {
+    selectedBars = "4";
+  } else if (latency < 600) {
+    selectedBars = "3";
+  } else if (latency < 1000) {
+    selectedBars = "2";
+  } else {
+    selectedBars = "1";
+  }
+
+  const bars = selectedBars;
 
   const key = `gui/sprites/icon/ping_${bars}` as keyof typeof playerListAssets;
 

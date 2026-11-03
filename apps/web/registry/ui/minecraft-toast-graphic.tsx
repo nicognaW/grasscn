@@ -49,14 +49,19 @@ export const MinecraftToastGraphic = ({
         const t = Math.fround(elapsed / 600);
         const square = Math.fround(t * t);
 
-        const portion =
-          state.phase === "hidden"
-            ? 0
-            : state.phase === "shown"
-              ? 1
-              : state.phase === "exiting"
-                ? Math.fround(1 - square)
-                : square;
+        let selectedPortion: number;
+
+        if (state.phase === "hidden") {
+          selectedPortion = 0;
+        } else if (state.phase === "shown") {
+          selectedPortion = 1;
+        } else if (state.phase === "exiting") {
+          selectedPortion = Math.fround(1 - square);
+        } else {
+          selectedPortion = square;
+        }
+
+        const portion = selectedPortion;
 
         const offset = Math.fround(
           layout.width - Math.fround(layout.width * portion)

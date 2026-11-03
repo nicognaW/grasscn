@@ -247,12 +247,17 @@ const Trading = ({
       if (!event.defaultPrevented && event.deltaY) {
         event.preventDefault();
 
-        const amount =
-          event.deltaMode === 1
-            ? event.deltaY
-            : event.deltaMode === 2
-              ? event.deltaY * 7
-              : event.deltaY / 100;
+        let selectedAmount: number;
+
+        if (event.deltaMode === 1) {
+          selectedAmount = event.deltaY;
+        } else if (event.deltaMode === 2) {
+          selectedAmount = event.deltaY * 7;
+        } else {
+          selectedAmount = event.deltaY / 100;
+        }
+
+        const amount = selectedAmount;
 
         changeOffset(Math.trunc(latestOffset.current + amount));
       }

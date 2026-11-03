@@ -32,14 +32,19 @@ export const MinecraftToastBackdrop = ({
         Math.max(0, Math.min(600, Date.now() - state.start)) / 600
       );
 
-      const portion =
-        state.phase === "hidden"
-          ? 0
-          : state.phase === "shown"
-            ? 1
-            : state.phase === "exiting"
-              ? Math.fround(1 - Math.fround(t * t))
-              : Math.fround(t * t);
+      let selectedPortion: number;
+
+      if (state.phase === "hidden") {
+        selectedPortion = 0;
+      } else if (state.phase === "shown") {
+        selectedPortion = 1;
+      } else if (state.phase === "exiting") {
+        selectedPortion = Math.fround(1 - Math.fround(t * t));
+      } else {
+        selectedPortion = Math.fround(t * t);
+      }
+
+      const portion = selectedPortion;
 
       const offset = Math.fround(width - Math.fround(width * portion));
 

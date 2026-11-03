@@ -117,8 +117,17 @@ export const MinecraftConfirmationText = ({
 
   const text = String(children);
 
-  const allLines =
-    text === "" ? [] : title && !compact ? [text] : wrap(text, contentWidth);
+  let selectedAllLines: string[];
+
+  if (text === "") {
+    selectedAllLines = [];
+  } else if (title && !compact) {
+    selectedAllLines = [text];
+  } else {
+    selectedAllLines = wrap(text, contentWidth);
+  }
+
+  const allLines = selectedAllLines;
 
   const lines = compact ? allLines : allLines.slice(0, title ? 1 : 15);
 
@@ -136,14 +145,19 @@ export const MinecraftConfirmationText = ({
   const widths = lines.map(widthOf);
   const widest = Math.max(0, ...widths);
 
-  const nativeLines =
-    text === ""
-      ? []
-      : title
-        ? [text]
-        : compact
-          ? wrap(text, nativeContentWidth)
-          : allLines;
+  let selectedNativeLines: string[];
+
+  if (text === "") {
+    selectedNativeLines = [];
+  } else if (title) {
+    selectedNativeLines = [text];
+  } else if (compact) {
+    selectedNativeLines = wrap(text, nativeContentWidth);
+  } else {
+    selectedNativeLines = allLines;
+  }
+
+  const nativeLines = selectedNativeLines;
 
   return (
     <span

@@ -82,12 +82,17 @@ const IconMeter = ({
           const i = kind === "health" ? count - 1 - order : order;
           const filled = Math.max(0, Math.min(step, amount - i * step));
 
-          const empty =
-            kind === "health"
-              ? "gui/sprites/hud/heart/container"
-              : kind === "air"
-                ? "gui/sprites/hud/air_empty"
-                : prefix + "empty";
+          let selectedEmpty: string;
+
+          if (kind === "health") {
+            selectedEmpty = "gui/sprites/hud/heart/container";
+          } else if (kind === "air") {
+            selectedEmpty = "gui/sprites/hud/air_empty";
+          } else {
+            selectedEmpty = prefix + "empty";
+          }
+
+          const empty = selectedEmpty;
 
           const fill =
             kind === "air"
