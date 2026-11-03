@@ -30,6 +30,109 @@ const ready = async function ready(page: Page) {
   }
 };
 
+const verifyItemScaleGeometry = async (page: Page, scale: number) => {
+    await page.goto(`/?component=item&scale=${scale}`);
+    await ready(page);
+    const subject = page.locator("[data-subject]");
+    await subject.evaluate((node) => {
+      node.style.removeProperty("width");
+      node.style.removeProperty("height");
+    });
+    await expect
+      .poll(async () => {
+        const b = await subject.boundingBox();
+
+        return [b?.width, b?.height];
+      })
+      .toEqual([270 * scale, 36 * scale]);
+  };
+
+const verifyItemTitleColor = async (page: Page, label: string) => {
+    await page.goto(`/?component=item&label=${encodeURIComponent(label)}`);
+    await ready(page);
+    const title = page.locator("[data-slot=item-title]");
+    await title.evaluate((node) => {
+      node.style.color = "#ff5555";
+    });
+    await expect
+      .poll(
+        async () =>
+          await title
+            .locator("canvas")
+            .first()
+            .evaluate((canvas: HTMLCanvasElement) => {
+              const { data } = canvas
+                .getContext("2d")!
+                .getImageData(0, 0, canvas.width, canvas.height);
+
+              for (let i = 0; i < data.length; i += 4) {
+                if (
+                  data[i] === 255 &&
+                  data[i + 1] === 85 &&
+                  data[i + 2] === 85 &&
+                  data[i + 3] === 255
+                ) {
+                  return true;
+                }
+              }
+
+              return false;
+            })
+      )
+      .toBe(true);
+  };
+
+const verifyDisabledItemComposition = async (page: Page, suffix: string) => {
+    await page.goto(`/?component=item&disabled=1${suffix}`);
+    await ready(page);
+    const subject = page.locator("[data-subject]");
+    await expect(subject).toBeDisabled();
+    await subject.dispatchEvent("click");
+    await subject.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#events")).toHaveText("0");
+    expect(page.url()).not.toContain("#world");
+  };
+
+const verifyItemActivationSound = async (page: Page, suffix: string) => {
+    await page.goto(`/?component=item&${suffix.replace(/^\?/u, "")}`);
+    await ready(page);
+    const subject = page.locator("[data-subject]");
+    await subject.hover();
+    await subject.focus();
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+          (window as typeof window & ItemAudioState).sounds
+      )
+    ).toEqual([]);
+    await subject.click();
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+          (window as typeof window & ItemAudioState).sounds
+      )
+    ).toEqual([{ rate: 1, src: minecraftClickSound, volume: 0.25 }]);
+  };
+
+const verifySilentItemComposition = async (page: Page, suffix: string) => {
+    await page.goto(`/?component=item&${suffix.replace(/^\?/u, "")}`);
+    await ready(page);
+    await page.locator("[data-subject]").dispatchEvent("click");
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+          (window as typeof window & ItemAudioState).sounds
+      )
+    ).toEqual([]);
+  };
+
 test("Item retains an accessible link name, native thumbnail and DOM ref", async ({
   page,
 }) => {
@@ -74,21 +177,8 @@ test("Item default dimensions use native270 by36 logical pixels", async ({
   page,
 }) => {
   for (const scale of [1, 2, 3]) {
-    await page.goto(`/?component=item&scale=${scale}`);
-    await ready(page);
-    const subject = page.locator("[data-subject]");
-    await subject.evaluate((node) => {
-      node.style.removeProperty("width");
-      node.style.removeProperty("height");
-    });
-    await expect
-      .poll(async () => {
-        const b = await subject.boundingBox();
-
-        return [b?.width, b?.height];
-      })
-      .toEqual([270 * scale, 36 * scale]);
-  }
+await verifyItemScaleGeometry(page, scale);
+}
 });
 
 test("Item preserves all header, footer, media, content and action slots", async ({
@@ -159,55 +249,16 @@ test("Item honors full RGB text colors for both ASCII and CJK", async ({
   page,
 }) => {
   for (const label of ["New World", "你好，世界"]) {
-    await page.goto(`/?component=item&label=${encodeURIComponent(label)}`);
-    await ready(page);
-    const title = page.locator("[data-slot=item-title]");
-    await title.evaluate((node) => {
-      node.style.color = "#ff5555";
-    });
-    await expect
-      .poll(
-        async () =>
-          await title
-            .locator("canvas")
-            .first()
-            .evaluate((canvas: HTMLCanvasElement) => {
-              const { data } = canvas
-                .getContext("2d")!
-                .getImageData(0, 0, canvas.width, canvas.height);
-
-              for (let i = 0; i < data.length; i += 4) {
-                if (
-                  data[i] === 255 &&
-                  data[i + 1] === 85 &&
-                  data[i + 2] === 85 &&
-                  data[i + 3] === 255
-                ) {
-                  return true;
-                }
-              }
-
-              return false;
-            })
-      )
-      .toBe(true);
-  }
+await verifyItemTitleColor(page, label);
+}
 });
 
 test("Item aria-disabled blocks pointer and keyboard activation", async ({
   page,
 }) => {
   for (const suffix of ["", "&button=1", "&customAction=1"]) {
-    await page.goto(`/?component=item&disabled=1${suffix}`);
-    await ready(page);
-    const subject = page.locator("[data-subject]");
-    await expect(subject).toBeDisabled();
-    await subject.dispatchEvent("click");
-    await subject.focus();
-    await page.keyboard.press("Enter");
-    await expect(page.locator("#events")).toHaveText("0");
-    expect(page.url()).not.toContain("#world");
-  }
+await verifyDisabledItemComposition(page, suffix);
+}
 });
 
 test("Item uses original activation sound once and keeps passive rows silent", async ({
@@ -231,29 +282,8 @@ test("Item uses original activation sound once and keeps passive rows silent", a
   });
 
   for (const suffix of ["", "?button=1", "?customAction=1"]) {
-    await page.goto(`/?component=item&${suffix.replace(/^\?/u, "")}`);
-    await ready(page);
-    const subject = page.locator("[data-subject]");
-    await subject.hover();
-    await subject.focus();
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
-          (window as typeof window & ItemAudioState).sounds
-      )
-    ).toEqual([]);
-    await subject.click();
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
-          (window as typeof window & ItemAudioState).sounds
-      )
-    ).toEqual([{ rate: 1, src: minecraftClickSound, volume: 0.25 }]);
-  }
+await verifyItemActivationSound(page, suffix);
+}
 
   for (const suffix of [
     "?plain=1",
@@ -261,18 +291,8 @@ test("Item uses original activation sound once and keeps passive rows silent", a
     "?childCancel=1",
     "?disabled=1",
   ]) {
-    await page.goto(`/?component=item&${suffix.replace(/^\?/u, "")}`);
-    await ready(page);
-    await page.locator("[data-subject]").dispatchEvent("click");
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
-          (window as typeof window & ItemAudioState).sounds
-      )
-    ).toEqual([]);
-  }
+await verifySilentItemComposition(page, suffix);
+}
 
   await page.goto("/?component=item&volume=0.4");
   await ready(page);
