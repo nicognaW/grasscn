@@ -59,7 +59,7 @@ export const AvatarFixture = () => {
             maxWidth={
               q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined
             }
-            align={(q.get("align") ?? "left") as any}
+            align={q.get("align") === "center" ? "center" : "left"}
           >
             {q.get("text") ?? q.get("label") ?? ""}
           </AvatarFallback>
