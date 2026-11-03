@@ -73,6 +73,149 @@ const pageErrors: string[] = [];
 try {
   let page: Page | undefined;
 
+  const verifyAttachmentCase = async (c: AttachmentCaptureManifest["cases"][number], part: string, dir: string, m: AttachmentCaptureManifest, fixturePage: Page | undefined) => {
+    const q = new URLSearchParams({
+      background: c.background ?? m.background ?? "#202020",
+      description: c.placeholder ?? "Survival Mode",
+      height: String(c.height ?? 20),
+      label: c.label,
+      native: "1",
+      part,
+      scale: String(c.scale),
+      selected: String(c.selected ?? false),
+      state: c.state,
+      text: c.text ?? "world-1",
+      width: String(c.width),
+      x: String(c.x ?? 16),
+      y: String(c.y ?? 16),
+    });
+
+    await fixturePage!.goto(`${urlArg}?${q}`);
+    const subject = fixturePage!.locator("#subject");
+    await expect(subject).toBeVisible();
+    await fixturePage!.mouse.move(0, 0);
+
+    if (part === "row") {
+      await expect(
+        subject.locator("[data-slot=attachment-content]")
+      ).toHaveAttribute("data-mc-item-content-ready", "true");
+
+      for (const label of await subject
+        .locator("[data-mc-label-layout-ready]")
+        .all()) {
+        await expect(label).toHaveAttribute(
+          "data-mc-label-layout-ready",
+          "true"
+        );
+      }
+
+      await expect(
+        subject.locator("[data-mc-item-media-ready]")
+      ).toHaveAttribute("data-mc-item-media-ready", "true");
+
+      if (c.state === "hover") {
+        await subject.hover();
+      }
+
+      if (c.state === "icon-hover") {
+        const b = await subject.boundingBox();
+        await fixturePage!.mouse.move(b!.x + 18 * c.scale, b!.y + 18 * c.scale);
+      }
+
+      if (c.state === "focus") {
+        await subject.focus();
+        await fixturePage!.keyboard.press("Tab");
+        await fixturePage!.keyboard.press("Shift+Tab");
+        await expect(subject).toBeFocused();
+      }
+
+      let mediaStateSelection: string;
+
+      if (c.state === "hover") {
+        mediaStateSelection = "1";
+      } else if (c.state === "icon-hover") {
+        mediaStateSelection = "2";
+      } else {
+        mediaStateSelection = "0";
+      }
+
+      await expect(
+        subject.locator("[data-mc-item-media-ready]")
+      ).toHaveAttribute("data-mc-item-media-state", mediaStateSelection);
+    } else {
+      if (c.state === "hover") {
+        await subject.hover();
+      }
+
+      if (c.state === "focus") {
+        await subject.focus();
+      }
+    }
+
+    for (const glyph of await subject
+      .locator("[data-mc-label-ready]")
+      .all()) {
+      await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+    }
+
+    await fixturePage!.evaluate(async () => {
+      const frameCompletion = Promise.withResolvers();
+
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(frameCompletion.resolve);
+        });
+      } catch (error) {
+        frameCompletion.reject(error);
+      }
+
+      return await frameCompletion.promise;
+    });
+
+    const a = PNG.sync.read(await subject.screenshot());
+
+    const b = PNG.sync.read(
+      fs.readFileSync(
+        `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${
+          c.name
+        }`
+      )
+    );
+
+    assert.deepEqual([a.width, a.height], [b.width, b.height]);
+    assert.equal(
+      hash(
+        fs.readFileSync(
+          pixelPerfectFile(
+            path.join("tests/reference", dir, "captures", c.name)
+          )
+        )
+      ),
+      c.sha256
+    );
+    let n = 0;
+
+    for (let p = 0; p < a.data.length; p += 4) {
+      n += Number(
+        !a.data.subarray(p, p + 4).equals(b.data.subarray(p, p + 4))
+      );
+    }
+
+    if (n) {
+      fs.writeFileSync(
+        path.join(pixelPerfectTestRoot, "attachment-actual.png"),
+        PNG.sync.write(a)
+      );
+      throw new Error(`${part} ${c.name} ${n} pixels`);
+    }
+
+    return {
+      decodedRgbaSha256: createHash("sha256").update(a.data).digest("hex"),
+      mismatchedPixels: 0,
+      name: c.name,
+    };
+  };
+
   for (const [part, dir] of [
     ["row", "item"],
     ["action", "."],
@@ -106,146 +249,7 @@ try {
 
       const c = m.cases[i];
 
-      const q = new URLSearchParams({
-        background: c.background ?? m.background ?? "#202020",
-        description: c.placeholder ?? "Survival Mode",
-        height: String(c.height ?? 20),
-        label: c.label,
-        native: "1",
-        part,
-        scale: String(c.scale),
-        selected: String(c.selected ?? false),
-        state: c.state,
-        text: c.text ?? "world-1",
-        width: String(c.width),
-        x: String(c.x ?? 16),
-        y: String(c.y ?? 16),
-      });
-
-      await page!.goto(`${urlArg}?${q}`);
-      const subject = page!.locator("#subject");
-      await expect(subject).toBeVisible();
-      await page!.mouse.move(0, 0);
-
-      if (part === "row") {
-        await expect(
-          subject.locator("[data-slot=attachment-content]")
-        ).toHaveAttribute("data-mc-item-content-ready", "true");
-
-        for (const label of await subject
-          .locator("[data-mc-label-layout-ready]")
-          .all()) {
-          await expect(label).toHaveAttribute(
-            "data-mc-label-layout-ready",
-            "true"
-          );
-        }
-
-        await expect(
-          subject.locator("[data-mc-item-media-ready]")
-        ).toHaveAttribute("data-mc-item-media-ready", "true");
-
-        if (c.state === "hover") {
-          await subject.hover();
-        }
-
-        if (c.state === "icon-hover") {
-          const b = await subject.boundingBox();
-          await page!.mouse.move(b!.x + 18 * c.scale, b!.y + 18 * c.scale);
-        }
-
-        if (c.state === "focus") {
-          await subject.focus();
-          await page!.keyboard.press("Tab");
-          await page!.keyboard.press("Shift+Tab");
-          await expect(subject).toBeFocused();
-        }
-
-        let mediaStateSelection: string;
-
-        if (c.state === "hover") {
-          mediaStateSelection = "1";
-        } else if (c.state === "icon-hover") {
-          mediaStateSelection = "2";
-        } else {
-          mediaStateSelection = "0";
-        }
-
-        await expect(
-          subject.locator("[data-mc-item-media-ready]")
-        ).toHaveAttribute("data-mc-item-media-state", mediaStateSelection);
-      } else {
-        if (c.state === "hover") {
-          await subject.hover();
-        }
-
-        if (c.state === "focus") {
-          await subject.focus();
-        }
-      }
-
-      for (const glyph of await subject
-        .locator("[data-mc-label-ready]")
-        .all()) {
-        await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
-      }
-
-      await page!.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers();
-
-        try {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(frameCompletion.resolve);
-          });
-        } catch (error) {
-          frameCompletion.reject(error);
-        }
-
-        return await frameCompletion.promise;
-      });
-
-      const a = PNG.sync.read(await subject.screenshot());
-
-      const b = PNG.sync.read(
-        fs.readFileSync(
-          `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${
-            c.name
-          }`
-        )
-      );
-
-      assert.deepEqual([a.width, a.height], [b.width, b.height]);
-      assert.equal(
-        hash(
-          fs.readFileSync(
-            pixelPerfectFile(
-              path.join("tests/reference", dir, "captures", c.name)
-            )
-          )
-        ),
-        c.sha256
-      );
-      let n = 0;
-
-      for (let p = 0; p < a.data.length; p += 4) {
-        n += Number(
-          !a.data.subarray(p, p + 4).equals(b.data.subarray(p, p + 4))
-        );
-      }
-
-      if (n) {
-        fs.writeFileSync(
-          path.join(pixelPerfectTestRoot, "attachment-actual.png"),
-          PNG.sync.write(a)
-        );
-        throw new Error(`${part} ${c.name} ${n} pixels`);
-      }
-
-      cases.push({
-        decodedRgbaSha256: createHash("sha256").update(a.data).digest("hex"),
-        mismatchedPixels: 0,
-        name: c.name,
-      });
+      cases.push(await verifyAttachmentCase(c, part, dir, m, page));
     }
 
     const expected = PNG.sync.read(

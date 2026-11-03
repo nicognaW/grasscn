@@ -6,6 +6,7 @@ import path from "node:path";
 
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import type {
   ItemVerificationTask,
   InstalledItemResult,
@@ -196,6 +197,175 @@ const compare = function compare(a: DecodedPixels, b: DecodedPixels) {
   return { diff, mismatchedPixels };
 };
 
+const verifyItemCase = async ({ part, c, manifestFile, manifest, plain, mode, page }: ItemVerificationTask & { page: Page }) => {
+  const q = new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background,
+    component: "item",
+    description: c.placeholder ?? "Survival Mode",
+    height: String(c.height),
+    label: c.label ?? "New World",
+    part,
+    scale: String(c.scale),
+    selected: String(c.selected ?? false),
+    state: c.state,
+    text: c.text ?? "world-1",
+    width: String(c.width),
+    x: String(c.x),
+    y: String(c.y),
+  });
+
+  const optionalWrapWidth = c.wrapWidth;
+
+  if (optionalWrapWidth !== null && optionalWrapWidth !== undefined) {
+    q.set("wrapWidth", String(c.wrapWidth));
+  }
+
+  if (plain) {
+    q.set("plain", "1");
+  }
+
+  if (mode === "button") {
+    q.set("button", "1");
+  }
+
+  await page.goto(`${origin}?${q}`);
+  const subject = page.locator("#subject");
+  await expect(subject).toHaveAttribute(
+    "data-slot",
+    part === "row" ? "item" : `item-${part}`
+  );
+  await expect(subject).toBeVisible();
+  await page.mouse.move(0, 0);
+
+  if (part === "row") {
+    await expect(
+      subject.locator("[data-slot=item-content]")
+    ).toHaveAttribute("data-mc-item-content-ready", "true");
+
+    for (const text of await subject
+      .locator("[data-mc-label-layout-ready]")
+      .all()) {
+      await expect(text).toHaveAttribute(
+        "data-mc-label-layout-ready",
+        "true"
+      );
+    }
+
+    const media = subject.locator("[data-mc-item-media-ready]");
+    await expect(media).toHaveAttribute("data-mc-item-media-ready", "true");
+
+    if (c.state === "hover") {
+      await subject.hover();
+    }
+
+    if (c.state === "icon-hover") {
+      const box = await subject.boundingBox();
+      await page.mouse.move(box!.x + 18 * c.scale, box!.y + 18 * c.scale);
+    }
+
+    if (c.state === "focus") {
+      await subject.focus();
+      await page.keyboard.press("Tab");
+      await page.keyboard.press("Shift+Tab");
+      await expect(subject).toBeFocused();
+    }
+
+    let mediaStateSelection: string;
+
+    if (c.state === "hover") {
+      mediaStateSelection = "1";
+    } else if (c.state === "icon-hover") {
+      mediaStateSelection = "2";
+    } else {
+      mediaStateSelection = "0";
+    }
+
+    await expect(media).toHaveAttribute(
+      "data-mc-item-media-state",
+      mediaStateSelection
+    );
+  } else if (part === "title") {
+    await expect(subject).toHaveAttribute(
+      "data-mc-label-layout-ready",
+      "true"
+    );
+  }
+
+  await page.addStyleTag({
+    content:
+      "#read-ref,#resize,#tag,#events,#actions{visibility:hidden!important}",
+  });
+
+  for (const glyph of await subject
+    .locator("[data-mc-label-ready]")
+    .all()) {
+    await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
+  await page.evaluate(async () => {
+    const frameCompletion = Promise.withResolvers();
+
+    try {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(frameCompletion.resolve);
+      });
+    } catch (error) {
+      frameCompletion.reject(error);
+    }
+
+    return await frameCompletion.promise;
+  });
+
+  const bytes = fs.readFileSync(
+    pixelPerfectFile(
+      path.join(path.dirname(manifestFile), "captures", c.name)
+    )
+  );
+
+  if (sha(bytes) !== c.sha256) {
+    throw new Error("Reference PNG integrity mismatch");
+  }
+
+  const expected = PNG.sync.read(bytes);
+  const actualBytes = await subject.screenshot();
+  const actual = PNG.sync.read(actualBytes);
+  const { mismatchedPixels, diff } = compare(expected, actual);
+
+  if (!negativeControls.includes(part)) {
+    const changed = PNG.sync.read(PNG.sync.write(expected));
+    // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
+    changed.data[0] ^= 1;
+
+    if (compare(expected, changed).mismatchedPixels !== 1) {
+      throw new Error("One-pixel comparator negative control failed");
+    }
+
+    negativeControls.push(part);
+  }
+
+  results.push({
+    decodedRgbaSha256: sha(actual.data),
+    manifest: manifestFile,
+    mismatchedPixels,
+    mode,
+    name: c.name,
+    part,
+    plain,
+    sourceJarSha256: manifest.sourceJarSha256,
+  });
+
+  if (mismatchedPixels) {
+    const id = `${part}-${mode}-${c.name}`;
+    console.log(id, mismatchedPixels);
+    fs.writeFileSync(path.join(failures, `actual-${id}`), actualBytes);
+    fs.writeFileSync(
+      path.join(failures, `diff-${id}`),
+      PNG.sync.write(diff)
+    );
+  }
+};
+
 const worker = async function worker() {
   let page = await browser.newPage({
     deviceScaleFactor: 1,
@@ -224,172 +394,7 @@ const worker = async function worker() {
         page.on("pageerror", (error) => errors.push(error.message));
       }
 
-      const q = new URLSearchParams({
-        align: c.alignment ?? "left",
-        background: c.background,
-        component: "item",
-        description: c.placeholder ?? "Survival Mode",
-        height: String(c.height),
-        label: c.label ?? "New World",
-        part,
-        scale: String(c.scale),
-        selected: String(c.selected ?? false),
-        state: c.state,
-        text: c.text ?? "world-1",
-        width: String(c.width),
-        x: String(c.x),
-        y: String(c.y),
-      });
-
-      const optionalWrapWidth = c.wrapWidth;
-
-      if (optionalWrapWidth !== null && optionalWrapWidth !== undefined) {
-        q.set("wrapWidth", String(c.wrapWidth));
-      }
-
-      if (plain) {
-        q.set("plain", "1");
-      }
-
-      if (mode === "button") {
-        q.set("button", "1");
-      }
-
-      await page.goto(`${origin}?${q}`);
-      const subject = page.locator("#subject");
-      await expect(subject).toHaveAttribute(
-        "data-slot",
-        part === "row" ? "item" : `item-${part}`
-      );
-      await expect(subject).toBeVisible();
-      await page.mouse.move(0, 0);
-
-      if (part === "row") {
-        await expect(
-          subject.locator("[data-slot=item-content]")
-        ).toHaveAttribute("data-mc-item-content-ready", "true");
-
-        for (const text of await subject
-          .locator("[data-mc-label-layout-ready]")
-          .all()) {
-          await expect(text).toHaveAttribute(
-            "data-mc-label-layout-ready",
-            "true"
-          );
-        }
-
-        const media = subject.locator("[data-mc-item-media-ready]");
-        await expect(media).toHaveAttribute("data-mc-item-media-ready", "true");
-
-        if (c.state === "hover") {
-          await subject.hover();
-        }
-
-        if (c.state === "icon-hover") {
-          const box = await subject.boundingBox();
-          await page.mouse.move(box!.x + 18 * c.scale, box!.y + 18 * c.scale);
-        }
-
-        if (c.state === "focus") {
-          await subject.focus();
-          await page.keyboard.press("Tab");
-          await page.keyboard.press("Shift+Tab");
-          await expect(subject).toBeFocused();
-        }
-
-        let mediaStateSelection: string;
-
-        if (c.state === "hover") {
-          mediaStateSelection = "1";
-        } else if (c.state === "icon-hover") {
-          mediaStateSelection = "2";
-        } else {
-          mediaStateSelection = "0";
-        }
-
-        await expect(media).toHaveAttribute(
-          "data-mc-item-media-state",
-          mediaStateSelection
-        );
-      } else if (part === "title") {
-        await expect(subject).toHaveAttribute(
-          "data-mc-label-layout-ready",
-          "true"
-        );
-      }
-
-      await page.addStyleTag({
-        content:
-          "#read-ref,#resize,#tag,#events,#actions{visibility:hidden!important}",
-      });
-
-      for (const glyph of await subject
-        .locator("[data-mc-label-ready]")
-        .all()) {
-        await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
-      }
-
-      await page.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers();
-
-        try {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(frameCompletion.resolve);
-          });
-        } catch (error) {
-          frameCompletion.reject(error);
-        }
-
-        return await frameCompletion.promise;
-      });
-
-      const bytes = fs.readFileSync(
-        pixelPerfectFile(
-          path.join(path.dirname(manifestFile), "captures", c.name)
-        )
-      );
-
-      if (sha(bytes) !== c.sha256) {
-        throw new Error("Reference PNG integrity mismatch");
-      }
-
-      const expected = PNG.sync.read(bytes);
-      const actualBytes = await subject.screenshot();
-      const actual = PNG.sync.read(actualBytes);
-      const { mismatchedPixels, diff } = compare(expected, actual);
-
-      if (!negativeControls.includes(part)) {
-        const changed = PNG.sync.read(PNG.sync.write(expected));
-        // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
-        changed.data[0] ^= 1;
-
-        if (compare(expected, changed).mismatchedPixels !== 1) {
-          throw new Error("One-pixel comparator negative control failed");
-        }
-
-        negativeControls.push(part);
-      }
-
-      results.push({
-        decodedRgbaSha256: sha(actual.data),
-        manifest: manifestFile,
-        mismatchedPixels,
-        mode,
-        name: c.name,
-        part,
-        plain,
-        sourceJarSha256: manifest.sourceJarSha256,
-      });
-
-      if (mismatchedPixels) {
-        const id = `${part}-${mode}-${c.name}`;
-        console.log(id, mismatchedPixels);
-        fs.writeFileSync(path.join(failures, `actual-${id}`), actualBytes);
-        fs.writeFileSync(
-          path.join(failures, `diff-${id}`),
-          PNG.sync.write(diff)
-        );
-      }
+      await verifyItemCase({ part, c, manifestFile, manifest, plain, mode, page });
     } catch (failure) {
       // SAFETY: preserve the existing message projection from the owned Node/PNG/Playwright APIs without normalizing arbitrary rejections.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed Item failure message projection boundary.

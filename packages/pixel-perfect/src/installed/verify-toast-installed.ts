@@ -129,25 +129,7 @@ try {
   let page: Page | undefined;
   let errors: string[] = [];
 
-  for (const c of cases) {
-    const previousCaseCount = index;
-    index += 1;
-
-    if (previousCaseCount % 64 === 0) {
-      if (page) {
-        await page.close();
-      }
-
-      page = await browser.newPage({
-        deviceScaleFactor: 1,
-        viewport: { height: 900, width: 1536 },
-      });
-      page.on("pageerror", (e) => errors.push(e.message));
-      await page.clock.install({ time: new Date("2026-10-30T00:00:00Z") });
-      await page.clock.pauseAt(new Date("2026-10-30T00:00:01Z"));
-    }
-
-    errors = [];
+  const verifyToastCase = async (c: ToastCaptureManifest["cases"][number], fixturePage: Page | undefined) => {
     const component = componentArg;
 
     const q = new URLSearchParams({
@@ -169,43 +151,43 @@ try {
       q.set("text", c.text);
     }
 
-    await page!.goto(`${urlArg}?${q}`);
+    await fixturePage!.goto(`${urlArg}?${q}`);
 
     if (component === "sonner") {
-      await expect(page!.locator("#created")).toHaveText(
+      await expect(fixturePage!.locator("#created")).toHaveText(
         String(c.selectedIndex ?? 1)
       );
     }
 
-    await page!.clock.fastForward(0);
-    await page!.addStyleTag({
+    await fixturePage!.clock.fastForward(0);
+    await fixturePage!.addStyleTag({
       content:
         "#root{visibility:hidden}#subject,[data-sonner-toast],[data-mc-sonner-ghost]{visibility:visible}",
     });
-    const subject = page!.locator("#subject");
+    const subject = fixturePage!.locator("#subject");
     await expect(subject).toBeVisible();
     await expect(
-      page!.locator(
+      fixturePage!.locator(
         component === "sonner" ? "[data-sonner-toast]" : '[data-slot="toast"]'
       )
     ).toHaveCount(c.selectedIndex ?? 1);
-    await expect(page!.locator("[data-mc-toast-ready]")).toHaveCount(
+    await expect(fixturePage!.locator("[data-mc-toast-ready]")).toHaveCount(
       c.selectedIndex ?? 1
     );
 
-    for (const canvas of await page!.locator("[data-mc-toast-ready]").all()) {
+    for (const canvas of await fixturePage!.locator("[data-mc-toast-ready]").all()) {
       await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
     }
 
     if (c.state === "exiting") {
-      await page!.clock.fastForward(600);
-      await page!.locator("#close").evaluate((n: HTMLElement) => {
+      await fixturePage!.clock.fastForward(600);
+      await fixturePage!.locator("#close").evaluate((n: HTMLElement) => {
         // SAFETY: the Sonner fixture #close is its HTML close button; retain the existing direct click call.
         n.click();
       });
-      await page!.clock.fastForward(component === "sonner" ? 16 : 0);
+      await fixturePage!.clock.fastForward(component === "sonner" ? 16 : 0);
       await expect(
-        page!
+        fixturePage!
           .locator(
             component === "sonner"
               ? "[data-sonner-toast]"
@@ -218,19 +200,19 @@ try {
       );
     }
 
-    await page!.clock.fastForward(c.timeMs);
+    await fixturePage!.clock.fastForward(c.timeMs);
 
     if (c.state !== "exiting" || c.timeMs < 600) {
-      await expect(page!.locator("[data-mc-toast-ready]")).toHaveCount(
+      await expect(fixturePage!.locator("[data-mc-toast-ready]")).toHaveCount(
         c.selectedIndex ?? 1
       );
 
-      for (const canvas of await page!.locator("[data-mc-toast-ready]").all()) {
+      for (const canvas of await fixturePage!.locator("[data-mc-toast-ready]").all()) {
         await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
       }
     }
 
-    await page!.evaluate(() => window.dispatchEvent(new Event("resize")));
+    await fixturePage!.evaluate(() => window.dispatchEvent(new Event("resize")));
 
     const actualBytes = await subject.screenshot({ animations: "disabled" });
     const actual = PNG.sync.read(actualBytes);
@@ -282,7 +264,7 @@ try {
         c.name,
         mismatchedPixels,
         JSON.stringify(
-          await page!.locator('[data-slot="toast"]').evaluateAll((nodes) =>
+          await fixturePage!.locator('[data-slot="toast"]').evaluateAll((nodes) =>
             nodes.map((n): { rect: unknown; text: string | null } => ({
               rect: n.getBoundingClientRect().toJSON(),
               text: n.textContent,
@@ -292,12 +274,34 @@ try {
       );
     }
 
-    results.push({
+    return {
       decodedRgbaSha256: sha(actual.data),
       mismatchedPixels,
       name: c.name,
       pageErrors: errors,
-    });
+    };
+  };
+
+  for (const c of cases) {
+    const previousCaseCount = index;
+    index += 1;
+
+    if (previousCaseCount % 64 === 0) {
+      if (page) {
+        await page.close();
+      }
+
+      page = await browser.newPage({
+        deviceScaleFactor: 1,
+        viewport: { height: 900, width: 1536 },
+      });
+      page.on("pageerror", (e) => errors.push(e.message));
+      await page.clock.install({ time: new Date("2026-10-30T00:00:00Z") });
+      await page.clock.pauseAt(new Date("2026-10-30T00:00:01Z"));
+    }
+
+    errors = [];
+    results.push(await verifyToastCase(c, page));
 
     if (index % 64 === 0) {
       console.log("Compared", index, "native cases");
