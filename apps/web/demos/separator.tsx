@@ -11,7 +11,6 @@ const SeparatorDemo = ({ scale }: DemoProps) => {
     <>
       <div className="demo-options">
         <Button
-          className="width-picker"
           aria-label={`Separator width: ${width} px`}
           onClick={() => {
             const widths = [103, 200, 257];

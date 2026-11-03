@@ -298,7 +298,7 @@ const MinecraftItemText = ({
       <span className="mc-text-accessible">{accessibleText}</span>
     </>
   ) : accessibleText === null ? (
-    <span className="mc-item-rich-inline">{richText(content)}</span>
+    <span>{richText(content)}</span>
   ) : (
     content
   );

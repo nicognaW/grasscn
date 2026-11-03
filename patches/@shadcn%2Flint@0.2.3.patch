@@ -1,3 +1,86 @@
+diff --git a/dist/index.js b/dist/index.js
+index 44bc4da28c5f8c0523fbd97dffd585c0561f863c..f169de50e260c0aab11ac2f070e8b66e1122595f 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1,4 +1,4 @@
+-import { A as isNamedColor, B as formatPx, C as resolveAlias, D as resolveFile, E as packageRoot, F as dirOf, G as isMarkerClass, H as COLOR_PREFIX, I as isFile, J as replaceClass, K as isPaletteClass, L as memoize, M as withoutVariableChannelColors, N as NODE_MODULES, O as PALETTE, P as TTL, R as mtimeOf, S as projectFor, T as warnOnce, U as OPACITY_MODIFIER, V as lengthInPx, W as isArbitraryValue$1, X as splitVariants, Y as splitClasses, Z as withBase, _ as themeFileFor, a as declaresClass, b as utilityPrefixesOf, c as moduleThemeEntryFor, d as scaleFor, f as scopedColorTokensFor, g as tailwindPrefixFor, h as tailwindEntryFor, i as colorValuesFor, j as parseColor, k as colorDistance, l as parseClassSelectors, m as spacingBaseFor, n as editDistance, o as declaresUtility, p as setThemeImports, q as normalizeClass, r as colorTokensFor, s as knownClassesFor, t as didYouMean, v as themeScalesFor, w as uiDirectory, x as utilityPropertiesOf, y as themeVocabularyFor, z as realpath } from "./similar.js";
++import { A as isNamedColor, B as formatPx, C as resolveAlias, D as resolveFile, E as packageRoot, F as dirOf, G as isMarkerClass, H as COLOR_PREFIX, I as isFile, J as replaceClass, K as isPaletteClass, L as memoize, M as withoutVariableChannelColors, N as NODE_MODULES, O as PALETTE, P as TTL, R as mtimeOf, S as projectFor, T as warnOnce, U as OPACITY_MODIFIER, V as lengthInPx, W as isArbitraryValue$1, X as splitVariants, Y as splitClasses, Z as withBase, _ as themeFileFor, a as declaresClass, b as utilityPrefixesOf, c as moduleThemeEntryFor, d as scaleFor, f as scopedColorTokensFor, g as tailwindPrefixFor, h as tailwindEntryFor, i as colorValuesFor, j as parseColor, k as colorDistance, l as parseClassSelectors, m as spacingBaseFor, n as editDistance, o as declaresUtility, p as setThemeImports, q as normalizeClass, r as colorTokensFor, s as knownClassesFor, t as didYouMean, u as parseImports, v as themeScalesFor, w as uiDirectory, x as utilityPropertiesOf, y as themeVocabularyFor, z as realpath } from "./similar.js";
+ import { createRequire } from "node:module";
+ import * as fs from "node:fs";
+ import { readFileSync } from "node:fs";
+@@ -3448,7 +3448,7 @@ function classSiteVisitors(context, options, onSite) {
+ 	const siteFor = (node, value, attribute, resolved, element = null) => {
+ 		const keyed = reader.classObjects === true && attribute === "class";
+ 		return {
+-			...value && !keyed ? collectFromValue(value, context, collectOptions) : collectClassStrings(value ?? node, context, collectOptions),
++			...value && !keyed ? collectFromValue(value, context, attribute === "classNames" ? { ...collectOptions, valuesMode: true } : collectOptions) : collectClassStrings(value ?? node, context, collectOptions),
+ 			component: resolved?.component ?? null,
+ 			componentFile: resolved?.file ?? null,
+ 			wrapper: resolved?.wrapper ?? null,
+@@ -5194,6 +5194,44 @@ const MESSAGES$1 = {
+ 	unknownVariant: "\"{{className}}\" uses a variant this project's Tailwind does not know, so no CSS is generated for it. Use an existing variant, or declare it with @custom-variant in {{file}}.",
+ 	useSuggestion: "Replace with \"{{suggestion}}\"."
+ };
++function additionalCssClassesFor(fromFile, configured) {
++	const classes = new Set();
++	if (configured === void 0) return classes;
++	if (!Array.isArray(configured) || configured.some((source) =>
++		!source || typeof source !== "object" || typeof source.file !== "string" || source.file.trim() === "" ||
++		!Array.isArray(source.owners) || source.owners.length === 0 ||
++		source.owners.some((owner) => typeof owner !== "string" || owner.trim() === ""))) {
++		throw new ContractConfigError("settings.shadcn.additionalCssSources must be an array of { file: CSS path, owners: nonempty source file paths[] }.");
++	}
++	const project = projectFor(fromFile);
++	if (!project) throw new ContractConfigError("Cannot resolve the project root for settings.shadcn.additionalCssSources.");
++	const identity = (file) => process.platform === "win32" ? path.resolve(file).toLowerCase() : path.resolve(file);
++	const current = identity(fromFile);
++	const seen = new Set();
++	const read = (file) => {
++		if (seen.has(file)) return;
++		if (path.extname(file).toLowerCase() !== ".css" || !isFile(file)) {
++			throw new ContractConfigError("Additional CSS source does not exist or is not a CSS file: " + file);
++		}
++		seen.add(file);
++		let css;
++		try { css = fs.readFileSync(file, "utf8"); }
++		catch (error) { throw new ContractConfigError("Cannot read additional CSS source " + file + ": " + String(error)); }
++		for (const name of parseClassSelectors(css)) classes.add(name);
++		for (const spec of parseImports(css)) {
++			if (/^(?:https?:|data:|\/\/)/i.test(spec)) continue;
++			const target = resolveFile(spec, path.dirname(file), project.root, [".css"]);
++			if (!target) throw new ContractConfigError("Cannot resolve CSS import " + spec + " from additional CSS source " + file);
++			read(target);
++		}
++	};
++	for (const source of configured) {
++		if (source.owners.some((owner) => identity(path.resolve(project.root, owner)) === current)) {
++			read(path.resolve(project.root, source.file));
++		}
++	}
++	return classes;
++}
+ const noUnknownClasses = {
+ 	meta: {
+ 		type: "problem",
+@@ -5230,6 +5268,9 @@ const noUnknownClasses = {
+ 			return configErrorVisitors(context, error);
+ 		}
+ 		const { groupOf } = projectClassifierFor(filename);
++		let additionalClasses;
++		try { additionalClasses = additionalCssClassesFor(filename, context.settings?.shadcn?.additionalCssSources); }
++		catch (error) { return configErrorVisitors(context, error); }
+ 		const known = knownClassesFor(filename);
+ 		const ownClasses = isSfc(filename) ? styleClassesOf(context.sourceCode?.text ?? "") : /* @__PURE__ */ new Set();
+ 		const themeFile = themeFileFor(filename);
+@@ -5244,7 +5285,7 @@ const noUnknownClasses = {
+ 			if (base.startsWith("[")) return true;
+ 			if (isMarkerClass(token)) return true;
+ 			const bare = base.replace(/\/[\w.%]+$/, "");
+-			return known.classes.has(bare) || ownClasses.has(bare);
++			return known.classes.has(bare) || additionalClasses.has(bare) || ownClasses.has(bare);
+ 		};
+ 		const knownByGrammar = (token) => {
+ 			if (groupOf(token)) return true;
 diff --git a/dist/similar.js b/dist/similar.js
 index 44b944892aa92f07a74436fd794619614fada69f..bd10b0973c481ed488a99c358b08d8b8f6abb1ea 100644
 --- a/dist/similar.js
@@ -11,15 +94,3 @@ index 44b944892aa92f07a74436fd794619614fada69f..bd10b0973c481ed488a99c358b08d8b8
  	seen.add(cssFile);
  	read.files.push(cssFile);
  	let css;
-diff --git a/dist/index.js b/dist/index.js
---- a/dist/index.js
-+++ b/dist/index.js
-@@ -3448,7 +3448,7 @@
- 	const siteFor = (node, value, attribute, resolved, element = null) => {
- 		const keyed = reader.classObjects === true && attribute === "class";
- 		return {
--			...value && !keyed ? collectFromValue(value, context, collectOptions) : collectClassStrings(value ?? node, context, collectOptions),
-+			...value && !keyed ? collectFromValue(value, context, attribute === "classNames" ? { ...collectOptions, valuesMode: true } : collectOptions) : collectClassStrings(value ?? node, context, collectOptions),
- 			component: resolved?.component ?? null,
- 			componentFile: resolved?.file ?? null,
- 			wrapper: resolved?.wrapper ?? null,

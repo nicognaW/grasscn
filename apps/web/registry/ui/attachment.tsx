@@ -202,7 +202,7 @@ const AttachmentTitle = ({
       data-slot="attachment-title"
       scale={scale}
       clipWidth={clipWidth ?? inherited}
-      className={cn(`mc-item-title mc-attachment-title`, className)}
+      className={cn(`mc-item-title`, className)}
       {...props}
     />
   );
@@ -222,7 +222,7 @@ const AttachmentDescription = ({
       data-slot="attachment-description"
       scale={scale}
       clipWidth={clipWidth ?? inherited}
-      className={cn(`mc-item-description mc-attachment-description`, className)}
+      className={cn(`mc-item-description`, className)}
       {...props}
     />
   );

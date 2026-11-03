@@ -311,8 +311,22 @@ const verifyItemCase = async ({
       "#read-ref,#resize,#tag,#events,#actions{visibility:hidden!important}",
   });
 
-  for (const glyph of await subject.locator("[data-mc-label-ready]").all()) {
-    await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const glyphs = await subject.locator("[data-mc-label-ready]").all();
+
+    const glyphReadinessResults = await Promise.allSettled(
+      glyphs.map(async (glyph) => {
+        await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = glyphReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   await page.evaluate(async () => {
@@ -410,11 +424,11 @@ const worker = async function worker() {
         part,
         plain,
       });
-    } catch (failure) {
+    } catch (error) {
       // SAFETY: preserve the existing message projection from the owned Node/PNG/Playwright APIs without normalizing arbitrary rejections.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed Item failure message projection boundary.
-      const error = failure as InstalledTextFailure;
-      const message = `${part}/${plain ? "plain/" : ""}${c.name}: ${error.message}`;
+      const failure = error as InstalledTextFailure;
+      const message = `${part}/${plain ? "plain/" : ""}${c.name}: ${failure.message}`;
       errors.push(message);
       console.log(message);
     }

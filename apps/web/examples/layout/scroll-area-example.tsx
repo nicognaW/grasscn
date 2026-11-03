@@ -31,9 +31,8 @@ const ScrollAreaExample = () => {
           {Array.from({ length: 100 }, (_, index) => (
             <div key={index} className="[height:48px]">
               <Button
-                /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-                style={{ width: "100%" }}
-                /* eslint-enable shadcn/no-inline-styles */
+                className="w-full"
+
                 onClick={() => {
                   setSelected(`Selected Row ${index + 1}`);
                 }}

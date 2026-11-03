@@ -116,8 +116,22 @@ const verifyCollapsibleRendering = async ({
     }
   }
 
-  for (const label of await subject.locator("[data-mc-label-ready]").all()) {
-    await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const glyphs = await subject.locator("[data-mc-label-ready]").all();
+
+    const glyphReadinessResults = await Promise.allSettled(
+      glyphs.map(async (label) => {
+        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = glyphReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   await page.evaluate(

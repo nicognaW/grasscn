@@ -16,6 +16,27 @@ import {
   useMessageScroller,
 } from "@/components/ui/message-scroller";
 
+interface ForwardedLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-examples-overlays-message-scroller-example-1-width": `${number}px`;
+}
+
+interface ForwardedLayoutStyle2 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-examples-overlays-message-scroller-example-2-width": `${number}px`;
+}
+
+interface ForwardedLayoutStyle3 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-examples-overlays-message-scroller-example-3-width": `${number}px`;
+}
+
+interface ForwardedLayoutStyle4 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-examples-overlays-message-scroller-example-4-height": `${number}px`;
+  "--mc-forwarded-examples-overlays-message-scroller-example-4-width": `${number}px`;
+}
+
+interface ForwardedLayoutStyle7 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-examples-overlays-message-scroller-example-7-width": `${number}px`;
+}
+
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-examples-overlays-message-scroller-example-1-min-height": `${number}px`;
   "--mc-intrinsic-examples-overlays-message-scroller-example-1-padding-top": `${number}px`;
@@ -69,20 +90,38 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
             onChange={(event) => {
               setText(event.target.value);
             }}
-            style={{ maxWidth: "100%", width: 180 * scale }}
+            className="w-(--mc-forwarded-examples-overlays-message-scroller-example-1-width) max-w-full"
+            style={
+              // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+              {
+                "--mc-forwarded-examples-overlays-message-scroller-example-1-width": `${180 * scale}px`,
+              } satisfies ForwardedLayoutStyle1 as ForwardedLayoutStyle1
+            }
           />
         </label>
         <Button
           type="submit"
           scale={scale}
-          style={{ width: 75 * scale, maxWidth: "100%" }}
+          className="w-(--mc-forwarded-examples-overlays-message-scroller-example-2-width) max-w-full"
+          style={
+            // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+            {
+              "--mc-forwarded-examples-overlays-message-scroller-example-2-width": `${75 * scale}px`,
+            } satisfies ForwardedLayoutStyle2 as ForwardedLayoutStyle2
+          }
         >
           Send
         </Button>
         <Button
           type="button"
           scale={scale}
-          style={{ width: 75 * scale, maxWidth: "100%" }}
+          className="w-(--mc-forwarded-examples-overlays-message-scroller-example-3-width) max-w-full"
+          style={
+            // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+            {
+              "--mc-forwarded-examples-overlays-message-scroller-example-3-width": `${75 * scale}px`,
+            } satisfies ForwardedLayoutStyle3 as ForwardedLayoutStyle3
+          }
           onClick={() => api.scrollToStart({ behavior: "instant" })}
         >
           First
@@ -91,16 +130,23 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
       <div data-stage="message">
         <MessageScroller
           scale={scale}
-          style={{ height: 94 * scale, maxWidth: "100%", width: 320 * scale }}
+          className="h-(--mc-forwarded-examples-overlays-message-scroller-example-4-height) w-(--mc-forwarded-examples-overlays-message-scroller-example-4-width) max-w-full"
+          style={
+            // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+            {
+              "--mc-forwarded-examples-overlays-message-scroller-example-4-height": `${94 * scale}px`,
+              "--mc-forwarded-examples-overlays-message-scroller-example-4-width": `${320 * scale}px`,
+            } satisfies ForwardedLayoutStyle4 as ForwardedLayoutStyle4
+          }
         >
           <MessageScrollerViewport
             aria-label="Player chat"
-            style={{ flex: 1, height: "auto" }}
+            className="h-auto flex-1"
           >
             <MessageScrollerContent
               role="log"
               aria-live="polite"
-              style={{ justifyContent: "flex-end", overflow: "clip" }}
+              className="justify-end overflow-clip"
             >
               {messages.map((message, index) => (
                 <MessageScrollerItem key={index} messageId={String(index + 1)}>
@@ -127,16 +173,13 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
             <MessageScrollerButton
               direction="end"
               behavior="instant"
-              style={{
-                bottom: "auto",
-                left: "auto",
-                maxWidth: "100%",
-                position: "relative",
-                right: "auto",
-                top: "auto",
-                transform: "none",
-                width: 100 * scale,
-              }}
+              className="relative top-auto right-auto bottom-auto left-auto w-(--mc-forwarded-examples-overlays-message-scroller-example-7-width) max-w-full transform-none"
+              style={
+                // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                {
+                  "--mc-forwarded-examples-overlays-message-scroller-example-7-width": `${100 * scale}px`,
+                } satisfies ForwardedLayoutStyle7 as ForwardedLayoutStyle7
+              }
             >
               Latest
             </MessageScrollerButton>

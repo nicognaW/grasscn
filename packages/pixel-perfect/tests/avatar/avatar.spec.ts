@@ -159,8 +159,22 @@ test.describe("AvatarFallback original Label constituents", () => {
         page.locator("[data-mc-label-layout-ready]")
       ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-      for (const canvas of await page.locator("[data-mc-label-ready]").all()) {
-        await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+      {
+        const glyphs = await page.locator("[data-mc-label-ready]").all();
+
+        const glyphReadinessResults = await Promise.allSettled(
+          glyphs.map(async (canvas) => {
+            await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+          })
+        );
+
+        const rejectedReadiness = glyphReadinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
 
       await page.evaluate(async () => {

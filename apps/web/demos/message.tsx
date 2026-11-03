@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
@@ -14,6 +15,15 @@ import {
   useMessageScroller,
 } from "../registry/ui/message-scroller";
 import type { DemoProps } from "../types";
+
+interface ForwardedLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-demos-message-1-height": `${number}px`;
+  "--mc-forwarded-demos-message-1-width": `${number}px`;
+}
+
+interface ForwardedLayoutStyle4 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-demos-message-4-width": `${number}px`;
+}
 
 type Line = { author?: string; text: string; system?: boolean };
 
@@ -104,16 +114,23 @@ const History = ({ scale }: DemoProps) => {
       <div className="demo-stage" data-stage="message">
         <MessageScroller
           scale={scale}
-          style={{ height: 94 * scale, maxWidth: "100%", width: 320 * scale }}
+          className="h-(--mc-forwarded-demos-message-1-height) w-(--mc-forwarded-demos-message-1-width) max-w-full"
+          style={
+            // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+            {
+              "--mc-forwarded-demos-message-1-height": `${94 * scale}px`,
+              "--mc-forwarded-demos-message-1-width": `${320 * scale}px`,
+            } satisfies ForwardedLayoutStyle1 as ForwardedLayoutStyle1
+          }
         >
           <MessageScrollerViewport
             aria-label="Player chat"
-            style={{ flex: 1, height: "auto" }}
+            className="h-auto flex-1"
           >
             <MessageScrollerContent
               role="log"
               aria-live="polite"
-              style={{ justifyContent: "flex-end", overflow: "clip" }}
+              className="justify-end overflow-clip"
             >
               {messages.map((message, index) => (
                 <MessageScrollerItem key={index} messageId={String(index + 1)}>
@@ -140,16 +157,13 @@ const History = ({ scale }: DemoProps) => {
             <MessageScrollerButton
               direction="end"
               behavior="instant"
-              style={{
-                bottom: "auto",
-                left: "auto",
-                maxWidth: "100%",
-                position: "relative",
-                right: "auto",
-                top: "auto",
-                transform: "none",
-                width: 100 * scale,
-              }}
+              className="relative top-auto right-auto bottom-auto left-auto w-(--mc-forwarded-demos-message-4-width) max-w-full transform-none"
+              style={
+                // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                {
+                  "--mc-forwarded-demos-message-4-width": `${100 * scale}px`,
+                } satisfies ForwardedLayoutStyle4 as ForwardedLayoutStyle4
+              }
             >
               Latest
             </MessageScrollerButton>

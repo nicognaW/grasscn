@@ -201,8 +201,22 @@ const verifyComposedTextCase = async (
     await expect(node).toHaveAttribute("data-mc-label-layout-ready", "true");
   }
 
-  for (const node of await subject.locator("[data-mc-label-ready]").all()) {
-    await expect(node).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const glyphs = await subject.locator("[data-mc-label-ready]").all();
+
+    const glyphReadinessResults = await Promise.allSettled(
+      glyphs.map(async (node) => {
+        await expect(node).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = glyphReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   await page.evaluate(async () => {
@@ -211,11 +225,11 @@ const verifyComposedTextCase = async (
     const images = [...document.querySelectorAll(".mc-surface>span")]
       .map(
         (node) =>
-          /url\(["']?(?<imageUrl>.*?)["']?\)/.exec(
+          /url\(["']?(?<imageUrl>.*?)["']?\)/u.exec(
             getComputedStyle(node).backgroundImage
           )?.[1]
       )
-      .filter(Boolean);
+      .filter((imageSource): imageSource is string => Boolean(imageSource));
 
     await Promise.all(
       images.map(async (src) => {
@@ -224,8 +238,8 @@ const verifyComposedTextCase = async (
         try {
           const image = new Image();
           image.onload = image.onerror = imageCompletion.resolve;
-          // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
-          image.src = src!;
+          // The same Boolean predicate excludes absent or empty captured URLs before this native setter.
+          image.src = src;
         } catch (error) {
           imageCompletion.reject(error);
         }
@@ -307,12 +321,12 @@ const worker = async function worker() {
       }
 
       await verifyComposedTextCase(c, page);
-    } catch (failure) {
+    } catch (error) {
       // SAFETY: the owned Node/PNG and Playwright operations expose message; keep the original property access and failure coercion.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Narrow message projection at this concrete verifier failure boundary.
-      const error = failure as InstalledTextFailure;
-      errors.push(`${c.name}: ${error.message}`);
-      console.log(name, c.name, error.message);
+      const failure = error as InstalledTextFailure;
+      errors.push(`${c.name}: ${failure.message}`);
+      console.log(name, c.name, failure.message);
     }
   }
 

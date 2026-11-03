@@ -82,7 +82,7 @@ const TabsDemo = ({ scale }: DemoProps) => {
             </div>
           </TabsContent>
           <TabsContent value="world" style={panelStyle}>
-            <div className="checkbox-row">
+            <div>
               <Checkbox
                 id="tabs-structures"
                 scale={scale}

@@ -310,8 +310,22 @@ const verifyTextReferenceCase = async ({
     await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
   }
 
-  for (const line of await subject.locator("[data-mc-label-ready]").all()) {
-    await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const glyphs = await subject.locator("[data-mc-label-ready]").all();
+
+    const glyphReadinessResults = await Promise.allSettled(
+      glyphs.map(async (line) => {
+        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = glyphReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   await page.evaluate(async () => {

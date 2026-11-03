@@ -181,7 +181,7 @@ const ItemSeparator = ({
   return (
     <Separator
       data-slot="item-separator"
-      className={cn(`mc-item-separator`, className)}
+      className={cn(className)}
       scale={providedScale ?? inherited}
       {...props}
     />
