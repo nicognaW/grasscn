@@ -1,4 +1,5 @@
 import { Toggle, toggleVariants } from "@grasscn/web/ui/toggle";
+import type { ReactNode } from "react";
 import * as React from "react";
 
 const p = new URLSearchParams(location.search);
@@ -27,18 +28,22 @@ export const ToggleFixture = () => {
   const anchor = p.has("anchor");
   const label = p.get("label") ?? "Recipe filter";
 
+  let selectedFixtureBranch1: ReactNode;
+
+  if (asChild) {
+    selectedFixtureBranch1 = anchor ? (
+      <a href="#target" />
+    ) : (
+      <button type="button" />
+    );
+  } else {
+    selectedFixtureBranch1 = undefined;
+  }
+
   return (
     <>
       <Toggle
-        render={
-          asChild ? (
-            anchor ? (
-              <a href="#target" />
-            ) : (
-              <button type="button" />
-            )
-          ) : undefined
-        }
+        render={selectedFixtureBranch1}
         id="subject"
         ref={ref}
         scale={scale}

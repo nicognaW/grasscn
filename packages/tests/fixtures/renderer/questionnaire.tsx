@@ -15,6 +15,7 @@ import {
   QuestionnaireProgress,
   QuestionnaireChoiceDescription,
 } from "@grasscn/web/ui/questionnaire";
+import type { ReactNode } from "react";
 import * as React from "react";
 
 export const QuestionnaireFixture = () => {
@@ -160,20 +161,31 @@ export const QuestionnaireFixture = () => {
       );
     }
 
+    let selectedFixtureBranch1: ReactNode;
+
+    if (part === "description") {
+      selectedFixtureBranch1 = (
+        <QuestionnaireDescription {...textProps}>
+          {text}
+        </QuestionnaireDescription>
+      );
+    } else if (part === "error") {
+      selectedFixtureBranch1 = (
+        <QuestionnaireError {...textProps}>{text}</QuestionnaireError>
+      );
+    } else {
+      selectedFixtureBranch1 =
+        part === "progress" ? (
+          <QuestionnaireProgress {...textProps}>{text}</QuestionnaireProgress>
+        ) : (
+          <QuestionnaireTitle {...textProps}>{text}</QuestionnaireTitle>
+        );
+    }
+
     return (
       <Questionnaire scale={scale} items={[{ name: "text" }]}>
         <QuestionnaireItem name="text" invalid={part === "error"}>
-          {part === "description" ? (
-            <QuestionnaireDescription {...textProps}>
-              {text}
-            </QuestionnaireDescription>
-          ) : part === "error" ? (
-            <QuestionnaireError {...textProps}>{text}</QuestionnaireError>
-          ) : part === "progress" ? (
-            <QuestionnaireProgress {...textProps}>{text}</QuestionnaireProgress>
-          ) : (
-            <QuestionnaireTitle {...textProps}>{text}</QuestionnaireTitle>
-          )}
+          {selectedFixtureBranch1}
         </QuestionnaireItem>
       </Questionnaire>
     );

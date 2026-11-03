@@ -15,6 +15,7 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from "@grasscn/web/ui/pagination";
+import type { ReactNode } from "react";
 import * as React from "react";
 
 import { cn } from "./utils";
@@ -104,6 +105,42 @@ export const StructuralFixture = () => {
   }
 
   if (kind === "button-group") {
+    let selectedFixtureBranch1: ReactNode;
+
+    if (p.get("part") === "text") {
+      selectedFixtureBranch1 = (
+        <ButtonGroupText
+          id="subject"
+          scale={scale}
+          maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
+          align={p.get("alignment") === "center" ? "center" : "left"}
+          className="fixture-geometry-width fixture-geometry-height fixture-owner-layout-40 fixture-owner-layout-41"
+          style={{
+            "--fixture-height": `${height * scale}px`,
+            "--fixture-width": `${width * scale}px`,
+          }}
+          data-subject="true"
+        >
+          {label}
+        </ButtonGroupText>
+      );
+    } else {
+      selectedFixtureBranch1 =
+        p.get("part") === "separator" ? (
+          <ButtonGroupSeparator
+            id="subject"
+            scale={scale}
+            orientation="horizontal"
+            edge={p.get("edge") === "footer" ? "footer" : "header"}
+            className="fixture-geometry-width fixture-structural-min-width-zero"
+            style={{ "--fixture-width": `${width * scale}px` }}
+            data-subject="true"
+          />
+        ) : (
+          subject
+        );
+    }
+
     return (
       <>
         <ButtonGroup
@@ -116,36 +153,7 @@ export const StructuralFixture = () => {
           className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
           style={position}
         >
-          {p.get("part") === "text" ? (
-            <ButtonGroupText
-              id="subject"
-              scale={scale}
-              maxWidth={
-                p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
-              }
-              align={p.get("alignment") === "center" ? "center" : "left"}
-              className="fixture-geometry-width fixture-geometry-height fixture-owner-layout-40 fixture-owner-layout-41"
-              style={{
-                "--fixture-height": `${height * scale}px`,
-                "--fixture-width": `${width * scale}px`,
-              }}
-              data-subject="true"
-            >
-              {label}
-            </ButtonGroupText>
-          ) : p.get("part") === "separator" ? (
-            <ButtonGroupSeparator
-              id="subject"
-              scale={scale}
-              orientation="horizontal"
-              edge={p.get("edge") === "footer" ? "footer" : "header"}
-              className="fixture-geometry-width fixture-structural-min-width-zero"
-              style={{ "--fixture-width": `${width * scale}px` }}
-              data-subject="true"
-            />
-          ) : (
-            subject
-          )}
+          {selectedFixtureBranch1}
           {!native ? (
             <>
               <ButtonGroupSeparator scale={scale} role="separator" />

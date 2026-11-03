@@ -41,17 +41,19 @@ export const AvatarFixture = () => {
   if (q.get("native") === "1") {
     const part = q.get("part");
 
+    let selectedFixtureBranch1: "sm" | "lg" | "default";
+
+    if (Number(q.get("width")) === 12) {
+      selectedFixtureBranch1 = "sm";
+    } else {
+      selectedFixtureBranch1 = Number(q.get("width")) === 20 ? "lg" : "default";
+    }
+
     return (
       <Avatar
         id="subject"
         scale={scale}
-        size={
-          Number(q.get("width")) === 12
-            ? "sm"
-            : Number(q.get("width")) === 20
-              ? "lg"
-              : "default"
-        }
+        size={selectedFixtureBranch1}
         className="fixture-geometry-height fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width"
         style={{
           "--fixture-height": `${Number(q.get("height") ?? 16) * scale}px`,

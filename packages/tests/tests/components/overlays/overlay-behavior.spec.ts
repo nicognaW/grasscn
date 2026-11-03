@@ -60,22 +60,32 @@ for (const component of ["sheet", "drawer"]) {
       await page.goto(`/?component=${component}&side=${side}&open=1`);
       const panel = page.getByRole("dialog");
       await expect(panel).toBeVisible();
+      let selectedFixtureBranch2: 900 | 1280 | 0;
+
+      if (side === "bottom") {
+        selectedFixtureBranch2 = 900;
+      } else {
+        selectedFixtureBranch2 = side === "right" ? 1280 : 0;
+      }
+
       await expect
         .poll(async () => {
           const r = await panel.boundingBox();
           expectNotNull(r, "Missing required bounding box: r");
 
-          return Math.round(
-            side === "top"
-              ? r.y
-              : side === "bottom"
-                ? r.y + r.height
-                : side === "left"
-                  ? r.x
-                  : r.x + r.width
-          );
+          let selectedFixtureBranch1: number | undefined;
+
+          if (side === "top") {
+            selectedFixtureBranch1 = r.y;
+          } else if (side === "bottom") {
+            selectedFixtureBranch1 = r.y + r.height;
+          } else {
+            selectedFixtureBranch1 = side === "left" ? r.x : r.x + r.width;
+          }
+
+          return Math.round(selectedFixtureBranch1);
         })
-        .toBe(side === "bottom" ? 900 : side === "right" ? 1280 : 0);
+        .toBe(selectedFixtureBranch2);
     }
   });
   test(`${component} retains controlled state, disabled trigger and forwarded ref`, async ({

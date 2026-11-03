@@ -351,17 +351,20 @@ export const SidebarFixture = () => {
     );
   }
 
+  let selectedFixtureBranch1: "none" | "offcanvas" | "icon";
+
+  if (p.get("mode") === "none") {
+    selectedFixtureBranch1 = "none";
+  } else {
+    selectedFixtureBranch1 =
+      p.get("mode") === "offcanvas" ? "offcanvas" : "icon";
+  }
+
   return (
     <SidebarProvider {...provider} className="fixture-sidebar-app-provider">
       <Sidebar
         side={p.get("side") === "right" ? "right" : "left"}
-        collapsible={
-          p.get("mode") === "none"
-            ? "none"
-            : p.get("mode") === "offcanvas"
-              ? "offcanvas"
-              : "icon"
-        }
+        collapsible={selectedFixtureBranch1}
         style={{ position: p.get("mode") === "none" ? "relative" : "absolute" }}
       >
         <SidebarHeader>
