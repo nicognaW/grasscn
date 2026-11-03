@@ -260,6 +260,53 @@ const report: ConsumerPptReport = {
   websiteIdentity,
 };
 
+const verifyPreparedButton = async (project: (typeof projects)[number], consumerHost: Awaited<ReturnType<typeof servePreparedConsumer>>, observerBrowser: Playwright.Browser) => {
+  const page = await observerBrowser.newPage({
+    deviceScaleFactor: 1,
+    viewport: report.environment.viewport,
+  });
+
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto(consumerHost.url);
+  await page.mouse.move(1000, 800);
+
+  const button = project.id.startsWith("manual-")
+    ? page
+        .getByRole("region", { exact: true, name: "Consumer button" })
+        .getByRole("button", { exact: true, name: "Button" })
+    : page.getByRole("button", { exact: true, name: "Button" });
+
+  await button.waitFor();
+  const bytes = await button.screenshot({ animations: "disabled" });
+  const actual = PNG.sync.read(bytes);
+  const comparison = compare(actual, expected);
+  await writeFile(path.join(output, `${project.id}-actual.png`), bytes);
+  await writeFile(
+    path.join(output, `${project.id}-diff.png`),
+    PNG.sync.write(comparison.diff)
+  );
+
+  const result = {
+    actualSha256: sha256(bytes),
+    host: consumerHost.identity,
+    id: project.id,
+    mismatchedPixels: comparison.mismatchedPixels,
+    preparedArtifacts: project.artifactDirectory,
+    referenceSha256: nativeCase.sha256,
+    totalPixels: actual.width * actual.height,
+  };
+
+  report.consumers.push(result);
+  assert.equal(
+    comparison.mismatchedPixels,
+    0,
+    `Installed ${project.id} Button must match the exact native default`
+  );
+  assert.deepEqual(errors, []);
+  await page.close();
+};
+
 let browser: Playwright.Browser | undefined;
 let host: Awaited<ReturnType<typeof servePreparedConsumer>> | undefined;
 
@@ -275,50 +322,7 @@ try {
     );
     host = await servePreparedConsumer(project, { port: 5194 + index });
 
-    const page = await browser.newPage({
-      deviceScaleFactor: 1,
-      viewport: report.environment.viewport,
-    });
-
-    const errors: string[] = [];
-    page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto(host.url);
-    await page.mouse.move(1000, 800);
-
-    const button = project.id.startsWith("manual-")
-      ? page
-          .getByRole("region", { exact: true, name: "Consumer button" })
-          .getByRole("button", { exact: true, name: "Button" })
-      : page.getByRole("button", { exact: true, name: "Button" });
-
-    await button.waitFor();
-    const bytes = await button.screenshot({ animations: "disabled" });
-    const actual = PNG.sync.read(bytes);
-    const comparison = compare(actual, expected);
-    await writeFile(path.join(output, `${project.id}-actual.png`), bytes);
-    await writeFile(
-      path.join(output, `${project.id}-diff.png`),
-      PNG.sync.write(comparison.diff)
-    );
-
-    const result = {
-      actualSha256: sha256(bytes),
-      host: host.identity,
-      id: project.id,
-      mismatchedPixels: comparison.mismatchedPixels,
-      preparedArtifacts: project.artifactDirectory,
-      referenceSha256: nativeCase.sha256,
-      totalPixels: actual.width * actual.height,
-    };
-
-    report.consumers.push(result);
-    assert.equal(
-      comparison.mismatchedPixels,
-      0,
-      `Installed ${project.id} Button must match the exact native default`
-    );
-    assert.deepEqual(errors, []);
-    await page.close();
+    await verifyPreparedButton(project, host, browser);
     await host.close();
     host = undefined;
   }
