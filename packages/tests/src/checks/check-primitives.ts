@@ -18,14 +18,16 @@ interface PackageManifest extends DependencyFields {
 
 interface PrimitiveLockfile {
   lockfileVersion: number;
-  packages?: Record<
-    string,
-    [
-      identity: string,
-      location?: string,
-      metadata?: DependencyFields,
-      integrity?: string,
-    ]
+  packages?: Partial<
+    Record<
+      string,
+      [
+        identity: string,
+        location?: string,
+        metadata?: DependencyFields,
+        integrity?: string,
+      ]
+    >
   >;
   workspaces?: Record<string, DependencyFields>;
 }
@@ -169,7 +171,7 @@ for (
     for (const name of Object.keys(metadata(location)[field] ?? {})) {
       const dependency = resolveDependency(location, name);
 
-      if (dependency) {
+      if (dependency !== undefined && dependency !== "") {
         pending.push(dependency);
       }
     }
@@ -201,7 +203,11 @@ for (
     for (const name of Object.keys(metadata(location)[field] ?? {})) {
       const dependency = !cmdk(name) && resolveDependency(location, name);
 
-      if (dependency) {
+      if (
+        dependency !== false &&
+        dependency !== undefined &&
+        dependency !== ""
+      ) {
         outsidePending.push(dependency);
       }
     }
