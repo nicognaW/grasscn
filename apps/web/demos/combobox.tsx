@@ -1,5 +1,7 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
 import {
   Combobox,
   ComboboxInput,
@@ -13,7 +15,6 @@ import {
   ComboboxValue,
   useComboboxAnchor,
 } from "../registry/ui/combobox";
-import { Button } from "../registry/ui/button";
 import {
   MinecraftMenuText,
   MenuScaleContext,

@@ -93,11 +93,11 @@ test.describe("Tabs native matrix", () => {
       await card.evaluate(
         (node, p) =>
           Object.assign(node.style, {
-            left: `${p.x  }px`,
+            left: `${p.x}px`,
             position: "fixed",
-            top: `${p.y  }px`,
+            top: `${p.y}px`,
             visibility: "visible",
-            width: `${p.width  }px`,
+            width: `${p.width}px`,
           }),
         { width: c.width * c.scale, x: c.x * c.scale, y: c.y * c.scale }
       );

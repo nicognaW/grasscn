@@ -1,5 +1,15 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "../registry/ui/card";
+import { MinecraftDisclosureText } from "../registry/ui/minecraft-disclosure-text";
 import {
   SidebarProvider,
   Sidebar,
@@ -20,15 +30,6 @@ import {
   SidebarSeparator,
   SidebarInset,
 } from "../registry/ui/sidebar";
-import { MinecraftDisclosureText } from "../registry/ui/minecraft-disclosure-text";
-import { Button } from "../registry/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "../registry/ui/card";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
@@ -151,7 +152,7 @@ const SidebarDemo = ({ scale }: DemoProps) => {
           </Sidebar>
           <SidebarInset role="group" aria-label="World workspace">
             <div
-              className="p-(--demo-padding) flex flex-col gap-(--demo-gap) min-w-0"
+              className="flex min-w-0 flex-col gap-(--demo-gap) p-(--demo-padding)"
               style={
                 /* SAFETY: satisfies checks --demo-padding, --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
                 {

@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Kbd, KbdGroup } from "../registry/ui/kbd";
+
 import { Input } from "../registry/ui/input";
+import { Kbd, KbdGroup } from "../registry/ui/kbd";
 import type { DemoProps } from "../types";
 
 const KbdDemo = ({ scale }: DemoProps) => {

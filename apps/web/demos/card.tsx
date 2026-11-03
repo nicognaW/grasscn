@@ -1,5 +1,7 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
 import {
   Card,
   CardHeader,
@@ -8,7 +10,6 @@ import {
   CardContent,
   CardFooter,
 } from "../registry/ui/card";
-import { Button } from "../registry/ui/button";
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 
@@ -20,7 +21,7 @@ const CardDemo = ({ scale }: DemoProps) => {
     <>
       <div className="demo-stage" data-stage="card">
         <div
-          className="demo-pair w-(--demo-width) demo-pair-max-width-full"
+          className="demo-pair demo-pair-max-width-full w-(--demo-width)"
           style={
             /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
             {
@@ -36,7 +37,7 @@ const CardDemo = ({ scale }: DemoProps) => {
             <CardContent>
               <label
                 htmlFor="preview-world-name"
-                className="block mb-(--demo-margin-bottom)"
+                className="mb-(--demo-margin-bottom) block"
                 style={
                   /* SAFETY: satisfies checks --demo-margin-bottom against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
                   {

@@ -1,7 +1,8 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
-import { ScrollArea } from "../registry/ui/scroll-area";
+
+import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
+import { ScrollArea } from "../registry/ui/scroll-area";
 import type { DemoProps } from "../types";
 
 const ScrollAreaDemo = ({ scale }: DemoProps) => {
@@ -65,7 +66,7 @@ const ScrollAreaDemo = ({ scale }: DemoProps) => {
               {Array.from({ length: 100 }, (_, index) => (
                 <div
                   key={index}
-                  className="h-(--demo-height) flex items-start"
+                  className="flex h-(--demo-height) items-start"
                   style={
                     /* SAFETY: satisfies checks --demo-height against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
                     {

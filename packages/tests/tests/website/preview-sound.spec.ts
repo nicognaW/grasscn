@@ -1,6 +1,6 @@
+import { expectLength } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
-import { expectLength } from "@grasscn/tests/assertions";
 import {
   getMinecraftSoundVolume,
   setMinecraftSoundVolume,

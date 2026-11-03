@@ -67,14 +67,11 @@ try {
     }
 
     const c = m.cases[i];
-    await page!.evaluate(
-      (avatarCase) => {
+    await page!.evaluate((avatarCase) => {
       // SAFETY: the retained Avatar bridge consumes these actual captured case fields and returns void.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Avatar consumer bridge invocation boundary.
       (window as LegacyAvatarConsumerWindow).renderCase(avatarCase);
-    },
-      c
-    );
+    }, c);
     await expect(page!.locator("[data-mc-avatar-face]")).toHaveAttribute(
       "data-ready",
       "true"

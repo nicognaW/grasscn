@@ -14,10 +14,9 @@ import {
   readPreparedProductionBuild,
 } from "@grasscn/tests/next-production";
 import { repoRoot, testRoot } from "@tests/paths";
-import { packageBin } from "@tests/tooling";
-
 import { readVerificationState } from "@tests/runtime/verification-types";
 import type { VerificationReport } from "@tests/runtime/verification-types";
+import { packageBin } from "@tests/tooling";
 
 const [output, workerArgument = "1"] = process.argv.slice(2);
 const workers = Number(workerArgument);

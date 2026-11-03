@@ -44,7 +44,7 @@ const Example = () => {
     <div
       ref={container}
 
-      className="grid [justify-items:safe_center] [min-width:0]"
+      className="grid [min-width:0] [justify-items:safe_center]"
     >
       <FpsChartExample
         aria-label="Frame timing"

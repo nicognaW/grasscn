@@ -1,7 +1,8 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
-import { Spinner } from "../registry/ui/spinner";
+
+import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
+import { Spinner } from "../registry/ui/spinner";
 import type { DemoProps } from "../types";
 
 const SpinnerDemo = ({ scale }: DemoProps) => {

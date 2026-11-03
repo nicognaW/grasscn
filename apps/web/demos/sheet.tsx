@@ -1,4 +1,6 @@
 import * as React from "react";
+
+import { Input } from "../registry/ui/input";
 import {
   Sheet,
   SheetTrigger,
@@ -9,7 +11,6 @@ import {
   SheetFooter,
   SheetClose,
 } from "../registry/ui/sheet";
-import { Input } from "../registry/ui/input";
 import { Textarea } from "../registry/ui/textarea";
 import type { DemoProps } from "../types";
 

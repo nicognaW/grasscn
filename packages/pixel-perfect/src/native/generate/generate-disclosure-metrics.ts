@@ -18,7 +18,9 @@ const zip = Buffer.from(
 // SAFETY: generate-unifont-assets emits this exact array of native provider [from, to, left, right] ranges.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const overrides = JSON.parse(
-  /export const unifontOverrides = (?<unifontOverrides>\[.*\]) as const/.exec(source)![1]
+  /export const unifontOverrides = (?<unifontOverrides>\[.*\]) as const/.exec(
+    source
+  )![1]
 ) as [number, number, number, number][];
 
 const cjk = (code: number) =>

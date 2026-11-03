@@ -98,11 +98,7 @@ for (const c of manifest.cases) {
       await expect(input).toBeFocused();
     }
 
-    await (c.state === "hover" ?
-      input.hover()
-    :
-      page.mouse.move(0, 0)
-    );
+    await (c.state === "hover" ? input.hover() : page.mouse.move(0, 0));
 
     const cursor = c.cursor ?? c.text.length;
     const anchor = c.anchor ?? cursor;

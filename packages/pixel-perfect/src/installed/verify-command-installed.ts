@@ -187,11 +187,9 @@ try {
           await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
           await subject.focus();
 
-          await (c.state.endsWith("hover") ?
-            subject.getByRole("option").nth(c.targetIndex!).hover()
-          :
-            page.mouse.move(0, 0)
-          );
+          await (c.state.endsWith("hover")
+            ? subject.getByRole("option").nth(c.targetIndex!).hover()
+            : page.mouse.move(0, 0));
 
           await subject.evaluate(
             (node, scroll) => {
@@ -236,11 +234,7 @@ try {
             await subject.focus();
           }
 
-          await (c.state === "hover" ?
-            subject.hover()
-          :
-            page.mouse.move(0, 0)
-          );
+          await (c.state === "hover" ? subject.hover() : page.mouse.move(0, 0));
 
           const cursor = c.cursor ?? c.text!.length;
           const anchor = c.anchor ?? cursor;

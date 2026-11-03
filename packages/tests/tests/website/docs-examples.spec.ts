@@ -1,9 +1,9 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { webRoot } from "@tests/paths";
-import { expectNotNull } from "@grasscn/tests/assertions";
 
 // These properties capture clipboard writes performed by this test page.
 declare global {

@@ -131,7 +131,7 @@ for (const component of ["calendar", "date-picker"]) {
               q.set("wrapWidth", String(c.wrapWidth));
             }
 
-            await page.goto(`/?${  q}`);
+            await page.goto(`/?${q}`);
             await expect(page.locator("[data-subject]")).toBeVisible();
 
             if (part === "label") {

@@ -3,8 +3,8 @@ import {
   DatePickerDemo,
   DatePickerRangeDemo,
 } from "../registry/blocks/date-picker";
-import { Label } from "../registry/ui/label";
 import { Button } from "../registry/ui/button";
+import { Label } from "../registry/ui/label";
 import type { DemoProps } from "../types";
 
 const DatePickerExamples = ({ scale }: DemoProps) => (

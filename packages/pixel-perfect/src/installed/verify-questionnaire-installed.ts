@@ -99,14 +99,20 @@ try {
         name: c.name,
       };
 
-      let questionnaireActions: readonly ("next" | "previous" | "skip" | "submit" | "radio")[];
+      let questionnaireActions: readonly (
+        | "next"
+        | "previous"
+        | "skip"
+        | "submit"
+        | "radio"
+      )[];
 
       if (part === "action") {
-        questionnaireActions = (["next", "previous", "skip", "submit"] as const);
+        questionnaireActions = ["next", "previous", "skip", "submit"] as const;
       } else if (part === "checkbox") {
-        questionnaireActions = (["next", "radio"] as const);
+        questionnaireActions = ["next", "radio"] as const;
       } else {
-        questionnaireActions = (["next"] as const);
+        questionnaireActions = ["next"] as const;
       }
 
       for (const action of questionnaireActions) {

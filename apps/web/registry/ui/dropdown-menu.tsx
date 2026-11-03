@@ -11,7 +11,12 @@ import {
   MinecraftMenuText,
   menuTextNodes,
 } from "./minecraft-menu-text";
-import { isMinecraftRefCallback, isMinecraftRefCleanup, minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftSurface } from "./minecraft-surface";

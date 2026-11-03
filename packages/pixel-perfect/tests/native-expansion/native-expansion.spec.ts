@@ -34,12 +34,14 @@ const corpora = process.env.GRASSCN_EXPANSION_REFERENCE
 const specimens = corpora.flatMap((reference) =>
   // SAFETY: All489cases in the13retained native-expansion manifests emit name, numeric scale and element; an override supplies the same capture-consumer contract at this original read boundary.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact native capture manifest consumer projection; no new validation or generic JSON caster.
-  (JSON.parse(
-    readFileSync(
-      pixelPerfectFile(path.join(reference, "manifest.json")),
-      "utf-8"
-    )
-  ) as NativeExpansionManifest).cases.map((sample) => ({ reference, sample }))
+  (
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile(path.join(reference, "manifest.json")),
+        "utf-8"
+      )
+    ) as NativeExpansionManifest
+  ).cases.map((sample) => ({ reference, sample }))
 );
 
 for (const { reference, sample } of specimens) {

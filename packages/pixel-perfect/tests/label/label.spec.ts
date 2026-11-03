@@ -79,9 +79,7 @@ test("Label uses the UVs observed in its native font-atlas context", () => {
 
   observedCodepoints.sort();
 
-  atlasComparison.toEqual(
-    observedCodepoints
-  );
+  atlasComparison.toEqual(observedCodepoints);
 
   for (const [code, uv] of Object.entries(labelUnihexAtlas)) {
     expect(uv).toEqual(

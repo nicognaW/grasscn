@@ -1,8 +1,9 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
 import { Badge } from "../registry/ui/badge";
-import { Input } from "../registry/ui/input";
 import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 
 const BadgeDemo = ({ scale }: DemoProps) => {
@@ -48,7 +49,7 @@ const BadgeDemo = ({ scale }: DemoProps) => {
         </Button>
       </div>
       <div
-        className="demo-stage demo-stage-display-flex flex-col demo-stage-align-items-flex-start"
+        className="demo-stage demo-stage-display-flex demo-stage-align-items-flex-start flex-col"
         data-stage="badge"
         style={
           /* SAFETY: satisfies checks --demo-stage-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */

@@ -188,8 +188,7 @@ if (process.platform === "win32") {
   platformNameSelection = "linux";
 }
 
-const platformName =
-  platformNameSelection;
+const platformName = platformNameSelection;
 
 const permitted = function permitted(library: MinecraftCaptureLibrary) {
   if (!library.rules) {
@@ -383,7 +382,7 @@ try {
 
 for (const scale of [1, 2, 3]) {
   for (const definition of definitions) {
-    const name = `${definition.name  }-s${  scale  }.png`;
+    const name = `${definition.name}-s${scale}.png`;
 
     const bytes = await readFile(path.join(captures, name));
 
@@ -518,7 +517,7 @@ if (Object.keys(inputResources).length) {
 
 await writeFile(
   path.join(outputDir, "manifest.json"),
-  `${JSON.stringify(manifest, null, 2)  }\n`
+  `${JSON.stringify(manifest, null, 2)}\n`
 );
 
-console.log(`Captured ${  cases.length  } native control references`);
+console.log(`Captured ${cases.length} native control references`);

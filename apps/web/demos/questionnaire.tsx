@@ -1,5 +1,8 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
+import { Label } from "../registry/ui/label";
 import {
   Questionnaire,
   QuestionnaireProgress,
@@ -16,8 +19,6 @@ import {
   QuestionnaireNext,
   QuestionnaireSubmit,
 } from "../registry/ui/questionnaire";
-import { Label } from "../registry/ui/label";
-import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 
 const QuestionnaireDemo = ({ scale }: DemoProps) => {

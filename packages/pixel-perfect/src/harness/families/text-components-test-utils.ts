@@ -79,8 +79,7 @@ export const nativeTextTests = function nativeTextTests(
     directoriesSelection = ["tests/reference/label"];
   }
 
-  const directories =
-    directoriesSelection;
+  const directories = directoriesSelection;
 
   test(`${component} pixel comparator detects a changed pixel`, () => {
     // SAFETY: the first directory is retained button, label or tooltip; every case in those manifests owns a name.
@@ -113,27 +112,26 @@ export const nativeTextTests = function nativeTextTests(
 
     if (component === "typography") {
       partsSelection = [
-            "default",
-            "h1",
-            "h2",
-            "h3",
-            "h4",
-            "p",
-            "small",
-            "blockquote",
-            "code",
-            "lead",
-            "large",
-            "muted",
-          ];
+        "default",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "p",
+        "small",
+        "blockquote",
+        "code",
+        "lead",
+        "large",
+        "muted",
+      ];
     } else if (component === "breadcrumb") {
       partsSelection = ["link", "page"];
     } else {
       partsSelection = ["default"];
     }
 
-    const parts =
-      partsSelection;
+    const parts = partsSelection;
 
     for (const part of parts) {
       for (const c of manifest.cases) {
@@ -174,10 +172,7 @@ export const nativeTextTests = function nativeTextTests(
             slotSelection = component;
           }
 
-          await expect(subject).toHaveAttribute(
-            "data-slot",
-            slotSelection
-          );
+          await expect(subject).toHaveAttribute("data-slot", slotSelection);
           await expect(subject).toBeVisible();
           await page.mouse.move(0, 0);
 

@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 
-import { test, expect } from "@grasscn/tests/test";
 import { expectNotNull } from "@grasscn/tests/assertions";
+import { test, expect } from "@grasscn/tests/test";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
 

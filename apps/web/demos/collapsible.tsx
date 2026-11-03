@@ -1,5 +1,7 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
 import {
   Collapsible,
   CollapsibleTrigger,
@@ -7,7 +9,6 @@ import {
 } from "../registry/ui/collapsible";
 import { Input } from "../registry/ui/input";
 import { Textarea } from "../registry/ui/textarea";
-import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 
 const CollapsibleDemo = ({ scale }: DemoProps) => {

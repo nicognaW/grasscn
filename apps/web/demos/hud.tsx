@@ -1,5 +1,7 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
 import {
   HealthMeter,
   ArmorMeter,
@@ -7,7 +9,6 @@ import {
   AirMeter,
   ExperienceBar,
 } from "../registry/ui/hud";
-import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 
 const HudDemo = ({ scale }: DemoProps) => {
@@ -30,7 +31,7 @@ const HudDemo = ({ scale }: DemoProps) => {
         <p>Journey to the next level</p>
         <ExperienceBar value={progress} scale={scale} />
       </div>
-      <div className="flex gap-3 flex-wrap">
+      <div className="flex flex-wrap gap-3">
         <Button
           scale={scale}
           onClick={() => {

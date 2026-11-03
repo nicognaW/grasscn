@@ -1,4 +1,6 @@
 import * as React from "react";
+
+import { Button } from "../registry/ui/button";
 import {
   Table,
   TableHeader,
@@ -9,9 +11,8 @@ import {
   TableCell,
   TableCaption,
 } from "../registry/ui/table";
-import { Button } from "../registry/ui/button";
-import { useDemoWidth } from "../use-demo-width";
 import type { DemoProps } from "../types";
+import { useDemoWidth } from "../use-demo-width";
 
 const TableDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);

@@ -1,4 +1,6 @@
 import * as React from "react";
+
+import { Textarea } from "../registry/ui/textarea";
 import {
   TypographyH1,
   TypographyH2,
@@ -7,7 +9,6 @@ import {
   TypographyInlineCode,
   TypographySmall,
 } from "../registry/ui/typography";
-import { Textarea } from "../registry/ui/textarea";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 

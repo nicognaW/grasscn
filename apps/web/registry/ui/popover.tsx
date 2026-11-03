@@ -11,7 +11,9 @@ import {
   MinecraftPopoverText,
 } from "./minecraft-popover-text";
 import {
-  isMinecraftRefCallback, isMinecraftRefCleanup, isMinecraftTextContent,
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
 } from "./minecraft-render";

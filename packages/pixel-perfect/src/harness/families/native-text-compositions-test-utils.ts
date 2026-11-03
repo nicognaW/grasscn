@@ -66,10 +66,7 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
         slotSelection = component;
       }
 
-      await expect(subject).toHaveAttribute(
-        "data-slot",
-        slotSelection
-      );
+      await expect(subject).toHaveAttribute("data-slot", slotSelection);
 
       if (component === "code-block") {
         await expect(
@@ -149,8 +146,7 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
           component,
           manifest: `${directory}/manifest.json`,
           mismatchedPixels,
-          part:
-            metricPartSelection,
+          part: metricPartSelection,
           tolerance: 0,
         })
       );

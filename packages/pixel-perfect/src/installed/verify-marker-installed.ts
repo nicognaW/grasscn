@@ -140,15 +140,13 @@ try {
 
       await page!.mouse.move(0, 0);
 
-      await (c.state === "focus" ?
-        page!.locator("#subject").focus()
-      :
-        page!.evaluate(() =>
-          // SAFETY: this fixture focuses HTML subject controls; preserve the existing optional active-element blur.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Focused HTML fixture element DOM API boundary.
-          (document.activeElement as HTMLElement | null)?.blur()
-        )
-      );
+      await (c.state === "focus"
+        ? page!.locator("#subject").focus()
+        : page!.evaluate(() =>
+            // SAFETY: this fixture focuses HTML subject controls; preserve the existing optional active-element blur.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Focused HTML fixture element DOM API boundary.
+            (document.activeElement as HTMLElement | null)?.blur()
+          ));
 
       if (c.state.endsWith("hover")) {
         await page!.locator("#subject").hover({ force: true });

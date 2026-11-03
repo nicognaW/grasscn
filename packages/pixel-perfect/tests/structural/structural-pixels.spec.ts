@@ -145,10 +145,7 @@ test.describe("Structural native constituents", () => {
                 slotSelection = `button-group-${part}`;
               }
 
-              await expect(subject).toHaveAttribute(
-                "data-slot",
-                slotSelection
-              );
+              await expect(subject).toHaveAttribute("data-slot", slotSelection);
               await page.addStyleTag({
                 content:
                   "#root{visibility:hidden}[data-subject]{visibility:visible}",

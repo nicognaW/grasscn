@@ -1,8 +1,9 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
-import { PlayerPreview } from "../registry/ui/player-preview";
+
+import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
 import { Input } from "../registry/ui/input";
+import { PlayerPreview } from "../registry/ui/player-preview";
 import type { DemoProps } from "../types";
 
 const PlayerDemo = ({ scale }: DemoProps) => {
@@ -29,7 +30,7 @@ const PlayerDemo = ({ scale }: DemoProps) => {
           aria-label="Player preview"
         />
       </div>
-      <div className="flex gap-3 flex-wrap">
+      <div className="flex flex-wrap gap-3">
         <Button
           scale={scale}
           className="w-(--demo-width)"
@@ -86,7 +87,7 @@ const PlayerDemo = ({ scale }: DemoProps) => {
             setUsername(name.trim());
           }
         }}
-        className="flex gap-3 flex-wrap"
+        className="flex flex-wrap gap-3"
       >
         <Input
           value={name}

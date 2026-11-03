@@ -19,13 +19,13 @@ import type {
 } from "@ppt/installed/reference-case";
 import type { CollapsibleReferenceCase } from "@ppt/installed/verify-collapsible-installed";
 import { verifyCollapsibleCase } from "@ppt/installed/verify-collapsible-installed";
+import { verifyDialogCase } from "@ppt/installed/verify-dialog-installed";
+import { verifyFixtureControlCase } from "@ppt/installed/verify-fixture-control-installed";
 import {
   verifyMenuCase,
   verifyMenubarTriggerCase,
 } from "@ppt/installed/verify-menu-installed";
 import { verifyPopoverCase } from "@ppt/installed/verify-popover-installed";
-import { verifyDialogCase } from "@ppt/installed/verify-dialog-installed";
-import { verifyFixtureControlCase } from "@ppt/installed/verify-fixture-control-installed";
 import { webFile, pixelPerfectFile } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";

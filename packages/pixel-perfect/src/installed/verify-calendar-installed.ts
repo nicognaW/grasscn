@@ -253,16 +253,13 @@ try {
           q.wrapWidth = String(c.wrapWidth);
         }
 
-        await page!.evaluate(
-          (calendarFields) => {
+        await page!.evaluate((calendarFields) => {
           // SAFETY: the retained Calendar bridge receives string query fields, updates history/background and renders the keyed marker.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Calendar consumer bridge invocation boundary.
           (window as LegacyCalendarConsumerWindow).renderCalendarCase(
             calendarFields
           );
-        },
-          q
-        );
+        }, q);
         await expect(page!.locator("#marker")).toHaveAttribute(
           "data-case",
           q.case

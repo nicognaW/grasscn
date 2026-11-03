@@ -162,19 +162,19 @@ for (const manifestFile of manifests.filter(
     allPartsSelection = ["label", "legend", "title", "description"];
   } else if (name === "typography") {
     allPartsSelection = [
-              "default",
-              "h1",
-              "h2",
-              "h3",
-              "h4",
-              "p",
-              "small",
-              "blockquote",
-              "code",
-              "lead",
-              "large",
-              "muted",
-            ];
+      "default",
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "p",
+      "small",
+      "blockquote",
+      "code",
+      "lead",
+      "large",
+      "muted",
+    ];
   } else if (name === "breadcrumb") {
     allPartsSelection = ["link", "page"];
   } else if (name === "empty" && !nativeEmpty) {
@@ -183,8 +183,7 @@ for (const manifestFile of manifests.filter(
     allPartsSelection = ["default"];
   }
 
-  const allParts: string[] =
-    allPartsSelection;
+  const allParts: string[] = allPartsSelection;
 
   if (partArgument) {
     assert.ok(

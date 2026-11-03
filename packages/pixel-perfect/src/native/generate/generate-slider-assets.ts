@@ -169,7 +169,9 @@ const textAssets = await readFile(
 const fontFace = (/@font-face[^\n]+/.exec(textAssets) as RegExpExecArray)[0];
 
 const atlasMatch =
-  /--mc-ascii-atlas: (?<atlasUrl>url\("[^"]+"\)); --mc-atlas-size: (?<atlasSize>\d+)/.exec(textAssets);
+  /--mc-ascii-atlas: (?<atlasUrl>url\("[^"]+"\)); --mc-atlas-size: (?<atlasSize>\d+)/.exec(
+    textAssets
+  );
 
 // SAFETY: the generated font sheet owns these two capture fields; preserve the original null/index failure.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion

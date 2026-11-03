@@ -1,5 +1,5 @@
-import { test, expect } from "@grasscn/tests/test";
 import { expectLength } from "@grasscn/tests/assertions";
+import { test, expect } from "@grasscn/tests/test";
 import type { PlayerRotation } from "@grasscn/web/ui/player-preview";
 
 interface BookAudioFixtureWindow extends Window {
@@ -129,8 +129,11 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
   await expect
     .poll(
       async () =>
-        await page.evaluate(() =>
-          (JSON.parse(document.documentElement.dataset.rotation ?? "null") as PlayerRotation | null)
+        await page.evaluate(
+          () =>
+            JSON.parse(
+              document.documentElement.dataset.rotation ?? "null"
+            ) as PlayerRotation | null
         )
     )
     .toEqual({ pitch: -5, yaw: 25 });
@@ -141,8 +144,11 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
   await expect
     .poll(
       async () =>
-        await page.evaluate(() =>
-          (JSON.parse(document.documentElement.dataset.rotation ?? "null") as PlayerRotation | null)
+        await page.evaluate(
+          () =>
+            JSON.parse(
+              document.documentElement.dataset.rotation ?? "null"
+            ) as PlayerRotation | null
         )
     )
     .toEqual({ pitch: -5, yaw: 30 });
@@ -161,8 +167,11 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
       async () =>
         await page.evaluate(
           () =>
-            (JSON.parse(document.documentElement.dataset.rotation ?? "null") as PlayerRotation | null)
-              ?.pitch
+            (
+              JSON.parse(
+                document.documentElement.dataset.rotation ?? "null"
+              ) as PlayerRotation | null
+            )?.pitch
         )
     )
     .toBe(-50);

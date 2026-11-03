@@ -82,8 +82,7 @@ const files = item!.files.map((file) => {
     directorySelection = "components/ui";
   }
 
-  const directory =
-    directorySelection;
+  const directory = directorySelection;
 
   const source = fs.readFileSync(webFile(path.join(file.path)));
 
@@ -202,10 +201,7 @@ const worker = async function worker() {
         slotSelection = name;
       }
 
-      await expect(subject).toHaveAttribute(
-        "data-slot",
-        slotSelection
-      );
+      await expect(subject).toHaveAttribute("data-slot", slotSelection);
       await expect(subject).toBeVisible();
 
       if (name === "code-block") {

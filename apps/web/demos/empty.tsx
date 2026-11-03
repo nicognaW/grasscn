@@ -1,4 +1,6 @@
 import * as React from "react";
+
+import { Button } from "../registry/ui/button";
 import {
   Empty,
   EmptyHeader,
@@ -8,7 +10,6 @@ import {
 } from "../registry/ui/empty";
 import { Input } from "../registry/ui/input";
 import { Textarea } from "../registry/ui/textarea";
-import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 

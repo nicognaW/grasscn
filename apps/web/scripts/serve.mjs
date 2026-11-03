@@ -1,5 +1,5 @@
-import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
+import { createServer } from "node:http";
 
 const port = Number(process.env.PORT || 5173);
 const root = new URL("../public/r/", import.meta.url);

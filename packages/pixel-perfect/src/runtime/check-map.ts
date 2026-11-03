@@ -5,6 +5,11 @@ import path from "node:path";
 
 import { repoRoot } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
+import {
+  assertHistoricalUtilitySources,
+  validateHistoricalEvidence,
+  historicalMapComponents,
+} from "@ppt/runtime/historical-evidence";
 import type {
   RepeatedEvidenceCase,
   UpstreamRegistryCatalog,
@@ -28,12 +33,6 @@ import {
   readNativeGlyphCaptureManifest,
 } from "@ppt/runtime/map-evidence-readers";
 import { PNG } from "pngjs";
-
-import {
-  assertHistoricalUtilitySources,
-  validateHistoricalEvidence,
-  historicalMapComponents,
-} from "@ppt/runtime/historical-evidence";
 
 const root = repoRoot;
 
@@ -154,11 +153,11 @@ const mappedComponentNames = [...names];
 mappedComponentNames.sort();
 
 const supportedComponentNames = [
-    ...union.filter(
-      (name) => !excluded.some((component) => component.name === name)
-    ),
-    ...extensions.map((component) => component.name),
-  ];
+  ...union.filter(
+    (name) => !excluded.some((component) => component.name === name)
+  ),
+  ...extensions.map((component) => component.name),
+];
 
 supportedComponentNames.sort();
 
@@ -305,10 +304,7 @@ for (const component of map.components) {
 
     installedFilePaths.sort();
 
-    assert.deepEqual(
-      installedFilePaths,
-      filenames
-    );
+    assert.deepEqual(installedFilePaths, filenames);
     const behaviorFilePaths = behavior.files.map((file) => file.path);
 
     behaviorFilePaths.sort();
@@ -428,10 +424,7 @@ for (const component of map.components) {
 
       manifestCaseNames.sort();
 
-      assert.deepEqual(
-        reportedCaseNames,
-        manifestCaseNames
-      );
+      assert.deepEqual(reportedCaseNames, manifestCaseNames);
       const repeatedCaseNames = repeat.cases.map((c) => c.name);
 
       repeatedCaseNames.sort();
@@ -440,10 +433,7 @@ for (const component of map.components) {
 
       manifestCaseNames2.sort();
 
-      assert.deepEqual(
-        repeatedCaseNames,
-        manifestCaseNames2
-      );
+      assert.deepEqual(repeatedCaseNames, manifestCaseNames2);
 
       for (const file of report.files) {
         const sourcePath =
@@ -631,10 +621,7 @@ for (const component of map.components) {
 
         nativeCaseNames.sort();
 
-        assert.deepEqual(
-          observedCaseNames,
-          nativeCaseNames
-        );
+        assert.deepEqual(observedCaseNames, nativeCaseNames);
         assert.ok(
           observation.cases.every((c) => c.mismatchedPixels === 0),
           "Glyph observation changed native pixels"

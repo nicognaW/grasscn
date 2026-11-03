@@ -1,7 +1,8 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
-import { Label } from "../registry/ui/label";
+
+import type { DemoVariables } from "../demo-variables";
 import { Input } from "../registry/ui/input";
+import { Label } from "../registry/ui/label";
 import type { DemoProps } from "../types";
 
 const LabelDemo = ({ scale }: DemoProps) => {

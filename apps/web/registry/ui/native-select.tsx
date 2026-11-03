@@ -2,7 +2,12 @@
 
 import * as React from "react";
 
-import { isMinecraftRefCallback, isMinecraftRefCleanup, minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { Select, SelectTrigger } from "./select";
 

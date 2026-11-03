@@ -1,4 +1,7 @@
 import * as React from "react";
+
+import { useHighlightedCode } from "../registry/hooks/use-highlighted-code";
+import { Checkbox } from "../registry/ui/checkbox";
 import {
   CodeBlock,
   CodeBlockHeader,
@@ -9,9 +12,7 @@ import {
   CodeBlockLine,
   CodeBlockFooter,
 } from "../registry/ui/code-block";
-import { useHighlightedCode } from "../registry/hooks/use-highlighted-code";
 import { Textarea } from "../registry/ui/textarea";
-import { Checkbox } from "../registry/ui/checkbox";
 import type { DemoProps } from "../types";
 
 const CodeBlockDemo = ({ scale }: DemoProps) => {

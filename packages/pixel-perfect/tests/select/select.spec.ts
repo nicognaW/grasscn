@@ -74,11 +74,11 @@ test.describe("Select native matrix", () => {
       await subject.evaluate(
         (node, p) =>
           Object.assign(node.style, {
-            height: `${p.height  }px`,
-            left: `${p.x  }px`,
+            height: `${p.height}px`,
+            left: `${p.x}px`,
             position: "fixed",
-            top: `${p.y  }px`,
-            width: `${p.width  }px`,
+            top: `${p.y}px`,
+            width: `${p.width}px`,
           }),
         {
           height: c.height * c.scale,
@@ -90,13 +90,11 @@ test.describe("Select native matrix", () => {
       await expect(subject).toHaveAttribute("data-mc-select-ready", "true");
       await page.mouse.move(0, 0);
 
-      await (c.state === "focus" ?
-        subject.focus()
-      :
-        page.evaluate(() => {
-          (document.activeElement as HTMLElement)?.blur();
-        })
-      );
+      await (c.state === "focus"
+        ? subject.focus()
+        : page.evaluate(() => {
+            (document.activeElement as HTMLElement)?.blur();
+          }));
 
       if (c.state.endsWith("hover")) {
         await (

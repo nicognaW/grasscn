@@ -1,5 +1,8 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
+import { MinecraftDisclosureText } from "../registry/ui/minecraft-disclosure-text";
 import {
   Trace,
   TraceLine,
@@ -10,10 +13,8 @@ import {
   TraceCollapsibleTrigger,
   TraceCollapsibleContent,
 } from "../registry/ui/trace";
-import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
-import { MinecraftDisclosureText } from "../registry/ui/minecraft-disclosure-text";
 
 const TraceDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);

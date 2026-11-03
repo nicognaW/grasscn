@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Separator } from "../registry/ui/separator";
+
 import { Button } from "../registry/ui/button";
+import { Separator } from "../registry/ui/separator";
 import type { DemoProps } from "../types";
 
 const SeparatorDemo = ({ scale }: DemoProps) => {

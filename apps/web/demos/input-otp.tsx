@@ -1,12 +1,13 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
   InputOTPSeparator,
 } from "../registry/ui/input-otp";
-import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 

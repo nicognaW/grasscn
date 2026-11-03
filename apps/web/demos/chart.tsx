@@ -1,13 +1,15 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
 import {
   AnalyticsChartExample,
   type AnalyticsChartType,
 } from "../registry/blocks/chart-analytics";
 import { FpsChartExample } from "../registry/blocks/chart-fps";
 import { ProfilerChartExample } from "../registry/blocks/chart-profiler";
-import type { ChartConfig } from "../registry/ui/chart";
 import { Button } from "../registry/ui/button";
+import type { ChartConfig } from "../registry/ui/chart";
+import { MinecraftDisclosureText } from "../registry/ui/minecraft-disclosure-text";
 import {
   Select,
   SelectTrigger,
@@ -15,7 +17,6 @@ import {
   SelectContent,
   SelectItem,
 } from "../registry/ui/select";
-import { MinecraftDisclosureText } from "../registry/ui/minecraft-disclosure-text";
 import type { DemoProps } from "../types";
 
 // Official shadcn chart-bar-multiple and chart-pie-donut example datasets.
@@ -168,7 +169,7 @@ const ChartDemo = ({ scale }: DemoProps) => {
     <>
       <div
         ref={stage}
-        className="demo-stage demo-stage-display-flex flex-col demo-stage-flex-wrap-nowrap demo-stage-align-items-stretch demo-stage-min-width-0"
+        className="demo-stage demo-stage-display-flex demo-stage-flex-wrap-nowrap demo-stage-align-items-stretch demo-stage-min-width-0 flex-col"
         data-stage="chart"
         style={
           /* SAFETY: satisfies checks --mc-scale, --demo-stage-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
@@ -180,7 +181,7 @@ const ChartDemo = ({ scale }: DemoProps) => {
       >
         <section
           data-f3-web-data="true"
-          className="flex flex-col gap-(--demo-gap) min-w-0 w-full max-w-full"
+          className="flex w-full max-w-full min-w-0 flex-col gap-(--demo-gap)"
           style={
             /* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
             {
@@ -240,7 +241,7 @@ const ChartDemo = ({ scale }: DemoProps) => {
             </Button>
           </div>
           <div
-            className="flex flex-col items-start gap-(--demo-gap) overflow-x-auto w-full min-w-0 max-w-full p-(--demo-padding)"
+            className="flex w-full max-w-full min-w-0 flex-col items-start gap-(--demo-gap) overflow-x-auto p-(--demo-padding)"
             style={
               /* SAFETY: satisfies checks --demo-gap, --demo-padding against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
               {
@@ -289,7 +290,7 @@ const ChartDemo = ({ scale }: DemoProps) => {
           )}
         </section>
         <section
-          className="mc-chart-native-examples flex flex-col gap-(--demo-gap) min-w-0 w-full max-w-full"
+          className="mc-chart-native-examples flex w-full max-w-full min-w-0 flex-col gap-(--demo-gap)"
           data-chart-native-examples="true"
           style={
             /* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
@@ -336,7 +337,7 @@ const ChartDemo = ({ scale }: DemoProps) => {
             </Button>
           </div>
           <div
-            className="flex flex-col items-start gap-(--demo-gap) overflow-x-auto w-full min-w-0 max-w-full p-(--demo-padding)"
+            className="flex w-full max-w-full min-w-0 flex-col items-start gap-(--demo-gap) overflow-x-auto p-(--demo-padding)"
             style={
               /* SAFETY: satisfies checks --demo-gap, --demo-padding against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
               {

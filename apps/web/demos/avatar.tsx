@@ -1,7 +1,6 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
-import { Input } from "../registry/ui/input";
-import { Button } from "../registry/ui/button";
+
+import type { DemoVariables } from "../demo-variables";
 import {
   Avatar,
   AvatarImage,
@@ -9,6 +8,8 @@ import {
   AvatarGroup,
   AvatarGroupCount,
 } from "../registry/ui/avatar";
+import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 
 const people = [

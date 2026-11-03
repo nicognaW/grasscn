@@ -5,7 +5,9 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
-  isMinecraftRefCallback, isMinecraftRefCleanup, isMinecraftTextContent,
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,

@@ -1,6 +1,6 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
-import { Sign, HangingSign, type SignWood } from "../registry/ui/sign";
+
+import type { DemoVariables } from "../demo-variables";
 import { Input } from "../registry/ui/input";
 import {
   Select,
@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../registry/ui/select";
+import { Sign, HangingSign, type SignWood } from "../registry/ui/sign";
 import type { DemoProps } from "../types";
 
 const woods: SignWood[] = [
@@ -37,7 +38,7 @@ const SignDemo = ({ scale }: DemoProps) => {
       className="demo-stage demo-stage-display-grid demo-stage-gap-20"
       data-stage="sign"
     >
-      <div className="flex gap-4 flex-wrap items-center">
+      <div className="flex flex-wrap items-center gap-4">
         <label htmlFor="sign-label">First line</label>
         <Input
           id="sign-label"
@@ -74,7 +75,7 @@ const SignDemo = ({ scale }: DemoProps) => {
           </SelectContent>
         </Select>
       </div>
-      <div className="flex items-center gap-6 flex-wrap">
+      <div className="flex flex-wrap items-center gap-6">
         <Sign
           lines={lines}
           wood={wood}

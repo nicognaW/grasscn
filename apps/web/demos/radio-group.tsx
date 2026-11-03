@@ -1,8 +1,9 @@
 import * as React from "react";
-import { RadioGroup, RadioGroupItem } from "../registry/ui/radio-group";
-import { Label } from "../registry/ui/label";
-import { Input } from "../registry/ui/input";
+
 import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
+import { Label } from "../registry/ui/label";
+import { RadioGroup, RadioGroupItem } from "../registry/ui/radio-group";
 import type { DemoProps } from "../types";
 
 const RadioGroupDemo = ({ scale }: DemoProps) => {

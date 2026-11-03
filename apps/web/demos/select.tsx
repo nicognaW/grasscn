@@ -1,4 +1,7 @@
 import * as React from "react";
+
+import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
 import {
   Select,
   SelectTrigger,
@@ -6,8 +9,6 @@ import {
   SelectContent,
   SelectItem,
 } from "../registry/ui/select";
-import { Button } from "../registry/ui/button";
-import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 
 const initial = [

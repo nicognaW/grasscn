@@ -1,10 +1,11 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../registry/ui/tabs";
+
+import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
+import { Checkbox } from "../registry/ui/checkbox";
 import { Input } from "../registry/ui/input";
 import { Label } from "../registry/ui/label";
-import { Checkbox } from "../registry/ui/checkbox";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../registry/ui/tabs";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 

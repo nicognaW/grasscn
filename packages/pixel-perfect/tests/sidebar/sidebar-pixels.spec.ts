@@ -144,20 +144,17 @@ test.describe("Sidebar original native constituent cases", () => {
 
       if (kind === "button") {
         partsSelection = [
-              "menu-button",
-              "sub-button",
-              ...(representative
-                ? ["trigger", "group-action", "menu-action"]
-                : []),
-            ];
+          "menu-button",
+          "sub-button",
+          ...(representative ? ["trigger", "group-action", "menu-action"] : []),
+        ];
       } else if (kind === "label") {
         partsSelection = ["label", "badge"];
       } else {
         partsSelection = [kind];
       }
 
-      const parts =
-        partsSelection;
+      const parts = partsSelection;
 
       for (const part of parts) {
         for (const active of ["menu-button", "sub-button"].includes(part) &&
@@ -225,10 +222,7 @@ test.describe("Sidebar original native constituent cases", () => {
               slotSelection = `sidebar-${part}`;
             }
 
-            await expect(subject).toHaveAttribute(
-              "data-slot",
-              slotSelection
-            );
+            await expect(subject).toHaveAttribute("data-slot", slotSelection);
             await page.addStyleTag({
               content:
                 "#root{visibility:hidden}[data-subject]{visibility:visible}",

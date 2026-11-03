@@ -2,8 +2,8 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
-import { version } from "bun";
 import { workspaceNames } from "@tests/runtime/verification-types";
+import { version } from "bun";
 
 const digest = (bytes: string | Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");

@@ -1,5 +1,5 @@
-import { expect, test } from "@grasscn/tests/test";
 import { expectTruthy } from "@grasscn/tests/assertions";
+import { expect, test } from "@grasscn/tests/test";
 
 const website = (
   process.env.GRASSCN_WEBSITE_URL ??

@@ -1,4 +1,6 @@
 import * as React from "react";
+
+import { Button } from "../registry/ui/button";
 import {
   Dialog,
   DialogTrigger,
@@ -9,7 +11,6 @@ import {
   DialogFooter,
   DialogClose,
 } from "../registry/ui/dialog";
-import { Button } from "../registry/ui/button";
 import { Input } from "../registry/ui/input";
 import { Textarea } from "../registry/ui/textarea";
 import type { DemoProps } from "../types";

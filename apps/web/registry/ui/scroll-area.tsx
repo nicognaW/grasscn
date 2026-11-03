@@ -3,7 +3,12 @@
 import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area";
 import * as React from "react";
 
-import { isMinecraftRefCallback, isMinecraftRefCleanup, minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 

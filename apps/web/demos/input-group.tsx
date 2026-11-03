@@ -18,7 +18,7 @@ const InputGroupDemo = ({ scale }: DemoProps) => {
   return (
     <>
       <div
-        className="demo-stage demo-stage-display-grid grid-cols-1 demo-stage-gap-16"
+        className="demo-stage demo-stage-display-grid demo-stage-gap-16 grid-cols-1"
         data-stage="input-group"
       >
         <InputGroup

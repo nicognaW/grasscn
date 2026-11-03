@@ -1,6 +1,7 @@
 import * as React from "react";
-import { MinecraftMap, LocatorBar } from "../registry/ui/map";
+
 import { Button } from "../registry/ui/button";
+import { MinecraftMap, LocatorBar } from "../registry/ui/map";
 import type { DemoProps } from "../types";
 import { getWorldMapPixels } from "./map-world-data";
 
@@ -74,7 +75,7 @@ const MapDemo = ({ scale }: DemoProps) => {
           onMarkerSelect={setSelected}
         />
       </div>
-      <div className="flex gap-3 flex-wrap">
+      <div className="flex flex-wrap gap-3">
         <Button
           scale={scale}
           onClick={() => {

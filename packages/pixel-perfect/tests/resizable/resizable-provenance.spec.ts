@@ -121,7 +121,9 @@ test("Resizable ships unchanged original recipe-book arrow PNG artwork", () => {
   for (const match of css.matchAll(
     /\.mc-resizable-arrow\[data-direction="(?<direction>backward|forward)"\]\s*\{(?<declarations>[\s\S]*?)\}/gu
   )) {
-    const images = [...match[2].matchAll(/data:image\/png;base64,(?<pngBase64>[^")]+)/gu)];
+    const images = [
+      ...match[2].matchAll(/data:image\/png;base64,(?<pngBase64>[^")]+)/gu),
+    ];
     expect(images).toHaveLength(2);
 
     for (const [index, image] of images.entries()) {

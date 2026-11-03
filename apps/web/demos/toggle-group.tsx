@@ -1,7 +1,8 @@
 import * as React from "react";
-import { ToggleGroup, ToggleGroupItem } from "../registry/ui/toggle-group";
+
 import { Button } from "../registry/ui/button";
 import { Label } from "../registry/ui/label";
+import { ToggleGroup, ToggleGroupItem } from "../registry/ui/toggle-group";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 

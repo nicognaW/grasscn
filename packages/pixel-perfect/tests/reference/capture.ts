@@ -85,8 +85,7 @@ if (process.platform === "win32") {
   platformNameSelection = "linux";
 }
 
-const platformName =
-  platformNameSelection;
+const platformName = platformNameSelection;
 
 const permitted = function permitted(library: MinecraftCaptureLibrary) {
   if (!library.rules) {
@@ -313,7 +312,7 @@ const provenance = {
 
 await writeFile(
   path.join(outputDir, "manifest.json"),
-  `${JSON.stringify(provenance, null, 2)  }\n`
+  `${JSON.stringify(provenance, null, 2)}\n`
 );
 
 console.log(`Captured ${cases.length} reference cases in ${captures}`);

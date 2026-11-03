@@ -111,10 +111,7 @@ for (const [part, dir] of [
 
           await expect(
             subject.locator("[data-mc-item-media-ready]")
-          ).toHaveAttribute(
-            "data-mc-item-media-state",
-            mediaStateSelection
-          );
+          ).toHaveAttribute("data-mc-item-media-state", mediaStateSelection);
         } else {
           if (c.state === "hover") {
             await subject.hover();

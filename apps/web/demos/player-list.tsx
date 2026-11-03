@@ -1,10 +1,11 @@
 import * as React from "react";
+
+import { Button } from "../registry/ui/button";
 import {
   PlayerList,
   Scoreboard,
   type PlayerListEntry,
 } from "../registry/ui/player-list";
-import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 
 const initial: PlayerListEntry[] = [
@@ -65,7 +66,7 @@ const PlayerListDemo = ({ scale }: DemoProps) => {
       <p className="grass-note">
         {players.find((p) => p.id === selected)?.name ?? "Select a player"}
       </p>
-      <div className="flex gap-3 flex-wrap">
+      <div className="flex flex-wrap gap-3">
         <Button
           scale={scale}
           onClick={() => {

@@ -173,10 +173,7 @@ try {
 
         await expect(
           subject.locator("[data-mc-item-media-ready]")
-        ).toHaveAttribute(
-          "data-mc-item-media-state",
-          mediaStateSelection
-        );
+        ).toHaveAttribute("data-mc-item-media-state", mediaStateSelection);
       } else {
         if (c.state === "hover") {
           await subject.hover();
@@ -288,10 +285,7 @@ try {
     }
 
     fs.writeFileSync(
-      path.join(
-        target,
-        reportFilenameSelection
-      ),
+      path.join(target, reportFilenameSelection),
       JSON.stringify(
         {
           browser: browser.version(),

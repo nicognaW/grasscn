@@ -1,5 +1,8 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "../registry/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -8,8 +11,6 @@ import {
   CarouselNext,
   type CarouselApi,
 } from "../registry/ui/carousel";
-import { Card, CardHeader, CardTitle, CardContent } from "../registry/ui/card";
-import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 
 const CarouselDemo = ({ scale }: DemoProps) => {

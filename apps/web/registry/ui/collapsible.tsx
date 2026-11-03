@@ -6,7 +6,9 @@ import * as React from "react";
 import { Button } from "./button";
 import { MinecraftCollapsibleText } from "./minecraft-collapsible-text";
 import {
-  isMinecraftRefCallback, isMinecraftRefCleanup, isMinecraftTextContent,
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
 } from "./minecraft-render";

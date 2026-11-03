@@ -5,9 +5,10 @@ interface ToggleGroupPlaybackState extends Window {
   sounds?: { rate: number; source: string; volume: number }[];
 }
 
-type InitializedToggleGroupPlaybackState = typeof window & ToggleGroupPlaybackState & {
-  sounds: { rate: number; source: string; volume: number }[];
-};
+type InitializedToggleGroupPlaybackState = typeof window &
+  ToggleGroupPlaybackState & {
+    sounds: { rate: number; source: string; volume: number }[];
+  };
 
 const base = "/?component=toggle-group";
 

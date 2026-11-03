@@ -1,15 +1,16 @@
 "use client";
 
 import * as React from "react";
+import * as RechartsPrimitive from "recharts";
+import type { TooltipValueType } from "recharts";
 
-import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
 import {
-  isMinecraftTextContent,
-  minecraftClasses as cn,
-  minecraftStyle,
-} from "./minecraft-render";
-import { MinecraftSurface } from "./minecraft-surface";
-import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
+  ChartPixelBar as NativeChartPixelBar,
+  ChartProfilerSector as NativeChartProfilerSector,
+  ChartPixelSurface as NativeChartPixelSurface,
+  ChartAxisTick as NativeChartAxisTick,
+} from "./minecraft-chart-context";
+import { ChartGeometryProvider } from "./minecraft-chart-context";
 
 import "./minecraft-chart.css";
 
@@ -19,18 +20,14 @@ import {
   chartFpsColor as nativeChartFpsColor,
   chartProfilerColor as nativeChartProfilerColor,
 } from "./minecraft-chart-native";
-
+import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
 import {
-  ChartPixelBar as NativeChartPixelBar,
-  ChartProfilerSector as NativeChartProfilerSector,
-  ChartPixelSurface as NativeChartPixelSurface,
-  ChartAxisTick as NativeChartAxisTick,
-} from "./minecraft-chart-context";
-
-import * as RechartsPrimitive from "recharts";
-import type { TooltipValueType } from "recharts";
-
-import { ChartGeometryProvider } from "./minecraft-chart-context";
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
+import { MinecraftSurface } from "./minecraft-surface";
+import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
 
 export {
   NativeChartFpsFrame as ChartFpsFrame,

@@ -1,5 +1,9 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
+
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
+import { Message, MessageContent } from "../registry/ui/message";
 import {
   MessageScrollerProvider,
   MessageScroller,
@@ -9,9 +13,6 @@ import {
   MessageScrollerButton,
   useMessageScroller,
 } from "../registry/ui/message-scroller";
-import { Message, MessageContent } from "../registry/ui/message";
-import { Input } from "../registry/ui/input";
-import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 
 type Line = { author?: string; text: string; system?: boolean };
@@ -127,7 +128,7 @@ const History = ({ scale }: DemoProps) => {
             </MessageScrollerContent>
           </MessageScrollerViewport>
           <div
-            className="flex justify-end min-h-(--demo-min-height) pt-(--demo-padding-top)"
+            className="flex min-h-(--demo-min-height) justify-end pt-(--demo-padding-top)"
             style={
               /* SAFETY: satisfies checks --demo-min-height, --demo-padding-top against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
               {

@@ -44,10 +44,7 @@ const secondCaseNames = second.cases.map((c) => c.name);
 
 secondCaseNames.sort();
 
-assert.deepEqual(
-  firstCaseNames,
-  secondCaseNames
-);
+assert.deepEqual(firstCaseNames, secondCaseNames);
 
 const cases = [];
 

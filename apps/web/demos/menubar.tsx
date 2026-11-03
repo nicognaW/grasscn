@@ -1,4 +1,6 @@
 import * as React from "react";
+
+import { Input } from "../registry/ui/input";
 import {
   Menubar,
   MenubarMenu,
@@ -17,7 +19,6 @@ import {
   MenubarPortal,
   MenubarSubContent,
 } from "../registry/ui/menubar";
-import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 
 const MenubarDemo = ({ scale }: DemoProps) => {

@@ -10,7 +10,12 @@ import {
   DialogLayoutContext,
   MinecraftDialogText,
 } from "./minecraft-dialog-text";
-import { isMinecraftRefCallback, isMinecraftRefCleanup, minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";

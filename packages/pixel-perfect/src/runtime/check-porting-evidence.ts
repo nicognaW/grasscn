@@ -122,15 +122,11 @@ export const verifyPortingEvidence = async function verifyPortingEvidence(
     `${trading}trading-scroll-events.json`
   );
 
-  const eventOfferCounts = Object.keys(events)
-      .map(Number);
+  const eventOfferCounts = Object.keys(events).map(Number);
 
   eventOfferCounts.sort((a, b) => a - b);
 
-  assert.deepEqual(
-    eventOfferCounts,
-    repeat.offerCounts
-  );
+  assert.deepEqual(eventOfferCounts, repeat.offerCounts);
   assert.equal(
     Object.values(events).reduce((n, cases) => n + cases.length, 0),
     repeat.count

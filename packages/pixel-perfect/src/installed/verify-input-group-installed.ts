@@ -225,11 +225,7 @@ try {
           }
         }
 
-        await (c.state === "hover" ?
-          subject.hover()
-        :
-          page.mouse.move(0, 0)
-        );
+        await (c.state === "hover" ? subject.hover() : page.mouse.move(0, 0));
 
         if (entry) {
           const cursor = c.cursor ?? c.text!.length;
