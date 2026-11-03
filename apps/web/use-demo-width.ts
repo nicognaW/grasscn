@@ -29,8 +29,8 @@ export const useDemoWidth = function useDemoWidth(scale: 1 | 2 | 3) {
     observer.observe(element);
 
     return () => {
-observer.disconnect();
-};
+      observer.disconnect();
+    };
   }, [scale]);
 
   return { ref, width };

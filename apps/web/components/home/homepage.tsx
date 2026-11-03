@@ -598,8 +598,8 @@ const Performance = () => {
     o.observe(el);
 
     return () => {
-o.disconnect();
-};
+      o.disconnect();
+    };
   }, []);
 
   return (

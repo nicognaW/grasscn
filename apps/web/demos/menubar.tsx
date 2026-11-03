@@ -76,8 +76,8 @@ const MenubarDemo = ({ scale }: DemoProps) => {
                 checked={coordinates}
                 onCheckedChange={setCoordinates}
                 onClick={(event) => {
-event.preventDefault();
-}}
+                  event.preventDefault();
+                }}
                 closeOnClick={false}
               >
                 Show coordinates
@@ -86,8 +86,8 @@ event.preventDefault();
                 <MenubarRadioItem
                   value="world"
                   onClick={(event) => {
-event.preventDefault();
-}}
+                    event.preventDefault();
+                  }}
                   closeOnClick={false}
                 >
                   World
@@ -95,8 +95,8 @@ event.preventDefault();
                 <MenubarRadioItem
                   value="game"
                   onClick={(event) => {
-event.preventDefault();
-}}
+                    event.preventDefault();
+                  }}
                   closeOnClick={false}
                 >
                   Game

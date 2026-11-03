@@ -113,8 +113,8 @@ const ContextMenuDemo = ({ scale }: DemoProps) => {
               checked={coordinates}
               onCheckedChange={setCoordinates}
               onClick={(event) => {
-event.preventDefault();
-}}
+                event.preventDefault();
+              }}
               closeOnClick={false}
             >
               Show coordinates
@@ -123,8 +123,8 @@ event.preventDefault();
               <ContextMenuRadioItem
                 value="world"
                 onClick={(event) => {
-event.preventDefault();
-}}
+                  event.preventDefault();
+                }}
                 closeOnClick={false}
               >
                 World
@@ -132,8 +132,8 @@ event.preventDefault();
               <ContextMenuRadioItem
                 value="game"
                 onClick={(event) => {
-event.preventDefault();
-}}
+                  event.preventDefault();
+                }}
                 closeOnClick={false}
               >
                 Game

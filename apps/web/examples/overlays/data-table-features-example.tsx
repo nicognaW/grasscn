@@ -42,8 +42,8 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
               aria-label="World"
               style={{ width: 100 * scale, maxWidth: "100%" }}
               onClick={() => {
-column.toggleSorting();
-}}
+                column.toggleSorting();
+              }}
             >{`World${column.getIsSorted() === "asc" ? " ^" : column.getIsSorted() === "desc" ? " v" : ""}`}</Button>
           ),
           filterFn: "includesString",
@@ -121,8 +121,8 @@ column.toggleSorting();
                 aria-selected={row.getIsSelected()}
                 data-state={row.getIsSelected() ? "selected" : undefined}
                 onClick={() => {
-row.toggleSelected();
-}}
+                  row.toggleSelected();
+                }}
                 onKeyDown={(e) => {
                   if (
                     e.target === e.currentTarget &&
@@ -156,8 +156,8 @@ row.toggleSelected();
           style={{ width: 80 * scale }}
           disabled={!table.getCanPreviousPage()}
           onClick={() => {
-table.previousPage();
-}}
+            table.previousPage();
+          }}
         >
           Previous
         </Button>
@@ -167,8 +167,8 @@ table.previousPage();
           style={{ width: 80 * scale }}
           disabled={!table.getCanNextPage()}
           onClick={() => {
-table.nextPage();
-}}
+            table.nextPage();
+          }}
         >
           Next
         </Button>

@@ -53,8 +53,8 @@ const QuestionnaireDemo = ({ scale }: DemoProps) => {
     observer.observe(node);
 
     return () => {
-observer.disconnect();
-};
+      observer.disconnect();
+    };
   }, [scale, session]);
 
   return (

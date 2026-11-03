@@ -83,8 +83,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
     observer.observe(stage.current!);
 
     return () => {
-observer.disconnect();
-};
+      observer.disconnect();
+    };
   }, [scale]);
 
   const copy = (text: string) => (
