@@ -162,12 +162,12 @@ const CommandList = ({
     () => node.current,
     []
   );
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const element = node.current!;
     const items = element.querySelector<HTMLElement>("[data-mc-command-items]");
 
     if (!items) {
-      return;
+      return undefined;
     }
 
     let frame = 0;

@@ -42,9 +42,9 @@ const Empty = ({
     []
   );
   const plain = isMinecraftTextContent(children);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!plain || !node.current || !textNode.current) {
-      return;
+      return undefined;
     }
 
     const root = node.current;

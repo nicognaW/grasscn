@@ -104,7 +104,7 @@ const PopoverContent = ({
   const [width, setWidth] = React.useState(214);
 
   const forwarded = React.useCallback(
-    (element: HTMLDivElement | null) => {
+    (element: HTMLDivElement | null): (() => void) | undefined => {
       setNode(element);
 
       if (isMinecraftRefCallback(ref)) {
@@ -119,13 +119,15 @@ const PopoverContent = ({
       } else if (ref) {
         ref.current = element;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
     let frame = 0;

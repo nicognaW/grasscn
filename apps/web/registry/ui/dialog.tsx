@@ -38,7 +38,7 @@ const useElement = function useElement<T extends HTMLElement>(
   const [element, setElement] = React.useState<T | null>(null);
 
   const callback = React.useCallback(
-    (node: T | null) => {
+    (node: T | null): (() => void) | undefined => {
       setElement(node);
 
       if (isMinecraftRefCallback(ref)) {
@@ -53,6 +53,8 @@ const useElement = function useElement<T extends HTMLElement>(
       } else if (ref) {
         ref.current = node;
       }
+
+      return undefined;
     },
     [ref]
   );
@@ -163,9 +165,9 @@ const DialogContent = ({
   const scale = explicitScale ?? inherited;
   const [element, forwarded] = useElement(ref);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
@@ -293,9 +295,9 @@ const DialogFooter = ({
   const { scale, contentWidth } = React.useContext(DialogLayoutContext);
   const [element, forwarded] = useElement(ref);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {

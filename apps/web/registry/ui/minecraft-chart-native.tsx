@@ -583,9 +583,9 @@ const ChartProfilerFrame = ({
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const [ready, setReady] = React.useState(false);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!data.length) {
-      return;
+      return undefined;
     }
 
     let disposed = false;

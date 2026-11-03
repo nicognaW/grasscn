@@ -14,7 +14,7 @@ export const MinecraftDialogBackdrop = () => {
   const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/gu, "");
 
   const [bands, setBands] = React.useState<Band[]>([]);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const host = ref.current!.parentElement!;
 
     const canvas = document.createElement("canvas");
@@ -27,7 +27,7 @@ export const MinecraftDialogBackdrop = () => {
     });
 
     if (!gl || !CSS.supports("backdrop-filter", "url(#native)")) {
-      return;
+      return undefined;
     }
 
     const shader = (kind: number, source: string) => {

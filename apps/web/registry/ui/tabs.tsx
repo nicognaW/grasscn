@@ -53,7 +53,7 @@ const useLocalRef = function useLocalRef<T extends HTMLElement>(
   const [element, setElement] = React.useState<T | null>(null);
 
   const callback = React.useCallback(
-    (node: T | null) => {
+    (node: T | null): (() => void) | undefined => {
       local.current = node;
       setElement(node);
 
@@ -70,6 +70,8 @@ const useLocalRef = function useLocalRef<T extends HTMLElement>(
       } else if (forwarded) {
         forwarded.current = node;
       }
+
+      return undefined;
     },
     [forwarded]
   );
@@ -103,11 +105,11 @@ const Tabs = ({
   const requested = React.useRef<string | undefined>(undefined);
   const expiry = React.useRef(0);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const root = element;
 
     if (!root) {
-      return;
+      return undefined;
     }
 
     const current = () =>
@@ -194,9 +196,9 @@ const TabsList = ({
   const scale = React.useContext(ScaleContext);
   const [, forwarded, element] = useLocalRef(ref);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {
@@ -278,12 +280,12 @@ const TabsTrigger = ({
 
   const text = isMinecraftTextContent(content) ? String(content) : null;
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     let cancelled = false;
     let frame = 0;
 
     if (!element) {
-      return;
+      return undefined;
     }
 
     const update = () => {

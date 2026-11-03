@@ -77,11 +77,11 @@ export const MinecraftCardText = ({
   const scale = React.useContext(CardScaleContext);
   const node = React.useRef<HTMLSpanElement>(null);
   const [width, setWidth] = React.useState(200);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const element = node.current;
 
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {

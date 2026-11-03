@@ -47,7 +47,7 @@ const NativeSelect = ({
   const [label, setLabel] = React.useState("");
 
   const forwarded = React.useCallback(
-    (element: HTMLSelectElement | null) => {
+    (element: HTMLSelectElement | null): (() => void) | undefined => {
       node.current = element;
 
       if (isMinecraftRefCallback(ref)) {
@@ -60,21 +60,23 @@ const NativeSelect = ({
           };
         }
 
-        return;
+        return undefined;
       }
 
       if (ref) {
         ref.current = element;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const element = node.current;
 
     if (!element) {
-      return;
+      return undefined;
     }
 
     let frame = 0;

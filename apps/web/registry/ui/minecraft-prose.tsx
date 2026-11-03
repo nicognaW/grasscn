@@ -145,7 +145,7 @@ const MinecraftProse = ({
   const text = isMinecraftTextContent(content) ? String(content) : null;
 
   const unicode = text !== null && /\P{ASCII}/u.test(text);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (unicode) {
       let live = true;
       void loadUnihex().then(() => {
@@ -158,6 +158,8 @@ const MinecraftProse = ({
         live = false;
       };
     }
+
+    return undefined;
   }, [unicode]);
   React.useLayoutEffect(() => {
     const element = node.current!;

@@ -82,9 +82,9 @@ const TooltipContent = ({
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
   const [available, setAvailable] = React.useState(maxWidth);
   React.useImperativeHandle<typeof node, typeof node>(ref, () => node, [node]);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
     const measure = () => {

@@ -113,9 +113,9 @@ const CodeBlockCopyButton = ({
       live.current = false;
     };
   }, []);
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
     if (!copied) {
-      return;
+      return undefined;
     }
 
     const timer = setTimeout(() => {

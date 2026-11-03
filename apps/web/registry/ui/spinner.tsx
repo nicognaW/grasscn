@@ -27,9 +27,9 @@ const Spinner = ({
   logicalWidth?: number;
 }) => {
   const [time, setTime] = React.useState(0);
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
     if (typeof timeMs !== "undefined" && timeMs !== null) {
-      return;
+      return undefined;
     }
 
     let frame = 0;

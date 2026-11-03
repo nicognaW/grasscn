@@ -72,7 +72,7 @@ const useMenuFrame = function useMenuFrame(
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
 
   const forwarded = React.useCallback(
-    (element: HTMLDivElement | null) => {
+    (element: HTMLDivElement | null): (() => void) | undefined => {
       setNode(element);
 
       if (isMinecraftRefCallback(ref)) {
@@ -87,13 +87,15 @@ const useMenuFrame = function useMenuFrame(
       } else if (ref) {
         ref.current = element;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
     const items = [...node.children].find((child) =>
@@ -101,7 +103,7 @@ const useMenuFrame = function useMenuFrame(
     ) as HTMLElement | undefined;
 
     if (!items) {
-      return;
+      return undefined;
     }
 
     let frame = 0;

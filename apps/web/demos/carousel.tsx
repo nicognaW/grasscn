@@ -23,9 +23,9 @@ const CarouselDemo = ({ scale }: DemoProps) => {
   const [selected, setSelected] = React.useState(0);
   const [vertical, setVertical] = React.useState(false);
 
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
     if (!api) {
-      return;
+      return undefined;
     }
 
     const update = () => {

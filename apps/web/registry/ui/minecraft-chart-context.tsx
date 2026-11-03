@@ -368,11 +368,11 @@ export const ChartPixelSurface = ({
     "--mc-chart-surface-width": Math.max(1, Math.floor(width / scale)) * scale,
   };
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const svg = canvas.current?.closest("svg.recharts-surface");
 
     if (!svg) {
-      return;
+      return undefined;
     }
 
     const observer = new MutationObserver((records) => {

@@ -97,7 +97,7 @@ const CollapsibleContent = ({
   const [width, setWidth] = React.useState<number>();
 
   const forwarded = React.useCallback(
-    (node: HTMLDivElement | null) => {
+    (node: HTMLDivElement | null): (() => void) | undefined => {
       setElement(node);
 
       if (isMinecraftRefCallback(ref)) {
@@ -112,13 +112,15 @@ const CollapsibleContent = ({
       } else if (ref) {
         ref.current = node;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {

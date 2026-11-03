@@ -4,11 +4,11 @@ import * as React from "react";
 export const useDemoWidth = function useDemoWidth(scale: 1 | 2 | 3) {
   const ref = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState(200);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const element = ref.current;
 
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {

@@ -240,9 +240,9 @@ const Toaster = ({
     },
     []
   );
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!host) {
-      return;
+      return undefined;
     }
 
     const entries = entriesRef.current;

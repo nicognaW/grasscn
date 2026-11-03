@@ -136,7 +136,7 @@ const MinecraftDisclosureText = ({
   const text = isMinecraftTextContent(children) ? String(children) : null;
 
   const unicode = text !== null && /\P{ASCII}/u.test(text);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (unicode) {
       let live = true;
       void loadUnihex().then(() => {
@@ -149,6 +149,8 @@ const MinecraftDisclosureText = ({
         live = false;
       };
     }
+
+    return undefined;
   }, [unicode]);
   React.useLayoutEffect(() => {
     const element = node.current!;
