@@ -73,7 +73,7 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
       test(`Menubar trigger native pixels: ${c.name} open:${open}`, async ({
         page,
       }, info) => {
-        await page.setViewportSize({ width: 1536, height: 900 });
+        await page.setViewportSize({ height: 900, width: 1536 });
 
         const params = new URLSearchParams({
           component: "menubar",

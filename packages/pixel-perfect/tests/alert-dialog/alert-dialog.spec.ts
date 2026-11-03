@@ -88,7 +88,7 @@ for (const constituentDirectory of [
       test(`AlertDialog native pixels: ${c.name}`, async ({
         page,
       }, testInfo) => {
-        await page.setViewportSize({ width: 1536, height: 900 });
+        await page.setViewportSize({ height: 900, width: 1536 });
 
         const query = new URLSearchParams({
           component: "alert-dialog",

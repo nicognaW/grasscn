@@ -105,7 +105,7 @@ test.describe("Structural native constituents", () => {
             test(`${component} native ${part}: ${c.name} orientation:${orientation} active:${active}`, async ({
               page,
             }, info) => {
-              await page.setViewportSize({ width: 1536, height: 900 });
+              await page.setViewportSize({ height: 900, width: 1536 });
 
               const params = new URLSearchParams({
                 component,

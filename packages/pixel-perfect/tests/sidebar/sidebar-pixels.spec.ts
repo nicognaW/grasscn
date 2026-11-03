@@ -167,7 +167,7 @@ test.describe("Sidebar original native constituent cases", () => {
           test(`Sidebar ${part} native pixels ${c.name} active:${active}`, async ({
             page,
           }, info) => {
-            await page.setViewportSize({ width: 1536, height: 900 });
+            await page.setViewportSize({ height: 900, width: 1536 });
 
             if (kind === "input") {
               await page.clock.install({

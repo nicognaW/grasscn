@@ -140,7 +140,7 @@ export const nativeTextTests = function nativeTextTests(
         test(`${component} ${part} native pixels: ${c.name}`, async ({
           page,
         }, info) => {
-          await page.setViewportSize({ width: 1536, height: 900 });
+          await page.setViewportSize({ height: 900, width: 1536 });
 
           const params = new URLSearchParams({
             component,

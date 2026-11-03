@@ -101,7 +101,7 @@ for (const component of ["calendar", "date-picker"]) {
           test(`${component} ${part} ${c.name} ${alias}`, async ({
             page,
           }, info) => {
-            await page.setViewportSize({ width: 1536, height: 900 });
+            await page.setViewportSize({ height: 900, width: 1536 });
 
             const q = new URLSearchParams({
               component,
