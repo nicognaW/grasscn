@@ -131,9 +131,12 @@ test("Retired components are absent from supported catalog and served payloads",
 
   expect(registry.items.length).toBe(mapSize);
 
-  const served = await (
+  // SAFETY: the owned registry generator serves this catalogue's items; keep the original HTTP parse and existing count assertion unchanged.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact consumed items protocol from the authored/generated registry producer.
+  const served = (await (
     await request.get(new URL("r/registry.json", origin).href)
-  ).json();
+  ).json()) as Pick<ReturnType<typeof registryDocument>, "items">;
+  // oxlint-enable typescript/no-unsafe-type-assertion
 
   expect(served.items).toHaveLength(registry.items.length);
   await page.goto(`${origin}docs`);
