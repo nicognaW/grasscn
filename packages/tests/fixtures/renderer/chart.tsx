@@ -259,39 +259,44 @@ export const ChartFixture = () => {
     };
   }, []);
 
-  return p.has("metric") ? (
-    <MetricFixture />
-  ) : c.element === "chart-fps" ? (
-    <FpsChartExample
-      dataKey="value"
-      id="subject"
-      scale={scale}
-      width={c.width}
-      data={c.samples
-        .slice(-240)
-        .slice(Math.max(0, 240 - ((c.width ?? 242) - 2)))
-        .map((value: number) => ({ value: value / 1e6 }))}
-      framerateLimit={c.value}
-      className="fixture-geometry-x fixture-geometry-y"
-      style={style}
-      data-subject="true"
-    />
-  ) : c.element === "chart-pie" ? (
-    <ProfilerChartExample
-      dataKey="percentage"
-      id="subject"
-      scale={scale}
-      rootName={c.rootName}
-      data={(c.labels ?? []).map((name: string, i: number) => ({
-        globalPercentage: c.globalPercentages[i],
-        name,
-        percentage: c.percentages[i],
-      }))}
-      className="fixture-geometry-x fixture-geometry-y"
-      style={style}
-      data-subject="true"
-    />
-  ) : (
-    <ApiFixture />
-  );
+  if (p.has("metric")) {
+    return <MetricFixture />;
+  }
+  if (c.element === "chart-fps") {
+    return (
+      <FpsChartExample
+        dataKey="value"
+        id="subject"
+        scale={scale}
+        width={c.width}
+        data={c.samples
+          .slice(-240)
+          .slice(Math.max(0, 240 - ((c.width ?? 242) - 2)))
+          .map((value: number) => ({ value: value / 1e6 }))}
+        framerateLimit={c.value}
+        className="fixture-geometry-x fixture-geometry-y"
+        style={style}
+        data-subject="true"
+      />
+    );
+  }
+  if (c.element === "chart-pie") {
+    return (
+      <ProfilerChartExample
+        dataKey="percentage"
+        id="subject"
+        scale={scale}
+        rootName={c.rootName}
+        data={(c.labels ?? []).map((name: string, i: number) => ({
+          globalPercentage: c.globalPercentages[i],
+          name,
+          percentage: c.percentages[i],
+        }))}
+        className="fixture-geometry-x fixture-geometry-y"
+        style={style}
+        data-subject="true"
+      />
+    );
+  }
+  return <ApiFixture />;
 };
