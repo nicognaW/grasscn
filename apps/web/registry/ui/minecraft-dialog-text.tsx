@@ -6,6 +6,8 @@ import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+
 interface DialogBoldGlyphStyle extends React.CSSProperties {
   "--mc-advance": number;
   "--mc-glyph-x": number;
@@ -20,7 +22,7 @@ export const DialogLayoutContext = React.createContext({
 const widthOf = function widthOf(text: string, bold: boolean) {
   return Math.ceil(
     [...text].reduce((sum, char) => {
-      const ascii = minecraftGlyphs[char.codePointAt(0)! - 32];
+      const ascii = asciiGlyphs[char.codePointAt(0)! - 32];
 
       return (
         sum +

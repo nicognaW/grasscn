@@ -12,6 +12,9 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-unicode.css";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const observedMenuGlyphs: Partial<typeof menuGlyphAtlas> = menuGlyphAtlas;
+
 interface MenuUnicodeStyle extends React.CSSProperties {
   "--mc-menu-unicode-height": string;
   "--mc-menu-unicode-width": string;
@@ -77,9 +80,9 @@ export const MenuUnicodeLine = ({
 
       const glyphs = [...input.text].map((char) => {
         const code = char.codePointAt(0)!;
-        const ascii = minecraftGlyphs[code - 32];
+        const ascii = asciiGlyphs[code - 32];
         const uni = getUnihexGlyph(char);
-        const observed = menuGlyphAtlas[code.toString(16)];
+        const observed = observedMenuGlyphs[code.toString(16)];
 
         let selectedW: number;
 

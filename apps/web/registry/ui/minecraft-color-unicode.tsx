@@ -16,6 +16,8 @@ import type { UnihexGlyph } from "./minecraft-unifont";
 
 import "./minecraft-unicode.css";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+
 interface ColorUnicodeLabelStyle extends React.CSSProperties {
   "--mc-unicode-width": string;
 }
@@ -41,7 +43,7 @@ const loadAlpha = function loadAlpha() {
 };
 
 const advance = (char: string) =>
-  minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
+  asciiGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   0;
 
@@ -136,7 +138,7 @@ export const MinecraftColorUnicodeLabel = ({
               context.fillStyle = `rgba(${color.join(",")},${ink[3] ?? 1})`;
 
               for (const char of text) {
-                const glyph = minecraftGlyphs[char.codePointAt(0)! - 32];
+                const glyph = asciiGlyphs[char.codePointAt(0)! - 32];
 
                 if (glyph) {
                   if (char !== " ") {

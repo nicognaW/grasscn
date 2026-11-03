@@ -12,6 +12,9 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-unicode.css";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const observedPopoverGlyphs: Partial<typeof popoverGlyphAtlas> = popoverGlyphAtlas;
+
 interface PopoverUnicodeStyle extends React.CSSProperties {
   "--mc-popover-unicode-height": string;
   "--mc-popover-unicode-width": string;
@@ -67,9 +70,9 @@ export const PopoverUnicodeLine = ({
 
       const glyphs = [...text].map((char) => {
         const code = char.codePointAt(0)!;
-        const ascii = minecraftGlyphs[code - 32];
+        const ascii = asciiGlyphs[code - 32];
         const uni = getUnihexGlyph(char);
-        const observed = popoverGlyphAtlas[code.toString(16)];
+        const observed = observedPopoverGlyphs[code.toString(16)];
 
         let selectedW: number;
 

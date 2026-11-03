@@ -1,6 +1,8 @@
 import type { UnihexGlyph } from "./minecraft-unifont";
 import { nativeUnihexAtlas } from "./minecraft-unifont-atlas";
 
+const fallbackGlyphAtlas: Partial<typeof nativeUnihexAtlas> = nativeUnihexAtlas;
+
 interface Painter {
   canvas: HTMLCanvasElement;
   gl: WebGLRenderingContext;
@@ -231,7 +233,7 @@ export const paintUnihexGPU = function paintUnihexGPU(
     }
   }
 
-  const observed = (atlases.get(context) ?? nativeUnihexAtlas)[
+  const observed = (atlases.get(context) ?? fallbackGlyphAtlas)[
     glyph.code.toString(16)
   ];
 

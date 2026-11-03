@@ -3,6 +3,9 @@ import { minecraftInputAssets } from "./minecraft-input-assets";
 import { toastGlyphAtlas } from "./minecraft-toast-atlas";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+const observedToastGlyphs: Partial<typeof toastGlyphAtlas> = toastGlyphAtlas;
+
 export interface ToastGlyph {
   code: number;
   pixels: Uint8Array;
@@ -48,9 +51,9 @@ export const toastLayout = async function toastLayout(
     }
 
     const code = char.codePointAt(0)!;
-    const ascii = minecraftGlyphs[code - 32];
+    const ascii = asciiGlyphs[code - 32];
     const uni = getUnihexGlyph(char);
-    const observed = toastGlyphAtlas[code.toString(16)];
+    const observed = observedToastGlyphs[code.toString(16)];
 
     let selectedWidth: number;
 

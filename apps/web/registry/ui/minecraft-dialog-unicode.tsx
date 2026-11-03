@@ -11,6 +11,8 @@ import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+
 let alpha: Promise<Uint8ClampedArray> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
@@ -86,7 +88,7 @@ export const DialogUnicodeLine = ({
             let x = 0;
 
             for (const char of text) {
-              const ascii = minecraftGlyphs[char.codePointAt(0)! - 32];
+              const ascii = asciiGlyphs[char.codePointAt(0)! - 32];
               const uni = getUnihexGlyph(char);
               const offset = ascii ? 1 : 0.5;
 

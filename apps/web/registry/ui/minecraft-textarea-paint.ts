@@ -9,13 +9,15 @@ import {
 } from "./minecraft-unifont";
 import { positionUnihex, disposeUnihex } from "./minecraft-unifont-gpu";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+
 interface Line {
   begin: number;
   end: number;
 }
 
 const glyphAdvance = (char: string) =>
-  minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
+  asciiGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   6;
 
@@ -176,7 +178,7 @@ const text = function text(
     let offset = x;
 
     for (const char of value) {
-      const glyph = minecraftGlyphs[char.codePointAt(0)! - 32];
+      const glyph = asciiGlyphs[char.codePointAt(0)! - 32];
 
       if (!glyph) {
         const unihex = getUnihexGlyph(char);

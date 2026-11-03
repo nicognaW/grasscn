@@ -13,6 +13,8 @@ import {
   setUnihexAtlas,
 } from "./minecraft-unifont-gpu";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+
 interface Images {
   normal: HTMLImageElement;
   highlighted: HTMLImageElement;
@@ -55,7 +57,7 @@ const loadImages = function loadImages() {
 };
 
 const glyphAdvance = (char: string) =>
-  minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
+  asciiGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   0;
 
@@ -176,7 +178,7 @@ const text = function text(
     context.fillStyle = `rgb(${color},${color},${color})`;
 
     for (const char of value) {
-      const glyph = minecraftGlyphs[char.codePointAt(0)! - 32];
+      const glyph = asciiGlyphs[char.codePointAt(0)! - 32];
 
       if (!glyph) {
         const unihex = getUnihexGlyph(char);

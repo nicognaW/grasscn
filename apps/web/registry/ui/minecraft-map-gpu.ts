@@ -1,6 +1,8 @@
 import type { MapMarker } from "./map";
 import { mapAtlas } from "./minecraft-map-atlas";
 
+const markerSprites: Partial<Record<string, (typeof mapAtlas.sprites)[keyof typeof mapAtlas.sprites]>> = mapAtlas.sprites;
+
 export const mapGpuPixels = function mapGpuPixels(
   terrain: ImageData,
   images: readonly HTMLImageElement[],
@@ -148,9 +150,9 @@ export const mapGpuPixels = function mapGpuPixels(
 
   for (const [index, marker] of markers.entries()) {
     const key =
-      `minecraft:${marker.decoration ?? "player"}` as keyof typeof mapAtlas.sprites;
+      `minecraft:${marker.decoration ?? "player"}`;
 
-    const entry = mapAtlas.sprites[key];
+    const entry = markerSprites[key];
 
     if (!entry) {
       continue;
@@ -169,8 +171,8 @@ export const mapGpuPixels = function mapGpuPixels(
 
   for (const marker of markers) {
     const entry =
-      mapAtlas.sprites[
-        `minecraft:${marker.decoration ?? "player"}` as keyof typeof mapAtlas.sprites
+      markerSprites[
+        `minecraft:${marker.decoration ?? "player"}`
       ];
 
     if (!entry) {

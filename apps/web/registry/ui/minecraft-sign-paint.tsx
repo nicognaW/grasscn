@@ -8,6 +8,8 @@ import { minecraftInputAssets } from "./minecraft-input-assets";
 import { paintSignGpu } from "./minecraft-sign-gpu";
 import { loadUnihex, getUnihexGlyph, paintUnihex } from "./minecraft-unifont";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+
 const images = new Map<string, Promise<HTMLImageElement>>();
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the per-source image Promise itself, including cached rejection; async would wrap it.
@@ -182,7 +184,7 @@ export const MinecraftSignPaint = ({
           let x = 0;
 
           for (const char of line) {
-            const glyph = minecraftGlyphs[char.codePointAt(0)! - 32];
+            const glyph = asciiGlyphs[char.codePointAt(0)! - 32];
 
             if (glyph) {
               if (char !== " ") {

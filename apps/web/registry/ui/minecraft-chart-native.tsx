@@ -13,6 +13,8 @@ import { MinecraftText } from "./minecraft-text";
 
 import "./minecraft-chart.css";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+
 interface NativeChartTextStyle extends React.CSSProperties {
   "--mc-ink": string;
   "--mc-shadow": string;
@@ -28,7 +30,7 @@ const widthOf = (value: string) =>
       throw new Error("Expected a non-empty chart glyph character");
     }
 
-    return n + (minecraftGlyphs[codePoint - 32]?.[2] ?? 6);
+    return n + (asciiGlyphs[codePoint - 32]?.[2] ?? 6);
   }, 0);
 
 const cssColor = (value: number) =>

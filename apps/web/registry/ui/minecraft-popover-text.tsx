@@ -6,10 +6,12 @@ import { PopoverUnicodeLine } from "./minecraft-popover-unicode";
 import { isMinecraftTextContent } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+
 export const PopoverTextContext = React.createContext({ scale: 2, width: 214 });
 
 const advance = (char: string, bold: boolean) => {
-  const ascii = minecraftGlyphs[char.codePointAt(0)! - 32];
+  const ascii = asciiGlyphs[char.codePointAt(0)! - 32];
 
   return (
     (ascii?.[2] ?? getUnihexGlyph(char)?.advance ?? 0) +

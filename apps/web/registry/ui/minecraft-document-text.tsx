@@ -8,6 +8,8 @@ import { minecraftInputAssets } from "./minecraft-input-assets";
 import { minecraftStyle } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] = minecraftGlyphs;
+
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-registry-ui-minecraft-document-text-1-visibility": string;
 }
@@ -32,7 +34,7 @@ const documentTextWidth = function documentTextWidth(text: string) {
   return [...text].reduce(
     (sum, c) =>
       sum +
-      (minecraftGlyphs[c.codePointAt(0)! - 32]?.[2] ??
+      (asciiGlyphs[c.codePointAt(0)! - 32]?.[2] ??
         getUnihexGlyph(c)?.advance ??
         6),
     0
@@ -130,7 +132,7 @@ const MinecraftDocumentText = ({
                 : 0;
 
           for (const char of line) {
-            const glyph = minecraftGlyphs[char.codePointAt(0)! - 32];
+            const glyph = asciiGlyphs[char.codePointAt(0)! - 32];
 
             if (glyph) {
               if (char !== " ") {
