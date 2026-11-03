@@ -29,6 +29,7 @@ for (const viewport of [
     for (const name of names) {
       await page.goto(origin + "docs/components/" + name);
       const card = page.locator(".documentation-playground");
+
       for (const scale of [2]) {
         await expect(card).toBeVisible();
         await expect

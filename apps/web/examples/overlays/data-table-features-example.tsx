@@ -18,14 +18,18 @@ import {
   TableHead,
   TableCell,
 } from "@/components/ui/table";
+
 type World = { id: string; name: string; players: number };
+
 const helper = createColumnHelper<DataTableFeatures, World>();
+
 const worlds: World[] = [
   { id: "a", name: "Grasslands", players: 4 },
   { id: "b", name: "你好，世界", players: 2 },
   { id: "c", name: "Birch Forest", players: 8 },
   { id: "d", name: "Deep Dark", players: 1 },
 ];
+
 export default function DataTableDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
   const columns = React.useMemo(
     () =>
@@ -50,6 +54,7 @@ export default function DataTableDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       ]),
     [scale]
   );
+
   const table = useTable({
     features,
     columns,
@@ -64,6 +69,7 @@ export default function DataTableDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       ),
     },
   });
+
   return (
     <div data-stage="data-table">
       <div>

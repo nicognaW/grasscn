@@ -13,6 +13,7 @@ export function splashMotion(timeMillis: number, textWidth: number) {
   const sine = f(Math.sin(index / sineIndexScale));
   const pulse = f(f(1.8) - Math.abs(f(sine * f(0.1))));
   const scale = f(f(pulse * f(100)) / f(textWidth + 32));
+
   return {
     pulse,
     scale,

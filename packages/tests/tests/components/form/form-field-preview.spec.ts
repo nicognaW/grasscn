@@ -34,6 +34,7 @@ for (const scale of [2]) {
       exact: true,
       name: "Journey notes",
     });
+
     await expect(form.locator("[data-slot=field-set]")).toHaveCount(1);
     await expect(form.locator("[data-slot=field]")).toHaveCount(3);
     await form

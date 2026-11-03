@@ -160,6 +160,7 @@ export const reusableBrowserTests = async function reusableBrowserTests(
       b.report.startedAt ?? b.filename
     )
   );
+
   for (const candidate of nativeSortValues) {
     const run = path.dirname(candidate.filename);
     const directory = path.join(run, "checkpoints", file);

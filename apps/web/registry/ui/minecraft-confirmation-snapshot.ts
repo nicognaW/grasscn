@@ -105,6 +105,7 @@ export function useConfirmationSnapshot(
       }[] = [];
 
       const pseudos: FixedPseudo[] = [];
+
       try {
         const { domToCanvas } = await import("modern-screenshot");
         await document.fonts.ready;
@@ -457,6 +458,7 @@ export function useConfirmationSnapshot(
             item.element.setAttribute(item.attribute, item.previous);
           }
         }
+
         for (const item of fixed) {
           if (item.element.dataset.mcSnapshotFixed !== item.key) {
             continue;

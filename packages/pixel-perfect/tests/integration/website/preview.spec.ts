@@ -33,9 +33,11 @@ const nativePixels = async function nativePixels(
   const actual = PNG.sync.read(
     await locator.screenshot({ animations: "disabled" })
   );
+
   const expected = PNG.sync.read(
     await readFile(referenceFile(file.replace(/^tests\/reference\//u, "")))
   );
+
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -86,6 +88,7 @@ for (const scale of [2]) {
     const checkbox = page
       .locator(".documentation-playground")
       .getByRole("checkbox", { name: "Enable shadows" });
+
     await page.mouse.move(0, 0);
     await nativePixels(
       checkbox,
@@ -122,12 +125,14 @@ for (const scale of [2]) {
     const input = page
       .locator(".documentation-playground")
       .getByRole("textbox", { exact: true, name: "Demo input" });
+
     await expect(input).toHaveAttribute("data-mc-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
       input,
       `tests/reference/input/captures/input-w200-normal-c39-s${scale}.png`
     );
+
     const readonly = page
       .locator(".documentation-playground")
       .getByRole("textbox", { exact: true, name: "Read-only demo input" });
@@ -137,9 +142,11 @@ for (const scale of [2]) {
       readonly,
       `tests/reference/input/captures/input-w200-readonly-c44-s${scale}.png`
     );
+
     const disabled = page
       .locator(".documentation-playground")
       .getByRole("textbox", { exact: true, name: "Disabled demo input" });
+
     await expect(disabled).toHaveAttribute("data-mc-ready", "true");
     await nativePixels(
       disabled,
@@ -150,6 +157,7 @@ for (const scale of [2]) {
     const textarea = page
       .locator(".documentation-playground")
       .getByRole("textbox", { exact: true, name: "Demo textarea" });
+
     await expect(textarea).toHaveAttribute("data-mc-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -188,6 +196,7 @@ for (const scale of [2]) {
     const scrollArea = page
       .locator(".documentation-playground")
       .getByRole("region", { exact: true, name: "Demo scroll area" });
+
     await expect(scrollArea).toHaveAttribute("data-mc-scroll-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -199,6 +208,7 @@ for (const scale of [2]) {
     const progress = page
       .locator(".documentation-playground")
       .getByRole("progressbar", { exact: true, name: "Demo progress" });
+
     await page.mouse.move(0, 0);
     await nativePixels(
       progress,
@@ -225,6 +235,7 @@ test("Preview text fields share the native focused Input pixels", async ({
   await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
   await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
   await page.goto(`${origin}docs/components/button`);
+
   const fields = [
     { name: "Button label", path: "button" },
     { name: "Demo input", path: "input" },
@@ -238,6 +249,7 @@ test("Preview text fields share the native focused Input pixels", async ({
     const field = page
       .locator(".documentation-playground")
       .getByLabel(entry.name, { exact: true });
+
     await field.fill("");
     await field.evaluate((element) => {
       const input = element as HTMLInputElement;
@@ -265,6 +277,7 @@ for (const scale of [2]) {
     const list = page
       .locator(".documentation-playground")
       .getByRole("tablist", { exact: true, name: "World settings" });
+
     await expect(list).toHaveAttribute("data-mc-tabs-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -284,6 +297,7 @@ for (const scale of [2]) {
     const trigger = page
       .locator(".documentation-playground")
       .getByRole("combobox", { exact: true, name: "Demo game mode" });
+
     await expect(trigger).toHaveText("Survival");
     await expect(trigger).toHaveAttribute("data-mc-select-ready", "true");
     await page.mouse.move(0, 0);
@@ -304,6 +318,7 @@ for (const scale of [2]) {
       .locator(".documentation-playground")
       .getByRole("radiogroup", { exact: true, name: "Demo radio game mode" })
       .getByRole("radio", { exact: true, name: "Survival" });
+
     await expect(radio).toBeChecked();
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -322,6 +337,7 @@ for (const scale of [2]) {
     const control = page
       .locator(".documentation-playground")
       .getByRole("switch", { exact: true, name: "Enable clouds" });
+
     await expect(control).not.toBeChecked();
     await page.mouse.move(0, 0);
     await nativePixels(

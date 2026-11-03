@@ -23,6 +23,7 @@ import type { TooltipValueType } from "recharts";
 import { ChartGeometryProvider } from "./minecraft-chart-context";
 
 export { NativeChartFpsFrame as ChartFpsFrame, NativeChartProfilerFrame as ChartProfilerFrame, nativeChartFpsColor as chartFpsColor, nativeChartProfilerColor as chartProfilerColor };
+
 export { NativeChartPixelBar as ChartPixelBar, NativeChartProfilerSector as ChartProfilerSector, NativeChartPixelSurface as ChartPixelSurface, NativeChartAxisTick as ChartAxisTick };
 
 interface ChartScaleStyle extends React.CSSProperties {

@@ -20,10 +20,12 @@ test("advancement tree selection, keyboard, details and panning", async ({
     }?scale=2&mask=1`
   );
   const tree = page.getByRole("group", { name: "Advancement tree" });
+
   const first = page.getByRole("button", {
     exact: true,
     name: "Milestone 0, completed",
   });
+
   await first.hover();
   await expect(page.locator('[data-slot="tooltip-content"]')).toContainText(
     "Milestone 0"

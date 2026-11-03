@@ -105,8 +105,10 @@ export const groupSearchResults = (
       score,
     };
   });
+
   rankedResults.sort(
     (first, second) => second.score - first.score || first.index - second.index
   );
+
   return rankedResults.map((entry) => entry.result);
 };

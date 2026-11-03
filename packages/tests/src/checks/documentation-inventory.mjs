@@ -110,7 +110,9 @@ export const documentationInventory = (root = webRoot) => {
   const sortedPageFiles = readdirSync(directory).filter((file) =>
     file.endsWith(".mdx")
   );
+
   sortedPageFiles.sort();
+
   const pages = sortedPageFiles.map((file) => {
     const name = file.slice(0, -4);
     const text = readFileSync(path.join(directory, file), "utf-8");
@@ -148,6 +150,7 @@ export const documentationInventory = (root = webRoot) => {
 
   const sortedItemNames = registry.map((item) => item.name);
   sortedItemNames.sort();
+
   return {
     items: sortedItemNames,
     pages,

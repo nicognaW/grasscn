@@ -35,6 +35,7 @@ export interface RuntimeVerificationReceipt extends VerificationReport {
   suite: string;
   fullCases?: BrowserCase[];
 }
+
 export interface PreviousVerification {
   filename: string;
   report: VerificationState & CheckpointCandidate["report"];

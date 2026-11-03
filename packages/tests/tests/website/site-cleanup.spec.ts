@@ -53,9 +53,11 @@ for (const width of [320, 1440]) {
   test(`sidebar remains visible at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto(origin + "docs/components/sidebar");
+
     const stage = page.locator(
       '.documentation-playground [data-stage="sidebar"]'
     );
+
     await expect(stage.locator('[data-slot="sidebar"]')).toHaveAttribute(
       "data-collapsible",
       "none"

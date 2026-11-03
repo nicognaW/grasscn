@@ -55,6 +55,7 @@ for (const scale of [2] as const) {
       const trigger = page.locator(
         '[data-slot=select-trigger][aria-label="Chart type"]'
       );
+
       await trigger.evaluate((n) => {
         scrollBy(0, n.getBoundingClientRect().top - 80);
       });

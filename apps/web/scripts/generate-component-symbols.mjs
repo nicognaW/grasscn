@@ -53,6 +53,7 @@ try {
       const exports = project.checker
         .getExportsOfModule(entryModule)
         .map((symbol) => symbol.name);
+
       exports.sort();
 
       if (!exports.length) {

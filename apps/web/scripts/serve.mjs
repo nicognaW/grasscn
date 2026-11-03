@@ -6,19 +6,25 @@ const root = new URL("../public/r/", import.meta.url);
 
 createServer(async (request, response) => {
   const pathname = new URL(request.url, "http://localhost").pathname;
+
   if (request.method !== "GET" && request.method !== "HEAD") {
     response.writeHead(405, { Allow: "GET, HEAD" }).end();
+
     return;
   }
+
   // Serve only registry JSON, never source files or HTML.
   const match = /^\/r\/([a-zA-Z0-9_-]+\.json)$/u.exec(pathname);
+
   if (!match) {
     response.writeHead(404, { "Content-Type": "application/json" });
     response.end(
       JSON.stringify({ error: "Not found. Catalog: /r/registry.json" })
     );
+
     return;
   }
+
   try {
     const content = await readFile(new URL(match[1], root));
     response.writeHead(200, {

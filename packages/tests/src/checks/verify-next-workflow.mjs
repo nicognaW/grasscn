@@ -160,6 +160,7 @@ const preserveInstalledDependencies = async () => {
   targetsByDepth.sort(
     (left, right) => right.target.length - left.target.length
   );
+
   for (const [index, item] of targetsByDepth.entries()) {
     await rename(item.target, path.join(backup, String(index)));
   }
@@ -182,6 +183,7 @@ const generatedDocsIdentity = async () => {
 
     const sortedEntries = entries.slice();
     sortedEntries.sort((left, right) => left.name.localeCompare(right.name));
+
     for (const entry of sortedEntries) {
       const filename = path.join(folder, entry.name);
 

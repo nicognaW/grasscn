@@ -2,8 +2,10 @@ import * as React from "react";
 import { Separator } from "../registry/ui/separator";
 import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
+
 const SeparatorDemo = ({ scale }: DemoProps) => {
   const [width, setWidth] = React.useState(200);
+
   return (
     <>
       <div className="demo-options">

@@ -10,6 +10,7 @@ setMinecraftSoundVolume(0.5);
 export function getPreviewSoundVolume() {
   return Math.round(getMinecraftSoundVolume() * 100);
 }
+
 export function setPreviewSoundVolume(percent: number) {
   setMinecraftSoundVolume(percent / 100);
 }

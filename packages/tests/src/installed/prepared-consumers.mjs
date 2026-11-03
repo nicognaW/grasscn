@@ -248,6 +248,7 @@ export const readPreparedConsumerProjects = async ({
 
   const reversedObserved = rawObserved.slice();
   reversedObserved.reverse();
+
   for (const entry of reversedObserved) {
     const project = preparedProject(entry);
     observedByFramework.set(project.framework, project);

@@ -56,6 +56,7 @@ const historicalEvidence = await validateHistoricalEvidence({
   registry,
   resolvePath: evidenceFile,
 });
+
 const pilot = await readNativeCaptureManifest("tests/reference/manifest.json");
 
 const digest = (bytes: Uint8Array) =>
@@ -99,7 +100,9 @@ assert.equal(new Set(names).size, names.length, "Duplicate component mapping");
 const nativeSortValues = [
   ...new Set(catalog.sources.flatMap((source) => source.names)),
 ];
+
 nativeSortValues.sort();
+
 const union = nativeSortValues;
 
 assert.deepEqual(

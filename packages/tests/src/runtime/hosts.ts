@@ -208,12 +208,14 @@ export async function serveVerificationHosts(execution: {
     });
     proxy = proxyServer;
     const listening = Promise.withResolvers<void>();
+
     try {
       proxyServer.once("error", listening.reject);
       proxyServer.listen(proxyPort, "127.0.0.1", listening.resolve);
     } catch (error) {
       listening.reject(error);
     }
+
     await listening.promise;
     const ownedPreview = preview;
     const ownedFixture = fixture;

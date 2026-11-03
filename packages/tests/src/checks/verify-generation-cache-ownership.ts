@@ -101,6 +101,7 @@ export const verifyGenerationCacheOwnership = async ({
 
     const sortedFiles = files.flat();
     sortedFiles.sort(compare);
+
     return sortedFiles;
   };
 
@@ -109,6 +110,7 @@ export const verifyGenerationCacheOwnership = async ({
 
     const sortedFiles = files.flat();
     sortedFiles.sort(compare);
+
     return sortedFiles;
   };
 

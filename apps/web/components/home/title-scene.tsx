@@ -31,10 +31,12 @@ const titleSource = (() => {
 })();
 
 const splash = "Now with components!";
+
 const splashWidth = Array.from(splash).reduce(
   (width, char) => width + minecraftGlyphs[char.charCodeAt(0) - 32][2],
   0
 );
+
 export function TitleScene() {
   const ref = React.useRef<HTMLDivElement>(null);
   React.useLayoutEffect(() => {
@@ -44,16 +46,19 @@ export function TitleScene() {
     let frame = 0;
     let visible = true;
     let guiScale = 1;
+
     const paint = (time: number) => {
       splashNode.style.transform = splashTransform(
         splashMotion(time, splashWidth),
         guiScale
       );
     };
+
     const tick = () => {
       paint(performance.now());
       frame = requestAnimationFrame(tick);
     };
+
     const sync = () => {
       cancelAnimationFrame(frame);
       guiScale =
@@ -61,6 +66,7 @@ export function TitleScene() {
         1;
       const running = visible && !document.hidden && !motion.matches;
       splashNode.dataset.motion = running ? "running" : "paused";
+
       if (running) {
         paint(performance.now());
         frame = requestAnimationFrame(tick);
@@ -68,16 +74,19 @@ export function TitleScene() {
         paint(0);
       }
     };
+
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       sync();
     });
+
     const resize = new ResizeObserver(sync);
     observer.observe(node);
     resize.observe(node);
     document.addEventListener("visibilitychange", sync);
     motion.addEventListener("change", sync);
     sync();
+
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
@@ -86,6 +95,7 @@ export function TitleScene() {
       motion.removeEventListener("change", sync);
     };
   }, []);
+
   return (
     <div ref={ref} className="grass-title-scene">
       <h1 id="grass-title">
