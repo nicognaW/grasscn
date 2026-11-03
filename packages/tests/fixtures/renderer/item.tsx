@@ -111,8 +111,10 @@ const ItemFixture = () => {
     width: width * scale,
   } satisfies React.CSSProperties;
 
-  const subject =
-    part === "title" ? (
+  let selectedSubject: React.JSX.Element;
+
+  if (part === "title") {
+    selectedSubject = (
       <ItemTitle
         id="subject"
         ref={ref}
@@ -131,7 +133,9 @@ const ItemFixture = () => {
       >
         {title}
       </ItemTitle>
-    ) : part === "separator" ? (
+    );
+  } else if (part === "separator") {
+    selectedSubject = (
       <ItemSeparator
         id="subject"
         ref={ref}
@@ -142,9 +146,11 @@ const ItemFixture = () => {
         style={commonStyle}
         data-subject="true"
       />
-    ) : part === "media" ? (
-      <ItemMedia id="subject" ref={ref} data-subject="true" />
-    ) : (
+    );
+  } else if (part === "media") {
+    selectedSubject = <ItemMedia id="subject" ref={ref} data-subject="true" />;
+  } else {
+    selectedSubject = (
       <Item
         render={
           q.has("plain") ? undefined : q.has("plain") ? undefined : q.has(
@@ -208,6 +214,9 @@ const ItemFixture = () => {
         )}
       </Item>
     );
+  }
+
+  const subject = selectedSubject;
 
   return (
     <>

@@ -8,12 +8,21 @@ for (const scale of [1, 2, 3]) {
       test(`Collapsible first paint ${variant} GUI${scale} ${warm ? "warm" : "cold"}`, async ({
         page,
       }, info) => {
-        const text =
-          variant === "ascii"
-            ? "Hello Minecraft\n\nNext adventure"
-            : variant === "cjk"
-              ? "你好，世界\n\nHello Minecraft"
-              : "你好，世界你好，世界你好，世界\nMinecraft adventures start here.";
+        let selectedText:
+          | "Hello Minecraft\n\nNext adventure"
+          | "你好，世界\n\nHello Minecraft"
+          | "你好，世界你好，世界你好，世界\nMinecraft adventures start here.";
+
+        if (variant === "ascii") {
+          selectedText = "Hello Minecraft\n\nNext adventure";
+        } else if (variant === "cjk") {
+          selectedText = "你好，世界\n\nHello Minecraft";
+        } else {
+          selectedText =
+            "你好，世界你好，世界你好，世界\nMinecraft adventures start here.";
+        }
+
+        const text = selectedText;
 
         await page.goto(
           "/?" +

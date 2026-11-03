@@ -56,12 +56,17 @@ export const installedRegistryFile = function installedRegistryFile(
   } else if (hasTargetText(entry.target)) {
     target = path.resolve(root, entry.target.replace(/^~\//u, ""));
   } else {
-    const kind =
-      entry.type === "registry:hook"
-        ? "hooks"
-        : entry.type === "registry:lib"
-          ? "lib"
-          : "ui";
+    let selectedKind: "hooks" | "lib" | "ui";
+
+    if (entry.type === "registry:hook") {
+      selectedKind = "hooks";
+    } else if (entry.type === "registry:lib") {
+      selectedKind = "lib";
+    } else {
+      selectedKind = "ui";
+    }
+
+    const kind = selectedKind;
 
     const directory =
       kind === "ui"

@@ -132,127 +132,153 @@ export const SidebarFixture = () => {
   };
 
   if (native) {
+    let selectedNativeSidebarSubject: React.JSX.Element | null;
+
+    if (part === "menu-button") {
+      selectedNativeSidebarSubject = (
+        <SidebarMenuButton {...buttonProps} isActive={p.has("active")}>
+          {label}
+        </SidebarMenuButton>
+      );
+    } else if (part === "sub-button") {
+      selectedNativeSidebarSubject = (
+        <SidebarMenuSubButton
+          id="subject"
+          href="#destination"
+          style={position}
+          aria-disabled={state === "disabled" || undefined}
+          isActive={p.has("active")}
+          onClick={click}
+          data-subject="true"
+        >
+          {label}
+        </SidebarMenuSubButton>
+      );
+    } else if (part === "trigger") {
+      selectedNativeSidebarSubject = (
+        <SidebarTrigger {...buttonProps}>{label}</SidebarTrigger>
+      );
+    } else if (part === "group-action") {
+      selectedNativeSidebarSubject = (
+        <SidebarGroupAction {...buttonProps}>{label}</SidebarGroupAction>
+      );
+    } else if (part === "menu-action") {
+      selectedNativeSidebarSubject = (
+        <SidebarMenuAction {...buttonProps}>{label}</SidebarMenuAction>
+      );
+    } else if (part === "input") {
+      selectedNativeSidebarSubject = (
+        <SidebarInput
+          id="subject"
+          aria-label="Test input"
+          value={text}
+          onChange={(event) => {
+            setText(event.target.value);
+          }}
+          placeholder={p.get("placeholder") ?? ""}
+          disabled={state === "disabled"}
+          readOnly={state.includes("readonly")}
+          maxLength={
+            p.has("maxLength") ? Number(p.get("maxLength")) : undefined
+          }
+          style={position}
+          data-subject="true"
+        />
+      );
+    } else if (part === "label") {
+      selectedNativeSidebarSubject = (
+        <SidebarGroupLabel
+          id="subject"
+          maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
+          align={p.get("alignment") === "center" ? "center" : "left"}
+          style={{ ...position, margin: 0, minHeight: 0 }}
+          data-subject="true"
+        >
+          {label}
+        </SidebarGroupLabel>
+      );
+    } else if (part === "badge") {
+      selectedNativeSidebarSubject = (
+        <SidebarMenuBadge
+          id="subject"
+          maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
+          align={p.get("alignment") === "center" ? "center" : "left"}
+          style={{ ...position, margin: 0 }}
+          data-subject="true"
+        >
+          {label}
+        </SidebarMenuBadge>
+      );
+    } else if (part === "separator") {
+      selectedNativeSidebarSubject = (
+        <SidebarSeparator
+          id="subject"
+          edge={state === "footer" ? "footer" : "header"}
+          style={{ ...position, margin: 0 }}
+          data-subject="true"
+        />
+      );
+    } else if (part === "panel") {
+      selectedNativeSidebarSubject = (
+        <Sidebar
+          id="subject"
+          collapsible="none"
+          style={{
+            ...position,
+            padding: p.has("text") ? 18 * scale : 0,
+            gap: 12 * scale,
+          }}
+          data-subject="true"
+        >
+          {p.has("text") ? (
+            <>
+              <CardHeader>
+                <CardTitle>{label}</CardTitle>
+                <CardDescription>{p.get("text")}</CardDescription>
+              </CardHeader>
+              <CardFooter>
+                <Button scale={scale}>Done</Button>
+              </CardFooter>
+            </>
+          ) : null}
+        </Sidebar>
+      );
+    } else if (part === "scroll") {
+      selectedNativeSidebarSubject = (
+        <SidebarContent id="subject" style={position} data-subject="true">
+          <div
+            style={{
+              "--fixture-layout-22": `${Number(p.get("contentHeight") ?? 0) * scale}px`,
+            }}
+            className="fixture-owner-layout-38 fixture-owner-layout-39 fixture-owner-layout-47"
+          >
+            {Array.from(
+              { length: Math.ceil(Number(p.get("contentHeight") ?? 0) / 24) },
+              (_, index) => (
+                <Button
+                  key={index}
+                  scale={scale}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 24 * index * scale,
+                    width: "100%",
+                  }}
+                >{`Row ${index + 1}`}</Button>
+              )
+            )}
+          </div>
+        </SidebarContent>
+      );
+    } else {
+      selectedNativeSidebarSubject = null;
+    }
+
+    const nativeSidebarSubject = selectedNativeSidebarSubject;
+
     return (
       <SidebarProvider {...provider} style={{ minHeight: 0 }}>
-        {part === "menu-button" ? (
-          <SidebarMenuButton {...buttonProps} isActive={p.has("active")}>
-            {label}
-          </SidebarMenuButton>
-        ) : part === "sub-button" ? (
-          <SidebarMenuSubButton
-            id="subject"
-            href="#destination"
-            style={position}
-            aria-disabled={state === "disabled" || undefined}
-            isActive={p.has("active")}
-            onClick={click}
-            data-subject="true"
-          >
-            {label}
-          </SidebarMenuSubButton>
-        ) : part === "trigger" ? (
-          <SidebarTrigger {...buttonProps}>{label}</SidebarTrigger>
-        ) : part === "group-action" ? (
-          <SidebarGroupAction {...buttonProps}>{label}</SidebarGroupAction>
-        ) : part === "menu-action" ? (
-          <SidebarMenuAction {...buttonProps}>{label}</SidebarMenuAction>
-        ) : part === "input" ? (
-          <SidebarInput
-            id="subject"
-            aria-label="Test input"
-            value={text}
-            onChange={(event) => {
-              setText(event.target.value);
-            }}
-            placeholder={p.get("placeholder") ?? ""}
-            disabled={state === "disabled"}
-            readOnly={state.includes("readonly")}
-            maxLength={
-              p.has("maxLength") ? Number(p.get("maxLength")) : undefined
-            }
-            style={position}
-            data-subject="true"
-          />
-        ) : part === "label" ? (
-          <SidebarGroupLabel
-            id="subject"
-            maxWidth={
-              p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
-            }
-            align={p.get("alignment") === "center" ? "center" : "left"}
-            style={{ ...position, margin: 0, minHeight: 0 }}
-            data-subject="true"
-          >
-            {label}
-          </SidebarGroupLabel>
-        ) : part === "badge" ? (
-          <SidebarMenuBadge
-            id="subject"
-            maxWidth={
-              p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
-            }
-            align={p.get("alignment") === "center" ? "center" : "left"}
-            style={{ ...position, margin: 0 }}
-            data-subject="true"
-          >
-            {label}
-          </SidebarMenuBadge>
-        ) : part === "separator" ? (
-          <SidebarSeparator
-            id="subject"
-            edge={state === "footer" ? "footer" : "header"}
-            style={{ ...position, margin: 0 }}
-            data-subject="true"
-          />
-        ) : part === "panel" ? (
-          <Sidebar
-            id="subject"
-            collapsible="none"
-            style={{
-              ...position,
-              padding: p.has("text") ? 18 * scale : 0,
-              gap: 12 * scale,
-            }}
-            data-subject="true"
-          >
-            {p.has("text") ? (
-              <>
-                <CardHeader>
-                  <CardTitle>{label}</CardTitle>
-                  <CardDescription>{p.get("text")}</CardDescription>
-                </CardHeader>
-                <CardFooter>
-                  <Button scale={scale}>Done</Button>
-                </CardFooter>
-              </>
-            ) : null}
-          </Sidebar>
-        ) : part === "scroll" ? (
-          <SidebarContent id="subject" style={position} data-subject="true">
-            <div
-              style={{
-                "--fixture-layout-22": `${Number(p.get("contentHeight") ?? 0) * scale}px`,
-              }}
-              className="fixture-owner-layout-38 fixture-owner-layout-39 fixture-owner-layout-47"
-            >
-              {Array.from(
-                { length: Math.ceil(Number(p.get("contentHeight") ?? 0) / 24) },
-                (_, index) => (
-                  <Button
-                    key={index}
-                    scale={scale}
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      top: 24 * index * scale,
-                      width: "100%",
-                    }}
-                  >{`Row ${index + 1}`}</Button>
-                )
-              )}
-            </div>
-          </SidebarContent>
-        ) : null}
+        {nativeSidebarSubject}
       </SidebarProvider>
     );
   }

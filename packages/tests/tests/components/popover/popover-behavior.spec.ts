@@ -165,7 +165,17 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
       const anchorX = 400;
       const anchorY = 300;
 
-      const offset = align === "start" ? 0 : align === "center" ? 0.5 : 1;
+      let selectedOffset: 0 | 0.5 | 1;
+
+      if (align === "start") {
+        selectedOffset = 0;
+      } else if (align === "center") {
+        selectedOffset = 0.5;
+      } else {
+        selectedOffset = 1;
+      }
+
+      const offset = selectedOffset;
 
       if (side === "top" || side === "bottom") {
         expect(bounds.x + bounds.width * offset).toBeCloseTo(anchorX, 0);
