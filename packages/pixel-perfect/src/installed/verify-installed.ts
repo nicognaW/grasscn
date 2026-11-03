@@ -6,7 +6,7 @@ import path from "node:path";
 
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
 import type { InstalledComponentSettings } from "@grasscn/tests/installed-registry-file";
-import { chromium, expect } from "@playwright/test";
+import { chromium } from "@playwright/test";
 import type {
   ToggleReferenceCase,
   MenuReferenceCase,
@@ -26,9 +26,9 @@ import {
   verifyMenubarTriggerCase,
 } from "@ppt/installed/verify-menu-installed";
 import { verifyPopoverCase } from "@ppt/installed/verify-popover-installed";
-import { webFile, pixelPerfectFile } from "@ppt/paths";
+import { verifyToggleCase } from "@ppt/installed/verify-toggle-installed";
+import { webFile } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
-import { PNG } from "pngjs";
 
 import type registry from "../../../../apps/web/registry.json";
 import type minecraftMap from "../../../../apps/web/registry/minecraft-map.json";
@@ -194,90 +194,7 @@ try {
       // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
       const c = referenceCase as ToggleReferenceCase;
-      await page.setViewportSize({ height: 900, width: 1536 });
-      const renderings = [];
-
-      for (const type of name === "toggle-group"
-        ? ["single", "multiple"]
-        : ["single"]) {
-        const params = new URLSearchParams({
-          background: c.background,
-          checked: String(c.checked),
-          component: name,
-          scale: String(c.scale),
-          state: c.state,
-          x: String(c.x),
-          y: String(c.y),
-        });
-
-        if (name === "toggle-group") {
-          params.set("native", "1");
-          params.set("type", type);
-        }
-
-        await page.goto(`${url}?${params}`);
-        const subject = page.locator("[data-subject]");
-        await expect(subject).toHaveAttribute(
-          "data-slot",
-          name === "toggle-group" ? "toggle-group-item" : "toggle"
-        );
-        await page.mouse.move(0, 0);
-
-        if (c.state.endsWith("hover")) {
-          await subject.hover();
-        }
-
-        if (c.state === "focus") {
-          await subject.focus();
-          await page.keyboard.press("Tab");
-          await page.keyboard.press("Shift+Tab");
-          await expect(subject).toBeFocused();
-        }
-
-        await page.evaluate(async () => {
-          const frameCompletion = Promise.withResolvers();
-
-          try {
-            requestAnimationFrame(() => {
-              requestAnimationFrame(frameCompletion.resolve);
-            });
-          } catch (error) {
-            frameCompletion.reject(error);
-          }
-
-          return await frameCompletion.promise;
-        });
-
-        const expectedBytes = await readFile(
-          pixelPerfectFile(
-            path.join(path.dirname(manifestFile), "captures", c.name)
-          )
-        );
-
-        assert.equal(sha(expectedBytes), c.sha256);
-
-        const expected = PNG.sync.read(expectedBytes);
-        const actual = PNG.sync.read(await subject.screenshot());
-
-        assert.deepEqual(
-          [actual.width, actual.height],
-          [expected.width, expected.height]
-        );
-        assert.ok(
-          actual.data.equals(expected.data),
-          `Installed Toggle pixels differ: ${c.name}`
-        );
-        renderings.push(sha(actual.data));
-      }
-
-      cases.push({
-        decodedRgbaSha256: renderings[0],
-        mismatchedPixels: 0,
-        name: c.name,
-        ...(name === "toggle-group"
-          ? { multipleDecodedRgbaSha256: renderings[1] }
-          : {}),
-      });
+      cases.push(await verifyToggleCase({ c, manifestFile, name, page, url }));
       continue;
     }
 

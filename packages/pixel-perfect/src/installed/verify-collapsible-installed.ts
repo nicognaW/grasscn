@@ -72,6 +72,81 @@ const collapsibleParams = (
   return params;
 };
 
+interface InstalledCollapsibleRendering {
+  body: boolean;
+  c: CollapsibleReferenceCase;
+  expanded: boolean;
+  expected: ReturnType<typeof PNG.sync.read>;
+  page: Page;
+  url: string;
+}
+
+const verifyCollapsibleRendering = async ({ body, c, expanded, expected, page, url }: InstalledCollapsibleRendering) => {
+  const params = collapsibleParams(c, body, expanded);
+
+  await page.goto(`${url}?${params}`);
+  const subject = page.locator("#subject");
+  await expect(subject).toBeVisible();
+  await page.addStyleTag({
+    content: `html,body{background:${c.background ?? "#202020"}}#root{visibility:hidden}#subject{visibility:visible}`,
+  });
+  await page.mouse.move(0, 0);
+
+  if (body) {
+    await expect(
+      subject.locator("[data-mc-label-layout-ready]")
+    ).toHaveAttribute("data-mc-label-layout-ready", "true");
+  } else {
+    if (c.state === "hover") {
+      await subject.hover();
+    }
+
+    if (c.state === "focus") {
+      await subject.focus();
+      await page.keyboard.press("Tab");
+      await page.keyboard.press("Shift+Tab");
+      await expect(subject).toBeFocused();
+    }
+  }
+
+  for (const label of await subject.locator("[data-mc-label-ready]").all()) {
+    await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
+  await page.evaluate(
+    async () =>
+      // oxlint-disable-next-line promise/avoid-new -- Browser animation frames have no native Promise API; retain the two-frame boundary.
+      await new Promise<number>((resolve) => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(resolve);
+        });
+      })
+  );
+
+  // SAFETY: this fixed fixture subject is visible and has completed the same
+  // two-frame layout boundary before its geometry is read. Keep the original
+  // failure behavior if the browser unexpectedly returns null.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Established visible fixture geometry.
+  const bounds = (await subject.boundingBox()) as NonNullable<
+    Awaited<ReturnType<typeof subject.boundingBox>>
+  >;
+
+  assert.deepEqual(
+    [bounds.x, bounds.y],
+    [(c.x ?? 16) * c.scale, (c.y ?? 16) * c.scale]
+  );
+  const actual = PNG.sync.read(await subject.screenshot());
+  assert.deepEqual(
+    [actual.width, actual.height],
+    [expected.width, expected.height]
+  );
+  assert.ok(
+    actual.data.equals(expected.data),
+    `Installed Collapsible pixels differ: ${c.name} expanded:${expanded}`
+  );
+  return actual;
+};
+
 export const verifyCollapsibleCase = async ({
   page,
   c,
@@ -89,68 +164,7 @@ export const verifyCollapsibleCase = async ({
   let result: InstalledCollapsibleResult | undefined;
 
   for (const expanded of body ? [true] : [false, true]) {
-    const params = collapsibleParams(c, body, expanded);
-
-    await page.goto(`${url}?${params}`);
-    const subject = page.locator("#subject");
-    await expect(subject).toBeVisible();
-    await page.addStyleTag({
-      content: `html,body{background:${c.background ?? "#202020"}}#root{visibility:hidden}#subject{visibility:visible}`,
-    });
-    await page.mouse.move(0, 0);
-
-    if (body) {
-      await expect(
-        subject.locator("[data-mc-label-layout-ready]")
-      ).toHaveAttribute("data-mc-label-layout-ready", "true");
-    } else {
-      if (c.state === "hover") {
-        await subject.hover();
-      }
-
-      if (c.state === "focus") {
-        await subject.focus();
-        await page.keyboard.press("Tab");
-        await page.keyboard.press("Shift+Tab");
-        await expect(subject).toBeFocused();
-      }
-    }
-
-    for (const label of await subject.locator("[data-mc-label-ready]").all()) {
-      await expect(label).toHaveAttribute("data-mc-label-ready", "true");
-    }
-
-    await page.evaluate(
-      async () =>
-        // oxlint-disable-next-line promise/avoid-new -- Browser animation frames have no native Promise API; retain the two-frame boundary.
-        await new Promise<number>((resolve) => {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(resolve);
-          });
-        })
-    );
-
-    // SAFETY: this fixed fixture subject is visible and has completed the same
-    // two-frame layout boundary before its geometry is read. Keep the original
-    // failure behavior if the browser unexpectedly returns null.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Established visible fixture geometry.
-    const bounds = (await subject.boundingBox()) as NonNullable<
-      Awaited<ReturnType<typeof subject.boundingBox>>
-    >;
-
-    assert.deepEqual(
-      [bounds.x, bounds.y],
-      [(c.x ?? 16) * c.scale, (c.y ?? 16) * c.scale]
-    );
-    const actual = PNG.sync.read(await subject.screenshot());
-    assert.deepEqual(
-      [actual.width, actual.height],
-      [expected.width, expected.height]
-    );
-    assert.ok(
-      actual.data.equals(expected.data),
-      `Installed Collapsible pixels differ: ${c.name} expanded:${expanded}`
-    );
+    const actual = await verifyCollapsibleRendering({ body, c, expanded, expected, page, url });
 
     if (result) {
       result.expandedDecodedRgbaSha256 = sha(actual.data);
