@@ -1,9 +1,8 @@
 import type { Buffer } from "node:buffer";
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 import type {
   MinecraftCaptureLibrary,
@@ -18,7 +17,7 @@ import type {
 } from "@ppt/native/capture-types";
 import { pixelPerfectTestRoot } from "@ppt/paths";
 
-const here = path.dirname(fileURLToPath(import.meta.url));
+const here = import.meta.dirname;
 
 const versionDir = path.resolve(
   process.argv[2] ?? process.env.MINECRAFT_VERSION_DIR ?? ""
@@ -355,7 +354,7 @@ console.log("Capturing vanilla control pixels in an isolated offline client…")
 
 const captureTimeout = Math.max(
   240_000,
-  new Set(definitions.map((c) => c.page ?? 0)).size * 3 * 3_000 + 90_000
+  new Set(definitions.map((c) => c.page ?? 0)).size * 3 * 3000 + 90_000
 );
 
 const output = await javaCommand("java", javaArgs, captureTimeout);
