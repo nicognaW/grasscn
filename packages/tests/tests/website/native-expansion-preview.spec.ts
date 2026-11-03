@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const origin = (
@@ -236,7 +237,8 @@ for (const name of ["map", "trading", "player-list"]) {
       )
     ).toBe(true);
     const card = page.locator(".documentation-playground");
-    const bounds = (await card.boundingBox())!;
+    const bounds = await card.boundingBox();
+    expectNotNull(bounds, "Missing required bounding box: bounds");
     expect(bounds.x + bounds.width).toBeLessThanOrEqual(390);
     await page.screenshot({
       path: info.outputPath(`${name}-website-mobile.png`),

@@ -227,7 +227,7 @@ const Toaster = ({
   const sequence = React.useRef(0);
   const entriesRef = React.useRef(new Map<HTMLElement, Model>());
 
-  React.useImperativeHandle(ref, () => host!, [host]);
+  React.useImperativeHandle<typeof host, typeof host>(ref, () => host, [host]);
   React.useLayoutEffect(
     () => () => {
       for (const model of entriesRef.current.values()) {

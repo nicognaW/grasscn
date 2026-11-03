@@ -99,9 +99,13 @@ export const MinecraftColorUnicodeLabel = ({
           return;
         }
 
-        const logicalWidth = Math.ceil(
-          [...text].reduce((sum, char) => sum + advance(char), 0)
-        );
+        let accumulatedGlyphAdvance = 0;
+
+        for (const advanceCharacter of text) {
+          accumulatedGlyphAdvance += advance(advanceCharacter);
+        }
+
+        const logicalWidth = Math.ceil(accumulatedGlyphAdvance);
 
         setWidth(logicalWidth);
 

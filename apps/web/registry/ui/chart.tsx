@@ -145,7 +145,11 @@ const ChartContainer = ({
   };
 }) => {
   const host = React.useRef<HTMLDivElement>(null);
-  React.useImperativeHandle(ref, () => host.current!, []);
+  React.useImperativeHandle<typeof host.current, typeof host.current>(
+    ref,
+    () => host.current,
+    []
+  );
   const uniqueId = React.useId();
   const chartId = `chart-${id ?? uniqueId.replaceAll(":", "")}`;
 

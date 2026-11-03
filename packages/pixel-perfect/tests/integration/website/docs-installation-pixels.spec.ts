@@ -44,9 +44,63 @@ test("default installation controls match their captured Minecraft content and s
     await readFile(new URL("manifest.json", family), "utf-8")
   );
 
-  const cases = parseInstallationCases(
+  const primaryCases = parseInstallationCases(
     await readFile(new URL("cases.json", family), "utf-8")
   );
+
+  const filenameFamily = new URL(
+    "../../reference/docs-installation-unicode-file/",
+    import.meta.url
+  );
+
+  const filenameManifest = parseNativeManifest(
+    await readFile(new URL("manifest.json", filenameFamily), "utf-8")
+  );
+
+  const filenameDefinitions = await readFile(
+    new URL("cases.json", filenameFamily)
+  );
+
+  const filenameCases = parseInstallationCases(
+    filenameDefinitions.toString("utf-8")
+  );
+
+  expect(filenameManifest.sourceJarSha256).toBe(manifest.sourceJarSha256);
+  expect(filenameManifest.minecraftVersion).toBe(manifest.minecraftVersion);
+  expect(createHash("sha256").update(filenameDefinitions).digest("hex")).toBe(
+    filenameManifest.caseDefinitionSha256
+  );
+  expect(
+    createHash("sha256")
+      .update(
+        await readFile(
+          new URL("source/ControlsReferenceMain.java", filenameFamily)
+        )
+      )
+      .digest("hex")
+  ).toBe(filenameManifest.captureSourceSha256);
+  expect(
+    createHash("sha256")
+      .update(
+        await readFile(
+          new URL("source-input/capture-controls.mjs", filenameFamily)
+        )
+      )
+      .digest("hex")
+  ).toBe(filenameManifest.captureRunnerSha256);
+  const cases = [...primaryCases, ...filenameCases];
+
+  const primaryReference = {
+    directory: family,
+    manifest,
+    name: "docs-installation-controls",
+  };
+
+  const filenameReference = {
+    directory: filenameFamily,
+    manifest: filenameManifest,
+    name: "docs-installation-unicode-file",
+  };
 
   const records: {
     reference: string;
@@ -56,11 +110,19 @@ test("default installation controls match their captured Minecraft content and s
 
   let probe = false;
 
-  const pixels = async (bytes: Buffer, identity: string) => {
+  const pixels = async (
+    bytes: Buffer,
+    identity: string,
+    source = primaryReference
+  ) => {
     const name = `${identity}-s2.png`;
-    const reference = await readFile(new URL(`captures/${name}`, family));
+
+    const reference = await readFile(
+      new URL(`captures/${name}`, source.directory)
+    );
+
     expect(createHash("sha256").update(reference).digest("hex")).toBe(
-      nativeReference(manifest, name).sha256
+      nativeReference(source.manifest, name).sha256
     );
     const expected = PNG.sync.read(reference);
 
@@ -81,7 +143,7 @@ test("default installation controls match their captured Minecraft content and s
     );
     records.push({
       differentPixels: result.differentPixels,
-      reference: `docs-installation-controls/${name}`,
+      reference: `${source.name}/${name}`,
       totalPixels: actual.width * actual.height,
     });
     await writeFile(
@@ -205,7 +267,11 @@ test("default installation controls match their captured Minecraft content and s
       })
       .toBe(true);
     await page.mouse.move(0, 0);
-    await pixels(await button.screenshot(), reference.name);
+    await pixels(
+      await button.screenshot(),
+      reference.name,
+      filenameCases.includes(reference) ? filenameReference : primaryReference
+    );
   };
 
   for (const file of inventory.files) {

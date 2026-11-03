@@ -23,16 +23,21 @@ interface NativeChartTextStyle extends React.CSSProperties {
 
 const f = Math.fround;
 
-const widthOf = (value: string) =>
-  [...value].reduce((n, c) => {
-    const codePoint = c.codePointAt(0);
+const widthOf = (value: string) => {
+  let accumulatedGlyphAdvance = 0;
+
+  for (const advanceCharacter of value) {
+    const codePoint = advanceCharacter.codePointAt(0);
 
     if (codePoint === undefined) {
       throw new Error("Expected a non-empty chart glyph character");
     }
 
-    return n + (asciiGlyphs[codePoint - 32]?.[2] ?? 6);
-  }, 0);
+    accumulatedGlyphAdvance += asciiGlyphs[codePoint - 32]?.[2] ?? 6;
+  }
+
+  return accumulatedGlyphAdvance;
+};
 
 const cssColor = (value: number) =>
   // oxlint-disable-next-line no-bitwise -- CSS receives only the low 24 RGB bits of the native packed color.

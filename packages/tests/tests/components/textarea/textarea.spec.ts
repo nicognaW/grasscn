@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 test("Textarea preserves controlled multiline editing, events and Enter behavior", async ({
@@ -88,7 +89,8 @@ test("Textarea scrollbar can be dragged and wheel scrolling remains native", asy
   );
   const area = page.getByRole("textbox", { name: "Test textarea" });
   await expect(area).toHaveAttribute("data-mc-scrollbar", "true");
-  const bounds = (await area.boundingBox())!;
+  const bounds = await area.boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.move(bounds.x + bounds.width - 6, bounds.y + 20);
   await page.mouse.down();
   await page.mouse.move(bounds.x + bounds.width - 6, bounds.y + 50);

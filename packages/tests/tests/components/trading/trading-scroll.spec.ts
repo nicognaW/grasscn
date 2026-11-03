@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { referenceFile } from "@tests/paths";
 
@@ -37,7 +38,8 @@ for (const [count, events] of Object.entries(probes)) {
     const input = page.getByRole("spinbutton", { name: "Scroll offset" });
     const rail = page.getByRole("scrollbar", { name: "Trade offers scroll" });
     const root = page.locator('[data-slot="trading"]');
-    const bounds = (await rail.boundingBox())!;
+    const bounds = await rail.boundingBox();
+    expectNotNull(bounds, "Missing required bounding box: bounds");
 
     let held = false;
 

@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const fixture =
@@ -19,7 +20,8 @@ test("map terrain coordinates and keyboard markers", async ({ page }) => {
   );
 
   const subject = page.locator("[data-subject]");
-  const bounds = (await subject.boundingBox())!;
+  const bounds = await subject.boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
 
   await subject.click({ position: { x: 20, y: 40 } });
   await expect

@@ -236,16 +236,16 @@ const SelectTrigger = ({
 
       const width = Math.floor(element.clientWidth / scale);
 
-      const textWidth = Math.ceil(
-        [...text].reduce(
-          (sum, char) =>
-            sum +
-            (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
-              getUnihexGlyph(char)?.advance ??
-              6),
-          0
-        )
-      );
+      let accumulatedGlyphAdvance = 0;
+
+      for (const advanceCharacter of text) {
+        accumulatedGlyphAdvance +=
+          minecraftGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+          getUnihexGlyph(advanceCharacter)?.advance ??
+          6;
+      }
+
+      const textWidth = Math.ceil(accumulatedGlyphAdvance);
 
       const available = width - 4;
       const overflow = textWidth - available;

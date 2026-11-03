@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
@@ -36,8 +37,10 @@ for (const scale of [2] as const) {
         await expect(popup).toBeVisible();
         await expect(popup).toHaveAttribute("data-mc-select-ready", "true");
 
-        const before = (await popup.boundingBox())!;
-        const anchor = (await trigger.boundingBox())!;
+        const before = await popup.boundingBox();
+        expectNotNull(before, "Missing required bounding box: before");
+        const anchor = await trigger.boundingBox();
+        expectNotNull(anchor, "Missing required bounding box: anchor");
 
         expect(before.x).toBeGreaterThanOrEqual(0);
         expect(before.x + before.width).toBeLessThanOrEqual(width);
@@ -85,7 +88,8 @@ for (const scale of [2] as const) {
 
           return await frameCompletion.promise;
         });
-        const after = (await popup.boundingBox())!;
+        const after = await popup.boundingBox();
+        expectNotNull(after, "Missing required bounding box: after");
 
         if ((await popup.getAttribute("data-align-trigger")) !== "true") {
           expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(scale);
@@ -123,7 +127,8 @@ for (const scale of [2] as const) {
         );
 
         if (settledMaximum > 0) {
-          const bounds = (await bar.boundingBox())!;
+          const bounds = await bar.boundingBox();
+          expectNotNull(bounds, "Missing required bounding box: bounds");
           expect(bounds.x + bounds.width).toBeLessThanOrEqual(
             after.x + after.width
           );

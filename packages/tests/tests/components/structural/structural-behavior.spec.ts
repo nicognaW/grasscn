@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 import type { Page } from "@playwright/test";
@@ -22,10 +23,12 @@ const verifyAspectRatioGeometry = async (
   const node = page.locator("#ratio");
   await expect(node).toHaveAttribute("data-slot", "aspect-ratio");
   await expect(node).toHaveAttribute("data-ref", "true");
-  const rect = (await node.boundingBox())!;
+  const rect = await node.boundingBox();
+  expectNotNull(rect, "Missing required bounding box: rect");
   expect(rect.width).toBe(width);
   expect(rect.height).toBeCloseTo(width / ratio, 1);
-  const art = (await page.locator("#art").boundingBox())!;
+  const art = await page.locator("#art").boundingBox();
+  expectNotNull(art, "Missing required bounding box: art");
   expect([art.width, art.height]).toEqual([40, 40]);
 };
 
@@ -37,11 +40,14 @@ const verifyButtonGroupOrientation = async (
   const group = page.getByRole("group", { name: "Game actions" });
   await expect(group).toHaveAttribute("data-orientation", orientation);
 
-  const first = (await page.locator("[data-subject]").boundingBox())!;
+  const first = await page.locator("[data-subject]").boundingBox();
+  expectNotNull(first, "Missing required bounding box: first");
 
-  const last = (await group
+  const last = await group
     .getByRole("button", { exact: true, name: "Next" })
-    .boundingBox())!;
+    .boundingBox();
+
+  expectNotNull(last, "Missing required bounding box: last");
 
   expect(
     orientation === "horizontal" ? last.x > first.x : last.y > first.y
@@ -149,9 +155,11 @@ test("Aspect Ratio supports explicit clipping without resampling its content", a
       .locator("#ratio")
       .evaluate((node) => getComputedStyle(node).overflow)
   ).toBe("hidden");
-  const art = (await page.locator("#art").boundingBox())!;
+  const art = await page.locator("#art").boundingBox();
+  expectNotNull(art, "Missing required bounding box: art");
   expect([art.width, art.height]).toEqual([40, 40]);
-  const box = (await page.locator("#ratio").boundingBox())!;
+  const box = await page.locator("#ratio").boundingBox();
+  expectNotNull(box, "Missing required bounding box: box");
   expect(box.height).toBe(10);
 });
 

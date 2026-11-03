@@ -36,7 +36,11 @@ const Empty = ({
   const textNode = React.useRef<HTMLElement>(null);
   const [position, setPosition] = React.useState({ x: 0, y: 0 });
 
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   const plain = isMinecraftTextContent(children);
   React.useLayoutEffect(() => {
     if (!plain || !node.current || !textNode.current) {

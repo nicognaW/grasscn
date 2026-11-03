@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 import type { RecordedAudioPlayback } from "@tests/harness/audio-playback";
@@ -61,7 +62,8 @@ for (const component of ["sheet", "drawer"]) {
       await expect(panel).toBeVisible();
       await expect
         .poll(async () => {
-          const r = (await panel.boundingBox())!;
+          const r = await panel.boundingBox();
+          expectNotNull(r, "Missing required bounding box: r");
 
           return Math.round(
             side === "top"
@@ -183,7 +185,8 @@ test("Drawer dismisses through Base UI swipe details", async ({ page }) => {
   const panel = page.getByRole("dialog");
   await expect(panel).toBeVisible();
 
-  const bounds = (await panel.boundingBox())!;
+  const bounds = await panel.boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.move(bounds.x + 8, bounds.y + 8);
   await page.mouse.down();
   await page.mouse.move(bounds.x + 8, bounds.y + bounds.height * 0.8, {

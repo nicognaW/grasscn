@@ -138,7 +138,11 @@ const Hotbar = ({
   const root = React.useRef<HTMLDivElement>(null);
 
   const cancelledWheel = React.useRef<WheelEvent | null>(null);
-  React.useImperativeHandle(forwardedRef, () => root.current!, []);
+  React.useImperativeHandle<typeof root.current, typeof root.current>(
+    forwardedRef,
+    () => root.current,
+    []
+  );
 
   if (!Number.isInteger(current) || current < 0 || current > 8) {
     throw new Error("Hotbar value must be a slot from 0 to 8");

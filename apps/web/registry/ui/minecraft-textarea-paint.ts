@@ -9,6 +9,31 @@ import {
 } from "./minecraft-unifont";
 import { positionUnihex, disposeUnihex } from "./minecraft-unifont-gpu";
 
+const requiresCJKFont = function requiresCJKFont(text: string) {
+  for (const character of text) {
+    if (isCJKCodepoint(character.codePointAt(0)!)) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+const supportsInputGlyphs = function supportsInputGlyphs(text: string) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E\n]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
   minecraftGlyphs;
 
@@ -269,12 +294,9 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
 
     const bounds = node.getBoundingClientRect();
     positionUnihex(context, bounds);
-    const characters = [...(value + node.placeholder)];
+    const inputGlyphText = value + node.placeholder;
 
-    if (
-      !loadingUnihex &&
-      characters.some((char) => isCJKCodepoint(char.codePointAt(0)!))
-    ) {
+    if (!loadingUnihex && requiresCJKFont(inputGlyphText)) {
       loadingUnihex = true;
       loadUnihex()
         .then(() => {
@@ -299,9 +321,7 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
     node.dataset.mcScrollbar = String(scrollable);
 
     const supported =
-      characters.every(
-        (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
-      ) && style.direction !== "rtl";
+      supportsInputGlyphs(inputGlyphText) && style.direction !== "rtl";
 
     node.dataset.mcBitmap = String(supported);
 

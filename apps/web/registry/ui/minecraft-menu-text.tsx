@@ -72,16 +72,16 @@ export const MinecraftMenuText = ({
     );
   }
 
-  const width = Math.ceil(
-    [...text].reduce(
-      (sum, char) =>
-        sum +
-        (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
-          getUnihexGlyph(char)?.advance ??
-          6),
-      0
-    )
-  );
+  let accumulatedGlyphAdvance = 0;
+
+  for (const advanceCharacter of text) {
+    accumulatedGlyphAdvance +=
+      minecraftGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+      getUnihexGlyph(advanceCharacter)?.advance ??
+      6;
+  }
+
+  const width = Math.ceil(accumulatedGlyphAdvance);
 
   return (
     <span className="mc-menu-text" data-mc-menu-text-ready="true">

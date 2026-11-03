@@ -39,7 +39,7 @@ export const verifyPopoverCase = async ({
 
   if (optionalText !== null && optionalText !== undefined) {
     params.set("text", optionalText);
-    params.set("label", c.label!);
+    params.set("label", String(c.label));
   }
 
   await page.goto(`${url}?${params}`);

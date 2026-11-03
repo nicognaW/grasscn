@@ -210,7 +210,11 @@ const Trading = ({
   const latestOffset = React.useRef(offset);
   latestOffset.current = offset;
   const cancelledWheel = React.useRef<WheelEvent | null>(null);
-  React.useImperativeHandle(forwardedRef, () => root.current!, []);
+  React.useImperativeHandle<typeof root.current, typeof root.current>(
+    forwardedRef,
+    () => root.current,
+    []
+  );
 
   const choose = (id: string) => {
     if (selectedId === undefined) {

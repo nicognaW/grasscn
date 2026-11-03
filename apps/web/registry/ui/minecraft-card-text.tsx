@@ -26,9 +26,17 @@ const wrap = function wrap(text: string, width: number, bold: boolean) {
   };
 
   for (let remaining of text.split("\n")) {
-    while (
-      [...remaining].reduce((sum, char) => sum + advance(char), 0) > width
-    ) {
+    const cardLineAdvance = function cardLineAdvance(glyphText: string) {
+      let accumulatedGlyphAdvance = 0;
+
+      for (const advanceCharacter of glyphText) {
+        accumulatedGlyphAdvance += advance(advanceCharacter);
+      }
+
+      return accumulatedGlyphAdvance;
+    };
+
+    while (cardLineAdvance(remaining) > width) {
       let count = 0;
       let used = 0;
       let space = -1;
@@ -98,15 +106,20 @@ export const MinecraftCardText = ({
 
   const lines = wrap(String(children), width, bold);
 
-  const widths = lines.map((line) =>
-    [...line].reduce(
-      (sum, char) =>
-        sum +
-        minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32][2] +
-        Number(bold),
-      0
-    )
-  );
+  const widths = lines.map((line) => {
+    let accumulatedGlyphAdvance2 = 0;
+
+    for (const advanceCharacter2 of line) {
+      accumulatedGlyphAdvance2 =
+        accumulatedGlyphAdvance2 +
+        minecraftGlyphs[
+          (advanceCharacter2.codePointAt(0) ?? Number.NaN) - 32
+        ][2] +
+        Number(bold);
+    }
+
+    return accumulatedGlyphAdvance2;
+  });
 
   const widest = Math.max(0, ...widths);
 

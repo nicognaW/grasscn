@@ -167,7 +167,11 @@ const AdvancementTree = ({
   const [isDragging, setIsDragging] = React.useState(false);
   const [tooltipId, setTooltipId] = React.useState<string | null>(null);
 
-  React.useImperativeHandle(forwardedRef, () => root.current!, []);
+  React.useImperativeHandle<typeof root.current, typeof root.current>(
+    forwardedRef,
+    () => root.current,
+    []
+  );
 
   const position = pan ?? offset;
   const current = selectedId ?? selection;

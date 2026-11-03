@@ -32,14 +32,16 @@ const fontImage = function fontImage() {
 };
 
 const documentTextWidth = function documentTextWidth(text: string) {
-  return [...text].reduce(
-    (sum, c) =>
-      sum +
-      (asciiGlyphs[c.codePointAt(0)! - 32]?.[2] ??
-        getUnihexGlyph(c)?.advance ??
-        6),
-    0
-  );
+  let accumulatedGlyphAdvance = 0;
+
+  for (const advanceCharacter of text) {
+    accumulatedGlyphAdvance +=
+      asciiGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+      getUnihexGlyph(advanceCharacter)?.advance ??
+      6;
+  }
+
+  return accumulatedGlyphAdvance;
 };
 
 const documentLines = function documentLines(text: string, width: number) {
@@ -47,7 +49,11 @@ const documentLines = function documentLines(text: string, width: number) {
 
   for (let line of text.split("\n")) {
     while (documentTextWidth(line) > width) {
-      const chars = [...line];
+      const chars: string[] = [];
+
+      for (const bufferCharacter of line) {
+        chars.push(bufferCharacter);
+      }
 
       let count = 0;
       let used = 0;

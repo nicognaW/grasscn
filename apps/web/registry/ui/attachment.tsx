@@ -66,7 +66,11 @@ const Attachment = ({
 
   const node = React.useRef<HTMLDivElement>(null);
 
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useLayoutEffect(() => {
     const root = node.current!;
 
@@ -147,7 +151,11 @@ const AttachmentContent = ({
   const node = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState<number>();
 
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useLayoutEffect(() => {
     const element = node.current!;
 

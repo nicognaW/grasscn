@@ -796,7 +796,15 @@ const collapsedContent = function collapsedContent(
         child.props.children === undefined)
   );
 
-  return icon ?? [...plainText(children)][0] ?? "?";
+  if (icon !== null && icon !== undefined) {
+    return icon;
+  }
+
+  const firstCodePoint = plainText(children).codePointAt(0);
+
+  return firstCodePoint === undefined
+    ? "?"
+    : String.fromCodePoint(firstCodePoint);
 };
 
 const sidebarMenuButtonVariants = cva("mc-sidebar-menu-button", {

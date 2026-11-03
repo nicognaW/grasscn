@@ -233,14 +233,16 @@ export const ChartAxisTick = ({
     };
   }, [text]);
 
-  const width = [...text].reduce(
-    (sum, char) =>
-      sum +
-      (minecraftGlyphs[char.charCodeAt(0) - 32]?.[2] ??
-        getUnihexGlyph(char)?.advance ??
-        10),
-    0
-  );
+  let accumulatedGlyphAdvance = 0;
+
+  for (const advanceCharacter of text) {
+    accumulatedGlyphAdvance +=
+      minecraftGlyphs[advanceCharacter.charCodeAt(0) - 32]?.[2] ??
+      getUnihexGlyph(advanceCharacter)?.advance ??
+      10;
+  }
+
+  const width = accumulatedGlyphAdvance;
 
   const left =
     Math.round(Number(x) / scale) -

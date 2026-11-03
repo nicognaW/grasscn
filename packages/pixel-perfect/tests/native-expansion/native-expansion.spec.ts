@@ -13,23 +13,26 @@ interface NativeExpansionManifest {
   }[];
 }
 
-const corpora = process.env.GRASSCN_EXPANSION_REFERENCE
-  ? [path.resolve(process.env.GRASSCN_EXPANSION_REFERENCE)]
-  : [
-      "book",
-      "hotbar",
-      "hud",
-      "hud/meters",
-      "sign",
-      "player-preview",
-      "player-preview/custom-skins",
-      "map",
-      "map/locator",
-      "map/demo-world",
-      "trading",
-      "trading/scrollbar",
-      "player-list",
-    ].map((name) => referenceFile(name));
+const expansionReference = process.env.GRASSCN_EXPANSION_REFERENCE ?? "";
+
+const corpora =
+  expansionReference === ""
+    ? [
+        "book",
+        "hotbar",
+        "hud",
+        "hud/meters",
+        "sign",
+        "player-preview",
+        "player-preview/custom-skins",
+        "map",
+        "map/locator",
+        "map/demo-world",
+        "trading",
+        "trading/scrollbar",
+        "player-list",
+      ].map((name) => referenceFile(name))
+    : [path.resolve(expansionReference)];
 
 const specimens = corpora.flatMap((reference) =>
   // SAFETY: All489cases in the13retained native-expansion manifests emit name, numeric scale and element; an override supplies the same capture-consumer contract at this original read boundary.

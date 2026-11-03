@@ -31,6 +31,47 @@ interface QuestionnaireComparisonManifest {
   cases: QuestionnaireComparisonCase[];
 }
 
+// Native capture Case.wrapWidth is a nullable Integer; zero or absence disables wrapping.
+const questionnaireCaseQuery = (
+  c: QuestionnaireComparisonCase,
+  part: string,
+  action: string,
+  manifest: QuestionnaireComparisonManifest
+) => {
+  const q = new URLSearchParams({
+    component: "questionnaire",
+    native: "1",
+    part,
+    action,
+    label: c.label ?? "",
+    text: c.text ?? "",
+    placeholder: c.placeholder ?? "",
+    checked: String(c.checked ?? false),
+    width: String(c.width),
+    height: String(c.height ?? 20),
+    scale: String(c.scale),
+    state: c.state,
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+    background: c.background ?? manifest.background ?? "#202020",
+    align: c.alignment ?? "left",
+  });
+
+  if (action === "radio") {
+    q.set("radio", "1");
+  }
+
+  if ((c.wrapWidth ?? 0) !== 0) {
+    q.set("wrapWidth", String(c.wrapWidth));
+  }
+
+  if (c.maxLength !== undefined) {
+    q.set("maxLength", String(c.maxLength));
+  }
+
+  return q;
+};
+
 const parts = [
   ["title", "label"],
   ["description", "label"],
@@ -77,36 +118,7 @@ for (const [part, dir] of parts) {
             await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
           }
 
-          const q = new URLSearchParams({
-            component: "questionnaire",
-            native: "1",
-            part,
-            action,
-            label: c.label ?? "",
-            text: c.text ?? "",
-            placeholder: c.placeholder ?? "",
-            checked: String(c.checked ?? false),
-            width: String(c.width),
-            height: String(c.height ?? 20),
-            scale: String(c.scale),
-            state: c.state,
-            x: String(c.x ?? 16),
-            y: String(c.y ?? 16),
-            background: c.background ?? manifest.background ?? "#202020",
-            align: c.alignment ?? "left",
-          });
-
-          if (action === "radio") {
-            q.set("radio", "1");
-          }
-
-          if (c.wrapWidth) {
-            q.set("wrapWidth", String(c.wrapWidth));
-          }
-
-          if (c.maxLength !== undefined) {
-            q.set("maxLength", String(c.maxLength));
-          }
+          const q = questionnaireCaseQuery(c, part, action, manifest);
 
           await page.goto(`/?${q}`);
           const subject = page.locator("[data-subject]");

@@ -8,6 +8,7 @@ import type * as Playwright from "@playwright/test";
 import type {
   AvatarCaptureManifest,
   LegacyAvatarConsumerWindow,
+  LoadingAvatarConsumerWindow,
 } from "@ppt/installed/legacy-consumer-protocol";
 import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
 import { pixelPerfectTestRoot, pixelPerfectFile, webFile } from "@ppt/paths";
@@ -120,9 +121,8 @@ try {
       await page.goto(urlArg);
       await page.waitForFunction(
         () =>
-          // SAFETY: the hash-bound retained Avatar standalone consumer installs the required renderCase ABI.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Avatar consumer bridge boundary.
-          !!(window as LegacyAvatarConsumerWindow).renderCase
+          // SAFETY: this readiness read observes only the retained producer's owned bridge member before its installation has been observed.
+          !!(window as LoadingAvatarConsumerWindow).renderCase
       );
     }
 

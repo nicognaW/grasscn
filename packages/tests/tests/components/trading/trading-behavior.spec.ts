@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { tradingSounds as clips } from "@grasscn/web/ui/minecraft-trading-sound-assets";
 import { referenceFile } from "@tests/paths";
@@ -161,7 +162,8 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await scroll.hover();
   await page.mouse.wheel(0, 100);
   await expect(scroll).toHaveAttribute("aria-valuenow", "1");
-  const box = (await scroll.boundingBox())!;
+  const box = await scroll.boundingBox();
+  expectNotNull(box, "Missing required bounding box: box");
   await page.mouse.move(box.x + 3, box.y + box.height - 8);
   await page.mouse.down();
   await page.mouse.move(box.x + 3, box.y + box.height - 2);

@@ -118,8 +118,22 @@ export const toastLayout = async function toastLayout(
     const lines: string[] = [];
 
     for (let remaining of text.split("\n")) {
-      while ([...remaining].reduce((n, char) => n + advance(char), 0) > 200) {
-        const chars = [...remaining];
+      const toastLineAdvance = function toastLineAdvance(glyphText: string) {
+        let accumulatedGlyphAdvance = 0;
+
+        for (const advanceCharacter of glyphText) {
+          accumulatedGlyphAdvance += advance(advanceCharacter);
+        }
+
+        return accumulatedGlyphAdvance;
+      };
+
+      while (toastLineAdvance(remaining) > 200) {
+        const chars: string[] = [];
+
+        for (const bufferCharacter of remaining) {
+          chars.push(bufferCharacter);
+        }
 
         let count = 0;
         let used = 0;
@@ -159,9 +173,15 @@ export const toastLayout = async function toastLayout(
       160,
       all.length
         ? Math.max(
-            ...all.map((line) =>
-              Math.ceil([...line].reduce((n, char) => n + advance(char), 0))
-            )
+            ...all.map((line) => {
+              let accumulatedGlyphAdvance2 = 0;
+
+              for (const advanceCharacter2 of line) {
+                accumulatedGlyphAdvance2 += advance(advanceCharacter2);
+              }
+
+              return Math.ceil(accumulatedGlyphAdvance2);
+            })
           )
         : 200
     ) + 30;

@@ -38,6 +38,44 @@ const different = function different(a: PNG, b: PNG) {
   return count;
 };
 
+// Native capture Case.wrapWidth is a nullable Integer; zero or absence disables wrapping.
+const calendarCaseQuery = (
+  c: CalendarComparisonCase,
+  component: string,
+  part: string,
+  alias: string,
+  manifest: CalendarComparisonManifest
+) => {
+  const q = new URLSearchParams({
+    component,
+    native: "1",
+    part,
+    scale: String(c.scale),
+    width: String(c.width),
+    height: String(c.height),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+    label: c.label ?? "",
+    background: c.background ?? manifest.background ?? "#202020",
+    align: c.alignment ?? "left",
+    checked: String(c.checked ?? false),
+    state: alias === "base" ? c.state : "normal",
+    selected: String(alias === "selected"),
+    today: String(alias === "today"),
+    range: alias.startsWith("range-") ? alias.slice(6) : "",
+  });
+
+  if (c.text !== undefined) {
+    q.set("text", c.text);
+  }
+
+  if ((c.wrapWidth ?? 0) !== 0) {
+    q.set("wrapWidth", String(c.wrapWidth));
+  }
+
+  return q;
+};
+
 for (const component of ["calendar", "date-picker"]) {
   test(`${component} comparator rejects a one-pixel mutation`, () => {
     // SAFETY: This read consumes the same pinned tests/reference/calendar-day/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
@@ -104,32 +142,7 @@ for (const component of ["calendar", "date-picker"]) {
           }, info) => {
             await page.setViewportSize({ height: 900, width: 1536 });
 
-            const q = new URLSearchParams({
-              component,
-              native: "1",
-              part,
-              scale: String(c.scale),
-              width: String(c.width),
-              height: String(c.height),
-              x: String(c.x ?? 16),
-              y: String(c.y ?? 16),
-              label: c.label ?? "",
-              background: c.background ?? manifest.background ?? "#202020",
-              align: c.alignment ?? "left",
-              checked: String(c.checked ?? false),
-              state: alias === "base" ? c.state : "normal",
-              selected: String(alias === "selected"),
-              today: String(alias === "today"),
-              range: alias.startsWith("range-") ? alias.slice(6) : "",
-            });
-
-            if (c.text !== undefined) {
-              q.set("text", c.text);
-            }
-
-            if (c.wrapWidth) {
-              q.set("wrapWidth", String(c.wrapWidth));
-            }
+            const q = calendarCaseQuery(c, component, part, alias, manifest);
 
             await page.goto(`/?${q}`);
             await expect(page.locator("[data-subject]")).toBeVisible();

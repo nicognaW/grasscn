@@ -24,7 +24,11 @@ const Input = ({
   scale?: 1 | 2 | 3;
 }) => {
   const node = React.useRef<HTMLInputElement>(null);
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useEffect(
     () =>
       node.current ? attachMinecraftInput(node.current, scale) : undefined,
