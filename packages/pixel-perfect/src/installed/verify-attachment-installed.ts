@@ -284,14 +284,27 @@ try {
     assert.deepEqual(pageErrors, []);
     const target = pixelPerfectFile(path.join("tests/reference/attachment"));
     fs.mkdirSync(target, { recursive: true });
+    let reportFilenameSelection: string;
+
+    switch (true) {
+      case part === "row": {
+        reportFilenameSelection = "row-installation-verification.json";
+        break;
+      }
+      case dir === ".": {
+        reportFilenameSelection = "action-ascii-installation-verification.json";
+        break;
+      }
+      default: {
+        reportFilenameSelection = "action-cjk-installation-verification.json";
+        break;
+      }
+    }
+
     fs.writeFileSync(
       path.join(
         target,
-        part === "row"
-          ? "row-installation-verification.json"
-          : dir === "."
-            ? "action-ascii-installation-verification.json"
-            : "action-cjk-installation-verification.json"
+        reportFilenameSelection
       ),
       JSON.stringify(
         {

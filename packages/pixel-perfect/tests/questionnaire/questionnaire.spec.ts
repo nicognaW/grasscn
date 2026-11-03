@@ -56,11 +56,24 @@ for (const [part, dir] of parts) {
     test.describe.configure({ mode: "parallel" });
 
     for (const c of manifest.cases) {
-      for (const action of part === "action"
-        ? ["next", "previous", "skip", "submit"]
-        : part === "checkbox"
-          ? ["next", "radio"]
-          : ["next"]) {
+      let questionnaireActions: string[];
+
+      switch (true) {
+        case part === "action": {
+          questionnaireActions = ["next", "previous", "skip", "submit"];
+          break;
+        }
+        case part === "checkbox": {
+          questionnaireActions = ["next", "radio"];
+          break;
+        }
+        default: {
+          questionnaireActions = ["next"];
+          break;
+        }
+      }
+
+      for (const action of questionnaireActions) {
         test(`${c.name} ${action}`, async ({ page }, info) => {
           await page.setViewportSize({ width: 1536, height: 900 });
 

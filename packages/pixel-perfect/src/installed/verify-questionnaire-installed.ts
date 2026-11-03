@@ -99,11 +99,24 @@ try {
         name: c.name,
       };
 
-      for (const action of part === "action"
-        ? (["next", "previous", "skip", "submit"] as const)
-        : part === "checkbox"
-          ? (["next", "radio"] as const)
-          : (["next"] as const)) {
+      let questionnaireActions: readonly ("next" | "previous" | "skip" | "submit" | "radio")[];
+
+      switch (true) {
+        case part === "action": {
+          questionnaireActions = (["next", "previous", "skip", "submit"] as const);
+          break;
+        }
+        case part === "checkbox": {
+          questionnaireActions = (["next", "radio"] as const);
+          break;
+        }
+        default: {
+          questionnaireActions = (["next"] as const);
+          break;
+        }
+      }
+
+      for (const action of questionnaireActions) {
         let shouldCreatePage = part === "input";
 
         if (!shouldCreatePage) {

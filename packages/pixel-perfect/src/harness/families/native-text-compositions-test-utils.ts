@@ -137,6 +137,27 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
 
       writeFileSync(info.outputPath("actual.png"), actualBytes);
       writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
+      let metricPartSelection: string;
+
+      switch (true) {
+        case component === "code-block": {
+          metricPartSelection = "content";
+          break;
+        }
+        case component === "trace": {
+          metricPartSelection = "line";
+          break;
+        }
+        case component === "message-scroller": {
+          metricPartSelection = "item";
+          break;
+        }
+        default: {
+          metricPartSelection = "default";
+          break;
+        }
+      }
+
       writeFileSync(
         info.outputPath("metrics.json"),
         JSON.stringify({
@@ -146,13 +167,7 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
           manifest: `${directory}/manifest.json`,
           mismatchedPixels,
           part:
-            component === "code-block"
-              ? "content"
-              : component === "trace"
-                ? "line"
-                : component === "message-scroller"
-                  ? "item"
-                  : "default",
+            metricPartSelection,
           tolerance: 0,
         })
       );
