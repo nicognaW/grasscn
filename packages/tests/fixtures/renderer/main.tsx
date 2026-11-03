@@ -578,6 +578,9 @@ const SwitchFixture = () => {
       value={params.get("formValue") ?? "enabled"}
       required={params.has("required")}
       aria-label={params.has("labelled") ? undefined : "Test switch"}
+      aria-labelledby={
+        params.has("labelled") ? "switch-setting-label" : undefined
+      }
       style={params.has("width") ? { width: width * scale } : undefined}
       onClick={(event) => {
         setEvents((current) => current + 1);
@@ -604,7 +607,7 @@ const SwitchFixture = () => {
         }}
       >
         {params.has("labelled") && (
-          <Label scale={scale} htmlFor="subject">
+          <Label id="switch-setting-label" scale={scale} htmlFor="subject">
             Switch setting
           </Label>
         )}
