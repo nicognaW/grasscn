@@ -1,11 +1,11 @@
-import type paginationArrowReference from "../reference/pagination-arrow/manifest.json";
-
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
+import type paginationArrowReference from "../reference/pagination-arrow/manifest.json";
 
 const directory = "tests/reference/pagination-arrow";
 

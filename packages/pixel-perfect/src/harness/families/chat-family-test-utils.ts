@@ -1,5 +1,3 @@
-import type messageReference from "../../../tests/reference/message/manifest.json";
-
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -7,6 +5,8 @@ import { test, expect } from "@grasscn/pixel-perfect/test";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
+import type messageReference from "../../../tests/reference/message/manifest.json";
 
 export const nativeChatTests = function nativeChatTests(
   component: "message" | "bubble"

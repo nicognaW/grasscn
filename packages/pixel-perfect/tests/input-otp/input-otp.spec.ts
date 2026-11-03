@@ -1,5 +1,3 @@
-import type inputOtpReference from "../reference/input-otp/manifest.json";
-
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -7,6 +5,8 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
+import type inputOtpReference from "../reference/input-otp/manifest.json";
 
 test.describe.configure({ mode: "parallel" });
 
