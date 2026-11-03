@@ -1,5 +1,11 @@
 import { test, expect } from "@grasscn/tests/test";
 
+declare global {
+  interface Window {
+    scrollAudioPlays?: number;
+  }
+}
+
 const viewport = '[data-slot="scroll-area-viewport"]';
 const bar = '[data-slot="scroll-area-scrollbar"]';
 const thumb = '[data-slot="scroll-area-thumb"]';
@@ -48,13 +54,9 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    const state = window as Window & {
-      scrollAudioPlays?: number;
-    };
-
-    state.scrollAudioPlays = 0;
+    const state = Object.assign(window, { scrollAudioPlays: 0 });
     HTMLMediaElement.prototype.play = function play() {
-      state.scrollAudioPlays!++;
+      state.scrollAudioPlays += 1;
 
       return Promise.resolve();
     };
@@ -93,27 +95,9 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
   await expect(page.getByLabel("Pointer events", { exact: true })).toHaveText(
     "2"
   );
-  expect(
-    await page.evaluate(
-      () =>
-        (
-          window as Window & {
-            scrollAudioPlays?: number;
-          }
-        ).scrollAudioPlays
-    )
-  ).toBe(0);
+  expect(await page.evaluate(() => window.scrollAudioPlays)).toBe(0);
   await page.getByRole("button", { exact: true, name: "Row 1" }).click();
-  expect(
-    await page.evaluate(
-      () =>
-        (
-          window as Window & {
-            scrollAudioPlays?: number;
-          }
-        ).scrollAudioPlays
-    )
-  ).toBe(1);
+  expect(await page.evaluate(() => window.scrollAudioPlays)).toBe(1);
 });
 
 test("ScrollArea disables scrolling without changing child controls", async ({

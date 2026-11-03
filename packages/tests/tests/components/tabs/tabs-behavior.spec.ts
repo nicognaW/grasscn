@@ -1,5 +1,11 @@
 import { test, expect } from "@grasscn/tests/test";
 
+declare global {
+  interface Window {
+    tabAudio?: number;
+  }
+}
+
 test("Tabs switch panels and retain tab/panel associations", async ({
   page,
 }) => {
@@ -125,28 +131,16 @@ test("Tabs play one original click only for accepted selection changes", async (
   page,
 }) => {
   await page.addInitScript(() => {
-    const state = window as Window & {
-      tabAudio?: number;
-    };
-
-    state.tabAudio = 0;
+    const state = Object.assign(window, { tabAudio: 0 });
     HTMLMediaElement.prototype.play = function play() {
-      state.tabAudio!++;
+      state.tabAudio += 1;
 
       return Promise.resolve();
     };
   });
   await page.goto("/?component=tabs&controlled=1");
 
-  const sounds = async () =>
-    await page.evaluate(
-      () =>
-        (
-          window as Window & {
-            tabAudio?: number;
-          }
-        ).tabAudio
-    );
+  const sounds = async () => await page.evaluate(() => window.tabAudio);
 
   await page.getByRole("tab", { exact: true, name: "World" }).hover();
   expect(await sounds()).toBe(0);
