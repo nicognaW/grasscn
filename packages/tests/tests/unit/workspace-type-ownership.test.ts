@@ -162,7 +162,9 @@ test("public JavaScript type ownership rejects ancestor TypeScript implementatio
       name.startsWith(`${manifest.name}/`)
     );
     sortedConfiguredAliases.sort();
-    const sortedPublicAliases = publicJavaScript.map(([subpath]) => alias(subpath));
+    const sortedPublicAliases = publicJavaScript.map(([subpath]) =>
+      alias(subpath)
+    );
     sortedPublicAliases.sort();
     assert.deepEqual(sortedConfiguredAliases, sortedPublicAliases);
 

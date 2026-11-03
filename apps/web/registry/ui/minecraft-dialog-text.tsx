@@ -143,11 +143,11 @@ export const MinecraftDialogText = ({
                       minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32];
 
                     const glyphStyle: DialogBoldGlyphStyle = {
-                            "--mc-advance": advance + 1,
-                            "--mc-glyph-x": x,
-                            "--mc-glyph-y": y,
-                            visibility: char === " " ? "hidden" : undefined,
-                          };
+                      "--mc-advance": advance + 1,
+                      "--mc-glyph-x": x,
+                      "--mc-glyph-y": y,
+                      visibility: char === " " ? "hidden" : undefined,
+                    };
 
                     return (
                       <span

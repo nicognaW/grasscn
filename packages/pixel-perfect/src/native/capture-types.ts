@@ -51,15 +51,19 @@ export interface CapturedInputResource {
 export interface CapturedFontAssets {
   assetIndex: string;
   assetIndexSha256: string;
-  resources: Record<string, { sha1: string; sha256: string; size: number } | undefined>;
+  resources: Record<
+    string,
+    { sha1: string; sha256: string; size: number } | undefined
+  >;
 }
 
-export type ControlCaptureCase = CaptureCaseInput & Partial<NativeCaptureLayout> & {
-  name: string;
-  scale: number;
-  sha256: string;
-  widgetWidth?: number;
-};
+export type ControlCaptureCase = CaptureCaseInput &
+  Partial<NativeCaptureLayout> & {
+    name: string;
+    scale: number;
+    sha256: string;
+    widgetWidth?: number;
+  };
 
 export interface ControlCaptureManifest {
   source: string;

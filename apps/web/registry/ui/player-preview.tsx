@@ -254,7 +254,10 @@ const buildRenderer = function buildRenderer(
 
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 
-      const nativeSortValues = Array.from({ length: source.length / 4 }, (_, i) => i);
+      const nativeSortValues = Array.from(
+        { length: source.length / 4 },
+        (_, i) => i
+      );
       nativeSortValues.sort(
         (leftQuadIndex, rightQuadIndex) =>
           Math.fround(

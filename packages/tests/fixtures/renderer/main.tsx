@@ -1775,10 +1775,7 @@ const AlertDialogFixture = () => {
     <>
       {params.has("patterned") &&
         createPortal(
-          <div
-            data-dialog-underlay="true"
-            className="fixture-dialog-underlay"
-          >
+          <div data-dialog-underlay="true" className="fixture-dialog-underlay">
             <div
               style={{
                 display: "flex",
@@ -2036,10 +2033,7 @@ const DialogFixture = () => {
     <>
       {params.has("patterned") &&
         createPortal(
-          <div
-            data-dialog-underlay="true"
-            className="fixture-dialog-underlay"
-          >
+          <div data-dialog-underlay="true" className="fixture-dialog-underlay">
             <div
               style={{
                 display: "flex",

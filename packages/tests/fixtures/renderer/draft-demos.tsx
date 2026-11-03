@@ -446,10 +446,7 @@ export default function DraftDemos({
           }}
         />
       )}
-      <output
-        aria-label="Demo value"
-        className="fixture-demo-value"
-      >
+      <output aria-label="Demo value" className="fixture-demo-value">
         {value} / {selected} / {trades}
       </output>
     </>

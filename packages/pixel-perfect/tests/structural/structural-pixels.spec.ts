@@ -2,8 +2,8 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectFile } from "@ppt/paths";
 import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 interface StructuralReferenceCase extends CapturedReferenceCase {

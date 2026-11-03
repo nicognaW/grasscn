@@ -1,7 +1,7 @@
-import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
 import type { GroupImperativeHandle } from "react-resizable-panels";
 
+import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../registry/ui/card";
 import {

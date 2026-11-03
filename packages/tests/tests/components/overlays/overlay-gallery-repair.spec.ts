@@ -68,7 +68,10 @@ for (const scale of [2]) {
       .getByLabel("Alert dialog message", { exact: true })
       .fill(
         [
-          ...Array.from({ length: 14 }, () => "这是一个很长的描述。请确认您是否删除世界。"),
+          ...Array.from(
+            { length: 14 },
+            () => "这是一个很长的描述。请确认您是否删除世界。"
+          ),
           "LAST世界",
         ].join("\n")
       );
