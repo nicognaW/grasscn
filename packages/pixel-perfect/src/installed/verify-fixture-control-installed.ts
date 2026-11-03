@@ -65,10 +65,14 @@ const controlParameters = (c: FixtureReferenceCase, name: string) => {
     params.set("wrapWidth", String(c.wrapWidth));
     params.set("open", "1");
   }
+
   return params;
 };
 
-const appendSurfaceParameters = (params: URLSearchParams, c: FixtureReferenceCase) => {
+const appendSurfaceParameters = (
+  params: URLSearchParams,
+  c: FixtureReferenceCase
+) => {
   if (c.element === "card") {
     params.set("height", String(c.height));
 
@@ -104,7 +108,11 @@ const appendSurfaceParameters = (params: URLSearchParams, c: FixtureReferenceCas
   }
 };
 
-const appendSelectionParameters = (params: URLSearchParams, c: FixtureReferenceCase, name: string) => {
+const appendSelectionParameters = (
+  params: URLSearchParams,
+  c: FixtureReferenceCase,
+  name: string
+) => {
   if (name === "tabs") {
     // SAFETY: the existing item-name branch selects its registered TabsReferenceCase capture format.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific registered manifest protocol.
@@ -151,7 +159,13 @@ const appendSelectionParameters = (params: URLSearchParams, c: FixtureReferenceC
   }
 };
 
-const prepareControlAppearance = async (c: FixtureReferenceCase, manifest: InstalledReferenceManifest, name: string, page: Page, subject: Locator) => {
+const prepareControlAppearance = async (
+  c: FixtureReferenceCase,
+  manifest: InstalledReferenceManifest,
+  name: string,
+  page: Page,
+  subject: Locator
+) => {
   if (c.element === "progress" && c.overlay !== "progress") {
     await expect(subject.locator("canvas")).toHaveAttribute(
       "data-mc-progress-painted",
@@ -260,7 +274,12 @@ const prepareControlAppearance = async (c: FixtureReferenceCase, manifest: Insta
   }
 };
 
-const prepareTabsControlState = async (c: FixtureReferenceCase, name: string, page: Page, subject: Locator) => {
+const prepareTabsControlState = async (
+  c: FixtureReferenceCase,
+  name: string,
+  page: Page,
+  subject: Locator
+) => {
   if (name === "tabs") {
     // SAFETY: the existing item-name branch selects its registered TabsReferenceCase capture format.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific registered manifest protocol.
@@ -319,7 +338,12 @@ const prepareTabsControlState = async (c: FixtureReferenceCase, name: string, pa
   }
 };
 
-const prepareSelectControlState = async (c: FixtureReferenceCase, name: string, page: Page, subject: Locator) => {
+const prepareSelectControlState = async (
+  c: FixtureReferenceCase,
+  name: string,
+  page: Page,
+  subject: Locator
+) => {
   if (name === "select") {
     // SAFETY: the existing item-name branch selects its registered SelectReferenceCase capture format.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific registered manifest protocol.
@@ -407,7 +431,12 @@ const prepareSelectControlState = async (c: FixtureReferenceCase, name: string, 
   }
 };
 
-const prepareChoiceControlState = async (c: FixtureReferenceCase, name: string, page: Page, subject: Locator) => {
+const prepareChoiceControlState = async (
+  c: FixtureReferenceCase,
+  name: string,
+  page: Page,
+  subject: Locator
+) => {
   if (["radio-group", "switch"].includes(name)) {
     // SAFETY: the registered radio-group and switch captures both emit required numeric x/y coordinates.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact positioned capture producer boundary.
@@ -457,7 +486,11 @@ const prepareChoiceControlState = async (c: FixtureReferenceCase, name: string, 
   }
 };
 
-const prepareEntryControlSelection = async (c: FixtureReferenceCase, page: Page, subject: Locator) => {
+const prepareEntryControlSelection = async (
+  c: FixtureReferenceCase,
+  page: Page,
+  subject: Locator
+) => {
   if (c.element === "input" || c.element === "textarea") {
     const cursor = c.cursor ?? c.text.length;
     const anchor = c.anchor ?? cursor;

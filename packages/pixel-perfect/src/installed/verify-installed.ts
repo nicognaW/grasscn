@@ -19,7 +19,10 @@ import type {
 } from "@ppt/installed/reference-case";
 import type { CollapsibleReferenceCase } from "@ppt/installed/verify-collapsible-installed";
 import { verifyCollapsibleCase } from "@ppt/installed/verify-collapsible-installed";
-import { verifyMenuCase, verifyMenubarTriggerCase } from "@ppt/installed/verify-menu-installed";
+import {
+  verifyMenuCase,
+  verifyMenubarTriggerCase,
+} from "@ppt/installed/verify-menu-installed";
 import { verifyPopoverCase } from "@ppt/installed/verify-popover-installed";
 import { verifyDialogCase } from "@ppt/installed/verify-dialog-installed";
 import { verifyFixtureControlCase } from "@ppt/installed/verify-fixture-control-installed";
@@ -325,7 +328,9 @@ try {
       // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
       const c = referenceCase as MenubarTriggerReferenceCase;
-      cases.push(await verifyMenubarTriggerCase({ c, manifestFile, name, page, url }));
+      cases.push(
+        await verifyMenubarTriggerCase({ c, manifestFile, name, page, url })
+      );
       continue;
     }
 
@@ -347,7 +352,16 @@ try {
 
     // SAFETY: remaining fixture controls dispatch by their captured element discriminator.
     const c = referenceCase as FixtureReferenceCase;
-    cases.push(await verifyFixtureControlCase({ c, manifest, manifestFile, name, page, url }));
+    cases.push(
+      await verifyFixtureControlCase({
+        c,
+        manifest,
+        manifestFile,
+        name,
+        page,
+        url,
+      })
+    );
   }
 
   assert.deepEqual(pageErrors, []);

@@ -20,7 +20,11 @@ interface InstalledDialogCase {
   url: string;
 }
 
-const dialogParameters = (c: DialogReferenceCase, name: string, confirmation: boolean) => {
+const dialogParameters = (
+  c: DialogReferenceCase,
+  name: string,
+  confirmation: boolean
+) => {
   const params = new URLSearchParams({
     component: name,
     label: c.label,
@@ -52,6 +56,7 @@ const dialogParameters = (c: DialogReferenceCase, name: string, confirmation: bo
   if (c.checked ?? false) {
     params.set("patterned", "1");
   }
+
   return params;
 };
 
