@@ -253,7 +253,7 @@ test("nested browser file filters match the same exact case path on Windows and 
 });
 
 test("nested helper-defined checkpoints retain only both source-identical inputs", async () => {
-  await fixture(async ({ root, record, candidate, output }) => {
+  await fixture(async ({ root, record, candidate }) => {
     const file = "button/native.spec.ts";
     const owner = `tests/${file}`;
     const definition = "src/family.mjs";

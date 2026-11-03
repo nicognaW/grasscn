@@ -160,7 +160,7 @@ test("Hover inspection reports the plotted datum and leaving clears the readout"
   const chart = page.locator('[data-slot="chart-example"]');
   const canvas = chart.locator("canvas");
 
-  const b = await canvas.boundingBox();
+  await canvas.boundingBox();
   await chart.getByRole("application").hover({ position: { x: 80, y: 40 } });
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("January");
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("186");
