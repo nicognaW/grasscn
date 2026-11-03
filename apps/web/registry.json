@@ -807,7 +807,7 @@
       "type": "registry:ui",
       "title": "Dialog",
       "description": "Original Minecraft PopupScreen appearance with shadcn Dialog semantics.",
-      "dependencies": ["@base-ui/react"],
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
