@@ -6,6 +6,7 @@ import path from "node:path";
 
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import type {
   InputGroupCaptureManifest,
   InputGroupEntryElement,
@@ -25,6 +26,174 @@ const consumer = path.resolve(consumerArgument);
 
 const sha = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
+
+interface InstalledInputGroupCase {
+  c: InputGroupCaptureManifest["cases"][number];
+  folder: string;
+  page: Page;
+  part: string;
+  reference: string;
+  url: string;
+}
+
+const inputGroupParameters = (
+  c: InputGroupCaptureManifest["cases"][number],
+  part: string
+) => {
+  const q = new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background ?? "#202020",
+    component: "input-group",
+    height: String(c.height ?? (part === "text" ? 9 : 20)),
+    label: c.label ?? "Button",
+    native: "1",
+    part,
+    placeholder: c.placeholder ?? "",
+    scale: String(c.scale),
+    state: c.state ?? "normal",
+    text: c.text ?? "",
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
+  const optionalWrapWidth = c.wrapWidth;
+
+  if (optionalWrapWidth !== null && optionalWrapWidth !== undefined) {
+    q.set("wrapWidth", String(c.wrapWidth));
+  }
+
+  const optionalMaxLength = c.maxLength;
+
+  if (optionalMaxLength !== null && optionalMaxLength !== undefined) {
+    q.set("maxLength", String(c.maxLength));
+  }
+
+  return q;
+};
+
+const verifyInputGroupReferenceCase = async ({
+  c,
+  folder,
+  page,
+  part,
+  reference,
+  url: fixtureUrl,
+}: InstalledInputGroupCase) => {
+  const entry = part === "input" || part === "textarea";
+
+  const q = inputGroupParameters(c, part);
+
+  if (entry) {
+    await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
+    await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
+  }
+
+  await page.goto(`${fixtureUrl}?${q}`);
+  const subject = page.locator("#subject");
+  await expect(subject).toBeVisible();
+
+  if (entry) {
+    await expect(subject).toHaveAttribute("data-mc-ready", "true");
+
+    if (
+      folder.includes("cjk") ||
+      /\P{ASCII}/u.test((c.text ?? "") + (c.placeholder ?? ""))
+    ) {
+      await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
+    }
+  }
+
+  if (part === "text") {
+    await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
+  }
+
+  for (const line of await subject.locator("[data-mc-label-ready]").all()) {
+    await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
+  if (c.state?.startsWith("focus")) {
+    await subject.focus();
+
+    if (part === "button") {
+      await page.keyboard.press("Tab");
+      await page.keyboard.press("Shift+Tab");
+    }
+  }
+
+  await (c.state === "hover" ? subject.hover() : page.mouse.move(0, 0));
+
+  if (entry) {
+    const cursor = c.cursor ?? c.text!.length;
+    const anchor = c.anchor ?? cursor;
+
+    await subject.evaluate(
+      (node, { cursor: selectionCursor, anchor: selectionAnchor }) => {
+        // SAFETY: the entry route renders an HTML input or textarea with native selection support.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed entry fixture HTML DOM API boundary.
+        (node as InputGroupEntryElement).setSelectionRange(
+          Math.min(selectionCursor, selectionAnchor),
+          Math.max(selectionCursor, selectionAnchor),
+          selectionCursor < selectionAnchor ? "backward" : "forward"
+        );
+      },
+      { anchor, cursor }
+    );
+
+    if (part === "textarea") {
+      await subject.evaluate(
+        (node, y) => {
+          node.scrollTop = y;
+        },
+        (c.value ?? 0) * c.scale
+      );
+    }
+
+    await page.clock.runFor(c.caretMs!);
+    await expect(subject).toHaveAttribute("data-mc-ready", "true");
+  } else {
+    await page.evaluate(async () => {
+      const frameCompletion = Promise.withResolvers();
+
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(frameCompletion.resolve);
+        });
+      } catch (error) {
+        frameCompletion.reject(error);
+      }
+
+      return await frameCompletion.promise;
+    });
+  }
+
+  const expectedBytes = await readFile(
+    path.join(reference, "captures", c.name)
+  );
+
+  assert.equal(sha(expectedBytes), c.sha256);
+
+  const expected = PNG.sync.read(expectedBytes);
+
+  const actual = PNG.sync.read(
+    await subject.screenshot({ animations: "disabled" })
+  );
+
+  assert.deepEqual(
+    [actual.width, actual.height],
+    [expected.width, expected.height]
+  );
+  assert.ok(
+    actual.data.equals(expected.data),
+    `${folder}/${c.name}: installed pixels differ`
+  );
+
+  return {
+    decodedRgbaSha256: sha(actual.data),
+    mismatchedPixels: 0,
+    name: c.name,
+  };
+};
 
 // SAFETY: the authored registry owns this fresh installed source descriptor read.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
@@ -152,150 +321,16 @@ try {
       page.on("pageerror", (error) => pageErrors.push(error.message));
 
       try {
-        const entry = part === "input" || part === "textarea";
-
-        const q = new URLSearchParams({
-          align: c.alignment ?? "left",
-          background: c.background ?? "#202020",
-          component: "input-group",
-          height: String(c.height ?? (part === "text" ? 9 : 20)),
-          label: c.label ?? "Button",
-          native: "1",
-          part,
-          placeholder: c.placeholder ?? "",
-          scale: String(c.scale),
-          state: c.state ?? "normal",
-          text: c.text ?? "",
-          width: String(c.width),
-          x: String(c.x ?? 16),
-          y: String(c.y ?? 16),
-        });
-
-        const optionalWrapWidth = c.wrapWidth;
-
-        if (optionalWrapWidth !== null && optionalWrapWidth !== undefined) {
-          q.set("wrapWidth", String(c.wrapWidth));
-        }
-
-        const optionalMaxLength = c.maxLength;
-
-        if (optionalMaxLength !== null && optionalMaxLength !== undefined) {
-          q.set("maxLength", String(c.maxLength));
-        }
-
-        if (entry) {
-          await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
-          await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
-        }
-
-        await page.goto(`${url}?${q}`);
-        const subject = page.locator("#subject");
-        await expect(subject).toBeVisible();
-
-        if (entry) {
-          await expect(subject).toHaveAttribute("data-mc-ready", "true");
-
-          if (
-            folder.includes("cjk") ||
-            /\P{ASCII}/u.test((c.text ?? "") + (c.placeholder ?? ""))
-          ) {
-            await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
-          }
-        }
-
-        if (part === "text") {
-          await expect(subject).toHaveAttribute(
-            "data-mc-label-layout-ready",
-            "true"
-          );
-        }
-
-        for (const line of await subject
-          .locator("[data-mc-label-ready]")
-          .all()) {
-          await expect(line).toHaveAttribute("data-mc-label-ready", "true");
-        }
-
-        if (c.state?.startsWith("focus")) {
-          await subject.focus();
-
-          if (part === "button") {
-            await page.keyboard.press("Tab");
-            await page.keyboard.press("Shift+Tab");
-          }
-        }
-
-        await (c.state === "hover" ? subject.hover() : page.mouse.move(0, 0));
-
-        if (entry) {
-          const cursor = c.cursor ?? c.text!.length;
-          const anchor = c.anchor ?? cursor;
-
-          await subject.evaluate(
-            (node, { cursor: selectionCursor, anchor: selectionAnchor }) => {
-              // SAFETY: the entry route renders an HTML input or textarea with native selection support.
-              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed entry fixture HTML DOM API boundary.
-              (node as InputGroupEntryElement).setSelectionRange(
-                Math.min(selectionCursor, selectionAnchor),
-                Math.max(selectionCursor, selectionAnchor),
-                selectionCursor < selectionAnchor ? "backward" : "forward"
-              );
-            },
-            { anchor, cursor }
-          );
-
-          if (part === "textarea") {
-            await subject.evaluate(
-              (node, y) => {
-                node.scrollTop = y;
-              },
-              (c.value ?? 0) * c.scale
-            );
-          }
-
-          await page.clock.runFor(c.caretMs!);
-          await expect(subject).toHaveAttribute("data-mc-ready", "true");
-        } else {
-          await page.evaluate(async () => {
-            const frameCompletion = Promise.withResolvers();
-
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(frameCompletion.resolve);
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
-
-            return await frameCompletion.promise;
-          });
-        }
-
-        const expectedBytes = await readFile(
-          path.join(reference, "captures", c.name)
+        cases.push(
+          await verifyInputGroupReferenceCase({
+            c,
+            folder,
+            page,
+            part,
+            reference,
+            url,
+          })
         );
-
-        assert.equal(sha(expectedBytes), c.sha256);
-
-        const expected = PNG.sync.read(expectedBytes);
-
-        const actual = PNG.sync.read(
-          await subject.screenshot({ animations: "disabled" })
-        );
-
-        assert.deepEqual(
-          [actual.width, actual.height],
-          [expected.width, expected.height]
-        );
-        assert.ok(
-          actual.data.equals(expected.data),
-          `${folder}/${c.name}: installed pixels differ`
-        );
-        cases.push({
-          decodedRgbaSha256: sha(actual.data),
-          mismatchedPixels: 0,
-          name: c.name,
-        });
         count += 1;
       } finally {
         await page.close();

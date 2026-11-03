@@ -6,6 +6,7 @@ import path from "node:path";
 
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import type { CommandCaptureManifest } from "@ppt/installed/control-capture-protocol";
 import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
 import { webFile, pixelPerfectFile } from "@ppt/paths";
@@ -22,6 +23,170 @@ const consumer = path.resolve(consumerArgument);
 
 const sha = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
+
+interface InstalledCommandCase {
+  c: CommandCaptureManifest["cases"][number];
+  directory: string;
+  folder: string;
+  page: Page;
+  url: string;
+}
+
+const commandParameters = (
+  c: CommandCaptureManifest["cases"][number],
+  menu: boolean
+) => {
+  const query = new URLSearchParams({
+    background: c.background ?? "#202020",
+    component: "command",
+    height: String(c.height),
+    native: "1",
+    part: menu ? "list" : "input",
+    scale: String(c.scale),
+    state: c.state,
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
+  if (menu) {
+    query.set("labels", JSON.stringify(c.labels));
+    query.set("surface", c.element === "menu-panel" ? "popup" : "suggestions");
+    query.set("selectedIndex", String(c.selectedIndex));
+  } else {
+    query.set("text", c.text!);
+    query.set("placeholder", c.placeholder ?? "");
+
+    const optionalMaxLength = c.maxLength;
+
+    if (optionalMaxLength !== null && optionalMaxLength !== undefined) {
+      query.set("maxLength", String(c.maxLength));
+    }
+  }
+
+  return query;
+};
+
+const verifyCommandReferenceCase = async ({
+  c,
+  directory,
+  folder,
+  page,
+  url: fixtureUrl,
+}: InstalledCommandCase) => {
+  const menu = folder === "suggestions";
+
+  const query = commandParameters(c, menu);
+
+  if (!menu) {
+    await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
+    await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
+  }
+
+  await page.goto(`${fixtureUrl}?${query}`);
+
+  const subject = page.locator(
+    menu ? '[data-slot="command-list"]' : '[data-slot="command-input"]'
+  );
+
+  if (menu) {
+    await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
+    await subject.focus();
+
+    await (c.state.endsWith("hover")
+      ? subject.getByRole("option").nth(c.targetIndex!).hover()
+      : page.mouse.move(0, 0));
+
+    await subject.evaluate(
+      (node, scroll) => {
+        node.scrollTop = scroll;
+      },
+      (c.value ?? 0) * 12 * c.scale
+    );
+    await expect(
+      subject.locator('[data-mc-menu-text-ready="false"]')
+    ).toHaveCount(0, { timeout: 15_000 });
+
+    for (const line of await subject
+      .locator("[data-mc-menu-unicode-ready]")
+      .all()) {
+      await expect(line).toHaveAttribute("data-mc-menu-unicode-ready", "true");
+    }
+
+    await page.evaluate(async () => {
+      const frameCompletion = Promise.withResolvers();
+
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(frameCompletion.resolve);
+        });
+      } catch (error) {
+        frameCompletion.reject(error);
+      }
+
+      return await frameCompletion.promise;
+    });
+  } else {
+    await expect(subject).toHaveAttribute("data-mc-ready", "true");
+
+    if (folder === "input-cjk") {
+      await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
+    }
+
+    if (c.state.startsWith("focus")) {
+      await subject.focus();
+    }
+
+    await (c.state === "hover" ? subject.hover() : page.mouse.move(0, 0));
+
+    const cursor = c.cursor ?? c.text!.length;
+    const anchor = c.anchor ?? cursor;
+
+    await subject.evaluate(
+      (
+        node: HTMLInputElement | HTMLTextAreaElement,
+        { cursor: selectionCursor, anchor: selectionAnchor }
+      ) => {
+        // SAFETY: the entry route renders an HTML input or textarea with native selection support.
+        node.setSelectionRange(
+          Math.min(selectionCursor, selectionAnchor),
+          Math.max(selectionCursor, selectionAnchor),
+          selectionCursor < selectionAnchor ? "backward" : "forward"
+        );
+      },
+      { anchor, cursor }
+    );
+    await page.clock.runFor(c.caretMs!);
+    await expect(subject).toHaveAttribute("data-mc-ready", "true");
+  }
+
+  const expectedBytes = await readFile(
+    path.join(directory, "captures", c.name)
+  );
+
+  assert.equal(sha(expectedBytes), c.sha256);
+
+  const expected = PNG.sync.read(expectedBytes);
+
+  const actual = PNG.sync.read(
+    await subject.screenshot({ animations: "disabled" })
+  );
+
+  assert.deepEqual(
+    [actual.width, actual.height],
+    [expected.width, expected.height]
+  );
+  assert.ok(
+    actual.data.equals(expected.data),
+    `Installed Command ${folder}: ${c.name} differs`
+  );
+
+  return {
+    decodedRgbaSha256: sha(actual.data),
+    mismatchedPixels: 0,
+    name: c.name,
+  };
+};
 
 // SAFETY: the authored registry owns this existing awaited source descriptor read.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
@@ -141,147 +306,9 @@ try {
       page.on("pageerror", (error) => pageErrors.push(error.message));
 
       try {
-        const menu = folder === "suggestions";
-
-        const query = new URLSearchParams({
-          background: c.background ?? "#202020",
-          component: "command",
-          height: String(c.height),
-          native: "1",
-          part: menu ? "list" : "input",
-          scale: String(c.scale),
-          state: c.state,
-          width: String(c.width),
-          x: String(c.x ?? 16),
-          y: String(c.y ?? 16),
-        });
-
-        if (menu) {
-          query.set("labels", JSON.stringify(c.labels));
-          query.set(
-            "surface",
-            c.element === "menu-panel" ? "popup" : "suggestions"
-          );
-          query.set("selectedIndex", String(c.selectedIndex));
-        } else {
-          query.set("text", c.text!);
-          query.set("placeholder", c.placeholder ?? "");
-
-          const optionalMaxLength = c.maxLength;
-
-          if (optionalMaxLength !== null && optionalMaxLength !== undefined) {
-            query.set("maxLength", String(c.maxLength));
-          }
-
-          await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
-          await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
-        }
-
-        await page.goto(`${url}?${query}`);
-
-        const subject = page.locator(
-          menu ? '[data-slot="command-list"]' : '[data-slot="command-input"]'
+        cases.push(
+          await verifyCommandReferenceCase({ c, directory, folder, page, url })
         );
-
-        if (menu) {
-          await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
-          await subject.focus();
-
-          await (c.state.endsWith("hover")
-            ? subject.getByRole("option").nth(c.targetIndex!).hover()
-            : page.mouse.move(0, 0));
-
-          await subject.evaluate(
-            (node, scroll) => {
-              node.scrollTop = scroll;
-            },
-            (c.value ?? 0) * 12 * c.scale
-          );
-          await expect(
-            subject.locator('[data-mc-menu-text-ready="false"]')
-          ).toHaveCount(0, { timeout: 15_000 });
-
-          for (const line of await subject
-            .locator("[data-mc-menu-unicode-ready]")
-            .all()) {
-            await expect(line).toHaveAttribute(
-              "data-mc-menu-unicode-ready",
-              "true"
-            );
-          }
-
-          await page.evaluate(async () => {
-            const frameCompletion = Promise.withResolvers();
-
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(frameCompletion.resolve);
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
-
-            return await frameCompletion.promise;
-          });
-        } else {
-          await expect(subject).toHaveAttribute("data-mc-ready", "true");
-
-          if (folder === "input-cjk") {
-            await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
-          }
-
-          if (c.state.startsWith("focus")) {
-            await subject.focus();
-          }
-
-          await (c.state === "hover" ? subject.hover() : page.mouse.move(0, 0));
-
-          const cursor = c.cursor ?? c.text!.length;
-          const anchor = c.anchor ?? cursor;
-
-          await subject.evaluate(
-            (
-              node: HTMLInputElement | HTMLTextAreaElement,
-              { cursor: selectionCursor, anchor: selectionAnchor }
-            ) => {
-              // SAFETY: the entry route renders an HTML input or textarea with native selection support.
-              node.setSelectionRange(
-                Math.min(selectionCursor, selectionAnchor),
-                Math.max(selectionCursor, selectionAnchor),
-                selectionCursor < selectionAnchor ? "backward" : "forward"
-              );
-            },
-            { anchor, cursor }
-          );
-          await page.clock.runFor(c.caretMs!);
-          await expect(subject).toHaveAttribute("data-mc-ready", "true");
-        }
-
-        const expectedBytes = await readFile(
-          path.join(directory, "captures", c.name)
-        );
-
-        assert.equal(sha(expectedBytes), c.sha256);
-
-        const expected = PNG.sync.read(expectedBytes);
-
-        const actual = PNG.sync.read(
-          await subject.screenshot({ animations: "disabled" })
-        );
-
-        assert.deepEqual(
-          [actual.width, actual.height],
-          [expected.width, expected.height]
-        );
-        assert.ok(
-          actual.data.equals(expected.data),
-          `Installed Command ${folder}: ${c.name} differs`
-        );
-        cases.push({
-          decodedRgbaSha256: sha(actual.data),
-          mismatchedPixels: 0,
-          name: c.name,
-        });
         count += 1;
       } finally {
         await page.close();
