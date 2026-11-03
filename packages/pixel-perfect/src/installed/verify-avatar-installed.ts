@@ -89,7 +89,7 @@ try {
         frameCompletion.reject(error);
       }
 
-      return frameCompletion.promise;
+      return await frameCompletion.promise;
     });
 
     const got = PNG.sync.read(

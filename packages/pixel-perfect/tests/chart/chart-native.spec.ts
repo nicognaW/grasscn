@@ -68,7 +68,7 @@ for (const kind of ["fps", "pie"]) {
           frameCompletion.reject(error);
         }
 
-        return frameCompletion.promise;
+        return await frameCompletion.promise;
       });
 
       const bytes = readFileSync(

@@ -132,7 +132,7 @@ for (const [part, dir] of [
             frameCompletion.reject(error);
           }
 
-          return frameCompletion.promise;
+          return await frameCompletion.promise;
         });
 
         const bytes = readFileSync(

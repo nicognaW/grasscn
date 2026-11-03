@@ -114,7 +114,7 @@ for (const [folder, part] of [
             frameCompletion.reject(error);
           }
 
-          return frameCompletion.promise;
+          return await frameCompletion.promise;
         });
       } else {
         await expect(subject).toHaveAttribute("data-mc-ready", "true");

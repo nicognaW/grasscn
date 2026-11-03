@@ -112,7 +112,7 @@ for (const dir of ["label", "separator"]) {
             frameCompletion.reject(error);
           }
 
-          return frameCompletion.promise;
+          return await frameCompletion.promise;
         });
 
         const bytes = readFileSync(

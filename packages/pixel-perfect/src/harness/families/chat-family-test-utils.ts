@@ -84,7 +84,7 @@ export const nativeChatTests = function nativeChatTests(
           frameCompletion.reject(error);
         }
 
-        return frameCompletion.promise;
+        return await frameCompletion.promise;
       });
 
       const bytes = readFileSync(

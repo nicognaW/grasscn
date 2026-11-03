@@ -166,7 +166,7 @@ try {
           frameCompletion.reject(error);
         }
 
-        return frameCompletion.promise;
+        return await frameCompletion.promise;
       });
 
       const actual = PNG.sync.read(
