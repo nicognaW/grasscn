@@ -98,12 +98,14 @@ const ItemFixture = () => {
   );
 
   const height = Number(q.get("height") ?? 36) * scale;
+  const x = Number(q.get("x") ?? 16) * scale;
+  const y = Number(q.get("y") ?? 16) * scale;
 
   const commonStyle = {
     "--fixture-height": `${height}px`,
-    "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
+    "--fixture-x": `${x}px`,
 
-    "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
+    "--fixture-y": `${y}px`,
     width: width * scale,
   } satisfies React.CSSProperties;
 
@@ -115,8 +117,14 @@ const ItemFixture = () => {
         scale={scale}
         maxWidth={q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined}
         align={q.get("align") === "center" ? "center" : "left"}
-        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
-        style={commonStyle}
+
+        style={{
+          height,
+          left: x,
+          position: "fixed",
+          top: y,
+          width: commonStyle.width,
+        }}
         data-subject="true"
       >
         {title}

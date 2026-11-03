@@ -58,13 +58,13 @@ export const ColorPainterStressFixture = () => {
           >
             <BubbleContent
               id="subject"
-              className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
+              className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
               style={{
                 "--fixture-height": `${9 * scale}px`,
-                "--fixture-width": `${252 * scale}px`,
                 "--fixture-x": `${16 * scale}px`,
                 "--fixture-y": `${16 * scale}px`,
                 color: "#ff5555",
+                width: 252 * scale,
               }}
               data-subject="true"
             >

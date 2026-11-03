@@ -34,10 +34,12 @@ export const ChatFamilyFixture = () => {
   const ref = React.useRef<HTMLDivElement>(null);
   const width = Number(q.get("width") ?? 172);
 
+  const scaledWidth = width * scale;
+
   const common: ChatFamilyReferenceStyle = {
     "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
     "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
-    "--fixture-width": `${width * scale}px`,
+    "--fixture-width": `${scaledWidth}px`,
     ...(native ? { height: Number(q.get("height") ?? 9) * scale } : {}),
     color: q.get("color") ?? "#ffffff",
     "--mc-scale": scale,
@@ -80,10 +82,14 @@ export const ChatFamilyFixture = () => {
             id="subject"
             ref={ref}
             className={cn({
-              "fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width":
+              "fixture-placement-fixed fixture-geometry-x fixture-geometry-y":
                 native,
             })}
-            style={native ? common : { color: common.color }}
+            style={
+              native
+                ? { ...common, width: scaledWidth }
+                : { color: common.color }
+            }
             onClick={(event) => {
               setEvents((n) => n + 1);
 
