@@ -183,9 +183,9 @@ test("installation picker copies the selected real registry command", async ({
   await expect(page.locator(".grass-install").getByRole("status")).toHaveText(
     "Copied"
   );
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-    `npx shadcn@latest add ${new URL(origin).origin}/r/card.json`
-  );
+  expect(
+    await page.evaluate(async () => await navigator.clipboard.readText())
+  ).toBe(`npx shadcn@latest add ${new URL(origin).origin}/r/card.json`);
 });
 
 test("Minecraft-style title has a yellow splash and respects reduced motion", async ({
