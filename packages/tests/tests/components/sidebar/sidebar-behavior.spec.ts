@@ -45,10 +45,10 @@ test("Sidebar preserves desktop toggling, keyboard shortcut and persisted actual
     "aria-expanded",
     "false"
   );
-  expect(
-    (await page.context().cookies()).find((c) => c.name === "sidebar_state")
-      ?.value
-  ).toBe("false");
+  const awaitedCookies1 = await page.context().cookies();
+  expect(awaitedCookies1.find((c) => c.name === "sidebar_state")?.value).toBe(
+    "false"
+  );
   await page.keyboard.press("Control+b");
   await expect(page.locator("#state")).toHaveText("expanded");
   await page.locator("#external").click();
@@ -65,10 +65,10 @@ test("Sidebar controlled state accepts changes and honors rejection", async ({
   await page.locator("#toggle").click();
   await expect(page.locator("#state")).toHaveText("expanded");
   await expect(page.locator("#events")).toHaveText("1");
-  expect(
-    (await page.context().cookies()).find((c) => c.name === "sidebar_state")
-      ?.value
-  ).toBe("true");
+  const awaitedCookies2 = await page.context().cookies();
+  expect(awaitedCookies2.find((c) => c.name === "sidebar_state")?.value).toBe(
+    "true"
+  );
 });
 
 test("Sidebar functional updates do not lose synchronous toggles", async ({
@@ -284,27 +284,25 @@ test("Sidebar uses the original click sound once per accepted native-button acti
     { pitch: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
   await page.locator("#disabled").dispatchEvent("click");
-  expect(
-    (
-      await page.evaluate(
-        () =>
-          // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
-          (window as typeof window & SidebarClickAudioState).sounds
-      )
-    ).length
-  ).toBe(2);
+
+  const awaitedEvaluate3 = await page.evaluate(
+    () =>
+      // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+      (window as typeof window & SidebarClickAudioState).sounds
+  );
+
+  expect(awaitedEvaluate3.length).toBe(2);
   await page.keyboard.press("Control+b");
-  expect(
-    (
-      await page.evaluate(
-        () =>
-          // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
-          (window as typeof window & SidebarClickAudioState).sounds
-      )
-    ).length
-  ).toBe(2);
+
+  const awaitedEvaluate4 = await page.evaluate(
+    () =>
+      // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+      (window as typeof window & SidebarClickAudioState).sounds
+  );
+
+  expect(awaitedEvaluate4.length).toBe(2);
 });
 
 test("Sidebar prevented trigger activation stays silent and does not change state", async ({

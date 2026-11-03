@@ -92,8 +92,10 @@ for (const scale of [2] as const) {
     await expect(
       profiler.locator("[data-slot=chart-profiler-frame]")
     ).toHaveAttribute("data-mc-ready", "true");
-    expect((await metric.screenshot()).equals(beforeBars)).toBe(false);
-    expect((await profiler.screenshot()).equals(beforePie)).toBe(false);
+    const awaitedScreenshot1 = await metric.screenshot();
+    expect(awaitedScreenshot1.equals(beforeBars)).toBe(false);
+    const awaitedScreenshot2 = await profiler.screenshot();
+    expect(awaitedScreenshot2.equals(beforePie)).toBe(false);
     await page
       .getByRole("combobox", { exact: true, name: "F3 metric" })
       .click();

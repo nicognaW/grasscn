@@ -155,11 +155,13 @@ test("Combobox uses original click audio for native buttons while typing and cho
   await recordPitchedPlayback(page);
   await page.goto("/?component=combobox");
   await page.getByRole("button", { name: "Show options" }).click();
-  expect((await recordedPitchedPlayback(page)).length).toBe(1);
+  const awaitedRecordedPitchedPlayback1 = await recordedPitchedPlayback(page);
+  expect(awaitedRecordedPitchedPlayback1.length).toBe(1);
   await page.getByRole("combobox").fill("Stone");
   await page.getByRole("combobox").press("ArrowDown");
   await page.getByRole("combobox").press("Enter");
-  expect((await recordedPitchedPlayback(page)).length).toBe(1);
+  const awaitedRecordedPitchedPlayback2 = await recordedPitchedPlayback(page);
+  expect(awaitedRecordedPitchedPlayback2.length).toBe(1);
   await page.locator("#explicit-clear").click();
   const sounds = await recordedPitchedPlayback(page);
   expect(sounds.length).toBe(2);

@@ -110,9 +110,8 @@ test("Website analytics filters update real data and accessible table", async ({
   await expect(page.locator("[data-stage=chart]")).toContainText(
     "Apr to Jun 2024"
   );
-  expect((await chart.locator("canvas").screenshot()).equals(before)).toBe(
-    false
-  );
+  const awaitedScreenshot1 = await chart.locator("canvas").screenshot();
+  expect(awaitedScreenshot1.equals(before)).toBe(false);
   await select(page, "Chart devices", "Desktop");
   await expect(chart.getByRole("columnheader")).toHaveCount(2);
   const plot = chart.getByRole("application");

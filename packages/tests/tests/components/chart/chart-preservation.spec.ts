@@ -43,8 +43,10 @@ for (const scale of [2] as const) {
         .getByRole("button", { exact: true, name: "Next sample" })
         .click();
       await expect(page.getByLabel("Chart sample")).toHaveText("Sample 2");
-      expect((await fps.screenshot()).equals(firstFps)).toBe(false);
-      expect((await profiler.screenshot()).equals(firstProfiler)).toBe(false);
+      const awaitedScreenshot1 = await fps.screenshot();
+      expect(awaitedScreenshot1.equals(firstFps)).toBe(false);
+      const awaitedScreenshot2 = await profiler.screenshot();
+      expect(awaitedScreenshot2.equals(firstProfiler)).toBe(false);
       await native
         .getByRole("button", { exact: true, name: "120 FPS cap" })
         .click();
