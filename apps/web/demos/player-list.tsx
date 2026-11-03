@@ -38,11 +38,8 @@ const PlayerListDemo = ({ scale }: DemoProps) => {
       data-stage="player-list"
     >
       <div
+        className="demo-layout-demos-player-list-1"
         style={{
-          alignItems: "start",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 28,
           maxWidth: "100%",
         }}
       >

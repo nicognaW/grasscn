@@ -41,9 +41,7 @@ const AvatarDemo = ({ scale }: DemoProps) => {
         }}
         className="flex flex-wrap gap-3"
       >
-        <label
-          style={{ display: "grid", flex: "1 1 180px", gap: 8, minWidth: 0 }}
-        >
+        <label className="demo-layout-demos-avatar-1">
           Minecraft username
           <Input
             scale={scale}

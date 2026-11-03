@@ -120,3 +120,44 @@
 @utility demo-align-self-end {
   align-self: end;
 }
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  img.demo-layout-demos-aspect-ratio-2 {
+    image-rendering: pixelated;
+  }
+  label.demo-layout-demos-avatar-1 {
+    display: grid;
+    flex: 1 1 180px;
+    gap: 8px;
+    min-width: 0;
+  }
+  div.demo-layout-demos-calendar-1 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  div.demo-layout-demos-hotbar-1 {
+    background: #202020;
+  }
+  div.demo-layout-demos-map-1 {
+    align-items: start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  div.demo-layout-demos-map-2 {
+    overflow-x: auto;
+    padding: 12px 2px;
+  }
+  div.demo-layout-demos-marker-1 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  div.demo-layout-demos-native-select-1 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  div.demo-layout-demos-player-list-1 {
+    align-items: start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+  }
+}

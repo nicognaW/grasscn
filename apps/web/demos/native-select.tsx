@@ -11,12 +11,11 @@ export const Demo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
 
   return (
     <div
-      className="demo-stage"
+      className="demo-stage demo-layout-demos-native-select-1"
       data-stage="native-select"
       style={{
         display: "grid",
         gap: 8 * scale,
-        gridTemplateColumns: "minmax(0,1fr)",
       }}
     >
       <Label htmlFor="native-mode" scale={scale}>
