@@ -167,7 +167,7 @@ const MessageContent = ({
       {scalar ? (
         <MinecraftChatText
           scale={scale}
-          maxWidth={width && width > 0 ? width : undefined}
+          maxWidth={(width ?? 0) > 0 ? width : undefined}
           style={{ color: "inherit" }}
         >
           {author ? `<${author}> ${children}` : children}
