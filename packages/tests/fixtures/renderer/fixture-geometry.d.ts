@@ -2,6 +2,13 @@ import "react";
 
 declare module "react" {
   interface CSSProperties {
+    "--fixture-sidebar-native-height"?: string;
+    "--fixture-sidebar-native-left"?: string;
+    "--fixture-sidebar-native-top"?: string;
+    "--fixture-sidebar-native-width"?: string;
+    "--fixture-sidebar-native-padding"?: string;
+    "--fixture-sidebar-native-gap"?: string;
+    "--fixture-sidebar-row-top"?: string;
     "--fixture-anchor-x"?: string;
     "--fixture-anchor-y"?: string;
     "--fixture-bar-color"?: string;
