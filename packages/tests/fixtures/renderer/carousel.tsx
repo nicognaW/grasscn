@@ -35,7 +35,7 @@ export const CarouselFixture = () => {
   const [events, setEvents] = React.useState(0);
   const [count, setCount] = React.useState(3);
 
-  React.useEffect(() => {
+  React.useEffect((): ReturnType<React.EffectCallback> => {
     if (!api) {
       return;
     }

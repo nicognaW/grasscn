@@ -49,7 +49,7 @@ export const CalendarFixture = () => {
     chainedBackgroundInner.background = chainedBackgroundValue;
     chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): ReturnType<React.EffectCallback> => {
     if (q.get("native") !== "1") {
       return;
     }

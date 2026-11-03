@@ -92,21 +92,25 @@ const resolveDependency = function resolveDependency(
   name: string
 ) {
   let base = location;
+  let resolved: string | undefined;
 
   for (;;) {
     const candidate = base ? `${base}/${name}` : name;
 
     if (packages[candidate]) {
-      return candidate;
+      resolved = candidate;
+      break;
     }
 
     if (!base) {
-      return;
+      break;
     }
 
     const parent = base.lastIndexOf("/");
     base = parent === -1 ? "" : base.slice(0, parent);
   }
+
+  return resolved;
 };
 
 const packageName = (location: string) => {
