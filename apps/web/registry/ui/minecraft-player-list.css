@@ -111,3 +111,53 @@
     right: 0;
   }
 }
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-player-list-1 {
+    height: calc(var(--mc-dynamic-player-list-1-height) * 1px);
+    top: calc(var(--mc-dynamic-player-list-1-top) * 1px);
+  }
+  .mc-dynamic-layout-player-list-2 {
+    height: calc(var(--mc-dynamic-player-list-2-height) * 1px);
+  }
+  .mc-dynamic-layout-player-list-3 {
+    grid-auto-columns: calc(
+      var(--mc-dynamic-player-list-3-grid-auto-columns) * 1px
+    );
+    grid-template-rows: var(--mc-dynamic-player-list-3-grid-template-rows);
+    left: calc(var(--mc-dynamic-player-list-3-left) * 1px);
+    top: calc(var(--mc-dynamic-player-list-3-top) * 1px);
+  }
+  .mc-dynamic-layout-player-list-5 {
+    right: calc(var(--mc-dynamic-player-list-5-right) * 1px);
+  }
+  .mc-dynamic-layout-player-list-6 {
+    right: calc(var(--mc-dynamic-player-list-6-right) * 1px);
+  }
+  .mc-dynamic-layout-player-list-7 {
+    height: calc(var(--mc-dynamic-player-list-7-height) * 1px);
+    top: calc(var(--mc-dynamic-player-list-7-top) * 1px);
+  }
+  .mc-dynamic-layout-player-list-8 {
+    height: calc(var(--mc-dynamic-player-list-8-height) * 1px);
+  }
+  .mc-dynamic-layout-player-list-9 {
+    height: calc(var(--mc-dynamic-player-list-9-height) * 1px);
+  }
+  .mc-dynamic-layout-player-list-10 {
+    left: calc(var(--mc-dynamic-player-list-10-left) * 1px);
+    top: calc(var(--mc-dynamic-player-list-10-top) * 1px);
+  }
+  .mc-dynamic-layout-player-list-11 {
+    height: calc(var(--mc-dynamic-player-list-11-height) * 1px);
+    top: calc(var(--mc-dynamic-player-list-11-top) * 1px);
+  }
+  .mc-dynamic-layout-player-list-12 {
+    height: calc(var(--mc-dynamic-player-list-12-height) * 1px);
+    top: calc(var(--mc-dynamic-player-list-12-top) * 1px);
+  }
+  .mc-dynamic-layout-player-list-13 {
+    left: calc(var(--mc-dynamic-player-list-13-left) * 1px);
+  }
+}

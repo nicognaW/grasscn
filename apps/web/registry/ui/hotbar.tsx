@@ -8,6 +8,27 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-hotbar.css";
 
+interface HotbarLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-hotbar-1-height": number;
+  "--mc-dynamic-hotbar-1-width": number;
+}
+
+interface HotbarLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-hotbar-2-left": number;
+  "--mc-dynamic-hotbar-2-top": number;
+}
+
+interface HotbarLayoutStyle3 extends React.CSSProperties {
+  "--mc-dynamic-hotbar-3-left": number;
+}
+
+interface HotbarLayoutStyle4 extends React.CSSProperties {
+  "--mc-dynamic-hotbar-4-height": number;
+  "--mc-dynamic-hotbar-4-left": number;
+  "--mc-dynamic-hotbar-4-top": number;
+  "--mc-dynamic-hotbar-4-width": number;
+}
+
 interface HotbarScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -82,12 +103,14 @@ const HotbarPaint = ({
       width={184}
       height={23}
       aria-hidden="true"
-      className="mc-layout-hotbar-1"
-      style={{
-        height: 23 * scale,
-
-        width: 184 * scale,
-      }}
+      className="mc-layout-hotbar-1 mc-dynamic-layout-hotbar-1"
+      style={
+        /* SAFETY: The owned mc-dynamic-layout-hotbar-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+        {
+          "--mc-dynamic-hotbar-1-height": 23 * scale,
+          "--mc-dynamic-hotbar-1-width": 184 * scale,
+        } satisfies HotbarLayoutStyle1 as HotbarLayoutStyle1
+      }
     />
   );
 };
@@ -235,14 +258,25 @@ const Hotbar = ({
           <AdventureImage
             texture="gui/sprites/hud/hotbar"
             scale={scale}
-            className="mc-layout-hotbar-2"
-            style={{ left: scale, top: scale }}
+            className="mc-layout-hotbar-2 mc-dynamic-layout-hotbar-2"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-hotbar-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-hotbar-2-left": scale,
+                "--mc-dynamic-hotbar-2-top": scale,
+              } satisfies HotbarLayoutStyle2 as HotbarLayoutStyle2
+            }
           />
           <AdventureImage
             texture="gui/sprites/hud/hotbar_selection"
             scale={scale}
-            className="mc-layout-hotbar-3"
-            style={{ left: current * 20 * scale }}
+            className="mc-layout-hotbar-3 mc-dynamic-layout-hotbar-3"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-hotbar-3 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-hotbar-3-left": current * 20 * scale,
+              } satisfies HotbarLayoutStyle3 as HotbarLayoutStyle3
+            }
           />
         </>
       )}
@@ -260,12 +294,16 @@ const Hotbar = ({
               select(i);
             }
           }}
-          style={{
-            height: 16 * scale,
-            left: (4 + i * 20) * scale,
-            top: 4 * scale,
-            width: 16 * scale,
-          }}
+          className="mc-dynamic-layout-hotbar-4"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-hotbar-4 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-hotbar-4-height": 16 * scale,
+              "--mc-dynamic-hotbar-4-left": (4 + i * 20) * scale,
+              "--mc-dynamic-hotbar-4-top": 4 * scale,
+              "--mc-dynamic-hotbar-4-width": 16 * scale,
+            } satisfies HotbarLayoutStyle4 as HotbarLayoutStyle4
+          }
         >
           {items[i]?.icon}
         </button>

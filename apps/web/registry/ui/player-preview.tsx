@@ -10,6 +10,10 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-player-preview.css";
 
+interface PlayerPreviewLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-player-preview-1-visibility": string;
+}
+
 interface PlayerRotation {
   pitch: number;
   yaw: number;
@@ -609,10 +613,14 @@ const PlayerPreview = ({
         width={width * scale}
         height={height * scale}
         aria-hidden="true"
-        className="mc-layout-player-preview-1"
-        style={{
-          visibility: status === "loaded" ? "visible" : "hidden",
-        }}
+        className="mc-layout-player-preview-1 mc-dynamic-layout-player-preview-1"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-player-preview-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-player-preview-1-visibility":
+              status === "loaded" ? "visible" : "hidden",
+          } satisfies PlayerPreviewLayoutStyle1 as PlayerPreviewLayoutStyle1
+        }
       />
       {status !== "loaded" && (
         <span role="status">

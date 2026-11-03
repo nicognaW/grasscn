@@ -8,6 +8,16 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-hud.css";
 
+interface HudLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-hud-1-height": number;
+  "--mc-dynamic-hud-1-left": number;
+  "--mc-dynamic-hud-1-width": number;
+}
+
+interface HudLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-hud-2-width": number;
+}
+
 type MeterProps = React.ComponentProps<"div"> & {
   value: number;
   scale?: 1 | 2 | 3;
@@ -87,14 +97,18 @@ const IconMeter = ({
           return (
             <span
               key={i}
-              style={{
-                height: 9 * scale,
-                left:
-                  (kind === "hunger" || kind === "air" ? count - 1 - i : i) *
-                  8 *
-                  scale,
-                width: 9 * scale,
-              }}
+              className="mc-dynamic-layout-hud-1"
+              style={
+                /* SAFETY: The owned mc-dynamic-layout-hud-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                {
+                  "--mc-dynamic-hud-1-height": 9 * scale,
+                  "--mc-dynamic-hud-1-left":
+                    (kind === "hunger" || kind === "air" ? count - 1 - i : i) *
+                    8 *
+                    scale,
+                  "--mc-dynamic-hud-1-width": 9 * scale,
+                } satisfies HudLayoutStyle1 as HudLayoutStyle1
+              }
             >
               {!(
                 kind === "air" &&
@@ -165,7 +179,15 @@ const ExperienceBar = ({
         texture="gui/sprites/hud/experience_bar_background"
         scale={scale}
       />
-      <span style={{ width: width * scale }}>
+      <span
+        className="mc-dynamic-layout-hud-2"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-hud-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-hud-2-width": width * scale,
+          } satisfies HudLayoutStyle2 as HudLayoutStyle2
+        }
+      >
         <AdventureImage
           texture="gui/sprites/hud/experience_bar_progress"
           scale={scale}

@@ -185,3 +185,16 @@
     );
   }
 }
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-combobox-1 {
+    width: calc(var(--mc-dynamic-combobox-1-width) * 1px);
+  }
+  .mc-dynamic-layout-combobox-2 {
+    width: calc(var(--mc-dynamic-combobox-2-width) * 1px);
+  }
+  .mc-dynamic-layout-combobox-3 {
+    width: calc(var(--mc-dynamic-combobox-3-width) * 1px);
+  }
+}

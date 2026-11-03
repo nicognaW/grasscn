@@ -70,3 +70,14 @@
     image-rendering: pixelated;
   }
 }
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-advancement-tree-1 {
+    transform: var(--mc-dynamic-advancement-tree-1-transform);
+  }
+  .mc-dynamic-layout-advancement-tree-2 {
+    left: calc(var(--mc-dynamic-advancement-tree-2-left) * 1px);
+    top: calc(var(--mc-dynamic-advancement-tree-2-top) * 1px);
+  }
+}

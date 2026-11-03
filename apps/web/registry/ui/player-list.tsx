@@ -15,6 +15,62 @@ import { loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-player-list.css";
 
+interface PlayerListLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-player-list-1-height": number;
+  "--mc-dynamic-player-list-1-top": number;
+}
+
+interface PlayerListLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-player-list-2-height": number;
+}
+
+interface PlayerListLayoutStyle3 extends React.CSSProperties {
+  "--mc-dynamic-player-list-3-grid-auto-columns": number;
+  "--mc-dynamic-player-list-3-grid-template-rows": string;
+  "--mc-dynamic-player-list-3-left": number;
+  "--mc-dynamic-player-list-3-top": number;
+}
+
+interface PlayerListLayoutStyle5 extends React.CSSProperties {
+  "--mc-dynamic-player-list-5-right": number;
+}
+
+interface PlayerListLayoutStyle6 extends React.CSSProperties {
+  "--mc-dynamic-player-list-6-right": number;
+}
+
+interface PlayerListLayoutStyle7 extends React.CSSProperties {
+  "--mc-dynamic-player-list-7-height": number;
+  "--mc-dynamic-player-list-7-top": number;
+}
+
+interface PlayerListLayoutStyle8 extends React.CSSProperties {
+  "--mc-dynamic-player-list-8-height": number;
+}
+
+interface PlayerListLayoutStyle9 extends React.CSSProperties {
+  "--mc-dynamic-player-list-9-height": number;
+}
+
+interface PlayerListLayoutStyle10 extends React.CSSProperties {
+  "--mc-dynamic-player-list-10-left": number;
+  "--mc-dynamic-player-list-10-top": number;
+}
+
+interface PlayerListLayoutStyle11 extends React.CSSProperties {
+  "--mc-dynamic-player-list-11-height": number;
+  "--mc-dynamic-player-list-11-top": number;
+}
+
+interface PlayerListLayoutStyle12 extends React.CSSProperties {
+  "--mc-dynamic-player-list-12-height": number;
+  "--mc-dynamic-player-list-12-top": number;
+}
+
+interface PlayerListLayoutStyle13 extends React.CSSProperties {
+  "--mc-dynamic-player-list-13-left": number;
+}
+
 interface PlayerListScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -129,14 +185,25 @@ const PlayerList = ({
       >
         {header && (
           <div
-            className="mc-roster-heading"
-            style={{ height: head.length * 9 * scale, top: scale }}
+            className="mc-roster-heading mc-dynamic-layout-player-list-1"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-player-list-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-player-list-1-height": head.length * 9 * scale,
+                "--mc-dynamic-player-list-1-top": scale,
+              } satisfies PlayerListLayoutStyle1 as PlayerListLayoutStyle1
+            }
           >
             {head.map((line, i) => (
               <div
                 key={i}
-                className="mc-layout-player-list-2"
-                style={{ height: 9 * scale }}
+                className="mc-layout-player-list-2 mc-dynamic-layout-player-list-2"
+                style={
+                  /* SAFETY: The owned mc-dynamic-layout-player-list-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                  {
+                    "--mc-dynamic-player-list-2-height": 9 * scale,
+                  } satisfies PlayerListLayoutStyle2 as PlayerListLayoutStyle2
+                }
               >
                 <span
                   style={
@@ -161,13 +228,19 @@ const PlayerList = ({
         <div
           role="list"
           aria-label="Players"
-          className="mc-roster-grid"
-          style={{
-            gridAutoColumns: columnWidth * scale,
-            gridTemplateRows: rows ? `repeat(${rows},${9 * scale}px)` : "none",
-            left: bodyLeft * scale,
-            top: (headHeight + 1) * scale,
-          }}
+          className="mc-roster-grid mc-dynamic-layout-player-list-3"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-player-list-3 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-player-list-3-grid-auto-columns":
+                columnWidth * scale,
+              "--mc-dynamic-player-list-3-grid-template-rows": rows
+                ? `repeat(${rows},${9 * scale}px)`
+                : "none",
+              "--mc-dynamic-player-list-3-left": bodyLeft * scale,
+              "--mc-dynamic-player-list-3-top": (headHeight + 1) * scale,
+            } satisfies PlayerListLayoutStyle3 as PlayerListLayoutStyle3
+          }
         >
           {visible.map((player) => {
             const latency = player.latency ?? 0;
@@ -229,21 +302,31 @@ const PlayerList = ({
                 </span>
                 {player.score != null && (
                   <span
-                    className="mc-roster-score mc-layout-player-list-5"
-                    style={{ right: 12 * scale }}
+                    className="mc-roster-score mc-layout-player-list-5 mc-dynamic-layout-player-list-5"
+                    style={
+                      /* SAFETY: The owned mc-dynamic-layout-player-list-5 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                      {
+                        "--mc-dynamic-player-list-5-right": 12 * scale,
+                      } satisfies PlayerListLayoutStyle5 as PlayerListLayoutStyle5
+                    }
                   >
                     <MinecraftMenuText>{player.score}</MinecraftMenuText>
                   </span>
                 )}
                 <img
-                  className="mc-roster-ping mc-layout-player-list-6"
+                  className="mc-roster-ping mc-layout-player-list-6 mc-dynamic-layout-player-list-6"
                   alt={
                     latency < 0 ? "Connection unknown" : `${latency} ms latency`
                   }
                   src={playerListAssets[key]}
                   width={10 * scale}
                   height={8 * scale}
-                  style={{ right: scale }}
+                  style={
+                    /* SAFETY: The owned mc-dynamic-layout-player-list-6 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                    {
+                      "--mc-dynamic-player-list-6-right": scale,
+                    } satisfies PlayerListLayoutStyle6 as PlayerListLayoutStyle6
+                  }
                 />
               </>
             );
@@ -271,17 +354,26 @@ const PlayerList = ({
         </div>
         {footer && (
           <div
-            className="mc-roster-heading"
-            style={{
-              height: foot.length * 9 * scale,
-              top: (headHeight + rows * 9 + 2) * scale,
-            }}
+            className="mc-roster-heading mc-dynamic-layout-player-list-7"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-player-list-7 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-player-list-7-height": foot.length * 9 * scale,
+                "--mc-dynamic-player-list-7-top":
+                  (headHeight + rows * 9 + 2) * scale,
+              } satisfies PlayerListLayoutStyle7 as PlayerListLayoutStyle7
+            }
           >
             {foot.map((line, i) => (
               <div
                 key={i}
-                className="mc-layout-player-list-8"
-                style={{ height: 9 * scale }}
+                className="mc-layout-player-list-8 mc-dynamic-layout-player-list-8"
+                style={
+                  /* SAFETY: The owned mc-dynamic-layout-player-list-8 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                  {
+                    "--mc-dynamic-player-list-8-height": 9 * scale,
+                  } satisfies PlayerListLayoutStyle8 as PlayerListLayoutStyle8
+                }
               >
                 <span
                   style={
@@ -385,14 +477,25 @@ const Scoreboard = ({
     >
       <div
         role="row"
-        className="mc-scoreboard-title"
-        style={{ height: 9 * scale }}
+        className="mc-scoreboard-title mc-dynamic-layout-player-list-9"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-player-list-9 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-player-list-9-height": 9 * scale,
+          } satisfies PlayerListLayoutStyle9 as PlayerListLayoutStyle9
+        }
       >
         <span
           role="columnheader"
           aria-colspan={2}
-          className="mc-layout-player-list-10"
-          style={{ left: 2 * scale, top: scale }}
+          className="mc-layout-player-list-10 mc-dynamic-layout-player-list-10"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-player-list-10 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-player-list-10-left": 2 * scale,
+              "--mc-dynamic-player-list-10-top": scale,
+            } satisfies PlayerListLayoutStyle10 as PlayerListLayoutStyle10
+          }
         >
           <MinecraftDocumentText
             text={title}
@@ -404,27 +507,38 @@ const Scoreboard = ({
         </span>
       </div>
       <div
-        className="mc-scoreboard-body mc-layout-player-list-11"
-        style={{
-          height: (visible.length * 9 + 1) * scale,
-
-          top: 9 * scale,
-        }}
+        className="mc-scoreboard-body mc-layout-player-list-11 mc-dynamic-layout-player-list-11"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-player-list-11 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-player-list-11-height":
+              (visible.length * 9 + 1) * scale,
+            "--mc-dynamic-player-list-11-top": 9 * scale,
+          } satisfies PlayerListLayoutStyle11 as PlayerListLayoutStyle11
+        }
       />
       {visible.map((entry, i) => (
         <div
           role="row"
           key={entry.id}
-          className="mc-scoreboard-row"
-          style={{
-            height: 9 * scale,
-            top: (10 + i * 9) * scale,
-          }}
+          className="mc-scoreboard-row mc-dynamic-layout-player-list-12"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-player-list-12 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-player-list-12-height": 9 * scale,
+              "--mc-dynamic-player-list-12-top": (10 + i * 9) * scale,
+            } satisfies PlayerListLayoutStyle12 as PlayerListLayoutStyle12
+          }
         >
           <span
             role="cell"
-            className="mc-layout-player-list-13"
-            style={{ left: 2 * scale }}
+            className="mc-layout-player-list-13 mc-dynamic-layout-player-list-13"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-player-list-13 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-player-list-13-left": 2 * scale,
+              } satisfies PlayerListLayoutStyle13 as PlayerListLayoutStyle13
+            }
           >
             <MinecraftDocumentText
               text={entry.name}

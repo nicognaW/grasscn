@@ -62,3 +62,35 @@
     position: absolute;
   }
 }
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-map-1 {
+    height: calc(var(--mc-dynamic-map-1-height) * 1px);
+    width: calc(var(--mc-dynamic-map-1-width) * 1px);
+  }
+  .mc-dynamic-layout-map-2 {
+    height: calc(var(--mc-dynamic-map-2-height) * 1px);
+    left: calc(var(--mc-dynamic-map-2-left) * 1px);
+    top: calc(var(--mc-dynamic-map-2-top) * 1px);
+    transform: var(--mc-dynamic-map-2-transform);
+    width: calc(var(--mc-dynamic-map-2-width) * 1px);
+  }
+  .mc-dynamic-layout-map-3 {
+    visibility: var(--mc-dynamic-map-3-visibility);
+  }
+  .mc-dynamic-layout-map-4 {
+    height: calc(var(--mc-dynamic-map-4-height) * 1px);
+    width: calc(var(--mc-dynamic-map-4-width) * 1px);
+  }
+  .mc-dynamic-layout-map-5 {
+    height: calc(var(--mc-dynamic-map-5-height) * 1px);
+    left: calc(var(--mc-dynamic-map-5-left) * 1px);
+    top: calc(var(--mc-dynamic-map-5-top) * 1px);
+    width: calc(var(--mc-dynamic-map-5-width) * 1px);
+  }
+  .mc-dynamic-layout-map-6 {
+    left: calc(var(--mc-dynamic-map-6-left) * 1px);
+    top: calc(var(--mc-dynamic-map-6-top) * 1px);
+  }
+}

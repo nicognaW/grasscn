@@ -42,3 +42,24 @@
     top: 0;
   }
 }
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-hotbar-1 {
+    height: calc(var(--mc-dynamic-hotbar-1-height) * 1px);
+    width: calc(var(--mc-dynamic-hotbar-1-width) * 1px);
+  }
+  .mc-dynamic-layout-hotbar-2 {
+    left: calc(var(--mc-dynamic-hotbar-2-left) * 1px);
+    top: calc(var(--mc-dynamic-hotbar-2-top) * 1px);
+  }
+  .mc-dynamic-layout-hotbar-3 {
+    left: calc(var(--mc-dynamic-hotbar-3-left) * 1px);
+  }
+  .mc-dynamic-layout-hotbar-4 {
+    height: calc(var(--mc-dynamic-hotbar-4-height) * 1px);
+    left: calc(var(--mc-dynamic-hotbar-4-left) * 1px);
+    top: calc(var(--mc-dynamic-hotbar-4-top) * 1px);
+    width: calc(var(--mc-dynamic-hotbar-4-width) * 1px);
+  }
+}

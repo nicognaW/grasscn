@@ -16,6 +16,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
 
+interface MinecraftCollapsibleTextLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-minecraft-collapsible-text-1-padding-left": number;
+}
+
 interface MinecraftCollapsibleTextScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -165,17 +169,20 @@ const MinecraftCollapsibleText = ({
           {lines.map((line, index) => (
             <span
               aria-hidden="true"
-              className="mc-label-line"
+              className="mc-label-line mc-dynamic-layout-minecraft-collapsible-text-1"
               key={index}
-              style={{
-                paddingLeft:
-                  align === "center"
-                    ? (Math.floor((width - widest) / 2) +
-                        Math.floor(widest / 2) -
-                        Math.floor(textWidth(line) / 2)) *
-                      scale
-                    : 0,
-              }}
+              style={
+                /* SAFETY: The owned mc-dynamic-layout-minecraft-collapsible-text-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                {
+                  "--mc-dynamic-minecraft-collapsible-text-1-padding-left":
+                    align === "center"
+                      ? (Math.floor((width - widest) / 2) +
+                          Math.floor(widest / 2) -
+                          Math.floor(textWidth(line) / 2)) *
+                        scale
+                      : 0,
+                } satisfies MinecraftCollapsibleTextLayoutStyle1 as MinecraftCollapsibleTextLayoutStyle1
+              }
             >
               {/^[\u0020-\u007e]*$/u.test(line) ? (
                 <MinecraftText>{line}</MinecraftText>

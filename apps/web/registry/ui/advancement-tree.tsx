@@ -15,6 +15,15 @@ import {
 
 import "./minecraft-advancement-tree.css";
 
+interface AdvancementTreeLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-advancement-tree-1-transform": string;
+}
+
+interface AdvancementTreeLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-advancement-tree-2-left": number;
+  "--mc-dynamic-advancement-tree-2-top": number;
+}
+
 interface AdvancementTreeScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -385,10 +394,13 @@ const AdvancementTree = ({
         }}
       >
         <div
-          className="mc-advancement-plane"
-          style={{
-            transform: `translate(${Math.floor(position.x) * scale}px,${Math.floor(position.y) * scale}px)`,
-          }}
+          className="mc-advancement-plane mc-dynamic-layout-advancement-tree-1"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-advancement-tree-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-advancement-tree-1-transform": `translate(${Math.floor(position.x) * scale}px,${Math.floor(position.y) * scale}px)`,
+            } satisfies AdvancementTreeLayoutStyle1 as AdvancementTreeLayoutStyle1
+          }
         >
           <svg
             className="mc-advancement-links"
@@ -436,8 +448,14 @@ const AdvancementTree = ({
                     data-completed={String(!!(node.completed ?? false))}
                     aria-label={`${node.title}${(node.completed ?? false) ? ", completed" : ""}`}
                     aria-pressed={current === node.id}
-                    className="mc-advancement-node"
-                    style={{ left: node.px * scale, top: node.py * scale }}
+                    className="mc-advancement-node mc-dynamic-layout-advancement-tree-2"
+                    style={
+                      /* SAFETY: The owned mc-dynamic-layout-advancement-tree-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                      {
+                        "--mc-dynamic-advancement-tree-2-left": node.px * scale,
+                        "--mc-dynamic-advancement-tree-2-top": node.py * scale,
+                      } satisfies AdvancementTreeLayoutStyle2 as AdvancementTreeLayoutStyle2
+                    }
                     onClick={(event) => {
                       if (!event.defaultPrevented) {
                         choose(node.id);
