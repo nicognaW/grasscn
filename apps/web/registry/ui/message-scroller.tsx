@@ -30,9 +30,7 @@ const ScrollerScale = React.createContext<1 | 2 | 3>(2);
 
 const MessageScrollerProvider = (
   props: React.ComponentProps<typeof Primitive.Provider>
-) => {
-  return <Primitive.Provider {...props} />;
-};
+) => <Primitive.Provider {...props} />;
 
 const MessageScroller = ({
   className,
@@ -41,76 +39,65 @@ const MessageScroller = ({
   ...props
 }: React.ComponentProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <ScrollerScale value={scale}>
-      <MessageScale value={scale}>
-        <Primitive.Root
-          data-slot="message-scroller"
-          className={cn(`mc-message-scroller`, className)}
-          style={minecraftStyle(
-            style,
-            (__style): MessageScrollerPaintStyle => ({
-              "--mc-scale": scale,
-              "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
-              "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
-              ...__style,
-            })
-          )}
-          {...props}
-        />
-      </MessageScale>
-    </ScrollerScale>
-  );
-};
+}) => (
+  <ScrollerScale value={scale}>
+    <MessageScale value={scale}>
+      <Primitive.Root
+        data-slot="message-scroller"
+        className={cn(`mc-message-scroller`, className)}
+        style={minecraftStyle(style, (__style): MessageScrollerPaintStyle => ({
+          "--mc-scale": scale,
+          "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
+          "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
+          ...__style,
+        }))}
+        {...props}
+      />
+    </MessageScale>
+  </ScrollerScale>
+);
 
 const MessageScrollerViewport = ({
   className,
   ...props
-}: React.ComponentProps<typeof Primitive.Viewport>) => {
-  return (
-    <Primitive.Viewport
-      data-slot="message-scroller-viewport"
-      className={cn(`mc-message-scroller-viewport`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<typeof Primitive.Viewport>) => (
+  <Primitive.Viewport
+    data-slot="message-scroller-viewport"
+    className={cn(`mc-message-scroller-viewport`, className)}
+    {...props}
+  />
+);
 
 const MessageScrollerContent = ({
   className,
   ...props
-}: React.ComponentProps<typeof Primitive.Content>) => {
-  return (
-    <Primitive.Content
-      data-slot="message-scroller-content"
-      className={cn(`mc-message-scroller-content`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<typeof Primitive.Content>) => (
+  <Primitive.Content
+    data-slot="message-scroller-content"
+    className={cn(`mc-message-scroller-content`, className)}
+    {...props}
+  />
+);
 
 const MessageScrollerItem = ({
   className,
   scrollAnchor = false,
   children,
   ...props
-}: React.ComponentProps<typeof Primitive.Item>) => {
-  return (
-    <Primitive.Item
-      data-slot="message-scroller-item"
-      scrollAnchor={scrollAnchor}
-      className={cn(`mc-message-scroller-item`, className)}
-      {...props}
-    >
-      {isMinecraftTextContent(children) ? (
-        <MessageContent>{children}</MessageContent>
-      ) : (
-        children
-      )}
-    </Primitive.Item>
-  );
-};
+}: React.ComponentProps<typeof Primitive.Item>) => (
+  <Primitive.Item
+    data-slot="message-scroller-item"
+    scrollAnchor={scrollAnchor}
+    className={cn(`mc-message-scroller-item`, className)}
+    {...props}
+  >
+    {isMinecraftTextContent(children) ? (
+      <MessageContent>{children}</MessageContent>
+    ) : (
+      children
+    )}
+  </Primitive.Item>
+);
 
 const MessageScrollerButton = ({
   direction = "end",

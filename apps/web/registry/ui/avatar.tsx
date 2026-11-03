@@ -185,15 +185,13 @@ const AvatarFallback = ({
   );
 };
 
-const AvatarBadge = ({ className, ...props }: MinecraftProps<"span">) => {
-  return (
-    <span
-      data-slot="avatar-badge"
-      className={cn(`mc-avatar-badge`, className)}
-      {...props}
-    />
-  );
-};
+const AvatarBadge = ({ className, ...props }: MinecraftProps<"span">) => (
+  <span
+    data-slot="avatar-badge"
+    className={cn(`mc-avatar-badge`, className)}
+    {...props}
+  />
+);
 
 const groupScale = function groupScale(
   children: React.ReactNode
