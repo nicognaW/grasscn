@@ -258,6 +258,7 @@ const buildRenderer = function buildRenderer(
         { length: source.length / 4 },
         (_, i) => i
       );
+
       nativeSortValues.sort(
         (leftQuadIndex, rightQuadIndex) =>
           Math.fround(
