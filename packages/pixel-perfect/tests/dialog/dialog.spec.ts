@@ -106,11 +106,11 @@ for (const constituentDirectory of [
           state: c.state,
         });
 
-        if (c.text != null) {
+        if (c.text !== null) {
           query.set("text", c.text);
         }
 
-        if (c.disabledIndex != null) {
+        if (c.disabledIndex !== undefined) {
           query.set("disabledIndex", String(c.disabledIndex));
         }
 

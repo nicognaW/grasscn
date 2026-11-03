@@ -205,7 +205,7 @@ test.describe("Sidebar original native constituent cases", () => {
               "contentHeight",
               "value",
             ] as const) {
-              if (c[field] != null) {
+              if (c[field] !== undefined) {
                 params.set(field, String(c[field]));
               }
             }

@@ -111,7 +111,7 @@ for (const [part, dir] of parts) {
             q.set("wrapWidth", String(c.wrapWidth));
           }
 
-          if (c.maxLength != null) {
+          if (c.maxLength !== undefined) {
             q.set("maxLength", String(c.maxLength));
           }
 

@@ -104,7 +104,7 @@ for (const constituentDirectory of [
           query.set("patterned", "1");
         }
 
-        if (c.disabledIndex != null) {
+        if (c.disabledIndex !== undefined) {
           query.set("disabledIndex", String(c.disabledIndex));
         }
 

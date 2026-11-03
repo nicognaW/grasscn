@@ -44,7 +44,7 @@ for (const scale of [1, 2, 3]) {
           selectListCase.selectedIndex === 1 &&
           selectListCase.state === "focus" &&
           selectListCase.background === "#202020" &&
-          selectListCase.disabledIndex == null &&
+          selectListCase.disabledIndex === undefined &&
           selectListCase.scale === scale
       );
 
