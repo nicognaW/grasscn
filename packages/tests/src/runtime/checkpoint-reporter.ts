@@ -22,6 +22,10 @@ import type {
   CheckpointDeclaration,
 } from "@tests/runtime/checkpoint-protocol";
 
+const hasCheckpointDirectory = (
+  directory: string | undefined
+): directory is string => (directory?.length ?? 0) > 0;
+
 export default class CheckpointReporter implements Reporter {
   directory: string | undefined;
   sources: Map<string, string>;
@@ -60,7 +64,7 @@ export default class CheckpointReporter implements Reporter {
     return test.location.file;
   }
   onBegin(config: FullConfig, suite: Suite) {
-    if (!this.directory) {
+    if (!hasCheckpointDirectory(this.directory)) {
       return;
     }
 
@@ -160,7 +164,7 @@ export default class CheckpointReporter implements Reporter {
     return createHash("sha256").update(readFileSync(file)).digest("hex");
   }
   onTestEnd(test: TestCase, result: TestResult) {
-    if (!this.directory) {
+    if (!hasCheckpointDirectory(this.directory)) {
       return;
     }
 
@@ -205,7 +209,7 @@ export default class CheckpointReporter implements Reporter {
     );
   }
   onEnd(result: FullResult) {
-    if (this.directory) {
+    if (hasCheckpointDirectory(this.directory)) {
       writeFileSync(
         path.join(this.directory, "summary.json"),
         `${JSON.stringify(

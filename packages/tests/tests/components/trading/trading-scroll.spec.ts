@@ -156,9 +156,9 @@ for (const uncontrolled of [false, true]) {
       for (let i = 0; i < 5; i += 1) {
         element.dispatchEvent(
           new WheelEvent("wheel", {
-            deltaY: 100,
             bubbles: true,
             cancelable: true,
+            deltaY: 100,
           })
         );
       }

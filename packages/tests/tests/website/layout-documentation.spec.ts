@@ -157,10 +157,6 @@ test("default composed documentation examples retain their owned state and callb
   const box = await handle.boundingBox();
   expectNotNull(box);
 
-  if (!box) {
-    throw new Error("Resizable handle has no bounds");
-  }
-
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2 + 50, box.y + box.height / 2);

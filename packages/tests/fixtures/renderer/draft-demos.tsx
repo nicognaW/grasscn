@@ -42,6 +42,9 @@ interface Sample {
   background?: string;
 }
 
+const hasSkinSource = (src: Sample["src"]): src is string =>
+  (src?.length ?? 0) > 0;
+
 const DraftDemos = ({
   sample,
   scale,
@@ -55,7 +58,7 @@ const DraftDemos = ({
   const [scroll, setScroll] = React.useState(sample.cursor ?? 0);
 
   React.useEffect(() => {
-    setMinecraftSoundVolume(sample.muted ? 0 : 1);
+    setMinecraftSoundVolume(sample.muted === true ? 0 : 1);
   }, [sample.muted]);
   const common = { "data-subject": "true", id: "subject", scale };
 
@@ -207,7 +210,7 @@ const DraftDemos = ({
             document.documentElement.dataset.rotation = JSON.stringify(pose);
           }}
           skin={
-            (sample.src &&
+            (hasSkinSource(sample.src) &&
             !["wide/steve", "slim/alex"].includes(sample.state ?? "")
               ? "wide/steve"
               : (sample.state ?? "wide/steve")) as MinecraftAvatarSkin
@@ -232,7 +235,7 @@ const DraftDemos = ({
           {...common}
           pixels={pixels}
           markers={
-            sample.checked
+            sample.checked === true
               ? [
                   {
                     decoration: "frame",
@@ -277,7 +280,7 @@ const DraftDemos = ({
             scale={scale}
             heading={sample.heading ?? 0}
             markers={
-              sample.checked
+              sample.checked === true
                 ? [
                     {
                       bearing: value,
@@ -342,11 +345,12 @@ const DraftDemos = ({
                   ? [42, 220, 670][i]
                   : [-1, 42, 149, 150, 299, 300, 670, 1200][i % 8],
               name,
-              score: sample.checked
-                ? (sample.labels?.length ?? 3) === 3
-                  ? [18, 12, 7][i]
-                  : i * 3 + 7
-                : undefined,
+              score:
+                sample.checked === true
+                  ? (sample.labels?.length ?? 3) === 3
+                    ? [18, 12, 7][i]
+                    : i * 3 + 7
+                  : undefined,
               skin: (["slim/alex", "wide/steve", "wide/kai"] as const)[i % 3],
             })
           )}
@@ -385,7 +389,7 @@ const DraftDemos = ({
               node?.dataset.slot ?? "";
           }}
           defaultScrollOffset={sample.cursor ?? 0}
-          scrollOffset={sample.uncontrolled ? undefined : scroll}
+          scrollOffset={sample.uncontrolled === true ? undefined : scroll}
           onScrollOffsetChange={setScroll}
           {...common}
           id={sample.element === "trading-scrollbar" ? undefined : "subject"}

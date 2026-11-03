@@ -96,7 +96,7 @@ export const FormsFixture = () => {
           control={form.control}
           rules={{
             required: "Enter a player name",
-            minLength: { value: 2, message: "Use at least two characters" },
+            minLength: { message: "Use at least two characters", value: 2 },
           }}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>

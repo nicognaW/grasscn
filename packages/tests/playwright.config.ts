@@ -15,17 +15,21 @@ export default defineConfig({
     browserName: "chromium",
     channel: "msedge",
     deviceScaleFactor: 1,
-    launchOptions: process.env.GRASSCN_BROWSER_PROXY_PORT
-      ? {
-          args: [
-            `--proxy-server=http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}`,
-            "--proxy-bypass-list=<-loopback>",
-          ],
-        }
-      : undefined,
-    proxy: process.env.GRASSCN_BROWSER_PROXY_PORT
-      ? { server: `http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}` }
-      : undefined,
+    launchOptions:
+      (process.env.GRASSCN_BROWSER_PROXY_PORT?.length ?? 0) > 0
+        ? {
+            args: [
+              `--proxy-server=http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}`,
+              "--proxy-bypass-list=<-loopback>",
+            ],
+          }
+        : undefined,
+    proxy:
+      (process.env.GRASSCN_BROWSER_PROXY_PORT?.length ?? 0) > 0
+        ? {
+            server: `http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}`,
+          }
+        : undefined,
     viewport: { height: 900, width: 1280 },
   },
   webServer:

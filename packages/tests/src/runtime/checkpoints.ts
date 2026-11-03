@@ -27,6 +27,9 @@ export type {
 const digest = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 
+const hasSourcePath = (file: string | undefined): file is string =>
+  (file?.length ?? 0) > 0;
+
 const hasReplayableTestIdentity = (
   record: CheckpointResult
 ): record is CheckpointResult & { file: string; title: string[] } =>
@@ -53,12 +56,13 @@ const sourceMatches = async function sourceMatches(
     // Old records establish only direct definitions, never a helper-to-wrapper relationship.
     return (
       path.resolve(root, record.file) === spec &&
-      (!declaration.file || path.resolve(root, declaration.file) === spec)
+      (!hasSourcePath(declaration.file) ||
+        path.resolve(root, declaration.file) === spec)
     );
   }
 
   if (
-    !expected.sourceRoot ||
+    !hasSourcePath(expected.sourceRoot) ||
     !Array.isArray(declaration.sourceFiles) ||
     !declaration.sourceFiles.length ||
     record.file !== declaration.file ||

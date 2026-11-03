@@ -45,7 +45,11 @@ const sample: AdventureFixtureSample = params.has("case")
     };
 // oxlint-enable typescript/no-unsafe-type-assertion
 
-if (sample.background) {
+const hasBackgroundText = (
+  background: AdventureFixtureSample["background"]
+): background is string => (background?.length ?? 0) > 0;
+
+if (hasBackgroundText(sample.background)) {
   document.body.style.backgroundColor = sample.background;
 }
 

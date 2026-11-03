@@ -11,6 +11,10 @@ export interface InstalledComponentSettings {
   aliases: { components: string; hooks: string; lib: string; ui: string };
 }
 
+const hasTargetText = (
+  target: InstalledRegistryEntry["target"]
+): target is string => (target?.length ?? 0) > 0;
+
 // Resolve CLI target placeholders using the fixture's configured UI location.
 export const installedRegistryFile = function installedRegistryFile(
   entry: InstalledRegistryEntry,
@@ -49,7 +53,7 @@ export const installedRegistryFile = function installedRegistryFile(
       alias.replace(/^[@~]\//u, ""),
       placeholder[2]
     );
-  } else if (entry.target) {
+  } else if (hasTargetText(entry.target)) {
     target = path.resolve(root, entry.target.replace(/^~\//u, ""));
   } else {
     const kind =
