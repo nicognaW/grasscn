@@ -214,7 +214,7 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
             frameCompletion.reject(error);
           }
 
-          return await frameCompletion.promise;
+          await frameCompletion.promise;
         });
       } else {
         await expect(subject).toHaveAttribute("data-mc-ready", "true");

@@ -9,14 +9,14 @@ test("website loads Dream with slim arms after both presets", async ({
 }, info) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.route("https://mc-heads.net/skin/Dream", async (route) =>
+  await page.route("https://mc-heads.net/skin/Dream", async (route) => {
     await route.fulfill({
       body: readFileSync(fixtureFile("dream-skin.png")),
       contentType: "image/png",
       headers: { "access-control-allow-origin": "*" },
       status: 200,
-    })
-  );
+    });
+  });
   await page.goto("http://127.0.0.1:5176/components/player-preview");
 
   const player = page.getByRole("group", {
