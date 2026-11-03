@@ -79,7 +79,7 @@ for (const [part, directory] of [
           align: c.alignment ?? "left",
         });
 
-        if (c.wrapWidth != null) {
+        if (c.wrapWidth !== undefined) {
           q.set("wrapWidth", String(c.wrapWidth));
         }
 

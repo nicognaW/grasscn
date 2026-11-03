@@ -78,7 +78,7 @@ test.describe("Tabs native matrix", () => {
         "targetIndex",
         "disabledIndex",
       ] as const) {
-        if (c[key] != null) {
+        if (c[key] !== undefined) {
           query.set(key, String(c[key]));
         }
       }

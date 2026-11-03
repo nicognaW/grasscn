@@ -172,7 +172,7 @@ export const nativeTextTests = function nativeTextTests(
             align: c.alignment ?? "left",
           });
 
-          if (c.wrapWidth != null) {
+          if (c.wrapWidth !== undefined) {
             params.set("wrapWidth", String(c.wrapWidth));
           }
 

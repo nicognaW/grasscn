@@ -94,7 +94,7 @@ for (const directory of [
           y: String(c.y),
         });
 
-        if (c.text != null) {
+        if (c.text !== undefined) {
           query.set("text", c.text);
           // SAFETY: Every retained Card/Popover case with non-null text also has a string label; this original text guard identifies that actual co-present variant.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained field co-presence under the existing guard; no new check, fallback or property read.

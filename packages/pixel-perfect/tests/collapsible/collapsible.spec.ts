@@ -102,7 +102,7 @@ for (const directory of [
             align: c.alignment ?? "left",
           });
 
-          if (c.wrapWidth != null) {
+          if (c.wrapWidth !== undefined) {
             params.set("wrapWidth", String(c.wrapWidth));
           }
 

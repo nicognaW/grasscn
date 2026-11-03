@@ -122,7 +122,7 @@ for (const component of ["calendar", "date-picker"]) {
               range: alias.startsWith("range-") ? alias.slice(6) : "",
             });
 
-            if (c.text != null) {
+            if (c.text !== undefined) {
               q.set("text", c.text);
             }
 
