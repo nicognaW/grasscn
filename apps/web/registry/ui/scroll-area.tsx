@@ -63,6 +63,146 @@ type ScrollAreaProps = Omit<
   >;
 };
 
+const ScrollBar = ({
+  children,
+  render,
+  className,
+  orientation = "vertical",
+  style,
+  onPointerDownCapture,
+  onPointerMoveCapture,
+  onPointerUpCapture,
+  onPointerCancelCapture,
+  onLostPointerCapture,
+  ...props
+}: ScrollBarProps) => {
+  if (orientation !== "vertical") {
+    throw new Error("Minecraft ScrollBar supports vertical orientation only");
+  }
+
+  const context = React.useContext(ScrollContext);
+
+  if (!context) {
+    throw new Error("ScrollBar must be rendered inside ScrollArea");
+  }
+
+  const { viewport, scale, disabled, geometry } = context;
+
+  const drag = React.useRef<{
+    y: number;
+    scroll: number;
+  } | null>(null);
+
+  const [dragging, setDragging] = React.useState(false);
+
+  const stop = () => {
+    drag.current = null;
+    setDragging(false);
+  };
+
+  const thumb = (
+    <ScrollAreaPrimitive.Thumb
+      data-slot="scroll-area-thumb"
+      className="mc-scroll-area-thumb"
+    />
+  );
+
+  return (
+    <ScrollAreaPrimitive.Scrollbar
+      render={render}
+      {...props}
+      orientation={orientation}
+      data-slot="scroll-area-scrollbar"
+      data-dragging={dragging || undefined}
+      aria-disabled={disabled || undefined}
+      className={cn(`mc-scroll-area-scrollbar`, className)}
+      style={minecraftStyle(style, (__style): ScrollAreaThumbStyle => ({
+        "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
+        "--mc-thumb-height": `${geometry.thumb * scale}px`,
+        "--mc-thumb-offset": `${geometry.offset * scale}px`,
+        "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
+        ...__style,
+      }))}
+      onPointerDownCapture={(event) => {
+        onPointerDownCapture?.(event);
+        event.preventBaseUIHandler();
+
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        if (disabled) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          return;
+        }
+
+        if (event.button !== 0) {
+          return;
+        }
+
+        event.preventDefault();
+
+        const element = viewport.current!;
+        const bounds = event.currentTarget.getBoundingClientRect();
+
+        if (
+          !(event.target as Element).closest('[data-slot="scroll-area-thumb"]')
+        ) {
+          element.scrollTop = Math.max(
+            0,
+            Math.min(
+              geometry.maximum * scale,
+              ((event.clientY - bounds.top - (geometry.thumb * scale) / 2) *
+                geometry.maximum) /
+                Math.max(1, geometry.height - geometry.thumb)
+            )
+          );
+        }
+
+        drag.current = { scroll: element.scrollTop, y: event.clientY };
+        setDragging(true);
+        event.currentTarget.setPointerCapture(event.pointerId);
+      }}
+      onPointerMoveCapture={(event) => {
+        onPointerMoveCapture?.(event);
+        event.preventBaseUIHandler();
+
+        if (!event.defaultPrevented && drag.current && !disabled) {
+          event.preventDefault();
+          viewport.current!.scrollTop =
+            drag.current.scroll +
+            ((event.clientY - drag.current.y) * geometry.maximum) /
+              Math.max(1, geometry.height - geometry.thumb);
+        }
+      }}
+      onPointerUpCapture={(event) => {
+        onPointerUpCapture?.(event);
+        event.preventBaseUIHandler();
+
+        if (drag.current) {
+          event.preventDefault();
+          stop();
+        }
+      }}
+      onPointerCancelCapture={(event) => {
+        onPointerCancelCapture?.(event);
+        stop();
+      }}
+      onLostPointerCapture={(event) => {
+        onLostPointerCapture?.(event);
+        stop();
+      }}
+    >
+      <>
+        {thumb}
+        {children}
+      </>
+    </ScrollAreaPrimitive.Scrollbar>
+  );
+};
+
 const ScrollArea = ({
   children,
   className,
@@ -252,145 +392,7 @@ type ScrollBarProps = Omit<
   orientation?: "vertical";
 };
 
-const ScrollBar = ({
-  children,
-  render,
-  className,
-  orientation = "vertical",
-  style,
-  onPointerDownCapture,
-  onPointerMoveCapture,
-  onPointerUpCapture,
-  onPointerCancelCapture,
-  onLostPointerCapture,
-  ...props
-}: ScrollBarProps) => {
-  if (orientation !== "vertical") {
-    throw new Error("Minecraft ScrollBar supports vertical orientation only");
-  }
 
-  const context = React.useContext(ScrollContext);
-
-  if (!context) {
-    throw new Error("ScrollBar must be rendered inside ScrollArea");
-  }
-
-  const { viewport, scale, disabled, geometry } = context;
-
-  const drag = React.useRef<{
-    y: number;
-    scroll: number;
-  } | null>(null);
-
-  const [dragging, setDragging] = React.useState(false);
-
-  const stop = () => {
-    drag.current = null;
-    setDragging(false);
-  };
-
-  const thumb = (
-    <ScrollAreaPrimitive.Thumb
-      data-slot="scroll-area-thumb"
-      className="mc-scroll-area-thumb"
-    />
-  );
-
-  return (
-    <ScrollAreaPrimitive.Scrollbar
-      render={render}
-      {...props}
-      orientation={orientation}
-      data-slot="scroll-area-scrollbar"
-      data-dragging={dragging || undefined}
-      aria-disabled={disabled || undefined}
-      className={cn(`mc-scroll-area-scrollbar`, className)}
-      style={minecraftStyle(style, (__style): ScrollAreaThumbStyle => ({
-        "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
-        "--mc-thumb-height": `${geometry.thumb * scale}px`,
-        "--mc-thumb-offset": `${geometry.offset * scale}px`,
-        "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
-        ...__style,
-      }))}
-      onPointerDownCapture={(event) => {
-        onPointerDownCapture?.(event);
-        event.preventBaseUIHandler();
-
-        if (event.defaultPrevented) {
-          return;
-        }
-
-        if (disabled) {
-          event.preventDefault();
-          event.stopPropagation();
-
-          return;
-        }
-
-        if (event.button !== 0) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const element = viewport.current!;
-        const bounds = event.currentTarget.getBoundingClientRect();
-
-        if (
-          !(event.target as Element).closest('[data-slot="scroll-area-thumb"]')
-        ) {
-          element.scrollTop = Math.max(
-            0,
-            Math.min(
-              geometry.maximum * scale,
-              ((event.clientY - bounds.top - (geometry.thumb * scale) / 2) *
-                geometry.maximum) /
-                Math.max(1, geometry.height - geometry.thumb)
-            )
-          );
-        }
-
-        drag.current = { scroll: element.scrollTop, y: event.clientY };
-        setDragging(true);
-        event.currentTarget.setPointerCapture(event.pointerId);
-      }}
-      onPointerMoveCapture={(event) => {
-        onPointerMoveCapture?.(event);
-        event.preventBaseUIHandler();
-
-        if (!event.defaultPrevented && drag.current && !disabled) {
-          event.preventDefault();
-          viewport.current!.scrollTop =
-            drag.current.scroll +
-            ((event.clientY - drag.current.y) * geometry.maximum) /
-              Math.max(1, geometry.height - geometry.thumb);
-        }
-      }}
-      onPointerUpCapture={(event) => {
-        onPointerUpCapture?.(event);
-        event.preventBaseUIHandler();
-
-        if (drag.current) {
-          event.preventDefault();
-          stop();
-        }
-      }}
-      onPointerCancelCapture={(event) => {
-        onPointerCancelCapture?.(event);
-        stop();
-      }}
-      onLostPointerCapture={(event) => {
-        onLostPointerCapture?.(event);
-        stop();
-      }}
-    >
-      <>
-        {thumb}
-        {children}
-      </>
-    </ScrollAreaPrimitive.Scrollbar>
-  );
-};
 
 export { ScrollArea, ScrollBar };
 

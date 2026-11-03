@@ -43,6 +43,17 @@ type ProgressProps = Omit<
   scale?: 1 | 2 | 3;
 };
 
+const ProgressTrack = ({
+  className,
+  ...props
+}: MinecraftProps<typeof ProgressPrimitive.Track>) => (
+  <ProgressPrimitive.Track
+    data-slot="progress-track"
+    className={cn(`mc-progress-track`, className)}
+    {...props}
+  />
+);
+
 const Progress = ({
   className,
   value,
@@ -175,16 +186,7 @@ const Progress = ({
   );
 };
 
-const ProgressTrack = ({
-  className,
-  ...props
-}: MinecraftProps<typeof ProgressPrimitive.Track>) => (
-  <ProgressPrimitive.Track
-    data-slot="progress-track"
-    className={cn(`mc-progress-track`, className)}
-    {...props}
-  />
-);
+
 
 const ProgressIndicator = ({
   className,

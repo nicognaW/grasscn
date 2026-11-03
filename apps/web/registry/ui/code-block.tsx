@@ -193,6 +193,37 @@ const selectable = function selectable(
   return value;
 };
 
+const CodeBlockLine = ({
+  className,
+  variant = "default",
+  children,
+  ...props
+}: React.ComponentProps<"span"> & {
+  variant?: "default" | "added" | "removed" | "highlighted";
+}) => {
+  const empty =
+    typeof children === "undefined" ||
+    children === null ||
+    children === "" ||
+    (Array.isArray(children) && children.length === 0);
+
+  return (
+    <span
+      data-slot="code-block-line"
+      data-variant={variant}
+      className={cn(`mc-code-block-line`, className)}
+      {...props}
+    >
+      <span data-slot="code-block-line-content">
+        {empty ? "\n" : selectable(children)}
+      </span>
+      {variant === "added" || variant === "removed" ? (
+        <CodeLineMarker variant={variant} />
+      ) : null}
+    </span>
+  );
+};
+
 const CodeBlockContent = ({
   className,
   children,
@@ -250,36 +281,7 @@ const CodeLineMarker = ({ variant }: { variant: "added" | "removed" }) => {
   );
 };
 
-const CodeBlockLine = ({
-  className,
-  variant = "default",
-  children,
-  ...props
-}: React.ComponentProps<"span"> & {
-  variant?: "default" | "added" | "removed" | "highlighted";
-}) => {
-  const empty =
-    typeof children === "undefined" ||
-    children === null ||
-    children === "" ||
-    (Array.isArray(children) && children.length === 0);
 
-  return (
-    <span
-      data-slot="code-block-line"
-      data-variant={variant}
-      className={cn(`mc-code-block-line`, className)}
-      {...props}
-    >
-      <span data-slot="code-block-line-content">
-        {empty ? "\n" : selectable(children)}
-      </span>
-      {variant === "added" || variant === "removed" ? (
-        <CodeLineMarker variant={variant} />
-      ) : null}
-    </span>
-  );
-};
 
 const CodeBlockFooter = ({
   className,
