@@ -280,8 +280,7 @@ try {
     });
 
     // SAFETY: Node's ChildProcess exit event provides (code, signal); events.once rejects on spawn errors.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- This owned child has no callers operating on its handle after exit.
-    // oxlint-disable-next-line no-await-in-loop -- The ordinary owner stages form one required preparation pipeline; later stages consume generated/build/fixture outputs and recorded previous results.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion, no-await-in-loop -- This owned child has no callers operating on its handle after exit. The required preparation stages run in order because later stages consume preceding outputs and results.
     const [exitCode, signal] = (await once(child, "exit")) as [
       number | null,
       NodeJS.Signals | null,
