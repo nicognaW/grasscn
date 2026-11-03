@@ -1,0 +1,56 @@
+{
+  "scope": "One maintainer-approved default manual filename button; normal, 303x20 logical pixels, GUI scale2, en_us, #202020. No additional state, scale or Full coverage.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "74a2b097f89a6bb08826248ebc9e1e66b1677be8c82a9a29cee1bf03bd2640df",
+  "caseDefinitionSha256": "047377195d5563bdab84a7116e220a1bc4f895891ba01ed04c25ddbe5f43753b",
+  "captureRunner": "source-input/capture-controls.mjs",
+  "captureRunnerSha256": "6a6ec741762fb1ac10770bc8426d927d20d39f472159e27e8c779cca814d9e6a",
+  "baseProducer": "../docs-installation-controls/source/ControlsReferenceMain.java",
+  "baseProducerSha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197",
+  "producerChanges": "Only initial, terminal and next-page scale selectors changed from1/3 to2. Native widget construction, rendering, screenshot and crop code are unchanged.",
+  "runnerChanges": "Only scale selection/manifest scales and initial guiScale were restricted to2. Published manifests add the verified executed runner digest; image/source/case/frame digests are unchanged.",
+  "javaExecutableSha256": "4c062924e741a9663353a8b44ce1c1523534063aa7d6c9be1df241126a1ce074",
+  "javacExecutableSha256": "a1057a56fe25875d9286661a1da0c604e21caed8472ae8101a43999590942bb4",
+  "nativeLaunches": 2,
+  "nativeCaptureCountPerLaunch": 1,
+  "settings": {
+    "a": {
+      "forceUnicodeFont": "false",
+      "guiScale": "2",
+      "highContrast": "false",
+      "resourcePacks": "[]",
+      "lang": "en_us"
+    },
+    "b": {
+      "forceUnicodeFont": "false",
+      "guiScale": "2",
+      "highContrast": "false",
+      "resourcePacks": "[]",
+      "lang": "en_us"
+    }
+  },
+  "repeatability": "repeatability.json",
+  "guard": {
+    "PeakJobCommittedGiB": 1.6163,
+    "Reason": "completed",
+    "ExitCode": 0,
+    "Samples": 110,
+    "CpuSampleWindowMilliseconds": 500,
+    "PeakInstantSystemCpuPercent": 68.23,
+    "PeakSystemCpuPercent": 68.23,
+    "PeakSystemRamPercent": 97.09,
+    "CpuHardCapPercent": 10,
+    "JobCommitCapGiB": null,
+    "CpuReadback": 1000,
+    "JobCpuAffinityMask": "15",
+    "JobCpuAffinityBits": 4,
+    "RootCpuAffinityMask": "15",
+    "RootCpuAffinityBits": 4
+  },
+  "capturedAt": "2026-11-03T14:12:14.502Z",
+  "repositoryContext": {
+    "commit": "2fffad8a000c4bb3132b2f0fd04d540103304dbd",
+    "tree": "d51361701dc54ea4120d80c051e09a78c3b11a56"
+  }
+}

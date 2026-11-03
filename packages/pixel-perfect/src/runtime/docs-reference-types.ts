@@ -7,6 +7,7 @@ export interface NativeCase {
 
 export interface NativeManifest {
   background?: string;
+  captureRunnerSha256?: string;
   captureSourceSha256?: string;
   caseDefinitionSha256?: string;
   cases: NativeCase[];

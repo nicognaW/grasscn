@@ -45,6 +45,8 @@ export const generatedCode = [
 // Archived authored-source snapshots retain their reviewed historical bytes.
 // Maintained capture runners remain checked.
 export const retainedSourceInputs = [
+  // Immutable input of the separately approved single-filename native capture.
+  "packages/pixel-perfect/tests/reference/docs-installation-unicode-file/source-input/capture-controls.mjs",
   "packages/pixel-perfect/tests/reference/docs-input-defaults/source-input/capture-controls.mjs",
   "packages/pixel-perfect/tests/reference/docs-input-defaults/source-input/capture-docs-input-defaults.mjs",
   "packages/pixel-perfect/tests/reference/docs-installation-controls/source-input/capture-controls.mjs",
@@ -453,4 +455,12 @@ export const retainedEvidenceData = [
   "packages/pixel-perfect/tests/reference/resizable/asset-provenance.json",
   "packages/pixel-perfect/tests/reference/spinner/font-context.json",
   "packages/pixel-perfect/tests/reference/table-background/asset-provenance.json",
+  // Separately approved single-filename native reference and independent repeat.
+  "packages/pixel-perfect/tests/reference/docs-installation-unicode-file/cases.json",
+  "packages/pixel-perfect/tests/reference/docs-installation-unicode-file/layout.json",
+  "packages/pixel-perfect/tests/reference/docs-installation-unicode-file/manifest.json",
+  "packages/pixel-perfect/tests/reference/docs-installation-unicode-file/repeat/layout.json",
+  "packages/pixel-perfect/tests/reference/docs-installation-unicode-file/repeat/manifest.json",
+  "packages/pixel-perfect/tests/reference/docs-installation-unicode-file/repeatability.json",
+  "packages/pixel-perfect/tests/reference/docs-installation-unicode-file/runtime-provenance.json",
 ];

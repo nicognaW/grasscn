@@ -1,0 +1,19 @@
+{
+  "captureSourceSha256": "74a2b097f89a6bb08826248ebc9e1e66b1677be8c82a9a29cee1bf03bd2640df",
+  "caseDefinitionSha256": "047377195d5563bdab84a7116e220a1bc4f895891ba01ed04c25ddbe5f43753b",
+  "cases": [
+    {
+      "decodedRgbaSha256": "49b6c2462763885eb3753b527cfa984adfb3b0cd8f052105dd60cb9ff42bcbe3",
+      "mismatchedPixels": 0,
+      "name": "install-file-minecraft-unicode-css-s2.png",
+      "runOnePngSha256": "0c0d0e3ae13570af694f87e261f7506701bcaabbecd6f178ee0a8abf8c5012c7",
+      "runTwoPngSha256": "0c0d0e3ae13570af694f87e261f7506701bcaabbecd6f178ee0a8abf8c5012c7"
+    }
+  ],
+  "glyphObservationEnabled": {
+    "runOne": true,
+    "runTwo": true
+  },
+  "method": "Two separate isolated vanilla launches; decoded RGBA compared exactly per case",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
+}
