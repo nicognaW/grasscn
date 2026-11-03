@@ -8,6 +8,10 @@ import { PNG } from "pngjs";
 
 export * from "@playwright/test";
 
+type CollectedMetric =
+  | { data: unknown; file: string }
+  | { file: string; unreadable: true };
+
 const digest = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 
@@ -37,7 +41,7 @@ export const test = base.extend<{ grasscnVerificationArtifacts: void }>({
 
       const metrics = files
         .filter((file) => /\.[jJ][sS][oO][nN]$/u.test(file))
-        .map((file) => {
+        .map((file): CollectedMetric => {
           try {
             return {
               data: JSON.parse(
