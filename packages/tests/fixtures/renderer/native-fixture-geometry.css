@@ -374,3 +374,16 @@
 #root .fixture-main-slider-width[data-orientation="horizontal"] {
   width: var(--fixture-width);
 }
+
+/* The original positioned-trigger branch owns these dimensions. */
+#root .fixture-native-menu-trigger {
+  left: var(--fixture-trigger-left);
+  position: fixed;
+  top: var(--fixture-trigger-top);
+  width: var(--fixture-trigger-width);
+}
+#root .fixture-native-locator-offset {
+  left: 0;
+  position: absolute;
+  top: var(--fixture-locator-top);
+}

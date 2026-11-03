@@ -91,10 +91,10 @@ export const InputGroupFixture = () => {
             id="subject"
             ref={button}
             disabled={state.startsWith("disabled")}
-            className="fixture-geometry-height"
+            className="fixture-geometry-height fixture-geometry-width"
             style={{
               "--fixture-height": `${Number(p.get("height") ?? 20) * scale}px`,
-              width: width * scale,
+              "--fixture-width": `${width * scale}px`,
             }}
             data-subject="true"
           >
@@ -141,7 +141,8 @@ export const InputGroupFixture = () => {
           <InputGroupButton
             ref={button}
             disabled={p.has("disabled")}
-            style={{ width: 80 * scale }}
+            className="fixture-geometry-width"
+            style={{ "--fixture-width": `${80 * scale}px` }}
             onClick={() => {
               setEvents((v) => v + 1);
             }}

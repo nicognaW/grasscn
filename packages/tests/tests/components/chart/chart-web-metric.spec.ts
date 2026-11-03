@@ -23,21 +23,21 @@ for (const scale of [1, 2, 3] as const) {
         nodes
           .filter(
             (n) =>
-              (n as HTMLElement).style.width ===
+              n.style.width ===
                 `${getComputedStyle(n).getPropertyValue("--mc-scale").trim()}px` &&
-              (n as HTMLElement).style.background.startsWith("rgb(") &&
+              n.style.background.startsWith("rgb(") &&
               // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-              Number.parseFloat((n as HTMLElement).style.top) +
+              Number.parseFloat(n.style.top) +
                 // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-                Number.parseFloat((n as HTMLElement).style.height) ===
+                Number.parseFloat(n.style.height) ===
                 69 * Number(getComputedStyle(n).getPropertyValue("--mc-scale"))
           )
           .map((n) => ({
-            color: (n as HTMLElement).style.background,
+            color: n.style.background,
             // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-            height: Number.parseFloat((n as HTMLElement).style.height),
+            height: Number.parseFloat(n.style.height),
             // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-            top: Number.parseFloat((n as HTMLElement).style.top),
+            top: Number.parseFloat(n.style.top),
           }))
       );
 

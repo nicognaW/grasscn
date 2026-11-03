@@ -292,7 +292,8 @@ const DraftDemos = ({
                   ]
                 : []
             }
-            style={{ left: 0, position: "absolute", top: 6 * scale }}
+            className="fixture-native-locator-offset"
+            style={{ "--fixture-locator-top": `${6 * scale}px` }}
             onMarkerSelect={(id) => {
               setSelected(id);
               document.documentElement.dataset.marker = id;

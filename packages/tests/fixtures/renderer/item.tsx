@@ -59,7 +59,7 @@ const ItemFixture = () => {
   const [actions, setActions] = React.useState(0);
   const [tag, setTag] = React.useState("");
   const [width, setWidth] = React.useState(Number(q.get("width") ?? 270));
-  const ref = React.useRef<any>(null);
+  const ref = React.useRef<React.ComponentRef<typeof Item>>(null);
   const part = q.get("part");
   const rich = q.has("rich");
 
