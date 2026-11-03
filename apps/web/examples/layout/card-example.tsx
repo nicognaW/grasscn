@@ -33,9 +33,8 @@ const CardExample = () => {
             setName(event.target.value);
             setSaved(false);
           }}
-          /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-          style={{ width: "100%" }}
-          /* eslint-enable shadcn/no-inline-styles */
+
+          className="w-full"
         />
       </CardContent>
       <CardFooter>

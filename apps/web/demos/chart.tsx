@@ -229,9 +229,9 @@ const ChartDemo = ({ scale }: DemoProps) => {
             <Button
               scale={scale}
               type="button"
+              className="max-w-full"
               style={{
                 width: Math.min(100, contentWidth) * scale,
-                maxWidth: "100%",
               }}
               onClick={() => {
                 setWebStep((value) => value + 1);
@@ -312,9 +312,9 @@ const ChartDemo = ({ scale }: DemoProps) => {
             <Button
               scale={scale}
               type="button"
+              className="max-w-full"
               style={{
                 width: Math.min(120, contentWidth) * scale,
-                maxWidth: "100%",
               }}
               onClick={() => {
                 setStep((v) => v + 1);
@@ -325,9 +325,9 @@ const ChartDemo = ({ scale }: DemoProps) => {
             <Button
               scale={scale}
               type="button"
+              className="max-w-full"
               style={{
                 width: Math.min(100, contentWidth) * scale,
-                maxWidth: "100%",
               }}
               onClick={() => {
                 setLimit((v) => (v === 120 ? 260 : 120));

@@ -2,6 +2,7 @@
 
 import { createColumnHelper, useTable } from "@tanstack/react-table";
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import type { DataTableFeatures } from "@/components/data-table-features";
 import { features } from "@/components/data-table-features";
@@ -16,6 +17,26 @@ import {
   TableHead,
   TableCell,
 } from "@/components/ui/table";
+
+interface ForwardedLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-examples-overlays-data-table-features-example-1-width": `${number}px`;
+}
+
+interface ForwardedLayoutStyle2 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-examples-overlays-data-table-features-example-2-width": `${number}px`;
+}
+
+interface ForwardedLayoutStyle3 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-examples-overlays-data-table-features-example-3-width": `${number}px`;
+}
+
+interface ForwardedLayoutStyle4 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-examples-overlays-data-table-features-example-4-width": `${number}px`;
+}
+
+interface ForwardedLayoutStyle5 extends IntrinsicLayoutCSSProperties {
+  "--mc-forwarded-examples-overlays-data-table-features-example-5-width": `${number}px`;
+}
 
 type World = { id: string; name: string; players: number };
 
@@ -38,7 +59,13 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
               type="button"
               scale={scale}
               aria-label="World"
-              style={{ width: 100 * scale, maxWidth: "100%" }}
+              className="w-(--mc-forwarded-examples-overlays-data-table-features-example-1-width) max-w-full"
+              style={
+                // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                {
+                  "--mc-forwarded-examples-overlays-data-table-features-example-1-width": `${100 * scale}px`,
+                } satisfies ForwardedLayoutStyle1 as ForwardedLayoutStyle1
+              }
               onClick={() => {
                 column.toggleSorting();
               }}
@@ -77,7 +104,13 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
           aria-label="Filter worlds"
           placeholder="Search worlds"
           scale={scale}
-          style={{ maxWidth: "100%", width: 160 * scale }}
+          className="w-(--mc-forwarded-examples-overlays-data-table-features-example-2-width) max-w-full"
+          style={
+            // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+            {
+              "--mc-forwarded-examples-overlays-data-table-features-example-2-width": `${160 * scale}px`,
+            } satisfies ForwardedLayoutStyle2 as ForwardedLayoutStyle2
+          }
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(e) =>
             table.getColumn("name")?.setFilterValue(e.target.value)
@@ -86,7 +119,13 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
         <Button
           type="button"
           scale={scale}
-          style={{ width: 100 * scale, maxWidth: "100%" }}
+          className="w-(--mc-forwarded-examples-overlays-data-table-features-example-3-width) max-w-full"
+          style={
+            // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+            {
+              "--mc-forwarded-examples-overlays-data-table-features-example-3-width": `${100 * scale}px`,
+            } satisfies ForwardedLayoutStyle3 as ForwardedLayoutStyle3
+          }
           aria-pressed={table.getColumn("players")?.getIsVisible()}
           onClick={() => table.getColumn("players")?.toggleVisibility()}
         >
@@ -151,7 +190,13 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
         <Button
           scale={scale}
           type="button"
-          style={{ width: 80 * scale }}
+          className="w-(--mc-forwarded-examples-overlays-data-table-features-example-4-width)"
+          style={
+            // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+            {
+              "--mc-forwarded-examples-overlays-data-table-features-example-4-width": `${80 * scale}px`,
+            } satisfies ForwardedLayoutStyle4 as ForwardedLayoutStyle4
+          }
           disabled={!table.getCanPreviousPage()}
           onClick={() => {
             table.previousPage();
@@ -162,7 +207,13 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
         <Button
           scale={scale}
           type="button"
-          style={{ width: 80 * scale }}
+          className="w-(--mc-forwarded-examples-overlays-data-table-features-example-5-width)"
+          style={
+            // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+            {
+              "--mc-forwarded-examples-overlays-data-table-features-example-5-width": `${80 * scale}px`,
+            } satisfies ForwardedLayoutStyle5 as ForwardedLayoutStyle5
+          }
           disabled={!table.getCanNextPage()}
           onClick={() => {
             table.nextPage();

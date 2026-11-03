@@ -22,9 +22,8 @@ const Example = () => {
         <BubbleContent>Bring your pickaxe.</BubbleContent>
         <BubbleReactions>
           <Button
-            /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-            style={{ width: 140 }}
-            /* eslint-enable shadcn/no-inline-styles */
+            className="w-35"
+
             aria-pressed={liked}
             onClick={() => {
               setLiked(!liked);

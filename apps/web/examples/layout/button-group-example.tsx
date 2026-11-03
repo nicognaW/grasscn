@@ -15,9 +15,8 @@ const ButtonGroupExample = () => {
   return (
     <ButtonGroup aria-label="World actions">
       <Button
-        /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-        style={{ width: 160 }}
-        /* eslint-enable shadcn/no-inline-styles */
+        className="w-40"
+
         onClick={() => {
           setSaved(true);
         }}
@@ -26,9 +25,8 @@ const ButtonGroupExample = () => {
       </Button>
       <ButtonGroupSeparator />
       <Button
-        /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-        style={{ width: 160 }}
-        /* eslint-enable shadcn/no-inline-styles */
+        className="w-40"
+
         onClick={() => {
           setSaved(false);
         }}
