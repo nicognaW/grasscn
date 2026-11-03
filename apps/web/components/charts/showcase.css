@@ -125,9 +125,6 @@
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-.showcase-main .documentation-tabs-scroll [data-slot="tabs-list"] {
-  width: 606px;
-}
 @media (max-width: 1200px) {
   .showcase-main {
     padding: 32px 28px 48px;
