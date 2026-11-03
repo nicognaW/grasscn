@@ -87,7 +87,7 @@ const CommandDialog = ({
       <DialogContent
         className={cn(`mc-command-dialog`, className)}
         finalFocus={() => {
-          if (restoreFocus.current?.isConnected) {
+          if (restoreFocus.current?.isConnected === true) {
             return restoreFocus.current;
           }
         }}

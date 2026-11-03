@@ -100,7 +100,7 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
                 <MessageScrollerItem key={index} messageId={String(index + 1)}>
                   <Message
                     author={message.author}
-                    kind={message.system ? "system" : "chat"}
+                    kind={message.system === true ? "system" : "chat"}
                   >
                     <MessageContent>{message.text}</MessageContent>
                   </Message>

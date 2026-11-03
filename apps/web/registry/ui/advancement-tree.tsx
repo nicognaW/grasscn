@@ -190,7 +190,9 @@ const AdvancementTree = ({
     onSelectedIdChange?.(id);
   };
 
-  const visible = points.filter((node) => !node.hidden || node.completed);
+  const visible = points.filter(
+    (node) => node.hidden !== true || node.completed === true
+  );
 
   const paths = (outline: boolean) =>
     visible.flatMap((node) => {

@@ -118,7 +118,7 @@ const History = ({ scale }: DemoProps) => {
                 <MessageScrollerItem key={index} messageId={String(index + 1)}>
                   <Message
                     author={message.author}
-                    kind={message.system ? "system" : "chat"}
+                    kind={message.system === true ? "system" : "chat"}
                   >
                     <MessageContent>{message.text}</MessageContent>
                   </Message>

@@ -250,11 +250,11 @@ const AlertDialogContent = ({
           header &&
           item.closest('[data-slot="alert-dialog-header"]') === header;
 
-        const areaWidth = inHeader ? header.clientWidth / scale : width;
+        const areaWidth =
+          inHeader === true ? header.clientWidth / scale : width;
 
-        const areaLeft = inHeader
-          ? header.getBoundingClientRect().left
-          : bounds.left;
+        const areaLeft =
+          inHeader === true ? header.getBoundingClientRect().left : bounds.left;
 
         const previous = Number(item.dataset.mcConfirmationShift ?? 0);
 

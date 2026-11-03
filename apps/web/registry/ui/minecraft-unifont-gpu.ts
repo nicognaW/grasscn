@@ -177,7 +177,7 @@ export const paintUnihexGPU = function paintUnihexGPU(
 
   let painter = sharedPainter;
 
-  if (painter?.gl.isContextLost()) {
+  if (painter?.gl.isContextLost() === true) {
     releasePainter(painter);
     sharedPainter = painter = undefined;
   }

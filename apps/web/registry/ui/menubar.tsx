@@ -390,7 +390,7 @@ const MenubarCheckboxItem = ({
       onCheckedChange={(next, details) => {
         onCheckedChange?.(next, details);
 
-        if (!props.disabled) {
+        if (props.disabled !== true) {
           playMinecraftClick();
         }
       }}
@@ -427,7 +427,7 @@ const MenubarRadioItem = ({
       onClick={(event) => {
         onClick?.(event);
 
-        if (!props.disabled) {
+        if (props.disabled !== true) {
           playMinecraftClick();
         }
       }}

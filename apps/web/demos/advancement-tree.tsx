@@ -76,7 +76,9 @@ const AdvancementDemo = ({ scale }: DemoProps) => {
             onClick={() => {
               setNodes((old) =>
                 old.map((n) =>
-                  n.id === selected ? { ...n, completed: !n.completed } : n
+                  n.id === selected
+                    ? { ...n, completed: n.completed !== true }
+                    : n
                 )
               );
             }}
@@ -88,7 +90,7 @@ const AdvancementDemo = ({ scale }: DemoProps) => {
               } satisfies DemoVariables as DemoVariables
             }
           >
-            {node.completed ? "Mark incomplete" : "Complete milestone"}
+            {node.completed === true ? "Mark incomplete" : "Complete milestone"}
           </Button>
           <Button
             scale={scale}

@@ -98,7 +98,7 @@ const solidBackdrop = function solidBackdrop(node: HTMLElement) {
 
     if (
       ownText ||
-      differentColor ||
+      differentColor === true ||
       style.backgroundImage !== "none" ||
       style.boxShadow !== "none" ||
       style.filter !== "none" ||
