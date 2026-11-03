@@ -44,15 +44,17 @@ for (const selection of ["alert-dialog"]) {
         0
       );
 
-      const state = await overlay.locator("canvas").evaluate((node) => {
-        const canvas = node as HTMLCanvasElement;
-        const gl = canvas.getContext("webgl")!;
-        const pixel = new Uint8Array(4);
+      const state = await overlay
+        .locator("canvas")
+        .evaluate((node: HTMLCanvasElement) => {
+          const canvas = node;
+          const gl = canvas.getContext("webgl")!;
+          const pixel = new Uint8Array(4);
 
-        gl.readPixels(20, 20, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+          gl.readPixels(20, 20, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
 
-        return { lost: gl.isContextLost(), pixel: [...pixel] };
-      });
+          return { lost: gl.isContextLost(), pixel: [...pixel] };
+        });
 
       expect(
         state.lost,
@@ -116,8 +118,8 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
 
     const pixel = await overlay
       .locator("canvas")
-      .evaluate((node, pixelScene) => {
-        const canvas = node as HTMLCanvasElement;
+      .evaluate((node: HTMLCanvasElement, pixelScene) => {
+        const canvas = node;
         const gl = canvas.getContext("webgl")!;
         const rgba = new Uint8Array(4);
 

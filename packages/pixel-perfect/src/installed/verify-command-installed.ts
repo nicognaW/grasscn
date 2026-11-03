@@ -246,10 +246,12 @@ try {
           const anchor = c.anchor ?? cursor;
 
           await subject.evaluate(
-            (node, { cursor: selectionCursor, anchor: selectionAnchor }) => {
+            (
+              node: HTMLInputElement | HTMLTextAreaElement,
+              { cursor: selectionCursor, anchor: selectionAnchor }
+            ) => {
               // SAFETY: the entry route renders an HTML input or textarea with native selection support.
-              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed entry fixture HTML DOM API boundary.
-              (node as HTMLInputElement).setSelectionRange(
+              node.setSelectionRange(
                 Math.min(selectionCursor, selectionAnchor),
                 Math.max(selectionCursor, selectionAnchor),
                 selectionCursor < selectionAnchor ? "backward" : "forward"

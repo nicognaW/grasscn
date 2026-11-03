@@ -129,7 +129,7 @@ test("Profiler WebGL rerenders changed data without losing its context", async (
   expect(
     await plot
       .locator("canvas")
-      .evaluate((n) => (n as HTMLCanvasElement).getContext("2d") !== null)
+      .evaluate((n: HTMLCanvasElement) => n.getContext("2d") !== null)
   ).toBe(true);
 });
 

@@ -6,34 +6,20 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-interface NativeCase {
-  name: string;
-  text: string;
-  placeholder?: string;
-  state: string;
-  width: number;
-  height: number;
-  scale: number;
-  x: number;
-  y: number;
-  value?: number;
-  cursor?: number;
-  anchor?: number;
-  caretMs: number;
-  sha256: string;
-  referenceDirectory: string;
-}
+import type BoundaryReference2 from "../reference/textarea-cjk/manifest.json";
+import type BoundaryReference1 from "../reference/textarea/manifest.json";
 
 const manifest = {
   cases: ["textarea", "textarea-cjk"].flatMap((directory) =>
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
     (
       JSON.parse(
         readFileSync(
           pixelPerfectFile(`tests/reference/${directory}/manifest.json`),
           "utf-8"
         )
-      ).cases as NativeCase[]
-    ).map((c) => ({ ...c, referenceDirectory: directory }))
+      ) as typeof BoundaryReference1 | typeof BoundaryReference2
+    ).cases.map((c) => ({ ...c, referenceDirectory: directory }))
   ),
 };
 
@@ -97,8 +83,8 @@ for (const c of manifest.cases) {
 
     if (c.referenceDirectory === "textarea-cjk") {
       await area.evaluate(
-        (node, position) => {
-          Object.assign((node as HTMLElement).style, {
+        (node: HTMLElement, position) => {
+          Object.assign(node.style, {
             left: `${position.x}px`,
             position: "fixed",
             top: `${position.y}px`,
@@ -118,8 +104,8 @@ for (const c of manifest.cases) {
 
     await page.mouse.move(0, 0);
     await area.evaluate(
-      (node, settings) => {
-        const textareaElement = node as HTMLTextAreaElement;
+      (node: HTMLTextAreaElement, settings) => {
+        const textareaElement = node;
         textareaElement.setSelectionRange(
           Math.min(settings.cursor, settings.anchor),
           Math.max(settings.cursor, settings.anchor),

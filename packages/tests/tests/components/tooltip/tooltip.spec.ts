@@ -30,8 +30,8 @@ test("Tooltip preserves controlled state, asChild and the real content ref", asy
   await page.locator("#external-open").click();
   const content = page.locator('[data-slot="tooltip-content"]');
   await expect(content).toBeVisible();
-  await page.locator("#read-ref").evaluate((element) => {
-    (element as HTMLButtonElement).click();
+  await page.locator("#read-ref").evaluate((element: HTMLButtonElement) => {
+    element.click();
   });
   await expect(page.getByLabel("Root ref", { exact: true })).toHaveText("DIV");
   await expect(content.locator(".mc-tooltip-line")).toHaveCount(1);

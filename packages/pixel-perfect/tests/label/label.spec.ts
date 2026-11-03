@@ -7,6 +7,7 @@ import { labelUnihexAtlas } from "@grasscn/web/ui/minecraft-label-atlas";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type BoundaryReference1 from "../reference/label/glyph-atlas.json";
 import manifest from "../reference/label/manifest.json";
 
 const compare = function compare(expected: PNG, actual: PNG) {
@@ -55,12 +56,18 @@ test("Label comparator catches a one-pixel change", async () => {
 });
 
 test("Label uses the UVs observed in its native font-atlas context", () => {
-  const observed = JSON.parse(
-    readFileSync(
-      pixelPerfectFile("tests/reference/label/glyph-atlas.json"),
-      "utf-8"
-    )
-  );
+  const observed =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/label/glyph-atlas.json"),
+        "utf-8"
+      )
+    ) as Record<
+      string,
+      (typeof BoundaryReference1)[keyof typeof BoundaryReference1]
+    >;
 
   expect(Object.keys(labelUnihexAtlas).sort()).toEqual(
     Object.keys(observed).sort()
@@ -69,7 +76,10 @@ test("Label uses the UVs observed in its native font-atlas context", () => {
   for (const [code, uv] of Object.entries(labelUnihexAtlas)) {
     expect(uv).toEqual(
       Object.fromEntries(
-        ["u0", "u1", "v0", "v1"].map((key) => [key, observed[code][key]])
+        (["u0", "u1", "v0", "v1"] as const).map((key) => [
+          key,
+          observed[code][key],
+        ])
       )
     );
   }

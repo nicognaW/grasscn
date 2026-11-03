@@ -5,6 +5,8 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type BoundaryReference1 from "../reference/advancement-tree/manifest.json";
+
 test.use({
   launchOptions: {
     args: [
@@ -17,9 +19,15 @@ test.use({
 
 const reference = path.resolve("tests/reference/advancement-tree");
 
-const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile(path.join(reference, "manifest.json")), "utf-8")
-);
+const manifest =
+  // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+  JSON.parse(
+    readFileSync(
+      pixelPerfectFile(path.join(reference, "manifest.json")),
+      "utf-8"
+    )
+  ) as typeof BoundaryReference1;
 
 for (const c of manifest.cases) {
   test(`advancement tree native pixels ${c.name}`, async ({ page }, info) => {
@@ -32,12 +40,8 @@ for (const c of manifest.cases) {
       .poll(async () =>
         page
           .locator("[data-subject] img")
-          .evaluateAll((images) =>
-            images.every(
-              (image) =>
-                (image as HTMLImageElement).complete &&
-                (image as HTMLImageElement).naturalWidth > 0
-            )
+          .evaluateAll((images: HTMLImageElement[]) =>
+            images.every((image) => image.complete && image.naturalWidth > 0)
           )
       )
       .toBe(true);

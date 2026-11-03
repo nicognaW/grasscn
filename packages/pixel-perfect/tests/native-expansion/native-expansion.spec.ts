@@ -58,12 +58,8 @@ for (const { reference, sample } of specimens) {
       .poll(async () =>
         subject
           .locator("img")
-          .evaluateAll((images) =>
-            images.every(
-              (image) =>
-                (image as HTMLImageElement).complete &&
-                (image as HTMLImageElement).naturalWidth > 0
-            )
+          .evaluateAll((images: HTMLImageElement[]) =>
+            images.every((image) => image.complete && image.naturalWidth > 0)
           )
       )
       .toBe(true);

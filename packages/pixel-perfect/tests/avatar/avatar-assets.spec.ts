@@ -6,6 +6,9 @@ import { minecraftAvatarSkins } from "@grasscn/web/ui/minecraft-avatar-assets";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type BoundaryReference2 from "../reference/avatar/manifest.json";
+import type BoundaryReference1 from "../reference/avatar/provenance.json";
+
 test("All18 original skins retain their PNG bytes and rawRGBA including hat transparency", () => {
   const provenance = JSON.parse(
     readFileSync(
@@ -32,23 +35,27 @@ test("All18 original skins retain their PNG bytes and rawRGBA including hat tran
 });
 
 test("Native Avatar reference guards pin real class members and no fake glyph observations", () => {
-  const m = JSON.parse(
-    readFileSync(
-      pixelPerfectFile("tests/reference/avatar/manifest.json"),
-      "utf-8"
-    )
-  );
+  const m =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/avatar/manifest.json"),
+        "utf-8"
+      )
+    ) as typeof BoundaryReference2;
 
-  const p = JSON.parse(
-    readFileSync(
-      pixelPerfectFile("tests/reference/avatar/provenance.json"),
-      "utf-8"
-    )
-  );
+  const p =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/avatar/provenance.json"),
+        "utf-8"
+      )
+    ) as typeof BoundaryReference1;
 
   expect(m.glyphObservationEnabled).toBe(false);
-  expect(p.assets.filter((a: any) => a.path.endsWith(".class"))).toHaveLength(
-    2
-  );
+  expect(p.assets.filter((a) => a.path.endsWith(".class"))).toHaveLength(2);
   expect(p.nativeMethod).toContain("PlayerFaceExtractor.extractRenderState");
 });

@@ -828,10 +828,8 @@ test("Editable, read-only and disabled textarea examples render real line breaks
 
   const images = await page
     .locator('[data-stage="textarea"] textarea')
-    .evaluateAll((nodes) =>
-      nodes.map((node) =>
-        (node as HTMLElement).style.getPropertyValue("--mc-textarea-image")
-      )
+    .evaluateAll((nodes: HTMLElement[]) =>
+      nodes.map((node) => node.style.getPropertyValue("--mc-textarea-image"))
     );
 
   expect(images).toHaveLength(3);

@@ -121,8 +121,8 @@ for (const component of ["sonner"]) {
 
         if (c.state === "exiting") {
           await page.clock.fastForward(600);
-          await page.locator("#close").evaluate((node) => {
-            (node as HTMLElement).click();
+          await page.locator("#close").evaluate((node: HTMLElement) => {
+            node.click();
           });
           await page.clock.fastForward(component === "sonner" ? 16 : 0);
           await expect(

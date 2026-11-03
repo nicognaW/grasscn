@@ -18,7 +18,7 @@ test("CJK pointer hit-testing uses the original glyph advances", async ({
       bounds.y + bounds.height / 2
     );
     expect(
-      await input.evaluate((node) => (node as HTMLInputElement).selectionStart)
+      await input.evaluate((node: HTMLInputElement) => node.selectionStart)
     ).toBe(2);
   }
 });

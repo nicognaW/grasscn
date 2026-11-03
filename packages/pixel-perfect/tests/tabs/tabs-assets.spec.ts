@@ -7,6 +7,10 @@ import { tabsUnihexAtlas } from "@grasscn/web/ui/minecraft-tabs-atlas";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type BoundaryReference2 from "../reference/tabs-extra/glyph-atlas.json";
+import type BoundaryReference3 from "../reference/tabs-extra/repeatability.json";
+import type BoundaryReference1 from "../reference/tabs/asset-provenance.json";
+
 const json = (file: string) =>
   JSON.parse(readFileSync(pixelPerfectFile(file), "utf-8"));
 
@@ -14,7 +18,17 @@ const decode = (uri: string) =>
   Buffer.from(/base64,([A-Za-z0-9+/=]+)/u.exec(uri)![1], "base64");
 
 test("Tabs preserve original texture bytes and exact nine-slice pixels", () => {
-  const provenance = json("tests/reference/tabs/asset-provenance.json");
+  const provenance =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    json(
+      "tests/reference/tabs/asset-provenance.json"
+    ) as typeof BoundaryReference1 & {
+      sources: Record<
+        string,
+        (typeof BoundaryReference1)["sources"][keyof (typeof BoundaryReference1)["sources"]]
+      >;
+    };
 
   for (const [name, sprite] of Object.entries(assets.sprites)) {
     const bytes = decode(sprite.original);
@@ -54,7 +68,14 @@ test("Tabs preserve original texture bytes and exact nine-slice pixels", () => {
 });
 
 test("Tabs CJK atlas uses observed native UVs without changing native pixels", () => {
-  const observed = json("tests/reference/tabs-extra/glyph-atlas.json");
+  const observed =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    json("tests/reference/tabs-extra/glyph-atlas.json") as Record<
+      string,
+      (typeof BoundaryReference2)[keyof typeof BoundaryReference2]
+    >;
+
   expect(Object.keys(tabsUnihexAtlas).sort()).toEqual(
     Object.keys(observed).sort()
   );
@@ -65,7 +86,13 @@ test("Tabs CJK atlas uses observed native UVs without changing native pixels", (
     }
   }
 
-  const repeat = json("tests/reference/tabs-extra/repeatability.json");
+  const repeat =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    json(
+      "tests/reference/tabs-extra/repeatability.json"
+    ) as typeof BoundaryReference3;
+
   expect(repeat.glyphObservationEnabled).toEqual({
     runOne: true,
     runTwo: false,

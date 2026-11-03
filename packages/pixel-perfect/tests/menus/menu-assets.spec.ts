@@ -6,19 +6,33 @@ import { menuCheckboxAtlas } from "@grasscn/web/ui/minecraft-menu-checkbox-asset
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const inventory = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
-    "utf-8"
-  )
-);
+import type BoundaryReference1 from "../reference/catalog/native-inventory.json";
+import type BoundaryReference2 from "../reference/menu-parts/checkbox-atlas.json";
 
-const native = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/menu-parts/checkbox-atlas.json"),
-    "utf-8"
-  )
-);
+const inventory =
+  // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+  JSON.parse(
+    readFileSync(
+      pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
+      "utf-8"
+    )
+  ) as typeof BoundaryReference1 & {
+    assets: Record<
+      string,
+      (typeof BoundaryReference1)["assets"][keyof (typeof BoundaryReference1)["assets"]]
+    >;
+  };
+
+const native =
+  // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+  JSON.parse(
+    readFileSync(
+      pixelPerfectFile("tests/reference/menu-parts/checkbox-atlas.json"),
+      "utf-8"
+    )
+  ) as typeof BoundaryReference2;
 
 for (const [name, sprite] of Object.entries(menuCheckboxAtlas.sprites)) {
   test(`Menu embeds the original ${name} texture and native atlas coordinates`, () => {

@@ -63,8 +63,8 @@ for (const c of manifest.cases) {
     });
     const button = page.locator("[data-subject]");
     await button.evaluate(
-      (node, position) => {
-        Object.assign((node as HTMLElement).style, {
+      (node: HTMLElement, position) => {
+        Object.assign(node.style, {
           left: `${position.x}px`,
           position: "fixed",
           top: `${position.y}px`,

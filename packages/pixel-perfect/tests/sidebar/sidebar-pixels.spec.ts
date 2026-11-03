@@ -243,8 +243,8 @@ test.describe("Sidebar original native constituent cases", () => {
               const anchor = inputCase.anchor ?? cursor;
 
               await subject.evaluate(
-                (node, selection) => {
-                  (node as HTMLInputElement).setSelectionRange(
+                (node: HTMLInputElement, selection) => {
+                  node.setSelectionRange(
                     Math.min(selection.cursor, selection.anchor),
                     Math.max(selection.cursor, selection.anchor),
                     selection.cursor < selection.anchor ? "backward" : "forward"

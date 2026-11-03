@@ -137,10 +137,12 @@ for (const [folder, part] of [
         const anchor = c.anchor ?? cursor;
 
         await subject.evaluate(
-          (node, { cursor: selectionCursor, anchor: selectionAnchor }) =>
+          (
+            node: HTMLInputElement,
+            { cursor: selectionCursor, anchor: selectionAnchor }
+          ) =>
             // SAFETY: this entry fixture route renders an HTML input with native selection support.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact entry subject DOM API producer boundary.
-            (node as HTMLInputElement).setSelectionRange(
+            node.setSelectionRange(
               Math.min(selectionCursor, selectionAnchor),
               Math.max(selectionCursor, selectionAnchor),
               selectionCursor < selectionAnchor ? "backward" : "forward"

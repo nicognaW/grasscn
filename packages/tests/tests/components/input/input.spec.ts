@@ -31,8 +31,8 @@ test("Input retains uncontrolled form reset and form submission", async ({
   expect(
     await page
       .locator("form")
-      .evaluate((element) =>
-        new FormData(element as HTMLFormElement).get("message")
+      .evaluate((element: HTMLFormElement) =>
+        new FormData(element).get("message")
       )
   ).toBe("Done");
   await page.locator("#reset").click();
@@ -71,8 +71,8 @@ test("Input uses the real DOM ref and repaints imperative value assignments", as
   const input = page.getByRole("textbox", { name: "Test input" });
   await expect(input).toHaveAttribute("data-mc-ready", "true");
 
-  const before = await input.evaluate((element) =>
-    (element as HTMLInputElement).style.getPropertyValue("--mc-input-image")
+  const before = await input.evaluate((element: HTMLInputElement) =>
+    element.style.getPropertyValue("--mc-input-image")
   );
 
   await page.locator("#read-ref").click();
@@ -83,8 +83,8 @@ test("Input uses the real DOM ref and repaints imperative value assignments", as
   await expect(input).toHaveValue("Done");
   await expect
     .poll(async () =>
-      input.evaluate((element) =>
-        (element as HTMLInputElement).style.getPropertyValue("--mc-input-image")
+      input.evaluate((element: HTMLInputElement) =>
+        element.style.getPropertyValue("--mc-input-image")
       )
     )
     .not.toBe(before);
@@ -100,7 +100,7 @@ test("Input keeps HTML validation and maxlength", async ({ page }) => {
   await input.fill("abc");
   expect(
     await input.evaluate(
-      (element) => (element as HTMLInputElement).validity.patternMismatch
+      (element: HTMLInputElement) => element.validity.patternMismatch
     )
   ).toBe(true);
   await input.fill("");
@@ -138,8 +138,6 @@ test("Input pointer position uses the same original font advances", async ({
     bounds.y + bounds.height / 2
   );
   expect(
-    await input.evaluate(
-      (element) => (element as HTMLInputElement).selectionStart
-    )
+    await input.evaluate((element: HTMLInputElement) => element.selectionStart)
   ).toBe(3);
 });

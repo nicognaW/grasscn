@@ -239,8 +239,11 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
         const anchor = c.anchor ?? cursor;
 
         await subject.evaluate(
-          (n, { cursor: selectionCursor, anchor: selectionAnchor }) => {
-            (n as HTMLInputElement).setSelectionRange(
+          (
+            n: HTMLInputElement,
+            { cursor: selectionCursor, anchor: selectionAnchor }
+          ) => {
+            n.setSelectionRange(
               Math.min(selectionCursor, selectionAnchor),
               Math.max(selectionCursor, selectionAnchor),
               selectionCursor < selectionAnchor ? "backward" : "forward"

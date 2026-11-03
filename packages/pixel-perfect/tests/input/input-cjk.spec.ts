@@ -80,8 +80,8 @@ for (const c of manifest.cases) {
     await page.goto(`/?${query}`);
     const input = page.getByRole("textbox", { name: "Test input" });
     await input.evaluate(
-      (node, position) => {
-        Object.assign((node as HTMLElement).style, {
+      (node: HTMLElement, position) => {
+        Object.assign(node.style, {
           left: `${position.x}px`,
           position: "fixed",
           top: `${position.y}px`,
@@ -108,8 +108,8 @@ for (const c of manifest.cases) {
     const anchor = c.anchor ?? cursor;
 
     await input.evaluate(
-      (node, selection) => {
-        const inputElement = node as HTMLInputElement;
+      (node: HTMLInputElement, selection) => {
+        const inputElement = node;
         inputElement.setSelectionRange(
           Math.min(selection.cursor, selection.anchor),
           Math.max(selection.cursor, selection.anchor),

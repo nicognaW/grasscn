@@ -251,8 +251,8 @@ test("Preview text fields share the native focused Input pixels", async ({
       .getByLabel(entry.name, { exact: true });
 
     await field.fill("");
-    await field.evaluate((element) => {
-      const input = element as HTMLInputElement;
+    await field.evaluate((element: HTMLInputElement) => {
+      const input = element;
       input.style.width = "206px";
       input.style.height = "40px";
       input.placeholder = "";

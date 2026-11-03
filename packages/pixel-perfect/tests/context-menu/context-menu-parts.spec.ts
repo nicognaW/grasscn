@@ -80,8 +80,8 @@ for (const c of manifest.cases) {
       const subject = page.locator('[data-slot="context-menu-content"]');
       await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
       await page.mouse.move(0, 0);
-      await subject.evaluate((node) => {
-        (node as HTMLElement).focus();
+      await subject.evaluate((node: HTMLElement) => {
+        node.focus();
       });
 
       if (c.state === "focus") {

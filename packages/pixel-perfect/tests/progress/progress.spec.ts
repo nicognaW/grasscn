@@ -10,6 +10,7 @@ import {
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type BoundaryReference1 from "../reference/progress/asset-provenance.json";
 import manifest from "../reference/progress/manifest.json";
 
 const compare = function compare(expected: PNG, actual: PNG) {
@@ -114,12 +115,20 @@ test.describe("Progress native matrix", () => {
 });
 
 test("Progress retains every original boss-bar PNG", () => {
-  const provenance = JSON.parse(
-    readFileSync(
-      pixelPerfectFile("tests/reference/progress/asset-provenance.json"),
-      "utf-8"
-    )
-  );
+  const provenance =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/progress/asset-provenance.json"),
+        "utf-8"
+      )
+    ) as typeof BoundaryReference1 & {
+      sources: Record<
+        string,
+        (typeof BoundaryReference1)["sources"][keyof (typeof BoundaryReference1)["sources"]]
+      >;
+    };
 
   expect(Object.keys(minecraftProgressAssets)).toHaveLength(22);
 
@@ -164,9 +173,9 @@ test("Progress notch painter preserves the background through transparent corner
   const rendered = PNG.sync.read(await progress.screenshot());
   await progress
     .locator("canvas, .mc-progress-fallback")
-    .evaluateAll((nodes) => {
+    .evaluateAll((nodes: HTMLElement[]) => {
       nodes.forEach((node) => {
-        (node as HTMLElement).style.visibility = "hidden";
+        node.style.visibility = "hidden";
       });
     });
   const backdrop = PNG.sync.read(await progress.screenshot());

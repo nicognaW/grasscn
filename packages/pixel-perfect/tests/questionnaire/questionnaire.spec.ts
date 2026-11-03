@@ -139,8 +139,8 @@ for (const [part, dir] of parts) {
             const anchor = c.anchor ?? cursor;
 
             await subject.evaluate(
-              (el, p) => {
-                (el as HTMLInputElement).setSelectionRange(
+              (el: HTMLInputElement, p) => {
+                el.setSelectionRange(
                   Math.min(p.cursor, p.anchor),
                   Math.max(p.cursor, p.anchor),
                   p.cursor < p.anchor ? "backward" : "forward"

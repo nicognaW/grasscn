@@ -7,6 +7,8 @@ import type { TestInfo } from "@playwright/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type BoundaryReference1 from "../reference/pagination-arrow/manifest.json";
+
 const repo = path.resolve(".");
 
 const compare = function compare(
@@ -64,14 +66,17 @@ test.afterEach(({ page, browser }, info) => {
   expect(runtimeErrors.get(page)).toEqual([]);
 });
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile(
-      path.join(repo, "tests/reference/pagination-arrow/manifest.json")
-    ),
-    "utf-8"
-  )
-);
+const manifest =
+  // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+  JSON.parse(
+    readFileSync(
+      pixelPerfectFile(
+        path.join(repo, "tests/reference/pagination-arrow/manifest.json")
+      ),
+      "utf-8"
+    )
+  ) as typeof BoundaryReference1;
 
 for (const c of manifest.cases) {
   test(`Carousel original native recipe arrow:${c.name}`, async ({

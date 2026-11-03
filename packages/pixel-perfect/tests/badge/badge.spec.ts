@@ -7,13 +7,19 @@ import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type BoundaryReference2 from "../reference/badge-advancement/asset-provenance.json";
+import type BoundaryReference1 from "../reference/badge-advancement/manifest.json";
+
 test.describe.configure({ mode: "parallel" });
 
 const directory = "tests/reference/badge-advancement";
 
-const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+const manifest =
+  // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+  JSON.parse(
+    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
+  ) as typeof BoundaryReference1;
 
 test("Badge advancement comparator detects one changed pixel", () => {
   const a = PNG.sync.read(
@@ -68,18 +74,21 @@ for (const c of manifest.cases) {
 }
 
 test("Badge embeds unchanged original advancement frames/panels and diamond artwork", () => {
-  const provenance = JSON.parse(
-    readFileSync(
-      pixelPerfectFile(`${directory}/asset-provenance.json`),
-      "utf-8"
-    )
-  );
+  const provenance =
+    // SAFETY: the retained nine provenance records use only the actual minecraftBadgeAssets keys; the finite key set was checked against that real producer, while all other fields derive from the exact retained JSON.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile(`${directory}/asset-provenance.json`),
+        "utf-8"
+      )
+    ) as (Omit<(typeof BoundaryReference2)[number], "key"> & {
+      key: keyof typeof minecraftBadgeAssets;
+    })[];
 
   for (const record of provenance) {
     const bytes = Buffer.from(
-      minecraftBadgeAssets[
-        record.key as keyof typeof minecraftBadgeAssets
-      ].split(",")[1],
+      minecraftBadgeAssets[record.key].split(",")[1],
       "base64"
     );
 

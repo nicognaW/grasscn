@@ -6,11 +6,25 @@ import { minecraftSelectAssets } from "@grasscn/web/ui/minecraft-select-assets";
 import { selectUnihexAtlas } from "@grasscn/web/ui/minecraft-select-atlas";
 import { pixelPerfectFile } from "@ppt/paths";
 
+import type BoundaryReference2 from "../reference/select-extra/glyph-atlas.json";
+import type BoundaryReference3 from "../reference/select-extra/repeatability.json";
+import type BoundaryReference1 from "../reference/select/asset-provenance.json";
+
 const json = (file: string) =>
   JSON.parse(readFileSync(pixelPerfectFile(file), "utf-8"));
 
 test("Select retains original list texture bytes", () => {
-  const provenance = json("tests/reference/select/asset-provenance.json");
+  const provenance =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    json(
+      "tests/reference/select/asset-provenance.json"
+    ) as typeof BoundaryReference1 & {
+      sources: Record<
+        string,
+        (typeof BoundaryReference1)["sources"][keyof (typeof BoundaryReference1)["sources"]]
+      >;
+    };
 
   for (const [name, uri] of Object.entries(minecraftSelectAssets)) {
     const bytes = Buffer.from(
@@ -25,7 +39,14 @@ test("Select retains original list texture bytes", () => {
 });
 
 test("Select uses the observed CJK atlas without changing the original renderer", () => {
-  const observed = json("tests/reference/select-extra/glyph-atlas.json");
+  const observed =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    json("tests/reference/select-extra/glyph-atlas.json") as Record<
+      string,
+      (typeof BoundaryReference2)[keyof typeof BoundaryReference2]
+    >;
+
   expect(Object.keys(selectUnihexAtlas).sort()).toEqual(
     Object.keys(observed).sort()
   );
@@ -36,7 +57,13 @@ test("Select uses the observed CJK atlas without changing the original renderer"
     }
   }
 
-  const repeat = json("tests/reference/select-extra/repeatability.json");
+  const repeat =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    json(
+      "tests/reference/select-extra/repeatability.json"
+    ) as typeof BoundaryReference3;
+
   expect(repeat.glyphObservationEnabled).toEqual({
     runOne: true,
     runTwo: false,

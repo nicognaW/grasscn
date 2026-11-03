@@ -78,8 +78,8 @@ test("Range slider keeps separate thumbs and named form values", async ({
 
   const form = await page
     .locator("form")
-    .evaluate((element) => [
-      ...new FormData(element as HTMLFormElement).entries(),
+    .evaluate((element: HTMLFormElement) => [
+      ...new FormData(element).entries(),
     ]);
 
   expect(form).toEqual([
