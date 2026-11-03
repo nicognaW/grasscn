@@ -3,10 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 
 const BadgeAchievements = () => (
-  <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-    style={{ display: "grid", gap: 24 }}
-    /* eslint-enable shadcn/no-inline-styles */
-  >
+  <div className="grid [gap:24px]">
     <Badge achievement="goal" earned={false}>
       Diamonds!
     </Badge>

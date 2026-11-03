@@ -16,14 +16,7 @@ const MapDemo = ({ scale }: DemoProps) => {
       className="demo-stage demo-stage-display-grid demo-stage-gap-20 max-w-full"
       data-stage="map"
     >
-      <div
-        style={{
-          alignItems: "start",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 24,
-        }}
-      >
+      <div className="demo-layout-demos-map-1">
         <MinecraftMap
           scale={scale}
           pixels={pixels}
@@ -58,7 +51,7 @@ const MapDemo = ({ scale }: DemoProps) => {
           <p className="grass-note">Select a marker or a point on the map.</p>
         </div>
       </div>
-      <div style={{ maxWidth: "100%", overflowX: "auto", padding: "12px 2px" }}>
+      <div className="demo-layout-demos-map-2" style={{ maxWidth: "100%" }}>
         <LocatorBar
           scale={scale}
           heading={heading}

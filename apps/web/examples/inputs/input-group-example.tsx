@@ -21,9 +21,8 @@ const InputGroupExample = () => {
         setSent(message);
         setMessage("");
       }}
-      /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ display: "grid", gap: 12 }}
-      /* eslint-enable shadcn/no-inline-styles */
+
+      className="grid [gap:12px]"
     >
       <InputGroup>
         <InputGroupInput

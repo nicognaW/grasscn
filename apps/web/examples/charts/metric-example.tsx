@@ -44,9 +44,7 @@ const Example = () => {
     <div
       ref={container}
 
-      /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ display: "grid", justifyItems: "safe center", minWidth: 0 }}
-      /* eslint-enable shadcn/no-inline-styles */
+      className="grid [justify-items:safe_center] [min-width:0]"
     >
       <FpsChartExample
         aria-label="API response time"

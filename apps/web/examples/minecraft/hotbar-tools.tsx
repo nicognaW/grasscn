@@ -20,10 +20,7 @@ const HotbarTools = () => {
   const [value, setValue] = useState(0);
 
   return (
-    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ display: "grid", gap: 16 }}
-      /* eslint-enable shadcn/no-inline-styles */
-    >
+    <div className="grid [gap:16px]">
       <Hotbar
         items={labels.map((label) => ({ id: label, label }))}
         value={value}

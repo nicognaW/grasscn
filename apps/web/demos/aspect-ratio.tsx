@@ -57,7 +57,7 @@ const AspectRatioDemo = ({ scale }: DemoProps) => {
               alt="Grass block"
               width="48"
               height="48"
-              style={{ imageRendering: "pixelated" }}
+              className="demo-layout-demos-aspect-ratio-2"
             />
           </AspectRatio>
         </div>

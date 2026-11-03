@@ -11,10 +11,7 @@ const ScrollAreaExample = () => {
   const [selected, setSelected] = useState("Select a row");
 
   return (
-    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ display: "grid", gap: 16 }}
-      /* eslint-enable shadcn/no-inline-styles */
-    >
+    <div className="grid [gap:16px]">
       <Button onClick={() => viewport.current?.scrollTo({ top: 0 })}>
         Top
       </Button>
@@ -30,18 +27,9 @@ const ScrollAreaExample = () => {
         style={{ height: 128, maxWidth: "100%", width: 400 }}
         /* eslint-enable shadcn/no-inline-styles */
       >
-        <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-          style={{ height: 4800 }}
-          /* eslint-enable shadcn/no-inline-styles */
-        >
+        <div className="[height:4800px]">
           {Array.from({ length: 100 }, (_, index) => (
-            <div
-              key={
-                index
-              } /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-              style={{ height: 48 }}
-              /* eslint-enable shadcn/no-inline-styles */
-            >
+            <div key={index} className="[height:48px]">
               <Button
                 /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
                 style={{ width: "100%" }}

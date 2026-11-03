@@ -10,12 +10,11 @@ export const Demo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
 
   return (
     <div
-      className="demo-stage"
+      className="demo-stage demo-layout-demos-calendar-1"
       data-stage="calendar"
       style={{
         display: "grid",
         gap: 8 * scale,
-        gridTemplateColumns: "minmax(0,1fr)",
       }}
     >
       <Calendar
