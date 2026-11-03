@@ -12,7 +12,7 @@
         "component-groups.json",
         "package.json",
         "app/**",
-        "next.config.mjs",
+        "next.config.ts",
         "tsconfig.json",
         "$TURBO_ROOT$/packages/pixel-perfect/tests/reference/**/*.json"
       ],

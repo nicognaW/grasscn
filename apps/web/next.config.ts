@@ -5,11 +5,10 @@ import { createMDX } from "fumadocs-mdx/next";
 const withMDX = createMDX({});
 const workspaceRoot = fileURLToPath(new URL("../../", import.meta.url));
 
-/**
- * @param {{cache?: boolean | object}} config - Original Webpack configuration; all other properties remain untouched.
- * @param {{dev: boolean}} context - Next's compilation mode.
- */
-const configureWebpack = (config, { dev }) => {
+const configureWebpack = <Config extends { cache?: boolean | object }>(
+  config: Config,
+  { dev }: { dev: boolean }
+) => {
   // Serializing the large development pack retains duplicate source buffers.
   if (dev) {
     config.cache = false;
