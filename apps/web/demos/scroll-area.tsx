@@ -4,7 +4,7 @@ import { ScrollArea } from "../registry/ui/scroll-area"
 import { Button } from "../registry/ui/button"
 import type { DemoProps } from "../types"
 
-export default function ScrollAreaDemo({ scale }: DemoProps) {
+const ScrollAreaDemo = ({ scale }: DemoProps) => {
   const viewport = React.useRef<HTMLDivElement>(null);
 
   const [offset, setOffset] = React.useState(0);
@@ -95,4 +95,6 @@ export default function ScrollAreaDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { ScrollAreaDemo as default };

@@ -6,7 +6,7 @@ import type {DemoProps} from "../types"
 import {useDemoWidth} from "../use-demo-width"
 import {MinecraftDisclosureText} from "../registry/ui/minecraft-disclosure-text"
 
-export default function TraceDemo({ scale }: DemoProps) {
+const TraceDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);
 
   const [status, setStatus] = React.useState<"running" | "error" | "pending">(
@@ -74,4 +74,6 @@ export default function TraceDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { TraceDemo as default };

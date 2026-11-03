@@ -4,7 +4,7 @@ import {Spinner} from "../registry/ui/spinner"
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
 
-export default function SpinnerDemo({ scale }: DemoProps) {
+const SpinnerDemo = ({ scale }: DemoProps) => {
   const [paused, setPaused] = React.useState(false);
   const [time, setTime] = React.useState(0);
 
@@ -56,4 +56,6 @@ export default function SpinnerDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { SpinnerDemo as default };

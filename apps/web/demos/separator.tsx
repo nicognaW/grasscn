@@ -2,7 +2,7 @@ import * as React from "react";
 import { Separator } from "../registry/ui/separator";
 import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
-export default function SeparatorDemo({ scale }: DemoProps) {
+const SeparatorDemo = ({ scale }: DemoProps) => {
   const [width, setWidth] = React.useState(200);
   return (
     <>
@@ -44,4 +44,6 @@ export default function SeparatorDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { SeparatorDemo as default };

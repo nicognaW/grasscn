@@ -23,7 +23,7 @@ const overlays: BossBarOverlay[] = [
   "notched_20",
 ];
 
-export default function ProgressDemo({ scale }: DemoProps) {
+const ProgressDemo = ({ scale }: DemoProps) => {
   const [value, setValue] = React.useState(50);
   const [color, setColor] = React.useState<BossBarColor>("pink");
   const [overlay, setOverlay] = React.useState<BossBarOverlay>("progress");
@@ -86,4 +86,6 @@ export default function ProgressDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { ProgressDemo as default };

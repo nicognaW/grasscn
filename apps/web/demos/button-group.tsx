@@ -6,7 +6,7 @@ import {Input} from "../registry/ui/input"
 import {useDemoWidth} from "../use-demo-width"
 import type {DemoProps} from "../types"
 
-export default function ButtonGroupDemo({ scale }: DemoProps) {
+const ButtonGroupDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);
 
   const buttonWidth = Math.min(
@@ -107,4 +107,6 @@ export default function ButtonGroupDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { ButtonGroupDemo as default };

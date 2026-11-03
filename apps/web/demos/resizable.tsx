@@ -11,7 +11,7 @@ import {
 } from "../registry/ui/resizable";
 import type { DemoProps } from "../types";
 
-export default function ResizableDemo({ scale }: DemoProps) {
+const ResizableDemo = ({ scale }: DemoProps) => {
   const identity = React.useId();
   const left = `${identity}-left`;
   const right = `${identity}-right`;
@@ -151,4 +151,6 @@ export default function ResizableDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { ResizableDemo as default };

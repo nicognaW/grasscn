@@ -5,7 +5,7 @@ import {Textarea} from "../registry/ui/textarea"
 import {Checkbox} from "../registry/ui/checkbox"
 import type {DemoProps} from "../types"
 
-export default function CodeBlockDemo({ scale }: DemoProps) {
+const CodeBlockDemo = ({ scale }: DemoProps) => {
   const [code, setCode] = React.useState(
     'const greeting = "Hello 世界";\n\n// Keep building!'
   );
@@ -72,4 +72,6 @@ export default function CodeBlockDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { CodeBlockDemo as default };
