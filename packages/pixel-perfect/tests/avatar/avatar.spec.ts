@@ -140,7 +140,7 @@ test.describe("AvatarFallback original Label constituents", () => {
         y: String(c.y),
       });
 
-      if (Boolean(c.wrapWidth)) {
+      if (c.wrapWidth) {
         q.set("wrapWidth", String(c.wrapWidth));
       }
 

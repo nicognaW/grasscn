@@ -127,7 +127,7 @@ for (const component of ["calendar", "date-picker"]) {
               q.set("text", c.text);
             }
 
-            if (Boolean(c.wrapWidth)) {
+            if (c.wrapWidth) {
               q.set("wrapWidth", String(c.wrapWidth));
             }
 
