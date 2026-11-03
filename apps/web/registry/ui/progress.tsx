@@ -49,7 +49,7 @@ const ProgressTrack = ({
 }: MinecraftProps<typeof ProgressPrimitive.Track>) => (
   <ProgressPrimitive.Track
     data-slot="progress-track"
-    className={cn(`mc-progress-track`, className)}
+    className={cn(className)}
     {...props}
   />
 );

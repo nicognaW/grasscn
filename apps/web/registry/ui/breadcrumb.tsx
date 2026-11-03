@@ -111,7 +111,7 @@ const BreadcrumbPage = ({
       role="link"
       aria-disabled="true"
       aria-current="page"
-      className={cn(`mc-breadcrumb-page`, className)}
+      className={cn(className)}
       scale={scale ?? inherited}
       maxWidth={maxWidth}
       align={align}
@@ -134,7 +134,7 @@ const BreadcrumbSeparator = ({
       data-slot="breadcrumb-separator"
       role="presentation"
       aria-hidden="true"
-      className={cn(`mc-breadcrumb-separator`, className)}
+      className={cn(className)}
       {...props}
     >
       {children ?? <MinecraftProse scale={scale}>{">"}</MinecraftProse>}

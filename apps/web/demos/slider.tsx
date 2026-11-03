@@ -9,7 +9,7 @@ const SliderDemo = ({ scale }: DemoProps) => {
 
   return (
     <>
-      <div className="demo-stage slider-stage" data-stage="slider">
+      <div className="demo-stage" data-stage="slider">
         <div className="demo-pair">
           <span>INTERACTIVE</span>
           <Slider

@@ -1026,7 +1026,7 @@ const SidebarMenuSubButton = ({
     aria-disabled={props["aria-disabled"]}
     data-slot="sidebar-menu-sub-button"
     data-sidebar="menu-sub-button"
-    className={cn(`mc-sidebar-menu-sub-button`, className)}
+    className={cn(className)}
   >
     {children}
   </SidebarMenuButton>

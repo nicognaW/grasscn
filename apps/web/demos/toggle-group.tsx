@@ -45,7 +45,6 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
             One crafting station
           </Label>
           <ToggleGroup
-            className="demo-filter-choices"
             aria-label="One recipe station"
             scale={scale}
             value={
@@ -80,7 +79,6 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
             Several crafting stations
           </Label>
           <ToggleGroup
-            className="demo-filter-choices"
             aria-label="Several recipe stations"
             scale={scale}
             value={

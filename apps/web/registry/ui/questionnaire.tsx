@@ -230,7 +230,7 @@ const QuestionnaireChoiceDescription = ({
       as="span"
       scale={scale}
       data-slot="questionnaire-choice-description"
-      className={cn(`mc-questionnaire-choice-description`, className)}
+      className={cn(className)}
       {...props}
     />
   );

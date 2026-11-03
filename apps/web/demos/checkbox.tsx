@@ -9,7 +9,7 @@ const CheckboxDemo = ({ scale }: DemoProps) => {
   return (
     <>
       <div
-        className="demo-stage checkbox-stage"
+        className="demo-stage"
         data-stage="checkbox"
         style={
           /* SAFETY: --preview-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
@@ -17,7 +17,7 @@ const CheckboxDemo = ({ scale }: DemoProps) => {
           } as React.CSSProperties
         }
       >
-        <div className="checkbox-row">
+        <div>
           <Checkbox
             id="preview-checkbox"
             scale={scale}
@@ -28,7 +28,7 @@ const CheckboxDemo = ({ scale }: DemoProps) => {
           />
           <label htmlFor="preview-checkbox">Enable shadows</label>
         </div>
-        <div className="checkbox-row muted">
+        <div>
           <Checkbox
             id="preview-checkbox-disabled"
             scale={scale}

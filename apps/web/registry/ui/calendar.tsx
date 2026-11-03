@@ -139,7 +139,7 @@ const CalendarDropdown = ({
   const native = React.useRef<HTMLSelectElement>(null);
 
   return (
-    <span className={cn(`mc-calendar-dropdown`, className)} style={style}>
+    <span className={cn(className)} style={style}>
       <select
         ref={native}
         value={value}

@@ -88,18 +88,14 @@ const FieldLabel = ({
   className,
   ...props
 }: React.ComponentProps<typeof Label>) => (
-  <Label
-    data-slot="field-label"
-    className={cn("mc-field-label", className)}
-    {...props}
-  />
+  <Label data-slot="field-label" className={cn(className)} {...props} />
 );
 
 const FieldTitle = ({ className, ...props }: MinecraftProseProps) => (
   <MinecraftProse
     as="div"
     data-slot="field-label"
-    className={cn("mc-field-label", className)}
+    className={cn(className)}
     {...props}
   />
 );
@@ -192,7 +188,7 @@ const FieldError = ({
     <div
       role="alert"
       data-slot="field-error"
-      className={cn("mc-field-error", className)}
+      className={cn(className)}
       {...props}
     >
       {isMinecraftTextContent(content) ? (

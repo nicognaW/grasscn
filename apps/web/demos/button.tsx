@@ -25,7 +25,6 @@ const ButtonDemo = ({ scale }: DemoProps) => {
           />
         </label>
         <Button
-          className="width-picker"
           aria-label={`Button width: ${width} px`}
           onClick={() => {
             const widths = [103, 150, 200, 257];
