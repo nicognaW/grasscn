@@ -69,7 +69,9 @@ test("Popover comparator catches one changed pixel", () => {
 
 for (const directory of [
   "tests/reference/card",
-  ...((process.env.POPOVER_SURFACE_ONLY ?? "") !== "" ? [] : ["tests/reference/popover"]),
+  ...((process.env.POPOVER_SURFACE_ONLY ?? "") === ""
+    ? ["tests/reference/popover"]
+    : []),
 ]) {
   test.describe(`Popover original surface ${directory}`, () => {
     test.describe.configure({ mode: "parallel" });

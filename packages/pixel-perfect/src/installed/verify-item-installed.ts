@@ -459,7 +459,10 @@ for (const [manifestFile, output, _part] of [
     const button = matching.find((result) => result.mode === "button");
     const plain = matching.find((result) => result.mode === "plain");
 
-    const result: Pick<InstalledItemResult, "decodedRgbaSha256" | "mismatchedPixels" | "name"> & {
+    const result: Pick<
+      InstalledItemResult,
+      "decodedRgbaSha256" | "mismatchedPixels" | "name"
+    > & {
       buttonDecodedRgbaSha256?: string;
       plainDecodedRgbaSha256?: string;
     } = {

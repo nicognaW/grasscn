@@ -5,7 +5,10 @@ import path from "node:path";
 
 import { expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
-import type { InstalledCaseResult, ToggleReferenceCase } from "@ppt/installed/reference-case";
+import type {
+  InstalledCaseResult,
+  ToggleReferenceCase,
+} from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -126,14 +129,20 @@ export const verifyToggleCase = async ({
     renderings.push(sha(actual.data));
   }
 
-  const result: Pick<InstalledCaseResult, "decodedRgbaSha256" | "mismatchedPixels" | "name" | "multipleDecodedRgbaSha256"> = {
+  const result: Pick<
+    InstalledCaseResult,
+    | "decodedRgbaSha256"
+    | "mismatchedPixels"
+    | "name"
+    | "multipleDecodedRgbaSha256"
+  > = {
     decodedRgbaSha256: renderings[0],
     mismatchedPixels: 0,
     name: c.name,
   };
 
   if (name === "toggle-group") {
-    result.multipleDecodedRgbaSha256 = renderings[1];
+    [, result.multipleDecodedRgbaSha256] = renderings;
   }
 
   return result;

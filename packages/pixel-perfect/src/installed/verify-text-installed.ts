@@ -531,6 +531,7 @@ for (const group of groups) {
 
   await mkdir(path.dirname(pixelPerfectFile(output)), { recursive: true });
   const reportFile = pixelPerfectFile(output);
+
   const report = {
     browser: [...browserVersions][0],
     caseIsolation:

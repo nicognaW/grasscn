@@ -56,7 +56,7 @@ for (const dir of ["label", "separator"]) {
               Number(new URLSearchParams(location.search).get("timeMs") ?? 0))
         );
 
-        const queryFields: Record<string, string> = {
+        const queryFields = {
           align: c.alignment ?? "left",
           background: c.background,
           component: "marker",
@@ -73,7 +73,7 @@ for (const dir of ["label", "separator"]) {
         };
 
         if (c.wrapWidth ?? 0) {
-          queryFields.wrapWidth = String(c.wrapWidth);
+          Object.assign(queryFields, { wrapWidth: String(c.wrapWidth) });
         }
 
         const q = new URLSearchParams(queryFields);

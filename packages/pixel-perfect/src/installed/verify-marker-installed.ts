@@ -108,7 +108,7 @@ try {
         );
       }
 
-      const queryFields: Record<string, string> = {
+      const queryFields = {
         align: c.alignment ?? "left",
         background: c.background,
         height: String(c.height),
@@ -124,7 +124,7 @@ try {
       };
 
       if (c.wrapWidth ?? 0) {
-        queryFields.wrapWidth = String(c.wrapWidth);
+        Object.assign(queryFields, { wrapWidth: String(c.wrapWidth) });
       }
 
       const q = new URLSearchParams(queryFields);

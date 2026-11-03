@@ -80,10 +80,12 @@ const files = item.files.map((file) => {
     `${file.path} changed beyond CLI transforms`
   );
 
-  const sourceLocation: { path: string; sourcePath?: string } = { path: basename };
+  const sourceLocation = {
+    path: basename,
+  };
 
   if (file.type === "registry:hook") {
-    sourceLocation.sourcePath = file.path;
+    Object.assign(sourceLocation, { sourcePath: file.path });
   }
 
   return {

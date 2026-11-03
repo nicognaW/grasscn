@@ -28,15 +28,19 @@ export default defineConfig({
     browserName: "chromium",
     channel: "msedge",
     deviceScaleFactor: 1,
-    launchOptions: proxyPort !== undefined && proxyPort !== ""
-      ? {
-          args: [
-            `--proxy-server=http://127.0.0.1:${proxyPort}`,
-            "--proxy-bypass-list=<-loopback>",
-          ],
-        }
-      : undefined,
-    proxy: proxyPort !== undefined && proxyPort !== "" ? { server: `http://127.0.0.1:${proxyPort}` } : undefined,
+    launchOptions:
+      proxyPort !== undefined && proxyPort !== ""
+        ? {
+            args: [
+              `--proxy-server=http://127.0.0.1:${proxyPort}`,
+              "--proxy-bypass-list=<-loopback>",
+            ],
+          }
+        : undefined,
+    proxy:
+      proxyPort !== undefined && proxyPort !== ""
+        ? { server: `http://127.0.0.1:${proxyPort}` }
+        : undefined,
     viewport: { height: 900, width: 1280 },
   },
   webServer:
