@@ -3,10 +3,6 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 
-import type * as Playwright from "@playwright/test";
-import type * as PngJs from "pngjs";
-import type { NativeButtonCase } from "@ppt/installed/button-consumer-types";
-
 import { sha256 } from "@grasscn/tests/consumer-boundary";
 import { parseWebsiteIdentity } from "@grasscn/tests/consumer-validation";
 import {
@@ -19,16 +15,18 @@ import {
   servePreparedConsumer,
   consumerVerificationEnvironment,
 } from "@grasscn/tests/prepared-consumers";
-
+import type * as Playwright from "@playwright/test";
+import type { NativeButtonCase } from "@ppt/installed/button-consumer-types";
+import {
+  parseNativeManifest,
+  parseBaseCatalogue,
+} from "@ppt/installed/button-consumer-types";
 import {
   pixelPerfectRoot,
   pixelPerfectTestRoot,
   referenceFile,
 } from "@ppt/paths";
-import {
-  parseNativeManifest,
-  parseBaseCatalogue,
-} from "@ppt/installed/button-consumer-types";
+import type * as PngJs from "pngjs";
 
 // The caller explicitly selects this one existing website-default Base case.
 assert.equal(
@@ -228,7 +226,10 @@ interface ConsumerPptReport {
   nonPptIncluded: boolean;
   onePixelCorruptionDetected: boolean;
   pptOnly: boolean;
-  reference: NativeButtonCase & { manifestSha256: string; sourceJarSha256: string };
+  reference: NativeButtonCase & {
+    manifestSha256: string;
+    sourceJarSha256: string;
+  };
   selection: string;
   source: typeof source;
   status: "incomplete" | "passed" | "failed";

@@ -239,7 +239,11 @@ interface InstalledTextCase {
   url: string;
 }
 
-const textParameters = (c: TextCaptureGroup["manifest"]["cases"][number], componentName: string, part: string) => {
+const textParameters = (
+  c: TextCaptureGroup["manifest"]["cases"][number],
+  componentName: string,
+  part: string
+) => {
   const params = new URLSearchParams({
     align: c.alignment ?? "left",
     background: c.background ?? "#202020",
@@ -261,10 +265,19 @@ const textParameters = (c: TextCaptureGroup["manifest"]["cases"][number], compon
   if (optionalWrapWidth !== null && optionalWrapWidth !== undefined) {
     params.set("wrapWidth", String(c.wrapWidth));
   }
+
   return params;
 };
 
-const verifyTextReferenceCase = async ({ c, consumer: consumerDirectory, group, name: componentName, page, part, url: fixtureUrl }: InstalledTextCase): Promise<InstalledTextResult> => {
+const verifyTextReferenceCase = async ({
+  c,
+  consumer: consumerDirectory,
+  group,
+  name: componentName,
+  page,
+  part,
+  url: fixtureUrl,
+}: InstalledTextCase): Promise<InstalledTextResult> => {
   const params = textParameters(c, componentName, part);
 
   await page.goto(`${fixtureUrl}?${params}`);
@@ -286,14 +299,15 @@ const verifyTextReferenceCase = async ({ c, consumer: consumerDirectory, group, 
   }
 
   if (componentName === "badge") {
-    await expect(
-      subject.locator("[data-mc-tooltip-painted]")
-    ).toHaveAttribute("data-mc-tooltip-painted", "true");
-  } else if (componentName !== "kbd" && !(componentName === "empty" && part === "default")) {
-    await expect(subject).toHaveAttribute(
-      "data-mc-label-layout-ready",
+    await expect(subject.locator("[data-mc-tooltip-painted]")).toHaveAttribute(
+      "data-mc-tooltip-painted",
       "true"
     );
+  } else if (
+    componentName !== "kbd" &&
+    !(componentName === "empty" && part === "default")
+  ) {
+    await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
   }
 
   for (const line of await subject.locator("[data-mc-label-ready]").all()) {
@@ -343,14 +357,16 @@ const verifyTextReferenceCase = async ({ c, consumer: consumerDirectory, group, 
   );
 
   if (mismatchedPixels) {
-    const directory = path.join(consumerDirectory, ".grasscn-verification", componentName);
+    const directory = path.join(
+      consumerDirectory,
+      ".grasscn-verification",
+      componentName
+    );
+
     await mkdir(directory, { recursive: true });
     const id = `${part}-${c.name}`;
     await writeFile(path.join(directory, `actual-${id}`), actualBytes);
-    await writeFile(
-      path.join(directory, `diff-${id}`),
-      PNG.sync.write(diff)
-    );
+    await writeFile(path.join(directory, `diff-${id}`), PNG.sync.write(diff));
     await writeFile(
       path.join(directory, `${id}.json`),
       JSON.stringify({
@@ -432,7 +448,17 @@ const worker = async function worker() {
 
       count += 1;
 
-      results.push(await verifyTextReferenceCase({ c, consumer, group, name, page, part, url }));
+      results.push(
+        await verifyTextReferenceCase({
+          c,
+          consumer,
+          group,
+          name,
+          page,
+          part,
+          url,
+        })
+      );
     }
   } finally {
     if (browser) {
