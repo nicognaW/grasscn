@@ -95,6 +95,23 @@ type PlayerListProps = React.ComponentProps<"div"> & {
   onPlayerSelect?: (id: string) => void;
 };
 
+const rosterGridStyle = function rosterGridStyle(
+  columnWidth: number,
+  rows: number,
+  bodyLeft: number,
+  headHeight: number,
+  scale: number
+): PlayerListLayoutStyle3 {
+  return {
+    "--mc-dynamic-player-list-3-grid-auto-columns": columnWidth * scale,
+    "--mc-dynamic-player-list-3-grid-template-rows": rows
+      ? `repeat(${rows},${9 * scale}px)`
+      : "none",
+    "--mc-dynamic-player-list-3-left": bodyLeft * scale,
+    "--mc-dynamic-player-list-3-top": (headHeight + 1) * scale,
+  };
+};
+
 const PlayerList = ({
   players,
   header,
@@ -229,18 +246,13 @@ const PlayerList = ({
           role="list"
           aria-label="Players"
           className="mc-roster-grid mc-dynamic-layout-player-list-3"
-          style={
-            /* SAFETY: The owned mc-dynamic-layout-player-list-3 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-            {
-              "--mc-dynamic-player-list-3-grid-auto-columns":
-                columnWidth * scale,
-              "--mc-dynamic-player-list-3-grid-template-rows": rows
-                ? `repeat(${rows},${9 * scale}px)`
-                : "none",
-              "--mc-dynamic-player-list-3-left": bodyLeft * scale,
-              "--mc-dynamic-player-list-3-top": (headHeight + 1) * scale,
-            } satisfies PlayerListLayoutStyle3 as PlayerListLayoutStyle3
-          }
+          style={rosterGridStyle(
+            columnWidth,
+            rows,
+            bodyLeft,
+            headHeight,
+            scale
+          )}
         >
           {visible.map((player) => {
             const latency = player.latency ?? 0;

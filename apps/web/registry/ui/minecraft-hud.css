@@ -30,7 +30,7 @@
 
 /* Dynamic component layout channels retain the original arithmetic at their owning elements. */
 @layer components {
-  .mc-dynamic-layout-hud-1 {
+  .mc-hud-meter > .mc-dynamic-layout-hud-1 {
     height: calc(var(--mc-dynamic-hud-1-height) * 1px);
     left: calc(var(--mc-dynamic-hud-1-left) * 1px);
     width: calc(var(--mc-dynamic-hud-1-width) * 1px);
