@@ -40,7 +40,11 @@ const ScrollerFixture = () => {
   return (
     <>
       <MessageScroller
-        scale={Number(q.get("scale") ?? 2) as 1 | 2 | 3}
+        scale={
+          // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          Number(q.get("scale") ?? 2) as 1 | 2 | 3
+        }
         id="subject"
         className="fixture-height-200 fixture-width-520"
         data-testid="scroller-root"
@@ -156,7 +160,11 @@ export const TextWidgetsFixture = () => {
           id="subject"
           aria-label="Working"
           timeMs={q.has("animate") ? undefined : phase}
-          scale={Number(q.get("scale") ?? 2) as 1 | 2 | 3}
+          scale={
+            // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+            Number(q.get("scale") ?? 2) as 1 | 2 | 3
+          }
           onClick={() => {
             setEvents((n) => n + 1);
           }}
@@ -190,7 +198,11 @@ export const TextWidgetsFixture = () => {
   return (
     <Trace
       id="subject"
-      scale={Number(q.get("scale") ?? 2) as 1 | 2 | 3}
+      scale={
+        // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+        Number(q.get("scale") ?? 2) as 1 | 2 | 3
+      }
       className="fixture-width-500"
       data-subject="true"
     >
