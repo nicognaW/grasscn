@@ -20,6 +20,8 @@ import {
 import { Input } from "@grasscn/web/ui/input";
 import * as React from "react";
 
+import type { FixtureLabels } from "./fixture-query-protocol";
+
 const p = new URLSearchParams(location.search);
 const native = p.has("native");
 const part = p.get("part") ?? "list";
@@ -27,9 +29,11 @@ const part = p.get("part") ?? "list";
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
 const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
 
+// SAFETY: the owned native case callers serialize their actual string-label arrays, or this unchanged literal default; retain the original URL read and JSON parse.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned menu-label JSON producer boundary; all reads and existing filters remain unchanged.
 const labels = JSON.parse(
   p.get("labels") ?? '["Stone","Stick","世界"]'
-) as string[];
+) as FixtureLabels;
 
 const nativeItems = labels.map((label, i) => ({ id: `row-${i}`, label }));
 const blocks = ["Stone", "Stick", "世界", "Bedrock"];

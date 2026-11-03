@@ -139,10 +139,12 @@ test("Profiler recovers transient GPU creation failures without unmounting its c
   await page.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;
     let attempts = 0;
+    // SAFETY: every original getContext overload delegates to the captured browser method with the same receiver/arguments; the first two webgl2 attempts return null, a permitted result for that overload.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact captured Canvas getContext overload-preserving test stub.
     HTMLCanvasElement.prototype.getContext = function getContext(
       this: HTMLCanvasElement,
-      kind: any,
-      ...args: any[]
+      kind: Parameters<typeof original>[0],
+      ...args: [options?: Parameters<typeof original>[1]]
     ) {
       if (kind === "webgl2") {
         const previousAttempts = attempts;
@@ -153,8 +155,10 @@ test("Profiler recovers transient GPU creation failures without unmounting its c
         }
       }
 
-      return original.apply(this, [kind, ...args] as any);
-    } as any;
+      return original.apply(this, [kind, ...args] satisfies Parameters<
+        typeof original
+      >);
+    } as typeof original;
   });
   await page.goto("/?component=chart");
   const plot = page.locator("#reactive-pie");
