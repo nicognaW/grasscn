@@ -183,6 +183,21 @@ const useStore = function useStore() {
   return store;
 };
 
+export const useChartGeometry = function useChartGeometry() {
+  const { scale, store } = useStore();
+
+  const snapshot = React.useSyncExternalStore(
+    store.subscribe,
+    store.getSnapshot,
+    store.getServerSnapshot
+  );
+
+  return {
+    ...snapshot,
+    scale,
+  };
+};
+
 export const ChartAxisTick = ({
   x = 0,
   y = 0,
@@ -248,20 +263,7 @@ export const ChartAxisTick = ({
   );
 };
 
-export const useChartGeometry = function useChartGeometry() {
-  const { scale, store } = useStore();
 
-  const snapshot = React.useSyncExternalStore(
-    store.subscribe,
-    store.getSnapshot,
-    store.getServerSnapshot
-  );
-
-  return {
-    ...snapshot,
-    scale,
-  };
-};
 
 const useRegister = function useRegister(geometry: Geometry) {
   const { store } = useStore();
@@ -277,12 +279,6 @@ const useRegister = function useRegister(geometry: Geometry) {
     };
   }, [store, id, serialized]);
 };
-
-/** Recharts owns the coordinates, scales, stacking, hit testing and tooltip state. */
-// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts renderer-prop contract.
-export const ChartPixelBar = (props: BarShapeProps) => (
-  <PixelBarGeometry {...props} />
-);
 
 // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts renderer-prop contract.
 const PixelBarGeometry = (props: BarShapeProps) => {
@@ -300,11 +296,13 @@ const PixelBarGeometry = (props: BarShapeProps) => {
   return <Rectangle {...props} fill="transparent" stroke="none" />;
 };
 
-/** A Pie shape adapter, not a second Pie implementation or data API. */
-// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts sector renderer-prop contract.
-export const ChartProfilerSector = (props: PieSectorShapeProps) => (
-  <ProfilerSectorGeometry {...props} />
+/** Recharts owns the coordinates, scales, stacking, hit testing and tooltip state. */
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts renderer-prop contract.
+export const ChartPixelBar = (props: BarShapeProps) => (
+  <PixelBarGeometry {...props} />
 );
+
+
 
 // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts sector renderer-prop contract.
 const ProfilerSectorGeometry = (props: PieSectorShapeProps) => {
@@ -332,6 +330,14 @@ const ProfilerSectorGeometry = (props: PieSectorShapeProps) => {
     />
   );
 };
+
+/** A Pie shape adapter, not a second Pie implementation or data API. */
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts sector renderer-prop contract.
+export const ChartProfilerSector = (props: PieSectorShapeProps) => (
+  <ProfilerSectorGeometry {...props} />
+);
+
+
 
 /** Quantize Recharts' rendered SVG geometry; Recharts retains every data and layout API. */
 export const ChartPixelSurface = ({

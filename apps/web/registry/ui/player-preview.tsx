@@ -36,6 +36,27 @@ type PlayerPreviewProps = React.ComponentProps<"div"> & {
 const vs = `attribute vec3 position;attribute vec2 uv;attribute vec3 normal;uniform mat4 projection;uniform mat4 modelView;varying vec2 vUv;varying vec3 vNormal;void main(){gl_Position=projection*modelView*vec4(position,1.);vUv=uv;vNormal=normal;}`;
 const fs = `precision highp float;uniform sampler2D skin;varying vec2 vUv;varying vec3 vNormal;void main(){vec4 color=texture2D(skin,vUv);if(color.a<.1)discard;vec3 n=sign(vNormal)*floor(abs(vNormal)*127.)/127.;if(!gl_FrontFacing)n=-n;vec3 l0=normalize(vec3(.2,-1.,1.));vec3 l1=normalize(vec3(-.2,-1.,0.));float brightness=min(1.,(max(0.,dot(l0,n))+max(0.,dot(l1,n)))*.6+.4);gl_FragColor=vec4(color.rgb*brightness,color.a);}`;
 
+// Match JOML's float quaternion construction, including the exact half-turn.
+const nativeCosFromSin = function nativeCosFromSin(
+  sine: number,
+  angle: number
+) {
+  const f = Math.fround;
+  const pi = f(Math.PI);
+  const tau = f(Math.PI * 2);
+  const shifted = f(angle + f(Math.PI / 2));
+
+  let wrapped = f(shifted - f(Math.trunc(f(shifted / tau)) * tau));
+
+  if (wrapped < 0) {
+    wrapped = f(tau + wrapped);
+  }
+
+  const magnitude = f(Math.sqrt(f(1 - f(sine * sine))));
+
+  return wrapped >= pi ? -magnitude : magnitude;
+};
+
 const buildRenderer = function buildRenderer(
   canvas: HTMLCanvasElement,
   model: "wide" | "slim"
@@ -357,26 +378,7 @@ const buildRenderer = function buildRenderer(
   };
 };
 
-// Match JOML's float quaternion construction, including the exact half-turn.
-const nativeCosFromSin = function nativeCosFromSin(
-  sine: number,
-  angle: number
-) {
-  const f = Math.fround;
-  const pi = f(Math.PI);
-  const tau = f(Math.PI * 2);
-  const shifted = f(angle + f(Math.PI / 2));
 
-  let wrapped = f(shifted - f(Math.trunc(f(shifted / tau)) * tau));
-
-  if (wrapped < 0) {
-    wrapped = f(tau + wrapped);
-  }
-
-  const magnitude = f(Math.sqrt(f(1 - f(sine * sine))));
-
-  return wrapped >= pi ? -magnitude : magnitude;
-};
 
 const PlayerPreview = ({
   skin = "wide/steve",
