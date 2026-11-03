@@ -1,6 +1,6 @@
-import type { Page } from "@playwright/test";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { Page } from "@playwright/test";
 
 interface ToggleGroupPlaybackState extends Window {
   sounds?: { rate: number; source: string; volume: number }[];
@@ -13,55 +13,59 @@ type InitializedToggleGroupPlaybackState = typeof window &
 
 const base = "/?component=toggle-group";
 
-const verifyToggleGroupKeyboard = async (page: Page, extra: string, key: string) => {
-    await page.goto(base + extra);
+const verifyToggleGroupKeyboard = async (
+  page: Page,
+  extra: string,
+  key: string
+) => {
+  await page.goto(base + extra);
 
-    const one = page.locator("[data-subject]");
-    const two = page.locator("#item-two");
+  const one = page.locator("[data-subject]");
+  const two = page.locator("#item-two");
 
-    await one.focus();
-    await page.keyboard.press(key);
-    await expect(two).toBeFocused();
-    await page.keyboard.press("Space");
-    await expect(two).toHaveAttribute("aria-pressed", "true");
-    await page.keyboard.press("End");
-    await expect(page.locator("#item-three")).toBeFocused();
-    await page.keyboard.press("Home");
-    await expect(one).toBeFocused();
-  };
+  await one.focus();
+  await page.keyboard.press(key);
+  await expect(two).toBeFocused();
+  await page.keyboard.press("Space");
+  await expect(two).toHaveAttribute("aria-pressed", "true");
+  await page.keyboard.press("End");
+  await expect(page.locator("#item-three")).toBeFocused();
+  await page.keyboard.press("Home");
+  await expect(one).toBeFocused();
+};
 
 const verifyControlledToggleGroup = async (page: Page, type: string) => {
-    await page.goto(`${base}&controlled=1&type=${type}`);
-    await page.locator("#external").click();
-    await expect(page.locator("#item-two")).toHaveAttribute("data-pressed", "");
-    await page.locator("[data-subject]").click();
-    await expect(page.locator("[data-subject]")).toHaveAttribute(
-      "data-pressed",
-      ""
-    );
-  };
+  await page.goto(`${base}&controlled=1&type=${type}`);
+  await page.locator("#external").click();
+  await expect(page.locator("#item-two")).toHaveAttribute("data-pressed", "");
+  await page.locator("[data-subject]").click();
+  await expect(page.locator("[data-subject]")).toHaveAttribute(
+    "data-pressed",
+    ""
+  );
+};
 
 const verifyBlockedToggleGroup = async (page: Page, extra: string) => {
-    await page.goto(`${base}&${extra}`);
-    await page.locator("[data-subject]").dispatchEvent("click");
-    await expect(page.locator("[data-subject]")).not.toHaveAttribute(
-      "data-pressed"
-    );
-    await expect(page.locator("#events")).toHaveText("0");
-  };
+  await page.goto(`${base}&${extra}`);
+  await page.locator("[data-subject]").dispatchEvent("click");
+  await expect(page.locator("[data-subject]")).not.toHaveAttribute(
+    "data-pressed"
+  );
+  await expect(page.locator("#events")).toHaveText("0");
+};
 
 const verifySilentToggleGroup = async (page: Page, extra: string) => {
-    await page.goto(`${base}&${extra}`);
-    await page.locator("[data-subject]").dispatchEvent("click");
-    // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
-    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
-    expect(
-      await page.evaluate(
-        () => (window as InitializedToggleGroupPlaybackState).sounds
-      )
-    ).toEqual([]);
-    // oxlint-enable typescript/no-unsafe-type-assertion
-  };
+  await page.goto(`${base}&${extra}`);
+  await page.locator("[data-subject]").dispatchEvent("click");
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedToggleGroupPlaybackState).sounds
+    )
+  ).toEqual([]);
+  // oxlint-enable typescript/no-unsafe-type-assertion
+};
 
 test("Toggle Group single selection and deselection", async ({ page }) => {
   await page.goto(base);
@@ -104,8 +108,8 @@ test("Toggle Group roving keyboard focus supports RTL and vertical layout", asyn
     ["&dir=rtl", "ArrowLeft"],
     ["&orientation=vertical", "ArrowDown"],
   ]) {
-await verifyToggleGroupKeyboard(page, extra, key);
-}
+    await verifyToggleGroupKeyboard(page, extra, key);
+  }
 });
 
 test("Toggle Group skips disabled items and obeys no-loop", async ({
@@ -123,8 +127,8 @@ test("Toggle Group supports controlled external values and rejected updates", as
   page,
 }) => {
   for (const type of ["single", "multiple"]) {
-await verifyControlledToggleGroup(page, type);
-}
+    await verifyControlledToggleGroup(page, type);
+  }
 
   await page.goto(`${base}&controlled=1&reject=1`);
   await page.locator("[data-subject]").click();
@@ -142,8 +146,8 @@ test("Toggle Group cancelled activation and disabled roots remain unchanged", as
     "state=disabled",
     "state=disabled&asChild=1",
   ]) {
-await verifyBlockedToggleGroup(page, extra);
-}
+    await verifyBlockedToggleGroup(page, extra);
+  }
 });
 
 test("Toggle Group retains composed children, refs and accessible names", async ({
@@ -206,6 +210,6 @@ test("Toggle Group uses original click audio and silent focus navigation", async
     "state=disabled",
     "state=disabled&asChild=1",
   ]) {
-await verifySilentToggleGroup(page, extra);
-}
+    await verifySilentToggleGroup(page, extra);
+  }
 });
