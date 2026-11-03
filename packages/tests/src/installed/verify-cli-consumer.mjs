@@ -19,7 +19,7 @@ import {
   assertConsumerPortAvailable,
   consumerEnvironment,
   directoryIdentity,
-} from "./consumer-boundary.mjs";
+} from "./consumer-boundary";
 import {
   fetchPublicRegistry,
   assertRegistryInstallation,

@@ -9,7 +9,7 @@ import { sourceIdentity } from "@grasscn/tests/next-production";
 import { chromium, expect } from "@playwright/test";
 import { repoRoot, webRoot } from "@tests/paths";
 
-import { assertConsumerPortAvailable } from "../installed/consumer-boundary.mjs";
+import { assertConsumerPortAvailable } from "../installed/consumer-boundary";
 import { documentationInventory } from "./documentation-inventory.mjs";
 
 // Ordinary root dev command, fresh generated inputs, expanded public routes.

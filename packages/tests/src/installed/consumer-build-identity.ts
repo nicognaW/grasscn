@@ -1,9 +1,13 @@
 import assert from "node:assert/strict";
 
-import { directoryIdentity, sha256 } from "./consumer-boundary.mjs";
+import { directoryIdentity, sha256 } from "./consumer-boundary";
+import type { DirectoryIdentity } from "./consumer-validation-types";
 
 /** @param {string} directory @param {string} framework */
-export const consumerBuildIdentity = async (directory, framework) => {
+export const consumerBuildIdentity = async (
+  directory: string,
+  framework: string
+): Promise<DirectoryIdentity> => {
   assert.ok(["next", "vite"].includes(framework));
 
   const identity = await directoryIdentity(

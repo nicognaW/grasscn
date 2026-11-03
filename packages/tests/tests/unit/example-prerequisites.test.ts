@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 
-import { assertExamplePrerequisites } from "../../src/installed/example-prerequisites.mjs";
+import { assertExamplePrerequisites } from "../../src/installed/example-prerequisites";
 
 const code = `import { Tabs } from "@/components/ui/tabs";
 import { Typography } from "@/components/ui/typography";`;

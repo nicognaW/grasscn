@@ -8,7 +8,7 @@ import { repoRoot, webRoot } from "@tests/paths";
 import { packageBin } from "@tests/tooling";
 
 import { installedDependencyIdentity } from "./dependency-identity.ts";
-import { serveOwnedHttpProcess } from "./owned-http-process.mjs";
+import { serveOwnedHttpProcess } from "./owned-http-process";
 import { parseProductionIdentity } from "./verification-types.ts";
 
 /** @typedef {import("./verification-types.ts").SourceIdentity} SourceIdentity */

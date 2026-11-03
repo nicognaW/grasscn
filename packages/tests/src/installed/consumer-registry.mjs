@@ -4,7 +4,7 @@ import path from "node:path";
 
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
 
-import { sha256 } from "./consumer-boundary.mjs";
+import { sha256 } from "./consumer-boundary";
 import { isRegistryPayload } from "./consumer-metadata.ts";
 
 /** @typedef {{path: string, type?: string, target?: string}} RegistryFile */

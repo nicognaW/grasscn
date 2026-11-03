@@ -7,7 +7,7 @@ import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity"
 import { repoRoot } from "@grasscn/tests/paths";
 import { packageBin } from "@grasscn/tests/tooling";
 
-import { serveOwnedHttpProcess } from "../runtime/owned-http-process.mjs";
+import { serveOwnedHttpProcess } from "../runtime/owned-http-process";
 import {
   parseConsumerSnapshot,
   parseCollectedSnapshot,
@@ -26,8 +26,8 @@ import {
   consumerEnvironment,
   directoryIdentity,
   sha256,
-} from "./consumer-boundary.mjs";
-import { consumerBuildIdentity } from "./consumer-build-identity.mjs";
+} from "./consumer-boundary";
+import { consumerBuildIdentity } from "./consumer-build-identity";
 
 /**
  * @template {PreparedProject} T

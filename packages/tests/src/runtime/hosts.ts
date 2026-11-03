@@ -10,7 +10,7 @@ import { webRoot } from "@tests/paths";
 import {
   isolatedHttpTarget,
   isolatedTunnelTarget,
-} from "./isolated-host-routing.mjs";
+} from "./isolated-host-routing";
 import { serveNextProduction } from "./next-production.mjs";
 
 // Preserve absolute legacy loopback URLs without reading the mutable foreground

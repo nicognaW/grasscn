@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { once } from "node:events";
 import { createServer } from "node:net";
 
-import { serveOwnedHttpProcess } from "../../src/runtime/owned-http-process.mjs";
+import { serveOwnedHttpProcess } from "../../src/runtime/owned-http-process";
 
 const reservePort = async () => {
   const probe = createServer();

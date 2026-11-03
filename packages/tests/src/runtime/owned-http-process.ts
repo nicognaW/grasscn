@@ -1,6 +1,16 @@
 import { spawn } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
 
+interface OwnedHttpProcessOptions {
+  args: string[];
+  cwd: string;
+  env: NodeJS.ProcessEnv;
+  label: string;
+  port: number;
+  readyText: string;
+  startupTimeout: number;
+}
+
 /**
  * Own one Bun HTTP process from startup through shutdown. Callers validate domain identity first.
  * @param {{args: string[], cwd: string, env: NodeJS.ProcessEnv, label: string, port: number, readyText: string, startupTimeout: number}} options - Listener configuration.
@@ -13,7 +23,7 @@ export const serveOwnedHttpProcess = async ({
   port,
   readyText,
   startupTimeout,
-}) => {
+}: OwnedHttpProcessOptions) => {
   const child = spawn(process.execPath, args, {
     cwd,
     env,
@@ -22,16 +32,16 @@ export const serveOwnedHttpProcess = async ({
 
   let logs = "";
   /** @type {Error | undefined} */
-  let failure;
+  let failure: Error | undefined;
 
   /** @param {Buffer} bytes - Owned process output. */
-  const stdout = (bytes) => {
+  const stdout = (bytes: Buffer) => {
     logs += bytes.toString("utf-8");
     process.stdout.write(bytes);
   };
 
   /** @param {Buffer} bytes - Owned process diagnostics. */
-  const stderr = (bytes) => {
+  const stderr = (bytes: Buffer) => {
     logs += bytes.toString("utf-8");
     process.stderr.write(bytes);
   };
@@ -52,7 +62,7 @@ export const serveOwnedHttpProcess = async ({
     }
 
     // eslint-disable-next-line promise/avoid-new -- Await the owned child process exit before releasing its listener.
-    await new Promise((resolve) => {
+    await new Promise<void>((resolve) => {
       const timer = setTimeout(() => {
         child.kill("SIGKILL");
       }, 5000);
@@ -66,7 +76,7 @@ export const serveOwnedHttpProcess = async ({
   };
 
   /** @type {Promise<void> | undefined} */
-  let closing;
+  let closing: Promise<void> | undefined;
 
   const close = async () => {
     closing ??= stop();

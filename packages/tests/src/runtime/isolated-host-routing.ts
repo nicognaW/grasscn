@@ -1,7 +1,13 @@
 /** @typedef {{ fixturePort: number, previewPort: number, proxyPort: number }} HostExecution */
 
+interface HostExecution {
+  fixturePort: number;
+  previewPort: number;
+  proxyPort: number;
+}
+
 /** @param {HostExecution} execution - Verification input. */
-const ports = (execution) => {
+const ports = (execution: HostExecution) => {
   const { fixturePort, previewPort, proxyPort } = execution;
 
   return {
@@ -20,7 +26,11 @@ const ports = (execution) => {
  * @param {string} host - Verification input.
  * @param {HostExecution} execution - Verification input.
  */
-export const isolatedHttpTarget = (url, host, execution) => {
+export const isolatedHttpTarget = (
+  url: string,
+  host: string,
+  execution: HostExecution
+) => {
   const { owned, map } = ports(execution);
   const target = new URL(url, `http://${host}`);
 
@@ -49,7 +59,10 @@ export const isolatedHttpTarget = (url, host, execution) => {
  * @param {string} authority - Verification input.
  * @param {HostExecution} execution - Verification input.
  */
-export const isolatedTunnelTarget = (authority, execution) => {
+export const isolatedTunnelTarget = (
+  authority: string,
+  execution: HostExecution
+) => {
   const { owned, map, proxyPort } = ports(execution);
   const target = new URL(`http://${authority}`);
 

@@ -20,12 +20,6 @@
       "@grasscn/tests/next-production": [
         "../tests/src/runtime/next-production.mjs"
       ],
-      "@grasscn/tests/isolated-host-routing": [
-        "../tests/src/runtime/isolated-host-routing.mjs"
-      ],
-      "@grasscn/tests/consumer-boundary": [
-        "../tests/src/installed/consumer-boundary.mjs"
-      ],
       "@grasscn/tests/consumer-registry": [
         "../tests/src/installed/consumer-registry.mjs"
       ],

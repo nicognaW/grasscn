@@ -9,14 +9,16 @@ import {
   isPackageMetadata,
   isInstalledMetadata,
   isMissingFileError,
-} from "./consumer-metadata.ts";
+} from "./consumer-metadata";
+import type { DirectoryIdentity } from "./consumer-validation-types";
 
-/** @param {import("node:crypto").BinaryLike} bytes - Exact bytes to hash. */
-export const sha256 = (bytes) =>
-  createHash("sha256").update(bytes).digest("hex");
+/** @param bytes - Input accepted by the owned hash-update SDK. */
+export const sha256 = (
+  bytes: Parameters<ReturnType<typeof createHash>["update"]>[0]
+) => createHash("sha256").update(bytes).digest("hex");
 
 /** @param {string} child @param {string} parent */
-const within = (child, parent) => {
+const within = (child: string, parent: string) => {
   const relative = path.relative(parent, child);
 
   return (
@@ -28,7 +30,10 @@ const within = (child, parent) => {
 };
 
 /** @param {string} project @param {string[]} excludedRoots */
-export const assertExternalProject = async (project, excludedRoots) => {
+export const assertExternalProject = async (
+  project: string,
+  excludedRoots: string[]
+) => {
   const resolved = await realpath(project);
 
   for (const root of excludedRoots) {
@@ -48,7 +53,9 @@ export const assertExternalProject = async (project, excludedRoots) => {
 };
 
 /** @param {NodeJS.ProcessEnv} [environment] @returns {NodeJS.ProcessEnv} */
-export const consumerEnvironment = (environment = process.env) => ({
+export const consumerEnvironment = (
+  environment: NodeJS.ProcessEnv = process.env
+): NodeJS.ProcessEnv => ({
   ...environment,
   CI: "true",
   NEXT_TELEMETRY_DISABLED: "1",
@@ -57,17 +64,17 @@ export const consumerEnvironment = (environment = process.env) => ({
 });
 
 /** @param {number} port - Required unoccupied loopback port. */
-export const assertConsumerPortAvailable = async (port) => {
+export const assertConsumerPortAvailable = async (port: number) => {
   const probe = createServer();
   // oxlint-disable-next-line promise/avoid-new -- Bridge the callback-only net.Server lifecycle without leaving an occupied test port.
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     probe.once("error", reject);
     probe.listen(port, "127.0.0.1", () => {
       resolve(undefined);
     });
   });
   // oxlint-disable-next-line promise/avoid-new -- Bridge the callback-only net.Server lifecycle without leaving an occupied test port.
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     probe.close((error) => {
       if (error) {
         reject(error);
@@ -79,11 +86,11 @@ export const assertConsumerPortAvailable = async (port) => {
 };
 
 /** @param {string} project @returns {Promise<Record<string, {path: string, version: string, packageSha256: string}>>} */
-export const assertIndependentDependencies = async (project) => {
+export const assertIndependentDependencies = async (project: string) => {
   const consumer = await realpath(project);
 
   /** @type {unknown} */
-  const packageData = JSON.parse(
+  const packageData: unknown = JSON.parse(
     await readFile(path.join(consumer, "package.json"), "utf-8")
   );
 
@@ -122,7 +129,10 @@ export const assertIndependentDependencies = async (project) => {
   }
 
   /** @type {Record<string, {path: string, version: string, packageSha256: string}>} */
-  const identities = {};
+  const identities: Record<
+    string,
+    { path: string; version: string; packageSha256: string }
+  > = {};
 
   const sortedDependencyNames = Object.keys({
     ...dependencies,
@@ -151,7 +161,7 @@ export const assertIndependentDependencies = async (project) => {
       try {
         const bytes = await readFile(path.join(directory, "package.json"));
         /** @type {unknown} */
-        const installed = JSON.parse(bytes.toString("utf-8"));
+        const installed: unknown = JSON.parse(bytes.toString("utf-8"));
 
         if (isInstalledMetadata(installed) && installed.name === name) {
           identities[name] = {
@@ -179,14 +189,14 @@ export const assertIndependentDependencies = async (project) => {
 
 /** @param {string} directory @param {Set<string>} [skipped] @returns {Promise<{sha256: string, files: Record<string, string>}>} */
 export const directoryIdentity = async (
-  directory,
+  directory: string,
   skipped = new Set(["node_modules", ".next", "dist", ".git"])
-) => {
+): Promise<DirectoryIdentity> => {
   /** @type {Record<string,string>} */
-  const files = {};
+  const files: DirectoryIdentity["files"] = {};
 
   /** @param {string} relative @returns {Promise<void>} */
-  const visit = async (relative) => {
+  const visit = async (relative: string): Promise<void> => {
     for (const entry of await readdir(path.join(directory, relative), {
       withFileTypes: true,
     })) {

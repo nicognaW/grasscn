@@ -7,7 +7,7 @@ import path from "node:path";
 
 import { directoryIdentity } from "@grasscn/tests/consumer-boundary";
 
-import { consumerBuildIdentity } from "../../src/installed/consumer-build-identity.mjs";
+import { consumerBuildIdentity } from "../../src/installed/consumer-build-identity";
 
 test("consumer build identity excludes only Next's response-cache path and preserves immutable delivery", async () => {
   const root = await mkdtemp(path.join(tmpdir(), "grasscn-consumer-build-"));

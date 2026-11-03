@@ -6,7 +6,11 @@ import assert from "node:assert/strict";
  * @param {string[]} items - Items linked beside this example.
  * @param {{name: string, files: {destination: string}[]}[]} manifests - Public installation inventory.
  */
-export const assertExamplePrerequisites = (code, items, manifests) => {
+export const assertExamplePrerequisites = (
+  code: string,
+  items: string[],
+  manifests: { name: string; files: { destination: string }[] }[]
+) => {
   assert.ok(
     items.length > 0,
     "Copied example must declare its installation items"
@@ -33,7 +37,9 @@ export const assertExamplePrerequisites = (code, items, manifests) => {
   for (const match of code.matchAll(
     /\bfrom\s*["'](?<specifier>@\/components\/[^"']+)["']/gu
   )) {
-    const specifier = match.groups?.specifier;
+    // SAFETY: the adjacent regex has one mandatory named specifier capture, present in every matchAll result.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve the exact required named-capture contract and existing optional-chain read.
+    const specifier = (match.groups as { specifier: string })?.specifier;
     assert.ok(
       available.has(specifier),
       `Copied example prerequisite is not declared: ${specifier}`

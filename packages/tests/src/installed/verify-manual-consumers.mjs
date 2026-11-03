@@ -26,8 +26,8 @@ import {
   assertConsumerPortAvailable,
   consumerEnvironment,
   directoryIdentity,
-} from "./consumer-boundary.mjs";
-import { consumerBuildIdentity } from "./consumer-build-identity.mjs";
+} from "./consumer-boundary";
+import { consumerBuildIdentity } from "./consumer-build-identity";
 import {
   parseWebsiteIdentity,
   parsePublicInputs,
@@ -35,7 +35,7 @@ import {
   parseManualManifest,
   encodeConsumerFile,
 } from "./consumer-validation-types.ts";
-import { assertExamplePrerequisites } from "./example-prerequisites.mjs";
+import { assertExamplePrerequisites } from "./example-prerequisites";
 import { consumerVerificationEnvironment } from "./prepared-consumers.mjs";
 
 // Run through the workspace resource guard with an owned production website already available.
