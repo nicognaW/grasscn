@@ -68,12 +68,20 @@ test("default installation controls match their captured Minecraft content and s
   );
   expect(
     createHash("sha256")
-      .update(await readFile(new URL("source/ControlsReferenceMain.java", filenameFamily)))
+      .update(
+        await readFile(
+          new URL("source/ControlsReferenceMain.java", filenameFamily)
+        )
+      )
       .digest("hex")
   ).toBe(filenameManifest.captureSourceSha256);
   expect(
     createHash("sha256")
-      .update(await readFile(new URL("source-input/capture-controls.mjs", filenameFamily)))
+      .update(
+        await readFile(
+          new URL("source-input/capture-controls.mjs", filenameFamily)
+        )
+      )
       .digest("hex")
   ).toBe(filenameManifest.captureRunnerSha256);
   const cases = [...primaryCases, ...filenameCases];
@@ -102,7 +110,9 @@ test("default installation controls match their captured Minecraft content and s
     source = primaryReference
   ) => {
     const name = `${identity}-s2.png`;
-    const reference = await readFile(new URL(`captures/${name}`, source.directory));
+    const reference = await readFile(
+      new URL(`captures/${name}`, source.directory)
+    );
     expect(createHash("sha256").update(reference).digest("hex")).toBe(
       nativeReference(source.manifest, name).sha256
     );
