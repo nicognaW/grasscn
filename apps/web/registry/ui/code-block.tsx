@@ -193,6 +193,24 @@ const selectable = function selectable(
   return value;
 };
 
+const CodeLineMarker = ({ variant }: { variant: "added" | "removed" }) => {
+  const glyph = minecraftLoadingGlyphs[variant === "added" ? "+" : "-"];
+
+  return (
+    <svg
+      aria-hidden="true"
+      className="mc-code-block-line-marker"
+      viewBox="0 0 8 9"
+    >
+      <g fill="currentColor">
+        {glyph.pixels.map(([x, y], index) => (
+          <rect key={index} x={x} y={y} width="1" height="1" />
+        ))}
+      </g>
+    </svg>
+  );
+};
+
 const CodeBlockLine = ({
   className,
   variant = "default",
@@ -262,24 +280,6 @@ const CodeBlockContent = ({
     </code>
   </pre>
 );
-
-const CodeLineMarker = ({ variant }: { variant: "added" | "removed" }) => {
-  const glyph = minecraftLoadingGlyphs[variant === "added" ? "+" : "-"];
-
-  return (
-    <svg
-      aria-hidden="true"
-      className="mc-code-block-line-marker"
-      viewBox="0 0 8 9"
-    >
-      <g fill="currentColor">
-        {glyph.pixels.map(([x, y], index) => (
-          <rect key={index} x={x} y={y} width="1" height="1" />
-        ))}
-      </g>
-    </svg>
-  );
-};
 
 
 

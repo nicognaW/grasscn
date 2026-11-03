@@ -334,10 +334,6 @@ const Calendar = ({
   );
 };
 
-
-
-
-
 export { Calendar, CalendarDayButton };
 
 export type { CalendarProps };

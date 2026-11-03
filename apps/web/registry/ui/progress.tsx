@@ -186,8 +186,6 @@ const Progress = ({
   );
 };
 
-
-
 const ProgressIndicator = ({
   className,
   ...props

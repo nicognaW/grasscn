@@ -392,8 +392,6 @@ type ScrollBarProps = Omit<
   orientation?: "vertical";
 };
 
-
-
 export { ScrollArea, ScrollBar };
 
 export type { ScrollAreaProps, ScrollBarProps };
