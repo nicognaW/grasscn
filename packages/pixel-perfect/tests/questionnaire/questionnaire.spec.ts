@@ -94,7 +94,7 @@ for (const [part, dir] of parts) {
             q.set("radio", "1");
           }
 
-          if ((c.wrapWidth ?? 0) !== 0) {
+          if (Boolean(c.wrapWidth)) {
             q.set("wrapWidth", String(c.wrapWidth));
           }
 
