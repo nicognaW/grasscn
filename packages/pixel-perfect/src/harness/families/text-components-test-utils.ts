@@ -34,6 +34,27 @@ interface TextReferenceManifest {
   cases: TextReferenceCase[];
 }
 
+const textReferenceParameters = (
+  c: TextReferenceCase,
+  component: string,
+  part: string
+) =>
+  new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background ?? "#202020",
+    component,
+    height: String(c.height ?? 20),
+    label: c.label ?? c.text ?? "Button",
+    native: "1",
+    part,
+    scale: String(c.scale),
+    state: c.state,
+    text: c.label ?? c.text ?? "Button",
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
 export const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
@@ -140,21 +161,7 @@ export const nativeTextTests = function nativeTextTests(
         }, info) => {
           await page.setViewportSize({ height: 900, width: 1536 });
 
-          const params = new URLSearchParams({
-            align: c.alignment ?? "left",
-            background: c.background ?? "#202020",
-            component,
-            height: String(c.height ?? 20),
-            label: c.label ?? c.text ?? "Button",
-            native: "1",
-            part,
-            scale: String(c.scale),
-            state: c.state,
-            text: c.label ?? c.text ?? "Button",
-            width: String(c.width),
-            x: String(c.x ?? 16),
-            y: String(c.y ?? 16),
-          });
+          const params = textReferenceParameters(c, component, part);
 
           if (c.wrapWidth !== undefined) {
             params.set("wrapWidth", String(c.wrapWidth));

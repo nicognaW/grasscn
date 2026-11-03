@@ -47,6 +47,19 @@ interface ComboboxComparisonManifest {
   cases: ComboboxComparisonCase[];
 }
 
+const comboboxBaseParameters = (c: ComboboxComparisonCase, kind: string) =>
+  new URLSearchParams({
+    background: c.background ?? "#202020",
+    height: String(c.height),
+    native: "1",
+    part: kind === "suggestions" ? "list" : "input",
+    scale: String(c.scale),
+    state: c.state,
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
 const repo = path.resolve(".");
 const audits = new WeakMap<object, string[]>();
 
@@ -118,17 +131,7 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
         await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
       }
 
-      const q = new URLSearchParams({
-        background: c.background ?? "#202020",
-        height: String(c.height),
-        native: "1",
-        part: kind === "suggestions" ? "list" : "input",
-        scale: String(c.scale),
-        state: c.state,
-        width: String(c.width),
-        x: String(c.x ?? 16),
-        y: String(c.y ?? 16),
-      });
+      const q = comboboxBaseParameters(c, kind);
 
       if (kind === "suggestions") {
         // SAFETY: The captured kind suggestions route reads only its retained Suggestions cases, all with string-array labels.
