@@ -149,13 +149,7 @@ const CalendarDropdown = ({
         {...props}
         aria-hidden="true"
         tabIndex={-1}
-        style={{
-          height: 1,
-          opacity: 0,
-          pointerEvents: "none",
-          position: "absolute",
-          width: 1,
-        }}
+        className="pointer-events-none absolute h-px w-px opacity-0"
       >
         {options?.map((option) => (
           <option

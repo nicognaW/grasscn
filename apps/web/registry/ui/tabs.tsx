@@ -23,6 +23,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-tabs.css";
 
+interface TabsTextureStyle extends React.CSSProperties {
+  "--mc-tabs-image": string;
+}
+
 const tabLabelAdvance = function tabLabelAdvance(glyphText: string) {
   let accumulatedGlyphAdvance = 0;
 
@@ -257,7 +261,15 @@ const TabsList = ({
 const TabSurface = ({ name }: { name: keyof typeof assets.sprites }) => (
   <span className="mc-tab-surface" data-sprite={name} aria-hidden="true">
     {assets.sprites[name].pieces.map((image, index) => (
-      <i key={index} style={{ backgroundImage: image }} />
+      <i
+        key={index}
+        style={
+          // SAFETY: The owned texture value is a string checked by TabsTextureStyle; the assertion supplies React’s CSSProperties view of its required custom property.
+          {
+            "--mc-tabs-image": image,
+          } satisfies TabsTextureStyle as TabsTextureStyle
+        }
+      />
     ))}
   </span>
 );
@@ -359,7 +371,12 @@ const TabsTrigger = ({
       <span
         className="mc-tab-menu"
         aria-hidden="true"
-        style={{ backgroundImage: assets.textures.menu_background }}
+        style={
+          // SAFETY: The owned texture value is a string checked by TabsTextureStyle; the assertion supplies React’s CSSProperties view of its required custom property.
+          {
+            "--mc-tabs-image": assets.textures.menu_background,
+          } satisfies TabsTextureStyle as TabsTextureStyle
+        }
       />
       <span className="mc-tab-underline" aria-hidden="true" />
       <span className="mc-tab-label-window">
@@ -400,8 +417,8 @@ const TabsContent = ({
   <TabsPrimitive.Panel
     data-slot="tabs-content"
     className={cn(`mc-tabs-content`, className)}
-    style={minecraftStyle(style, (__style) => ({
-      backgroundImage: assets.textures.menu_background,
+    style={minecraftStyle(style, (__style): TabsTextureStyle => ({
+      "--mc-tabs-image": assets.textures.menu_background,
       ...__style,
     }))}
     {...props}

@@ -25,6 +25,9 @@ interface AdvancementTreeLayoutStyle2 extends React.CSSProperties {
 }
 
 interface AdvancementTreeScaleStyle extends React.CSSProperties {
+  "--mc-tree-image": string;
+  "--mc-tree-position": string;
+  "--mc-tree-size": string;
   "--mc-scale": number;
 }
 
@@ -262,9 +265,9 @@ const AdvancementTree = ({
         aria-label={props["aria-label"] ?? "Advancement tree"}
         style={minecraftStyle(style, (__style): AdvancementTreeScaleStyle => ({
           "--mc-scale": scale,
-          backgroundImage: `url("${background}")`,
-          backgroundPosition: `${(Math.floor(position.x) % 16) * scale}px ${(Math.floor(position.y) % 16) * scale}px`,
-          backgroundSize: `${16 * scale}px ${16 * scale}px`,
+          "--mc-tree-image": `url("${background}")`,
+          "--mc-tree-position": `${(Math.floor(position.x) % 16) * scale}px ${(Math.floor(position.y) % 16) * scale}px`,
+          "--mc-tree-size": `${16 * scale}px ${16 * scale}px`,
           height: height * scale,
           width: width * scale,
           ...__style,

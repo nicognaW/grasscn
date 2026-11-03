@@ -23,6 +23,10 @@ import "./minecraft-card.css";
 import "./minecraft-dialog.css";
 import "./minecraft-alert-dialog.css";
 
+interface AlertDialogTextureStyle extends React.CSSProperties {
+  "--mc-overlay-image": string;
+}
+
 interface AlertDialogScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -94,8 +98,8 @@ const AlertDialogOverlay = ({
       data-slot="alert-dialog-overlay"
       data-mc-confirmation-id={identity}
       className={cn(`mc-alert-dialog-overlay`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        backgroundImage: `url("${confirmationMenuBackground}")`,
+      style={minecraftStyle(style, (__style): AlertDialogTextureStyle => ({
+        "--mc-overlay-image": `url("${confirmationMenuBackground}")`,
         ...__style,
       }))}
       {...props}
