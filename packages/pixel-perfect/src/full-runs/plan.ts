@@ -73,11 +73,7 @@ const exactKeys: ExactRunFields = (
   keys,
   subject
 ): asserts value is object => {
-  if (
-    value === null ||
-    typeof value !== "object" ||
-    Array.isArray(value)
-  ) {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) {
     throw new Error(`Invalid ${subject} fields`);
   }
 

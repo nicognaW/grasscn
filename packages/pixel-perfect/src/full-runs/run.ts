@@ -176,6 +176,7 @@ export const authorizeFullRun = function authorizeFullRun(
       ["labeled", "unlabeled"].includes(event.event) &&
       event.label?.name === approvalLabel
   );
+
   labelEvents.sort(
     (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at) || a.id - b.id
   );

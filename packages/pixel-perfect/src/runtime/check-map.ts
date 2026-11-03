@@ -752,15 +752,18 @@ if (args.includes("--live")) {
           ].map((match) => match[1])
         ),
       ];
+
       componentNames.sort();
       current = componentNames;
     } else {
       // SAFETY: the official registry catalogue endpoint returns items or a bare item array.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion
       const data = JSON.parse(body) as UpstreamRegistryCatalog;
+
       const registryNames = (data.items ?? data).flatMap((item) =>
         item.type === "registry:ui" ? [item.name] : []
       );
+
       registryNames.sort();
       current = registryNames;
     }
