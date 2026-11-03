@@ -21,13 +21,13 @@ const advance = (char: string, bold: boolean) => {
 };
 
 const textWidth = (text: string, bold: boolean) =>
-  Math.ceil(Array.from(text).reduce((sum, char) => sum + advance(char, bold), 0));
+  Math.ceil([...text].reduce((sum, char) => sum + advance(char, bold), 0));
 
 const wrap = function wrap(text: string, maximum: number, bold: boolean) {
   const lines: string[] = [];
 
   for (const paragraph of text.split("\n")) {
-    let remaining = Array.from(paragraph);
+    let remaining = [...paragraph];
 
     while (textWidth(remaining.join(""), bold) > maximum) {
       let count = 0;
@@ -110,7 +110,7 @@ export const MinecraftPopoverText = ({
   }
 
   if (
-    !Array.from(text).every(
+    ![...text].every(
       (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
     )
   ) {

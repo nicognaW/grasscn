@@ -118,8 +118,8 @@ export const toastLayout = async function toastLayout(
     const lines: string[] = [];
 
     for (let remaining of text.split("\n")) {
-      while (Array.from(remaining).reduce((n, char) => n + advance(char), 0) > 200) {
-        const chars = Array.from(remaining);
+      while ([...remaining].reduce((n, char) => n + advance(char), 0) > 200) {
+        const chars = [...remaining];
 
         let count = 0;
         let used = 0;
@@ -160,7 +160,7 @@ export const toastLayout = async function toastLayout(
       all.length
         ? Math.max(
             ...all.map((line) =>
-              Math.ceil(Array.from(line).reduce((n, char) => n + advance(char), 0))
+              Math.ceil([...line].reduce((n, char) => n + advance(char), 0))
             )
           )
         : 200

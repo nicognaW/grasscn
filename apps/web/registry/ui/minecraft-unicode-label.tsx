@@ -74,7 +74,7 @@ export const MinecraftUnicodeLabel = ({
         }
 
         if (
-          !Array.from(text).every(
+          ![...text].every(
             (char) => /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
           )
         ) {
@@ -84,7 +84,7 @@ export const MinecraftUnicodeLabel = ({
         }
 
         const logicalWidth = Math.ceil(
-          Array.from(text).reduce((sum, char) => sum + advance(char), 0)
+          [...text].reduce((sum, char) => sum + advance(char), 0)
         );
 
         setWidth(logicalWidth);

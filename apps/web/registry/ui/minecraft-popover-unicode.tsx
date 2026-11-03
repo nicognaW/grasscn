@@ -71,7 +71,7 @@ export const PopoverUnicodeLine = ({
         return;
       }
 
-      const glyphs = Array.from(text).map((char) => {
+      const glyphs = [...text].map((char) => {
         const code = char.codePointAt(0)!;
         const ascii = asciiGlyphs[code - 32];
         const uni = getUnihexGlyph(char);

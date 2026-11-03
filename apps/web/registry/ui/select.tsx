@@ -237,7 +237,7 @@ const SelectTrigger = ({
       const width = Math.floor(element.clientWidth / scale);
 
       const textWidth = Math.ceil(
-        Array.from(text).reduce(
+        [...text].reduce(
           (sum, char) =>
             sum +
             (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??

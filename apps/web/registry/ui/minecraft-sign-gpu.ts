@@ -166,7 +166,7 @@ export const paintSignGpu = function paintSignGpu(
   const ts = f((hanging ? 1 : f(0.9765628)) * scale);
 
   for (const [index, line] of lines.entries()) {
-    const glyphs = Array.from(line).map(
+    const glyphs = [...line].map(
       (char) => minecraftGlyphs[char.codePointAt(0)! - 32]
     );
 

@@ -23,7 +23,7 @@ const glyphAdvance = (char: string) =>
   6;
 
 const advance = (text: string) =>
-  Math.ceil(Array.from(text).reduce((sum, char) => sum + glyphAdvance(char), 0));
+  Math.ceil([...text].reduce((sum, char) => sum + glyphAdvance(char), 0));
 
 const wrap = function wrap(value: string, width: number): Line[] {
   const lines: Line[] = [];
@@ -262,7 +262,7 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
 
     const bounds = node.getBoundingClientRect();
     positionUnihex(context, bounds);
-    const characters = Array.from(value + node.placeholder);
+    const characters = [...(value + node.placeholder)];
 
     if (
       !loadingUnihex &&

@@ -32,7 +32,7 @@ const advance = (char: string) =>
   6;
 
 const textWidth = (text: string) =>
-  Math.ceil(Array.from(text).reduce((width, char) => width + advance(char), 0));
+  Math.ceil([...text].reduce((width, char) => width + advance(char), 0));
 
 const splitLines = function splitLines(text: string, width?: number) {
   const lines: string[] = [];
@@ -43,7 +43,7 @@ const splitLines = function splitLines(text: string, width?: number) {
       width !== undefined &&
       textWidth(remaining) > width
     ) {
-      const chars = Array.from(remaining);
+      const chars = [...remaining];
 
       let count = 0;
       let used = 0;
@@ -180,7 +180,7 @@ const MinecraftChatText = ({
   const supported =
     text !== null &&
     (!unicode || fontReady) &&
-    Array.from(text).every(
+    [...text].every(
       (char) =>
         char === "\n" || /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
     );

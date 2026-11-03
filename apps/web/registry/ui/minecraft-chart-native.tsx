@@ -24,7 +24,7 @@ interface NativeChartTextStyle extends React.CSSProperties {
 const f = Math.fround;
 
 const widthOf = (value: string) =>
-  Array.from(value).reduce((n, c) => {
+  [...value].reduce((n, c) => {
     const codePoint = c.codePointAt(0);
 
     if (codePoint === undefined) {

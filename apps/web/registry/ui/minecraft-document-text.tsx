@@ -32,7 +32,7 @@ const fontImage = function fontImage() {
 };
 
 const documentTextWidth = function documentTextWidth(text: string) {
-  return Array.from(text).reduce(
+  return [...text].reduce(
     (sum, c) =>
       sum +
       (asciiGlyphs[c.codePointAt(0)! - 32]?.[2] ??
@@ -47,7 +47,7 @@ const documentLines = function documentLines(text: string, width: number) {
 
   for (let line of text.split("\n")) {
     while (documentTextWidth(line) > width) {
-      const chars = Array.from(line);
+      const chars = [...line];
 
       let count = 0;
       let used = 0;
