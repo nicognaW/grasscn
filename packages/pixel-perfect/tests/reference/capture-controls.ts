@@ -141,12 +141,25 @@ await writeFile(frozenSource, harnessBytes);
 
 await writeFile(frozenCases, caseBytes);
 
+let platformNameSelection: "windows" | "osx" | "linux";
+
+switch (true) {
+  case process.platform === "win32": {
+    platformNameSelection = "windows";
+    break;
+  }
+  case process.platform === "darwin": {
+    platformNameSelection = "osx";
+    break;
+  }
+  default: {
+    platformNameSelection = "linux";
+    break;
+  }
+}
+
 const platformName =
-  process.platform === "win32"
-    ? "windows"
-    : process.platform === "darwin"
-      ? "osx"
-      : "linux";
+  platformNameSelection;
 
 const permitted = function permitted(library: MinecraftCaptureLibrary) {
   if (!library.rules) {

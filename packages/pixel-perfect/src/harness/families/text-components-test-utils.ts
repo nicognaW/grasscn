@@ -69,12 +69,25 @@ export const nativeTextTests = function nativeTextTests(
 ) {
   test.describe.configure({ mode: "parallel" });
 
+  let directoriesSelection: string[];
+
+  switch (true) {
+    case component === "badge": {
+      directoriesSelection = ["tests/reference/tooltip"];
+      break;
+    }
+    case component === "kbd": {
+      directoriesSelection = ["tests/reference", "tests/reference/button-cjk"];
+      break;
+    }
+    default: {
+      directoriesSelection = ["tests/reference/label"];
+      break;
+    }
+  }
+
   const directories =
-    component === "badge"
-      ? ["tests/reference/tooltip"]
-      : component === "kbd"
-        ? ["tests/reference", "tests/reference/button-cjk"]
-        : ["tests/reference/label"];
+    directoriesSelection;
 
   test(`${component} pixel comparator detects a changed pixel`, () => {
     // SAFETY: the first directory is retained button, label or tooltip; every case in those manifests owns a name.
@@ -103,9 +116,11 @@ export const nativeTextTests = function nativeTextTests(
       readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
     ) as TextReferenceManifest;
 
-    const parts =
-      component === "typography"
-        ? [
+    let partsSelection: string[];
+
+    switch (true) {
+      case component === "typography": {
+        partsSelection = [
             "default",
             "h1",
             "h2",
@@ -118,10 +133,21 @@ export const nativeTextTests = function nativeTextTests(
             "lead",
             "large",
             "muted",
-          ]
-        : component === "breadcrumb"
-          ? ["link", "page"]
-          : ["default"];
+          ];
+        break;
+      }
+      case component === "breadcrumb": {
+        partsSelection = ["link", "page"];
+        break;
+      }
+      default: {
+        partsSelection = ["default"];
+        break;
+      }
+    }
+
+    const parts =
+      partsSelection;
 
     for (const part of parts) {
       for (const c of manifest.cases) {
