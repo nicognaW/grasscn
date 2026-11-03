@@ -79,10 +79,12 @@ const files = item!.files.map((file) => {
       directorySelection = "hooks";
       break;
     }
+
     case file.type === "registry:lib": {
       directorySelection = "lib";
       break;
     }
+
     default: {
       directorySelection = "components/ui";
       break;
@@ -204,14 +206,17 @@ const worker = async function worker() {
           slotSelection = "code-block-content";
           break;
         }
+
         case name === "trace": {
           slotSelection = "trace-line";
           break;
         }
+
         case name === "message-scroller": {
           slotSelection = "message-scroller-item";
           break;
         }
+
         default: {
           slotSelection = name;
           break;

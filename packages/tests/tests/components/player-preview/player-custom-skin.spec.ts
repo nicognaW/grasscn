@@ -86,6 +86,7 @@ test("custom skin can fail, recover, and replace another model without remountin
 
     if (name === "Missing") {
       await route.fulfill({ body: "", status: 404 });
+
       return;
     }
 

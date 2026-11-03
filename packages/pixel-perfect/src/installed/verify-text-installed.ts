@@ -161,10 +161,12 @@ for (const manifestFile of manifests.filter(
       allPartsSelection = ["label", "description", "message"];
       break;
     }
+
     case name === "field": {
       allPartsSelection = ["label", "legend", "title", "description"];
       break;
     }
+
     case name === "typography": {
       allPartsSelection = [
               "default",
@@ -182,14 +184,17 @@ for (const manifestFile of manifests.filter(
             ];
       break;
     }
+
     case name === "breadcrumb": {
       allPartsSelection = ["link", "page"];
       break;
     }
+
     case name === "empty" && !nativeEmpty: {
       allPartsSelection = ["title", "description"];
       break;
     }
+
     default: {
       allPartsSelection = ["default"];
       break;

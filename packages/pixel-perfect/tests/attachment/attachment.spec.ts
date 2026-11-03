@@ -106,10 +106,12 @@ for (const [part, dir] of [
               mediaStateSelection = "1";
               break;
             }
+
             case c.state === "icon-hover": {
               mediaStateSelection = "2";
               break;
             }
+
             default: {
               mediaStateSelection = "0";
               break;

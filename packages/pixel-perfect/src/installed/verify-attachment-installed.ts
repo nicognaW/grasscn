@@ -168,10 +168,12 @@ try {
             mediaStateSelection = "1";
             break;
           }
+
           case c.state === "icon-hover": {
             mediaStateSelection = "2";
             break;
           }
+
           default: {
             mediaStateSelection = "0";
             break;
@@ -291,10 +293,12 @@ try {
         reportFilenameSelection = "row-installation-verification.json";
         break;
       }
+
       case dir === ".": {
         reportFilenameSelection = "action-ascii-installation-verification.json";
         break;
       }
+
       default: {
         reportFilenameSelection = "action-cjk-installation-verification.json";
         break;

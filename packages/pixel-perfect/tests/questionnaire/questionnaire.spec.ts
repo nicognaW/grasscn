@@ -63,10 +63,12 @@ for (const [part, dir] of parts) {
           questionnaireActions = ["next", "previous", "skip", "submit"];
           break;
         }
+
         case part === "checkbox": {
           questionnaireActions = ["next", "radio"];
           break;
         }
+
         default: {
           questionnaireActions = ["next"];
           break;

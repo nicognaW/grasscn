@@ -88,10 +88,12 @@ test.describe("Structural native constituents", () => {
           partSelection = "text";
           break;
         }
+
         case directory.endsWith("/separator"): {
           partSelection = "separator";
           break;
         }
+
         default: {
           partSelection = "button";
           break;
@@ -149,10 +151,12 @@ test.describe("Structural native constituents", () => {
                   slotSelection = "pagination-link";
                   break;
                 }
+
                 case part === "button": {
                   slotSelection = "button";
                   break;
                 }
+
                 default: {
                   slotSelection = `button-group-${part}`;
                   break;

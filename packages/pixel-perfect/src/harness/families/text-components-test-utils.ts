@@ -76,10 +76,12 @@ export const nativeTextTests = function nativeTextTests(
       directoriesSelection = ["tests/reference/tooltip"];
       break;
     }
+
     case component === "kbd": {
       directoriesSelection = ["tests/reference", "tests/reference/button-cjk"];
       break;
     }
+
     default: {
       directoriesSelection = ["tests/reference/label"];
       break;
@@ -136,10 +138,12 @@ export const nativeTextTests = function nativeTextTests(
           ];
         break;
       }
+
       case component === "breadcrumb": {
         partsSelection = ["link", "page"];
         break;
       }
+
       default: {
         partsSelection = ["default"];
         break;
@@ -185,10 +189,12 @@ export const nativeTextTests = function nativeTextTests(
               slotSelection = `breadcrumb-${part}`;
               break;
             }
+
             case component === "typography" && part !== "default": {
               slotSelection = `typography-${part === "code" ? "inline-code" : part}`;
               break;
             }
+
             default: {
               slotSelection = component;
               break;

@@ -106,10 +106,12 @@ try {
           questionnaireActions = (["next", "previous", "skip", "submit"] as const);
           break;
         }
+
         case part === "checkbox": {
           questionnaireActions = (["next", "radio"] as const);
           break;
         }
+
         default: {
           questionnaireActions = (["next"] as const);
           break;

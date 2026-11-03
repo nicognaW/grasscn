@@ -148,10 +148,12 @@ switch (true) {
     platformNameSelection = "windows";
     break;
   }
+
   case process.platform === "darwin": {
     platformNameSelection = "osx";
     break;
   }
+
   default: {
     platformNameSelection = "linux";
     break;

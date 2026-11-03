@@ -61,14 +61,17 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
           slotSelection = "code-block-content";
           break;
         }
+
         case component === "trace": {
           slotSelection = "trace-line";
           break;
         }
+
         case component === "message-scroller": {
           slotSelection = "message-scroller-item";
           break;
         }
+
         default: {
           slotSelection = component;
           break;
@@ -144,14 +147,17 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
           metricPartSelection = "content";
           break;
         }
+
         case component === "trace": {
           metricPartSelection = "line";
           break;
         }
+
         case component === "message-scroller": {
           metricPartSelection = "item";
           break;
         }
+
         default: {
           metricPartSelection = "default";
           break;

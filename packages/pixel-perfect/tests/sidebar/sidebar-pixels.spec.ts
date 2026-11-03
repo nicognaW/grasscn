@@ -153,10 +153,12 @@ test.describe("Sidebar original native constituent cases", () => {
             ];
           break;
         }
+
         case kind === "label": {
           partsSelection = ["label", "badge"];
           break;
         }
+
         default: {
           partsSelection = [kind];
           break;
@@ -223,22 +225,27 @@ test.describe("Sidebar original native constituent cases", () => {
                 slotSelection = "sidebar-menu-sub-button";
                 break;
               }
+
               case part === "label": {
                 slotSelection = "sidebar-group-label";
                 break;
               }
+
               case part === "badge": {
                 slotSelection = "sidebar-menu-badge";
                 break;
               }
+
               case part === "panel": {
                 slotSelection = "sidebar";
                 break;
               }
+
               case part === "scroll": {
                 slotSelection = "sidebar-content";
                 break;
               }
+
               default: {
                 slotSelection = `sidebar-${part}`;
                 break;
