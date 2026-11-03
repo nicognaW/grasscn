@@ -260,7 +260,11 @@ const report: ConsumerPptReport = {
   websiteIdentity,
 };
 
-const verifyPreparedButton = async (project: (typeof projects)[number], consumerHost: Awaited<ReturnType<typeof servePreparedConsumer>>, observerBrowser: Playwright.Browser) => {
+const verifyPreparedButton = async (
+  project: (typeof projects)[number],
+  consumerHost: Awaited<ReturnType<typeof servePreparedConsumer>>,
+  observerBrowser: Playwright.Browser
+) => {
   const page = await observerBrowser.newPage({
     deviceScaleFactor: 1,
     viewport: report.environment.viewport,
