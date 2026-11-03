@@ -9,6 +9,7 @@ import { PNG } from "pngjs";
 
 import type cropDerivation from "../reference/table-background/crop-derivation.json";
 import type nativeReference from "../reference/table-background/manifest.json";
+import type repeatedReference from "../reference/table-background/repeatability.json";
 
 const hash = (bytes: Buffer) =>
   createHash("sha256").update(bytes).digest("hex");
@@ -30,9 +31,11 @@ test("Table expected grip pixels are exact crops from both original native launc
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const proof = JSON.parse(proofBytes.toString()) as typeof cropDerivation;
 
+  // SAFETY: this fresh repeatability read is the exact retained constituent producer named by the existing directory; preserve the original case lookup and hash assertions.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained repeatability producer boundary; no new validation.
   const repeat = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/repeatability.json`), "utf-8")
-  );
+  ) as typeof repeatedReference;
 
   expect(hash(proofBytes)).toBe(manifest.derivation.cropProvenanceSha256);
   expect(
@@ -66,7 +69,7 @@ test("Table expected grip pixels are exact crops from both original native launc
     expect(hash(frameBytes)).toBe(c.parentFullFrameSha256);
     expect(hash(repeatFrameBytes)).toBe(c.parentRepeatFullFrameSha256);
     expect(hash(againBytes)).toBe(
-      repeat.cases.find((r: { name: string }) => r.name === c.name)
+      repeat.cases.find((r: { name: string }) => r.name === c.name)!
         .runTwoPngSha256
     );
     expect(again.data.equals(expected.data)).toBe(true);
