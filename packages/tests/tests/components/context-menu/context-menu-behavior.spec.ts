@@ -19,7 +19,7 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
   await openMenu(page);
   const menu = page.getByRole("menu");
   await expect(menu).toBeVisible();
-  const trigger = (await page.locator("#context-hit").boundingBox())!;
+  const trigger = await page.locator("#context-hit").boundingBox();
 
   const border = await page.locator("#context-hit").evaluate((node) => {
     const style = getComputedStyle(node);
@@ -30,7 +30,7 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
     ];
   });
 
-  const bounds = (await menu.boundingBox())!;
+  const bounds = await menu.boundingBox();
   expect([bounds.x, bounds.y]).toEqual([
     trigger.x + border[0] + 24 + 4,
     trigger.y + border[1] + 24,

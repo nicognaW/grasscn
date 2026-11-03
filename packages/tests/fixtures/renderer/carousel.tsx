@@ -104,13 +104,8 @@ export const CarouselFixture = () => {
           {Array.from({ length: count }, (_, i) => (
             <CarouselItem
               key={i}
-              className="fixture-height-180"
-              style={{
-                background: ["#505050", "#303030", "#707070"][i % 3],
-                display: "grid",
-
-                placeItems: "center",
-              }}
+              className="fixture-height-180 fixture-owner-layout-1 fixture-owner-layout-42"
+              style={{ background: ["#505050", "#303030", "#707070"][i % 3] }}
             >
               <span>World {i + 1}</span>
               <input aria-label={`World ${i + 1} name`} />

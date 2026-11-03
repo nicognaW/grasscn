@@ -126,17 +126,15 @@ test("Sidebar right-side positioning reserves the matching inset space", async (
 }) => {
   await page.goto("/?component=sidebar&side=right");
 
-  const provider = (await page
+  const provider = await page
     .locator('[data-slot="sidebar-wrapper"]')
-    .boundingBox())!;
+    .boundingBox();
 
-  const container = (await page
+  const container = await page
     .locator('[data-slot="sidebar-container"]')
-    .boundingBox())!;
+    .boundingBox();
 
-  const inset = (await page
-    .locator('[data-slot="sidebar-inset"]')
-    .boundingBox())!;
+  const inset = await page.locator('[data-slot="sidebar-inset"]').boundingBox();
 
   expect(container.x + container.width).toBe(provider.x + provider.width);
   expect(inset.x + inset.width).toBe(container.x);
@@ -167,7 +165,7 @@ test("Sidebar mobile backdrop closes and a desktop containment style cannot move
   await expect(page.locator("#mobile")).toHaveText("true");
   await page.locator("#toggle").click();
   const dialog = page.getByRole("dialog", { exact: true, name: "Sidebar" });
-  expect((await dialog.boundingBox())!.y).toBe(0);
+  expect((await dialog.boundingBox()).y).toBe(0);
   await page.mouse.click(365, 10);
   await expect(dialog).toHaveCount(0);
   await expect(page.locator("#open-mobile")).toHaveText("false");
@@ -231,11 +229,11 @@ test("Sidebar skeleton is deterministic and optional action placement does not c
     page.locator('[data-slot="sidebar-menu-skeleton"]')
   ).toHaveAttribute("aria-busy", "true");
 
-  const action = (await page
+  const action = await page
     .getByRole("button", { exact: true, name: "World actions" })
-    .boundingBox())!;
+    .boundingBox();
 
-  const button = (await page.locator("#menu-worlds").boundingBox())!;
+  const button = await page.locator("#menu-worlds").boundingBox();
 
   expect(action.y).toBe(button.y);
   expect(action.x).toBeGreaterThan(button.x);

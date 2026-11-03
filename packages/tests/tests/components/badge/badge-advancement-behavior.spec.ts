@@ -9,13 +9,13 @@ for (const scale of [2]) {
     test(`Advancement Badge compact/CJK/link/state at ${width} GUI${scale}`, async ({
       page,
     }) => {
-      await page.setViewportSize({ width, height: 1000 });
+      await page.setViewportSize({ height: 1000, width });
       await page.goto(origin + "docs/components/badge");
 
       const stage = page.locator('[data-stage="badge"]');
       const badge = stage.locator('[data-slot="badge"]').first();
 
-      expect((await badge.boundingBox())!.height).toBe(26 * scale);
+      expect((await badge.boundingBox()).height).toBe(26 * scale);
       await page.getByLabel("Badge text").fill("挑战完成！");
       await expect(
         badge.locator('[data-mc-label-layout-ready="false"]')

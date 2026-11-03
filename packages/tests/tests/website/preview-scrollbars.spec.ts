@@ -20,16 +20,17 @@ for (const scale of [2]) {
   test(`Document, nested and horizontal bars use Minecraft artwork at GUI scale ${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
+    await page.setViewportSize({ height: 844, width: 390 });
     await page.goto(origin + "docs/components/textarea");
 
     await expect
-      .poll(async () =>
-        await page.evaluate(
-          () =>
-            getComputedStyle(document.documentElement, "::-webkit-scrollbar")
-              .width
-        )
+      .poll(
+        async () =>
+          await page.evaluate(
+            () =>
+              getComputedStyle(document.documentElement, "::-webkit-scrollbar")
+                .width
+          )
       )
       .toBe(`${6 * scale}px`);
     // Exercise native overflow on ordinary content and body-portaled content.
@@ -45,7 +46,7 @@ for (const scale of [2]) {
         content.style.cssText = "width:600px;height:800px";
         content.textContent = "Scrollable world list";
         region.append(content);
-        (portal ? document.body : document.querySelector("main")!).append(
+        (portal ? document.body : document.querySelector("main")).append(
           region
         );
       }

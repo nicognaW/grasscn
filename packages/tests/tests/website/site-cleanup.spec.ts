@@ -51,7 +51,7 @@ test("canonical documentation independently exposes grouped public parts and omi
 
 for (const width of [320, 1440]) {
   test(`sidebar remains visible at ${width}px`, async ({ page }) => {
-    await page.setViewportSize({ width, height: 900 });
+    await page.setViewportSize({ height: 900, width });
     await page.goto(origin + "docs/components/sidebar");
 
     const stage = page.locator(

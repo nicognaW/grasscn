@@ -49,7 +49,7 @@ test("advancement tree selection, keyboard, details and panning", async ({
   expect(await plane.getAttribute("style")).not.toEqual(before);
   await tree.press("Home");
   expect(await plane.getAttribute("style")).toEqual(before);
-  const box = (await tree.boundingBox())!;
+  const box = await tree.boundingBox();
   await page.mouse.move(box.x + 10, box.y + 10);
   await page.mouse.down();
   await page.mouse.move(box.x + 40, box.y + 30, { steps: 4 });

@@ -184,7 +184,7 @@ test("Combobox IME Enter cannot commit a suggestion before CJK composition compl
     const setter = Object.getOwnPropertyDescriptor(
       HTMLInputElement.prototype,
       "value"
-    )!.set!;
+    ).set;
 
     setter.call(node, "世界");
     node.dispatchEvent(

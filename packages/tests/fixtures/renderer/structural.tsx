@@ -115,12 +115,10 @@ export const StructuralFixture = () => {
                 p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
               }
               align={p.get("alignment") === "center" ? "center" : "left"}
-              className="fixture-geometry-width fixture-geometry-height"
+              className="fixture-geometry-width fixture-geometry-height fixture-owner-layout-40 fixture-owner-layout-41"
               style={{
                 "--fixture-height": `${height * scale}px`,
                 "--fixture-width": `${width * scale}px`,
-                display: "block",
-                padding: 0,
               }}
               data-subject="true"
             >

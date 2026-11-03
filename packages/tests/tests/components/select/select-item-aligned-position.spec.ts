@@ -8,7 +8,7 @@ for (const scale of [1, 2, 3] as const) {
       const width = mobile ? 390 : 1536;
       const height = mobile ? 844 : 900;
 
-      await page.setViewportSize({ width, height });
+      await page.setViewportSize({ height, width });
 
       const labels = Array.from(
         { length: 12 },
@@ -37,15 +37,15 @@ for (const scale of [1, 2, 3] as const) {
       await expect(popup).toHaveAttribute("data-mc-select-ready", "true");
       await expect
         .poll(async () => {
-          const row = (await selected.boundingBox())!;
-          const anchor = (await trigger.boundingBox())!;
+          const row = await selected.boundingBox();
+          const anchor = await trigger.boundingBox();
 
           return Math.abs(
             row.y + row.height / 2 - anchor.y - anchor.height / 2
           );
         })
         .toBeLessThanOrEqual(1);
-      const before = (await popup.boundingBox())!;
+      const before = await popup.boundingBox();
       expect(before.x).toBeGreaterThanOrEqual(0);
       expect(before.x + before.width).toBeLessThanOrEqual(width);
       expect(before.y).toBeGreaterThanOrEqual(0);
@@ -68,7 +68,7 @@ for (const scale of [1, 2, 3] as const) {
 
         return await frameCompletion.promise;
       });
-      const after = (await popup.boundingBox())!;
+      const after = await popup.boundingBox();
       expect(after.x).toBeGreaterThanOrEqual(0);
       expect(after.y).toBeGreaterThanOrEqual(0);
       expect(after.x + after.width).toBeLessThanOrEqual(width);

@@ -40,10 +40,11 @@ test("Textarea keeps its native ref, uncontrolled form data and reset repaint", 
   await page.locator("#reset").click();
   await expect(area).toHaveValue("Hello");
   await expect
-    .poll(async () =>
-      await area.evaluate((node: HTMLElement) =>
-        node.style.getPropertyValue("--mc-textarea-image")
-      )
+    .poll(
+      async () =>
+        await area.evaluate((node: HTMLElement) =>
+          node.style.getPropertyValue("--mc-textarea-image")
+        )
     )
     .toBe(original);
   await page.locator("#read-ref").click();
@@ -87,7 +88,7 @@ test("Textarea scrollbar can be dragged and wheel scrolling remains native", asy
   );
   const area = page.getByRole("textbox", { name: "Test textarea" });
   await expect(area).toHaveAttribute("data-mc-scrollbar", "true");
-  const bounds = (await area.boundingBox())!;
+  const bounds = await area.boundingBox();
   await page.mouse.move(bounds.x + bounds.width - 6, bounds.y + 20);
   await page.mouse.down();
   await page.mouse.move(bounds.x + bounds.width - 6, bounds.y + 50);

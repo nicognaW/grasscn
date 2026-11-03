@@ -22,7 +22,7 @@ test("Slider pointer drag changes value and commits on release", async ({
   page,
 }) => {
   await page.goto("/?component=slider&value=100");
-  const bounds = (await page.locator("[data-subject]").boundingBox())!;
+  const bounds = await page.locator("[data-subject]").boundingBox();
   await page.mouse.move(
     bounds.x + bounds.width * 0.1,
     bounds.y + bounds.height / 2
@@ -48,7 +48,7 @@ test("Disabled slider ignores pointer changes and keyboard focus", async ({
   page,
 }) => {
   await page.goto("/?component=slider&state=disabled&value=500");
-  const bounds = (await page.locator("[data-subject]").boundingBox())!;
+  const bounds = await page.locator("[data-subject]").boundingBox();
   await page.mouse.click(
     bounds.x + bounds.width * 0.8,
     bounds.y + bounds.height / 2
@@ -121,8 +121,8 @@ test("RTL slider changes with RTL arrows and places minimum at the right", async
   await page.goto("/?component=slider&dir=rtl&value=0");
   const thumb = page.getByRole("slider");
 
-  const root = (await page.locator("[data-subject]").boundingBox())!;
-  const handle = (await thumb.boundingBox())!;
+  const root = await page.locator("[data-subject]").boundingBox();
+  const handle = await thumb.boundingBox();
 
   expect(handle.x + handle.width).toBe(root.x + root.width);
   await page.keyboard.press("Tab");
@@ -137,8 +137,8 @@ test("Vertical sliders retain native Base UI value behavior", async ({
   const thumb = page.getByRole("slider");
   await expect(thumb).toHaveAttribute("aria-orientation", "vertical");
 
-  const root = (await page.locator("[data-subject]").boundingBox())!;
-  const handle = (await thumb.boundingBox())!;
+  const root = await page.locator("[data-subject]").boundingBox();
+  const handle = await thumb.boundingBox();
 
   expect(handle.y + handle.height).toBe(root.y + root.height);
   await page.keyboard.press("Tab");

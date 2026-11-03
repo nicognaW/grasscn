@@ -19,26 +19,29 @@ test("map terrain coordinates and keyboard markers", async ({ page }) => {
   );
 
   const subject = page.locator("[data-subject]");
-  const bounds = (await subject.boundingBox())!;
+  const bounds = await subject.boundingBox();
 
   await subject.click({ position: { x: 20, y: 40 } });
   await expect
-    .poll(async () =>
-      await page.evaluate(() => document.documentElement.dataset.mapClick)
+    .poll(
+      async () =>
+        await page.evaluate(() => document.documentElement.dataset.mapClick)
     )
     .toBe(JSON.stringify({ x: 10, y: 20 }));
   const home = page.getByRole("button", { exact: true, name: "Home" });
   await home.focus();
   await home.press("Enter");
   await expect
-    .poll(async () =>
-      await page.evaluate(() => document.documentElement.dataset.marker)
+    .poll(
+      async () =>
+        await page.evaluate(() => document.documentElement.dataset.marker)
     )
     .toBe("home");
   await page.getByRole("button", { exact: true, name: "Village" }).click();
   await expect
-    .poll(async () =>
-      await page.evaluate(() => document.documentElement.dataset.marker)
+    .poll(
+      async () =>
+        await page.evaluate(() => document.documentElement.dataset.marker)
     )
     .toBe("village");
   expect(bounds.width).toBe(256);
@@ -62,8 +65,9 @@ test("locator limits and keyboard waypoint selection", async ({ page }) => {
       await point.focus();
       await point.press("Enter");
       await expect
-        .poll(async () =>
-          await page.evaluate(() => document.documentElement.dataset.marker)
+        .poll(
+          async () =>
+            await page.evaluate(() => document.documentElement.dataset.marker)
         )
         .toBe("point");
     }

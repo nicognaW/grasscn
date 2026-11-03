@@ -1,9 +1,16 @@
 import { test, expect } from "@grasscn/tests/test";
+import { expectLength } from "@grasscn/tests/assertions";
+
+declare global {
+  interface Window {
+    bookAudio?: { src: string; volume: number; rate: number }[];
+  }
+}
 
 test("book navigation and native page-turn sound", async ({ page }) => {
   await page.addInitScript(() => {
     const calls: { src: string; volume: number; rate: number }[] = [];
-    (window as any).bookAudio = calls;
+    window.bookAudio = calls;
 
     class RecordedAudio {
       src: string;
@@ -43,8 +50,8 @@ test("book navigation and native page-turn sound", async ({ page }) => {
   await expect(
     page.getByRole("document", { exact: true, name: "Page 2" })
   ).toContainText("Second page");
-  const sound = await page.evaluate(() => (window as any).bookAudio);
-  expect(sound).toHaveLength(1);
+  const sound = await page.evaluate(() => window.bookAudio);
+  expectLength(sound, 1);
   expect(sound[0].src).toMatch(/^data:audio\/ogg;base64,/u);
   expect(sound[0].volume).toBe(0.5);
   expect(sound[0].rate).toBe(1);
@@ -59,7 +66,7 @@ test("book navigation and native page-turn sound", async ({ page }) => {
   await expect(
     page.getByRole("document", { exact: true, name: "Page 2" })
   ).toBeVisible();
-  expect(await page.evaluate(() => (window as any).bookAudio.length)).toBe(1);
+  expect(await page.evaluate(() => window.bookAudio!.length)).toBe(1);
 });
 
 test("hotbar pointer, keyboard and wheel selection", async ({ page }) => {
@@ -106,33 +113,37 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
   await player.focus();
   await player.press("ArrowLeft");
   await expect
-    .poll(async () =>
-      await page.evaluate(() =>
-        JSON.parse(document.documentElement.dataset.rotation ?? "null")
-      )
+    .poll(
+      async () =>
+        await page.evaluate(() =>
+          JSON.parse(document.documentElement.dataset.rotation ?? "null")
+        )
     )
     .toEqual({ pitch: -5, yaw: 25 });
   await player.press("Home");
   await expect
-    .poll(async () =>
-      await page.evaluate(() =>
-        JSON.parse(document.documentElement.dataset.rotation ?? "null")
-      )
+    .poll(
+      async () =>
+        await page.evaluate(() =>
+          JSON.parse(document.documentElement.dataset.rotation ?? "null")
+        )
     )
     .toEqual({ pitch: -5, yaw: 30 });
   await player.blur();
   expect(await player.screenshot()).toEqual(before);
-  const box = (await player.boundingBox())!;
+  const box = await player.boundingBox();
   await page.mouse.move(box.x + 40, box.y + 40);
   await page.mouse.down();
   await page.mouse.move(box.x + 80, box.y + 200, { steps: 5 });
   await page.mouse.up();
   await expect
-    .poll(async () =>
-      await page.evaluate(
-        () =>
-          JSON.parse(document.documentElement.dataset.rotation ?? "null")?.pitch
-      )
+    .poll(
+      async () =>
+        await page.evaluate(
+          () =>
+            JSON.parse(document.documentElement.dataset.rotation ?? "null")
+              ?.pitch
+        )
     )
     .toBe(-50);
   expect(await player.screenshot()).not.toEqual(before);

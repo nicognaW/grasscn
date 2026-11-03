@@ -87,17 +87,33 @@ for (const scale of [2] as const) {
     expect(first.opacity).toBe("1");
 
     const values: number[][] = [];
-    const states: unknown[] = [];
+    const states: {
+      ms: number;
+      opacity: string;
+      panelTransform: string;
+      ready: string | null;
+      rect: {
+        bottom: number;
+        height: number;
+        left: number;
+        right: number;
+        top: number;
+        width: number;
+        x: number;
+        y: number;
+      };
+      transform: string;
+    }[] = [];
 
     for (const ms of [0, 16, 32, 50, 100, 200, 500]) {
       const state = await page.evaluate((frame) => {
         const overlay = document.querySelector<HTMLElement>(
           "[data-slot=drawer-overlay]"
-        )!;
+        );
 
         const content = document.querySelector<HTMLElement>(
           "[data-slot=drawer-content]"
-        )!;
+        );
 
         for (const n of [overlay, content]) {
           for (const a of n.getAnimations()) {
@@ -158,9 +174,7 @@ for (const scale of [2] as const) {
       expect(value).toEqual(values.at(-1));
     }
 
-    expect((states[0] as any).panelTransform).not.toBe(
-      (states.at(-1) as any).panelTransform
-    );
+    expect(states[0].panelTransform).not.toBe(states.at(-1)!.panelTransform);
   });
 }
 
@@ -177,10 +191,11 @@ test("Drawer stays visible during its closing transition, then restores focus", 
   const panel = page.locator("[data-slot=drawer-content]");
   await expect(panel).toBeVisible();
   await expect
-    .poll(async () =>
-      await panel.evaluate((n) =>
-        n.getAnimations().every((a) => a.playState === "finished")
-      )
+    .poll(
+      async () =>
+        await panel.evaluate((n) =>
+          n.getAnimations().every((a) => a.playState === "finished")
+        )
     )
     .toBe(true);
 
@@ -193,7 +208,7 @@ test("Drawer stays visible during its closing transition, then restores focus", 
     try {
       const drawerPanel = document.querySelector<HTMLElement>(
         "[data-slot=drawer-content]"
-      )!;
+      );
 
       const observer = new MutationObserver(() => {
         if (!Object.hasOwn(drawerPanel.dataset, "endingStyle")) {
@@ -213,7 +228,7 @@ test("Drawer stays visible during its closing transition, then restores focus", 
 
       observer.observe(drawerPanel, { attributes: true });
       document
-        .querySelector<HTMLButtonElement>("[data-slot=drawer-close]")!
+        .querySelector<HTMLButtonElement>("[data-slot=drawer-close]")
         .click();
     } catch (error) {
       mutationCompletion2.reject(error);

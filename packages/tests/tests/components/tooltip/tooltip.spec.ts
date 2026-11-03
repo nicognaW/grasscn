@@ -50,7 +50,7 @@ test("Tooltip honors hover delay and accepts rich children", async ({
   await page.goto("/?component=tooltip&delay=500&rich=1");
   const trigger = page.locator("#tooltip-trigger");
   await expect(trigger).toBeVisible();
-  const bounds = (await trigger.boundingBox())!;
+  const bounds = await trigger.boundingBox();
   await page.mouse.move(
     bounds.x + bounds.width / 2,
     bounds.y + bounds.height / 2
@@ -76,7 +76,7 @@ test("Tooltip wraps and stays inside a mobile viewport at each edge", async ({
     await expect(content).toBeVisible();
     await expect
       .poll(async () => {
-        const box = (await content.boundingBox())!;
+        const box = await content.boundingBox();
 
         return (
           box.x >= 0 &&

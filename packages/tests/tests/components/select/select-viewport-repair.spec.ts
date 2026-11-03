@@ -11,7 +11,7 @@ for (const scale of [2] as const) {
         const width = 390;
         const height = short ? 280 : 844;
 
-        await page.setViewportSize({ width, height });
+        await page.setViewportSize({ height, width });
         await page.goto(
           `${preview.replace(/\/$/u, "")}/docs/components/${position === "default" ? "chart" : "select"}`
         );
@@ -36,8 +36,8 @@ for (const scale of [2] as const) {
         await expect(popup).toBeVisible();
         await expect(popup).toHaveAttribute("data-mc-select-ready", "true");
 
-        const before = (await popup.boundingBox())!;
-        const anchor = (await trigger.boundingBox())!;
+        const before = await popup.boundingBox();
+        const anchor = await trigger.boundingBox();
 
         expect(before.x).toBeGreaterThanOrEqual(0);
         expect(before.x + before.width).toBeLessThanOrEqual(width);
@@ -84,7 +84,7 @@ for (const scale of [2] as const) {
 
           return await frameCompletion.promise;
         });
-        const after = (await popup.boundingBox())!;
+        const after = await popup.boundingBox();
 
         if ((await popup.getAttribute("data-align-trigger")) !== "true") {
           expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(scale);
@@ -108,7 +108,7 @@ for (const scale of [2] as const) {
 
         const bar = popup.locator(".mc-select-scrollbar");
 
-        expect(row!.width).toBe(
+        expect(row.width).toBe(
           Math.min(270, before.width / scale - 30) * scale
         );
 
@@ -122,7 +122,7 @@ for (const scale of [2] as const) {
         );
 
         if (settledMaximum > 0) {
-          const bounds = (await bar.boundingBox())!;
+          const bounds = await bar.boundingBox();
           expect(bounds.x + bounds.width).toBeLessThanOrEqual(
             after.x + after.width
           );

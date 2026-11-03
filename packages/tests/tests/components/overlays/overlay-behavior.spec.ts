@@ -61,7 +61,7 @@ for (const component of ["sheet", "drawer"]) {
       await expect(panel).toBeVisible();
       await expect
         .poll(async () => {
-          const r = (await panel.boundingBox())!;
+          const r = await panel.boundingBox();
 
           return Math.round(
             side === "top"
@@ -183,7 +183,7 @@ test("Drawer dismisses through Base UI swipe details", async ({ page }) => {
   const panel = page.getByRole("dialog");
   await expect(panel).toBeVisible();
 
-  const bounds = (await panel.boundingBox())!;
+  const bounds = await panel.boundingBox();
   await page.mouse.move(bounds.x + 8, bounds.y + 8);
   await page.mouse.down();
   await page.mouse.move(bounds.x + 8, bounds.y + bounds.height * 0.8, {
@@ -205,13 +205,13 @@ test("Drawer supports controlled Base UI snap points", async ({ page }) => {
   await expect(panel).toBeVisible();
   await expect(page.locator("#snap")).toHaveText("0.5");
   await expect
-    .poll(async () => Math.round((await panel.boundingBox())!.y))
+    .poll(async () => Math.round((await panel.boundingBox()).y))
     .toBe(450);
   await panel.locator("#snap-next").evaluate((node: HTMLButtonElement) => {
     node.click();
   });
   await expect(page.locator("#snap")).toHaveText("1");
   await expect
-    .poll(async () => Math.round((await panel.boundingBox())!.y))
+    .poll(async () => Math.round((await panel.boundingBox()).y))
     .toBe(0);
 });

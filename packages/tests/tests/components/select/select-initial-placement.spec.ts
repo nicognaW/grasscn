@@ -16,7 +16,7 @@ for (const scale of [2] as const) {
         const width = mobile ? 390 : 1440;
         const height = mobile ? 844 : 955;
 
-        await page.setViewportSize({ width, height });
+        await page.setViewportSize({ height, width });
         await page.goto(
           `${preview.replace(/\/$/u, "")}/docs/components/${route}`
         );
@@ -57,10 +57,10 @@ for (const scale of [2] as const) {
           await trigger.click();
           const popup = page.locator("[data-slot=select-content][data-open]");
           await expect(popup).toBeVisible();
-          const anchor = (await trigger.boundingBox())!;
+          const anchor = await trigger.boundingBox();
           await expect
             .poll(async () => {
-              const p = (await popup.boundingBox())!;
+              const p = await popup.boundingBox();
 
               return Math.max(
                 p.y - anchor.y - anchor.height,
@@ -77,7 +77,7 @@ for (const scale of [2] as const) {
             const selected = popup.locator("[data-selected]");
             await expect
               .poll(async () => {
-                const row = (await selected.boundingBox())!;
+                const row = await selected.boundingBox();
 
                 return Math.abs(
                   row.y + row.height / 2 - anchor.y - anchor.height / 2
@@ -85,14 +85,14 @@ for (const scale of [2] as const) {
               })
               .toBeLessThanOrEqual(scale);
           } else {
-            const bounds = (await popup.boundingBox())!;
+            const bounds = await popup.boundingBox();
             expect(
               bounds.y >= anchor.y + anchor.height - 1 ||
                 bounds.y + bounds.height <= anchor.y + 1
             ).toBe(true);
           }
 
-          const p = (await popup.boundingBox())!;
+          const p = await popup.boundingBox();
 
           let expectedX = Math.min(
             Math.max(anchor.x, 10),
@@ -103,13 +103,13 @@ for (const scale of [2] as const) {
 
           if (itemAligned) {
             // Base UI aligns the selected text with the value, clamping at its 5px screen inset.
-            const value = (await trigger
+            const value = await trigger
               .locator("[data-slot=select-value]")
-              .boundingBox())!;
+              .boundingBox();
 
-            const text = (await popup
+            const text = await popup
               .locator("[data-selected] .mc-select-item-label")
-              .boundingBox())!;
+              .boundingBox();
 
             expectedX = Math.min(
               Math.max(p.x + value.x - text.x, 5),
@@ -144,8 +144,8 @@ for (const scale of [2] as const) {
       page,
     }) => {
       await page.setViewportSize({
-        width: mobile ? 390 : 1440,
         height: mobile ? 844 : 955,
+        width: mobile ? 390 : 1440,
       });
       await page.goto(`${preview.replace(/\/$/u, "")}/#native-select`);
       const select = page.locator("select#native-mode");

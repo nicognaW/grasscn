@@ -15,7 +15,7 @@ for (const selection of ["alert-dialog"]) {
           warnings.push(m.text());
         }
       });
-      await page.setViewportSize({ width: 390, height: 844 });
+      await page.setViewportSize({ height: 844, width: 390 });
       await page.goto(origin + "docs/components/" + selection);
 
       const stage = page.locator('[data-stage="alert-dialog"]');
@@ -48,7 +48,7 @@ for (const selection of ["alert-dialog"]) {
         .locator("canvas")
         .evaluate((node: HTMLCanvasElement) => {
           const canvas = node;
-          const gl = canvas.getContext("webgl")!;
+          const gl = canvas.getContext("webgl");
           const pixel = new Uint8Array(4);
 
           gl.readPixels(20, 20, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
@@ -79,7 +79,7 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
   test(`Scrolled confirmation preserves ${scene} viewport paint`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
+    await page.setViewportSize({ height: 844, width: 390 });
     await page.goto(origin + "docs/components/alert-dialog");
     await page.evaluate((viewportScene) => {
       const owner = document.createElement("div");
@@ -120,7 +120,7 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
       .locator("canvas")
       .evaluate((node: HTMLCanvasElement, pixelScene) => {
         const canvas = node;
-        const gl = canvas.getContext("webgl")!;
+        const gl = canvas.getContext("webgl");
         const rgba = new Uint8Array(4);
 
         gl.readPixels(

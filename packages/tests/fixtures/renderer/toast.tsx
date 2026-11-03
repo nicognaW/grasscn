@@ -21,7 +21,7 @@ const SonnerFixture = () => {
             (p.get("label") ?? "World saved")
           ),
           {
-            ...(p.has("text") ? { description: p.get("text")! } : {}),
+            ...(p.has("text") ? { description: p.get("text") } : {}),
             ...(p.has("actions")
               ? {
                   action: {

@@ -175,7 +175,7 @@ const TextComponentsFixture = () => {
       </Kbd>
     );
   } else if (component === "typography") {
-    const parts: any = {
+    const parts: Readonly<Partial<Record<string, typeof Typography>>> = {
       blockquote: TypographyBlockquote,
       code: TypographyInlineCode,
       default: Typography,

@@ -47,23 +47,27 @@ test("MessageScroller preserves provider/hooks, viewport ref, scroll API and vis
   await page.goto("?component=message-scroller");
   const viewport = page.getByTestId("viewport");
   await expect
-    .poll(async () =>
-      await viewport.evaluate(
-        (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
-      )
+    .poll(
+      async () =>
+        await viewport.evaluate(
+          (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
+        )
     )
     .toBe(true);
   await page.getByRole("button", { exact: true, name: "API start" }).click();
-  await expect.poll(async () => await viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await expect
+    .poll(async () => await viewport.evaluate((n) => n.scrollTop))
+    .toBe(0);
   await expect(page.getByTestId("scrollable")).toContainText('"end":true');
   await page.getByRole("button", { exact: true, name: "API message" }).click();
   await expect(page.getByTestId("visible")).toContainText('"15"');
   await page.getByRole("button", { exact: true, name: "API end" }).click();
   await expect
-    .poll(async () =>
-      await viewport.evaluate(
-        (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
-      )
+    .poll(
+      async () =>
+        await viewport.evaluate(
+          (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
+        )
     )
     .toBe(true);
   await page.locator("#read-ref").click();
@@ -75,30 +79,38 @@ test("MessageScroller native buttons and auto-scroll retain keyboard/manual cont
 }) => {
   await page.goto("?component=message-scroller&position=start");
   const viewport = page.getByTestId("viewport");
-  await expect.poll(async () => await viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await expect
+    .poll(async () => await viewport.evaluate((n) => n.scrollTop))
+    .toBe(0);
   const end = page.getByRole("button", { exact: true, name: "Scroll to end" });
   await end.focus();
   await page.keyboard.press("Enter");
   await expect
-    .poll(async () =>
-      await viewport.evaluate(
-        (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
-      )
+    .poll(
+      async () =>
+        await viewport.evaluate(
+          (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
+        )
     )
     .toBe(true);
   await page.getByRole("button", { exact: true, name: "Append" }).click();
   await expect(page.getByTestId("message-31")).toBeAttached();
   await expect
-    .poll(async () =>
-      await viewport.evaluate(
-        (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
-      )
+    .poll(
+      async () =>
+        await viewport.evaluate(
+          (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
+        )
     )
     .toBe(true);
   await page.getByRole("button", { exact: true, name: "API start" }).click();
-  await expect.poll(async () => await viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await expect
+    .poll(async () => await viewport.evaluate((n) => n.scrollTop))
+    .toBe(0);
   await page.getByRole("button", { exact: true, name: "Append" }).click();
-  await expect.poll(async () => await viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await expect
+    .poll(async () => await viewport.evaluate((n) => n.scrollTop))
+    .toBe(0);
 });
 
 test("MessageScroller preserves visible anchor position on prepend", async ({
@@ -107,12 +119,12 @@ test("MessageScroller preserves visible anchor position on prepend", async ({
   await page.goto("?component=message-scroller&noauto=1");
   await page.getByRole("button", { exact: true, name: "API message" }).click();
   await expect(page.getByTestId("visible")).toContainText('"15"');
-  const before = (await page.getByTestId("message-15").boundingBox())!.y;
+  const before = (await page.getByTestId("message-15").boundingBox()).y;
   await page.getByRole("button", { exact: true, name: "Prepend" }).click();
   await expect(page.getByTestId("message-0")).toBeAttached();
   await expect
     .poll(async () =>
-      Math.abs((await page.getByTestId("message-15").boundingBox())!.y - before)
+      Math.abs((await page.getByTestId("message-15").boundingBox()).y - before)
     )
     .toBeLessThanOrEqual(1);
 });

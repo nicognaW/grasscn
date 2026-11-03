@@ -47,15 +47,15 @@ for (const scale of [2]) {
 
         for (const control of await stage.getByRole("combobox").all()) {
           const b = await control.boundingBox();
-          expect(b!.x).toBeGreaterThanOrEqual(0);
-          expect(b!.x + b!.width).toBeLessThanOrEqual(mobile ? 390 : 1440);
+          expect(b.x).toBeGreaterThanOrEqual(0);
+          expect(b.x + b.width).toBeLessThanOrEqual(mobile ? 390 : 1440);
         }
 
         const canvas = chart.locator("canvas");
         await expect(canvas).toBeVisible();
         const bounds = await canvas.boundingBox();
-        expect(bounds!.x).toBeGreaterThanOrEqual(0);
-        expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(
+        expect(bounds.x).toBeGreaterThanOrEqual(0);
+        expect(bounds.x + bounds.width).toBeLessThanOrEqual(
           mobile ? 390 : 1440
         );
         const buffer = await canvas.screenshot();
@@ -137,7 +137,9 @@ test("Analytics chart rerasterizes when available width changes", async ({
 
   const width = await canvas.getAttribute("width");
   await page.setViewportSize({ height: 1000, width: 540 });
-  await expect.poll(async () => await canvas.getAttribute("width")).not.toBe(width);
+  await expect
+    .poll(async () => await canvas.getAttribute("width"))
+    .not.toBe(width);
   await expect(chart.locator("canvas")).toHaveAttribute(
     "data-mc-ready",
     "true"

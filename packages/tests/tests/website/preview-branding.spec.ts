@@ -51,7 +51,7 @@ test("Header serves the preserved branding source at its actual production geome
     ...new Uint8Array(
       await (
         await fetch(
-          document.querySelector<HTMLLinkElement>('link[rel="icon"]')!.href
+          document.querySelector<HTMLLinkElement>('link[rel="icon"]').href
         )
       ).arrayBuffer()
     ),
@@ -69,7 +69,7 @@ test("Grasscn logo stays crisp and contained on narrow preview screens", async (
   page,
 }) => {
   for (const width of [320, 390]) {
-    await page.setViewportSize({ width, height: 844 });
+    await page.setViewportSize({ height: 844, width });
     await page.goto(`${origin}docs`);
 
     const logo = page

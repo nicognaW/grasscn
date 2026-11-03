@@ -229,10 +229,9 @@ export const SidebarFixture = () => {
           <SidebarContent id="subject" style={position} data-subject="true">
             <div
               style={{
-                height: Number(p.get("contentHeight") ?? 0) * scale,
-                position: "relative",
-                overflow: "hidden",
+                "--fixture-layout-22": `${Number(p.get("contentHeight") ?? 0) * scale}px`,
               }}
+              className="fixture-owner-layout-38 fixture-owner-layout-39 fixture-owner-layout-47"
             >
               {Array.from(
                 { length: Math.ceil(Number(p.get("contentHeight") ?? 0) / 24) },

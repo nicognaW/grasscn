@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./assertions": "./src/harness/assertions.ts",
     "./test": "./src/harness/test.ts",
     "./paths": "./src/paths.ts",
     "./fixture": "./src/runtime/fixture.ts",

@@ -267,10 +267,10 @@ const DraftDemos = ({
         <div
           id="subject"
           style={{
-            height: 17 * scale,
-            position: "relative",
-            width: 182 * scale,
+            "--fixture-layout-1": `${17 * scale}px`,
+            "--fixture-layout-2": `${182 * scale}px`,
           }}
+          className="fixture-owner-layout-2 fixture-owner-layout-3 fixture-owner-layout-4"
           data-subject="true"
         >
           <LocatorBar
@@ -417,15 +417,18 @@ const DraftDemos = ({
       <div
         id="subject"
         style={{
-          height: 140 * scale,
-          overflow: "hidden",
-          position: "relative",
-          width: 6 * scale,
+          "--fixture-layout-3": `${140 * scale}px`,
+          "--fixture-layout-4": `${6 * scale}px`,
         }}
+        className="fixture-owner-layout-5 fixture-owner-layout-6 fixture-owner-layout-7 fixture-owner-layout-8"
         data-subject="true"
       >
         <div
-          style={{ left: -94 * scale, position: "absolute", top: -18 * scale }}
+          style={{
+            "--fixture-layout-5": `${-94 * scale}px`,
+            "--fixture-layout-6": `${-18 * scale}px`,
+          }}
+          className="fixture-owner-layout-9 fixture-owner-layout-10 fixture-owner-layout-11"
         >
           {content}
         </div>

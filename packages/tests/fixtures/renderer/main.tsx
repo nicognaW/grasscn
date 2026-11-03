@@ -181,7 +181,7 @@ const SelectFixture = () => {
   // SAFETY: owned Select titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
   // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Select titles query-label producer boundary.
   const titles: string[] = params.has("labels")
-    ? (JSON.parse(params.get("labels")!) as FixtureLabels)
+    ? (JSON.parse(params.get("labels")) as FixtureLabels)
     : ["Survival", "Creative", "Adventure"];
   // oxlint-enable typescript/no-unsafe-type-assertion
 
@@ -391,7 +391,8 @@ const RadioFixture = () => {
   const items = names.map((name, index) => (
     <div
       key={name}
-      style={{ alignItems: "center", display: "flex", gap: 4 * scale }}
+      style={{ "--fixture-layout-7": `${4 * scale}px` }}
+      className="fixture-owner-layout-12 fixture-owner-layout-13 fixture-owner-layout-14"
     >
       <RadioGroupItem
         render={
@@ -1572,12 +1573,10 @@ const PopoverFixture = () => {
           <div
             ref={anchor}
             style={{
-              height: 0,
-              left: Number(params.get("x") ?? 16) * scale,
-              position: "fixed",
-              top: Number(params.get("y") ?? 16) * scale,
-              width: 0,
+              "--fixture-layout-19": `${Number(params.get("x") ?? 16) * scale}px`,
+              "--fixture-layout-20": `${Number(params.get("y") ?? 16) * scale}px`,
             }}
+            className="fixture-owner-layout-15 fixture-owner-layout-16 fixture-owner-layout-17 fixture-owner-layout-44 fixture-owner-layout-45"
           />
         )}
         <PopoverTrigger ref={trigger} disabled={params.has("disabled")}>
@@ -1640,9 +1639,12 @@ const PopoverFixture = () => {
                   </Button>
                 </form>
               )}
-              <div style={{ display: "flex", gap: 6 * scale }}>
+              <div
+                style={{ "--fixture-layout-8": `${6 * scale}px` }}
+                className="fixture-owner-layout-18 fixture-owner-layout-19"
+              >
                 <PopoverClose
-                  style={{ width: "100%" }}
+                  className="fixture-owner-layout-20"
                   onClick={() => {
                     setActions((n) => n + 1);
                   }}
@@ -1697,13 +1699,7 @@ const PopoverCompositionFixture = () => {
         <div
           ref={anchor}
           id="composed-anchor"
-          style={{
-            height: 24,
-            left: 240,
-            position: "fixed",
-            top: 180,
-            width: 32,
-          }}
+          className="fixture-layout-bulk-1"
         />
         <PopoverTrigger render={<Button scale={scale} />} ref={trigger}>
           Composed trigger
@@ -1715,7 +1711,8 @@ const PopoverCompositionFixture = () => {
           side="bottom"
           align="start"
           sideOffset={0}
-          style={{ width: 236 * scale }}
+          style={{ "--fixture-layout-9": `${236 * scale}px` }}
+          className="fixture-owner-layout-21"
         >
           <>
             <PopoverHeader>
@@ -1778,12 +1775,11 @@ const AlertDialogFixture = () => {
           <div data-dialog-underlay="true" className="fixture-dialog-underlay">
             <div
               style={{
-                display: "flex",
-                height: 64 * scale,
-                left: 18 * scale,
-                position: "absolute",
-                top: 18 * scale,
+                "--fixture-layout-10": `${64 * scale}px`,
+                "--fixture-layout-11": `${18 * scale}px`,
+                "--fixture-layout-12": `${18 * scale}px`,
               }}
+              className="fixture-owner-layout-22 fixture-owner-layout-23 fixture-owner-layout-24 fixture-owner-layout-25 fixture-owner-layout-26"
             >
               {Array.from({ length: 256 }, (_, i) => (
                 <i
@@ -2019,7 +2015,7 @@ const DialogFixture = () => {
   // SAFETY: owned Dialog actions callers serialize string label arrays; preserve this branch's existing parameter/default read.
   // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Dialog actions query-label producer boundary.
   const labels: string[] = params.has("labels")
-    ? (JSON.parse(params.get("labels")!) as FixtureLabels)
+    ? (JSON.parse(params.get("labels")) as FixtureLabels)
     : ["Cancel", "Continue"];
   // oxlint-enable typescript/no-unsafe-type-assertion
 
@@ -2036,12 +2032,11 @@ const DialogFixture = () => {
           <div data-dialog-underlay="true" className="fixture-dialog-underlay">
             <div
               style={{
-                display: "flex",
-                height: 64 * scale,
-                left: 18 * scale,
-                position: "absolute",
-                top: 18 * scale,
+                "--fixture-layout-13": `${64 * scale}px`,
+                "--fixture-layout-14": `${18 * scale}px`,
+                "--fixture-layout-15": `${18 * scale}px`,
               }}
+              className="fixture-owner-layout-27 fixture-owner-layout-28 fixture-owner-layout-29 fixture-owner-layout-30 fixture-owner-layout-31"
             >
               {Array.from({ length: 256 }, (_, i) => (
                 <i
@@ -2448,7 +2443,7 @@ const Fixture = () => {
     // SAFETY: owned Tabs titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
     // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Tabs titles query-label producer boundary.
     const titles: string[] = params.has("labels")
-      ? (JSON.parse(params.get("labels")!) as FixtureLabels)
+      ? (JSON.parse(params.get("labels")) as FixtureLabels)
       : ["Game", "World", "More"];
     // oxlint-enable typescript/no-unsafe-type-assertion
 
@@ -2627,16 +2622,14 @@ const Fixture = () => {
     const rows = (
       <div
         key="rows"
-        style={{ height: scrollContent * scale, overflow: "hidden" }}
+        style={{ "--fixture-layout-16": `${scrollContent * scale}px` }}
+        className="fixture-owner-layout-32 fixture-owner-layout-33"
       >
         {Array.from({ length: Math.ceil(scrollContent / 24) }, (_, index) => (
           <div
             key={index}
-            style={{
-              alignItems: "flex-start",
-              display: "flex",
-              height: 24 * scale,
-            }}
+            style={{ "--fixture-layout-17": `${24 * scale}px` }}
+            className="fixture-owner-layout-34 fixture-owner-layout-35 fixture-owner-layout-36"
           >
             <Button
               scale={scale}
@@ -2884,10 +2877,11 @@ const Fixture = () => {
           aria-label="Test card"
           scale={scale}
           style={{
-            width: width * scale,
-            height: Number(params.get("height") ?? 200) * scale,
+            "--fixture-layout-18": `${width * scale}px`,
+            "--fixture-layout-21": `${Number(params.get("height") ?? 200) * scale}px`,
             padding: params.has("text") ? undefined : 0,
           }}
+          className="fixture-owner-layout-37 fixture-owner-layout-46"
           data-subject="true"
         >
           {params.has("text") && (
@@ -3230,7 +3224,7 @@ const Fixture = () => {
   );
 };
 
-createRoot(document.querySelector("#root")!).render(
+createRoot(document.querySelector("#root")).render(
   params.get("component") === "custom-api" ? (
     <CustomApiFixture />
   ) : (

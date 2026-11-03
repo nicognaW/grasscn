@@ -81,7 +81,7 @@ test("custom skin can fail, recover, and replace another model without remountin
 }) => {
   await page.route("https://mc-heads.net/skin/*", async (route) => {
     const name = decodeURIComponent(
-      new URL(route.request().url()).pathname.split("/").pop()!
+      new URL(route.request().url()).pathname.split("/").pop()
     );
 
     if (name === "Missing") {

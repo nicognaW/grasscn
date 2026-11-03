@@ -1,10 +1,17 @@
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
+import { expectLength } from "@grasscn/tests/assertions";
 import {
   getMinecraftSoundVolume,
   setMinecraftSoundVolume,
 } from "@grasscn/web/ui/minecraft-sound";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+
+declare global {
+  interface Window {
+    __previewVoices?: Voice[];
+  }
+}
 
 interface Voice {
   source: string;
@@ -13,11 +20,11 @@ interface Voice {
 }
 
 const voices = async (page: Page) =>
-  await page.evaluate(() => (window as any).__previewVoices as Voice[]);
+  await page.evaluate(() => window.__previewVoices);
 
 const clearVoices = async (page: Page) => {
   await page.evaluate(() => {
-    (window as any).__previewVoices = [];
+    window.__previewVoices = [];
   });
 };
 
@@ -27,9 +34,9 @@ const origin = (
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
-    (window as any).__previewVoices = [];
+    window.__previewVoices = [];
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).__previewVoices.push({
+      window.__previewVoices!.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -96,7 +103,7 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
       .getByRole("link", { exact: true, name })
       .click();
     await page.evaluate((previousVoices) => {
-      (window as any).__previewVoices = previousVoices;
+      window.__previewVoices = previousVoices;
     }, previous);
   };
 
@@ -149,7 +156,7 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
   await navigate("Checkbox");
   await checkbox.check();
   const audible = await voices(page);
-  expect(audible).toHaveLength(3);
+  expectLength(audible, 3);
 
   for (const voice of audible) {
     expect(voice).toEqual({
@@ -186,7 +193,7 @@ test("Keyboard volume changes persist when the slider demo is filtered out", asy
     .first()
     .click();
   const played = await voices(page);
-  expect(played).toHaveLength(1);
+  expectLength(played, 1);
   expect(played[0].volume).toBeCloseTo(0.1275);
   expect(played[0].source).toBe(minecraftClickSound);
   expect(played[0].rate).toBe(1);

@@ -75,14 +75,13 @@ export const ColorPainterStressFixture = () => {
                   <span
                     data-stress-label
                     key={index}
-                    className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
+                    className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-owner-layout-43"
                     style={{
                       "--fixture-x": `${700 + index}px`,
                       "--fixture-y": `${300 + index}px`,
                       color: ["#55ff55", "#ff55ff", "#ffaa00", "#55ffff"][
                         index % 4
                       ],
-                      opacity: 0,
                     }}
                   >
                     <MinecraftColorUnicodeLabel

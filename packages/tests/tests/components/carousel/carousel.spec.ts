@@ -95,7 +95,7 @@ test("Carousel supports pointer dragging and reinitialization after dynamic slid
   page,
 }) => {
   await page.goto("/?component=carousel");
-  const b = (await page.locator("[data-slot=carousel-content]").boundingBox())!;
+  const b = await page.locator("[data-slot=carousel-content]").boundingBox();
   await page.mouse.move(b.x + b.width - 20, b.y + 30);
   await page.mouse.down();
   await page.mouse.move(b.x + 20, b.y + 30, { steps: 20 });

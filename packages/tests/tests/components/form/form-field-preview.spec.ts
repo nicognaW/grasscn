@@ -1,5 +1,6 @@
 import { test, expect } from "@grasscn/tests/test";
 import { documentationRegistry } from "@tests/checks/documentation-inventory.mjs";
+import { expectDefined } from "@grasscn/tests/assertions";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
@@ -138,7 +139,7 @@ test("Field is independently documented while installed through Form", async ({
 
   const registry = documentationRegistry();
   const form = registry.find((item) => item.name === "form");
-  expect(form).toBeDefined();
+  expectDefined(form);
   expect(
     form?.files?.some((file) => file.path === "registry/ui/field.tsx")
   ).toBe(true);

@@ -11,8 +11,8 @@ test("Button keeps consumer SVG/rich nodes, props, handlers and intended spacing
   await expect(icon).toHaveCount(1);
   await expect(rich).toHaveAttribute("data-preserved", "yes");
 
-  const a = (await icon.boundingBox())!;
-  const b = (await rich.boundingBox())!;
+  const a = await icon.boundingBox();
+  const b = await rich.boundingBox();
 
   expect(b.x - a.x - a.width).toBeGreaterThan(0);
   await rich.click();

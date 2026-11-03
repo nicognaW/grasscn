@@ -1,5 +1,6 @@
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
+import type { Layout } from "react-resizable-panels";
 
 const layoutLeft = async function layoutLeft(page: Page) {
   const text = await page.locator("#layout").textContent();
@@ -8,7 +9,9 @@ const layoutLeft = async function layoutLeft(page: Page) {
     throw new Error("Resizable layout text is missing");
   }
 
-  return JSON.parse(text).left;
+  // SAFETY: the fixture serializes the actual panel-group layout for the authored left/right panel IDs.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Real resizable-panel Layout producer.
+  return (JSON.parse(text) as Layout).left;
 };
 
 test("Resizable preserves horizontal and vertical geometry and standard separator semantics", async ({
@@ -27,8 +30,8 @@ test("Resizable preserves horizontal and vertical geometry and standard separato
     );
     await expect(handle).toHaveAttribute("aria-valuenow", "50");
 
-    const left = (await page.locator("#left").boundingBox())!;
-    const right = (await page.locator("#right").boundingBox())!;
+    const left = await page.locator("#left").boundingBox();
+    const right = await page.locator("#right").boundingBox();
 
     expect(
       orientation === "horizontal" ? right.x > left.x : right.y > left.y
@@ -41,7 +44,7 @@ test("Resizable responds to pointer dragging and reports layouts", async ({
 }) => {
   await page.goto("/?component=resizable");
   const handle = page.getByRole("separator", { name: "Resize panels" });
-  const box = (await handle.boundingBox())!;
+  const box = await handle.boundingBox();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2 + 80, box.y + box.height / 2, {
@@ -140,7 +143,7 @@ for (const orientation of ["horizontal", "vertical"]) {
 
     const handle = page.getByRole("separator", { name: "Resize panels" });
     const arrow = handle.locator("[data-slot=resizable-arrow]").first();
-    const bounds = (await arrow.boundingBox())!;
+    const bounds = await arrow.boundingBox();
 
     expect(bounds.width < bounds.height).toBe(orientation === "horizontal");
     expect(await handle.evaluate((node) => getComputedStyle(node).cursor)).toBe(

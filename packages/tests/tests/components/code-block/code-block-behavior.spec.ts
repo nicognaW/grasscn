@@ -42,8 +42,8 @@ test("CodeBlock all eight exports retain semantics, ref, keyboard focus and real
 
   const selection = await subject.evaluate((el) => {
     const range = document.createRange();
-    range.selectNodeContents(el.querySelector("code")!);
-    const browserSelection = getSelection()!;
+    range.selectNodeContents(el.querySelector("code"));
+    const browserSelection = getSelection();
     browserSelection.removeAllRanges();
     browserSelection.addRange(range);
 
@@ -67,8 +67,8 @@ test("CodeBlock scalar CJK selection preserves original newlines without duplica
 
   const selected = await page.locator("[data-subject]").evaluate((el) => {
     const range = document.createRange();
-    range.selectNodeContents(el.querySelector("code")!);
-    const selection = getSelection()!;
+    range.selectNodeContents(el.querySelector("code"));
+    const selection = getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
 

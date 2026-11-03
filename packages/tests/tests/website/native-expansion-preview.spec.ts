@@ -18,7 +18,7 @@ for (const [name, title] of [
   test(`local ${name} preview`, async ({ page }, info) => {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.setViewportSize({ height: 1000, width: 1440 });
     await page.goto(`${origin}/docs/components/${name}`);
     await expect(
       page.getByRole("heading", { exact: true, name: title })
@@ -225,7 +225,7 @@ for (const [name, title] of [
 
 for (const name of ["map", "trading", "player-list"]) {
   test(`mobile ${name} preview fits viewport`, async ({ page }, info) => {
-    await page.setViewportSize({ width: 390, height: 844 });
+    await page.setViewportSize({ height: 844, width: 390 });
     await page.goto(`${origin}/docs/components/${name}`);
     await expect(
       page.locator(`.documentation-playground [data-stage="${name}"]`)
@@ -236,7 +236,7 @@ for (const name of ["map", "trading", "player-list"]) {
       )
     ).toBe(true);
     const card = page.locator(".documentation-playground");
-    const bounds = (await card.boundingBox())!;
+    const bounds = await card.boundingBox();
     expect(bounds.x + bounds.width).toBeLessThanOrEqual(390);
     await page.screenshot({
       path: info.outputPath(`${name}-website-mobile.png`),

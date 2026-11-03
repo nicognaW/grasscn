@@ -1,6 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 
 import { test, expect } from "@grasscn/tests/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
 
@@ -154,7 +155,7 @@ test("default composed documentation examples retain their owned state and callb
   });
 
   const box = await handle.boundingBox();
-  expect(box).not.toBeNull();
+  expectNotNull(box);
 
   if (!box) {
     throw new Error("Resizable handle has no bounds");

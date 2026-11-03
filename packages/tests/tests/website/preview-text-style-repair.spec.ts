@@ -12,16 +12,17 @@ const open = async function open(page: Page, name: string) {
 
 const labelFits = async function labelFits(button: Locator) {
   await expect
-    .poll(async () =>
-      await button.evaluate((node) => {
-        const box = node.getBoundingClientRect();
+    .poll(
+      async () =>
+        await button.evaluate((node) => {
+          const box = node.getBoundingClientRect();
 
-        const label = node
-          .querySelector(".mc-button-label")!
-          .getBoundingClientRect();
+          const label = node
+            .querySelector(".mc-button-label")
+            .getBoundingClientRect();
 
-        return label.left >= box.left - 0.5 && label.right <= box.right + 0.5;
-      })
+          return label.left >= box.left - 0.5 && label.right <= box.right + 0.5;
+        })
     )
     .toBe(true);
 };
@@ -79,7 +80,9 @@ test("Questionnaire action labels fit, CJK submission works and restart clears t
   );
   await card.getByRole("button", { exact: true, name: "Save world" }).click();
   await expect
-    .poll(async () => await card.getByLabel("World setup result").ariaSnapshot())
+    .poll(
+      async () => await card.getByLabel("World setup result").ariaSnapshot()
+    )
     .toContain("World created: 你好 世界");
   await card.getByRole("button", { exact: true, name: "Start again" }).click();
   await expect(
@@ -123,8 +126,8 @@ test("Attachment supports CJK filenames, preview, removal and restoration inside
     const row = card.locator('[data-slot="attachment"]');
 
     await expect(row).toContainText("世界存档.zip");
-    expect((await row.boundingBox())!.width).toBeLessThanOrEqual(
-      (await stage.boundingBox())!.width
+    expect((await row.boundingBox()).width).toBeLessThanOrEqual(
+      (await stage.boundingBox()).width
     );
   }
 
@@ -153,24 +156,26 @@ test("MessageScroller footer texture stays bound to its button and never covers 
     const latest = card.getByRole("button", { exact: true, name: "Latest" });
 
     await expect(latest).toBeVisible();
-    expect((await latest.boundingBox())!.y).toBeGreaterThanOrEqual(
-      (await viewport.boundingBox())!.y + (await viewport.boundingBox())!.height
+    expect((await latest.boundingBox()).y).toBeGreaterThanOrEqual(
+      (await viewport.boundingBox()).y + (await viewport.boundingBox()).height
     );
     const skin = latest.locator(".mc-button-surface");
-    expect((await skin.boundingBox())!.height).toBeCloseTo(
-      (await latest.boundingBox())!.height,
+    expect((await skin.boundingBox()).height).toBeCloseTo(
+      (await latest.boundingBox()).height,
       0
     );
-    expect((await skin.boundingBox())!.width).toBeCloseTo(
-      (await latest.boundingBox())!.width,
+    expect((await skin.boundingBox()).width).toBeCloseTo(
+      (await latest.boundingBox()).width,
       0
     );
     await latest.click();
     await expect
-      .poll(async () =>
-        await viewport.evaluate(
-          (node) => node.scrollTop + node.clientHeight >= node.scrollHeight - 2
-        )
+      .poll(
+        async () =>
+          await viewport.evaluate(
+            (node) =>
+              node.scrollTop + node.clientHeight >= node.scrollHeight - 2
+          )
       )
       .toBe(true);
   }
@@ -185,10 +190,11 @@ test("MessageScroller footer texture stays bound to its button and never covers 
   ).toContainText("<You> 你好，矿工！");
   const viewport = card.getByRole("region", { name: "Player chat" });
   await expect
-    .poll(async () =>
-      await viewport.evaluate(
-        (node) => node.scrollTop + node.clientHeight >= node.scrollHeight - 2
-      )
+    .poll(
+      async () =>
+        await viewport.evaluate(
+          (node) => node.scrollTop + node.clientHeight >= node.scrollHeight - 2
+        )
     )
     .toBe(true);
   await card.getByRole("button", { exact: true, name: "First" }).click();

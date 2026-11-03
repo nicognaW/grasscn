@@ -58,3 +58,157 @@
 .fixture-width-180 {
   width: 180px;
 }
+
+/* Authored intrinsic fixture layouts; component caller-style probes stay inline. */
+.fixture-layout-bulk-1 {
+  height: 24px;
+  left: 240px;
+  position: fixed;
+  top: 180px;
+  width: 32px;
+}
+
+/* Additional fixture-owned composition layout. */
+.fixture-owner-layout-1 {
+  display: grid;
+}
+.fixture-owner-layout-2 {
+  height: var(--fixture-layout-1);
+}
+.fixture-owner-layout-3 {
+  position: relative;
+}
+.fixture-owner-layout-4 {
+  width: var(--fixture-layout-2);
+}
+.fixture-owner-layout-5 {
+  height: var(--fixture-layout-3);
+}
+.fixture-owner-layout-6 {
+  overflow: hidden;
+}
+.fixture-owner-layout-7 {
+  position: relative;
+}
+.fixture-owner-layout-8 {
+  width: var(--fixture-layout-4);
+}
+.fixture-owner-layout-9 {
+  left: var(--fixture-layout-5);
+}
+.fixture-owner-layout-10 {
+  position: absolute;
+}
+.fixture-owner-layout-11 {
+  top: var(--fixture-layout-6);
+}
+.fixture-owner-layout-12 {
+  align-items: center;
+}
+.fixture-owner-layout-13 {
+  display: flex;
+}
+.fixture-owner-layout-14 {
+  gap: var(--fixture-layout-7);
+}
+.fixture-owner-layout-15 {
+  height: 0;
+}
+.fixture-owner-layout-16 {
+  position: fixed;
+}
+.fixture-owner-layout-17 {
+  width: 0;
+}
+.fixture-owner-layout-18 {
+  display: flex;
+}
+.fixture-owner-layout-19 {
+  gap: var(--fixture-layout-8);
+}
+.fixture-owner-layout-20 {
+  width: 100%;
+}
+.fixture-owner-layout-21 {
+  width: var(--fixture-layout-9);
+}
+.fixture-owner-layout-22 {
+  display: flex;
+}
+.fixture-owner-layout-23 {
+  height: var(--fixture-layout-10);
+}
+.fixture-owner-layout-24 {
+  left: var(--fixture-layout-11);
+}
+.fixture-owner-layout-25 {
+  position: absolute;
+}
+.fixture-owner-layout-26 {
+  top: var(--fixture-layout-12);
+}
+.fixture-owner-layout-27 {
+  display: flex;
+}
+.fixture-owner-layout-28 {
+  height: var(--fixture-layout-13);
+}
+.fixture-owner-layout-29 {
+  left: var(--fixture-layout-14);
+}
+.fixture-owner-layout-30 {
+  position: absolute;
+}
+.fixture-owner-layout-31 {
+  top: var(--fixture-layout-15);
+}
+.fixture-owner-layout-32 {
+  height: var(--fixture-layout-16);
+}
+.fixture-owner-layout-33 {
+  overflow: hidden;
+}
+.fixture-owner-layout-34 {
+  align-items: flex-start;
+}
+.fixture-owner-layout-35 {
+  display: flex;
+}
+.fixture-owner-layout-36 {
+  height: var(--fixture-layout-17);
+}
+.fixture-owner-layout-37 {
+  width: var(--fixture-layout-18);
+}
+.fixture-owner-layout-38 {
+  position: relative;
+}
+.fixture-owner-layout-39 {
+  overflow: hidden;
+}
+.fixture-owner-layout-40 {
+  display: block;
+}
+.fixture-owner-layout-41 {
+  padding: 0;
+}
+
+/* Additional fixture-owned composition layout. */
+.fixture-owner-layout-42 {
+  place-items: center;
+}
+.fixture-owner-layout-43 {
+  opacity: 0;
+}
+.fixture-owner-layout-44 {
+  left: var(--fixture-layout-19);
+}
+.fixture-owner-layout-45 {
+  top: var(--fixture-layout-20);
+}
+.fixture-owner-layout-46 {
+  height: var(--fixture-layout-21);
+}
+.fixture-owner-layout-47 {
+  height: var(--fixture-layout-22);
+}

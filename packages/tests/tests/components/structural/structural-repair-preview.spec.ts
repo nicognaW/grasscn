@@ -29,7 +29,7 @@ for (const scale of [2]) {
   test(`Retained Data Table and Resizable playground controls preserve behavior at scale${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.setViewportSize({ height: 1000, width: 1440 });
     await page.goto(`${origin}docs/components/data-table`);
 
     const table = page.getByRole("region", {

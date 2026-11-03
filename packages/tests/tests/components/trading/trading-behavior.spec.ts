@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { test, expect } from "@grasscn/tests/test";
 import { tradingSounds as clips } from "@grasscn/web/ui/minecraft-trading-sound-assets";
 import { referenceFile } from "@tests/paths";
+import type TradingSoundReference from "../../../fixtures/reference/native-expansion/trading-sound-provenance.json";
 
 interface TradingAudioPlayback {
   pitch: number;
@@ -22,12 +23,15 @@ const url = (sample: object = {}) =>
   `${base}?scale=2&case=${encodeURIComponent(JSON.stringify({ element: "trading", value: 0, ...sample }))}`;
 
 test("trading original sound bytes decode in the browser", async ({ page }) => {
+  // SAFETY: this exact retained producer file defines the parsed sound provenance; keep its fresh read and all existing asset checks.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact sound-provenance JSON producer boundary.
   const provenance = JSON.parse(
     readFileSync(
       referenceFile("native-expansion/trading-sound-provenance.json"),
       "utf-8"
     )
-  );
+  ) as typeof TradingSoundReference;
+  // oxlint-enable typescript/no-unsafe-type-assertion
 
   expect(clips).toHaveLength(3);
 
@@ -97,8 +101,9 @@ test("trading selection, result feedback and native scrollbar controls", async (
   });
   await page.goto(url());
   await expect
-    .poll(async () =>
-      await page.evaluate(() => document.documentElement.dataset.tradingRef)
+    .poll(
+      async () =>
+        await page.evaluate(() => document.documentElement.dataset.tradingRef)
     )
     .toBe("trading");
   await page.getByRole("button", { exact: true, name: "Offer 2" }).click();
@@ -156,7 +161,7 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await scroll.hover();
   await page.mouse.wheel(0, 100);
   await expect(scroll).toHaveAttribute("aria-valuenow", "1");
-  const box = (await scroll.boundingBox())!;
+  const box = await scroll.boundingBox();
   await page.mouse.move(box.x + 3, box.y + box.height - 8);
   await page.mouse.down();
   await page.mouse.move(box.x + 3, box.y + box.height - 2);

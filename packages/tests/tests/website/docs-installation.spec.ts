@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 
 import { test, expect } from "@grasscn/tests/test";
 import { documentationRegistry } from "@tests/checks/documentation-inventory.mjs";
+import { expectDefined } from "@grasscn/tests/assertions";
 
 // These properties capture clipboard writes performed by this test page.
 declare global {
@@ -143,7 +144,7 @@ test("Button manual installation exposes complete files and defers large resourc
 
   const registry = documentationRegistry();
   const item = registry.find((entry) => entry.name === "button");
-  expect(item).toBeDefined();
+  expectDefined(item);
 
   if (item?.files === undefined) {
     throw new Error("Button manual source files required");
