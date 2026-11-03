@@ -122,6 +122,45 @@ mutation.data[0] ^= 1;
 
 assert.equal(comparator(control, mutation), 1);
 
+const advanceToastPhase = async (
+  c: ToastCaptureManifest["cases"][number],
+  component: string,
+  fixturePage: Page | undefined
+) => {
+  if (c.state === "exiting") {
+    await fixturePage!.clock.fastForward(600);
+    await fixturePage!.locator("#close").evaluate((n: HTMLElement) => {
+      // SAFETY: the Sonner fixture #close is its HTML close button; retain the existing direct click call.
+      n.click();
+    });
+    await fixturePage!.clock.fastForward(component === "sonner" ? 16 : 0);
+    await expect(
+      fixturePage!
+        .locator(
+          component === "sonner" ? "[data-sonner-toast]" : '[data-slot="toast"]'
+        )
+        .first()
+    ).toHaveAttribute(
+      component === "sonner" ? "data-removed" : "data-state",
+      component === "sonner" ? "true" : "closed"
+    );
+  }
+
+  await fixturePage!.clock.fastForward(c.timeMs);
+
+  if (c.state !== "exiting" || c.timeMs < 600) {
+    await expect(fixturePage!.locator("[data-mc-toast-ready]")).toHaveCount(
+      c.selectedIndex ?? 1
+    );
+
+    for (const canvas of await fixturePage!
+      .locator("[data-mc-toast-ready]")
+      .all()) {
+      await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
+    }
+  }
+};
+
 const browser = await chromium.launch({ channel: "msedge" });
 
 try {
@@ -129,7 +168,10 @@ try {
   let page: Page | undefined;
   let errors: string[] = [];
 
-  const verifyToastCase = async (c: ToastCaptureManifest["cases"][number], fixturePage: Page | undefined) => {
+  const verifyToastCase = async (
+    c: ToastCaptureManifest["cases"][number],
+    fixturePage: Page | undefined
+  ) => {
     const component = componentArg;
 
     const q = new URLSearchParams({
@@ -175,44 +217,17 @@ try {
       c.selectedIndex ?? 1
     );
 
-    for (const canvas of await fixturePage!.locator("[data-mc-toast-ready]").all()) {
+    for (const canvas of await fixturePage!
+      .locator("[data-mc-toast-ready]")
+      .all()) {
       await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
     }
 
-    if (c.state === "exiting") {
-      await fixturePage!.clock.fastForward(600);
-      await fixturePage!.locator("#close").evaluate((n: HTMLElement) => {
-        // SAFETY: the Sonner fixture #close is its HTML close button; retain the existing direct click call.
-        n.click();
-      });
-      await fixturePage!.clock.fastForward(component === "sonner" ? 16 : 0);
-      await expect(
-        fixturePage!
-          .locator(
-            component === "sonner"
-              ? "[data-sonner-toast]"
-              : '[data-slot="toast"]'
-          )
-          .first()
-      ).toHaveAttribute(
-        component === "sonner" ? "data-removed" : "data-state",
-        component === "sonner" ? "true" : "closed"
-      );
-    }
+    await advanceToastPhase(c, component, fixturePage);
 
-    await fixturePage!.clock.fastForward(c.timeMs);
-
-    if (c.state !== "exiting" || c.timeMs < 600) {
-      await expect(fixturePage!.locator("[data-mc-toast-ready]")).toHaveCount(
-        c.selectedIndex ?? 1
-      );
-
-      for (const canvas of await fixturePage!.locator("[data-mc-toast-ready]").all()) {
-        await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
-      }
-    }
-
-    await fixturePage!.evaluate(() => window.dispatchEvent(new Event("resize")));
+    await fixturePage!.evaluate(() =>
+      window.dispatchEvent(new Event("resize"))
+    );
 
     const actualBytes = await subject.screenshot({ animations: "disabled" });
     const actual = PNG.sync.read(actualBytes);
@@ -264,12 +279,14 @@ try {
         c.name,
         mismatchedPixels,
         JSON.stringify(
-          await fixturePage!.locator('[data-slot="toast"]').evaluateAll((nodes) =>
-            nodes.map((n): { rect: unknown; text: string | null } => ({
-              rect: n.getBoundingClientRect().toJSON(),
-              text: n.textContent,
-            }))
-          )
+          await fixturePage!
+            .locator('[data-slot="toast"]')
+            .evaluateAll((nodes) =>
+              nodes.map((n): { rect: unknown; text: string | null } => ({
+                rect: n.getBoundingClientRect().toJSON(),
+                text: n.textContent,
+              }))
+            )
         )
       );
     }

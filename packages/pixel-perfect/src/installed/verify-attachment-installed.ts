@@ -26,6 +26,31 @@ const { chromium, expect } =
 // SAFETY: createRequire resolves the installed pngjs decoder used by this comparator.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed pngjs module API boundary.
 const { PNG } = require("pngjs") as typeof PngJs;
+
+const buildAttachmentQuery = (
+  c: AttachmentCaptureManifest["cases"][number],
+  part: string,
+  m: AttachmentCaptureManifest
+) => {
+  const q = new URLSearchParams({
+    background: c.background ?? m.background ?? "#202020",
+    description: c.placeholder ?? "Survival Mode",
+    height: String(c.height ?? 20),
+    label: c.label,
+    native: "1",
+    part,
+    scale: String(c.scale),
+    selected: String(c.selected ?? false),
+    state: c.state,
+    text: c.text ?? "world-1",
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
+  return q;
+};
+
 const browser = await chromium.launch({ channel: "msedge" });
 
 // SAFETY: registry.json owns the installed source descriptor metadata read here.
@@ -73,22 +98,14 @@ const pageErrors: string[] = [];
 try {
   let page: Page | undefined;
 
-  const verifyAttachmentCase = async (c: AttachmentCaptureManifest["cases"][number], part: string, dir: string, m: AttachmentCaptureManifest, fixturePage: Page | undefined) => {
-    const q = new URLSearchParams({
-      background: c.background ?? m.background ?? "#202020",
-      description: c.placeholder ?? "Survival Mode",
-      height: String(c.height ?? 20),
-      label: c.label,
-      native: "1",
-      part,
-      scale: String(c.scale),
-      selected: String(c.selected ?? false),
-      state: c.state,
-      text: c.text ?? "world-1",
-      width: String(c.width),
-      x: String(c.x ?? 16),
-      y: String(c.y ?? 16),
-    });
+  const verifyAttachmentCase = async (
+    c: AttachmentCaptureManifest["cases"][number],
+    part: string,
+    dir: string,
+    m: AttachmentCaptureManifest,
+    fixturePage: Page | undefined
+  ) => {
+    const q = buildAttachmentQuery(c, part, m);
 
     await fixturePage!.goto(`${urlArg}?${q}`);
     const subject = fixturePage!.locator("#subject");
@@ -152,9 +169,7 @@ try {
       }
     }
 
-    for (const glyph of await subject
-      .locator("[data-mc-label-ready]")
-      .all()) {
+    for (const glyph of await subject.locator("[data-mc-label-ready]").all()) {
       await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
     }
 
@@ -196,9 +211,7 @@ try {
     let n = 0;
 
     for (let p = 0; p < a.data.length; p += 4) {
-      n += Number(
-        !a.data.subarray(p, p + 4).equals(b.data.subarray(p, p + 4))
-      );
+      n += Number(!a.data.subarray(p, p + 4).equals(b.data.subarray(p, p + 4)));
     }
 
     if (n) {

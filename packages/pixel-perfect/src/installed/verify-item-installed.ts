@@ -197,7 +197,12 @@ const compare = function compare(a: DecodedPixels, b: DecodedPixels) {
   return { diff, mismatchedPixels };
 };
 
-const verifyItemCase = async ({ part, c, manifestFile, manifest, plain, mode, page }: ItemVerificationTask & { page: Page }) => {
+const buildItemQuery = ({
+  c,
+  mode,
+  part,
+  plain,
+}: Pick<ItemVerificationTask, "c" | "mode" | "part" | "plain">) => {
   const q = new URLSearchParams({
     align: c.alignment ?? "left",
     background: c.background,
@@ -229,6 +234,20 @@ const verifyItemCase = async ({ part, c, manifestFile, manifest, plain, mode, pa
     q.set("button", "1");
   }
 
+  return q;
+};
+
+const verifyItemCase = async ({
+  part,
+  c,
+  manifestFile,
+  manifest,
+  plain,
+  mode,
+  page,
+}: ItemVerificationTask & { page: Page }) => {
+  const q = buildItemQuery({ c, mode, part, plain });
+
   await page.goto(`${origin}?${q}`);
   const subject = page.locator("#subject");
   await expect(subject).toHaveAttribute(
@@ -239,17 +258,15 @@ const verifyItemCase = async ({ part, c, manifestFile, manifest, plain, mode, pa
   await page.mouse.move(0, 0);
 
   if (part === "row") {
-    await expect(
-      subject.locator("[data-slot=item-content]")
-    ).toHaveAttribute("data-mc-item-content-ready", "true");
+    await expect(subject.locator("[data-slot=item-content]")).toHaveAttribute(
+      "data-mc-item-content-ready",
+      "true"
+    );
 
     for (const text of await subject
       .locator("[data-mc-label-layout-ready]")
       .all()) {
-      await expect(text).toHaveAttribute(
-        "data-mc-label-layout-ready",
-        "true"
-      );
+      await expect(text).toHaveAttribute("data-mc-label-layout-ready", "true");
     }
 
     const media = subject.locator("[data-mc-item-media-ready]");
@@ -286,10 +303,7 @@ const verifyItemCase = async ({ part, c, manifestFile, manifest, plain, mode, pa
       mediaStateSelection
     );
   } else if (part === "title") {
-    await expect(subject).toHaveAttribute(
-      "data-mc-label-layout-ready",
-      "true"
-    );
+    await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
   }
 
   await page.addStyleTag({
@@ -297,9 +311,7 @@ const verifyItemCase = async ({ part, c, manifestFile, manifest, plain, mode, pa
       "#read-ref,#resize,#tag,#events,#actions{visibility:hidden!important}",
   });
 
-  for (const glyph of await subject
-    .locator("[data-mc-label-ready]")
-    .all()) {
+  for (const glyph of await subject.locator("[data-mc-label-ready]").all()) {
     await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
   }
 
@@ -318,9 +330,7 @@ const verifyItemCase = async ({ part, c, manifestFile, manifest, plain, mode, pa
   });
 
   const bytes = fs.readFileSync(
-    pixelPerfectFile(
-      path.join(path.dirname(manifestFile), "captures", c.name)
-    )
+    pixelPerfectFile(path.join(path.dirname(manifestFile), "captures", c.name))
   );
 
   if (sha(bytes) !== c.sha256) {
@@ -359,10 +369,7 @@ const verifyItemCase = async ({ part, c, manifestFile, manifest, plain, mode, pa
     const id = `${part}-${mode}-${c.name}`;
     console.log(id, mismatchedPixels);
     fs.writeFileSync(path.join(failures, `actual-${id}`), actualBytes);
-    fs.writeFileSync(
-      path.join(failures, `diff-${id}`),
-      PNG.sync.write(diff)
-    );
+    fs.writeFileSync(path.join(failures, `diff-${id}`), PNG.sync.write(diff));
   }
 };
 
@@ -394,7 +401,15 @@ const worker = async function worker() {
         page.on("pageerror", (error) => errors.push(error.message));
       }
 
-      await verifyItemCase({ part, c, manifestFile, manifest, plain, mode, page });
+      await verifyItemCase({
+        c,
+        manifest,
+        manifestFile,
+        mode,
+        page,
+        part,
+        plain,
+      });
     } catch (failure) {
       // SAFETY: preserve the existing message projection from the owned Node/PNG/Playwright APIs without normalizing arbitrary rejections.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed Item failure message projection boundary.
