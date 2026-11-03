@@ -23,6 +23,19 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-tabs.css";
 
+const tabLabelAdvance = function tabLabelAdvance(glyphText: string) {
+  let accumulatedGlyphAdvance = 0;
+
+  for (const advanceCharacter of glyphText) {
+    accumulatedGlyphAdvance +=
+      minecraftGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+      getUnihexGlyph(advanceCharacter)?.advance ??
+      6;
+  }
+
+  return accumulatedGlyphAdvance;
+};
+
 interface TabsHeaderStyle extends React.CSSProperties {
   "--mc-tab-header": string;
 }
@@ -283,16 +296,7 @@ const TabsTrigger = ({
                 .querySelector<HTMLElement>("[data-mc-tabs-rich]")
                 ?.getBoundingClientRect().width ?? 0) / scale
             )
-          : Math.ceil(
-              [...text].reduce(
-                (sum, char) =>
-                  sum +
-                  (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
-                    getUnihexGlyph(char)?.advance ??
-                    6),
-                0
-              )
-            );
+          : Math.ceil(tabLabelAdvance(text));
 
       const overflow = textWidth - (width - 2);
       let left = Math.floor(width / 2) - Math.floor(textWidth / 2);

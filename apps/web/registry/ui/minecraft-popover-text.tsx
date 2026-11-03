@@ -51,7 +51,11 @@ const wrap = function wrap(text: string, maximum: number, bold: boolean) {
   const lines: string[] = [];
 
   for (const paragraph of text.split("\n")) {
-    let remaining = [...paragraph];
+    let remaining: string[] = [];
+
+    for (const bufferCharacter of paragraph) {
+      remaining.push(bufferCharacter);
+    }
 
     while (textWidth(remaining.join(""), bold) > maximum) {
       let count = 0;

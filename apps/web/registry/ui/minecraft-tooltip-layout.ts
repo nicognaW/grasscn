@@ -1,15 +1,20 @@
 import { minecraftGlyphs } from "./minecraft-font";
 
-export const minecraftTextWidth = (text: string) =>
-  [...text].reduce((sum, char) => {
-    const codePoint = char.codePointAt(0);
+export const minecraftTextWidth = (text: string) => {
+  let accumulatedGlyphAdvance = 0;
+
+  for (const advanceCharacter of text) {
+    const codePoint = advanceCharacter.codePointAt(0);
 
     if (codePoint === undefined) {
       throw new Error("Expected a non-empty tooltip glyph character");
     }
 
-    return sum + (minecraftGlyphs[codePoint - 32]?.[2] ?? 6);
-  }, 0);
+    accumulatedGlyphAdvance += (minecraftGlyphs[codePoint - 32]?.[2] ?? 6);
+  }
+
+  return accumulatedGlyphAdvance;
+};
 
 export const wrapMinecraftTooltip = function wrapMinecraftTooltip(
   text: string,

@@ -38,17 +38,18 @@ export const DialogLayoutContext = React.createContext({
 });
 
 const widthOf = function widthOf(text: string, bold: boolean) {
-  return Math.ceil(
-    [...text].reduce((sum, char) => {
-      const ascii = asciiGlyphs[char.codePointAt(0)! - 32];
+  let accumulatedGlyphAdvance = 0;
 
-      return (
-        sum +
-        (ascii?.[2] ?? getUnihexGlyph(char)?.advance ?? 0) +
-        (bold ? (ascii ? 1 : 0.5) : 0)
-      );
-    }, 0)
-  );
+  for (const advanceCharacter of text) {
+    const ascii = asciiGlyphs[advanceCharacter.codePointAt(0)! - 32];
+
+    accumulatedGlyphAdvance =
+      accumulatedGlyphAdvance +
+      (ascii?.[2] ?? getUnihexGlyph(advanceCharacter)?.advance ?? 0) +
+      (bold ? (ascii ? 1 : 0.5) : 0);
+  }
+
+  return Math.ceil(accumulatedGlyphAdvance);
 };
 
 const wrap = function wrap(text: string, maximum: number, bold: boolean) {

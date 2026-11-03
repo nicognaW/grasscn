@@ -111,15 +111,18 @@ const Badge = ({
     };
   }, [plain]);
 
-  const widthOf = (text: string) =>
-    [...text].reduce(
-      (sum, char) =>
-        sum +
-        (char.codePointAt(0)! < 128
-          ? minecraftTextWidth(char)
-          : (getUnihexGlyph(char)?.advance ?? 8)),
-      0
-    );
+  const widthOf = (text: string) => {
+    let accumulatedGlyphAdvance = 0;
+
+    for (const advanceCharacter of text) {
+      accumulatedGlyphAdvance +=
+        (advanceCharacter.codePointAt(0)! < 128
+          ? minecraftTextWidth(advanceCharacter)
+          : (getUnihexGlyph(advanceCharacter)?.advance ?? 8));
+    }
+
+    return accumulatedGlyphAdvance;
+  };
 
   const natural =
     plain === undefined

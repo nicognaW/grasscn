@@ -219,21 +219,19 @@ const BubbleContent = ({
 
   const naturalWidth = Math.max(
     0,
-    ...text
-      .split("\n")
-      .map((line) =>
-        Math.ceil(
-          [...line].reduce(
-            (sum, char) =>
-              sum +
-              (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
-                getUnihexGlyph(char)?.advance ??
-                disclosureAdvance(char) ??
-                6),
-            0
-          )
-        )
-      )
+    ...text.split("\n").map((line) => {
+      let accumulatedGlyphAdvance = 0;
+
+      for (const advanceCharacter of line) {
+        accumulatedGlyphAdvance +=
+          (minecraftGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+            getUnihexGlyph(advanceCharacter)?.advance ??
+            disclosureAdvance(advanceCharacter) ??
+            6);
+      }
+
+      return Math.ceil(accumulatedGlyphAdvance);
+    })
   );
 
   const width = Math.min(naturalWidth, available ?? naturalWidth);

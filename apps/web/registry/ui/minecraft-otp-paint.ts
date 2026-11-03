@@ -13,6 +13,31 @@ import {
   setUnihexAtlas,
 } from "./minecraft-unifont-gpu";
 
+const requiresCJKFont = function requiresCJKFont(text: string) {
+  for (const character of text) {
+    if (isCJKCodepoint(character.codePointAt(0)!)) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+const supportsInputGlyphs = function supportsInputGlyphs(text: string) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
   minecraftGlyphs;
 
@@ -80,7 +105,16 @@ const trimToWidth = function trimToWidth(
   let length = 0;
   let used = 0;
 
-  const chars = backwards ? [...text].reverse() : [...text];
+  const reverseCharacters = backwards;
+  const chars: string[] = [];
+
+  for (const bufferCharacter of text) {
+    chars.push(bufferCharacter);
+  }
+
+  if (reverseCharacters) {
+    chars.reverse();
+  }
 
   for (const char of chars) {
     const next = glyphAdvance(char);
@@ -275,12 +309,9 @@ export const attachMinecraftOTPSlot = function attachMinecraftOTPSlot(
 
     wasFocused = focused;
     const blink = Math.floor((Date.now() - focusedAt) / 300) % 2 === 0;
-    const chars = [...(value + input.placeholder)];
+    const inputGlyphText = value + input.placeholder;
 
-    if (
-      !loadingUnihex &&
-      chars.some((char) => isCJKCodepoint(char.codePointAt(0)!))
-    ) {
+    if (!loadingUnihex && requiresCJKFont(inputGlyphText)) {
       loadingUnihex = true;
       loadUnihex()
         .then(() => {
@@ -294,9 +325,7 @@ export const attachMinecraftOTPSlot = function attachMinecraftOTPSlot(
 
     const supported =
       ["text", "search", "url", "tel"].includes(input.type) &&
-      chars.every(
-        (char) => /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
-      ) &&
+      supportsInputGlyphs(inputGlyphText) &&
       style.direction !== "rtl";
 
     if (input.dataset.mcBitmap !== String(supported)) {
