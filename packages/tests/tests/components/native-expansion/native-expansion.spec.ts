@@ -1,5 +1,6 @@
 import { test, expect } from "@grasscn/tests/test";
 import { expectLength } from "@grasscn/tests/assertions";
+import type { PlayerRotation } from "@grasscn/web/ui/player-preview";
 
 interface BookAudioFixtureWindow extends Window {
   bookAudio: { src: string; volume: number; rate: number }[];
@@ -123,23 +124,29 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
   const before = await player.screenshot();
   await player.focus();
   await player.press("ArrowLeft");
+  // SAFETY: the owned player-preview fixture serializes its actual PlayerRotation callback value into dataset.rotation; the unchanged missing-data fallback parses null.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact fixture JSON producer protocol; preserve parse position, optional pitch access and existing polling assertions.
   await expect
     .poll(
       async () =>
         await page.evaluate(() =>
-          JSON.parse(document.documentElement.dataset.rotation ?? "null")
+          (JSON.parse(document.documentElement.dataset.rotation ?? "null") as PlayerRotation | null)
         )
     )
     .toEqual({ pitch: -5, yaw: 25 });
+  // oxlint-enable typescript/no-unsafe-type-assertion
   await player.press("Home");
+  // SAFETY: the owned player-preview fixture serializes its actual PlayerRotation callback value into dataset.rotation; the unchanged missing-data fallback parses null.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact fixture JSON producer protocol; preserve parse position, optional pitch access and existing polling assertions.
   await expect
     .poll(
       async () =>
         await page.evaluate(() =>
-          JSON.parse(document.documentElement.dataset.rotation ?? "null")
+          (JSON.parse(document.documentElement.dataset.rotation ?? "null") as PlayerRotation | null)
         )
     )
     .toEqual({ pitch: -5, yaw: 30 });
+  // oxlint-enable typescript/no-unsafe-type-assertion
   await player.blur();
   expect(await player.screenshot()).toEqual(before);
   const box = (await player.boundingBox())!;
@@ -147,15 +154,18 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
   await page.mouse.down();
   await page.mouse.move(box.x + 80, box.y + 200, { steps: 5 });
   await page.mouse.up();
+  // SAFETY: the owned player-preview fixture serializes its actual PlayerRotation callback value into dataset.rotation; the unchanged missing-data fallback parses null.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact fixture JSON producer protocol; preserve parse position, optional pitch access and existing polling assertions.
   await expect
     .poll(
       async () =>
         await page.evaluate(
           () =>
-            JSON.parse(document.documentElement.dataset.rotation ?? "null")
+            (JSON.parse(document.documentElement.dataset.rotation ?? "null") as PlayerRotation | null)
               ?.pitch
         )
     )
     .toBe(-50);
+  // oxlint-enable typescript/no-unsafe-type-assertion
   expect(await player.screenshot()).not.toEqual(before);
 });
