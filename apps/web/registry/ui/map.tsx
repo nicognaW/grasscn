@@ -231,11 +231,9 @@ const MinecraftMap = ({
           <AdventureImage
             texture={`map/decorations/${marker.decoration ?? "player"}`}
             scale={scale}
+            className="mc-layout-map-3"
             style={{
-              height: "100%",
-              transform: "scaleY(-1)",
               visibility: gpuReady ? "hidden" : "visible",
-              width: "100%",
             }}
           />
         </button>
@@ -307,10 +305,10 @@ const LocatorDot = ({
       width={9}
       height={9}
       aria-hidden="true"
+      className="mc-layout-map-4"
       style={{
-        display: "block",
         height: 9 * scale,
-        imageRendering: "pixelated",
+
         width: 9 * scale,
       }}
     />
@@ -395,9 +393,10 @@ const LocatorBar = ({
             <AdventureImage
               texture={`gui/sprites/hud/locator_bar_arrow_${marker.direction}`}
               scale={scale}
+              className="mc-layout-map-6"
               style={{
                 left: scale,
-                position: "absolute",
+
                 top: (marker.direction === "up" ? -4 : 8) * scale,
               }}
             />

@@ -35,3 +35,12 @@
     overflow: hidden;
   }
 }
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-player-preview-1 {
+    height: 100%;
+    transform: scaleY(-1);
+    width: 100%;
+  }
+}

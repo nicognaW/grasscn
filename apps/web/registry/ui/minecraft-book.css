@@ -27,3 +27,16 @@
     outline: calc(1px * var(--mc-scale)) solid #fff;
   }
 }
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-book-1 {
+    left: 0;
+    max-width: none;
+    position: absolute;
+    top: 0;
+  }
+  .mc-layout-book-2 {
+    position: absolute;
+  }
+}

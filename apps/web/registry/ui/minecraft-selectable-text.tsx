@@ -128,7 +128,8 @@ const MinecraftSelectableText = ({
         {runs.map((run, index) => (
           <span
             key={index}
-            style={{ left: run.x, position: "absolute", top: run.y }}
+            className="mc-layout-minecraft-selectable-text-1"
+            style={{ left: run.x, top: run.y }}
           >
             <MinecraftColorUnicodeLabel
               text={run.text}

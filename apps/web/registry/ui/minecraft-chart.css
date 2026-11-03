@@ -130,3 +130,42 @@
     transform: rotate(90deg);
   }
 }
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-minecraft-chart-native-1 {
+    left: 0;
+  }
+  .mc-layout-minecraft-chart-native-2 {
+    background: rgba(80, 80, 80, 0.5647058823529412);
+  }
+  .mc-layout-minecraft-chart-native-4 {
+    overflow: visible;
+    pointer-events: none;
+  }
+  .mc-layout-minecraft-chart-native-5 {
+    position: relative;
+  }
+  .mc-layout-minecraft-chart-native-6 {
+    background: rgba(80, 80, 80, 0.5647058823529412);
+    left: 0;
+  }
+  .mc-layout-minecraft-chart-native-8 {
+    background: white;
+    left: 0;
+  }
+  .mc-layout-minecraft-chart-native-9 {
+    background: white;
+  }
+  .mc-layout-minecraft-chart-native-10 {
+    overflow: visible;
+    pointer-events: none;
+  }
+  .mc-layout-minecraft-chart-native-11 {
+    position: relative;
+  }
+  .mc-layout-minecraft-chart-native-12 {
+    image-rendering: pixelated;
+    position: absolute;
+  }
+}

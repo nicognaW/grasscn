@@ -133,7 +133,11 @@ const PlayerList = ({
             style={{ height: head.length * 9 * scale, top: scale }}
           >
             {head.map((line, i) => (
-              <div key={i} style={{ height: 9 * scale, position: "relative" }}>
+              <div
+                key={i}
+                className="mc-layout-player-list-2"
+                style={{ height: 9 * scale }}
+              >
                 <span
                   style={
                     typeof line === "string"
@@ -212,35 +216,34 @@ const PlayerList = ({
                   />
                 </Avatar>
                 <span
-                  className="mc-roster-name"
+                  className="mc-roster-name mc-layout-player-list-4"
                   style={{
                     fontStyle:
                       (player.spectator ?? false) ? "italic" : undefined,
                     left: 9 * scale,
                     maxWidth: (columnWidth - 9 - scoreWidth - 13) * scale,
                     opacity: (player.spectator ?? false) ? 144 / 255 : 1,
-                    top: 0,
                   }}
                 >
                   <MinecraftMenuText>{player.name}</MinecraftMenuText>
                 </span>
                 {player.score != null && (
                   <span
-                    className="mc-roster-score"
-                    style={{ right: 12 * scale, top: 0 }}
+                    className="mc-roster-score mc-layout-player-list-5"
+                    style={{ right: 12 * scale }}
                   >
                     <MinecraftMenuText>{player.score}</MinecraftMenuText>
                   </span>
                 )}
                 <img
-                  className="mc-roster-ping"
+                  className="mc-roster-ping mc-layout-player-list-6"
                   alt={
                     latency < 0 ? "Connection unknown" : `${latency} ms latency`
                   }
                   src={playerListAssets[key]}
                   width={10 * scale}
                   height={8 * scale}
-                  style={{ right: scale, top: 0 }}
+                  style={{ right: scale }}
                 />
               </>
             );
@@ -275,7 +278,11 @@ const PlayerList = ({
             }}
           >
             {foot.map((line, i) => (
-              <div key={i} style={{ height: 9 * scale, position: "relative" }}>
+              <div
+                key={i}
+                className="mc-layout-player-list-8"
+                style={{ height: 9 * scale }}
+              >
                 <span
                   style={
                     typeof line === "string"
@@ -384,7 +391,8 @@ const Scoreboard = ({
         <span
           role="columnheader"
           aria-colspan={2}
-          style={{ left: 2 * scale, position: "absolute", top: scale }}
+          className="mc-layout-player-list-10"
+          style={{ left: 2 * scale, top: scale }}
         >
           <MinecraftDocumentText
             text={title}
@@ -396,12 +404,10 @@ const Scoreboard = ({
         </span>
       </div>
       <div
-        className="mc-scoreboard-body"
+        className="mc-scoreboard-body mc-layout-player-list-11"
         style={{
           height: (visible.length * 9 + 1) * scale,
-          left: 0,
-          position: "absolute",
-          right: 0,
+
           top: 9 * scale,
         }}
       />
@@ -415,7 +421,11 @@ const Scoreboard = ({
             top: (10 + i * 9) * scale,
           }}
         >
-          <span role="cell" style={{ left: 2 * scale, position: "absolute" }}>
+          <span
+            role="cell"
+            className="mc-layout-player-list-13"
+            style={{ left: 2 * scale }}
+          >
             <MinecraftDocumentText
               text={entry.name}
               width={documentTextWidth(entry.name)}
@@ -423,7 +433,7 @@ const Scoreboard = ({
               color="#ffffff"
             />
           </span>
-          <span role="cell" style={{ position: "absolute", right: 0 }}>
+          <span role="cell" className="mc-layout-player-list-14">
             <MinecraftDocumentText
               text={String(entry.score)}
               width={documentTextWidth(String(entry.score))}

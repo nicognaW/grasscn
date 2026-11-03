@@ -99,8 +99,8 @@ export const Schedule = () => {
         <DocumentText>
           {date
             ? date.toLocaleDateString("en-US", {
-                month: "long",
                 day: "numeric",
+                month: "long",
                 year: "numeric",
               })
             : "Choose a day"}

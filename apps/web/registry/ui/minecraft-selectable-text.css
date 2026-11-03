@@ -44,3 +44,10 @@
     color: transparent;
   }
 }
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-minecraft-selectable-text-1 {
+    position: absolute;
+  }
+}

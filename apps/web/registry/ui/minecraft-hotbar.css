@@ -25,3 +25,20 @@
     image-rendering: pixelated;
   }
 }
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-hotbar-1 {
+    image-rendering: pixelated;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+  .mc-layout-hotbar-2 {
+    position: absolute;
+  }
+  .mc-layout-hotbar-3 {
+    position: absolute;
+    top: 0;
+  }
+}
