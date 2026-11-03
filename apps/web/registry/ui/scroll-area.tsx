@@ -3,7 +3,7 @@
 import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area";
 import * as React from "react";
 
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import { isMinecraftRefCallback, isMinecraftRefCleanup, minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 
@@ -85,10 +85,10 @@ const ScrollArea = ({
     (element: HTMLDivElement | null) => {
       viewport.current = element;
 
-      if (typeof viewportRef === "function") {
+      if (isMinecraftRefCallback(viewportRef)) {
         const cleanup = viewportRef(element);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             viewport.current = null;
             cleanup();

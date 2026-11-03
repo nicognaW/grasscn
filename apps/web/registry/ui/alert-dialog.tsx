@@ -11,7 +11,7 @@ import {
   MinecraftConfirmationText,
   confirmationButtonText,
 } from "./minecraft-confirmation-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import { isMinecraftRefCallback, isMinecraftRefCleanup, minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-card.css";
@@ -135,10 +135,10 @@ const AlertDialogContent = ({
     (element: HTMLDivElement | null) => {
       setNode(element);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(element);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setNode(null);
             cleanup();

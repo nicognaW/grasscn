@@ -10,7 +10,7 @@ import {
   DialogLayoutContext,
   MinecraftDialogText,
 } from "./minecraft-dialog-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import { isMinecraftRefCallback, isMinecraftRefCleanup, minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
@@ -36,10 +36,10 @@ const useElement = function useElement<T extends HTMLElement>(
     (node: T | null) => {
       setElement(node);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(node);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setElement(null);
             cleanup();

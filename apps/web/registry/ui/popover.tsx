@@ -11,7 +11,7 @@ import {
   MinecraftPopoverText,
 } from "./minecraft-popover-text";
 import {
-  isMinecraftTextContent,
+  isMinecraftRefCallback, isMinecraftRefCleanup, isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
 } from "./minecraft-render";
@@ -105,10 +105,10 @@ const PopoverContent = ({
     (element: HTMLDivElement | null) => {
       setNode(element);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(element);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setNode(null);
             cleanup();
