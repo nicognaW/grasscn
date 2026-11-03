@@ -27,6 +27,7 @@ const InputGroupDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("Player");
   const [message, setMessage] = React.useState("你好，Minecraft!");
   const [sent, setSent] = React.useState("");
+
   const sendButtonStyle: SendButtonStyle = {
     "--input-group-send-width": `${60 * scale}px`,
   };
