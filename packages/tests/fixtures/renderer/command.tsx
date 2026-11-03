@@ -12,6 +12,7 @@ import {
 } from "@grasscn/web/ui/command";
 import * as React from "react";
 
+import type { FixtureLabels } from "./fixture-query-protocol";
 import { cn } from "./utils";
 
 const p = new URLSearchParams(location.search);
@@ -21,9 +22,11 @@ const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
 const native = p.has("native");
 const part = p.get("part") ?? "list";
 
+// SAFETY: the owned native case callers serialize their actual string-label arrays, or this unchanged literal default; retain the original URL read and JSON parse.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned menu-label JSON producer boundary; all reads and existing filters remain unchanged.
 const labels = JSON.parse(
   p.get("labels") ?? '["Stone","Stick","世界"]'
-) as string[];
+) as FixtureLabels;
 
 export const CommandFixture = () => {
   React.useLayoutEffect(() => {
