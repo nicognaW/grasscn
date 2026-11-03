@@ -2,8 +2,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { expectTruthy } from "@grasscn/tests/assertions";
-import type { SelectReferenceCase } from "@ppt/installed/reference-case";
 import { compareSelectPixels } from "@ppt/harness/families/select-pixel-compare";
+import type { SelectReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 

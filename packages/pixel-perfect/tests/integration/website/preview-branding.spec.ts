@@ -7,8 +7,8 @@ import { pixelPerfectRoot } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
-import type RegistryIdentityData from "../../../../../apps/web/registry.json";
 import type BrandingProvenance from "../../../../../apps/web/branding.provenance.json";
+import type RegistryIdentityData from "../../../../../apps/web/registry.json";
 
 const differences = (left: PNG, right: PNG) => {
   let count = 0;

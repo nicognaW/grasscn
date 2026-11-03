@@ -4,8 +4,9 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
-import type CapturedData0 from "../reference/calendar-day/manifest.json";
 import { PNG } from "pngjs";
+
+import type CapturedData0 from "../reference/calendar-day/manifest.json";
 
 /** Consumed fields of the six retained Calendar/Date Picker constituent families. */
 interface CalendarComparisonCase extends CapturedReferenceCase {
