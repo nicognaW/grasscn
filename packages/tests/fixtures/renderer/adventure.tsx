@@ -37,7 +37,7 @@ const nodes: React.ComponentProps<typeof AdvancementTree>["nodes"] =
 // SAFETY: owned Adventure callers serialize DraftDemos samples and optional native positions into this query.
 // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Adventure fixture query producer boundary.
 const sample: AdventureFixtureSample = params.has("case")
-  ? (JSON.parse((params.get("case"))!) as AdventureFixtureSample)
+  ? (JSON.parse(params.get("case")!) as AdventureFixtureSample)
   : {
       element: params.get("kind") ?? "advancement-tree",
       state: params.get("state") ?? undefined,
@@ -54,14 +54,14 @@ if (
   sample.element === "hanging-sign" ||
   sample.element === "map"
 ) {
-  Object.assign((document.querySelector<HTMLElement>("#root"))!.style, {
+  Object.assign(document.querySelector<HTMLElement>("#root")!.style, {
     left: `${(sample.x ?? 0) * scale}px`,
     position: "absolute",
     top: `${(sample.y ?? 0) * scale}px`,
   });
 }
 
-createRoot((document.querySelector<HTMLElement>("#root"))!).render(
+createRoot(document.querySelector<HTMLElement>("#root")!).render(
   sample.element === "advancement-tree" ? (
     <AdvancementTree
       id="subject"

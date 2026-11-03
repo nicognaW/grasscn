@@ -48,7 +48,7 @@ for (const selection of ["alert-dialog"]) {
         .locator("canvas")
         .evaluate((node: HTMLCanvasElement) => {
           const canvas = node;
-          const gl = (canvas.getContext("webgl"))!;
+          const gl = canvas.getContext("webgl")!;
           const pixel = new Uint8Array(4);
 
           gl.readPixels(20, 20, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
@@ -120,7 +120,7 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
       .locator("canvas")
       .evaluate((node: HTMLCanvasElement, pixelScene) => {
         const canvas = node;
-        const gl = (canvas.getContext("webgl"))!;
+        const gl = canvas.getContext("webgl")!;
         const rgba = new Uint8Array(4);
 
         gl.readPixels(

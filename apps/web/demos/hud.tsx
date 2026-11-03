@@ -1,8 +1,14 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from 'react';
-import { HealthMeter, ArmorMeter, HungerMeter, AirMeter, ExperienceBar } from '../registry/ui/hud';
-import { Button } from '../registry/ui/button';
-import type { DemoProps } from '../types';
+import * as React from "react";
+import {
+  HealthMeter,
+  ArmorMeter,
+  HungerMeter,
+  AirMeter,
+  ExperienceBar,
+} from "../registry/ui/hud";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
 
 const HudDemo = ({ scale }: DemoProps) => {
   const [health, setHealth] = React.useState(17);

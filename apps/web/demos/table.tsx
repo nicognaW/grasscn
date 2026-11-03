@@ -1,8 +1,17 @@
-import * as React from "react"
-import{Table,TableHeader,TableBody,TableFooter,TableRow,TableHead,TableCell,TableCaption}from"../registry/ui/table"
-import{Button}from"../registry/ui/button"
-import{useDemoWidth}from"../use-demo-width"
-import type{DemoProps}from"../types"
+import * as React from "react";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+} from "../registry/ui/table";
+import { Button } from "../registry/ui/button";
+import { useDemoWidth } from "../use-demo-width";
+import type { DemoProps } from "../types";
 
 const TableDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);

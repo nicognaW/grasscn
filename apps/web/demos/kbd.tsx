@@ -1,7 +1,7 @@
-import * as React from "react"
-import {Kbd,KbdGroup} from "../registry/ui/kbd"
-import {Input} from "../registry/ui/input"
-import type {DemoProps} from "../types"
+import * as React from "react";
+import { Kbd, KbdGroup } from "../registry/ui/kbd";
+import { Input } from "../registry/ui/input";
+import type { DemoProps } from "../types";
 
 const KbdDemo = ({ scale }: DemoProps) => {
   const [key, setKey] = React.useState("Space");

@@ -1,9 +1,15 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import {Input} from "../registry/ui/input"
-import {Button} from "../registry/ui/button"
-import {Avatar,AvatarImage,AvatarFallback,AvatarGroup,AvatarGroupCount} from "../registry/ui/avatar"
-import type {DemoProps} from "../types"
+import * as React from "react";
+import { Input } from "../registry/ui/input";
+import { Button } from "../registry/ui/button";
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+} from "../registry/ui/avatar";
+import type { DemoProps } from "../types";
 
 const people = [
   { name: "Jordan Lee", role: "Frontend developer", skin: "wide/steve" },

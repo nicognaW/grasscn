@@ -1,10 +1,14 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import {ButtonGroup,ButtonGroupText,ButtonGroupSeparator} from "../registry/ui/button-group"
-import {Button} from "../registry/ui/button"
-import {Input} from "../registry/ui/input"
-import {useDemoWidth} from "../use-demo-width"
-import type {DemoProps} from "../types"
+import * as React from "react";
+import {
+  ButtonGroup,
+  ButtonGroupText,
+  ButtonGroupSeparator,
+} from "../registry/ui/button-group";
+import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
+import { useDemoWidth } from "../use-demo-width";
+import type { DemoProps } from "../types";
 
 const ButtonGroupDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);

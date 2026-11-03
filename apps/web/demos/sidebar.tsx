@@ -1,11 +1,36 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import {SidebarProvider,Sidebar,SidebarHeader,SidebarContent,SidebarGroup,SidebarGroupLabel,SidebarGroupContent,SidebarMenu,SidebarMenuItem,SidebarMenuButton,SidebarMenuBadge,SidebarMenuSub,SidebarMenuSubItem,SidebarMenuSubButton,SidebarFooter,SidebarInput,SidebarSeparator,SidebarInset} from "../registry/ui/sidebar"
-import {MinecraftDisclosureText} from "../registry/ui/minecraft-disclosure-text"
-import{Button}from"../registry/ui/button"
-import{Card,CardHeader,CardTitle,CardDescription,CardContent}from"../registry/ui/card"
-import type{DemoProps}from"../types"
-import {useDemoWidth} from "../use-demo-width"
+import * as React from "react";
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarMenuBadge,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
+  SidebarFooter,
+  SidebarInput,
+  SidebarSeparator,
+  SidebarInset,
+} from "../registry/ui/sidebar";
+import { MinecraftDisclosureText } from "../registry/ui/minecraft-disclosure-text";
+import { Button } from "../registry/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "../registry/ui/card";
+import type { DemoProps } from "../types";
+import { useDemoWidth } from "../use-demo-width";
 
 const SidebarDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);

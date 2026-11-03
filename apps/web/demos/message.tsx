@@ -1,10 +1,18 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import {MessageScrollerProvider,MessageScroller,MessageScrollerViewport,MessageScrollerContent,MessageScrollerItem,MessageScrollerButton,useMessageScroller} from "../registry/ui/message-scroller"
-import {Message,MessageContent} from "../registry/ui/message"
-import {Input} from "../registry/ui/input"
-import {Button} from "../registry/ui/button"
-import type {DemoProps} from "../types"
+import * as React from "react";
+import {
+  MessageScrollerProvider,
+  MessageScroller,
+  MessageScrollerViewport,
+  MessageScrollerContent,
+  MessageScrollerItem,
+  MessageScrollerButton,
+  useMessageScroller,
+} from "../registry/ui/message-scroller";
+import { Message, MessageContent } from "../registry/ui/message";
+import { Input } from "../registry/ui/input";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
 
 type Line = { author?: string; text: string; system?: boolean };
 

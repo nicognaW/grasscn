@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../registry/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "../registry/ui/select";
 import { Button } from "../registry/ui/button";
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";

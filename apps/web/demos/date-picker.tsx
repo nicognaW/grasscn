@@ -1,8 +1,11 @@
 import type { DemoVariables } from "../demo-variables";
-import {DatePickerDemo,DatePickerRangeDemo} from "../registry/blocks/date-picker"
-import {Label} from "../registry/ui/label"
-import {Button} from "../registry/ui/button"
-import type {DemoProps} from "../types"
+import {
+  DatePickerDemo,
+  DatePickerRangeDemo,
+} from "../registry/blocks/date-picker";
+import { Label } from "../registry/ui/label";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
 
 const DatePickerExamples = ({ scale }: DemoProps) => (
   <div

@@ -183,7 +183,8 @@ test("Select uses the original cycle-button click for opening, while list select
       return Promise.resolve();
     };
   });
-  const voices = async () => await page.evaluate(() => (window as any).selectVoices);
+  const voices = async () =>
+    await page.evaluate(() => (window as any).selectVoices);
   await page.goto("/?component=select");
   await page.getByRole("combobox").hover();
   expect(await voices()).toEqual([]);

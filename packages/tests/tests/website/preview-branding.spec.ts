@@ -51,7 +51,7 @@ test("Header serves the preserved branding source at its actual production geome
     ...new Uint8Array(
       await (
         await fetch(
-          (document.querySelector<HTMLLinkElement>('link[rel="icon"]'))!.href
+          document.querySelector<HTMLLinkElement>('link[rel="icon"]')!.href
         )
       ).arrayBuffer()
     ),

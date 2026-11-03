@@ -134,7 +134,9 @@ test("Sidebar right-side positioning reserves the matching inset space", async (
     .locator('[data-slot="sidebar-container"]')
     .boundingBox())!;
 
-  const inset = (await page.locator('[data-slot="sidebar-inset"]').boundingBox())!;
+  const inset = (await page
+    .locator('[data-slot="sidebar-inset"]')
+    .boundingBox())!;
 
   expect(container.x + container.width).toBe(provider.x + provider.width);
   expect(inset.x + inset.width).toBe(container.x);
@@ -165,7 +167,7 @@ test("Sidebar mobile backdrop closes and a desktop containment style cannot move
   await expect(page.locator("#mobile")).toHaveText("true");
   await page.locator("#toggle").click();
   const dialog = page.getByRole("dialog", { exact: true, name: "Sidebar" });
-  expect(((await dialog.boundingBox())!).y).toBe(0);
+  expect((await dialog.boundingBox())!.y).toBe(0);
   await page.mouse.click(365, 10);
   await expect(dialog).toHaveCount(0);
   await expect(page.locator("#open-mobile")).toHaveText("false");

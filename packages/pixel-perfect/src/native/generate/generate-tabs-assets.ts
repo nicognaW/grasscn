@@ -48,7 +48,9 @@ const assetInputNames = [
   "header_separator.png",
 ];
 const assetInputReads = await Promise.allSettled(
-  assetInputNames.map(async (filename) => await readFile(path.join(directory, filename)))
+  assetInputNames.map(
+    async (filename) => await readFile(path.join(directory, filename))
+  )
 );
 
 for (const name of [
@@ -66,7 +68,8 @@ for (const name of [
   }
 
   const bytes = bytesRead.value;
-  const metadataRead = assetInputReads[assetInputNames.indexOf(`${name}.png.mcmeta`)];
+  const metadataRead =
+    assetInputReads[assetInputNames.indexOf(`${name}.png.mcmeta`)];
 
   if (metadataRead.status === "rejected") {
     throw metadataRead.reason;

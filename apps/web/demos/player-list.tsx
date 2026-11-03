@@ -1,7 +1,11 @@
-import * as React from 'react'
-import {PlayerList,Scoreboard,type PlayerListEntry} from '../registry/ui/player-list'
-import {Button} from '../registry/ui/button'
-import type {DemoProps} from '../types'
+import * as React from "react";
+import {
+  PlayerList,
+  Scoreboard,
+  type PlayerListEntry,
+} from "../registry/ui/player-list";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
 
 const initial: PlayerListEntry[] = [
   { id: "alex", name: "Alex", skin: "slim/alex", latency: 42, score: 180 },

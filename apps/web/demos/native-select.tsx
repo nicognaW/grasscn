@@ -1,4 +1,10 @@
-import *as React from'react';import{NativeSelect,NativeSelectOption,NativeSelectOptGroup}from'../registry/ui/native-select';import{Label}from'../registry/ui/label';
+import * as React from "react";
+import {
+  NativeSelect,
+  NativeSelectOption,
+  NativeSelectOptGroup,
+} from "../registry/ui/native-select";
+import { Label } from "../registry/ui/label";
 
 export const Demo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   const [value, setValue] = React.useState("survival");

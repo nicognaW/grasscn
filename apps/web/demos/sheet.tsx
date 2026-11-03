@@ -1,8 +1,17 @@
-import * as React from "react"
-import {Sheet,SheetTrigger,SheetContent,SheetHeader,SheetTitle,SheetDescription,SheetFooter,SheetClose} from "../registry/ui/sheet"
-import {Input} from "../registry/ui/input"
-import {Textarea} from "../registry/ui/textarea"
-import type {DemoProps} from "../types"
+import * as React from "react";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetFooter,
+  SheetClose,
+} from "../registry/ui/sheet";
+import { Input } from "../registry/ui/input";
+import { Textarea } from "../registry/ui/textarea";
+import type { DemoProps } from "../types";
 
 const SheetDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World settings");

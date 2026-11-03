@@ -61,8 +61,8 @@ test("Tabs keyboard navigation visits disabled tabs without selecting them", asy
     .boundingBox();
 
   await page.mouse.click(
-    (disabled)!.x + (disabled)!.width / 2,
-    (disabled)!.y + (disabled)!.height / 2
+    disabled!.x + disabled!.width / 2,
+    disabled!.y + disabled!.height / 2
   );
   await expect(
     page.getByRole("tab", { exact: true, name: "More" })
@@ -100,7 +100,7 @@ test("Tabs controlled value supports user and external changes", async ({
     page.getByRole("tab", { exact: true, name: "More" })
   ).toHaveAttribute("aria-selected", "true");
   await expect(page.getByLabel("Tab changes", { exact: true })).toHaveText(
-    (changes)!
+    changes!
   );
 });
 
@@ -131,7 +131,7 @@ test("Tabs play one original click only for accepted selection changes", async (
 
     state.tabAudio = 0;
     HTMLMediaElement.prototype.play = function play() {
-      (state.tabAudio)!++;
+      state.tabAudio!++;
 
       return Promise.resolve();
     };

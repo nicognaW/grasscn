@@ -1,6 +1,17 @@
 import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
-import { Item, ItemGroup, ItemSeparator, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from "../registry/ui/item";
+import {
+  Item,
+  ItemGroup,
+  ItemSeparator,
+  ItemMedia,
+  ItemContent,
+  ItemTitle,
+  ItemDescription,
+  ItemActions,
+  ItemHeader,
+  ItemFooter,
+} from "../registry/ui/item";
 import { Input } from "../registry/ui/input";
 import { Textarea } from "../registry/ui/textarea";
 import { Button } from "../registry/ui/button";

@@ -108,7 +108,7 @@ for (const scale of [2] as const) {
 
         const bar = popup.locator(".mc-select-scrollbar");
 
-        expect((row)!.width).toBe(
+        expect(row!.width).toBe(
           Math.min(270, before.width / scale - 30) * scale
         );
 

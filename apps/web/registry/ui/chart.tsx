@@ -13,9 +13,19 @@ import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites"
 
 import "./minecraft-chart.css";
 
-import { ChartFpsFrame as NativeChartFpsFrame, ChartProfilerFrame as NativeChartProfilerFrame, chartFpsColor as nativeChartFpsColor, chartProfilerColor as nativeChartProfilerColor } from "./minecraft-chart-native";
+import {
+  ChartFpsFrame as NativeChartFpsFrame,
+  ChartProfilerFrame as NativeChartProfilerFrame,
+  chartFpsColor as nativeChartFpsColor,
+  chartProfilerColor as nativeChartProfilerColor,
+} from "./minecraft-chart-native";
 
-import { ChartPixelBar as NativeChartPixelBar, ChartProfilerSector as NativeChartProfilerSector, ChartPixelSurface as NativeChartPixelSurface, ChartAxisTick as NativeChartAxisTick } from "./minecraft-chart-context";
+import {
+  ChartPixelBar as NativeChartPixelBar,
+  ChartProfilerSector as NativeChartProfilerSector,
+  ChartPixelSurface as NativeChartPixelSurface,
+  ChartAxisTick as NativeChartAxisTick,
+} from "./minecraft-chart-context";
 
 import * as RechartsPrimitive from "recharts";
 import type { TooltipValueType } from "recharts";

@@ -1,10 +1,14 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import {Collapsible,CollapsibleTrigger,CollapsibleContent} from "../registry/ui/collapsible"
-import {Input} from "../registry/ui/input"
-import {Textarea} from "../registry/ui/textarea"
-import {Button} from "../registry/ui/button"
-import type {DemoProps} from "../types"
+import * as React from "react";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "../registry/ui/collapsible";
+import { Input } from "../registry/ui/input";
+import { Textarea } from "../registry/ui/textarea";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
 
 const CollapsibleDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World details");

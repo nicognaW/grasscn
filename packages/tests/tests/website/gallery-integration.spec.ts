@@ -33,10 +33,11 @@ for (const viewport of [
       for (const scale of [2]) {
         await expect(card).toBeVisible();
         await expect
-          .poll(async () =>
-            await page.evaluate(
-              () => document.documentElement.scrollWidth <= innerWidth
-            )
+          .poll(
+            async () =>
+              await page.evaluate(
+                () => document.documentElement.scrollWidth <= innerWidth
+              )
           )
           .toBe(true);
         expect(

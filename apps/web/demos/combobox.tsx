@@ -1,9 +1,24 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import{Combobox,ComboboxInput,ComboboxContent,ComboboxList,ComboboxItem,ComboboxEmpty,ComboboxChips,ComboboxChip,ComboboxChipsInput,ComboboxValue,useComboboxAnchor}from"../registry/ui/combobox"
-import{Button}from"../registry/ui/button"
-import{MinecraftMenuText,MenuScaleContext}from"../registry/ui/minecraft-menu-text"
-import type{DemoProps}from"../types"
+import * as React from "react";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxContent,
+  ComboboxList,
+  ComboboxItem,
+  ComboboxEmpty,
+  ComboboxChips,
+  ComboboxChip,
+  ComboboxChipsInput,
+  ComboboxValue,
+  useComboboxAnchor,
+} from "../registry/ui/combobox";
+import { Button } from "../registry/ui/button";
+import {
+  MinecraftMenuText,
+  MenuScaleContext,
+} from "../registry/ui/minecraft-menu-text";
+import type { DemoProps } from "../types";
 
 const biomes = ["Grasslands", "Birch Forest", "你好，世界", "Deep Dark"];
 const blocks = ["Oak Planks", "Stone", "你好，世界", "Bedrock"];

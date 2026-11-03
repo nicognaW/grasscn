@@ -1,10 +1,16 @@
-import * as React from "react"
-import {Empty,EmptyHeader,EmptyTitle,EmptyDescription,EmptyContent} from "../registry/ui/empty"
-import {Input} from "../registry/ui/input"
-import {Textarea} from "../registry/ui/textarea"
-import {Button} from "../registry/ui/button"
-import type {DemoProps} from "../types"
-import {useDemoWidth} from "../use-demo-width"
+import * as React from "react";
+import {
+  Empty,
+  EmptyHeader,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyContent,
+} from "../registry/ui/empty";
+import { Input } from "../registry/ui/input";
+import { Textarea } from "../registry/ui/textarea";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
+import { useDemoWidth } from "../use-demo-width";
 
 const EmptyDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);

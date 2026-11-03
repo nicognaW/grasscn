@@ -1,9 +1,18 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import {Attachment,AttachmentMedia,AttachmentContent,AttachmentTitle,AttachmentDescription,AttachmentTrigger,AttachmentAction,AttachmentActions} from "../registry/ui/attachment"
-import {Input} from "../registry/ui/input"
-import {Button} from "../registry/ui/button"
-import type {DemoProps} from "../types"
+import * as React from "react";
+import {
+  Attachment,
+  AttachmentMedia,
+  AttachmentContent,
+  AttachmentTitle,
+  AttachmentDescription,
+  AttachmentTrigger,
+  AttachmentAction,
+  AttachmentActions,
+} from "../registry/ui/attachment";
+import { Input } from "../registry/ui/input";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
 
 const AttachmentDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("New World.zip");

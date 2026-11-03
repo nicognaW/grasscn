@@ -1,9 +1,16 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../registry/ui/card"
-import { Button } from "../registry/ui/button"
-import { Input } from "../registry/ui/input"
-import type { DemoProps } from "../types"
+import * as React from "react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "../registry/ui/card";
+import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
+import type { DemoProps } from "../types";
 
 const CardDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("Minecraft");

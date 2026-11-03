@@ -1,6 +1,27 @@
 import * as React from "react";
-import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuGroup, ContextMenuLabel, ContextMenuItem, ContextMenuCheckboxItem, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuSub, ContextMenuSubTrigger, ContextMenuPortal, ContextMenuSubContent, } from "../registry/ui/context-menu";
-import { Card, CardHeader, CardTitle, CardDescription } from "../registry/ui/card";
+import {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuGroup,
+  ContextMenuLabel,
+  ContextMenuItem,
+  ContextMenuCheckboxItem,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubTrigger,
+  ContextMenuPortal,
+  ContextMenuSubContent,
+} from "../registry/ui/context-menu";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "../registry/ui/card";
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 

@@ -1,8 +1,8 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import { Label } from "../registry/ui/label"
-import { Input } from "../registry/ui/input"
-import type { DemoProps } from "../types"
+import * as React from "react";
+import { Label } from "../registry/ui/label";
+import { Input } from "../registry/ui/input";
+import type { DemoProps } from "../types";
 
 const LabelDemo = ({ scale }: DemoProps) => {
   const [text, setText] = React.useState("Player Name");

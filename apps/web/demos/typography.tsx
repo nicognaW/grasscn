@@ -1,8 +1,15 @@
-import * as React from "react"
-import {TypographyH1,TypographyH2,TypographyP,TypographyBlockquote,TypographyInlineCode,TypographySmall} from "../registry/ui/typography"
-import {Textarea} from "../registry/ui/textarea"
-import type {DemoProps} from "../types"
-import {useDemoWidth} from "../use-demo-width"
+import * as React from "react";
+import {
+  TypographyH1,
+  TypographyH2,
+  TypographyP,
+  TypographyBlockquote,
+  TypographyInlineCode,
+  TypographySmall,
+} from "../registry/ui/typography";
+import { Textarea } from "../registry/ui/textarea";
+import type { DemoProps } from "../types";
+import { useDemoWidth } from "../use-demo-width";
 
 const TypographyDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);

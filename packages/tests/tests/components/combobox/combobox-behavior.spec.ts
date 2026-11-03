@@ -181,10 +181,10 @@ test("Combobox IME Enter cannot commit a suggestion before CJK composition compl
   await input.focus();
   await input.dispatchEvent("compositionstart", { data: "世" });
   await input.evaluate((node) => {
-    const setter = ((Object.getOwnPropertyDescriptor(
+    const setter = Object.getOwnPropertyDescriptor(
       HTMLInputElement.prototype,
       "value"
-    ))!.set)!;
+    )!.set!;
 
     setter.call(node, "世界");
     node.dispatchEvent(

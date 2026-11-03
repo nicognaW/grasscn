@@ -1,9 +1,24 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import {Questionnaire,QuestionnaireProgress,QuestionnaireItem,QuestionnaireTitle,QuestionnaireDescription,QuestionnaireChoices,QuestionnaireChoice,QuestionnaireInput,QuestionnaireError,QuestionnaireActions,QuestionnairePrevious,QuestionnaireSkip,QuestionnaireNext,QuestionnaireSubmit} from "../registry/ui/questionnaire"
-import {Label} from "../registry/ui/label"
-import {Button} from "../registry/ui/button"
-import type {DemoProps} from "../types"
+import * as React from "react";
+import {
+  Questionnaire,
+  QuestionnaireProgress,
+  QuestionnaireItem,
+  QuestionnaireTitle,
+  QuestionnaireDescription,
+  QuestionnaireChoices,
+  QuestionnaireChoice,
+  QuestionnaireInput,
+  QuestionnaireError,
+  QuestionnaireActions,
+  QuestionnairePrevious,
+  QuestionnaireSkip,
+  QuestionnaireNext,
+  QuestionnaireSubmit,
+} from "../registry/ui/questionnaire";
+import { Label } from "../registry/ui/label";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
 
 const QuestionnaireDemo = ({ scale }: DemoProps) => {
   const [result, setResult] = React.useState("");

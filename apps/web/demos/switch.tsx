@@ -1,9 +1,9 @@
-import * as React from "react"
-import { Switch } from "../registry/ui/switch"
-import { Label } from "../registry/ui/label"
-import { Input } from "../registry/ui/input"
-import { Button } from "../registry/ui/button"
-import type { DemoProps } from "../types"
+import * as React from "react";
+import { Switch } from "../registry/ui/switch";
+import { Label } from "../registry/ui/label";
+import { Input } from "../registry/ui/input";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
 
 const SwitchDemo = ({ scale }: DemoProps) => {
   const [checked, setChecked] = React.useState(false);

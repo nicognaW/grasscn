@@ -1,11 +1,11 @@
-import * as React from "react"
-import {Toggle} from "../registry/ui/toggle"
-import {Input} from "../registry/ui/input"
-import {Button} from "../registry/ui/button"
-import {Label} from "../registry/ui/label"
-import type {DemoProps} from "../types"
+import * as React from "react";
+import { Toggle } from "../registry/ui/toggle";
+import { Input } from "../registry/ui/input";
+import { Button } from "../registry/ui/button";
+import { Label } from "../registry/ui/label";
+import type { DemoProps } from "../types";
 
-import {useDemoWidth} from "../use-demo-width"
+import { useDemoWidth } from "../use-demo-width";
 
 const ToggleDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);

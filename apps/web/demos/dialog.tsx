@@ -1,9 +1,18 @@
-import * as React from "react"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "../registry/ui/dialog"
-import { Button } from "../registry/ui/button"
-import { Input } from "../registry/ui/input"
-import { Textarea } from "../registry/ui/textarea"
-import type { DemoProps } from "../types"
+import * as React from "react";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from "../registry/ui/dialog";
+import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
+import { Textarea } from "../registry/ui/textarea";
+import type { DemoProps } from "../types";
 
 const DialogDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World settings");

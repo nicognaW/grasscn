@@ -1,8 +1,8 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import { ScrollArea } from "../registry/ui/scroll-area"
-import { Button } from "../registry/ui/button"
-import type { DemoProps } from "../types"
+import * as React from "react";
+import { ScrollArea } from "../registry/ui/scroll-area";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
 
 const ScrollAreaDemo = ({ scale }: DemoProps) => {
   const viewport = React.useRef<HTMLDivElement>(null);

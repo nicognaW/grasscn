@@ -156,13 +156,14 @@ for (const component of ["sonner"]) {
     await page.goto(`/?component=${component}&actions=1&volume=.5`);
     await ready(page);
     await expect
-      .poll(async () =>
-        await page.evaluate(
-          () =>
-            // SAFETY: this test's initScript initializes this precise playback log before navigation.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-            (window as typeof window & ToastPlaybackWindow).sounds
-        )
+      .poll(
+        async () =>
+          await page.evaluate(
+            () =>
+              // SAFETY: this test's initScript initializes this precise playback log before navigation.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+              (window as typeof window & ToastPlaybackWindow).sounds
+          )
       )
       .toEqual([{ kind: "in", rate: 1, volume: 0.2 }]);
     await page
@@ -180,13 +181,14 @@ for (const component of ["sonner"]) {
     ).toHaveLength(1);
     await page.getByRole("button", { exact: true, name: "Undo" }).click();
     await expect
-      .poll(async () =>
-        await page.evaluate(
-          () =>
-            // SAFETY: this test's initScript initializes this precise playback log before navigation.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-            (window as typeof window & ToastPlaybackWindow).sounds.length
-        )
+      .poll(
+        async () =>
+          await page.evaluate(
+            () =>
+              // SAFETY: this test's initScript initializes this precise playback log before navigation.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+              (window as typeof window & ToastPlaybackWindow).sounds.length
+          )
       )
       .toBe(3);
 
@@ -243,13 +245,14 @@ for (const component of ["sonner"]) {
 
     await ready(page);
     await expect
-      .poll(async () =>
-        await page.evaluate(
-          () =>
-            // SAFETY: the separate StrictMode initScript initializes this string-only log before navigation.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-            (window as typeof window & StrictToastSoundWindow).sounds
-        )
+      .poll(
+        async () =>
+          await page.evaluate(
+            () =>
+              // SAFETY: the separate StrictMode initScript initializes this string-only log before navigation.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+              (window as typeof window & StrictToastSoundWindow).sounds
+          )
       )
       .toEqual(["in"]);
   });

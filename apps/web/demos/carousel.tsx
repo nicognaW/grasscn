@@ -1,9 +1,16 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import{Carousel,CarouselContent,CarouselItem,CarouselPrevious,CarouselNext,type CarouselApi}from"../registry/ui/carousel"
-import{Card,CardHeader,CardTitle,CardContent}from"../registry/ui/card"
-import{Button}from"../registry/ui/button"
-import type{DemoProps}from"../types"
+import * as React from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "../registry/ui/carousel";
+import { Card, CardHeader, CardTitle, CardContent } from "../registry/ui/card";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
 
 const CarouselDemo = ({ scale }: DemoProps) => {
   const [api, setApi] = React.useState<CarouselApi>();

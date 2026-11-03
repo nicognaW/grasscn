@@ -1,8 +1,8 @@
-import * as React from 'react'
-import {MinecraftMap,LocatorBar} from '../registry/ui/map'
-import {Button} from '../registry/ui/button'
-import type {DemoProps} from '../types'
-import {getWorldMapPixels} from './map-world-data'
+import * as React from "react";
+import { MinecraftMap, LocatorBar } from "../registry/ui/map";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
+import { getWorldMapPixels } from "./map-world-data";
 
 const MapDemo = ({ scale }: DemoProps) => {
   const [heading, setHeading] = React.useState(0);

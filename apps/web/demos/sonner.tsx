@@ -1,10 +1,10 @@
-import * as React from "react"
-import {createPortal} from "react-dom"
-import {Button} from "../registry/ui/button"
-import {Input} from "../registry/ui/input"
-import {Textarea} from "../registry/ui/textarea"
-import {Toaster,toast} from "../registry/ui/sonner"
-import type {DemoProps} from "../types"
+import * as React from "react";
+import { createPortal } from "react-dom";
+import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
+import { Textarea } from "../registry/ui/textarea";
+import { Toaster, toast } from "../registry/ui/sonner";
+import type { DemoProps } from "../types";
 
 const SonnerDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World saved");

@@ -54,7 +54,7 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
 
     state.scrollAudioPlays = 0;
     HTMLMediaElement.prototype.play = function play() {
-      (state.scrollAudioPlays)!++;
+      state.scrollAudioPlays!++;
 
       return Promise.resolve();
     };
@@ -69,11 +69,11 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
   const track = await page.locator(bar).boundingBox();
 
   await page.mouse.move(
-    (handle)!.x + (handle)!.width / 2,
-    (handle)!.y + (handle)!.height / 2
+    handle!.x + handle!.width / 2,
+    handle!.y + handle!.height / 2
   );
   await page.mouse.down();
-  await page.mouse.move((track)!.x + (track)!.width / 2, (track)!.y + (track)!.height, {
+  await page.mouse.move(track!.x + track!.width / 2, track!.y + track!.height, {
     steps: 12,
   });
   await page.mouse.up();
@@ -83,7 +83,7 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
         await page.locator(viewport).evaluate((node) => node.scrollTop)
     )
     .toBe(800);
-  await page.mouse.click((track)!.x + (track)!.width / 2, (track)!.y + 1);
+  await page.mouse.click(track!.x + track!.width / 2, track!.y + 1);
   await expect
     .poll(
       async () =>

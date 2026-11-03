@@ -1,11 +1,20 @@
 import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
-import { AnalyticsChartExample, type AnalyticsChartType } from "../registry/blocks/chart-analytics";
+import {
+  AnalyticsChartExample,
+  type AnalyticsChartType,
+} from "../registry/blocks/chart-analytics";
 import { FpsChartExample } from "../registry/blocks/chart-fps";
 import { ProfilerChartExample } from "../registry/blocks/chart-profiler";
 import type { ChartConfig } from "../registry/ui/chart";
 import { Button } from "../registry/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../registry/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "../registry/ui/select";
 import { MinecraftDisclosureText } from "../registry/ui/minecraft-disclosure-text";
 import type { DemoProps } from "../types";
 

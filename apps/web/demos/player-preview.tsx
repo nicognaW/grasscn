@@ -1,9 +1,9 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from 'react';
-import { PlayerPreview } from '../registry/ui/player-preview';
-import { Button } from '../registry/ui/button';
-import { Input } from '../registry/ui/input';
-import type { DemoProps } from '../types';
+import * as React from "react";
+import { PlayerPreview } from "../registry/ui/player-preview";
+import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
+import type { DemoProps } from "../types";
 
 const PlayerDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("Nyanki");

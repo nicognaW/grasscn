@@ -41,7 +41,9 @@ const assetInputNames = [
   "scroller_background.png.mcmeta",
 ];
 const assetInputReads = await Promise.allSettled(
-  assetInputNames.map(async (filename) => await readFile(path.join(directory, filename)))
+  assetInputNames.map(
+    async (filename) => await readFile(path.join(directory, filename))
+  )
 );
 
 for (const name of ["scroller", "scroller_background"]) {
@@ -54,7 +56,8 @@ for (const name of ["scroller", "scroller_background"]) {
   }
 
   const bytes = bytesRead.value;
-  const metadataRead = assetInputReads[assetInputNames.indexOf(`${name}.png.mcmeta`)];
+  const metadataRead =
+    assetInputReads[assetInputNames.indexOf(`${name}.png.mcmeta`)];
 
   if (metadataRead.status === "rejected") {
     throw metadataRead.reason;

@@ -32,9 +32,9 @@ for (const scale of [1, 2, 3]) {
 
         // No text/font readiness wait occurs before clicking or sampling.
         const frames = await page.evaluate(async () => {
-          const trigger = (document.querySelector<HTMLButtonElement>(
+          const trigger = document.querySelector<HTMLButtonElement>(
             '[data-slot="collapsible-trigger"]'
-          ))!;
+          )!;
 
           const start = performance.now();
 
@@ -55,13 +55,13 @@ for (const scale of [1, 2, 3]) {
 
             await samplingCompletion.promise;
 
-            const content = (document.querySelector<HTMLElement>(
+            const content = document.querySelector<HTMLElement>(
               '[data-slot="collapsible-content"]'
-            ))!;
+            )!;
 
-            const label = (content.querySelector<HTMLElement>(
+            const label = content.querySelector<HTMLElement>(
               "[data-mc-label-layout-ready]"
-            ))!;
+            )!;
 
             const rect = content.getBoundingClientRect();
             const style = getComputedStyle(content);

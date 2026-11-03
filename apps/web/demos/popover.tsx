@@ -1,10 +1,17 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from "../registry/ui/popover"
-import { Button } from "../registry/ui/button"
-import { Input } from "../registry/ui/input"
-import { Textarea } from "../registry/ui/textarea"
-import type { DemoProps } from "../types"
+import * as React from "react";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverDescription,
+} from "../registry/ui/popover";
+import { Button } from "../registry/ui/button";
+import { Input } from "../registry/ui/input";
+import { Textarea } from "../registry/ui/textarea";
+import type { DemoProps } from "../types";
 
 const PopoverDemo = ({ scale }: DemoProps) => {
   const [open, setOpen] = React.useState(false);

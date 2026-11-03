@@ -165,10 +165,11 @@ for (const scale of [1, 2, 3]) {
     const subject = page.locator("section[data-subject]");
     await expect(subject).toHaveAttribute("data-mc-scroll-ready", "true");
     await expect
-      .poll(async () =>
-        await subject
-          .locator('[data-slot="scroll-area-viewport"]')
-          .evaluate((node) => node.scrollTop)
+      .poll(
+        async () =>
+          await subject
+            .locator('[data-slot="scroll-area-viewport"]')
+            .evaluate((node) => node.scrollTop)
       )
       .toBe(c.value * scale);
 

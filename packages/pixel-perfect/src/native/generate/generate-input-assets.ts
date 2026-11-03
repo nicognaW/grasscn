@@ -42,7 +42,9 @@ const assetInputNames = [
   "ascii.png",
 ];
 const assetInputReads = await Promise.allSettled(
-  assetInputNames.map(async (filename) => await readFile(path.join(input, filename)))
+  assetInputNames.map(
+    async (filename) => await readFile(path.join(input, filename))
+  )
 );
 
 for (const [key, file, member] of [
@@ -86,7 +88,8 @@ for (const [key, file, member] of [
   provenance[member] = fields as typeof fields & EmbeddedAssetSource;
 
   if (key !== "atlas") {
-    const metadataRead = assetInputReads[assetInputNames.indexOf(`${file}.mcmeta`)];
+    const metadataRead =
+      assetInputReads[assetInputNames.indexOf(`${file}.mcmeta`)];
 
     if (metadataRead.status === "rejected") {
       throw metadataRead.reason;

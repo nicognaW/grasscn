@@ -24,7 +24,6 @@ interface CalendarComparisonManifest {
   cases: CalendarComparisonCase[];
 }
 
-
 const different = function different(a: PNG, b: PNG) {
   expect([a.width, a.height]).toEqual([b.width, b.height]);
   let count = 0;

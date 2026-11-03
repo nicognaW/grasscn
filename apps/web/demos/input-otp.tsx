@@ -1,9 +1,14 @@
 import type { DemoVariables } from "../demo-variables";
-import * as React from "react"
-import {InputOTP,InputOTPGroup,InputOTPSlot,InputOTPSeparator} from "../registry/ui/input-otp"
-import {Button} from "../registry/ui/button"
-import type {DemoProps} from "../types"
-import {useDemoWidth} from "../use-demo-width"
+import * as React from "react";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+  InputOTPSeparator,
+} from "../registry/ui/input-otp";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
+import { useDemoWidth } from "../use-demo-width";
 
 const InputOTPDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);

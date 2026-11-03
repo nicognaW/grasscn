@@ -176,8 +176,8 @@ test("pixel shapes follow the same ChartConfig theme variables as Recharts SVG s
 
   const hasColor = async (color: number[]) =>
     await canvas.evaluate((element: HTMLCanvasElement, expectedColor) => {
-      const pixels = (element
-        .getContext("2d"))!
+      const pixels = element
+        .getContext("2d")!
         .getImageData(0, 0, element.width, element.height).data;
 
       for (let i = 0; i < pixels.length; i += 4) {

@@ -51,7 +51,10 @@ const inventory = await readNativeInventory(map.nativeInventory);
 const registry = await readEvidenceRegistry("registry.json");
 
 const historicalEvidence = await validateHistoricalEvidence({
-  archiveDirectory: path.join(root, "packages/pixel-perfect/evidence/historical-installed-977f538"),
+  archiveDirectory: path.join(
+    root,
+    "packages/pixel-perfect/evidence/historical-installed-977f538"
+  ),
   map,
   registry,
   resolvePath: evidenceFile,
@@ -293,7 +296,10 @@ for (const component of map.components) {
       filenames
     );
     assert.deepEqual(behavior.files.map((file) => file.path).sort(), filenames);
-    assertHistoricalUtilitySources(JSON.stringify(behavior), JSON.stringify(installation));
+    assertHistoricalUtilitySources(
+      JSON.stringify(behavior),
+      JSON.stringify(installation)
+    );
 
     for (const file of installation.files) {
       hash(file.installedSha256);

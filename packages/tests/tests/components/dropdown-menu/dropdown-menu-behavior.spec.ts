@@ -282,26 +282,28 @@ for (const query of ["nonmodal", "controlled&reject", "nativeButtonChild"]) {
 
     await trigger.click();
     await expect
-      .poll(async () =>
-        await page.evaluate(
-          () =>
-            // SAFETY: This Dropdown Menu reader follows navigation initialized with the exact paired __menuVoices producer.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
-            (window as typeof window & DropdownCounterState).__menuVoices
-        )
+      .poll(
+        async () =>
+          await page.evaluate(
+            () =>
+              // SAFETY: This Dropdown Menu reader follows navigation initialized with the exact paired __menuVoices producer.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+              (window as typeof window & DropdownCounterState).__menuVoices
+          )
       )
       .toBe(1);
     await page.keyboard.press("Escape");
     await trigger.focus();
     await trigger.press("Enter");
     await expect
-      .poll(async () =>
-        await page.evaluate(
-          () =>
-            // SAFETY: This Dropdown Menu reader follows navigation initialized with the exact paired __menuVoices producer.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
-            (window as typeof window & DropdownCounterState).__menuVoices
-        )
+      .poll(
+        async () =>
+          await page.evaluate(
+            () =>
+              // SAFETY: This Dropdown Menu reader follows navigation initialized with the exact paired __menuVoices producer.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+              (window as typeof window & DropdownCounterState).__menuVoices
+          )
       )
       .toBe(2);
   });

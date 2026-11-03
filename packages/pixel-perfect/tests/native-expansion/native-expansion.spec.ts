@@ -55,12 +55,13 @@ for (const { reference, sample } of specimens) {
     }
 
     await expect
-      .poll(async () =>
-        await subject
-          .locator("img")
-          .evaluateAll((images: HTMLImageElement[]) =>
-            images.every((image) => image.complete && image.naturalWidth > 0)
-          )
+      .poll(
+        async () =>
+          await subject
+            .locator("img")
+            .evaluateAll((images: HTMLImageElement[]) =>
+              images.every((image) => image.complete && image.naturalWidth > 0)
+            )
       )
       .toBe(true);
     await page.evaluate(async () => await document.fonts.ready);
