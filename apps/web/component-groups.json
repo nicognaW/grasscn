@@ -1,9 +1,4 @@
 {
-  "form": [
-    "field"
-  ],
-  "message": [
-    "bubble",
-    "message-scroller"
-  ]
+  "form": ["field"],
+  "message": ["bubble", "message-scroller"]
 }

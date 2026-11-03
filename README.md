@@ -4,9 +4,7 @@ Pixel-perfect Minecraft UI components for the web. Copy, customize, and build on
 
 <!-- Add the showcase composition here. -->
 
-[![GitHub stars](https://shieldcn.dev/github/stars/nicognaW/grasscn.svg)](https://github.com/nicognaW/grasscn/stargazers)
-[![MIT license](https://shieldcn.dev/github/license/nicognaW/grasscn.svg)](./LICENSE)
-[![Built on shadcn/ui](https://shieldcn.dev/badge/built_on-shadcn%2Fui.svg?logo=shadcnui)](https://ui.shadcn.com)
+[![GitHub stars](https://shieldcn.dev/github/stars/nicognaW/grasscn.svg)](https://github.com/nicognaW/grasscn/stargazers) [![MIT license](https://shieldcn.dev/github/license/nicognaW/grasscn.svg)](./LICENSE) [![Built on shadcn/ui](https://shieldcn.dev/badge/built_on-shadcn%2Fui.svg?logo=shadcnui)](https://ui.shadcn.com)
 
 ## Quick start
 
