@@ -45,7 +45,7 @@ export const MarkerFixture = () => {
             maxWidth={
               q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined
             }
-            align={(q.get("align") ?? "left") as "left" | "center"}
+            align={q.get("align") === "center" ? "center" : "left"}
           >
             {q.get("label") ?? ""}
           </MarkerContent>
