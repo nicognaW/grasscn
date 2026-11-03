@@ -4,9 +4,9 @@ interface EmptyPlaybackState extends Window {
   sounds?: string[];
 }
 
-interface InitializedEmptyPlaybackState extends EmptyPlaybackState {
+type InitializedEmptyPlaybackState = typeof window & EmptyPlaybackState & {
   sounds: string[];
-}
+};
 
 test("Empty keeps scalar native-row text, CJK rendering, refs and events", async ({
   page,

@@ -4,9 +4,9 @@ interface PlayerListPlaybackState extends Window {
   played?: number;
 }
 
-interface InitializedPlayerListPlaybackState extends PlayerListPlaybackState {
+type InitializedPlayerListPlaybackState = typeof window & PlayerListPlaybackState & {
   played: number;
-}
+};
 
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
