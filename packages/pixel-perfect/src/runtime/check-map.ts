@@ -632,6 +632,128 @@ const verifyGlyphEvidence = async (
   );
 };
 
+const verifyNativeManifestEvidence = async (
+  component: (typeof map.components)[number],
+  verification: (typeof map.components)[number]["pixelVerification"],
+  registryItemName: string | undefined,
+  manifestFile: string
+) => {
+  const manifest = await readNativeCaptureManifest(manifestFile);
+
+  assert.equal(manifest.sourceJarSha256, map.sourceJarSha256);
+  assert.ok(manifest.cases.length, `${component.name}: empty reference matrix`);
+
+  if (
+    manifest.sourceDirectory !== undefined &&
+    manifest.sourceDirectory !== ""
+  ) {
+    const source = path.join(
+      path.dirname(manifestFile),
+      manifest.sourceDirectory,
+      "ControlsReferenceMain.java"
+    );
+
+    assert.equal(
+      digest(await readFile(evidenceFile(source))),
+      manifest.captureSourceSha256,
+      `Native harness snapshot integrity: ${source}`
+    );
+    const casesFile = path.join(path.dirname(manifestFile), "cases.json");
+    assert.equal(
+      digest(await readFile(evidenceFile(casesFile))),
+      manifest.caseDefinitionSha256,
+      `Native case definition integrity: ${casesFile}`
+    );
+  }
+
+  for (const reference of manifest.cases) {
+    const file = path.join(
+      path.dirname(manifestFile),
+      "captures",
+      reference.name
+    );
+
+    assert.equal(
+      digest(await readFile(evidenceFile(file))),
+      reference.sha256,
+      `Reference integrity: ${file}`
+    );
+  }
+
+  if (
+    manifest.framesDirectory !== undefined &&
+    manifest.framesDirectory !== ""
+  ) {
+    for (const frame of manifest.frames) {
+      const file = path.join(
+        path.dirname(manifestFile),
+        manifest.framesDirectory,
+        frame.name
+      );
+
+      assert.equal(
+        digest(await readFile(evidenceFile(file))),
+        frame.sha256,
+        `Full-frame integrity: ${file}`
+      );
+    }
+  }
+
+  if (verification.status === "verified-declared-cases") {
+    await verifyDeclaredInstallation(
+      component,
+      verification,
+      registryItemName,
+      manifestFile,
+      manifest
+    );
+  }
+
+  const includesUnihex = registryItems
+    .get(registryItemName)
+    ?.files.some((file) => file.path.endsWith("/minecraft-unifont-data.ts"));
+
+  if (manifest.effectiveAssets && includesUnihex === true) {
+    assert.equal(
+      await embeddedFontZipDigest(),
+      manifest.effectiveAssets.resources["minecraft/font/unifont.zip"].sha256,
+      `${component.name}: embedded font bytes differ from native runtime resources`
+    );
+  }
+
+  if (manifest.glyphObservationEnabled === false) {
+    assert.ok(
+      manifest.cases.every(
+        (c) =>
+          ![c.label, c.text, ...(c.labels ?? [])].some(
+            (value) =>
+              value !== null &&
+              value !== undefined &&
+              /[^\u0020-\u007E\r\n\t]/u.test(value)
+          )
+      ),
+      `${component.name}: native Unihex text cases require their glyph sampling evidence`
+    );
+  }
+
+  if (
+    manifest.glyphObservationEnabled !== false &&
+    manifest.effectiveAssets &&
+    registryItems
+      .get(registryItemName)
+      ?.files.some((file) =>
+        file.path.endsWith("/minecraft-unifont-data.ts")
+      ) === true
+  ) {
+    await verifyGlyphEvidence(
+      component,
+      manifestFile,
+      manifest,
+      manifest.effectiveAssets
+    );
+  }
+};
+
 for (const component of map.components) {
   const verification = component.pixelVerification;
   const registryItemName = component.implementation.registryItem;
@@ -678,123 +800,12 @@ for (const component of map.components) {
     verification.manifest,
     ...(verification.additionalManifests ?? []),
   ].filter((file): file is string => Boolean(file))) {
-    const manifest = await readNativeCaptureManifest(manifestFile);
-
-    assert.equal(manifest.sourceJarSha256, map.sourceJarSha256);
-    assert.ok(
-      manifest.cases.length,
-      `${component.name}: empty reference matrix`
+    await verifyNativeManifestEvidence(
+      component,
+      verification,
+      registryItemName,
+      manifestFile
     );
-
-    if (
-      manifest.sourceDirectory !== undefined &&
-      manifest.sourceDirectory !== ""
-    ) {
-      const source = path.join(
-        path.dirname(manifestFile),
-        manifest.sourceDirectory,
-        "ControlsReferenceMain.java"
-      );
-
-      assert.equal(
-        digest(await readFile(evidenceFile(source))),
-        manifest.captureSourceSha256,
-        `Native harness snapshot integrity: ${source}`
-      );
-      const casesFile = path.join(path.dirname(manifestFile), "cases.json");
-      assert.equal(
-        digest(await readFile(evidenceFile(casesFile))),
-        manifest.caseDefinitionSha256,
-        `Native case definition integrity: ${casesFile}`
-      );
-    }
-
-    for (const reference of manifest.cases) {
-      const file = path.join(
-        path.dirname(manifestFile),
-        "captures",
-        reference.name
-      );
-
-      assert.equal(
-        digest(await readFile(evidenceFile(file))),
-        reference.sha256,
-        `Reference integrity: ${file}`
-      );
-    }
-
-    if (
-      manifest.framesDirectory !== undefined &&
-      manifest.framesDirectory !== ""
-    ) {
-      for (const frame of manifest.frames) {
-        const file = path.join(
-          path.dirname(manifestFile),
-          manifest.framesDirectory,
-          frame.name
-        );
-
-        assert.equal(
-          digest(await readFile(evidenceFile(file))),
-          frame.sha256,
-          `Full-frame integrity: ${file}`
-        );
-      }
-    }
-
-    if (verification.status === "verified-declared-cases") {
-      await verifyDeclaredInstallation(
-        component,
-        verification,
-        registryItemName,
-        manifestFile,
-        manifest
-      );
-    }
-
-    const includesUnihex = registryItems
-      .get(registryItemName)
-      ?.files.some((file) => file.path.endsWith("/minecraft-unifont-data.ts"));
-
-    if (manifest.effectiveAssets && includesUnihex === true) {
-      assert.equal(
-        await embeddedFontZipDigest(),
-        manifest.effectiveAssets.resources["minecraft/font/unifont.zip"].sha256,
-        `${component.name}: embedded font bytes differ from native runtime resources`
-      );
-    }
-
-    if (manifest.glyphObservationEnabled === false) {
-      assert.ok(
-        manifest.cases.every(
-          (c) =>
-            ![c.label, c.text, ...(c.labels ?? [])].some(
-              (value) =>
-                value !== null &&
-                value !== undefined &&
-                /[^\u0020-\u007E\r\n\t]/u.test(value)
-            )
-        ),
-        `${component.name}: native Unihex text cases require their glyph sampling evidence`
-      );
-    }
-
-    if (
-      manifest.glyphObservationEnabled !== false &&
-      manifest.effectiveAssets &&
-      registryItems
-        .get(registryItemName)
-        ?.files.some((file) =>
-          file.path.endsWith("/minecraft-unifont-data.ts")
-        ) === true
-    ) {
-      await verifyGlyphEvidence(
-        component,
-        manifestFile,
-        manifest,
-        manifest.effectiveAssets
-      );
-    }
   }
 }
 
