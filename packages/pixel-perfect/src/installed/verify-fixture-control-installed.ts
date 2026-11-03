@@ -4,12 +4,19 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { expect } from "@playwright/test";
-import type { Page } from "@playwright/test";
-import type { FixtureReferenceCase, PositionedReferenceCase, TabsReferenceCase, SelectReferenceCase, InstalledReferenceManifest } from "@ppt/installed/reference-case";
+import type { Locator, Page } from "@playwright/test";
+import type {
+  FixtureReferenceCase,
+  PositionedReferenceCase,
+  TabsReferenceCase,
+  SelectReferenceCase,
+  InstalledReferenceManifest,
+} from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const sha = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex");
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 interface InstalledFixtureControlCase {
   c: FixtureReferenceCase;
@@ -20,7 +27,7 @@ interface InstalledFixtureControlCase {
   url: string;
 }
 
-export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name, page, url }: InstalledFixtureControlCase) => {
+const controlParameters = (c: FixtureReferenceCase, name: string) => {
   const params = new URLSearchParams({
     checked: String(c.checked ?? false),
     component: c.element ?? name,
@@ -58,7 +65,10 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
     params.set("wrapWidth", String(c.wrapWidth));
     params.set("open", "1");
   }
+  return params;
+};
 
+const appendSurfaceParameters = (params: URLSearchParams, c: FixtureReferenceCase) => {
   if (c.element === "card") {
     params.set("height", String(c.height));
 
@@ -92,7 +102,9 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
     params.set("color", c.color);
     params.set("overlay", c.overlay);
   }
+};
 
+const appendSelectionParameters = (params: URLSearchParams, c: FixtureReferenceCase, name: string) => {
   if (name === "tabs") {
     // SAFETY: the existing item-name branch selects its registered TabsReferenceCase capture format.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific registered manifest protocol.
@@ -137,11 +149,9 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
       params.set("labels", JSON.stringify(selectedCase.labels));
     }
   }
+};
 
-  await page.goto(`${url}?${params}`);
-  const subject = page.locator("[data-subject]");
-  await subject.waitFor();
-
+const prepareControlAppearance = async (c: FixtureReferenceCase, manifest: InstalledReferenceManifest, name: string, page: Page, subject: Locator) => {
   if (c.element === "progress" && c.overlay !== "progress") {
     await expect(subject.locator("canvas")).toHaveAttribute(
       "data-mc-progress-painted",
@@ -174,10 +184,7 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
     await page.addStyleTag({
       content: "#root > :not([data-subject]) { visibility: hidden; }",
     });
-    await expect(subject).toHaveAttribute(
-      "data-mc-label-layout-ready",
-      "true"
-    );
+    await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
 
     for (const line of await subject.locator("[data-mc-label-ready]").all()) {
       await expect(line).toHaveAttribute("data-mc-label-ready", "true");
@@ -251,9 +258,9 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
   if (c.element === "input" || c.element === "textarea") {
     await expect(subject).toHaveAttribute("data-mc-ready", "true");
   }
+};
 
-  await page.mouse.move(0, 0);
-
+const prepareTabsControlState = async (c: FixtureReferenceCase, name: string, page: Page, subject: Locator) => {
   if (name === "tabs") {
     // SAFETY: the existing item-name branch selects its registered TabsReferenceCase capture format.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific registered manifest protocol.
@@ -306,13 +313,13 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
       }
     }
 
-    for (const label of await subject
-      .locator("[data-mc-label-ready]")
-      .all()) {
+    for (const label of await subject.locator("[data-mc-label-ready]").all()) {
       await expect(label).toHaveAttribute("data-mc-label-ready", "true");
     }
   }
+};
 
+const prepareSelectControlState = async (c: FixtureReferenceCase, name: string, page: Page, subject: Locator) => {
   if (name === "select") {
     // SAFETY: the existing item-name branch selects its registered SelectReferenceCase capture format.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific registered manifest protocol.
@@ -339,17 +346,15 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
     });
     await expect(subject).toHaveAttribute("data-mc-select-ready", "true");
 
-    await (selectedCase.state === "focus" ?
-      subject.focus()
-    :
-      page.evaluate(() => {
-        // SAFETY: the consumer fixture renders native HTML focus targets; null preserves the original optional blur.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual authored HTML focus target boundary.
-        const active = document.activeElement as HTMLElement | null;
+    await (selectedCase.state === "focus"
+      ? subject.focus()
+      : page.evaluate(() => {
+          // SAFETY: the consumer fixture renders native HTML focus targets; null preserves the original optional blur.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual authored HTML focus target boundary.
+          const active = document.activeElement as HTMLElement | null;
 
-        return active?.blur();
-      })
-    );
+          return active?.blur();
+        }));
 
     if (selectedCase.state.endsWith("hover")) {
       await (
@@ -396,13 +401,13 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
       return await frameCompletion6.promise;
     });
 
-    for (const label of await subject
-      .locator("[data-mc-label-ready]")
-      .all()) {
+    for (const label of await subject.locator("[data-mc-label-ready]").all()) {
       await expect(label).toHaveAttribute("data-mc-label-ready", "true");
     }
   }
+};
 
+const prepareChoiceControlState = async (c: FixtureReferenceCase, name: string, page: Page, subject: Locator) => {
   if (["radio-group", "switch"].includes(name)) {
     // SAFETY: the registered radio-group and switch captures both emit required numeric x/y coordinates.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact positioned capture producer boundary.
@@ -450,7 +455,9 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
       await page.keyboard.press("Enter");
     }
   }
+};
 
+const prepareEntryControlSelection = async (c: FixtureReferenceCase, page: Page, subject: Locator) => {
   if (c.element === "input" || c.element === "textarea") {
     const cursor = c.cursor ?? c.text.length;
     const anchor = c.anchor ?? cursor;
@@ -478,11 +485,40 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
     await page.clock.runFor(c.caretMs);
     await expect(subject).toHaveAttribute("data-mc-ready", "true");
   }
+};
+
+export const verifyFixtureControlCase = async ({
+  c,
+  manifest,
+  manifestFile,
+  name,
+  page,
+  url,
+}: InstalledFixtureControlCase) => {
+  const params = controlParameters(c, name);
+
+  appendSurfaceParameters(params, c);
+
+  appendSelectionParameters(params, c, name);
+
+  await page.goto(`${url}?${params}`);
+  const subject = page.locator("[data-subject]");
+  await subject.waitFor();
+
+  await prepareControlAppearance(c, manifest, name, page, subject);
+
+  await page.mouse.move(0, 0);
+
+  await prepareTabsControlState(c, name, page, subject);
+
+  await prepareSelectControlState(c, name, page, subject);
+
+  await prepareChoiceControlState(c, name, page, subject);
+
+  await prepareEntryControlSelection(c, page, subject);
 
   const expectedBytes = await readFile(
-    pixelPerfectFile(
-      path.join(path.dirname(manifestFile), "captures", c.name)
-    )
+    pixelPerfectFile(path.join(path.dirname(manifestFile), "captures", c.name))
   );
 
   assert.equal(sha(expectedBytes), c.sha256);
@@ -498,6 +534,7 @@ export const verifyFixtureControlCase = async ({ c, manifest, manifestFile, name
     actual.data.equals(expected.data),
     `Installed pixels differ: ${c.name}`
   );
+
   return {
     decodedRgbaSha256: sha(actual.data),
     mismatchedPixels: 0,

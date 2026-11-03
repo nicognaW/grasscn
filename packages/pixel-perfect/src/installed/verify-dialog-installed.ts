@@ -9,7 +9,8 @@ import type { DialogReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const sha = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex");
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 interface InstalledDialogCase {
   c: DialogReferenceCase;
@@ -19,9 +20,7 @@ interface InstalledDialogCase {
   url: string;
 }
 
-export const verifyDialogCase = async ({ c, manifestFile, name, page, url }: InstalledDialogCase) => {
-  const confirmation = name === "alert-dialog";
-
+const dialogParameters = (c: DialogReferenceCase, name: string, confirmation: boolean) => {
   const params = new URLSearchParams({
     component: name,
     label: c.label,
@@ -46,16 +45,26 @@ export const verifyDialogCase = async ({ c, manifestFile, name, page, url }: Ins
 
   const optionalDisabledIndex = c.disabledIndex;
 
-  if (
-    optionalDisabledIndex !== null &&
-    optionalDisabledIndex !== undefined
-  ) {
+  if (optionalDisabledIndex !== null && optionalDisabledIndex !== undefined) {
     params.set("disabledIndex", String(c.disabledIndex));
   }
 
   if (c.checked ?? false) {
     params.set("patterned", "1");
   }
+  return params;
+};
+
+export const verifyDialogCase = async ({
+  c,
+  manifestFile,
+  name,
+  page,
+  url,
+}: InstalledDialogCase) => {
+  const confirmation = name === "alert-dialog";
+
+  const params = dialogParameters(c, name, confirmation);
 
   await page.goto(`${url}?${params}`);
   await page.addStyleTag({
@@ -79,13 +88,9 @@ export const verifyDialogCase = async ({ c, manifestFile, name, page, url }: Ins
       c.labels.filter((label) => /\P{ASCII}/u.test(label)).length;
 
     if (count) {
-      await expect(dialog.locator("[data-mc-label-ready]")).toHaveCount(
-        count
-      );
+      await expect(dialog.locator("[data-mc-label-ready]")).toHaveCount(count);
 
-      for (const line of await dialog
-        .locator("[data-mc-label-ready]")
-        .all()) {
+      for (const line of await dialog.locator("[data-mc-label-ready]").all()) {
         await expect(line).toHaveAttribute("data-mc-label-ready", "true");
       }
     }
@@ -94,9 +99,10 @@ export const verifyDialogCase = async ({ c, manifestFile, name, page, url }: Ins
       page.locator('[data-slot="alert-dialog-overlay"]')
     ).toHaveAttribute("data-mc-confirmation-gpu-ready", "true");
   } else {
-    await expect(
-      page.locator('[data-slot="dialog-overlay"]')
-    ).toHaveAttribute("data-mc-backdrop-ready", "true");
+    await expect(page.locator('[data-slot="dialog-overlay"]')).toHaveAttribute(
+      "data-mc-backdrop-ready",
+      "true"
+    );
 
     if (/\P{ASCII}/u.test((c.label ?? "") + (c.text ?? ""))) {
       await expect(
@@ -140,9 +146,7 @@ export const verifyDialogCase = async ({ c, manifestFile, name, page, url }: Ins
   });
 
   const bytes = await readFile(
-    pixelPerfectFile(
-      path.join(path.dirname(manifestFile), "captures", c.name)
-    )
+    pixelPerfectFile(path.join(path.dirname(manifestFile), "captures", c.name))
   );
 
   assert.equal(sha(bytes), c.sha256);
@@ -158,6 +162,7 @@ export const verifyDialogCase = async ({ c, manifestFile, name, page, url }: Ins
     actual.data.equals(expected.data),
     `Installed pixels differ: ${c.name}`
   );
+
   return {
     decodedRgbaSha256: sha(actual.data),
     mismatchedPixels: 0,

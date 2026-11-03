@@ -9,7 +9,8 @@ import type { PopoverReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const sha = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex");
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 interface InstalledPopoverCase {
   c: PopoverReferenceCase;
@@ -18,7 +19,12 @@ interface InstalledPopoverCase {
   url: string;
 }
 
-export const verifyPopoverCase = async ({ c, manifestFile, page, url }: InstalledPopoverCase) => {
+export const verifyPopoverCase = async ({
+  c,
+  manifestFile,
+  page,
+  url,
+}: InstalledPopoverCase) => {
   const params = new URLSearchParams({
     component: "popover",
     height: String(c.height),
@@ -50,10 +56,7 @@ export const verifyPopoverCase = async ({ c, manifestFile, page, url }: Installe
   for (const line of await subject
     .locator("[data-mc-popover-unicode-ready]")
     .all()) {
-    await expect(line).toHaveAttribute(
-      "data-mc-popover-unicode-ready",
-      "true"
-    );
+    await expect(line).toHaveAttribute("data-mc-popover-unicode-ready", "true");
   }
 
   await page.evaluate(async () => {
@@ -74,9 +77,7 @@ export const verifyPopoverCase = async ({ c, manifestFile, page, url }: Installe
   assert.equal(bounds.y, c.y * c.scale);
 
   const bytes = await readFile(
-    pixelPerfectFile(
-      path.join(path.dirname(manifestFile), "captures", c.name)
-    )
+    pixelPerfectFile(path.join(path.dirname(manifestFile), "captures", c.name))
   );
 
   assert.equal(sha(bytes), c.sha256);
@@ -92,6 +93,7 @@ export const verifyPopoverCase = async ({ c, manifestFile, page, url }: Installe
     actual.data.equals(expected.data),
     `Installed Popover pixels differ: ${c.name}`
   );
+
   return {
     decodedRgbaSha256: sha(actual.data),
     mismatchedPixels: 0,

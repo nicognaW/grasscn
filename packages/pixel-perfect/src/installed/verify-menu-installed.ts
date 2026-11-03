@@ -5,11 +5,16 @@ import path from "node:path";
 
 import { expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
-import type { MenuReferenceCase, MenubarTriggerReferenceCase, InstalledCaseResult } from "@ppt/installed/reference-case";
+import type {
+  MenuReferenceCase,
+  MenubarTriggerReferenceCase,
+  InstalledCaseResult,
+} from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const sha = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex");
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 interface InstalledMenuCase {
   c: MenuReferenceCase;
@@ -19,7 +24,13 @@ interface InstalledMenuCase {
   url: string;
 }
 
-export const verifyMenuCase = async ({ c, manifestFile, name, page, url }: InstalledMenuCase) => {
+export const verifyMenuCase = async ({
+  c,
+  manifestFile,
+  name,
+  page,
+  url,
+}: InstalledMenuCase) => {
   let result: InstalledCaseResult | undefined;
 
   for (const kind of c.element === "menu-checkbox"
@@ -92,19 +103,13 @@ export const verifyMenuCase = async ({ c, manifestFile, name, page, url }: Insta
     for (const line of await subject
       .locator("[data-mc-menu-unicode-ready]")
       .all()) {
-      await expect(line).toHaveAttribute(
-        "data-mc-menu-unicode-ready",
-        "true"
-      );
+      await expect(line).toHaveAttribute("data-mc-menu-unicode-ready", "true");
     }
 
     for (const icon of await subject
       .locator("[data-mc-menu-sprite-ready]")
       .all()) {
-      await expect(icon).toHaveAttribute(
-        "data-mc-menu-sprite-ready",
-        "true"
-      );
+      await expect(icon).toHaveAttribute("data-mc-menu-sprite-ready", "true");
     }
 
     await page.evaluate(async () => {
@@ -166,7 +171,13 @@ interface InstalledMenubarTriggerCase {
   url: string;
 }
 
-export const verifyMenubarTriggerCase = async ({ c, manifestFile, name, page, url }: InstalledMenubarTriggerCase) => {
+export const verifyMenubarTriggerCase = async ({
+  c,
+  manifestFile,
+  name,
+  page,
+  url,
+}: InstalledMenubarTriggerCase) => {
   let result: InstalledCaseResult | undefined;
 
   for (const open of c.state === "hover" ? [false, true] : [false]) {
@@ -202,9 +213,7 @@ export const verifyMenubarTriggerCase = async ({ c, manifestFile, name, page, ur
       await expect(trigger).toBeFocused();
     }
 
-    for (const line of await trigger
-      .locator("[data-mc-label-ready]")
-      .all()) {
+    for (const line of await trigger.locator("[data-mc-label-ready]").all()) {
       await expect(line).toHaveAttribute("data-mc-label-ready", "true");
     }
 
