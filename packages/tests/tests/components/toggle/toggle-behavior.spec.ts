@@ -1,6 +1,15 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
+interface TogglePlaybackState extends Window {
+  sounds?: { rate: number; src: string; volume: number }[];
+}
+
+type InitializedTogglePlaybackState = typeof window &
+  TogglePlaybackState & {
+    sounds: { rate: number; src: string; volume: number }[];
+  };
+
 test("Toggle supports pointer, Space and Enter with pressed semantics", async ({
   page,
 }) => {
@@ -115,13 +124,17 @@ test("Toggle plays original game audio once per accepted activation", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as TogglePlaybackState).sounds = [];
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedTogglePlaybackState).sounds.push({
         rate: this.playbackRate,
         src: this.src,
         volume: this.volume,
       });
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
@@ -130,17 +143,27 @@ test("Toggle plays original game audio once per accepted activation", async ({
   const control = page.locator("[data-subject]");
   await control.hover();
   await control.focus();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(() => (window as InitializedTogglePlaybackState).sounds)
+  ).toEqual([]);
+  // oxlint-enable typescript/no-unsafe-type-assertion
   await control.click();
   await page.keyboard.press("Space");
   await page.keyboard.press("Enter");
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual(
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(() => (window as InitializedTogglePlaybackState).sounds)
+  ).toEqual(
     Array.from({ length: 3 }, () => ({
       rate: 1,
       src: minecraftClickSound,
       volume: 0.25,
     }))
   );
+  // oxlint-enable typescript/no-unsafe-type-assertion
 
   for (const suffix of [
     "cancel=1",
@@ -149,6 +172,13 @@ test("Toggle plays original game audio once per accepted activation", async ({
   ]) {
     await page.goto(`/?component=toggle&${suffix}`);
     await page.locator("[data-subject]").dispatchEvent("click");
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+    expect(
+      await page.evaluate(
+        () => (window as InitializedTogglePlaybackState).sounds
+      )
+    ).toEqual([]);
+    // oxlint-enable typescript/no-unsafe-type-assertion
   }
 });

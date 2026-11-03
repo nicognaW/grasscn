@@ -97,48 +97,56 @@ const TextComponentsFixture = () => {
   let subject: React.ReactNode;
 
   if (component === "empty") {
-    subject = native ? (
-      part === "title" ? (
-        <EmptyTitle {...common} scale={scale} maxWidth={width} align={align}>
-          {text}
-        </EmptyTitle>
-      ) : part === "description" ? (
-        <EmptyDescription
-          {...common}
-          scale={scale}
-          maxWidth={width}
-          align={align}
-        >
-          {text}
-        </EmptyDescription>
-      ) : (
-        <Empty {...common} scale={scale}>
-          {text}
-        </Empty>
-      )
-    ) : (
-      <Empty scale={scale} ref={ref}>
-        <EmptyHeader>
-          <EmptyMedia>
-            <span data-testid="media">*</span>
-          </EmptyMedia>
-          <EmptyTitle>No worlds found</EmptyTitle>
-          <EmptyDescription maxWidth={160}>
-            Create a world to begin your adventure.
-          </EmptyDescription>
-        </EmptyHeader>
-        <EmptyContent>
-          <button
-            type="button"
-            onClick={() => {
-              setEvents((n) => n + 1);
-            }}
+    if (native) {
+      if (part === "title") {
+        subject = (
+          <EmptyTitle {...common} scale={scale} maxWidth={width} align={align}>
+            {text}
+          </EmptyTitle>
+        );
+      } else if (part === "description") {
+        subject = (
+          <EmptyDescription
+            {...common}
+            scale={scale}
+            maxWidth={width}
+            align={align}
           >
-            Create world
-          </button>
-        </EmptyContent>
-      </Empty>
-    );
+            {text}
+          </EmptyDescription>
+        );
+      } else {
+        subject = (
+          <Empty {...common} scale={scale}>
+            {text}
+          </Empty>
+        );
+      }
+    } else {
+      subject = (
+        <Empty scale={scale} ref={ref}>
+          <EmptyHeader>
+            <EmptyMedia>
+              <span data-testid="media">*</span>
+            </EmptyMedia>
+            <EmptyTitle>No worlds found</EmptyTitle>
+            <EmptyDescription maxWidth={160}>
+              Create a world to begin your adventure.
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <button
+              type="button"
+              onClick={() => {
+                setEvents((n) => n + 1);
+              }}
+            >
+              Create world
+            </button>
+          </EmptyContent>
+        </Empty>
+      );
+    }
   } else if (component === "badge") {
     // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
     subject = (

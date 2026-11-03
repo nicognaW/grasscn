@@ -138,7 +138,7 @@ export const CalendarFixture = () => {
       ...(part === "label"
         ? {
             captionTextProps: {
-              align: (q.get("align") ?? "left") as "left" | "center",
+              align: q.get("align") === "center" ? "center" : "left",
               className: "native-reference-geometry native-reference-size",
               id: "subject",
               maxWidth: q.has("wrapWidth")
