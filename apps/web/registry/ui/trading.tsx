@@ -391,7 +391,7 @@ const Trading = ({
                         choose(item.id);
                       }
                     }}
-                    className="mc-trade-offer mc-layout-trading-7 mc-dynamic-layout-trading-6"
+                    className="mc-trade-offer block mc-layout-trading-7 mc-dynamic-layout-trading-6"
                     style={
                       /* SAFETY: The owned mc-dynamic-layout-trading-6 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
                       {
