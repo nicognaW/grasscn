@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./native-reference.css";
 @import "./structural.css";
+@import "./draft-demos.css";
 @import "../../../../apps/web/registry/ui/minecraft-components.css";
 @source "../../../../apps/web/registry/ui";
 html,
