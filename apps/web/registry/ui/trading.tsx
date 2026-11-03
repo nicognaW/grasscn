@@ -213,7 +213,7 @@ const Trading = ({
         <AdventureImage
           texture="gui/container/villager"
           scale={scale}
-          style={{ left: 0, maxWidth: "none", position: "absolute", top: 0 }}
+          className="mc-layout-trading-2"
         />
         <MinecraftDocumentText
           text="Trades"
@@ -221,7 +221,8 @@ const Trading = ({
           scale={scale}
           align="center"
           color="#404040"
-          style={{ left: 5 * scale, position: "absolute", top: 6 * scale }}
+          className="mc-layout-trading-3"
+          style={{ left: 5 * scale, top: 6 * scale }}
         />
         <MinecraftDocumentText
           text={title}
@@ -229,14 +230,16 @@ const Trading = ({
           scale={scale}
           align="center"
           color="#404040"
-          style={{ left: 106 * scale, position: "absolute", top: 6 * scale }}
+          className="mc-layout-trading-4"
+          style={{ left: 106 * scale, top: 6 * scale }}
         />
         <MinecraftDocumentText
           text="Inventory"
           width={162}
           scale={scale}
           color="#404040"
-          style={{ left: 107 * scale, position: "absolute", top: 72 * scale }}
+          className="mc-layout-trading-5"
+          style={{ left: 107 * scale, top: 72 * scale }}
         />
         <div
           id={listId}
@@ -264,9 +267,8 @@ const Trading = ({
                         choose(item.id);
                       }
                     }}
-                    className="mc-trade-offer"
+                    className="mc-trade-offer mc-layout-trading-7"
                     style={{
-                      display: "block",
                       height: 20 * scale,
                       width: 88 * scale,
                     }}
@@ -285,9 +287,10 @@ const Trading = ({
                   <AdventureImage
                     texture={`gui/sprites/container/villager/trade_arrow${item.inStock === false ? "_out_of_stock" : ""}`}
                     scale={scale}
+                    className="mc-layout-trading-10"
                     style={{
                       left: 55 * scale,
-                      position: "absolute",
+
                       top: 4 * scale,
                     }}
                   />
@@ -378,7 +381,8 @@ const Trading = ({
           <AdventureImage
             texture={`gui/sprites/container/villager/scroller${maxOffset ? "" : "_disabled"}`}
             scale={scale}
-            style={{ left: 0, position: "absolute", top: thumbY * scale }}
+            className="mc-layout-trading-13"
+            style={{ top: thumbY * scale }}
           />
         </div>
         {offer && (
@@ -432,9 +436,10 @@ const Trading = ({
               <AdventureImage
                 texture="gui/sprites/container/villager/out_of_stock"
                 scale={scale}
+                className="mc-layout-trading-17"
                 style={{
                   left: 182 * scale,
-                  position: "absolute",
+
                   top: 35 * scale,
                 }}
               />

@@ -46,3 +46,19 @@
     outline: calc(1px * var(--mc-scale)) solid white;
   }
 }
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-map-3 {
+    height: 100%;
+    transform: scaleY(-1);
+    width: 100%;
+  }
+  .mc-layout-map-4 {
+    display: block;
+    image-rendering: pixelated;
+  }
+  .mc-layout-map-6 {
+    position: absolute;
+  }
+}

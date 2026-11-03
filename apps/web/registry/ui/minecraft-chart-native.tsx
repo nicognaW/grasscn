@@ -63,18 +63,15 @@ const NativeChartText = ({
     : "transparent";
 
   const textStyle: NativeChartTextStyle = {
-          "--mc-ink": ink,
-          "--mc-shadow": shade,
-          color: ink,
-          left: x * scale,
-          top: y * scale,
-        };
+    "--mc-ink": ink,
+    "--mc-shadow": shade,
+    color: ink,
+    left: x * scale,
+    top: y * scale,
+  };
 
   return (
-    <span
-      className="mc-chart-text"
-      style={textStyle}
-    >
+    <span className="mc-chart-text" style={textStyle}>
       {/\P{ASCII}/u.test(text) ? (
         <MinecraftColorUnicodeLabel text={text} />
       ) : (
@@ -118,11 +115,11 @@ const ChartFpsFrame = ({
   const line = (y: number, color: string, key: string) => (
     <span
       key={key}
-      className="mc-chart-rect"
+      className="mc-chart-rect mc-layout-minecraft-chart-native-1"
       style={{
         background: color,
         height: scale,
-        left: 0,
+
         top: y * scale,
         width: width * scale,
       }}
@@ -132,9 +129,8 @@ const ChartFpsFrame = ({
   const shade = (text: string, y: number) => (
     <React.Fragment key={text}>
       <span
-        className="mc-chart-rect"
+        className="mc-chart-rect mc-layout-minecraft-chart-native-2"
         style={{
-          background: "rgba(80,80,80,0.5647058823529412)",
           height: 9 * scale,
           left: scale,
           top: y * scale,
@@ -194,20 +190,20 @@ const ChartFpsFrame = ({
       y={0}
       width={chartWidth}
       height={chartHeight}
-      style={{ overflow: "visible", pointerEvents: "none" }}
+      className="mc-layout-minecraft-chart-native-4"
     >
       <div
         ref={host}
         data-slot="chart-fps-frame"
         data-mc-ready={bars.length > 0}
-        style={{ height: chartHeight, position: "relative", width: chartWidth }}
+        className="mc-layout-minecraft-chart-native-5"
+        style={{ height: chartHeight, width: chartWidth }}
       >
         <span
-          className="mc-chart-rect"
+          className="mc-chart-rect mc-layout-minecraft-chart-native-6"
           style={{
-            background: "rgba(80,80,80,0.5647058823529412)",
             height: 60 * scale,
-            left: 0,
+
             top: 9 * scale,
             width: width * scale,
           }}
@@ -232,19 +228,17 @@ const ChartFpsFrame = ({
         {line(9, "white", "top")}
         {line(68, "white", "bottom")}
         <span
-          className="mc-chart-rect"
+          className="mc-chart-rect mc-layout-minecraft-chart-native-8"
           style={{
-            background: "white",
             height: 59 * scale,
-            left: 0,
+
             top: 10 * scale,
             width: scale,
           }}
         />
         <span
-          className="mc-chart-rect"
+          className="mc-chart-rect mc-layout-minecraft-chart-native-9"
           style={{
-            background: "white",
             height: 59 * scale,
             left: (width - 1) * scale,
             top: 10 * scale,
@@ -629,22 +623,24 @@ const ChartProfilerFrame = ({
       y={0}
       width={width}
       height={height}
-      style={{ overflow: "visible", pointerEvents: "none" }}
+      className="mc-layout-minecraft-chart-native-10"
     >
       <div
         data-slot="chart-profiler-frame"
         data-mc-ready={ready}
-        style={{ height, position: "relative", width }}
+        className="mc-layout-minecraft-chart-native-11"
+        style={{ height, width }}
       >
         <canvas
           key="profiler-2d-surface"
           ref={canvas}
           aria-hidden="true"
+          className="mc-layout-minecraft-chart-native-12"
           style={{
             height: 114 * unit,
-            imageRendering: "pixelated",
+
             left: sector.cx - 130 * unit,
-            position: "absolute",
+
             top: sector.cy - 52 * unit,
             width: 260 * unit,
           }}

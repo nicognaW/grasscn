@@ -82,12 +82,10 @@ const HotbarPaint = ({
       width={184}
       height={23}
       aria-hidden="true"
+      className="mc-layout-hotbar-1"
       style={{
         height: 23 * scale,
-        imageRendering: "pixelated",
-        left: 0,
-        position: "absolute",
-        top: 0,
+
         width: 184 * scale,
       }}
     />
@@ -237,12 +235,14 @@ const Hotbar = ({
           <AdventureImage
             texture="gui/sprites/hud/hotbar"
             scale={scale}
-            style={{ left: scale, position: "absolute", top: scale }}
+            className="mc-layout-hotbar-2"
+            style={{ left: scale, top: scale }}
           />
           <AdventureImage
             texture="gui/sprites/hud/hotbar_selection"
             scale={scale}
-            style={{ left: current * 20 * scale, position: "absolute", top: 0 }}
+            className="mc-layout-hotbar-3"
+            style={{ left: current * 20 * scale }}
           />
         </>
       )}

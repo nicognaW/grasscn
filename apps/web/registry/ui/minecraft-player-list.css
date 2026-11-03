@@ -77,3 +77,37 @@
     width: 100%;
   }
 }
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-player-list-2 {
+    position: relative;
+  }
+  .mc-layout-player-list-4 {
+    top: 0;
+  }
+  .mc-layout-player-list-5 {
+    top: 0;
+  }
+  .mc-layout-player-list-6 {
+    top: 0;
+  }
+  .mc-layout-player-list-8 {
+    position: relative;
+  }
+  .mc-layout-player-list-10 {
+    position: absolute;
+  }
+  .mc-layout-player-list-11 {
+    left: 0;
+    position: absolute;
+    right: 0;
+  }
+  .mc-layout-player-list-13 {
+    position: absolute;
+  }
+  .mc-layout-player-list-14 {
+    position: absolute;
+    right: 0;
+  }
+}

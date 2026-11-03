@@ -609,11 +609,9 @@ const PlayerPreview = ({
         width={width * scale}
         height={height * scale}
         aria-hidden="true"
+        className="mc-layout-player-preview-1"
         style={{
-          height: "100%",
-          transform: "scaleY(-1)",
           visibility: status === "loaded" ? "visible" : "hidden",
-          width: "100%",
         }}
       />
       {status !== "loaded" && (

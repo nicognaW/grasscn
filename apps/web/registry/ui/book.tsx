@@ -93,14 +93,15 @@ const Book = ({
       <AdventureImage
         texture="gui/book"
         scale={scale}
-        style={{ left: 0, maxWidth: "none", position: "absolute", top: 0 }}
+        className="mc-layout-book-1"
       />
       <MinecraftDocumentText
         text={`Page ${index + 1} of ${Math.max(1, pages.length)}`}
         width={114}
         scale={scale}
         align="right"
-        style={{ left: 34 * scale, position: "absolute", top: 16 * scale }}
+        className="mc-layout-book-2"
+        style={{ left: 34 * scale, top: 16 * scale }}
       />
       <div
         className="mc-book-page"

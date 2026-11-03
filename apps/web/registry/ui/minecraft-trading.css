@@ -92,3 +92,35 @@
     background: #ffffff80;
   }
 }
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-trading-2 {
+    left: 0;
+    max-width: none;
+    position: absolute;
+    top: 0;
+  }
+  .mc-layout-trading-3 {
+    position: absolute;
+  }
+  .mc-layout-trading-4 {
+    position: absolute;
+  }
+  .mc-layout-trading-5 {
+    position: absolute;
+  }
+  .mc-layout-trading-7 {
+    display: block;
+  }
+  .mc-layout-trading-10 {
+    position: absolute;
+  }
+  .mc-layout-trading-13 {
+    left: 0;
+    position: absolute;
+  }
+  .mc-layout-trading-17 {
+    position: absolute;
+  }
+}
