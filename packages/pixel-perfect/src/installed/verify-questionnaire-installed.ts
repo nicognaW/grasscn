@@ -101,21 +101,12 @@ try {
 
       let questionnaireActions: readonly ("next" | "previous" | "skip" | "submit" | "radio")[];
 
-      switch (true) {
-        case part === "action": {
-          questionnaireActions = (["next", "previous", "skip", "submit"] as const);
-          break;
-        }
-
-        case part === "checkbox": {
-          questionnaireActions = (["next", "radio"] as const);
-          break;
-        }
-
-        default: {
-          questionnaireActions = (["next"] as const);
-          break;
-        }
+      if (part === "action") {
+        questionnaireActions = (["next", "previous", "skip", "submit"] as const);
+      } else if (part === "checkbox") {
+        questionnaireActions = (["next", "radio"] as const);
+      } else {
+        questionnaireActions = (["next"] as const);
       }
 
       for (const action of questionnaireActions) {

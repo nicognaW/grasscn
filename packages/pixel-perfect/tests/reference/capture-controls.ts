@@ -143,21 +143,12 @@ await writeFile(frozenCases, caseBytes);
 
 let platformNameSelection: "windows" | "osx" | "linux";
 
-switch (true) {
-  case process.platform === "win32": {
-    platformNameSelection = "windows";
-    break;
-  }
-
-  case process.platform === "darwin": {
-    platformNameSelection = "osx";
-    break;
-  }
-
-  default: {
-    platformNameSelection = "linux";
-    break;
-  }
+if (process.platform === "win32") {
+  platformNameSelection = "windows";
+} else if (process.platform === "darwin") {
+  platformNameSelection = "osx";
+} else {
+  platformNameSelection = "linux";
 }
 
 const platformName =

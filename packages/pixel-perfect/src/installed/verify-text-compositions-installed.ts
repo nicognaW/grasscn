@@ -74,21 +74,12 @@ const files = item!.files.map((file) => {
 
   let directorySelection: "hooks" | "lib" | "components/ui";
 
-  switch (true) {
-    case file.type === "registry:hook": {
-      directorySelection = "hooks";
-      break;
-    }
-
-    case file.type === "registry:lib": {
-      directorySelection = "lib";
-      break;
-    }
-
-    default: {
-      directorySelection = "components/ui";
-      break;
-    }
+  if (file.type === "registry:hook") {
+    directorySelection = "hooks";
+  } else if (file.type === "registry:lib") {
+    directorySelection = "lib";
+  } else {
+    directorySelection = "components/ui";
   }
 
   const directory =
@@ -201,26 +192,14 @@ const worker = async function worker() {
       const subject = page.locator("#subject");
       let slotSelection: string;
 
-      switch (true) {
-        case name === "code-block": {
-          slotSelection = "code-block-content";
-          break;
-        }
-
-        case name === "trace": {
-          slotSelection = "trace-line";
-          break;
-        }
-
-        case name === "message-scroller": {
-          slotSelection = "message-scroller-item";
-          break;
-        }
-
-        default: {
-          slotSelection = name;
-          break;
-        }
+      if (name === "code-block") {
+        slotSelection = "code-block-content";
+      } else if (name === "trace") {
+        slotSelection = "trace-line";
+      } else if (name === "message-scroller") {
+        slotSelection = "message-scroller-item";
+      } else {
+        slotSelection = name;
       }
 
       await expect(subject).toHaveAttribute(

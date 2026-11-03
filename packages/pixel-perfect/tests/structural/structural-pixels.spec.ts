@@ -83,21 +83,12 @@ test.describe("Structural native constituents", () => {
 
       let partSelection: "text" | "separator" | "button";
 
-      switch (true) {
-        case directory.endsWith("/label"): {
-          partSelection = "text";
-          break;
-        }
-
-        case directory.endsWith("/separator"): {
-          partSelection = "separator";
-          break;
-        }
-
-        default: {
-          partSelection = "button";
-          break;
-        }
+      if (directory.endsWith("/label")) {
+        partSelection = "text";
+      } else if (directory.endsWith("/separator")) {
+        partSelection = "separator";
+      } else {
+        partSelection = "button";
       }
 
       const part = partSelection;
@@ -146,21 +137,12 @@ test.describe("Structural native constituents", () => {
               await expect(subject).toBeVisible();
               let slotSelection: string;
 
-              switch (true) {
-                case component === "pagination": {
-                  slotSelection = "pagination-link";
-                  break;
-                }
-
-                case part === "button": {
-                  slotSelection = "button";
-                  break;
-                }
-
-                default: {
-                  slotSelection = `button-group-${part}`;
-                  break;
-                }
+              if (component === "pagination") {
+                slotSelection = "pagination-link";
+              } else if (part === "button") {
+                slotSelection = "button";
+              } else {
+                slotSelection = `button-group-${part}`;
               }
 
               await expect(subject).toHaveAttribute(

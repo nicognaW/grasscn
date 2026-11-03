@@ -71,21 +71,12 @@ export const nativeTextTests = function nativeTextTests(
 
   let directoriesSelection: string[];
 
-  switch (true) {
-    case component === "badge": {
-      directoriesSelection = ["tests/reference/tooltip"];
-      break;
-    }
-
-    case component === "kbd": {
-      directoriesSelection = ["tests/reference", "tests/reference/button-cjk"];
-      break;
-    }
-
-    default: {
-      directoriesSelection = ["tests/reference/label"];
-      break;
-    }
+  if (component === "badge") {
+    directoriesSelection = ["tests/reference/tooltip"];
+  } else if (component === "kbd") {
+    directoriesSelection = ["tests/reference", "tests/reference/button-cjk"];
+  } else {
+    directoriesSelection = ["tests/reference/label"];
   }
 
   const directories =
@@ -120,9 +111,8 @@ export const nativeTextTests = function nativeTextTests(
 
     let partsSelection: string[];
 
-    switch (true) {
-      case component === "typography": {
-        partsSelection = [
+    if (component === "typography") {
+      partsSelection = [
             "default",
             "h1",
             "h2",
@@ -136,18 +126,10 @@ export const nativeTextTests = function nativeTextTests(
             "large",
             "muted",
           ];
-        break;
-      }
-
-      case component === "breadcrumb": {
-        partsSelection = ["link", "page"];
-        break;
-      }
-
-      default: {
-        partsSelection = ["default"];
-        break;
-      }
+    } else if (component === "breadcrumb") {
+      partsSelection = ["link", "page"];
+    } else {
+      partsSelection = ["default"];
     }
 
     const parts =
@@ -184,21 +166,12 @@ export const nativeTextTests = function nativeTextTests(
           const subject = page.locator("[data-subject]");
           let slotSelection: string;
 
-          switch (true) {
-            case component === "breadcrumb": {
-              slotSelection = `breadcrumb-${part}`;
-              break;
-            }
-
-            case component === "typography" && part !== "default": {
-              slotSelection = `typography-${part === "code" ? "inline-code" : part}`;
-              break;
-            }
-
-            default: {
-              slotSelection = component;
-              break;
-            }
+          if (component === "breadcrumb") {
+            slotSelection = `breadcrumb-${part}`;
+          } else if (component === "typography" && part !== "default") {
+            slotSelection = `typography-${part === "code" ? "inline-code" : part}`;
+          } else {
+            slotSelection = component;
           }
 
           await expect(subject).toHaveAttribute(

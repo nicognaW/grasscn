@@ -138,21 +138,12 @@ for (const [part, directory] of [
 
           let mediaStateSelection: string;
 
-          switch (true) {
-            case c.state === "hover": {
-              mediaStateSelection = "1";
-              break;
-            }
-
-            case c.state === "icon-hover": {
-              mediaStateSelection = "2";
-              break;
-            }
-
-            default: {
-              mediaStateSelection = "0";
-              break;
-            }
+          if (c.state === "hover") {
+            mediaStateSelection = "1";
+          } else if (c.state === "icon-hover") {
+            mediaStateSelection = "2";
+          } else {
+            mediaStateSelection = "0";
           }
 
           await expect(media).toHaveAttribute(

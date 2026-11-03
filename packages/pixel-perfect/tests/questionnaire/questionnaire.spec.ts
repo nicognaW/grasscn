@@ -58,21 +58,12 @@ for (const [part, dir] of parts) {
     for (const c of manifest.cases) {
       let questionnaireActions: string[];
 
-      switch (true) {
-        case part === "action": {
-          questionnaireActions = ["next", "previous", "skip", "submit"];
-          break;
-        }
-
-        case part === "checkbox": {
-          questionnaireActions = ["next", "radio"];
-          break;
-        }
-
-        default: {
-          questionnaireActions = ["next"];
-          break;
-        }
+      if (part === "action") {
+        questionnaireActions = ["next", "previous", "skip", "submit"];
+      } else if (part === "checkbox") {
+        questionnaireActions = ["next", "radio"];
+      } else {
+        questionnaireActions = ["next"];
       }
 
       for (const action of questionnaireActions) {
