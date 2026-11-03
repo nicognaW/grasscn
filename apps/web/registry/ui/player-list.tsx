@@ -15,6 +15,39 @@ import { loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-player-list.css";
 
+interface PlayerListLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-player-list-1-height": number;
+  "--mc-dynamic-player-list-1-top": number;
+}
+
+interface PlayerListLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-player-list-2-height": number;
+}
+
+interface PlayerListLayoutStyle3 extends React.CSSProperties {
+  "--mc-dynamic-player-list-3-grid-auto-columns": number;
+  "--mc-dynamic-player-list-3-grid-template-rows": string;
+  "--mc-dynamic-player-list-3-left": number;
+  "--mc-dynamic-player-list-3-top": number;
+}
+
+interface PlayerListLayoutStyle5 extends React.CSSProperties {
+  "--mc-dynamic-player-list-5-right": number;
+}
+
+interface PlayerListLayoutStyle6 extends React.CSSProperties {
+  "--mc-dynamic-player-list-6-right": number;
+}
+
+interface PlayerListLayoutStyle7 extends React.CSSProperties {
+  "--mc-dynamic-player-list-7-height": number;
+  "--mc-dynamic-player-list-7-top": number;
+}
+
+interface PlayerListLayoutStyle8 extends React.CSSProperties {
+  "--mc-dynamic-player-list-8-height": number;
+}
+
 interface PlayerListLayoutStyle9 extends React.CSSProperties {
   "--mc-dynamic-player-list-9-height": number;
 }
@@ -60,6 +93,118 @@ type PlayerListProps = React.ComponentProps<"div"> & {
   scale?: 1 | 2 | 3;
   rowWidth?: number;
   onPlayerSelect?: (id: string) => void;
+};
+
+const renderRosterEntry = (
+  player: PlayerListEntry,
+  scale: 1 | 2 | 3,
+  columnWidth: number,
+  scoreWidth: number,
+  onPlayerSelect: PlayerListProps["onPlayerSelect"]
+): React.ReactElement => {
+  const latency = player.latency ?? 0;
+
+  const bars =
+    latency < 0
+      ? "unknown"
+      : latency < 150
+        ? "5"
+        : latency < 300
+          ? "4"
+          : latency < 600
+            ? "3"
+            : latency < 1000
+              ? "2"
+              : "1";
+
+  const key = `gui/sprites/icon/ping_${bars}` as keyof typeof playerListAssets;
+
+  const content = (
+    <>
+      <Avatar
+        scale={scale}
+        style={{
+          height: 8 * scale,
+          left: 0,
+          position: "absolute",
+          top: 0,
+          width: 8 * scale,
+        }}
+      >
+        <AvatarImage
+          skin={
+            player.src || player.username
+              ? undefined
+              : (player.skin ?? "wide/steve")
+          }
+          src={
+            player.src ??
+            (player.username
+              ? `https://mc-heads.net/avatar/${encodeURIComponent(player.username)}/8`
+              : undefined)
+          }
+          alt=""
+        />
+      </Avatar>
+      <span
+        className="mc-roster-name mc-layout-player-list-4"
+        style={{
+          fontStyle: (player.spectator ?? false) ? "italic" : undefined,
+          left: 9 * scale,
+          maxWidth: (columnWidth - 9 - scoreWidth - 13) * scale,
+          opacity: (player.spectator ?? false) ? 144 / 255 : 1,
+        }}
+      >
+        <MinecraftMenuText>{player.name}</MinecraftMenuText>
+      </span>
+      {player.score != null && (
+        <span
+          className="mc-roster-score mc-layout-player-list-5 mc-dynamic-layout-player-list-5"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-player-list-5 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-player-list-5-right": 12 * scale,
+            } satisfies PlayerListLayoutStyle5 as PlayerListLayoutStyle5
+          }
+        >
+          <MinecraftMenuText>{player.score}</MinecraftMenuText>
+        </span>
+      )}
+      <img
+        className="mc-roster-ping mc-layout-player-list-6 mc-dynamic-layout-player-list-6"
+        alt={latency < 0 ? "Connection unknown" : `${latency} ms latency`}
+        src={playerListAssets[key]}
+        width={10 * scale}
+        height={8 * scale}
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-player-list-6 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-player-list-6-right": scale,
+          } satisfies PlayerListLayoutStyle6 as PlayerListLayoutStyle6
+        }
+      />
+    </>
+  );
+
+  return (
+    <div role="listitem" key={player.id} className="mc-roster-row">
+      {onPlayerSelect ? (
+        <button
+          type="button"
+          onClick={(event) => {
+            if (!event.defaultPrevented) {
+              onPlayerSelect(player.id);
+            }
+          }}
+          aria-label={player.name}
+        >
+          {content}
+        </button>
+      ) : (
+        content
+      )}
+    </div>
+  );
 };
 
 const PlayerList = ({
@@ -152,14 +297,25 @@ const PlayerList = ({
       >
         {header && (
           <div
-            className="mc-roster-heading"
-            style={{ height: head.length * 9 * scale, top: scale }}
+            className="mc-roster-heading mc-dynamic-layout-player-list-1"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-player-list-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-player-list-1-height": head.length * 9 * scale,
+                "--mc-dynamic-player-list-1-top": scale,
+              } satisfies PlayerListLayoutStyle1 as PlayerListLayoutStyle1
+            }
           >
             {head.map((line, i) => (
               <div
                 key={i}
-                className="mc-layout-player-list-2"
-                style={{ height: 9 * scale }}
+                className="mc-layout-player-list-2 mc-dynamic-layout-player-list-2"
+                style={
+                  /* SAFETY: The owned mc-dynamic-layout-player-list-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                  {
+                    "--mc-dynamic-player-list-2-height": 9 * scale,
+                  } satisfies PlayerListLayoutStyle2 as PlayerListLayoutStyle2
+                }
               >
                 <span
                   style={
@@ -184,127 +340,52 @@ const PlayerList = ({
         <div
           role="list"
           aria-label="Players"
-          className="mc-roster-grid"
-          style={{
-            gridAutoColumns: columnWidth * scale,
-            gridTemplateRows: rows ? `repeat(${rows},${9 * scale}px)` : "none",
-            left: bodyLeft * scale,
-            top: (headHeight + 1) * scale,
-          }}
+          className="mc-roster-grid mc-dynamic-layout-player-list-3"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-player-list-3 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-player-list-3-grid-auto-columns":
+                columnWidth * scale,
+              "--mc-dynamic-player-list-3-grid-template-rows": rows
+                ? `repeat(${rows},${9 * scale}px)`
+                : "none",
+              "--mc-dynamic-player-list-3-left": bodyLeft * scale,
+              "--mc-dynamic-player-list-3-top": (headHeight + 1) * scale,
+            } satisfies PlayerListLayoutStyle3 as PlayerListLayoutStyle3
+          }
         >
-          {visible.map((player) => {
-            const latency = player.latency ?? 0;
-
-            const bars =
-              latency < 0
-                ? "unknown"
-                : latency < 150
-                  ? "5"
-                  : latency < 300
-                    ? "4"
-                    : latency < 600
-                      ? "3"
-                      : latency < 1000
-                        ? "2"
-                        : "1";
-
-            const key =
-              `gui/sprites/icon/ping_${bars}` as keyof typeof playerListAssets;
-
-            const content = (
-              <>
-                <Avatar
-                  scale={scale}
-                  style={{
-                    height: 8 * scale,
-                    left: 0,
-                    position: "absolute",
-                    top: 0,
-                    width: 8 * scale,
-                  }}
-                >
-                  <AvatarImage
-                    skin={
-                      player.src || player.username
-                        ? undefined
-                        : (player.skin ?? "wide/steve")
-                    }
-                    src={
-                      player.src ??
-                      (player.username
-                        ? `https://mc-heads.net/avatar/${encodeURIComponent(player.username)}/8`
-                        : undefined)
-                    }
-                    alt=""
-                  />
-                </Avatar>
-                <span
-                  className="mc-roster-name mc-layout-player-list-4"
-                  style={{
-                    fontStyle:
-                      (player.spectator ?? false) ? "italic" : undefined,
-                    left: 9 * scale,
-                    maxWidth: (columnWidth - 9 - scoreWidth - 13) * scale,
-                    opacity: (player.spectator ?? false) ? 144 / 255 : 1,
-                  }}
-                >
-                  <MinecraftMenuText>{player.name}</MinecraftMenuText>
-                </span>
-                {player.score != null && (
-                  <span
-                    className="mc-roster-score mc-layout-player-list-5"
-                    style={{ right: 12 * scale }}
-                  >
-                    <MinecraftMenuText>{player.score}</MinecraftMenuText>
-                  </span>
-                )}
-                <img
-                  className="mc-roster-ping mc-layout-player-list-6"
-                  alt={
-                    latency < 0 ? "Connection unknown" : `${latency} ms latency`
-                  }
-                  src={playerListAssets[key]}
-                  width={10 * scale}
-                  height={8 * scale}
-                  style={{ right: scale }}
-                />
-              </>
-            );
-
-            return (
-              <div role="listitem" key={player.id} className="mc-roster-row">
-                {onPlayerSelect ? (
-                  <button
-                    type="button"
-                    onClick={(event) => {
-                      if (!event.defaultPrevented) {
-                        onPlayerSelect(player.id);
-                      }
-                    }}
-                    aria-label={player.name}
-                  >
-                    {content}
-                  </button>
-                ) : (
-                  content
-                )}
-              </div>
-            );
-          })}
+          {visible.map((player) =>
+            renderRosterEntry(
+              player,
+              scale,
+              columnWidth,
+              scoreWidth,
+              onPlayerSelect
+            )
+          )}
         </div>
         {footer && (
           <div
-            className="mc-roster-heading"
-            style={{
-              height: foot.length * 9 * scale,
-              top: (headHeight + rows * 9 + 2) * scale,
-            }}
+            className="mc-roster-heading mc-dynamic-layout-player-list-7"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-player-list-7 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-player-list-7-height": foot.length * 9 * scale,
+                "--mc-dynamic-player-list-7-top":
+                  (headHeight + rows * 9 + 2) * scale,
+              } satisfies PlayerListLayoutStyle7 as PlayerListLayoutStyle7
+            }
           >
             {foot.map((line, i) => (
               <div
                 key={i}
-                className="mc-layout-player-list-8"
-                style={{ height: 9 * scale }}
+                className="mc-layout-player-list-8 mc-dynamic-layout-player-list-8"
+                style={
+                  /* SAFETY: The owned mc-dynamic-layout-player-list-8 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                  {
+                    "--mc-dynamic-player-list-8-height": 9 * scale,
+                  } satisfies PlayerListLayoutStyle8 as PlayerListLayoutStyle8
+                }
               >
                 <span
                   style={

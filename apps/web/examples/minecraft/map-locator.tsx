@@ -9,7 +9,7 @@ const MapLocator = () => {
   const [heading, setHeading] = useState(0);
 
   return (
-    <div className="grid [gap:24px]">
+    <div className="grid gap-6">
       <LocatorBar
         markers={[{ bearing: 0, id: "camp", label: "Camp" }]}
         heading={heading}

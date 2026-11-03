@@ -6,6 +6,17 @@ import * as React from "react";
 
 import { cn as mergeClasses } from "@/lib/utils";
 
+/** React refs call their callback branch; object refs retain direct current assignment. */
+export const isMinecraftRefCallback = <T,>(
+  ref: React.Ref<T> | undefined
+): ref is React.RefCallback<T> => typeof ref === "function";
+
+/** React 19 callback refs may return an unmount cleanup instead of void. */
+export const isMinecraftRefCleanup = (
+  cleanup: ReturnType<React.RefCallback<HTMLElement>>
+): cleanup is Exclude<ReturnType<React.RefCallback<HTMLElement>>, void> =>
+  typeof cleanup === "function";
+
 type ClassValue = Parameters<typeof mergeClasses>[number];
 
 /** Scalar content supported by the Minecraft bitmap text renderers. */

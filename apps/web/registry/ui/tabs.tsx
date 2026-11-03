@@ -7,7 +7,7 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
-  isMinecraftTextContent,
+  isMinecraftRefCallback, isMinecraftRefCleanup, isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
 } from "./minecraft-render";
@@ -42,10 +42,10 @@ const useLocalRef = function useLocalRef<T extends HTMLElement>(
       local.current = node;
       setElement(node);
 
-      if (typeof forwarded === "function") {
+      if (isMinecraftRefCallback(forwarded)) {
         const cleanup = forwarded(node);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             local.current = null;
             setElement(null);

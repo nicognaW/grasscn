@@ -6,7 +6,7 @@ import * as React from "react";
 import { Button } from "./button";
 import { MinecraftCollapsibleText } from "./minecraft-collapsible-text";
 import {
-  isMinecraftTextContent,
+  isMinecraftRefCallback, isMinecraftRefCleanup, isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
 } from "./minecraft-render";
@@ -98,10 +98,10 @@ const CollapsibleContent = ({
     (node: HTMLDivElement | null) => {
       setElement(node);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(node);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setElement(null);
             cleanup();

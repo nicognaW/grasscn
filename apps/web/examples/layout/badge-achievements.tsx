@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 
 const BadgeAchievements = () => (
-  <div className="grid [gap:24px]">
+  <div className="grid gap-6">
     <Badge achievement="goal" earned={false}>
       Diamonds!
     </Badge>

@@ -9,7 +9,7 @@ const LabelExample = () => {
   const id = useId();
 
   return (
-    <div className="grid [gap:12px]">
+    <div className="grid gap-3">
       <Label htmlFor={id}>Player name</Label>
       <Input id={id} defaultValue="Steve" />
     </div>

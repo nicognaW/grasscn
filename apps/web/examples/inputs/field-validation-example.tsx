@@ -20,7 +20,7 @@ const ValidatedFieldExample = () => {
         setSubmitted(true);
       }}
 
-      className="grid [gap:12px]"
+      className="grid gap-3"
     >
       <Field data-invalid={invalid}>
         <FieldLabel htmlFor={id}>Player name</FieldLabel>

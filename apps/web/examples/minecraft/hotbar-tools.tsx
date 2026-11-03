@@ -20,7 +20,7 @@ const HotbarTools = () => {
   const [value, setValue] = useState(0);
 
   return (
-    <div className="grid [gap:16px]">
+    <div className="grid gap-4">
       <Hotbar
         items={labels.map((label) => ({ id: label, label }))}
         value={value}

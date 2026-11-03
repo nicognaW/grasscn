@@ -11,7 +11,7 @@ const ScrollAreaExample = () => {
   const [selected, setSelected] = useState("Select a row");
 
   return (
-    <div className="grid [gap:16px]">
+    <div className="grid gap-4">
       <Button onClick={() => viewport.current?.scrollTo({ top: 0 })}>
         Top
       </Button>

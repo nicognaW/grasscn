@@ -11,7 +11,7 @@ import {
 
 const Example = () => (
   <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-    className="[padding:48px] [width:100%]"
+    className="p-12 [width:100%]"
     style={{ maxWidth: 500 }}
     /* eslint-enable shadcn/no-inline-styles */
   >

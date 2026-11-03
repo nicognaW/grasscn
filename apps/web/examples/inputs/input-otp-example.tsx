@@ -15,7 +15,7 @@ const InputOTPExample = () => {
   const [complete, setComplete] = useState("");
 
   return (
-    <div className="grid [gap:12px]">
+    <div className="grid gap-3">
       <InputOTP
         aria-label="One-time code"
         maxLength={6}

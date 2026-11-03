@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import { isMinecraftRefCallback, isMinecraftRefCleanup, minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { Select, SelectTrigger } from "./select";
 
@@ -45,10 +45,10 @@ const NativeSelect = ({
     (element: HTMLSelectElement | null) => {
       node.current = element;
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(element);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             node.current = null;
             cleanup();

@@ -77,7 +77,35 @@ const MessageAvatar = ({
   />
 );
 
-const isChatInline = function isChatInline(value: React.ReactNode): boolean {
+type MinecraftChatInline =
+  | null
+  | undefined
+  | boolean
+  | string
+  | number
+  | readonly MinecraftChatInline[]
+  | React.ReactElement<
+      { children?: MinecraftChatInline },
+      | typeof React.Fragment
+      | "span"
+      | "a"
+      | "strong"
+      | "em"
+      | "b"
+      | "i"
+      | "u"
+      | "s"
+      | "small"
+      | "code"
+      | "mark"
+      | "abbr"
+      | "sub"
+      | "sup"
+    >;
+
+const isChatInline = function isChatInline(
+  value: React.ReactNode
+): value is MinecraftChatInline {
   if (isMinecraftEmptyChild(value) || isMinecraftTextContent(value)) {
     return true;
   }

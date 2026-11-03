@@ -30,7 +30,7 @@ const QuestionnaireExample = () => {
   const [result, setResult] = useState("");
 
   return (
-    <div className="grid [gap:16px]">
+    <div className="grid gap-4">
       <Questionnaire
         items={items}
         shortcuts="numbers"

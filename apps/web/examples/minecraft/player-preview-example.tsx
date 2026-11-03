@@ -10,7 +10,7 @@ const PlayerPreviewExample = () => {
   );
 
   return (
-    <div className="grid [gap:16px]">
+    <div className="grid gap-4">
       <PlayerPreview
         skin="wide/steve"
         aria-label="Steve preview"

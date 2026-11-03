@@ -5,7 +5,7 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
-  isMinecraftTextContent,
+  isMinecraftRefCallback, isMinecraftRefCleanup, isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -47,10 +47,10 @@ const useElement = function useElement<T extends HTMLElement>(
     (node: T | null) => {
       setElement(node);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(node);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setElement(null);
             cleanup();
