@@ -120,7 +120,7 @@ const libraries = metadata.libraries
   .filter(permitted)
   .filter(
     (library) =>
-      !/^(net\.fabricmc|net\.fabricmc\.|org\.ow2\.asm|io\.github\.llamalad7):/u.test(
+      !/^(?:net\.fabricmc|net\.fabricmc\.|org\.ow2\.asm|io\.github\.llamalad7):/u.test(
         library.name
       )
   )

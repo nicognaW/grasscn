@@ -84,7 +84,7 @@ test("Toggle Group embeds the original four opaque recipe-filter PNGs", () => {
   );
 
   const images = [
-    ...css.matchAll(/data:image\/png;base64,([A-Za-z0-9+/=]+)/gu),
+    ...css.matchAll(/data:image\/png;base64,(?<pngBase64>[A-Za-z0-9+/=]+)/gu),
   ].map((m) => Buffer.from(m[1], "base64"));
 
   expect(images).toHaveLength(4);
