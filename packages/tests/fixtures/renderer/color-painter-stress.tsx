@@ -73,6 +73,7 @@ export const ColorPainterStressFixture = () => {
                 "--fixture-x": `${16 * scale}px`,
                 "--fixture-y": `${16 * scale}px`,
                 color: "#ff5555",
+                // oxlint-disable-next-line shadcn/no-inline-styles -- Approved painter stress input: BubbleContent reads inline width before the existing scale-transition pixel assertions.
                 width: 252 * scale,
               }}
               data-subject="true"

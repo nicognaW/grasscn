@@ -81,7 +81,10 @@ export const StructuralFixture = () => {
           <AspectRatio
             id="ratio"
             ratio={Number(p.get("ratio") ?? 16 / 9)}
-            style={{ overflow: p.has("clip") ? "hidden" : "visible" }}
+            style={{
+              // oxlint-disable-next-line shadcn/no-inline-styles -- Approved AspectRatio caller-style API probe: the existing clipping test supplies this explicit overflow override.
+              overflow: p.has("clip") ? "hidden" : "visible",
+            }}
             ref={(node) => {
               if (node) {
                 node.dataset.ref = "true";
