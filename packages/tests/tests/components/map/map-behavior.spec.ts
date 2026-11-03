@@ -19,7 +19,7 @@ test("map terrain coordinates and keyboard markers", async ({ page }) => {
   );
 
   const subject = page.locator("[data-subject]");
-  const bounds = await subject.boundingBox();
+  const bounds = (await subject.boundingBox())!;
 
   await subject.click({ position: { x: 20, y: 40 } });
   await expect

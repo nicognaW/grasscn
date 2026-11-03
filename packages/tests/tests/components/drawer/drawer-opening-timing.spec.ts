@@ -107,13 +107,13 @@ for (const scale of [2] as const) {
 
     for (const ms of [0, 16, 32, 50, 100, 200, 500]) {
       const state = await page.evaluate((frame) => {
-        const overlay = document.querySelector<HTMLElement>(
+        const overlay = (document.querySelector<HTMLElement>(
           "[data-slot=drawer-overlay]"
-        );
+        ))!;
 
-        const content = document.querySelector<HTMLElement>(
+        const content = (document.querySelector<HTMLElement>(
           "[data-slot=drawer-content]"
-        );
+        ))!;
 
         for (const n of [overlay, content]) {
           for (const a of n.getAnimations()) {
@@ -206,9 +206,9 @@ test("Drawer stays visible during its closing transition, then restores focus", 
     }>();
 
     try {
-      const drawerPanel = document.querySelector<HTMLElement>(
+      const drawerPanel = (document.querySelector<HTMLElement>(
         "[data-slot=drawer-content]"
-      );
+      ))!;
 
       const observer = new MutationObserver(() => {
         if (!Object.hasOwn(drawerPanel.dataset, "endingStyle")) {
@@ -227,8 +227,8 @@ test("Drawer stays visible during its closing transition, then restores focus", 
       });
 
       observer.observe(drawerPanel, { attributes: true });
-      document
-        .querySelector<HTMLButtonElement>("[data-slot=drawer-close]")
+      (document
+        .querySelector<HTMLButtonElement>("[data-slot=drawer-close]"))!
         .click();
     } catch (error) {
       mutationCompletion2.reject(error);

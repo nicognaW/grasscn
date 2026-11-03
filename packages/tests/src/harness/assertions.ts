@@ -42,5 +42,5 @@ export const expectLength: <T>(
   length: number,
   ...message: ExpectMessage
 ): asserts value is NonNullable<T> {
-  expect(value, ...message).toHaveLength(length);
+  expect<unknown>(value, ...message).toHaveLength(length);
 };

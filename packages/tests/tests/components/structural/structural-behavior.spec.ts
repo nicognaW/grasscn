@@ -21,10 +21,10 @@ test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
       const node = page.locator("#ratio");
       await expect(node).toHaveAttribute("data-slot", "aspect-ratio");
       await expect(node).toHaveAttribute("data-ref", "true");
-      const rect = await node.boundingBox();
+      const rect = (await node.boundingBox())!;
       expect(rect.width).toBe(width);
       expect(rect.height).toBeCloseTo(width / ratio, 1);
-      const art = await page.locator("#art").boundingBox();
+      const art = (await page.locator("#art").boundingBox())!;
       expect([art.width, art.height]).toEqual([40, 40]);
     }
   }
@@ -41,9 +41,9 @@ test("Aspect Ratio supports explicit clipping without resampling its content", a
       .locator("#ratio")
       .evaluate((node) => getComputedStyle(node).overflow)
   ).toBe("hidden");
-  const art = await page.locator("#art").boundingBox();
+  const art = (await page.locator("#art").boundingBox())!;
   expect([art.width, art.height]).toEqual([40, 40]);
-  const box = await page.locator("#ratio").boundingBox();
+  const box = (await page.locator("#ratio").boundingBox())!;
   expect(box.height).toBe(10);
 });
 
@@ -55,11 +55,11 @@ test("Button Group preserves horizontal/vertical geometry and independent activa
     const group = page.getByRole("group", { name: "Game actions" });
     await expect(group).toHaveAttribute("data-orientation", orientation);
 
-    const first = await page.locator("[data-subject]").boundingBox();
+    const first = (await page.locator("[data-subject]").boundingBox())!;
 
-    const last = await group
+    const last = (await group
       .getByRole("button", { exact: true, name: "Next" })
-      .boundingBox();
+      .boundingBox())!;
 
     expect(
       orientation === "horizontal" ? last.x > first.x : last.y > first.y

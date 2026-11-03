@@ -47,15 +47,15 @@ for (const scale of [2]) {
 
         for (const control of await stage.getByRole("combobox").all()) {
           const b = await control.boundingBox();
-          expect(b.x).toBeGreaterThanOrEqual(0);
-          expect(b.x + b.width).toBeLessThanOrEqual(mobile ? 390 : 1440);
+          expect((b)!.x).toBeGreaterThanOrEqual(0);
+          expect((b)!.x + (b)!.width).toBeLessThanOrEqual(mobile ? 390 : 1440);
         }
 
         const canvas = chart.locator("canvas");
         await expect(canvas).toBeVisible();
         const bounds = await canvas.boundingBox();
-        expect(bounds.x).toBeGreaterThanOrEqual(0);
-        expect(bounds.x + bounds.width).toBeLessThanOrEqual(
+        expect((bounds)!.x).toBeGreaterThanOrEqual(0);
+        expect((bounds)!.x + (bounds)!.width).toBeLessThanOrEqual(
           mobile ? 390 : 1440
         );
         const buffer = await canvas.screenshot();

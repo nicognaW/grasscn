@@ -67,7 +67,7 @@ export const installedRegistryFile = function installedRegistryFile(
             settings.aliases[kind].replace(/^[@~]\//u, "")
           );
 
-    target = path.join(directory, path.basename(entry.path));
+    target = path.join(directory, path.basename((entry.path)!));
   }
 
   assert.ok(

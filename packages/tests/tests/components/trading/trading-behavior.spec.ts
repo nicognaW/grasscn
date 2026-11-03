@@ -161,7 +161,7 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await scroll.hover();
   await page.mouse.wheel(0, 100);
   await expect(scroll).toHaveAttribute("aria-valuenow", "1");
-  const box = await scroll.boundingBox();
+  const box = (await scroll.boundingBox())!;
   await page.mouse.move(box.x + 3, box.y + box.height - 8);
   await page.mouse.down();
   await page.mouse.move(box.x + 3, box.y + box.height - 2);

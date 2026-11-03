@@ -131,7 +131,7 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
     .toEqual({ pitch: -5, yaw: 30 });
   await player.blur();
   expect(await player.screenshot()).toEqual(before);
-  const box = await player.boundingBox();
+  const box = (await player.boundingBox())!;
   await page.mouse.move(box.x + 40, box.y + 40);
   await page.mouse.down();
   await page.mouse.move(box.x + 80, box.y + 200, { steps: 5 });

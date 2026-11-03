@@ -50,8 +50,8 @@ test("Input Group addon alignment and cancelled focus remain functional", async 
 
     await expect(addon).toHaveAttribute("data-align", align);
 
-    const a = await addon.boundingBox();
-    const f = await field.boundingBox();
+    const a = (await addon.boundingBox())!;
+    const f = (await field.boundingBox())!;
 
     expect(
       align.startsWith("block") ? Math.abs(a.y - f.y) : Math.abs(a.x - f.x)

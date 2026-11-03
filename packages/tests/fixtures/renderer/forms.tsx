@@ -21,6 +21,7 @@ export const FormsFixture = () => {
   const component = q.get("component") ?? "form";
   const native = q.has("native");
   const part = q.get("part") ?? "label";
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
   const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
   const text = q.get("label") ?? "Player name";
   const [saved, setSaved] = React.useState("");

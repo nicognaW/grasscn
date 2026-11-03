@@ -66,7 +66,7 @@ test("Slider plays on pointer release, with no press, drag or keyboard tick soun
   page,
 }) => {
   await page.goto("/?component=slider");
-  const bounds = await page.locator("[data-subject]").boundingBox();
+  const bounds = (await page.locator("[data-subject]").boundingBox())!;
   await page.mouse.move(
     bounds.x + bounds.width / 2,
     bounds.y + bounds.height / 2

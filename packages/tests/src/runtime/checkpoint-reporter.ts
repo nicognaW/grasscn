@@ -164,7 +164,7 @@ export default class CheckpointReporter implements Reporter {
       return;
     }
 
-    const declaration = this.declarations.get(test.id);
+    const declaration = (this.declarations.get(test.id))!;
     let changed = false;
 
     for (const source of declaration.sourceFiles) {
@@ -186,7 +186,7 @@ export default class CheckpointReporter implements Reporter {
     const verification = attachment
       ? // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- SAFETY: the named attachment is emitted by the general verification fixture.
         (JSON.parse(
-          attachment.body?.toString() ?? readFileSync(attachment.path, "utf-8")
+          attachment.body?.toString() ?? readFileSync((attachment.path)!, "utf-8")
         ) as BrowserVerification)
       : undefined;
 

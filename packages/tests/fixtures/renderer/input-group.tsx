@@ -11,6 +11,7 @@ import * as React from "react";
 const p = new URLSearchParams(location.search);
 const native = p.has("native");
 const part = p.get("part") ?? "input";
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
 const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
 const state = p.get("state") ?? "normal";
 const width = Number(p.get("width") ?? 200);

@@ -40,7 +40,7 @@ test("Message scalar text has original row dimensions and multiline semantics at
       subject.locator("[data-mc-label-layout-ready]")
     ).toHaveAttribute("data-mc-label-layout-ready", "true");
     await expect(subject).toContainText("First line\nSecond line");
-    expect((await subject.boundingBox()).height).toBe(18 * scale);
+    expect(((await subject.boundingBox())!).height).toBe(18 * scale);
   }
 });
 
@@ -110,8 +110,8 @@ test("Chat palette and rich intrinsic children retain native canvas colors", asy
   const canvas = subject.locator("canvas").first();
   expect(
     await canvas.evaluate((node: HTMLCanvasElement) => {
-      const pixels = node
-        .getContext("2d")
+      const pixels = (node
+        .getContext("2d"))!
         .getImageData(0, 0, node.width, node.height).data;
 
       for (let i = 0; i < pixels.length; i += 4) {

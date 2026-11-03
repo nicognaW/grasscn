@@ -633,7 +633,7 @@ test("Tooltip padding preserves the controls underneath it", async ({
     "data-mc-tooltip-painted",
     "false"
   );
-  const clip = await content.boundingBox();
+  const clip = (await content.boundingBox())!;
   const shown = PNG.sync.read(await page.screenshot({ clip }));
   await content.evaluate((node) => {
     node.style.visibility = "hidden";

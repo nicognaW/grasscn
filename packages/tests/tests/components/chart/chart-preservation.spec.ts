@@ -27,7 +27,7 @@ for (const scale of [2] as const) {
             !!(
               // oxlint-disable-next-line no-bitwise -- compareDocumentPosition returns combined DOM position flags; test the FOLLOWING bit while retaining other flags.
               n.compareDocumentPosition(
-                document.querySelector('[data-slot="chart-example"]')
+                (document.querySelector('[data-slot="chart-example"]'))!
               ) & Node.DOCUMENT_POSITION_FOLLOWING
             )
         )
@@ -62,7 +62,7 @@ for (const scale of [2] as const) {
       await trigger.click();
       const popup = page.locator("[data-slot=select-content]");
       await expect(popup).toBeVisible();
-      const before = await popup.boundingBox();
+      const before = (await popup.boundingBox())!;
       expect(before.x).toBeGreaterThanOrEqual(0);
       expect(before.x + before.width).toBeLessThanOrEqual(width);
       expect(before.y).toBeGreaterThanOrEqual(0);
@@ -88,7 +88,7 @@ for (const scale of [2] as const) {
       } else {
         // Base UI may show the entire list when item alignment has enough room.
         for (const option of await popup.getByRole("option").all()) {
-          const bounds = await option.boundingBox();
+          const bounds = (await option.boundingBox())!;
           expect(bounds.y).toBeGreaterThanOrEqual(before.y);
           expect(bounds.y + bounds.height).toBeLessThanOrEqual(
             before.y + before.height
@@ -112,7 +112,7 @@ for (const scale of [2] as const) {
         return frameCompletion.promise;
       });
       // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
-      const after = await popup.boundingBox();
+      const after = (await popup.boundingBox())!;
       expect(after.y).toBeGreaterThanOrEqual(0);
       expect(after.y + after.height).toBeLessThanOrEqual(height);
       await page.keyboard.press("End");

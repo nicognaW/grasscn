@@ -30,8 +30,8 @@ test("Resizable preserves horizontal and vertical geometry and standard separato
     );
     await expect(handle).toHaveAttribute("aria-valuenow", "50");
 
-    const left = await page.locator("#left").boundingBox();
-    const right = await page.locator("#right").boundingBox();
+    const left = (await page.locator("#left").boundingBox())!;
+    const right = (await page.locator("#right").boundingBox())!;
 
     expect(
       orientation === "horizontal" ? right.x > left.x : right.y > left.y
@@ -44,7 +44,7 @@ test("Resizable responds to pointer dragging and reports layouts", async ({
 }) => {
   await page.goto("/?component=resizable");
   const handle = page.getByRole("separator", { name: "Resize panels" });
-  const box = await handle.boundingBox();
+  const box = (await handle.boundingBox())!;
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2 + 80, box.y + box.height / 2, {
@@ -143,7 +143,7 @@ for (const orientation of ["horizontal", "vertical"]) {
 
     const handle = page.getByRole("separator", { name: "Resize panels" });
     const arrow = handle.locator("[data-slot=resizable-arrow]").first();
-    const bounds = await arrow.boundingBox();
+    const bounds = (await arrow.boundingBox())!;
 
     expect(bounds.width < bounds.height).toBe(orientation === "horizontal");
     expect(await handle.evaluate((node) => getComputedStyle(node).cursor)).toBe(

@@ -84,7 +84,7 @@ test("Menubar pointer hover switches open menus without opening disabled menus",
     name: "Unavailable menu",
   });
 
-  const rect = await disabled.boundingBox();
+  const rect = (await disabled.boundingBox())!;
   await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
   await expect(world(page)).toHaveAttribute("data-popup-open", "");
   await expect(disabled).not.toHaveAttribute("data-popup-open");

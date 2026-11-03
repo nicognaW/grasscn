@@ -38,14 +38,14 @@ for (const scale of [2]) {
     await group.scrollIntoViewIfNeeded();
     await expect
       .poll(async () => {
-        const face = await group
+        const face = (await group
           .locator("[data-slot=avatar]")
           .first()
-          .boundingBox();
+          .boundingBox())!;
 
-        const count = await group
+        const count = (await group
           .locator("[data-slot=avatar-group-count]")
-          .boundingBox();
+          .boundingBox())!;
 
         return Math.abs(face.height - count.height);
       })
@@ -83,7 +83,7 @@ for (const scale of [2]) {
     await expect(dialog).toHaveAttribute("data-mc-confirmation-ready", "true");
     await expect
       .poll(async () => {
-        const r = await dialog.boundingBox();
+        const r = (await dialog.boundingBox())!;
 
         return (
           r.x >= 0 && r.y >= 0 && r.x + r.width <= 390 && r.y + r.height <= 844
@@ -92,9 +92,9 @@ for (const scale of [2]) {
       .toBe(true);
 
     for (const name of ["Yes", "No"]) {
-      const r = await dialog
+      const r = (await dialog
         .getByRole("button", { exact: true, name })
-        .boundingBox();
+        .boundingBox())!;
 
       expect(r.x).toBeGreaterThanOrEqual(0);
       expect(r.x + r.width).toBeLessThanOrEqual(390);
@@ -108,12 +108,12 @@ for (const scale of [2]) {
       });
       await expect
         .poll(async () => {
-          const a = await header.boundingBox();
+          const a = (await header.boundingBox())!;
 
-          const b = await dialog
+          const b = (await dialog
             .locator(".mc-alert-dialog-description .mc-card-text-line")
             .last()
-            .boundingBox();
+            .boundingBox())!;
 
           return b.y >= a.y && b.y + b.height <= a.y + a.height + 1;
         })
@@ -141,7 +141,7 @@ test("Short viewport AlertDialog layout remains stable while resizing", async ({
   await expect(dialog).toHaveAttribute("data-mc-confirmation-compact", "true");
   await expect
     .poll(async () => {
-      const b = await dialog.boundingBox();
+      const b = (await dialog.boundingBox())!;
 
       return b.y >= 0 && b.y + b.height <= 240;
     })

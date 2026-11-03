@@ -172,8 +172,8 @@ test("Item honors full RGB text colors for both ASCII and CJK", async ({
             .locator("canvas")
             .first()
             .evaluate((canvas: HTMLCanvasElement) => {
-              const { data } = canvas
-                .getContext("2d")
+              const { data } = (canvas
+                .getContext("2d"))!
                 .getImageData(0, 0, canvas.width, canvas.height);
 
               for (let i = 0; i < data.length; i += 4) {

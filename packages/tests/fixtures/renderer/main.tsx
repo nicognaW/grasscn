@@ -172,6 +172,7 @@ import { ToggleGroupFixture } from "./toggle-group";
 import "./style.css";
 
 const params = new URLSearchParams(location.search);
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
 const scale = Number(params.get("scale") ?? 2) as 1 | 2 | 3;
 const width = Number(params.get("width") ?? 200);
 const state = params.get("state") ?? "normal";
@@ -181,7 +182,7 @@ const SelectFixture = () => {
   // SAFETY: owned Select titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
   // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Select titles query-label producer boundary.
   const titles: string[] = params.has("labels")
-    ? (JSON.parse(params.get("labels")) as FixtureLabels)
+    ? (JSON.parse((params.get("labels"))!) as FixtureLabels)
     : ["Survival", "Creative", "Adventure"];
   // oxlint-enable typescript/no-unsafe-type-assertion
 
@@ -2015,7 +2016,7 @@ const DialogFixture = () => {
   // SAFETY: owned Dialog actions callers serialize string label arrays; preserve this branch's existing parameter/default read.
   // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Dialog actions query-label producer boundary.
   const labels: string[] = params.has("labels")
-    ? (JSON.parse(params.get("labels")) as FixtureLabels)
+    ? (JSON.parse((params.get("labels"))!) as FixtureLabels)
     : ["Cancel", "Continue"];
   // oxlint-enable typescript/no-unsafe-type-assertion
 
@@ -2443,7 +2444,7 @@ const Fixture = () => {
     // SAFETY: owned Tabs titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
     // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Tabs titles query-label producer boundary.
     const titles: string[] = params.has("labels")
-      ? (JSON.parse(params.get("labels")) as FixtureLabels)
+      ? (JSON.parse((params.get("labels"))!) as FixtureLabels)
       : ["Game", "World", "More"];
     // oxlint-enable typescript/no-unsafe-type-assertion
 
@@ -3224,7 +3225,7 @@ const Fixture = () => {
   );
 };
 
-createRoot(document.querySelector("#root")).render(
+createRoot((document.querySelector("#root"))!).render(
   params.get("component") === "custom-api" ? (
     <CustomApiFixture />
   ) : (

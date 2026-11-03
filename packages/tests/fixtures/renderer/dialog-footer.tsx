@@ -12,6 +12,7 @@ import * as React from "react";
 
 export const DialogFooterFixture = () => {
   const p = new URLSearchParams(location.search);
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
   const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
   const [count, setCount] = React.useState(0);
   const [tag, setTag] = React.useState("");
