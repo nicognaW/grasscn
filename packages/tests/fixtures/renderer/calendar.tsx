@@ -18,6 +18,14 @@ import * as React from "react";
 
 import "./native-reference.css";
 
+interface CalendarReferenceStyle extends React.CSSProperties {
+  "--reference-height": string;
+  "--reference-padding"?: string;
+  "--reference-width": string;
+  "--reference-x": string;
+  "--reference-y": string;
+}
+
 export const CalendarFixture = () => {
   const q = new URLSearchParams(location.search);
   const component = q.get("component") ?? "calendar";
@@ -81,6 +89,7 @@ export const CalendarFixture = () => {
   }, [component, part, scale, width, height, x, y, state, label]);
 
   if (q.get("native") === "1" && part.startsWith("trigger")) {
+    // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
     return (
       <Popover scale={scale} open={false}>
         <PopoverTrigger
@@ -97,7 +106,7 @@ export const CalendarFixture = () => {
                   "--reference-y": `${y}px`,
                   "--reference-width": `${width * scale}px`,
                   "--reference-height": `${height * scale}px`,
-                } as React.CSSProperties
+                } satisfies CalendarReferenceStyle as CalendarReferenceStyle
               }
             />
           }
@@ -109,6 +118,7 @@ export const CalendarFixture = () => {
   }
 
   if (q.get("native") === "1") {
+    // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
     const props: CalendarProps = {
       scale,
       mode: "single",
@@ -139,7 +149,7 @@ export const CalendarFixture = () => {
                 "--reference-y": `${y}px`,
                 "--reference-width": `${width * scale}px`,
                 "--reference-height": `${height * scale}px`,
-              } as React.CSSProperties,
+              } satisfies CalendarReferenceStyle as CalendarReferenceStyle,
               ...{ "data-subject": "true" },
             },
             formatters: { formatCaption: () => label },
@@ -193,7 +203,7 @@ export const CalendarFixture = () => {
                       "--reference-width": `${width * scale}px`,
                       "--reference-x": `${x}px`,
                       "--reference-y": `${y}px`,
-                    } as React.CSSProperties
+                    } satisfies CalendarReferenceStyle as CalendarReferenceStyle
                   }
                   data-subject={
                     (day.date.getDate() === Number(label)
@@ -217,7 +227,7 @@ export const CalendarFixture = () => {
               "--reference-width": `${width * scale}px`,
               "--reference-x": `${x}px`,
               "--reference-y": `${y}px`,
-            } as React.CSSProperties)
+            } satisfies CalendarReferenceStyle as CalendarReferenceStyle)
           : undefined,
     };
 

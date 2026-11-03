@@ -11,6 +11,10 @@ import {
 } from "@grasscn/web/ui/table";
 import * as React from "react";
 
+interface TableReferenceStyle extends React.CSSProperties {
+  "--mc-table-header": "none";
+}
+
 const p = new URLSearchParams(location.search);
 
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
@@ -47,6 +51,7 @@ export const TableFixture = () => {
   };
 
   if (p.has("native")) {
+    // SAFETY: the existing minecraft-table.css header rule consumes this exact named variable; satisfies checks its value before the CSSProperties view is passed to React.
     return (
       <Table
         scale={scale}
@@ -100,7 +105,11 @@ export const TableFixture = () => {
           </TableCaption>
         ) : part === "head" ? (
           <TableHeader
-            style={{ "--mc-table-header": "none" } as React.CSSProperties}
+            style={
+              {
+                "--mc-table-header": "none",
+              } satisfies TableReferenceStyle as TableReferenceStyle
+            }
           >
             <TableRow
               className="fixture-geometry-height"
