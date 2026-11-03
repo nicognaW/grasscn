@@ -59,6 +59,17 @@ secondCaseNames.sort();
 
 assert.deepEqual(firstCaseNames, secondCaseNames);
 
+const repeatedByName = new Map<
+  string,
+  NativeCaptureManifest["cases"][number]
+>();
+
+for (const repeated of second.cases) {
+  if (!repeatedByName.has(repeated.name)) {
+    repeatedByName.set(repeated.name, repeated);
+  }
+}
+
 const captureReads = await Promise.allSettled(
   first.cases.map(async (reference) => {
     const [originalRead, repeatedRead] = await Promise.allSettled([
@@ -79,7 +90,7 @@ const captureReads = await Promise.allSettled(
 );
 
 const cases = first.cases.map((reference, index) => {
-  const repeated = second.cases.find((c) => c.name === reference.name)!;
+  const repeated = repeatedByName.get(reference.name)!;
   const captureRead = captureReads[index];
 
   if (captureRead.status === "rejected") {
