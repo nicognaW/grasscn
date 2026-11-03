@@ -76,9 +76,18 @@ const exactKeys: ExactRunFields = (
   if (
     value === null ||
     typeof value !== "object" ||
-    Array.isArray(value) ||
-    Object.keys(value).sort().join("|") !== [...keys].sort().join("|")
+    Array.isArray(value)
   ) {
+    throw new Error(`Invalid ${subject} fields`);
+  }
+
+  const actualFieldNames = Object.keys(value);
+  actualFieldNames.sort();
+  const actualFieldSignature = actualFieldNames.join("|");
+  const requiredFieldNames = [...keys];
+  requiredFieldNames.sort();
+
+  if (actualFieldSignature !== requiredFieldNames.join("|")) {
     throw new Error(`Invalid ${subject} fields`);
   }
 };

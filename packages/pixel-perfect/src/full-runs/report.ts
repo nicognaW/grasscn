@@ -143,9 +143,9 @@ export const completedRunReport = function completedRunReport(
     );
   }
 
-  const attempts = readRunAttempts(number).sort((a, b) =>
-    a.directory.localeCompare(b.directory)
-  );
+  const attemptValues = readRunAttempts(number);
+  attemptValues.sort((a, b) => a.directory.localeCompare(b.directory));
+  const attempts = attemptValues;
 
   const final = attempts.find(
     (attempt) =>

@@ -297,7 +297,9 @@ for (const component of map.components) {
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const item = registryItems.get(registryItemName) as EvidenceRegistryItem;
 
-    const filenames = item.files.map((file) => path.basename(file.path)).sort();
+    const filenameValues = item.files.map((file) => path.basename(file.path));
+    filenameValues.sort();
+    const filenames = filenameValues;
 
     const installedFilePaths = installation.files.map((file) => file.path);
 
@@ -741,7 +743,7 @@ if (args.includes("--live")) {
     let current;
 
     if (source.url.endsWith("/docs/components")) {
-      current = [
+      const componentNames = [
         ...new Set(
           [
             ...body.matchAll(
@@ -749,14 +751,18 @@ if (args.includes("--live")) {
             ),
           ].map((match) => match[1])
         ),
-      ].sort();
+      ];
+      componentNames.sort();
+      current = componentNames;
     } else {
       // SAFETY: the official registry catalogue endpoint returns items or a bare item array.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion
       const data = JSON.parse(body) as UpstreamRegistryCatalog;
-      current = (data.items ?? data)
-        .flatMap((item) => (item.type === "registry:ui" ? [item.name] : []))
-        .sort();
+      const registryNames = (data.items ?? data).flatMap((item) =>
+        item.type === "registry:ui" ? [item.name] : []
+      );
+      registryNames.sort();
+      current = registryNames;
     }
 
     assert.deepEqual(

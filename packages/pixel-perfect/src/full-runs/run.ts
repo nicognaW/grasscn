@@ -171,16 +171,15 @@ export const authorizeFullRun = function authorizeFullRun(
     throw new Error("Run plan belongs to another repository");
   }
 
-  const eventsForLabel = events
-    .filter(
-      (event) =>
-        ["labeled", "unlabeled"].includes(event.event) &&
-        event.label?.name === approvalLabel
-    )
-    .sort(
-      (a, b) =>
-        Date.parse(a.created_at) - Date.parse(b.created_at) || a.id - b.id
-    );
+  const labelEvents = events.filter(
+    (event) =>
+      ["labeled", "unlabeled"].includes(event.event) &&
+      event.label?.name === approvalLabel
+  );
+  labelEvents.sort(
+    (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at) || a.id - b.id
+  );
+  const eventsForLabel = labelEvents;
 
   const approval = eventsForLabel.at(-1);
 

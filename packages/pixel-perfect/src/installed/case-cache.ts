@@ -143,10 +143,13 @@ export const installedCaseCache = (
           return null;
         }
 
-        if (
-          JSON.stringify(Object.keys(entry.images).sort()) !==
-          JSON.stringify([...fields].sort())
-        ) {
+        const cachedImageFields = Object.keys(entry.images);
+        cachedImageFields.sort();
+        const cachedImageSchema = JSON.stringify(cachedImageFields);
+        const requiredImageFields = [...fields];
+        requiredImageFields.sort();
+
+        if (cachedImageSchema !== JSON.stringify(requiredImageFields)) {
           return null;
         }
 
