@@ -54,15 +54,30 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
       await page.goto(`/?${q}`);
       const subject = page.locator("[data-subject]");
       await expect(subject).toBeVisible();
+      let slotSelection: string;
+
+      switch (true) {
+        case component === "code-block": {
+          slotSelection = "code-block-content";
+          break;
+        }
+        case component === "trace": {
+          slotSelection = "trace-line";
+          break;
+        }
+        case component === "message-scroller": {
+          slotSelection = "message-scroller-item";
+          break;
+        }
+        default: {
+          slotSelection = component;
+          break;
+        }
+      }
+
       await expect(subject).toHaveAttribute(
         "data-slot",
-        component === "code-block"
-          ? "code-block-content"
-          : component === "trace"
-            ? "trace-line"
-            : component === "message-scroller"
-              ? "message-scroller-item"
-              : component
+        slotSelection
       );
 
       if (component === "code-block") {

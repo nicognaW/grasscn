@@ -99,11 +99,28 @@ for (const [part, dir] of [
             await expect(subject).toBeFocused();
           }
 
+          let mediaStateSelection: string;
+
+          switch (true) {
+            case c.state === "hover": {
+              mediaStateSelection = "1";
+              break;
+            }
+            case c.state === "icon-hover": {
+              mediaStateSelection = "2";
+              break;
+            }
+            default: {
+              mediaStateSelection = "0";
+              break;
+            }
+          }
+
           await expect(
             subject.locator("[data-mc-item-media-ready]")
           ).toHaveAttribute(
             "data-mc-item-media-state",
-            c.state === "hover" ? "1" : c.state === "icon-hover" ? "2" : "0"
+            mediaStateSelection
           );
         } else {
           if (c.state === "hover") {

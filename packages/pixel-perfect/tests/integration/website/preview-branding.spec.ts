@@ -10,10 +10,6 @@ import { PNG } from "pngjs";
 import type RegistryIdentityData from "../../../../../apps/web/registry.json";
 import type BrandingProvenance from "../../../../../apps/web/branding.provenance.json";
 
-type RegistryIdentity = Pick<typeof RegistryIdentityData, "name"> & {
-  packages?: { ""?: { name: string } };
-};
-
 const differences = (left: PNG, right: PNG) => {
   let count = 0;
 
@@ -32,17 +28,13 @@ const differences = (left: PNG, right: PNG) => {
 
 test("Grasscn project identity and native branding assets are consistent", async () => {
   for (const file of ["registry.json"]) {
-    // SAFETY: This fixed registry identity input supplies name; the existing optional packages root check retains its legacy identity projection without changing reads or checks.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry identity consumer boundary; preserve this fresh parse and the optional legacy branch.
+    // SAFETY: This fixed registry.json input has exactly the imported producer shape; preserve its original fresh read, parse and project-name assertion.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry identity producer boundary; no additional metadata variants or runtime validation.
     const metadata = JSON.parse(
       readFileSync(evidenceFile(file, pixelPerfectRoot), "utf-8")
-    ) as RegistryIdentity;
+    ) as typeof RegistryIdentityData;
 
     expect(metadata.name).toBe("grasscn");
-
-    if (metadata.packages?.[""]) {
-      expect(metadata.packages[""].name).toBe("grasscn");
-    }
   }
 
   // SAFETY: evidenceFile maps this retained preview path to the exact imported branding.provenance.json, including generated SHA records and native comparison cases.

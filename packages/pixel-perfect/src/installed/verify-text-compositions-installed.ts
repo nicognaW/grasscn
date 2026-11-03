@@ -197,15 +197,30 @@ const worker = async function worker() {
       url.searchParams.set("native", "1");
       await page.goto(url.href);
       const subject = page.locator("#subject");
+      let slotSelection: string;
+
+      switch (true) {
+        case name === "code-block": {
+          slotSelection = "code-block-content";
+          break;
+        }
+        case name === "trace": {
+          slotSelection = "trace-line";
+          break;
+        }
+        case name === "message-scroller": {
+          slotSelection = "message-scroller-item";
+          break;
+        }
+        default: {
+          slotSelection = name;
+          break;
+        }
+      }
+
       await expect(subject).toHaveAttribute(
         "data-slot",
-        name === "code-block"
-          ? "code-block-content"
-          : name === "trace"
-            ? "trace-line"
-            : name === "message-scroller"
-              ? "message-scroller-item"
-              : name
+        slotSelection
       );
       await expect(subject).toBeVisible();
 

@@ -142,13 +142,26 @@ test.describe("Structural native constituents", () => {
               await page.goto(`/?${params}`);
               const subject = page.locator("[data-subject]");
               await expect(subject).toBeVisible();
+              let slotSelection: string;
+
+              switch (true) {
+                case component === "pagination": {
+                  slotSelection = "pagination-link";
+                  break;
+                }
+                case part === "button": {
+                  slotSelection = "button";
+                  break;
+                }
+                default: {
+                  slotSelection = `button-group-${part}`;
+                  break;
+                }
+              }
+
               await expect(subject).toHaveAttribute(
                 "data-slot",
-                component === "pagination"
-                  ? "pagination-link"
-                  : part === "button"
-                    ? "button"
-                    : `button-group-${part}`
+                slotSelection
               );
               await page.addStyleTag({
                 content:
