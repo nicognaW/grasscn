@@ -7,21 +7,12 @@
     "FaviconTexture"
   ],
   "logicalGeometry": {
-    "row": [
-      270,
-      36
-    ],
+    "row": [270, 36],
     "contentPadding": 2,
-    "thumbnail": [
-      32,
-      32
-    ],
+    "thumbnail": [32, 32],
     "textX": 37,
     "titleY": 3,
-    "metadataLineYs": [
-      14,
-      23
-    ],
+    "metadataLineYs": [14, 23],
     "textClipWidth": 231,
     "selectionBorder": 1
   },
