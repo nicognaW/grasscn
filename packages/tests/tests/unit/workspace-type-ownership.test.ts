@@ -20,7 +20,8 @@ import manifest from "../../package.json";
 const consumerRoot = path.join(repoRoot, "packages/pixel-perfect");
 
 const publicOwnerExports = Object.entries(manifest.exports).filter(
-  ([subpath]) =>
+  ([subpath, target]) =>
+    /\.(?:[cm]?js)$/u.test(target) ||
     Object.hasOwn(
       consumerConfig.compilerOptions.paths,
       `${manifest.name}/${subpath.slice(2)}`
