@@ -50,6 +50,7 @@ test("Progress preserves native first-pixel fill and remains noninteractive", as
 test("Progress updates and pointer events are silent", async ({ page }) => {
   await page.addInitScript(() => {
     const state = Object.assign(window, { progressAudioPlays: 0 });
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play() {
       state.progressAudioPlays += 1;
 

@@ -271,6 +271,7 @@ test("Item uses original activation sound once and keeps passive rows silent", a
     // SAFETY: This Item initScript creates its own empty rate/src/volume trace before navigation and playback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
     (window as typeof window & ItemAudioState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: The paired Item initScript initializes sounds; this native media play mock records its own rate, src and volume.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.

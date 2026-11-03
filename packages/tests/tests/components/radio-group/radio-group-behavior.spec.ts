@@ -167,6 +167,7 @@ test("Radio Group uses original click audio per activation and respects preventD
     // SAFETY: This addInitScript owns radioSounds, creating its empty audio trace before navigation and playback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
     (window as typeof window & RadioGroupAudioState).radioSounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: The init script creates radioSounds; this unchanged media play mock records only rate, source and volume.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.

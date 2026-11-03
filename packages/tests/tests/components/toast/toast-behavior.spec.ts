@@ -130,6 +130,7 @@ for (const component of ["sonner"]) {
         // SAFETY: this initScript initializes the exact test-owned gain/pitch sound log here.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         (window as typeof window & ToastPlaybackWindow).sounds = [];
+        // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
         HTMLMediaElement.prototype.play = function play(
           this: HTMLMediaElement
         ) {
@@ -217,6 +218,7 @@ for (const component of ["sonner"]) {
         // SAFETY: this separate initScript initializes its own string-only StrictMode sound log.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         (window as typeof window & StrictToastSoundWindow).sounds = [];
+        // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
         HTMLMediaElement.prototype.play = function play(
           this: HTMLMediaElement
         ) {

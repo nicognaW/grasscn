@@ -55,6 +55,7 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
 }) => {
   await page.addInitScript(() => {
     const state = Object.assign(window, { scrollAudioPlays: 0 });
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play() {
       state.scrollAudioPlays += 1;
 

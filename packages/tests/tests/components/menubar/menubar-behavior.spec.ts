@@ -267,6 +267,7 @@ test("Menubar native activation plays once and hover/menu navigation stay silent
     // SAFETY: This Menubar initScript creates __menubarVoices as an empty playback trace before navigation and playback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
     (window as typeof window & MenubarPlaybackState).__menubarVoices = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: The paired Menubar initializer owns __menubarVoices; this unchanged native play mock appends only rate, source and volume.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
@@ -317,6 +318,7 @@ for (const query of ["nativeButtonChild", "controlled&reject"]) {
       // SAFETY: This Menubar initScript creates __menubarVoices as a zero playback counter before navigation and playback.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
       (window as typeof window & MenubarCounterState).__menubarVoices = 0;
+      // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
       HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
         // SAFETY: The paired Menubar initializer sets __menubarVoices to zero; this mock only increments that owned counter.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.

@@ -104,6 +104,7 @@ test("Switch uses original click audio once per activation, and respects cancell
     // SAFETY: This addInitScript owns switchSounds, creating its empty audio trace before navigation and playback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
     (window as typeof window & SwitchAudioState).switchSounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: The init script creates switchSounds; this unchanged media play mock records only rate, source and volume.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.

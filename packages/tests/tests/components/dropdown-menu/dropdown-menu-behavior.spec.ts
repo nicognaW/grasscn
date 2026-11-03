@@ -209,6 +209,7 @@ test("Dropdown Menu hover stays silent; native trigger and checkbox activation c
     // SAFETY: This Dropdown Menu initScript creates __menuSounds as an empty playback trace before navigation and playback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
     (window as typeof window & DropdownPlaybackState).__menuSounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: The paired Dropdown Menu initializer owns __menuSounds; this unchanged native play mock appends only rate, source and volume.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
@@ -265,6 +266,7 @@ for (const query of ["nonmodal", "controlled&reject", "nativeButtonChild"]) {
       // SAFETY: This Dropdown Menu initScript creates __menuVoices as a zero playback counter before navigation and playback.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
       (window as typeof window & DropdownCounterState).__menuVoices = 0;
+      // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
       HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
         // SAFETY: The paired Dropdown Menu initializer sets __menuVoices to zero; this mock only increments that owned counter.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
