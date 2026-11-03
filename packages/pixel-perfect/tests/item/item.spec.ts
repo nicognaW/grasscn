@@ -171,7 +171,7 @@ for (const [part, directory] of [
             frameCompletion.reject(error);
           }
 
-          return await frameCompletion.promise;
+          await frameCompletion.promise;
         });
         const box = (await subject.boundingBox())!;
         expect([box.x, box.y]).toEqual([c.x * c.scale, c.y * c.scale]);

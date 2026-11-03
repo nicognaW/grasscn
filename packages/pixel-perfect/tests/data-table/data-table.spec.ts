@@ -131,7 +131,7 @@ test.describe("DataTable original native label constituents", () => {
             frameCompletion.reject(error);
           }
 
-          return await frameCompletion.promise;
+          await frameCompletion.promise;
         });
 
         const bytes = readFileSync(

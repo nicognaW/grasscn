@@ -40,7 +40,7 @@ const instanceName = path.basename(versionDir);
 // SAFETY: selected launcher metadata supplies libraries, rule OS selectors, artifact paths and asset index ID.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Local assertion of the launcher metadata contract; preserve this fresh CLI-selected read.
 const metadata = JSON.parse(
-  await readFile(path.join(versionDir, `${instanceName}.json`), "utf8")
+  await readFile(path.join(versionDir, `${instanceName}.json`), "utf-8")
 ) as MinecraftCaptureVersion;
 
 const minecraftRoot = path.resolve(versionDir, "../..");
@@ -210,7 +210,7 @@ const javaCommand = async function javaCommand(
 
   const result = spawnSync(executable(command), [`@${argsFile}`], {
     cwd: gameDir,
-    encoding: "utf8",
+    encoding: "utf-8",
     timeout,
     windowsHide: true,
     maxBuffer: 10 * 1024 * 1024,
@@ -315,7 +315,7 @@ try {
   // SAFETY: retained native harness NativeLayout records emit width, height, renderedLines and optional tabRects.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete current and retained Java producer layouts share this consumed record shape.
   layouts = JSON.parse(
-    await readFile(path.join(outputDir, "layout.json"), "utf8")
+    await readFile(path.join(outputDir, "layout.json"), "utf-8")
   ) as Record<string, NativeCaptureLayout | undefined>;
 } catch (error) {
   if (definitions.some((c) => c.element === "tooltip")) {
@@ -325,7 +325,7 @@ try {
 
 for (const scale of [1, 2, 3]) {
   for (const definition of definitions) {
-    const name = definition.name + "-s" + scale + ".png";
+    const name = `${definition.name  }-s${  scale  }.png`;
 
     const bytes = await readFile(path.join(captures, name));
 
@@ -342,9 +342,11 @@ for (const scale of [1, 2, 3]) {
   }
 }
 
-const pages = [...new Set(definitions.map((c) => c.page ?? 0))].sort(
-  (a, b) => a - b
-);
+const pageValues = [...new Set(definitions.map((c) => c.page ?? 0))];
+
+pageValues.sort((a, b) => a - b);
+
+const pages = pageValues;
 
 if (pages.some((page, index) => page !== index)) {
   throw new Error("Native pages must be contiguous from zero");
@@ -454,7 +456,7 @@ manifest.sourceDirectory = "source";
 
 await writeFile(
   path.join(outputDir, "manifest.json"),
-  JSON.stringify(manifest, null, 2) + "\n"
+  `${JSON.stringify(manifest, null, 2)  }\n`
 );
 
-console.log("Captured " + cases.length + " native control references");
+console.log(`Captured ${  cases.length  } native control references`);

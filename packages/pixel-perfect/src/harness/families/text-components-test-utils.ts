@@ -206,7 +206,7 @@ export const nativeTextTests = function nativeTextTests(
               frameCompletion.reject(error);
             }
 
-            return await frameCompletion.promise;
+            await frameCompletion.promise;
           });
 
           const bytes = readFileSync(

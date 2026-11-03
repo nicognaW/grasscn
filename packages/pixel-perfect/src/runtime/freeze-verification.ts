@@ -28,7 +28,11 @@ const names = execFileSync(
 
 const records: { bytes: number; path: string; sha256: string }[] = [];
 
-for (const name of [...new Set(names)].sort()) {
+const verificationNames = [...new Set(names)];
+
+verificationNames.sort();
+
+for (const name of verificationNames) {
   if (
     name.startsWith("packages/pixel-perfect/tests/reference/") &&
     !/\.(?:json|java|mjs)$/u.test(name)
@@ -50,7 +54,7 @@ for (const name of [...new Set(names)].sort()) {
 // SAFETY: the authored component map supplies its existing identity/status snapshot fields.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const map = JSON.parse(
-  await readFile(evidenceFile("registry/minecraft-map.json"), "utf8")
+  await readFile(evidenceFile("registry/minecraft-map.json"), "utf-8")
 ) as ComponentEvidenceMap;
 
 const registry: unknown = JSON.parse(

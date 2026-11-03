@@ -135,7 +135,7 @@ export const formsNativeTests = function formsNativeTests(
               frameCompletion.reject(error);
             }
 
-            return await frameCompletion.promise;
+            await frameCompletion.promise;
           });
 
           const bytes = readFileSync(
