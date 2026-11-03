@@ -29,7 +29,9 @@ const label = React.createRef<HTMLLabelElement>();
   <AttachmentTitle>
     <strong>Actual rich title</strong>
   </AttachmentTitle>
-  <AttachmentTrigger render={<a href="#preview" />}>
+  <AttachmentTrigger
+    render={<a href="#preview" aria-label="Preview attachment" />}
+  >
     {undefined}
   </AttachmentTrigger>
   <AttachmentAction render={<a href="#remove" />}>X</AttachmentAction>
