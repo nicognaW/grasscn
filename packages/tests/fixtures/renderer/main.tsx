@@ -1198,16 +1198,12 @@ const MenubarFixture = () => {
               ) : native || params.has("triggerAsChild") ? (
                 <button
                   type="button"
+                  className={native ? "fixture-native-anchor" : undefined}
                   style={
                     native
                       ? {
-                          position: "fixed",
-                          left: Number(params.get("x")) * scale,
-                          top: Number(params.get("y")) * scale,
-                          width: 0,
-                          height: 0,
-                          padding: 0,
-                          border: 0,
+                          "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
+                          "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
                         }
                       : undefined
                   }
@@ -1476,16 +1472,12 @@ const DropdownFixture = () => {
             ) : native || params.has("triggerAsChild") ? (
               <button
                 type="button"
+                className={native ? "fixture-native-anchor" : undefined}
                 style={
                   native
                     ? {
-                        position: "fixed",
-                        left: Number(params.get("x")) * scale,
-                        top: Number(params.get("y")) * scale,
-                        width: 0,
-                        height: 0,
-                        padding: 0,
-                        border: 0,
+                        "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
+                        "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
                       }
                     : undefined
                 }
@@ -1786,11 +1778,10 @@ const AlertDialogFixture = () => {
               {Array.from({ length: 256 }, (_, i) => (
                 <i
                   key={i}
+                  className="fixture-color-bar"
                   style={{
-                    background: `rgb(${i},${255 - i},${(i * 37) % 256})`,
-                    display: "block",
-                    height: "100%",
-                    width: scale,
+                    "--fixture-bar-color": `rgb(${i},${255 - i},${(i * 37) % 256})`,
+                    "--fixture-bar-width": `${scale}px`,
                   }}
                 />
               ))}
@@ -2043,11 +2034,10 @@ const DialogFixture = () => {
               {Array.from({ length: 256 }, (_, i) => (
                 <i
                   key={i}
+                  className="fixture-color-bar"
                   style={{
-                    background: `rgb(${i},${255 - i},${(i * 37) % 256})`,
-                    display: "block",
-                    height: "100%",
-                    width: scale,
+                    "--fixture-bar-color": `rgb(${i},${255 - i},${(i * 37) % 256})`,
+                    "--fixture-bar-width": `${scale}px`,
                   }}
                 />
               ))}
@@ -2951,9 +2941,10 @@ const Fixture = () => {
               <button
                 type="button"
                 id="tooltip-trigger"
+                className="fixture-edge-anchor"
                 style={{
-                  marginTop: params.get("edge") === "top" ? 0 : 240,
-                  marginLeft: params.get("edge") === "left" ? 0 : 300,
+                  "--fixture-edge-top": `${params.get("edge") === "top" ? 0 : 240}px`,
+                  "--fixture-edge-left": `${params.get("edge") === "left" ? 0 : 300}px`,
                 }}
                 onClick={() => {
                   setCount((current) => current + 1);

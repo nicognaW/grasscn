@@ -2,6 +2,12 @@ import "react";
 
 declare module "react" {
   interface CSSProperties {
+    "--fixture-anchor-x"?: string;
+    "--fixture-anchor-y"?: string;
+    "--fixture-bar-color"?: string;
+    "--fixture-bar-width"?: string;
+    "--fixture-edge-top"?: string;
+    "--fixture-edge-left"?: string;
     "--fixture-layout-19"?: string;
     "--fixture-layout-20"?: string;
     "--fixture-layout-21"?: string;

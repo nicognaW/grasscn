@@ -212,3 +212,24 @@
 .fixture-owner-layout-47 {
   height: var(--fixture-layout-22);
 }
+
+/* Intrinsic fixture controls; component caller-style probes keep their public inline contracts. */
+.fixture-native-anchor {
+  border: 0;
+  height: 0;
+  left: var(--fixture-anchor-x);
+  padding: 0;
+  position: fixed;
+  top: var(--fixture-anchor-y);
+  width: 0;
+}
+.fixture-color-bar {
+  background: var(--fixture-bar-color);
+  display: block;
+  height: 100%;
+  width: var(--fixture-bar-width);
+}
+.fixture-edge-anchor {
+  margin-top: var(--fixture-edge-top);
+  margin-left: var(--fixture-edge-left);
+}
