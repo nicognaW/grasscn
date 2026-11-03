@@ -451,6 +451,7 @@ export const ChartPixelSurface = ({
       if (!Object.hasOwn(element.dataset, "mcPixelSource")) {
         element.dataset.mcPixelSource = "";
       }
+
       const style = getComputedStyle(element);
 
       let opacity = 1;

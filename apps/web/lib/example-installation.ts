@@ -46,5 +46,6 @@ export const exampleInstallation = (code: string): string[] => {
 
   const sortedNames = [...names];
   sortedNames.sort();
+
   return sortedNames;
 };

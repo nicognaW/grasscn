@@ -128,7 +128,9 @@ export const assertIndependentDependencies = async (project) => {
     ...dependencies,
     ...devDependencies,
   });
+
   sortedDependencyNames.sort();
+
   for (const name of sortedDependencyNames) {
     let resolved;
 

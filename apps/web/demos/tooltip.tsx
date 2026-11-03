@@ -6,6 +6,7 @@ import {
   TooltipContent,
 } from "../registry/ui/tooltip";
 import type { DemoProps } from "../types";
+
 export default function TooltipDemo({ scale }: DemoProps) {
   return (
     <TooltipProvider>

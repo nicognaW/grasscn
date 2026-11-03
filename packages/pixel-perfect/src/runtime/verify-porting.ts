@@ -335,7 +335,9 @@ if (fullRun !== null) {
 const nativeSortValues = [
   ...new Set((selectedCases ?? baseCatalogue()).map((test) => test.file)),
 ];
+
 nativeSortValues.sort();
+
 const browserFiles = nativeSortValues;
 
 if (phase !== "prepare") {

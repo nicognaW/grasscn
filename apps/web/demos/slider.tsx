@@ -3,8 +3,10 @@ import * as React from "react";
 import { Slider } from "../registry/ui/slider";
 import { getPreviewSoundVolume, setPreviewSoundVolume } from "../sound";
 import type { DemoProps } from "../types";
+
 export default function SliderDemo({ scale }: DemoProps) {
   const [value, setValue] = React.useState(() => [getPreviewSoundVolume()]);
+
   return (
     <>
       <div className="demo-stage slider-stage" data-stage="slider">

@@ -36,6 +36,7 @@ export const sourceIdentity = async (directory = repoRoot) => {
         .filter(Boolean)
     ),
   ];
+
   files.sort();
 
   const hash = createHash("sha256");

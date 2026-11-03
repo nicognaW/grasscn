@@ -172,6 +172,7 @@ test("Drawer stays visible during its closing transition, then restores focus", 
   const trigger = page
     .getByRole("region", { exact: true, name: "Interactive drawer playground" })
     .getByRole("button", { exact: true, name: "Open drawer" });
+
   await trigger.click();
   const panel = page.locator("[data-slot=drawer-content]");
   await expect(panel).toBeVisible();

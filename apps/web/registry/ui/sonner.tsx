@@ -119,6 +119,7 @@ const ActionGraphic = function ActionGraphic({
 
   const actionRender = <span aria-hidden="true" />;
   const actionDisabled = action.node.disabled;
+
   const canvasStyle: ToastCanvasStyle = {
     ...inherited,
     "--mc-ink": "inherit",

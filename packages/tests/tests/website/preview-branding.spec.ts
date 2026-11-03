@@ -44,6 +44,7 @@ test("Header serves the preserved branding source at its actual production geome
   const originalSvg = await readFile(webFile("assets/grasscn-logo.svg"));
 
   expect(deliveredSvg.equals(originalSvg)).toBe(true);
+
   // The original SVG is served at its intrinsic176x64 geometry. Native
   // constituent coverage is independently tested at the actual header backdrop.
   const iconBytes = await page.evaluate(async () => [
@@ -70,6 +71,7 @@ test("Grasscn logo stays crisp and contained on narrow preview screens", async (
   for (const width of [320, 390]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto(`${origin}docs`);
+
     const logo = page
       .getByRole("banner")
       .getByRole("link", { exact: true, name: "grasscn home" })

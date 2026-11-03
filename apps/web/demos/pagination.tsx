@@ -10,11 +10,14 @@ import {
   PaginationEllipsis,
 } from "../registry/ui/pagination";
 import type { DemoProps } from "../types";
+
 const PaginationDemo = ({ scale }: DemoProps) => {
   const [page, setPage] = React.useState(1);
+
   const choose = (next: number) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     setPage(next);
   };
+
   return (
     <>
       <div className="demo-stage" data-stage="pagination">

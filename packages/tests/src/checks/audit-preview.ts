@@ -19,6 +19,7 @@ await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: "msedge" });
 const page = await browser.newPage();
 const errors: string[] = [];
+
 const rows: (
   | {
       route: string;

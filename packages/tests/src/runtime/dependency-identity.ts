@@ -58,6 +58,7 @@ export const installedDependencyIdentity = function installedDependencyIdentity(
     if (info.isDirectory()) {
       const nativeSortValues = fs.readdirSync(file);
       nativeSortValues.sort();
+
       for (const name of nativeSortValues) {
         if ([".cache", ".vite", ".bin", ".package-lock.json"].includes(name)) {
           continue;

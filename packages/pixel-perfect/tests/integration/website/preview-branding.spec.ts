@@ -54,6 +54,7 @@ test("Grasscn project identity and native branding assets are consistent", async
     const bytes = await readFile(
       evidenceFile(`preview/assets/${file}`, pixelPerfectRoot)
     );
+
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       record.sha256
     );

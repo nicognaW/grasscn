@@ -52,6 +52,7 @@ for (const name of [...new Set(names)].sort()) {
 const map = JSON.parse(
   await readFile(evidenceFile("registry/minecraft-map.json"), "utf8")
 ) as ComponentEvidenceMap;
+
 const registry: unknown = JSON.parse(
   await readFile(evidenceFile("registry.json"), "utf-8")
 );

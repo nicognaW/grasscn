@@ -3,6 +3,7 @@ import * as React from "react";
 import { Hotbar } from "../registry/ui/hotbar";
 import { minecraftBadgeAssets } from "../registry/ui/minecraft-badge-assets";
 import type { DemoProps } from "../types";
+
 const tools = [
   "Draw",
   "Select",
@@ -14,8 +15,10 @@ const tools = [
   "Preview",
   "Publish",
 ];
+
 export default function HotbarDemo({ scale }: DemoProps) {
   const [value, setValue] = React.useState(0);
+
   return (
     <div
       className="demo-stage"

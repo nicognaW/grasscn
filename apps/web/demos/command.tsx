@@ -10,8 +10,10 @@ import {
   CommandShortcut,
 } from "../registry/ui/command";
 import type { DemoProps } from "../types";
+
 export default function CommandDemo({ scale }: DemoProps) {
   const [value, setValue] = React.useState("");
+
   return (
     <>
       <div className="demo-stage" data-stage="command">

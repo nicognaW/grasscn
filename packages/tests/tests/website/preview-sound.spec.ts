@@ -64,9 +64,11 @@ for (const [key, value] of [
     page,
   }) => {
     await page.goto(`${origin}docs/components/slider`);
+
     const volume = page
       .locator(".documentation-playground")
       .getByRole("slider", { exact: true, name: "Volume" });
+
     await volume.focus();
     await page.keyboard.press(key);
     await expect(volume).toHaveAttribute("aria-valuenow", value);
@@ -84,6 +86,7 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
   page,
 }) => {
   await page.goto(`${origin}docs/components/slider`);
+
   // Isolate demo control audio from the navigation buttons.
   const navigate = async (name: string) => {
     const previous = await voices(page);
@@ -95,6 +98,7 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
       (window as any).__previewVoices = previousVoices;
     }, previous);
   };
+
   const volume = page
     .locator(".documentation-playground")
     .getByRole("slider", { exact: true, name: "Volume" });
@@ -110,6 +114,7 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
     .getByRole("checkbox", {
       name: "Enable shadows",
     });
+
   await expect(volume).toHaveAttribute("aria-valuenow", "50");
   await navigate("Button");
   await button.click();
@@ -162,6 +167,7 @@ test("Keyboard volume changes persist when the slider demo is filtered out", asy
   const volume = page
     .locator(".documentation-playground")
     .getByRole("slider", { exact: true, name: "Volume" });
+
   await volume.focus();
   await page.keyboard.press("ArrowRight");
   await expect(page.getByLabel("Slider value", { exact: true })).toHaveText(

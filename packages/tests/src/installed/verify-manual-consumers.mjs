@@ -973,9 +973,11 @@ try {
                     ]
                   : null
               );
+
               sortedImageStates.sort((first, second) =>
                 String(first).localeCompare(String(second))
               );
+
               return sortedImageStates;
             })
         )

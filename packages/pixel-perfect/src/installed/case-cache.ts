@@ -49,6 +49,7 @@ export const installedConsumerIdentity = (consumer: string) => {
     if (fs.statSync(target).isDirectory()) {
       const nativeSortValues = fs.readdirSync(target);
       nativeSortValues.sort();
+
       for (const name of nativeSortValues) {
         visit(path.join(relative, name));
       }
@@ -73,6 +74,7 @@ export const installedConsumerIdentity = (consumer: string) => {
 
   const nativeSortValues1 = fs.readdirSync(consumer);
   nativeSortValues1.sort();
+
   for (const entry of nativeSortValues1) {
     if (
       /\.html$|^vite\.config\.|^tsconfig.*\.json$|^\.env(?:\.|$)/u.test(entry)

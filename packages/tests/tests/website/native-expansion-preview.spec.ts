@@ -3,6 +3,7 @@ import { test, expect } from "@grasscn/tests/test";
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"
 ).replace(/\/$/u, "");
+
 for (const [name, title] of [
   ["book", "Book"],
   ["hotbar", "Hotbar"],
@@ -25,6 +26,7 @@ for (const [name, title] of [
     await expect(
       page.locator(`.documentation-playground [data-stage="${name}"]`)
     ).toBeVisible();
+
     if (name === "book") {
       await page
         .locator(".documentation-playground")
@@ -156,6 +158,7 @@ for (const [name, title] of [
         expect(row.offset).toBe(row.index * 40);
         expect(row.bottom).toBeLessThanOrEqual(0);
       }
+
       await page
         .locator(".documentation-playground")
         .getByRole("button", { exact: true, name: "Bread" })
