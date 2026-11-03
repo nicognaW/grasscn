@@ -369,4 +369,16 @@ export const retainedEvidenceData = [
   "packages/pixel-perfect/tests/reference/suggestions/asset-provenance.json",
   "packages/pixel-perfect/tests/reference/switch/asset-provenance.json",
   "packages/pixel-perfect/tests/reference/toggle/asset-provenance.json",
+  // Frozen current capture-input versions; future authored versions still require formatting.
+  "packages/pixel-perfect/tests/reference/branding-header/case.json",
+  "packages/pixel-perfect/tests/reference/docs-input-defaults/cases.json",
+  "packages/pixel-perfect/tests/reference/native-expansion/cases.json",
+  "packages/pixel-perfect/tests/reference/native-expansion/custom-player-cases.json",
+  "packages/pixel-perfect/tests/reference/native-expansion/hud-cases.json",
+  "packages/pixel-perfect/tests/reference/native-expansion/locator-cases.json",
+  "packages/pixel-perfect/tests/reference/native-expansion/map-cases.json",
+  "packages/pixel-perfect/tests/reference/native-expansion/player-list-cases.json",
+  "packages/pixel-perfect/tests/reference/native-expansion/sign-cases.json",
+  "packages/pixel-perfect/tests/reference/native-expansion/trading-cases.json",
+  "packages/pixel-perfect/tests/reference/native-expansion/trading-scroll-cases.json",
 ];
