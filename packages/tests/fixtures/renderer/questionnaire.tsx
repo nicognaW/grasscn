@@ -109,14 +109,21 @@ export const QuestionnaireFixture = () => {
     if (part === "action") {
       const action = q.get("action") ?? "next";
 
-      const Action =
-        action === "previous"
-          ? QuestionnairePrevious
-          : action === "skip"
-            ? QuestionnaireSkip
-            : action === "submit"
-              ? QuestionnaireSubmit
-              : QuestionnaireNext;
+      let Action:
+        | typeof QuestionnairePrevious
+        | typeof QuestionnaireSkip
+        | typeof QuestionnaireSubmit
+        | typeof QuestionnaireNext;
+
+      if (action === "previous") {
+        Action = QuestionnairePrevious;
+      } else if (action === "skip") {
+        Action = QuestionnaireSkip;
+      } else if (action === "submit") {
+        Action = QuestionnaireSubmit;
+      } else {
+        Action = QuestionnaireNext;
+      }
 
       const active = action === "submit" ? "third" : "second";
 
