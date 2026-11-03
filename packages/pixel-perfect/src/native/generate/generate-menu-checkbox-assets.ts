@@ -129,11 +129,11 @@ for (const name of [
 await writeFile(
   webFile("registry/ui/minecraft-menu-checkbox-assets.ts"),
   `// Original Minecraft GUI sprites and observed runtime atlas coordinates.\nexport const menuCheckboxAtlas=${JSON.stringify(
-    {
-      width,
-      height,
-      sprites,
-    }
+    Object.fromEntries([
+      ["width", width],
+      ["height", height],
+      ["sprites", sprites],
+    ])
   )} as const\n`
 );
 

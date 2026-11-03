@@ -179,13 +179,18 @@ await writeFile(webFile("registry/ui/minecraft-assets.css"), css);
 await writeFile(
   pixelPerfectFile("tests/reference/asset-provenance.json"),
   `${JSON.stringify(
-    {
-      minecraftVersion: "26.2",
-      sourceFiles: sources,
-      font: "Unchanged original ASCII bitmap atlas; original advances preserved, space advance 4 from Minecraft space provider",
-      sourceJarSha256:
+    Object.fromEntries([
+      ["minecraftVersion", "26.2"],
+      ["sourceFiles", sources],
+      [
+        "font",
+        "Unchanged original ASCII bitmap atlas; original advances preserved, space advance 4 from Minecraft space provider",
+      ],
+      [
+        "sourceJarSha256",
         "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
-    },
+      ],
+    ]),
     null,
     2
   )}\n`

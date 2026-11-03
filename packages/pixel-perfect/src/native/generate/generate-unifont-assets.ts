@@ -237,18 +237,25 @@ await writeFile(
 await writeFile(
   pixelPerfectFile("tests/reference/input-cjk/asset-provenance.json"),
   `${JSON.stringify(
-    {
-      assetIndex: "32",
-      locale: "en_us / Japanese glyph filter disabled",
-      sources: provenance,
-      glyphCount: count,
-      glyphAtlasSha256: hash(atlasBytes),
-      glyphProbeSourceSha256: hash(
-        await readFile(pixelPerfectFile("tests/reference/GlyphProbeMain.java"))
-      ),
-      rendering:
+    Object.fromEntries([
+      ["assetIndex", "32"],
+      ["locale", "en_us / Japanese glyph filter disabled"],
+      ["sources", provenance],
+      ["glyphCount", count],
+      ["glyphAtlasSha256", hash(atlasBytes)],
+      [
+        "glyphProbeSourceSha256",
+        hash(
+          await readFile(
+            pixelPerfectFile("tests/reference/GlyphProbeMain.java")
+          )
+        ),
+      ],
+      [
+        "rendering",
         "Original indexed Unihex pixels and size overrides; oversample2, shadow offset0.5, native 0.01-texel inset and observed default-font UVs for the tested glyphs. GPU projection uses the actual input screen position and viewport. Advance-only font preserves native DOM hit-testing. Other CJK glyphs retain original pixels but their atlas sampling is unverified.",
-    },
+      ],
+    ]),
     null,
     2
   )}\n`
