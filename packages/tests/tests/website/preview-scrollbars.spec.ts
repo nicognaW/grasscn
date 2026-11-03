@@ -33,10 +33,12 @@ for (const scale of [2]) {
           )
       )
       .toBe(`${6 * scale}px`);
+
     const example = page.getByRole("region", {
       exact: true,
       name: "Textarea example",
     });
+
     await expect(example).toHaveAttribute("aria-busy", "false");
     await expect(
       example.getByRole("textbox", { exact: true, name: "Journey notes" })
