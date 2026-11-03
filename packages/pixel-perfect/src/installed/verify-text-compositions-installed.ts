@@ -149,7 +149,10 @@ const compare = function compare(expected: PNG, actual: PNG) {
   return count;
 };
 
-const verifyComposedTextCase = async (c: ComposedTextCaptureManifest["cases"][number], page: Page) => {
+const verifyComposedTextCase = async (
+  c: ComposedTextCaptureManifest["cases"][number],
+  page: Page
+) => {
   const url = new URL(origin);
   url.search = "";
 
@@ -179,9 +182,10 @@ const verifyComposedTextCase = async (c: ComposedTextCaptureManifest["cases"][nu
   await expect(subject).toBeVisible();
 
   if (name === "code-block") {
-    await expect(
-      subject.locator("[data-mc-selectable-ready]")
-    ).toHaveAttribute("data-mc-selectable-ready", "true");
+    await expect(subject.locator("[data-mc-selectable-ready]")).toHaveAttribute(
+      "data-mc-selectable-ready",
+      "true"
+    );
   }
 
   if (name === "message-scroller") {
@@ -194,10 +198,7 @@ const verifyComposedTextCase = async (c: ComposedTextCaptureManifest["cases"][nu
   for (const node of await subject
     .locator("[data-mc-label-layout-ready]")
     .all()) {
-    await expect(node).toHaveAttribute(
-      "data-mc-label-layout-ready",
-      "true"
-    );
+    await expect(node).toHaveAttribute("data-mc-label-layout-ready", "true");
   }
 
   for (const node of await subject.locator("[data-mc-label-ready]").all()) {

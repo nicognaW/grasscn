@@ -39,7 +39,10 @@ const m = JSON.parse(
     .toString()
 ) as AvatarCaptureManifest;
 
-const verifyAvatarCase = async (c: AvatarCaptureManifest["cases"][number], fixturePage: Page | undefined) => {
+const verifyAvatarCase = async (
+  c: AvatarCaptureManifest["cases"][number],
+  fixturePage: Page | undefined
+) => {
   await fixturePage!.evaluate((avatarCase) => {
     // SAFETY: the retained Avatar bridge consumes these actual captured case fields and returns void.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Avatar consumer bridge invocation boundary.
@@ -64,7 +67,9 @@ const verifyAvatarCase = async (c: AvatarCaptureManifest["cases"][number], fixtu
   });
 
   const got = PNG.sync.read(
-    await fixturePage!.locator("#subject").screenshot({ animations: "disabled" })
+    await fixturePage!
+      .locator("#subject")
+      .screenshot({ animations: "disabled" })
   );
 
   const want = PNG.sync.read(

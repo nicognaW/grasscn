@@ -116,7 +116,14 @@ const compare = function compare(a: DecodedPixels, b: DecodedPixels) {
   return { diff, mismatchedPixels: n };
 };
 
-const captureOverlayPart = async (c: OverlayCaptureManifest["cases"][number], name: string, dir: string, part: string, folder: string, page: Page) => {
+const captureOverlayPart = async (
+  c: OverlayCaptureManifest["cases"][number],
+  name: string,
+  dir: string,
+  part: string,
+  folder: string,
+  page: Page
+) => {
   const q = new URLSearchParams({
     align: c.alignment ?? "left",
     background: c.background,
@@ -144,10 +151,7 @@ const captureOverlayPart = async (c: OverlayCaptureManifest["cases"][number], na
 
   const optionalWrapWidth = c.wrapWidth;
 
-  if (
-    optionalWrapWidth !== null &&
-    optionalWrapWidth !== undefined
-  ) {
+  if (optionalWrapWidth !== null && optionalWrapWidth !== undefined) {
     q.set("wrapWidth", String(c.wrapWidth));
   }
 
@@ -163,18 +167,10 @@ const captureOverlayPart = async (c: OverlayCaptureManifest["cases"][number], na
   await expect(target).toBeVisible();
 
   if (dir === "label") {
-    await expect(target).toHaveAttribute(
-      "data-mc-label-layout-ready",
-      "true"
-    );
+    await expect(target).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-    for (const line of await target
-      .locator("[data-mc-label-ready]")
-      .all()) {
-      await expect(line).toHaveAttribute(
-        "data-mc-label-ready",
-        "true"
-      );
+    for (const line of await target.locator("[data-mc-label-ready]").all()) {
+      await expect(line).toHaveAttribute("data-mc-label-ready", "true");
     }
   }
 
@@ -192,9 +188,7 @@ const captureOverlayPart = async (c: OverlayCaptureManifest["cases"][number], na
     return await frameCompletion.promise;
   });
 
-  const expectedBytes = fs.readFileSync(
-    path.join(folder, "captures", c.name)
-  );
+  const expectedBytes = fs.readFileSync(path.join(folder, "captures", c.name));
 
   if (hash(expectedBytes) !== c.sha256) {
     throw new Error(`reference hash ${c.name}`);
@@ -233,10 +227,7 @@ const captureOverlayPart = async (c: OverlayCaptureManifest["cases"][number], na
 
   if (result.mismatchedPixels) {
     fs.writeFileSync(path.join(out, "actual.png"), actualBytes);
-    fs.writeFileSync(
-      path.join(out, "diff.png"),
-      PNG.sync.write(result.diff)
-    );
+    fs.writeFileSync(path.join(out, "diff.png"), PNG.sync.write(result.diff));
     throw new Error(
       `${name} ${dir} ${part} ${c.name}: ${result.mismatchedPixels} pixels`
     );
@@ -294,7 +285,14 @@ try {
                 page.on("pageerror", (e) => errors.push(e.message));
               }
 
-              const actual = await captureOverlayPart(c, name, dir, part, folder, page);
+              const actual = await captureOverlayPart(
+                c,
+                name,
+                dir,
+                part,
+                folder,
+                page
+              );
 
               record[
                 part === "description"
