@@ -62,9 +62,9 @@ for (const asChild of [false, true]) {
     }, testInfo) => {
       const query = new URLSearchParams({
         component: "separator",
-        width: String(c.width),
         scale: String(c.scale),
         state: c.state,
+        width: String(c.width),
       });
 
       if (asChild) {

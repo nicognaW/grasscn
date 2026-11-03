@@ -39,22 +39,22 @@ const questionnaireCaseQuery = (
   manifest: QuestionnaireComparisonManifest
 ) => {
   const q = new URLSearchParams({
+    action,
+    align: c.alignment ?? "left",
+    background: c.background ?? manifest.background ?? "#202020",
+    checked: String(c.checked ?? false),
     component: "questionnaire",
+    height: String(c.height ?? 20),
+    label: c.label ?? "",
     native: "1",
     part,
-    action,
-    label: c.label ?? "",
-    text: c.text ?? "",
     placeholder: c.placeholder ?? "",
-    checked: String(c.checked ?? false),
-    width: String(c.width),
-    height: String(c.height ?? 20),
     scale: String(c.scale),
     state: c.state,
+    text: c.text ?? "",
+    width: String(c.width),
     x: String(c.x ?? 16),
     y: String(c.y ?? 16),
-    background: c.background ?? manifest.background ?? "#202020",
-    align: c.alignment ?? "left",
   });
 
   if (action === "radio") {

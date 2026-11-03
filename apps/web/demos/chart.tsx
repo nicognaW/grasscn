@@ -68,7 +68,9 @@ const ChartDemo = ({ scale }: DemoProps) => {
           40,
           Math.floor(
             (node.clientWidth -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               parseFloat(css.paddingLeft) -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               parseFloat(css.paddingRight)) /
               scale
           )
@@ -214,9 +216,9 @@ const ChartDemo = ({ scale }: DemoProps) => {
             >
               <SelectTrigger
                 aria-label="F3 metric"
+                className="max-w-full"
                 style={{
                   width: Math.min(116, contentWidth) * scale,
-                  maxWidth: "100%",
                 }}
               >
                 <SelectValue />
@@ -387,9 +389,9 @@ const ChartDemo = ({ scale }: DemoProps) => {
           >
             <SelectTrigger
               aria-label="Chart type"
+              className="max-w-full"
               style={{
                 width: Math.min(116, contentWidth) * scale,
-                maxWidth: "100%",
               }}
             >
               <SelectValue />
@@ -414,9 +416,9 @@ const ChartDemo = ({ scale }: DemoProps) => {
               >
                 <SelectTrigger
                   aria-label="Chart period"
+                  className="max-w-full"
                   style={{
                     width: Math.min(116, contentWidth) * scale,
-                    maxWidth: "100%",
                   }}
                 >
                   <SelectValue />
@@ -440,9 +442,9 @@ const ChartDemo = ({ scale }: DemoProps) => {
               >
                 <SelectTrigger
                   aria-label="Chart devices"
+                  className="max-w-full"
                   style={{
                     width: Math.min(116, contentWidth) * scale,
-                    maxWidth: "100%",
                   }}
                 >
                   <SelectValue />

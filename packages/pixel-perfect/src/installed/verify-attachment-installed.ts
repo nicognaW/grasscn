@@ -249,9 +249,11 @@ try {
     for (let i = 0; i < m.cases.length; i += 1) {
       if (i % 64 === 0) {
         if (page) {
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
           await page.close();
         }
 
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         page = await browser.newPage({
           deviceScaleFactor: 1,
           viewport: { height: 900, width: 1536 },
@@ -262,6 +264,7 @@ try {
 
       const c = m.cases[i];
 
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       cases.push(await verifyAttachmentCase(c, part, dir, m, page!));
     }
 

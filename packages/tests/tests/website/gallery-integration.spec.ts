@@ -30,32 +30,30 @@ for (const viewport of [
       await page.goto(origin + "docs/components/" + name);
       const card = page.locator(".documentation-playground");
 
-      for (const scale of [2]) {
-        await expect(card).toBeVisible();
-        await expect
-          .poll(
-            async () =>
-              await page.evaluate(
-                () => document.documentElement.scrollWidth <= innerWidth
-              )
-          )
-          .toBe(true);
-        expect(
-          await page.locator("[id]").evaluateAll((nodes) => {
-            const seen = new Set<string>();
+      await expect(card).toBeVisible();
+      await expect
+        .poll(
+          async () =>
+            await page.evaluate(
+              () => document.documentElement.scrollWidth <= innerWidth
+            )
+        )
+        .toBe(true);
+      expect(
+        await page.locator("[id]").evaluateAll((nodes) => {
+          const seen = new Set<string>();
 
-            return nodes.flatMap((n) => {
-              if (seen.has(n.id)) {
-                return [n.id];
-              }
+          return nodes.flatMap((n) => {
+            if (seen.has(n.id)) {
+              return [n.id];
+            }
 
-              seen.add(n.id);
+            seen.add(n.id);
 
-              return [];
-            });
-          })
-        ).toEqual([]);
-      }
+            return [];
+          });
+        })
+      ).toEqual([]);
     }
 
     expect(errors).toEqual([]);

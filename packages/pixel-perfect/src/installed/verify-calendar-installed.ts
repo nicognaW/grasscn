@@ -343,15 +343,19 @@ try {
 
         if (previousComparisonCount % 128 === 0) {
           if (page) {
+            // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
             await page.close();
           }
 
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
           page = await browser.newPage({
             deviceScaleFactor: 1,
             viewport: { height: 900, width: 1536 },
           });
           page.on("pageerror", (e) => pageErrors.push(e.message));
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
           await page.goto(url);
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
           await page.waitForFunction(
             () =>
               // SAFETY: this readiness read observes only the retained producer's owned bridge member before its installation has been observed.
@@ -359,6 +363,7 @@ try {
           );
         }
 
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         const { actual, actualBytes } = await captureCalendarAlias(
           c,
           part,

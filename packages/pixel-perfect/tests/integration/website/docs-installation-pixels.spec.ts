@@ -193,6 +193,7 @@ test("default installation controls match their captured Minecraft content and s
   };
 
   for (const manager of ["npm", "pnpm", "Yarn", "Bun"]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
     await verifyManagerSelection(manager);
   }
 
@@ -275,6 +276,7 @@ test("default installation controls match their captured Minecraft content and s
   };
 
   for (const file of inventory.files) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
     await verifyManualFileRow(file);
   }
 

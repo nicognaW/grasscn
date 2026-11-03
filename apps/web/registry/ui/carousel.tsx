@@ -84,9 +84,9 @@ const Carousel = ({
       setApi?.(api);
     }
   }, [api, setApi]);
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
     if (!api) {
-      return;
+      return undefined;
     }
 
     const update = () => {

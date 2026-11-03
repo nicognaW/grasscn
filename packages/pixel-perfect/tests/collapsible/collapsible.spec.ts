@@ -89,18 +89,18 @@ for (const directory of [
           await page.setViewportSize({ height: 900, width: 1536 });
 
           const params = new URLSearchParams({
+            align: c.alignment ?? "left",
             component: "collapsible",
+            height: String(c.height ?? 20),
+            label: c.label ?? "Button",
             native: "1",
             part: body ? "body" : "header",
-            label: c.label ?? "Button",
-            text: body ? c.label : "",
-            width: String(c.width),
-            height: String(c.height ?? 20),
             scale: String(c.scale),
             state: c.state,
+            text: body ? c.label : "",
+            width: String(c.width),
             x: String(c.x ?? 16),
             y: String(c.y ?? 16),
-            align: c.alignment ?? "left",
           });
 
           if (c.wrapWidth !== undefined) {

@@ -78,11 +78,11 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
 
         const params = new URLSearchParams({
           component: "menubar",
-          triggerPixels: "1",
           label: c.label,
           scale: String(c.scale),
-          width: String(c.width),
           state: open ? "normal" : c.state,
+          triggerPixels: "1",
+          width: String(c.width),
           x: String(c.x ?? 16),
           y: String(c.y ?? 16),
         });

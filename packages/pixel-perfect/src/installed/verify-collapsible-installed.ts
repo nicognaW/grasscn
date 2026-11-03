@@ -186,6 +186,7 @@ export const verifyCollapsibleCase = async ({
   let result: InstalledCollapsibleResult | undefined;
 
   for (const expanded of body ? [true] : [false, true]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
     const actual = await verifyCollapsibleRendering({
       body,
       c,

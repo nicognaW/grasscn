@@ -31,7 +31,7 @@ export const DatePickerDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
       <PopoverContent
         data-slot="date-picker-content"
         align="start"
-        style={{ padding: 0, width: "auto" }}
+        className="w-auto p-0"
       >
         <Calendar
           scale={scale}
@@ -66,7 +66,7 @@ export const DatePickerRangeDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
       <PopoverContent
         data-slot="date-picker-content"
         align="start"
-        style={{ padding: 0, width: "auto" }}
+        className="w-auto p-0"
       >
         <Calendar
           scale={scale}

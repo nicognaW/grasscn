@@ -104,7 +104,7 @@ const PopoverContent = ({
   const [width, setWidth] = React.useState(214);
 
   const forwarded = React.useCallback(
-    (element: HTMLDivElement | null) => {
+    (element: HTMLDivElement | null): (() => void) | undefined => {
       setNode(element);
 
       if (isMinecraftRefCallback(ref)) {
@@ -119,13 +119,15 @@ const PopoverContent = ({
       } else if (ref) {
         ref.current = element;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
@@ -137,7 +139,9 @@ const PopoverContent = ({
           1,
           Math.floor(
             (node.clientWidth -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               Number.parseFloat(computed.paddingLeft) -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               Number.parseFloat(computed.paddingRight)) /
               scale
           )
@@ -199,7 +203,7 @@ const PopoverContent = ({
             <Primitive.Positioner
               anchor={anchor}
               data-mc-positioner=""
-              style={{ zIndex: 50 }}
+              className="z-50"
               side={side}
               align={align}
               sideOffset={sideOffset}

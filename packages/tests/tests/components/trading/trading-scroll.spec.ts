@@ -46,11 +46,14 @@ for (const [count, events] of Object.entries(probes)) {
     for (const event of events) {
       if (event.kind !== "drag") {
         if (held) {
+          // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
           await page.mouse.up();
           held = false;
         }
 
+        // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
         await input.fill(String(event.start));
+        // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
         await expect(rail).toHaveAttribute(
           "aria-valuenow",
           String(event.start)
@@ -58,6 +61,7 @@ for (const [count, events] of Object.entries(probes)) {
       }
 
       if (event.kind === "wheel") {
+        // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
         await root.dispatchEvent("wheel", {
           deltaY: -event.amount * 100,
           deltaMode: 0,
@@ -65,15 +69,19 @@ for (const [count, events] of Object.entries(probes)) {
       }
 
       if (event.kind === "press") {
+        // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
         await page.mouse.move(bounds.x + 6, bounds.y + (100 - 18) * 2);
+        // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
         await page.mouse.down();
         held = true;
       }
 
       if (event.kind === "drag") {
+        // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
         await page.mouse.move(bounds.x + 6, bounds.y + (event.y - 18) * 2);
       }
 
+      // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
       await expect(
         input,
         `${event.kind}: ${JSON.stringify(event)}`
@@ -100,12 +108,15 @@ test("burst wheel events preserve consecutive native offsets", async ({
   ).toBe(2);
 
   for (const uncontrolled of [false, true]) {
+    // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
     await page.goto(
       `${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify({ cursor: 0, element: "trading", offerCount: 9, uncontrolled }))}`
     );
+    // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
     await expect(
       page.locator('[data-slot="document-text"]').first()
     ).toHaveAttribute("data-ready", "true");
+    // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
     await page.locator('[data-slot="trading"]').evaluate((element) => {
       element.dispatchEvent(
         new WheelEvent("wheel", {
@@ -122,9 +133,11 @@ test("burst wheel events preserve consecutive native offsets", async ({
         })
       );
     });
+    // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
     await expect(
       page.getByRole("spinbutton", { name: "Scroll offset" })
     ).toHaveValue("2");
+    // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
     await expect(
       page.getByRole("scrollbar", { name: "Trade offers scroll" })
     ).toHaveAttribute("aria-valuenow", "2");
@@ -150,7 +163,9 @@ for (const uncontrolled of [false, true]) {
       [1000, 2, 18],
       [-1000, 2, 0],
     ] as const) {
+      // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
       await root.dispatchEvent("wheel", { deltaMode, deltaY });
+      // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
       await expect(rail).toHaveAttribute("aria-valuenow", String(result));
     }
 

@@ -47,22 +47,22 @@ const calendarCaseQuery = (
   manifest: CalendarComparisonManifest
 ) => {
   const q = new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background ?? manifest.background ?? "#202020",
+    checked: String(c.checked ?? false),
     component,
+    height: String(c.height),
+    label: c.label ?? "",
     native: "1",
     part,
+    range: alias.startsWith("range-") ? alias.slice(6) : "",
     scale: String(c.scale),
+    selected: String(alias === "selected"),
+    state: alias === "base" ? c.state : "normal",
+    today: String(alias === "today"),
     width: String(c.width),
-    height: String(c.height),
     x: String(c.x ?? 16),
     y: String(c.y ?? 16),
-    label: c.label ?? "",
-    background: c.background ?? manifest.background ?? "#202020",
-    align: c.alignment ?? "left",
-    checked: String(c.checked ?? false),
-    state: alias === "base" ? c.state : "normal",
-    selected: String(alias === "selected"),
-    today: String(alias === "today"),
-    range: alias.startsWith("range-") ? alias.slice(6) : "",
   });
 
   if (c.text !== undefined) {

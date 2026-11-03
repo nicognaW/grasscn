@@ -184,8 +184,11 @@ export const verifyInstalledPlayerPreviews = async (
   ).toBeVisible();
 
   for (const [index, preview] of [steve, alex].entries()) {
+    // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
     await preview.scrollIntoViewIfNeeded();
+    // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
     await preview.locator("canvas").waitFor({ state: "visible" });
+    // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
     await consumerPage.waitForFunction(
       (label) => {
         const element = document.querySelector(`[aria-label="${label}"]`);
@@ -193,30 +196,39 @@ export const verifyInstalledPlayerPreviews = async (
         // eslint-disable-next-line unicorn/prefer-dom-node-dataset -- Query selectors expose Element; the generic attribute API preserves the native readiness contract.
         return element?.getAttribute("data-ready") === "true";
       },
+      // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
       await preview.getAttribute("aria-label")
     );
+    // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
     await preview.focus();
+    // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
     const before = await preview.locator("canvas").screenshot();
+    // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
     await preview.press("ArrowRight");
+    // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
     const rotated = await preview.locator("canvas").screenshot();
     assert.notEqual(
       hash(before),
       hash(rotated),
       "Keyboard rotation repaints the actual WebGL canvas"
     );
+    // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
     await preview.press("Home");
+    // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
     const reset = await preview.locator("canvas").screenshot();
     assert.equal(
       hash(reset),
       hash(before),
       "Home restores the default WebGL pose"
     );
+    // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
     await writeFile(
       path.join(output, `${framework}-player-${index}.png`),
       reset
     );
     webgl.push({
       initialSha256: hash(before),
+      // oxlint-disable-next-line no-await-in-loop -- Steve/Alex preview workflow shares consumerPage focus/viewport; focus→ArrowRight→screenshot→Home→screenshot is an ordered state transition.
       model: await preview.getAttribute("data-model"),
       resetSha256: hash(reset),
       rotatedSha256: hash(rotated),

@@ -169,6 +169,7 @@ const preserveInstalledDependencies = async () => {
   );
 
   for (const [index, item] of targetsByDepth.entries()) {
+    // oxlint-disable-next-line no-await-in-loop -- Depth-sorted output moves preserve ancestor path validity; each mutate→hash/build/assert→finally restore probe must finish before next shared-workspace probe.
     await rename(item.target, path.join(backup, String(index)));
   }
 
@@ -359,10 +360,13 @@ try {
   report.invalidation = [];
 
   for (const probe of probes) {
+    // oxlint-disable-next-line no-await-in-loop -- Depth-sorted output moves preserve ancestor path validity; each mutate→hash/build/assert→finally restore probe must finish before next shared-workspace probe.
     const original = await readFile(probe.file);
 
     try {
+      // oxlint-disable-next-line no-await-in-loop -- Depth-sorted output moves preserve ancestor path validity; each mutate→hash/build/assert→finally restore probe must finish before next shared-workspace probe.
       await writeFile(probe.file, probe.change(original));
+      // oxlint-disable-next-line no-await-in-loop -- Depth-sorted output moves preserve ancestor path validity; each mutate→hash/build/assert→finally restore probe must finish before next shared-workspace probe.
       const changed = await taskHashes(`${probe.name}-hashes`);
       assert.notEqual(
         changed[probe.task],
@@ -374,6 +378,7 @@ try {
         hashes["@grasscn/web#build"],
         `${probe.name} did not invalidate web build`
       );
+      // oxlint-disable-next-line no-await-in-loop -- Depth-sorted output moves preserve ancestor path validity; each mutate→hash/build/assert→finally restore probe must finish before next shared-workspace probe.
       const log = await run(`${probe.name}-generation`, probe.run);
       assert.match(
         log,
@@ -387,6 +392,7 @@ try {
         task: probe.task,
       });
     } finally {
+      // oxlint-disable-next-line no-await-in-loop -- Depth-sorted output moves preserve ancestor path validity; each mutate→hash/build/assert→finally restore probe must finish before next shared-workspace probe.
       await writeFile(probe.file, original);
     }
   }

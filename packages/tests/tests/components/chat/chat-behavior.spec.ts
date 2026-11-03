@@ -31,15 +31,20 @@ test("Message scalar text has original row dimensions and multiline semantics at
   page,
 }) => {
   for (const scale of [1, 2, 3]) {
+    // oxlint-disable-next-line no-await-in-loop -- Each scale reloads the same page, waits actual glyph owners, then measures that scale before next navigation.
     await page.goto(
       `?component=message&label=First%20line%0ASecond%20line&scale=${scale}`
     );
     const subject = page.locator("[data-subject]");
+    // oxlint-disable-next-line no-await-in-loop -- Each scale reloads the same page, waits actual glyph owners, then measures that scale before next navigation.
     await expect(subject).toHaveAttribute("data-mc-chat-ready", "true");
+    // oxlint-disable-next-line no-await-in-loop -- Each scale reloads the same page, waits actual glyph owners, then measures that scale before next navigation.
     await expect(
       subject.locator("[data-mc-label-layout-ready]")
     ).toHaveAttribute("data-mc-label-layout-ready", "true");
+    // oxlint-disable-next-line no-await-in-loop -- Each scale reloads the same page, waits actual glyph owners, then measures that scale before next navigation.
     await expect(subject).toContainText("First line\nSecond line");
+    // oxlint-disable-next-line no-await-in-loop -- Each scale reloads the same page, waits actual glyph owners, then measures that scale before next navigation.
     expect((await subject.boundingBox())!.height).toBe(18 * scale);
   }
 });

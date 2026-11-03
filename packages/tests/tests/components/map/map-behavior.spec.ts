@@ -59,13 +59,18 @@ test("locator limits and keyboard waypoint selection", async ({ page }) => {
     [59, true],
     [61, false],
   ] as const) {
+    // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
     await page.goto(url({ checked: true, element: "locator", value: bearing }));
     const point = page.getByRole("button", { exact: true, name: "Waypoint" });
+    // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
     await expect(point).toHaveCount(visible ? 1 : 0);
 
     if (visible) {
+      // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
       await point.focus();
+      // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
       await point.press("Enter");
+      // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
       await expect
         .poll(
           async () =>
@@ -80,9 +85,11 @@ test("locator preserves bearings across positive and negative full turns", async
   page,
 }) => {
   for (const heading of [0, 360, 720, -360, -720]) {
+    // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
     await page.goto(
       url({ checked: true, element: "locator", heading, value: 0 })
     );
+    // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
     await expect(
       page.getByRole("button", { exact: true, name: "Waypoint" })
     ).toHaveCount(1);

@@ -197,7 +197,8 @@ const CalendarDropdown = ({
           id={id}
           aria-label={props["aria-label"]}
           aria-labelledby={props["aria-labelledby"]}
-          style={{ minWidth: 40 * scale, width: "auto" }}
+          className="w-auto"
+          style={{ minWidth: 40 * scale }}
         >
           <SelectValue />
         </SelectTrigger>

@@ -137,7 +137,7 @@ const AlertDialogContent = ({
   const [measuredWidth, setMeasuredWidth] = React.useState(462);
 
   const forwarded = React.useCallback(
-    (element: HTMLDivElement | null) => {
+    (element: HTMLDivElement | null): (() => void) | undefined => {
       setNode(element);
 
       if (isMinecraftRefCallback(ref)) {
@@ -152,13 +152,15 @@ const AlertDialogContent = ({
       } else if (ref) {
         ref.current = element;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
     let frame = 0;

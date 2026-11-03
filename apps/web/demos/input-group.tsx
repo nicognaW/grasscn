@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import {
   InputGroup,
@@ -10,10 +11,26 @@ import {
 } from "../registry/ui/input-group";
 import type { DemoProps } from "../types";
 
+interface PresentationLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-presentation-demos-input-group-1-width": `${number}px`;
+}
+
+interface PresentationLayoutStyle2 extends IntrinsicLayoutCSSProperties {
+  "--mc-presentation-demos-input-group-2-width": `${number}px`;
+}
+
+interface SendButtonStyle extends IntrinsicLayoutCSSProperties {
+  "--input-group-send-width": `${number}px`;
+}
+
 const InputGroupDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("Player");
   const [message, setMessage] = React.useState("你好，Minecraft!");
   const [sent, setSent] = React.useState("");
+
+  const sendButtonStyle: SendButtonStyle = {
+    "--input-group-send-width": `${60 * scale}px`,
+  };
 
   return (
     <>
@@ -23,7 +40,13 @@ const InputGroupDemo = ({ scale }: DemoProps) => {
       >
         <InputGroup
           scale={scale}
-          style={{ width: 200 * scale, maxWidth: "100%" }}
+          className="w-(--mc-presentation-demos-input-group-1-width) max-w-full"
+          style={
+            // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+            {
+              "--mc-presentation-demos-input-group-1-width": `${200 * scale}px`,
+            } satisfies PresentationLayoutStyle1 as PresentationLayoutStyle1
+          }
         >
           <InputGroupAddon>
             <InputGroupText>Name</InputGroupText>
@@ -38,7 +61,13 @@ const InputGroupDemo = ({ scale }: DemoProps) => {
         </InputGroup>
         <InputGroup
           scale={scale}
-          style={{ width: 200 * scale, maxWidth: "100%" }}
+          className="w-(--mc-presentation-demos-input-group-2-width) max-w-full"
+          style={
+            // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+            {
+              "--mc-presentation-demos-input-group-2-width": `${200 * scale}px`,
+            } satisfies PresentationLayoutStyle2 as PresentationLayoutStyle2
+          }
         >
           <InputGroupTextarea
             aria-label="Chat message"
@@ -53,7 +82,8 @@ const InputGroupDemo = ({ scale }: DemoProps) => {
               onClick={() => {
                 setSent(name + ": " + message);
               }}
-              style={{ width: 60 * scale }}
+              className="w-(--input-group-send-width)"
+              style={sendButtonStyle}
             >
               Send
             </InputGroupButton>

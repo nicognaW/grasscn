@@ -48,14 +48,18 @@ test("evidence chain rejects corrupted inputs, generated outputs and stale trace
       "tests/fixture/dream-skin.png",
     ]) {
       const target = path.join(root, file);
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Restore each exclusive integrity mutation before probing another field or file.
       const original = await readFile(target);
       const changed = Buffer.from(original);
 
       // Deliberately flip one frozen-input bit to prove the integrity chain rejects corruption.
       // oxlint-disable-next-line eslint/no-bitwise
       changed[0] ^= 1;
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Restore each exclusive integrity mutation before probing another field or file.
       await writeFile(target, changed);
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Restore each exclusive integrity mutation before probing another field or file.
       await assert.rejects(verifyPortingEvidence(root));
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Restore each exclusive integrity mutation before probing another field or file.
       await writeFile(target, original);
     }
 
@@ -90,10 +94,14 @@ test("evidence chain rejects corrupted inputs, generated outputs and stale trace
       ],
     ] satisfies [string, (original: Buffer) => string][]) {
       const target = path.join(root, file);
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Restore each exclusive integrity mutation before probing another field or file.
       const original = await readFile(target);
 
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Restore each exclusive integrity mutation before probing another field or file.
       await writeFile(target, mutate(original));
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Restore each exclusive integrity mutation before probing another field or file.
       await assert.rejects(verifyPortingEvidence(root));
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Restore each exclusive integrity mutation before probing another field or file.
       await writeFile(target, original);
     }
 

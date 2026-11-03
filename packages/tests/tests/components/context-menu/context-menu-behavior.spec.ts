@@ -27,7 +27,9 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
     const style = getComputedStyle(node);
 
     return [
+      // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
       Number.parseFloat(style.borderLeftWidth),
+      // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
       Number.parseFloat(style.borderTopWidth),
     ];
   });

@@ -82,13 +82,14 @@ const TooltipContent = ({
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
   const [available, setAvailable] = React.useState(maxWidth);
   React.useImperativeHandle<typeof node, typeof node>(ref, () => node, [node]);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
     const measure = () => {
       const physical =
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(
           getComputedStyle(node).getPropertyValue("--available-width")
         ) || window.innerWidth;
@@ -193,7 +194,7 @@ const TooltipContent = ({
     <TooltipPrimitive.Portal keepMounted={keepMounted}>
       <TooltipPrimitive.Positioner
         data-mc-positioner=""
-        style={{ zIndex: 50 }}
+        className="z-50"
         side={side}
         align={align}
         sideOffset={sideOffset}

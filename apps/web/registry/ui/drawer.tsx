@@ -143,14 +143,7 @@ const DrawerContent = ({
       <DrawerOverlay />
       <DrawerScale.Provider value={scale}>
         <CardScaleContext.Provider value={scale}>
-          <DrawerPrimitive.Viewport
-            style={{
-              inset: 0,
-              pointerEvents: "none",
-              position: "fixed",
-              zIndex: 50,
-            }}
-          >
+          <DrawerPrimitive.Viewport className="pointer-events-none fixed inset-0 z-50">
             <DrawerPrimitive.Popup
               render={render}
               data-slot="drawer-content"
@@ -165,7 +158,7 @@ const DrawerContent = ({
             >
               <DrawerPrimitive.Content
                 data-slot="drawer-body"
-                style={{ display: "contents" }}
+                className="contents"
               >
                 {content}
               </DrawerPrimitive.Content>

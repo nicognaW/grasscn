@@ -207,14 +207,17 @@ try {
 
       if (previousCaseCount % 128 === 0) {
         if (page) {
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
           await page.close();
         }
 
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         page = await browser.newPage({
           deviceScaleFactor: 1,
           viewport: { height: 900, width: 1536 },
         });
         page.on("pageerror", (e) => pageErrors.push(e.message));
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         await page.addInitScript(
           () =>
             (Date.now = () =>
@@ -222,6 +225,7 @@ try {
         );
       }
 
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       results.push(await verifyNativeSelectCase(c, dir, page!));
 
       if (results.length % 128 === 0) {

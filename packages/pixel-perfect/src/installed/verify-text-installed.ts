@@ -449,10 +449,14 @@ const worker = async function worker() {
       const { group, part, c } = tasks[taskIndex];
 
       if (count && count % 128 === 0) {
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         await browser!.close();
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         page = await open();
       } else if (count && count % 50 === 0) {
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         await page.close();
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         page = await browser!.newPage({
           deviceScaleFactor: 1,
           viewport: { height: 900, width: 1536 },
@@ -463,6 +467,7 @@ const worker = async function worker() {
       count += 1;
 
       results.push(
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         await verifyTextReferenceCase({
           c,
           consumer,

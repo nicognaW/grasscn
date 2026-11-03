@@ -400,12 +400,17 @@ try {
       ["chart", "Browser share", "profiler"],
       ["chart", "API response time", "metric"],
     ]) {
+      // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
       await page.goto(`${origin}/docs/components/${slug}`);
       const region = page.getByRole("region", { exact: true, name: title });
+      // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
       await region.getByRole("tab", { exact: true, name: "Code" }).click();
+      // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
       await region.getByRole("button", { exact: true, name: "Copy" }).click();
+      // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
       await region.getByRole("status").filter({ hasText: "Copied" }).waitFor();
 
+      // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
       const code = await page.evaluate(
         async () => await navigator.clipboard.readText()
       );
@@ -416,6 +421,7 @@ try {
         `Complete visitor code: ${filename}`
       );
       copiedExamples[filename] = code;
+      // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
       exampleItems[filename] = await region
         .locator("a[data-example-item]")
         .evaluateAll((links) =>
@@ -599,6 +605,7 @@ try {
         );
 
         try {
+          // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
           const response = await fetch(`http://127.0.0.1:${port}`);
 
           if (response.ok) {
@@ -609,6 +616,7 @@ try {
         }
 
         assert.ok(attempt < 120, "Consumer started");
+        // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
         await Bun.sleep(500);
       }
 
@@ -671,13 +679,17 @@ try {
           name: `Consumer ${name}`,
         });
 
+        // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
         await chart.scrollIntoViewIfNeeded();
+        // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
         await expect(
           chart.getByRole("application", { exact: true, name: chartName })
         ).toBeVisible();
+        // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
         await expect
           .poll(async () => await chart.locator("svg").count())
           .toBeGreaterThan(0);
+        // oxlint-disable-next-line no-await-in-loop -- One docs page/browser clipboard or one active consumer page/scroll focus; retry polls require response before delay/next attempt.
         await chart.screenshot({
           path: path.join(output, `${framework}-${name}.png`),
         });

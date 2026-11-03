@@ -267,6 +267,7 @@ try {
     // SAFETY: the existing command route list selects these actual capture producers at this read point.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact command constituent capture producer boundary.
     const manifest = JSON.parse(
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Load this route evidence before its dependent shared-browser cases run.
       await readFile(path.join(directory, "manifest.json"), "utf-8")
     ) as CommandCaptureManifest;
 
@@ -274,6 +275,7 @@ try {
     const pageErrors: string[] = [];
 
     const first = PNG.sync.read(
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Load this route evidence before its dependent shared-browser cases run.
       await readFile(path.join(directory, "captures", manifest.cases[0].name))
     );
 
@@ -293,11 +295,14 @@ try {
 
     for (const c of manifest.cases) {
       if (count && count % 128 === 0) {
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         await browser.close();
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         browser = await chromium.launch({ channel: "msedge" });
         assert.equal(browser.version(), browserVersion);
       }
 
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       const page = await browser.newPage({
         deviceScaleFactor: 1,
         viewport: { height: 900, width: folder === "input" ? 1280 : 1536 },
@@ -307,10 +312,12 @@ try {
 
       try {
         cases.push(
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
           await verifyCommandReferenceCase({ c, directory, folder, page, url })
         );
         count += 1;
       } finally {
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         await page.close();
       }
     }
@@ -333,6 +340,7 @@ try {
       typecheck: { command: "tsc --noEmit", passed: true },
     };
 
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Publish this route result before advancing the shared-browser case matrix.
     await writeFile(
       pixelPerfectFile(
         path.join(

@@ -57,16 +57,16 @@ const Slider = ({
     ref,
     () => root.current
   );
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
     if (value !== undefined) {
-      return;
+      return undefined;
     }
 
     const input = root.current?.querySelector("input");
     const form = input?.form ?? root.current?.closest("form");
 
     if (!form) {
-      return;
+      return undefined;
     }
 
     // The bitmap value and the primitive must reset together in ordinary HTML forms.
@@ -195,7 +195,7 @@ const Slider = ({
           onPointerCancelCapture?.(event);
         }}
       >
-        <SliderPrimitive.Control style={{ inset: 0, position: "absolute" }}>
+        <SliderPrimitive.Control className="absolute inset-0">
           <SliderPrimitive.Track
             style={{ inset: 0, position: "absolute" }}
             data-slot="slider-track"

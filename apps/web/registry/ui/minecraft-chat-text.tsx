@@ -184,7 +184,7 @@ const MinecraftChatText = ({
   }
 
   const unicode = text !== null && /\P{ASCII}/u.test(text);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (unicode) {
       let live = true;
       void loadUnihex().then(() => {
@@ -197,6 +197,8 @@ const MinecraftChatText = ({
         live = false;
       };
     }
+
+    return undefined;
   }, [unicode]);
   React.useLayoutEffect(() => {
     const element = node.current!;

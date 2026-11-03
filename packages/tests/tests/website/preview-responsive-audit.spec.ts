@@ -65,16 +65,21 @@ for (const scale of [2]) {
     const card = await open(page, "form");
 
     for (const text of ["", "a"]) {
+      // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
       await card
         .getByRole("textbox", { exact: true, name: "Player name" })
         .fill(text);
+      // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
       await card
         .getByRole("button", { exact: true, name: "Save player" })
         .click();
       const error = card.getByRole("alert");
+      // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
       await expect(error).toBeVisible();
 
+      // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
       for (const line of await error.locator(".mc-label-line").all()) {
+        // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
         await inside(line, card);
       }
     }
@@ -124,12 +129,16 @@ test("calendar family and native select have inset preview stages", async ({
   page,
 }) => {
   for (const name of ["calendar", "date-picker", "marker", "native-select"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
     const card = await open(page, name);
     const stage = card.locator(`[data-stage="${name}"]`);
 
+    // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
     await expect(stage).toHaveClass(/demo-stage/);
     expect(
+      // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
       await stage.evaluate((el) =>
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(getComputedStyle(el).paddingLeft)
       )
     ).toBeGreaterThan(0);
@@ -143,9 +152,13 @@ test("narrow preview tabs preserve readable labels and every panel stays reachab
 
   for (const name of ["Game", "World", "More"]) {
     const tab = card.getByRole("tab", { exact: true, name });
+    // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
     await inside(tab, card);
+    // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
     await inside(tab.locator(".mc-tab-label"), tab);
+    // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
     await tab.click();
+    // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
     await expect(
       card.getByRole("tabpanel", { exact: true, name })
     ).toBeVisible();

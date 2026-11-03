@@ -27,9 +27,9 @@ for (const mode of ["split", "fragments", "empty", "numeric"]) {
         component: "button-composition",
         composition: mode,
         label: c.label,
-        width: String(c.width),
         scale: String(c.scale),
         state: c.state,
+        width: String(c.width),
       });
 
       await page.goto(`/?${params}`);
@@ -92,9 +92,9 @@ for (const mode of ["split", "fragments", "empty"]) {
         component: "button-composition",
         composition: mode,
         label: c.label,
-        width: String(c.width),
         scale: String(c.scale),
         state: c.state,
+        width: String(c.width),
         x: String(c.x ?? 16),
         y: String(c.y ?? 16),
       });

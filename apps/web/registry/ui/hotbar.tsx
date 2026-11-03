@@ -165,11 +165,11 @@ const Hotbar = ({
     [value, current, onValueChange, items]
   );
 
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
     const element = root.current;
 
     if (!element) {
-      return;
+      return undefined;
     }
 
     const wheel = (event: WheelEvent) => {

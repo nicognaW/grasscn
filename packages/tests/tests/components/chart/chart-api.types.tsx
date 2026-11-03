@@ -6,7 +6,6 @@ import {
   ChartLegendContent,
   ChartPixelBar,
   ChartFpsFrame,
-  ChartProfilerFrame,
 } from "@grasscn/web/ui/chart";
 import type { ChartConfig } from "@grasscn/web/ui/chart";
 import * as React from "react";

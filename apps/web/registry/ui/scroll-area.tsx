@@ -227,7 +227,7 @@ const ScrollArea = ({
   const viewport = React.useRef<HTMLDivElement>(null);
 
   const setViewportRef = React.useCallback(
-    (element: HTMLDivElement | null) => {
+    (element: HTMLDivElement | null): (() => void) | undefined => {
       viewport.current = element;
 
       if (isMinecraftRefCallback(viewportRef)) {
@@ -242,6 +242,8 @@ const ScrollArea = ({
       } else if (viewportRef) {
         viewportRef.current = element;
       }
+
+      return undefined;
     },
     [viewportRef]
   );

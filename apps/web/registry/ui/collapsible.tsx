@@ -97,7 +97,7 @@ const CollapsibleContent = ({
   const [width, setWidth] = React.useState<number>();
 
   const forwarded = React.useCallback(
-    (node: HTMLDivElement | null) => {
+    (node: HTMLDivElement | null): (() => void) | undefined => {
       setElement(node);
 
       if (isMinecraftRefCallback(ref)) {
@@ -112,13 +112,15 @@ const CollapsibleContent = ({
       } else if (ref) {
         ref.current = node;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {
@@ -128,14 +130,17 @@ const CollapsibleContent = ({
       const physical =
         (element.clientWidth ||
           (computed.width.endsWith("px")
-            ? Number.parseFloat(computed.width)
+            ? // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+              Number.parseFloat(computed.width)
             : 0) ||
           root?.clientWidth) ??
         0;
 
       const logical = Math.floor(
         (physical -
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           Number.parseFloat(computed.paddingLeft) -
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           Number.parseFloat(computed.paddingRight)) /
           scale
       );

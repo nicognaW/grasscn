@@ -42,9 +42,12 @@ for (const scale of [2]) {
       const chart = stage.locator('[data-slot="chart-example"]');
 
       for (const [type, label] of types) {
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         await select(page, "Chart type", label);
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         await expect(chart).toHaveAttribute("data-chart-type", type);
 
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         for (const control of await stage.getByRole("combobox").all()) {
           const b = await control.boundingBox();
           expect(b!.x).toBeGreaterThanOrEqual(0);
@@ -52,13 +55,17 @@ for (const scale of [2]) {
         }
 
         const canvas = chart.locator("canvas");
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         await expect(canvas).toBeVisible();
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         const bounds = await canvas.boundingBox();
         expect(bounds!.x).toBeGreaterThanOrEqual(0);
         expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(
           mobile ? 390 : 1440
         );
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         const buffer = await canvas.screenshot();
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         await info.attach(`${type}.png`, {
           body: buffer,
           contentType: "image/png",
@@ -153,7 +160,7 @@ test("Hover inspection reports the plotted datum and leaving clears the readout"
   const chart = page.locator('[data-slot="chart-example"]');
   const canvas = chart.locator("canvas");
 
-  const b = await canvas.boundingBox();
+  await canvas.boundingBox();
   await chart.getByRole("application").hover({ position: { x: 80, y: 40 } });
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("January");
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("186");

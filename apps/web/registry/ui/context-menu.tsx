@@ -57,7 +57,7 @@ const useMenuFrame = function useMenuFrame(
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
 
   const forwarded = React.useCallback(
-    (element: HTMLDivElement | null) => {
+    (element: HTMLDivElement | null): (() => void) | undefined => {
       setNode(element);
 
       if (isMinecraftRefCallback(ref)) {
@@ -72,13 +72,15 @@ const useMenuFrame = function useMenuFrame(
       } else if (ref) {
         ref.current = element;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
     const items = [...node.children].find((child) =>
@@ -86,7 +88,7 @@ const useMenuFrame = function useMenuFrame(
     ) as HTMLElement | undefined;
 
     if (!items) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
@@ -103,7 +105,9 @@ const useMenuFrame = function useMenuFrame(
       const style = getComputedStyle(node);
 
       const padding =
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(style.paddingTop) +
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(style.paddingBottom);
 
       const maximum = Math.max(0, node.scrollHeight - node.clientHeight);
@@ -229,7 +233,7 @@ const ContextMenuContent = ({
       <MenuScaleContext.Provider value={scale}>
         <Primitive.Positioner
           data-mc-positioner=""
-          style={{ zIndex: 50 }}
+          className="z-50"
           side={side}
           align={align}
           sideOffset={sideOffset}
@@ -564,7 +568,7 @@ const ContextMenuSubContent = ({
     <MenuScaleContext.Provider value={scale}>
       <Primitive.Positioner
         data-mc-positioner=""
-        style={{ zIndex: 50 }}
+        className="z-50"
         side={side}
         align={align}
         sideOffset={sideOffset}

@@ -24,21 +24,24 @@ const TabsExample = () => {
       </TabsList>
       <TabsContent
         value="game" /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-        style={{ height: 128, padding: 16 }}
+        className="h-32"
+        style={{ padding: 16 }}
         /* eslint-enable shadcn/no-inline-styles */
       >
         <Typography>World settings</Typography>
       </TabsContent>
       <TabsContent
         value="world" /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-        style={{ height: 128, padding: 16 }}
+        className="h-32"
+        style={{ padding: 16 }}
         /* eslint-enable shadcn/no-inline-styles */
       >
         <Typography>Generate structures</Typography>
       </TabsContent>
       <TabsContent
         value="more" /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-        style={{ height: 128, padding: 16 }}
+        className="h-32"
+        style={{ padding: 16 }}
         /* eslint-enable shadcn/no-inline-styles */
       >
         <Button

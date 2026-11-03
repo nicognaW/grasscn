@@ -4,11 +4,11 @@ import * as React from "react";
 export const useDemoWidth = function useDemoWidth(scale: 1 | 2 | 3) {
   const ref = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState(200);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const element = ref.current;
 
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {
@@ -16,7 +16,9 @@ export const useDemoWidth = function useDemoWidth(scale: 1 | 2 | 3) {
 
       const pixels =
         element.clientWidth -
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         parseFloat(style.paddingLeft) -
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         parseFloat(style.paddingRight);
 
       if (pixels > 0) {

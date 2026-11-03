@@ -80,6 +80,7 @@ const InputGroupAddon = ({
 const InputGroupButton = ({
   scale: explicit,
   type = "button",
+  className,
   style,
   ...props
 }: React.ComponentProps<typeof Button>) => {
@@ -91,10 +92,8 @@ const InputGroupButton = ({
       data-slot="input-group-button"
       scale={scale}
       type={type}
-      style={minecraftStyle(style, (__style) => ({
-        width: 40 * scale,
-        ...__style,
-      }))}
+      className={cn("w-[calc(40*var(--mc-pixel))]", className)}
+      style={style}
       {...props}
     />
   );

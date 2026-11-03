@@ -108,20 +108,20 @@ test.describe("Structural native constituents", () => {
               await page.setViewportSize({ height: 900, width: 1536 });
 
               const params = new URLSearchParams({
+                alignment: c.alignment ?? "left",
+                background: c.background ?? manifest.background ?? "#202020",
                 component,
-                native: "1",
-                part,
-                orientation,
-                label: c.label ?? "",
-                scale: String(c.scale),
-                width: String(c.width),
-                height: String(c.height ?? 20),
-                state: c.state,
                 edge: c.state,
+                height: String(c.height ?? 20),
+                label: c.label ?? "",
+                native: "1",
+                orientation,
+                part,
+                scale: String(c.scale),
+                state: c.state,
+                width: String(c.width),
                 x: String(c.x ?? 16),
                 y: String(c.y ?? 16),
-                background: c.background ?? manifest.background ?? "#202020",
-                alignment: c.alignment ?? "left",
               });
 
               if (c.wrapWidth !== undefined) {

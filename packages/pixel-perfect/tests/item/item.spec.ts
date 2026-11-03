@@ -64,20 +64,20 @@ for (const [part, directory] of [
         await page.setViewportSize({ height: 900, width: 1536 });
 
         const q = new URLSearchParams({
+          align: c.alignment ?? "left",
+          background: c.background,
           component: "item",
-          part,
-          label: c.label ?? "New World",
-          text: c.text ?? "world-1",
           description: c.placeholder ?? "Survival Mode",
-          scale: String(c.scale),
-          state: c.state,
-          selected: String(c.selected ?? false),
-          width: String(c.width),
           height: String(c.height),
+          label: c.label ?? "New World",
+          part,
+          scale: String(c.scale),
+          selected: String(c.selected ?? false),
+          state: c.state,
+          text: c.text ?? "world-1",
+          width: String(c.width),
           x: String(c.x),
           y: String(c.y),
-          background: c.background,
-          align: c.alignment ?? "left",
         });
 
         if (c.wrapWidth !== undefined) {

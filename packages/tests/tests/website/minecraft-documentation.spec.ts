@@ -27,11 +27,15 @@ test("Minecraft documentation delivers maintained examples for all nine installa
     "trading",
     "player-list",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Shared page route/link/code-copy validation workflow must finish before the next documentation navigation.
     await page.goto(`${origin}/docs/components/${slug}`);
     const example = page.locator(".documentation-example").first();
+    // oxlint-disable-next-line no-await-in-loop -- Shared page route/link/code-copy validation workflow must finish before the next documentation navigation.
     await expect(example.locator(".minecraft-example")).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Shared page route/link/code-copy validation workflow must finish before the next documentation navigation.
     await example.getByRole("tab", { exact: true, name: "Code" }).click();
 
+    // oxlint-disable-next-line no-await-in-loop -- Shared page route/link/code-copy validation workflow must finish before the next documentation navigation.
     const source = await readFile(
       new URL(
         `../../../../apps/web/examples/minecraft/${slug}-example.tsx`,
@@ -40,6 +44,7 @@ test("Minecraft documentation delivers maintained examples for all nine installa
       "utf-8"
     );
 
+    // oxlint-disable-next-line no-await-in-loop -- Shared page route/link/code-copy validation workflow must finish before the next documentation navigation.
     await page.evaluate(() =>
       Object.defineProperty(navigator, "clipboard", {
         configurable: true,
@@ -51,11 +56,15 @@ test("Minecraft documentation delivers maintained examples for all nine installa
         },
       })
     );
+    // oxlint-disable-next-line no-await-in-loop -- Shared page route/link/code-copy validation workflow must finish before the next documentation navigation.
     await example.getByRole("button", { exact: true, name: "Copy" }).click();
+    // oxlint-disable-next-line no-await-in-loop -- Shared page route/link/code-copy validation workflow must finish before the next documentation navigation.
     expect(await page.evaluate(() => window.copiedExample)).toBe(source);
+    // oxlint-disable-next-line no-await-in-loop -- Shared page route/link/code-copy validation workflow must finish before the next documentation navigation.
     await expect(
       page.getByRole("region", { exact: true, name: `${slug} playground` })
     ).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Shared page route/link/code-copy validation workflow must finish before the next documentation navigation.
     await expect(
       page.locator(".minecraft-prose").getByRole("alert")
     ).toHaveCount(0);

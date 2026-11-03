@@ -89,10 +89,10 @@ for (const directory of [
 
         const query = new URLSearchParams({
           component: "popover",
+          height: String(c.height),
           native: "1",
           scale: String(c.scale),
           width: String(c.width),
-          height: String(c.height),
           x: String(c.x),
           y: String(c.y),
         });

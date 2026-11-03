@@ -371,6 +371,7 @@ try {
       name === "production-build" &&
       process.env.GRASSCN_REUSE_PREPARED_NEXT_BUILD === "1"
     ) {
+      // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
       report.websiteBuild = await readPreparedProductionBuild({
         source: before,
       });
@@ -380,6 +381,7 @@ try {
         reusedCompletedBuild: true,
         verifiedCommand: report.websiteBuild.verifiedCommand,
       });
+      // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
       await save();
       continue;
     }
@@ -391,6 +393,7 @@ try {
     let reusedTests: ReturnType<typeof browserReuseResults> = [];
 
     if (name.startsWith("browser:")) {
+      // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
       await writeFile(
         path.join(output, "verification-phase.json"),
         JSON.stringify({ phase: "browser", source: before })
@@ -398,17 +401,21 @@ try {
 
       if (managedFixture && !fixtureHost && !fullHosts) {
         report.fixtureBundle = fixtureManifest();
+        // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
         await writeFile(
           path.join(output, "fixture-bundle.json"),
           `${JSON.stringify(report.fixtureBundle, null, 2)}\n`
         );
 
         if (fullRun === null) {
+          // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
           fixtureHost = await serveProductionFixture();
         } else {
+          // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
           fullHosts = await serveFullHosts(fullRun.plan);
         }
 
+        // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
         await save();
       }
 
@@ -419,6 +426,7 @@ try {
           );
         }
 
+        // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
         previewHost = await serveNextProduction({
           expectedSource: before,
           port: Number(process.env.GRASSCN_VERIFICATION_PREVIEW_PORT ?? 5176),
@@ -443,6 +451,7 @@ try {
       const directory = path.join(output, "checkpoints", file);
 
       reusedTests = browserReuseResults(
+        // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
         await reusableBrowserTests(
           previous.filter(
             (candidate) =>
@@ -468,10 +477,12 @@ try {
           repoRoot
         )
       );
+      // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
       await mkdir(directory, { recursive: true });
 
       if (reusedTests.length) {
         const list = path.join(directory, "retained-tests.txt");
+        // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
         await writeFile(
           list,
           `${reusedTests.map((test) => test.line).join("\n")}\n`
@@ -523,6 +534,7 @@ try {
       completion.reject(error);
     }
 
+    // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
     const code = await completion.promise;
 
     const check: RuntimeVerificationReceipt["checks"][number] = {
@@ -535,19 +547,23 @@ try {
     }
 
     report.checks.push(check);
+    // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
     await save();
 
     if (name === "production-build" && code === 0) {
+      // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
       report.websiteBuild = await stampProductionBuild({
         source: before,
         verifiedCommand: [process.execPath, ...args],
         verifiedExitCode: code,
       });
+      // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
       await save();
     }
 
     if (name === "fixture-build" && code === 0) {
       report.fixtureBundle = fixtureManifest();
+      // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
       await save();
     }
 
@@ -560,6 +576,7 @@ try {
 
         try {
           summary = checkpointSummary(
+            // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
             await readFile(path.join(directory, "summary.json"), "utf-8")
           );
         } catch {
@@ -570,9 +587,11 @@ try {
 
         try {
           const expected = expectedCheckpoint(
+            // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
             await readFile(path.join(directory, "expected.json"), "utf-8")
           );
 
+          // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
           const checkpointResultsBytes = await readFile(
             path.join(directory, "results.jsonl"),
             "utf-8"
@@ -591,6 +610,7 @@ try {
           );
 
           const browserReport = browserCollectionReport(
+            // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
             await readFile(path.join(directory, "playwright.json"), "utf-8")
           );
 

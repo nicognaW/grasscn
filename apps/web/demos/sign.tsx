@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import type { DemoVariables } from "../demo-variables";
 import { Input } from "../registry/ui/input";
@@ -12,6 +13,10 @@ import {
 import type { SignWood } from "../registry/ui/sign";
 import { Sign, HangingSign } from "../registry/ui/sign";
 import type { DemoProps } from "../types";
+
+interface PresentationLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-presentation-demos-sign-1-width": `${number}px`;
+}
 
 const woods: SignWood[] = [
   "oak",
@@ -64,7 +69,16 @@ const SignDemo = ({ scale }: DemoProps) => {
             setWood(value as SignWood);
           }}
         >
-          <SelectTrigger aria-label="Wood type" style={{ width: 120 * scale }}>
+          <SelectTrigger
+            aria-label="Wood type"
+            className="w-(--mc-presentation-demos-sign-1-width)"
+            style={
+              // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+              {
+                "--mc-presentation-demos-sign-1-width": `${120 * scale}px`,
+              } satisfies PresentationLayoutStyle1 as PresentationLayoutStyle1
+            }
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

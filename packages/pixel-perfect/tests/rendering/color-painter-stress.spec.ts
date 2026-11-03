@@ -107,6 +107,7 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
   };
 
   for (const scale of [1, 2, 3, 1, 3]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Capture this renderer scale before the next scale mutates the same Page.
     await verify(scale);
   }
 
@@ -277,13 +278,16 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
   const checks: { mismatchedPixels: number; scale: number }[] = [];
 
   for (const scale of [1, 2, 3]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Capture this renderer scale before the next scale mutates the same Page.
     await page
       .getByRole("button", { exact: true, name: `Scale ${scale}` })
       .click();
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Capture this renderer scale before the next scale mutates the same Page.
     await expect(page.locator("#subject")).toHaveCSS(
       "width",
       `${252 * scale}px`
     );
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Capture this renderer scale before the next scale mutates the same Page.
     await page.evaluate(async () => {
       const frameCompletion2 = Promise.withResolvers();
 
@@ -298,6 +302,7 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
       return await frameCompletion2.promise;
     });
 
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Capture this renderer scale before the next scale mutates the same Page.
     const bytes = await page.locator("#subject").screenshot();
     const actual = PNG.sync.read(bytes);
 

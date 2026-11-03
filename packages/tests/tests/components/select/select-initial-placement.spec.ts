@@ -44,6 +44,7 @@ for (const scale of [2] as const) {
           index += 1
         ) {
           const trigger = triggers.nth(index);
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await expect
             .poll(
               async () =>
@@ -52,14 +53,19 @@ for (const scale of [2] as const) {
                 )
             )
             .toBe(String(scale));
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await trigger.evaluate((n) => {
             scrollBy(0, n.getBoundingClientRect().top - 160);
           });
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await trigger.click();
           const popup = page.locator("[data-slot=select-content][data-open]");
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await expect(popup).toBeVisible();
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           const anchor = await trigger.boundingBox();
           expectNotNull(anchor, "Missing required bounding box: anchor");
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await expect
             .poll(async () => {
               const p = await popup.boundingBox();
@@ -74,10 +80,12 @@ for (const scale of [2] as const) {
             .toBeLessThanOrEqual(8 * scale);
 
           const itemAligned =
+            // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
             (await popup.getAttribute("data-align-trigger")) === "true";
 
           if (itemAligned) {
             const selected = popup.locator("[data-selected]");
+            // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
             await expect
               .poll(async () => {
                 const row = await selected.boundingBox();
@@ -89,6 +97,7 @@ for (const scale of [2] as const) {
               })
               .toBeLessThanOrEqual(scale);
           } else {
+            // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
             const bounds = await popup.boundingBox();
             expectNotNull(bounds, "Missing required bounding box: bounds");
             expect(
@@ -97,6 +106,7 @@ for (const scale of [2] as const) {
             ).toBe(true);
           }
 
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           const p = await popup.boundingBox();
           expectNotNull(p, "Missing required bounding box: p");
 
@@ -109,12 +119,14 @@ for (const scale of [2] as const) {
 
           if (itemAligned) {
             // Base UI aligns the selected text with the value, clamping at its 5px screen inset.
+            // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
             const value = await trigger
               .locator("[data-slot=select-value]")
               .boundingBox();
 
             expectNotNull(value, "Missing required bounding box: value");
 
+            // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
             const text = await popup
               .locator("[data-selected] .mc-select-item-label")
               .boundingBox();
@@ -140,7 +152,9 @@ for (const scale of [2] as const) {
           expect(p.y).toBeGreaterThanOrEqual(0);
           expect(p.x + p.width).toBeLessThanOrEqual(width);
           expect(p.y + p.height).toBeLessThanOrEqual(height);
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await page.keyboard.press("Escape");
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await expect(trigger).toBeFocused();
         }
       });

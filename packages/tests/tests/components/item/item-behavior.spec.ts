@@ -177,6 +177,7 @@ test("Item default dimensions use native270 by36 logical pixels", async ({
   page,
 }) => {
   for (const scale of [1, 2, 3]) {
+    // oxlint-disable-next-line no-await-in-loop -- Already-extracted complete Item scale/color/disabled/activation workflows use same page/audio state; outer case loop must finish before next navigation.
     await verifyItemScaleGeometry(page, scale);
   }
 });
@@ -249,6 +250,7 @@ test("Item honors full RGB text colors for both ASCII and CJK", async ({
   page,
 }) => {
   for (const label of ["New World", "你好，世界"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Already-extracted complete Item scale/color/disabled/activation workflows use same page/audio state; outer case loop must finish before next navigation.
     await verifyItemTitleColor(page, label);
   }
 });
@@ -257,6 +259,7 @@ test("Item aria-disabled blocks pointer and keyboard activation", async ({
   page,
 }) => {
   for (const suffix of ["", "&button=1", "&customAction=1"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Already-extracted complete Item scale/color/disabled/activation workflows use same page/audio state; outer case loop must finish before next navigation.
     await verifyDisabledItemComposition(page, suffix);
   }
 });
@@ -282,6 +285,7 @@ test("Item uses original activation sound once and keeps passive rows silent", a
   });
 
   for (const suffix of ["", "?button=1", "?customAction=1"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Already-extracted complete Item scale/color/disabled/activation workflows use same page/audio state; outer case loop must finish before next navigation.
     await verifyItemActivationSound(page, suffix);
   }
 
@@ -291,6 +295,7 @@ test("Item uses original activation sound once and keeps passive rows silent", a
     "?childCancel=1",
     "?disabled=1",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Already-extracted complete Item scale/color/disabled/activation workflows use same page/audio state; outer case loop must finish before next navigation.
     await verifySilentItemComposition(page, suffix);
   }
 

@@ -22,8 +22,21 @@ const read = async (dir: string): Promise<NativeCaptureManifest> => {
   ) as NativeCaptureManifest;
 };
 
-const first = await read(firstDir);
-const second = await read(secondDir);
+const [firstRead, secondRead] = await Promise.allSettled([
+  read(firstDir),
+  read(secondDir),
+]);
+
+if (firstRead.status === "rejected") {
+  throw firstRead.reason;
+}
+
+if (secondRead.status === "rejected") {
+  throw secondRead.reason;
+}
+
+const first = firstRead.value;
+const second = secondRead.value;
 
 const hash = (data: Uint8Array) =>
   createHash("sha256").update(data).digest("hex");
@@ -46,12 +59,45 @@ secondCaseNames.sort();
 
 assert.deepEqual(firstCaseNames, secondCaseNames);
 
-const cases = [];
+const repeatedByName = new Map<
+  string,
+  NativeCaptureManifest["cases"][number]
+>();
 
-for (const reference of first.cases) {
-  const repeated = second.cases.find((c) => c.name === reference.name)!;
-  const a = await readFile(path.join(firstDir, "captures", reference.name));
-  const b = await readFile(path.join(secondDir, "captures", reference.name));
+for (const repeated of second.cases) {
+  if (!repeatedByName.has(repeated.name)) {
+    repeatedByName.set(repeated.name, repeated);
+  }
+}
+
+const captureReads = await Promise.allSettled(
+  first.cases.map(async (reference) => {
+    const [originalRead, repeatedRead] = await Promise.allSettled([
+      readFile(path.join(firstDir, "captures", reference.name)),
+      readFile(path.join(secondDir, "captures", reference.name)),
+    ]);
+
+    if (originalRead.status === "rejected") {
+      throw originalRead.reason;
+    }
+
+    if (repeatedRead.status === "rejected") {
+      throw repeatedRead.reason;
+    }
+
+    return { a: originalRead.value, b: repeatedRead.value };
+  })
+);
+
+const cases = first.cases.map((reference, index) => {
+  const repeated = repeatedByName.get(reference.name)!;
+  const captureRead = captureReads[index];
+
+  if (captureRead.status === "rejected") {
+    throw captureRead.reason;
+  }
+
+  const { a, b } = captureRead.value;
   assert.equal(hash(a), reference.sha256);
   assert.equal(hash(b), repeated.sha256);
 
@@ -63,14 +109,15 @@ for (const reference of first.cases) {
     actual.data.equals(other.data),
     `Non-repeatable native pixels: ${reference.name}`
   );
-  cases.push({
+
+  return {
     decodedRgbaSha256: hash(actual.data),
     mismatchedPixels: 0,
     name: reference.name,
     runOnePngSha256: hash(a),
     runTwoPngSha256: hash(b),
-  });
-}
+  };
+});
 
 await writeFile(
   path.join(firstDir, "repeatability.json"),

@@ -46,7 +46,7 @@ const useElement = function useElement<T extends HTMLElement>(
   const [element, setElement] = React.useState<T | null>(null);
 
   const callback = React.useCallback(
-    (node: T | null) => {
+    (node: T | null): (() => void) | undefined => {
       setElement(node);
 
       if (isMinecraftRefCallback(ref)) {
@@ -61,6 +61,8 @@ const useElement = function useElement<T extends HTMLElement>(
       } else if (ref) {
         ref.current = node;
       }
+
+      return undefined;
     },
     [ref]
   );
@@ -209,9 +211,9 @@ const SelectTrigger = ({
   const anchorId = React.useContext(AnchorContext);
   const [element, forwarded] = useElement(ref);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
@@ -356,9 +358,9 @@ const SelectContent = ({
   const [element, forwarded] = useElement(ref);
 
   const [viewport, setViewport] = React.useState<HTMLDivElement | null>(null);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element || !viewport) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
@@ -451,7 +453,7 @@ const SelectContent = ({
       <ListContext.Provider value={{ scale, viewport }}>
         <SelectPrimitive.Positioner
           data-mc-positioner=""
-          style={{ zIndex: 50 }}
+          className="z-50"
           side={side}
           align={align}
           sideOffset={sideOffset}
