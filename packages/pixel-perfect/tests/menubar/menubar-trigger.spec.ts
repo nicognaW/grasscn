@@ -126,7 +126,7 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
             frameCompletion.reject(error);
           }
 
-          return await frameCompletion.promise;
+          await frameCompletion.promise;
         });
         const bounds = (await trigger.boundingBox())!;
         expect([bounds.x, bounds.y]).toEqual([

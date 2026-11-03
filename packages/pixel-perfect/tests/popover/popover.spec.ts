@@ -134,7 +134,7 @@ for (const directory of [
             frameCompletion.reject(error);
           }
 
-          return await frameCompletion.promise;
+          await frameCompletion.promise;
         });
         const bounds = (await subject.boundingBox())!;
         expect(bounds.x).toBe(c.x * c.scale);
