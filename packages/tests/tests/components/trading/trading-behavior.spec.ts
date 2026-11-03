@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { test, expect } from "@grasscn/tests/test";
 import { tradingSounds as clips } from "@grasscn/web/ui/minecraft-trading-sound-assets";
 import { referenceFile } from "@tests/paths";
+
 import type TradingSoundReference from "../../../fixtures/reference/native-expansion/trading-sound-provenance.json";
 
 interface TradingAudioPlayback {
@@ -97,7 +98,7 @@ test("trading selection, result feedback and native scrollbar controls", async (
       }
     }
 
-    (window as any).Audio = RecordedAudio;
+    Object.defineProperty(window, "Audio", { value: RecordedAudio });
   });
   await page.goto(url());
   await expect
