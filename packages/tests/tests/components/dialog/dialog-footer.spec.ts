@@ -1,3 +1,4 @@
+import type { Page } from "@playwright/test";
 import { test, expect } from "@grasscn/tests/test";
 
 const errors = new WeakMap<object, string[]>();
@@ -12,10 +13,7 @@ test.afterEach(({ page }) => {
   expect(errors.get(page)).toEqual([]);
 });
 
-test("DialogFooter defaultfalse keeps children/ref/attributes and no DOM boolean leakage", async ({
-  page,
-}) => {
-  for (const suffix of ["", "?explicitFalse=1"]) {
+const verifyDefaultDialogFooter = async (page: Page, suffix: string) => {
     await page.goto(`/?component=dialog-footer${suffix.replace("?", "&")}`);
     await page
       .getByRole("button", { exact: true, name: "Open footer" })
@@ -37,7 +35,14 @@ test("DialogFooter defaultfalse keeps children/ref/attributes and no DOM boolean
       .click();
     await expect(page.locator("#footer-events")).toHaveText("1");
     await expect(page.getByRole("dialog")).toBeVisible();
-  }
+  };
+
+test("DialogFooter defaultfalse keeps children/ref/attributes and no DOM boolean leakage", async ({
+  page,
+}) => {
+  for (const suffix of ["", "?explicitFalse=1"]) {
+await verifyDefaultDialogFooter(page, suffix);
+}
 });
 
 test("DialogFooter enabled appends a native Close action with shared sizing and focus restoration", async ({
