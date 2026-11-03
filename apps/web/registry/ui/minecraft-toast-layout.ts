@@ -5,6 +5,7 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
   minecraftGlyphs;
+
 const observedToastGlyphs: Partial<typeof toastGlyphAtlas> = toastGlyphAtlas;
 
 export interface ToastGlyph {

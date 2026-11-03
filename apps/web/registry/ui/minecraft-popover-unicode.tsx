@@ -14,6 +14,7 @@ import "./minecraft-unicode.css";
 
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
   minecraftGlyphs;
+
 const observedPopoverGlyphs: Partial<typeof popoverGlyphAtlas> =
   popoverGlyphAtlas;
 
