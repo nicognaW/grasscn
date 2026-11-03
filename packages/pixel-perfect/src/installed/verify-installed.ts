@@ -194,6 +194,7 @@ try {
       // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
       const c = referenceCase as ToggleReferenceCase;
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       cases.push(await verifyToggleCase({ c, manifestFile, name, page, url }));
       continue;
     }
@@ -202,10 +203,13 @@ try {
       console.log(
         `Installed ${name}: ${cases.length}/${manifest.cases.length} exact reference cases verified`
       );
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       await page.close();
 
       if (cases.length % 256 === 0) {
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         await browser.close();
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         browser = await chromium.launch({ channel: "msedge" });
         assert.equal(
           browser.version(),
@@ -214,6 +218,7 @@ try {
         );
       }
 
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       page = await preparePage();
     }
 
@@ -221,6 +226,7 @@ try {
       // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
       const c = referenceCase as CollapsibleReferenceCase;
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       cases.push(await verifyCollapsibleCase({ c, manifestFile, page, url }));
       continue;
     }
@@ -237,6 +243,7 @@ try {
       // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
       const c = referenceCase as MenuReferenceCase;
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       cases.push(await verifyMenuCase({ c, manifestFile, name, page, url }));
       continue;
     }
@@ -246,6 +253,7 @@ try {
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
       const c = referenceCase as MenubarTriggerReferenceCase;
       cases.push(
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         await verifyMenubarTriggerCase({ c, manifestFile, name, page, url })
       );
       continue;
@@ -255,6 +263,7 @@ try {
       // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
       const c = referenceCase as PopoverReferenceCase;
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       cases.push(await verifyPopoverCase({ c, manifestFile, page, url }));
       continue;
     }
@@ -263,6 +272,7 @@ try {
       // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
       const c = referenceCase as DialogReferenceCase;
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       cases.push(await verifyDialogCase({ c, manifestFile, name, page, url }));
       continue;
     }
@@ -270,6 +280,7 @@ try {
     // SAFETY: remaining fixture controls dispatch by their captured element discriminator.
     const c = referenceCase as FixtureReferenceCase;
     cases.push(
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       await verifyFixtureControlCase({
         c,
         manifest,

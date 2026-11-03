@@ -55,8 +55,10 @@ pixelPerfectTest(
       "wide-steve-16-hat-upright-dark-s2.png",
       "slim-alex-16-hat-upright-dark-s2.png",
     ].entries()) {
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await expect(faces.nth(index)).toHaveAttribute("data-ready", "true");
 
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       const expectedBytes = await readFile(
         new URL(`../../reference/avatar/captures/${name}`, import.meta.url)
       );
@@ -66,6 +68,7 @@ pixelPerfectTest(
       );
 
       const expected = PNG.sync.read(expectedBytes);
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       const actualBytes = await faces.nth(index).screenshot();
       const actual = PNG.sync.read(actualBytes);
 
@@ -81,11 +84,14 @@ pixelPerfectTest(
         totalPixels: actual.width * actual.height,
       };
 
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await writeFile(info.outputPath(`face-${index}-actual.png`), actualBytes);
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await writeFile(
         info.outputPath(`face-${index}-diff.png`),
         PNG.sync.write(diff)
       );
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await writeFile(
         info.outputPath(`face-${index}-metrics.json`),
         JSON.stringify(metrics)

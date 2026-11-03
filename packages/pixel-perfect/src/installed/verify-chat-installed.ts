@@ -240,7 +240,9 @@ const worker = async function worker() {
       i += 1;
 
       if (previousCaseCount && i % 50 === 0) {
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         await page.close();
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         page = await browser.newPage({
           deviceScaleFactor: 1,
           viewport: { height: 900, width: 1536 },
@@ -248,6 +250,7 @@ const worker = async function worker() {
         page.on("pageerror", (e) => errors.push({ error: e.message }));
       }
 
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       await verifyChatCase(c, part, page);
     } catch (error) {
       // SAFETY: the owned Node/PNG and Playwright operations expose message; keep the original property access and failure coercion.

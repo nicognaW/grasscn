@@ -278,9 +278,11 @@ try {
 
         if (shouldCreatePage) {
           if (page) {
+            // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
             await page.close();
           }
 
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
           page = await browser.newPage({
             deviceScaleFactor: 1,
             viewport: { height: 900, width: 1536 },
@@ -288,13 +290,16 @@ try {
           page.on("pageerror", (e) => pageErrors.push(e.message));
 
           if (part === "input") {
+            // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
             await page.clock.install({
               time: new Date("2026-10-28T00:00:00Z"),
             });
+            // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
             await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
           }
         }
 
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         const a = await captureQuestionnaireAction(
           c,
           part,

@@ -49,6 +49,7 @@ test("mobile documentation Preview and Code remain visible and match compact nat
   await tabs.scrollIntoViewIfNeeded();
 
   for (const name of ["Preview", "Code"]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
     await expect(tabs.getByRole("tab", { exact: true, name })).toBeInViewport({
       ratio: 1,
     });
@@ -134,6 +135,7 @@ test("mobile documentation Preview and Code remain visible and match compact nat
   };
 
   for (const state of ["preview", "code"]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
     await verifyMobileTabState(state);
   }
 

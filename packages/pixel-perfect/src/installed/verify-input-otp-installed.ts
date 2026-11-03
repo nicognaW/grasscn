@@ -187,6 +187,7 @@ const worker = async function worker() {
     next += 1;
     const c = manifest.cases[taskIndex];
 
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
     const page = await browser.newPage({
       deviceScaleFactor: 1,
       viewport: { height: 900, width: 1536 },
@@ -195,8 +196,10 @@ const worker = async function worker() {
     page.on("pageerror", (e) => pageErrors.push(e.message));
 
     try {
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       cases.push(await verifyInputOtpCase(c, page));
     } finally {
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       await page.close();
     }
   }

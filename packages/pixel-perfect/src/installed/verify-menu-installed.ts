@@ -250,6 +250,7 @@ export const verifyMenuCase = async ({
   for (const kind of c.element === "menu-checkbox"
     ? ["menu-checkbox", "menu-radio"]
     : [c.element]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
     const actual = await verifyMenuRendering({
       c,
       kind,
@@ -291,6 +292,7 @@ export const verifyMenubarTriggerCase = async ({
   let result: InstalledCaseResult | undefined;
 
   for (const open of c.state === "hover" ? [false, true] : [false]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
     const actual = await verifyMenubarTriggerRendering({
       c,
       manifestFile,

@@ -117,6 +117,7 @@ export const verifyToggleCase = async ({
   for (const type of name === "toggle-group"
     ? ["single", "multiple"]
     : ["single"]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
     const actual = await verifyToggleRendering({
       c,
       manifestFile,

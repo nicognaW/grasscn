@@ -258,6 +258,7 @@ try {
         const name = pending.shift()!;
         const errors: string[] = [];
 
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         let page = await browser.newPage({
           deviceScaleFactor: 1,
           viewport: { height: 900, width: 1536 },
@@ -291,7 +292,9 @@ try {
               count += 1;
 
               if (previousCaseCount > 0 && count % 64 === 0) {
+                // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
                 await page.close();
+                // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
                 page = await browser.newPage({
                   deviceScaleFactor: 1,
                   viewport: { height: 900, width: 1536 },
@@ -299,6 +302,7 @@ try {
                 page.on("pageerror", (e) => errors.push(e.message));
               }
 
+              // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
               const actual = await captureOverlayPart(
                 c,
                 name,
@@ -353,6 +357,7 @@ try {
           name,
           all.map((d) => `${d.manifest}:${d.cases.length}`).join(" ")
         );
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         await page.close();
       }
     })

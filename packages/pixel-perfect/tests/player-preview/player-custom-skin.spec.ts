@@ -25,13 +25,19 @@ test("website loads Dream with slim arms after both presets", async ({
   });
 
   for (const preset of ["Steve", "Alex"]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Apply each input to the same player state in order before sending the next input.
     await page.getByRole("button", { exact: true, name: preset }).click();
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Apply each input to the same player state in order before sending the next input.
     await expect(player).toHaveAttribute("data-ready", "true");
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Apply each input to the same player state in order before sending the next input.
     await page
       .getByRole("textbox", { exact: true, name: "Player name" })
       .fill("Dream");
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Apply each input to the same player state in order before sending the next input.
     await page.getByRole("button", { exact: true, name: "Load skin" }).click();
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Apply each input to the same player state in order before sending the next input.
     await expect(player).toHaveAttribute("data-model", "slim");
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Apply each input to the same player state in order before sending the next input.
     await expect(player).toHaveAttribute("data-ready", "true");
   }
 
@@ -39,6 +45,7 @@ test("website loads Dream with slim arms after both presets", async ({
   await player.press("ArrowDown");
 
   for (let i = 0; i < 30; i += 1) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Apply each input to the same player state in order before sending the next input.
     await player.press("ArrowRight");
   }
 

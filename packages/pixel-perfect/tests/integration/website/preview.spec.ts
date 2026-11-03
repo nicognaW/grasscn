@@ -14,9 +14,11 @@ const focusByKeyboard = async function focusByKeyboard(
   locator: Locator
 ) {
   for (let i = 0; i < 256; i += 1) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
     await page.keyboard.press("Tab");
 
     if (
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await locator.evaluate((element) => element === document.activeElement)
     ) {
       return;
@@ -170,7 +172,9 @@ for (const scale of [2]) {
         .locator(".documentation-playground")
         .getByRole("textbox", { exact: true, name });
 
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await expect(field).toHaveAttribute("data-mc-ready", "true");
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await nativePixels(
         field,
         `tests/reference/textarea/captures/textarea-c18-s${scale}.png`
@@ -267,6 +271,7 @@ test("Preview text fields share the native focused Input pixels", async ({
 
   // Match a captured vanilla case so preview CSS cannot add a second focus ring.
   for (const entry of fields) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
     await verifyFocusedField(entry);
   }
 });
