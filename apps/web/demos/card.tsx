@@ -5,7 +5,7 @@ import { Button } from "../registry/ui/button"
 import { Input } from "../registry/ui/input"
 import type { DemoProps } from "../types"
 
-export default function CardDemo({ scale }: DemoProps) {
+const CardDemo = ({ scale }: DemoProps) => {
   const [name, setName] = React.useState("Minecraft");
   const [saved, setSaved] = React.useState(false);
 
@@ -72,4 +72,6 @@ export default function CardDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { CardDemo as default };

@@ -8,7 +8,7 @@ import { Checkbox } from "../registry/ui/checkbox";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
-export default function TabsDemo({ scale }: DemoProps) {
+const TabsDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);
   const [title, setTitle] = React.useState("Game");
   const [value, setValue] = React.useState("game");
@@ -125,4 +125,6 @@ export default function TabsDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { TabsDemo as default };

@@ -4,7 +4,7 @@ import {Textarea} from "../registry/ui/textarea"
 import type {DemoProps} from "../types"
 import {useDemoWidth} from "../use-demo-width"
 
-export default function TypographyDemo({ scale }: DemoProps) {
+const TypographyDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);
   const [text, setText] = React.useState("Hello 世界\nWelcome to your world");
 
@@ -61,4 +61,6 @@ export default function TypographyDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { TypographyDemo as default };

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Marker, MarkerContent, MarkerIcon } from "../registry/ui/marker";
-export default function Demo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
+const Demo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   return (
     <div
       className="demo-stage"
@@ -26,4 +26,6 @@ export default function Demo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       </Marker>
     </div>
   );
-}
+};
+
+export { Demo as default };

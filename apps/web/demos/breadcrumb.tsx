@@ -12,7 +12,7 @@ import {
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
 
-export default function BreadcrumbDemo({ scale }: DemoProps) {
+const BreadcrumbDemo = ({ scale }: DemoProps) => {
   const [current, setCurrent] = React.useState("My world");
   const [visited, setVisited] = React.useState("None");
 
@@ -80,4 +80,6 @@ export default function BreadcrumbDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { BreadcrumbDemo as default };

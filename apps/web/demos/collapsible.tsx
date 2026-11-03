@@ -6,7 +6,7 @@ import {Textarea} from "../registry/ui/textarea"
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
 
-export default function CollapsibleDemo({ scale }: DemoProps) {
+const CollapsibleDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World details");
 
   const [message, setMessage] = React.useState(
@@ -80,4 +80,6 @@ export default function CollapsibleDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { CollapsibleDemo as default };

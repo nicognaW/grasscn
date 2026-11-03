@@ -7,7 +7,7 @@ import{Card,CardHeader,CardTitle,CardDescription,CardContent}from"../registry/ui
 import type{DemoProps}from"../types"
 import {useDemoWidth} from "../use-demo-width"
 
-export default function SidebarDemo({ scale }: DemoProps) {
+const SidebarDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);
 
   const [search, setSearch] = React.useState("");
@@ -182,4 +182,6 @@ export default function SidebarDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { SidebarDemo as default };

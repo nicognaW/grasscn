@@ -5,7 +5,7 @@ import { Input } from "../registry/ui/input";
 import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 
-export default function BadgeDemo({ scale }: DemoProps) {
+const BadgeDemo = ({ scale }: DemoProps) => {
   const [text, setText] = React.useState("Diamonds!");
   const [earned, setEarned] = React.useState(true);
   const [clicks, setClicks] = React.useState(0);
@@ -98,4 +98,6 @@ export default function BadgeDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { BadgeDemo as default };

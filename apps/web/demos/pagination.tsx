@@ -10,7 +10,7 @@ import {
   PaginationEllipsis,
 } from "../registry/ui/pagination";
 import type { DemoProps } from "../types";
-export default function PaginationDemo({ scale }: DemoProps) {
+const PaginationDemo = ({ scale }: DemoProps) => {
   const [page, setPage] = React.useState(1);
   const choose = (next: number) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     setPage(next);
@@ -58,4 +58,6 @@ export default function PaginationDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { PaginationDemo as default };

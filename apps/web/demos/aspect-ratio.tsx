@@ -9,7 +9,7 @@ import type { DemoProps } from "../types";
 const isAssetUrl = (asset: unknown): asset is string =>
   typeof asset === "string";
 
-export default function AspectRatioDemo({ scale }: DemoProps) {
+const AspectRatioDemo = ({ scale }: DemoProps) => {
   const [ratio, setRatio] = React.useState(16 / 9);
 
   return (
@@ -71,4 +71,6 @@ export default function AspectRatioDemo({ scale }: DemoProps) {
       </div>
     </>
   );
-}
+};
+
+export { AspectRatioDemo as default };
