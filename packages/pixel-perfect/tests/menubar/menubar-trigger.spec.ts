@@ -108,10 +108,24 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
           await expect(trigger).toBeFocused();
         }
 
-        for (const line of await trigger
-          .locator("[data-mc-label-ready]")
-          .all()) {
-          await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+        {
+          const readyElements = await trigger
+            .locator("[data-mc-label-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (line) => {
+              await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+            })
+          );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
         await page.evaluate(async () => {

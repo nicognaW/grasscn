@@ -107,10 +107,27 @@ const verifyCommandReferenceCase = async ({
       subject.locator('[data-mc-menu-text-ready="false"]')
     ).toHaveCount(0, { timeout: 15_000 });
 
-    for (const line of await subject
-      .locator("[data-mc-menu-unicode-ready]")
-      .all()) {
-      await expect(line).toHaveAttribute("data-mc-menu-unicode-ready", "true");
+    {
+      const readyElements = await subject
+        .locator("[data-mc-menu-unicode-ready]")
+        .all();
+
+      const readinessResults = await Promise.allSettled(
+        readyElements.map(async (line) => {
+          await expect(line).toHaveAttribute(
+            "data-mc-menu-unicode-ready",
+            "true"
+          );
+        })
+      );
+
+      const rejectedReadiness = readinessResults.find(
+        (result) => result.status === "rejected"
+      );
+
+      if (rejectedReadiness) {
+        throw rejectedReadiness.reason;
+      }
     }
 
     await page.evaluate(async () => {

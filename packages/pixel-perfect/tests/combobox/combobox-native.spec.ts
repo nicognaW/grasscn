@@ -181,22 +181,50 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
           unicodeCount
         );
 
-        for (const label of await subject
-          .locator("[data-mc-menu-text-ready]")
-          .all()) {
-          await expect(label).toHaveAttribute(
-            "data-mc-menu-text-ready",
-            "true"
+        {
+          const readyElements = await subject
+            .locator("[data-mc-menu-text-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (label) => {
+              await expect(label).toHaveAttribute(
+                "data-mc-menu-text-ready",
+                "true"
+              );
+            })
           );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
-        for (const line of await subject
-          .locator("[data-mc-menu-unicode-ready]")
-          .all()) {
-          await expect(line).toHaveAttribute(
-            "data-mc-menu-unicode-ready",
-            "true"
+        {
+          const readyElements = await subject
+            .locator("[data-mc-menu-unicode-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (line) => {
+              await expect(line).toHaveAttribute(
+                "data-mc-menu-unicode-ready",
+                "true"
+              );
+            })
           );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
         await page.evaluate(async () => {

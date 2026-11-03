@@ -95,8 +95,24 @@ export const verifyDialogCase = async ({
     if (count) {
       await expect(dialog.locator("[data-mc-label-ready]")).toHaveCount(count);
 
-      for (const line of await dialog.locator("[data-mc-label-ready]").all()) {
-        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+      {
+        const readyElements = await dialog
+          .locator("[data-mc-label-ready]")
+          .all();
+
+        const readinessResults = await Promise.allSettled(
+          readyElements.map(async (line) => {
+            await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+          })
+        );
+
+        const rejectedReadiness = readinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
     }
 
@@ -114,13 +130,27 @@ export const verifyDialogCase = async ({
         dialog.locator("[data-mc-dialog-unicode-ready]")
       ).toHaveCount(3);
 
-      for (const line of await dialog
-        .locator("[data-mc-dialog-unicode-ready]")
-        .all()) {
-        await expect(line).toHaveAttribute(
-          "data-mc-dialog-unicode-ready",
-          "true"
+      {
+        const readyElements = await dialog
+          .locator("[data-mc-dialog-unicode-ready]")
+          .all();
+
+        const readinessResults = await Promise.allSettled(
+          readyElements.map(async (line) => {
+            await expect(line).toHaveAttribute(
+              "data-mc-dialog-unicode-ready",
+              "true"
+            );
+          })
         );
+
+        const rejectedReadiness = readinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
     }
   }

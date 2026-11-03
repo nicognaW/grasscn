@@ -117,13 +117,27 @@ try {
         subject.locator("[data-slot=attachment-content]")
       ).toHaveAttribute("data-mc-item-content-ready", "true");
 
-      for (const label of await subject
-        .locator("[data-mc-label-layout-ready]")
-        .all()) {
-        await expect(label).toHaveAttribute(
-          "data-mc-label-layout-ready",
-          "true"
+      {
+        const readyElements = await subject
+          .locator("[data-mc-label-layout-ready]")
+          .all();
+
+        const readinessResults = await Promise.allSettled(
+          readyElements.map(async (label) => {
+            await expect(label).toHaveAttribute(
+              "data-mc-label-layout-ready",
+              "true"
+            );
+          })
         );
+
+        const rejectedReadiness = readinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
 
       await expect(
@@ -169,8 +183,24 @@ try {
       }
     }
 
-    for (const glyph of await subject.locator("[data-mc-label-ready]").all()) {
-      await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+    {
+      const readyElements = await subject
+        .locator("[data-mc-label-ready]")
+        .all();
+
+      const readinessResults = await Promise.allSettled(
+        readyElements.map(async (glyph) => {
+          await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+        })
+      );
+
+      const rejectedReadiness = readinessResults.find(
+        (result) => result.status === "rejected"
+      );
+
+      if (rejectedReadiness) {
+        throw rejectedReadiness.reason;
+      }
     }
 
     await fixturePage.evaluate(async () => {

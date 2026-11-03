@@ -53,10 +53,27 @@ export const verifyPopoverCase = async ({
     subject.locator('[data-mc-popover-text-ready="false"]')
   ).toHaveCount(0);
 
-  for (const line of await subject
-    .locator("[data-mc-popover-unicode-ready]")
-    .all()) {
-    await expect(line).toHaveAttribute("data-mc-popover-unicode-ready", "true");
+  {
+    const readyElements = await subject
+      .locator("[data-mc-popover-unicode-ready]")
+      .all();
+
+    const readinessResults = await Promise.allSettled(
+      readyElements.map(async (line) => {
+        await expect(line).toHaveAttribute(
+          "data-mc-popover-unicode-ready",
+          "true"
+        );
+      })
+    );
+
+    const rejectedReadiness = readinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   await page.evaluate(async () => {

@@ -113,10 +113,27 @@ for (const component of ["sonner"]) {
           c.selectedIndex ?? 1
         );
 
-        for (const canvas of await page
-          .locator("[data-mc-toast-ready]")
-          .all()) {
-          await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
+        {
+          const readyElements = await page
+            .locator("[data-mc-toast-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (canvas) => {
+              await expect(canvas).toHaveAttribute(
+                "data-mc-toast-ready",
+                "true"
+              );
+            })
+          );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
         if (c.state === "exiting") {
@@ -146,10 +163,27 @@ for (const component of ["sonner"]) {
             c.selectedIndex ?? 1
           );
 
-          for (const canvas of await page
-            .locator("[data-mc-toast-ready]")
-            .all()) {
-            await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
+          {
+            const readyElements = await page
+              .locator("[data-mc-toast-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (canvas) => {
+                await expect(canvas).toHaveAttribute(
+                  "data-mc-toast-ready",
+                  "true"
+                );
+              })
+            );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
           }
         }
 

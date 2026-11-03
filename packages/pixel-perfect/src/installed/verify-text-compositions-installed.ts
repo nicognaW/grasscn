@@ -195,10 +195,27 @@ const verifyComposedTextCase = async (
     );
   }
 
-  for (const node of await subject
-    .locator("[data-mc-label-layout-ready]")
-    .all()) {
-    await expect(node).toHaveAttribute("data-mc-label-layout-ready", "true");
+  {
+    const readyElements = await subject
+      .locator("[data-mc-label-layout-ready]")
+      .all();
+
+    const readinessResults = await Promise.allSettled(
+      readyElements.map(async (node) => {
+        await expect(node).toHaveAttribute(
+          "data-mc-label-layout-ready",
+          "true"
+        );
+      })
+    );
+
+    const rejectedReadiness = readinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   {

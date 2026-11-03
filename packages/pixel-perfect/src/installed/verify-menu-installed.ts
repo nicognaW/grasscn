@@ -100,16 +100,47 @@ const verifyMenuRendering = async ({
     subject.locator('[data-mc-menu-text-ready="false"]')
   ).toHaveCount(0);
 
-  for (const line of await subject
-    .locator("[data-mc-menu-unicode-ready]")
-    .all()) {
-    await expect(line).toHaveAttribute("data-mc-menu-unicode-ready", "true");
+  {
+    const readyElements = await subject
+      .locator("[data-mc-menu-unicode-ready]")
+      .all();
+
+    const readinessResults = await Promise.allSettled(
+      readyElements.map(async (line) => {
+        await expect(line).toHaveAttribute(
+          "data-mc-menu-unicode-ready",
+          "true"
+        );
+      })
+    );
+
+    const rejectedReadiness = readinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
-  for (const icon of await subject
-    .locator("[data-mc-menu-sprite-ready]")
-    .all()) {
-    await expect(icon).toHaveAttribute("data-mc-menu-sprite-ready", "true");
+  {
+    const readyElements = await subject
+      .locator("[data-mc-menu-sprite-ready]")
+      .all();
+
+    const readinessResults = await Promise.allSettled(
+      readyElements.map(async (icon) => {
+        await expect(icon).toHaveAttribute("data-mc-menu-sprite-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = readinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   await page.evaluate(async () => {
@@ -194,8 +225,22 @@ const verifyMenubarTriggerRendering = async ({
     await expect(trigger).toBeFocused();
   }
 
-  for (const line of await trigger.locator("[data-mc-label-ready]").all()) {
-    await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const readyElements = await trigger.locator("[data-mc-label-ready]").all();
+
+    const readinessResults = await Promise.allSettled(
+      readyElements.map(async (line) => {
+        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = readinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   await page.evaluate(async () => {
