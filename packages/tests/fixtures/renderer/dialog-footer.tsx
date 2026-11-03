@@ -18,11 +18,15 @@ export const DialogFooterFixture = () => {
   const [tag, setTag] = React.useState("");
   const ref = React.useRef<HTMLDivElement>(null);
 
-  const enabled = p.has("enabled")
-    ? true
-    : p.has("explicitFalse")
-      ? false
-      : undefined;
+  let enabled: true | false | undefined;
+
+  if (p.has("enabled")) {
+    enabled = true;
+  } else if (p.has("explicitFalse")) {
+    enabled = false;
+  } else {
+    enabled = undefined;
+  }
 
   return (
     <>
