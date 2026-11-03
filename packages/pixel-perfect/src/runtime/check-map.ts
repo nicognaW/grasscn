@@ -225,7 +225,14 @@ const kinds = new Set([
   "platform-limited",
 ]);
 
-const verifyUtilityEvidence = async (component: (typeof map.components)[number], verification: Extract<(typeof map.components)[number]["pixelVerification"], {status: "not-applicable-unskinned-utility"}>, registryItemName: string | undefined) => {
+const verifyUtilityEvidence = async (
+  component: (typeof map.components)[number],
+  verification: Extract<
+    (typeof map.components)[number]["pixelVerification"],
+    { status: "not-applicable-unskinned-utility" }
+  >,
+  registryItemName: string | undefined
+) => {
   assert.equal(
     component.mapping.kind,
     "layout",
@@ -237,11 +244,22 @@ const verifyUtilityEvidence = async (component: (typeof map.components)[number],
     `${component.name}: unskinned utility must not claim native pixels`
   );
 
-  const behavior = await readUtilityBehavior(verification.behaviorReport);
+  const [behaviorRead, installationRead] = await Promise.allSettled([
+    readUtilityBehavior(verification.behaviorReport),
+    readUtilityInstallation(verification.installationReport),
+  ]);
 
-  const installation = await readUtilityInstallation(
-    verification.installationReport
-  );
+  if (behaviorRead.status === "rejected") {
+    throw behaviorRead.reason;
+  }
+
+  const behavior = behaviorRead.value;
+
+  if (installationRead.status === "rejected") {
+    throw installationRead.reason;
+  }
+
+  const installation = installationRead.value;
 
   assert.equal(behavior.kind, "unskinned-web-utility");
   assert.ok(behavior.nativeReferenceNotApplicable && behavior.scope);
@@ -286,24 +304,47 @@ const verifyUtilityEvidence = async (component: (typeof map.components)[number],
   }
 };
 
-const verifyDeclaredInstallation = async (component: (typeof map.components)[number], verification: Extract<(typeof map.components)[number]["pixelVerification"], {status: "verified-declared-cases"}>, registryItemName: string | undefined, manifestFile: string, manifest: Awaited<ReturnType<typeof readNativeCaptureManifest>>) => {
+const verifyDeclaredInstallation = async (
+  component: (typeof map.components)[number],
+  verification: Extract<
+    (typeof map.components)[number]["pixelVerification"],
+    { status: "verified-declared-cases" }
+  >,
+  registryItemName: string | undefined,
+  manifestFile: string,
+  manifest: Awaited<ReturnType<typeof readNativeCaptureManifest>>
+) => {
   const primary = manifestFile === verification.manifest;
 
-  const report = await readInstallationEvidence(
-    primary
-      ? verification.installationReport
-      : (verification.additionalInstallationReports?.[manifestFile] ??
-          path.join(
-            path.dirname(manifestFile),
-            "installation-verification.json"
-          ))
-  );
+  const [reportRead, repeatRead] = await Promise.allSettled([
+    readInstallationEvidence(
+      primary
+        ? verification.installationReport
+        : (verification.additionalInstallationReports?.[manifestFile] ??
+            path.join(
+              path.dirname(manifestFile),
+              "installation-verification.json"
+            ))
+    ),
 
-  const repeat = await readRepeatabilityEvidence(
-    primary
-      ? verification.repeatabilityReport
-      : path.join(path.dirname(manifestFile), "repeatability.json")
-  );
+    readRepeatabilityEvidence(
+      primary
+        ? verification.repeatabilityReport
+        : path.join(path.dirname(manifestFile), "repeatability.json")
+    ),
+  ]);
+
+  if (reportRead.status === "rejected") {
+    throw reportRead.reason;
+  }
+
+  const report = reportRead.value;
+
+  if (repeatRead.status === "rejected") {
+    throw repeatRead.reason;
+  }
+
+  const repeat = repeatRead.value;
 
   assert.equal(report.sourceJarSha256, map.sourceJarSha256);
   assert.equal(repeat.sourceJarSha256, map.sourceJarSha256);
@@ -346,18 +387,29 @@ const verifyDeclaredInstallation = async (component: (typeof map.components)[num
     // Exact historical report/source integrity and recognized current applicability are checked by the shared resolver above.
   }
 
+  const installedByName = new Map<string, PixelEvidenceCase>();
+  const repeatedByName = new Map<string, RepeatedEvidenceCase>();
+
+  for (const installedCase of report.cases) {
+    if (!installedByName.has(installedCase.name)) {
+      installedByName.set(installedCase.name, installedCase);
+    }
+  }
+
+  for (const repeatedCase of repeat.cases) {
+    if (!repeatedByName.has(repeatedCase.name)) {
+      repeatedByName.set(repeatedCase.name, repeatedCase);
+    }
+  }
+
   for (const reference of manifest.cases) {
     // SAFETY: the case-name arrays were just asserted equal to the reference matrix.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const installed = report.cases.find(
-      (c) => c.name === reference.name
-    ) as PixelEvidenceCase;
+    const installed = installedByName.get(reference.name) as PixelEvidenceCase;
 
     // SAFETY: the repeatability case names were likewise asserted equal above.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const repeated = repeat.cases.find(
-      (c) => c.name === reference.name
-    ) as RepeatedEvidenceCase;
+    const repeated = repeatedByName.get(reference.name) as RepeatedEvidenceCase;
 
     assert.equal(installed.mismatchedPixels, 0);
     assert.equal(repeated.mismatchedPixels, 0);
@@ -391,9 +443,7 @@ const verifyDeclaredInstallation = async (component: (typeof map.components)[num
     );
 
     assert.equal(
-      digest(
-        PNG.sync.read(await readFile(evidenceFile(referenceFile))).data
-      ),
+      digest(PNG.sync.read(await readFile(evidenceFile(referenceFile))).data),
       repeated.decodedRgbaSha256
     );
     assert.equal(repeated.runOnePngSha256, reference.sha256);
@@ -401,14 +451,19 @@ const verifyDeclaredInstallation = async (component: (typeof map.components)[num
   }
 };
 
-const verifyGlyphEvidence = async (component: (typeof map.components)[number], manifestFile: string, manifest: Awaited<ReturnType<typeof readNativeCaptureManifest>>, effectiveAssets: NonNullable<Awaited<ReturnType<typeof readNativeCaptureManifest>>["effectiveAssets"]>) => {
+const verifyGlyphEvidence = async (
+  component: (typeof map.components)[number],
+  manifestFile: string,
+  manifest: Awaited<ReturnType<typeof readNativeCaptureManifest>>,
+  effectiveAssets: NonNullable<
+    Awaited<ReturnType<typeof readNativeCaptureManifest>>["effectiveAssets"]
+  >
+) => {
   const provenance = await readGlyphProvenance(
     path.join(path.dirname(manifestFile), "asset-provenance.json")
   );
 
-  for (const [resource, pin] of Object.entries(
-    effectiveAssets.resources
-  )) {
+  for (const [resource, pin] of Object.entries(effectiveAssets.resources)) {
     assert.ok(
       provenance.sources[resource],
       `${component.name}: missing indexed provenance for ${resource} in ${manifestFile}`
@@ -428,9 +483,7 @@ const verifyGlyphEvidence = async (component: (typeof map.components)[number], m
   assert.equal(
     digest(
       await readFile(
-        evidenceFile(
-          path.join(path.dirname(manifestFile), "glyph-atlas.json")
-        )
+        evidenceFile(path.join(path.dirname(manifestFile), "glyph-atlas.json"))
       )
     ),
     provenance.glyphAtlasSha256
@@ -440,8 +493,7 @@ const verifyGlyphEvidence = async (component: (typeof map.components)[number], m
       await readFile(
         evidenceFile(
           path.join(
-            provenance.glyphProbeSource ??
-              "tests/reference/GlyphProbeMain.java"
+            provenance.glyphProbeSource ?? "tests/reference/GlyphProbeMain.java"
           )
         )
       )
@@ -464,10 +516,7 @@ const verifyGlyphEvidence = async (component: (typeof map.components)[number], m
       runOne: true,
       runTwo: false,
     });
-    assert.equal(
-      observation.captureSourceSha256,
-      manifest.captureSourceSha256
-    );
+    assert.equal(observation.captureSourceSha256, manifest.captureSourceSha256);
     assert.equal(
       observation.caseDefinitionSha256,
       manifest.caseDefinitionSha256
@@ -501,8 +550,7 @@ const verifyGlyphEvidence = async (component: (typeof map.components)[number], m
       provenance.glyphAtlasCaptureManifestSha256
     );
 
-    const observation =
-      await readNativeGlyphCaptureManifest(observationPath);
+    const observation = await readNativeGlyphCaptureManifest(observationPath);
 
     const observedAtlasPath = path.join(
       path.dirname(manifestFile),
@@ -536,10 +584,19 @@ const verifyGlyphEvidence = async (component: (typeof map.components)[number], m
       );
     }
 
+    const observedByName = new Map<
+      string,
+      (typeof observation.cases)[number]
+    >();
+
+    for (const observedCase of observation.cases) {
+      if (!observedByName.has(observedCase.name)) {
+        observedByName.set(observedCase.name, observedCase);
+      }
+    }
+
     for (const reference of manifest.cases) {
-      const observed = observation.cases.find(
-        (c) => c.name === reference.name
-      );
+      const observed = observedByName.get(reference.name);
 
       assert.ok(
         observed,
@@ -548,11 +605,7 @@ const verifyGlyphEvidence = async (component: (typeof map.components)[number], m
 
       const observedBytes = await readFile(
         evidenceFile(
-          path.join(
-            path.dirname(observationPath),
-            "captures",
-            observed.name
-          )
+          path.join(path.dirname(observationPath), "captures", observed.name)
         )
       );
 
@@ -690,7 +743,13 @@ for (const component of map.components) {
     }
 
     if (verification.status === "verified-declared-cases") {
-      await verifyDeclaredInstallation(component, verification, registryItemName, manifestFile, manifest);
+      await verifyDeclaredInstallation(
+        component,
+        verification,
+        registryItemName,
+        manifestFile,
+        manifest
+      );
     }
 
     const includesUnihex = registryItems
@@ -729,7 +788,12 @@ for (const component of map.components) {
           file.path.endsWith("/minecraft-unifont-data.ts")
         ) === true
     ) {
-      await verifyGlyphEvidence(component, manifestFile, manifest, manifest.effectiveAssets);
+      await verifyGlyphEvidence(
+        component,
+        manifestFile,
+        manifest,
+        manifest.effectiveAssets
+      );
     }
   }
 }
