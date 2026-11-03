@@ -4,24 +4,25 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { PNG } from "pngjs";
+import type { HeaderCapture, ImageIdentity } from "@ppt/runtime/docs-reference-types";
 
 import {
   parseHeaderCase,
   parseHeaderCapture,
   parseImageIdentity,
-} from "../../src/runtime/docs-reference-types.ts";
+} from "@ppt/runtime/docs-reference-types";
 
 const root = path.resolve(
   process.argv[2] ?? fileURLToPath(new URL("branding-header", import.meta.url))
 );
 
-/** @param {string | Uint8Array} bytes - Original reference bytes to bind. */
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+/** @param bytes - Original reference input accepted by the owned hash-update SDK. */
+const hash = (bytes: Parameters<ReturnType<typeof createHash>["update"]>[0]) => createHash("sha256").update(bytes).digest("hex");
 const definitions = await readFile(path.join(root, "case.json"));
 const definition = parseHeaderCase(definitions.toString("utf-8"));
 
-/** @type {(import("../../src/runtime/docs-reference-types.ts").HeaderCapture & {images: Record<string, import("../../src/runtime/docs-reference-types.ts").ImageIdentity>, launch: string})[]} */
-const captures = [];
+/** @type {(import("@ppt/runtime/docs-reference-types").HeaderCapture & {images: Record<string, import("@ppt/runtime/docs-reference-types").ImageIdentity>, launch: string})[]} */
+const captures: (HeaderCapture & { images: Record<string, ImageIdentity>; launch: string })[] = [];
 
 for (const launch of ["native-one", "native-two"]) {
   const directory = path.join(root, launch);
@@ -38,8 +39,8 @@ for (const launch of ["native-one", "native-two"]) {
     throw new Error("Native source/case identity mismatch");
   }
 
-  /** @type {Record<string, import("../../src/runtime/docs-reference-types.ts").ImageIdentity>} */
-  const images = {};
+  /** @type {Record<string, import("@ppt/runtime/docs-reference-types").ImageIdentity>} */
+  const images: Record<string, ImageIdentity> = {};
 
   for (const relative of [definition.name, `frames/${definition.name}`]) {
     const bytes = await readFile(path.join(directory, relative));

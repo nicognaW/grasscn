@@ -4,11 +4,12 @@ import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { PNG } from "pngjs";
+import type { NativeLibrary } from "@ppt/runtime/docs-reference-types";
 
 import {
   parseHeaderCase,
   parseMinecraftMetadata,
-} from "../../src/runtime/docs-reference-types.ts";
+} from "@ppt/runtime/docs-reference-types";
 
 const here = import.meta.dirname;
 
@@ -38,7 +39,8 @@ for (const directory of [work, output]) {
       );
     }
   } catch (error) {
-    if (error.code !== "ENOENT") {
+    // SAFETY: this catch observes the owned Node readdir API's Error/errno object; the optional code read and original rethrow remain unchanged.
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
       throw error;
     }
   }
@@ -55,8 +57,8 @@ const instance = path.basename(version);
 const minecraftRoot = path.resolve(version, "../..");
 const jar = path.join(version, `${instance}.jar`);
 
-/** @param {string | Uint8Array} bytes - Original bytes to bind. */
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+/** @param bytes - Original input accepted by the owned hash-update SDK. */
+const hash = (bytes: Parameters<ReturnType<typeof createHash>["update"]>[0]) => createHash("sha256").update(bytes).digest("hex");
 const sourceJarSha256 = hash(await readFile(jar));
 
 if (
@@ -70,8 +72,8 @@ const metadata = parseMinecraftMetadata(
   await readFile(path.join(version, `${instance}.json`), "utf-8")
 );
 
-/** @param {import("../../src/runtime/docs-reference-types.ts").NativeLibrary} library - Shipped library metadata. */
-const permitted = (library) => {
+/** @param {import("@ppt/runtime/docs-reference-types").NativeLibrary} library - Shipped library metadata. */
+const permitted = (library: NativeLibrary) => {
   if (library.rules === undefined) {
     return true;
   }
@@ -126,11 +128,11 @@ const source = path.join(
 );
 
 /** @param {string} argument - Literal Java argument. */
-const quote = (argument) =>
+const quote = (argument: string) =>
   `"${argument.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`;
 
 /** @param {string} name - Java tool. @param {string[]} args - Fixed isolated capture arguments. */
-const run = async (name, args) => {
+const run = async (name: string, args: string[]) => {
   const argsFile = path.join(work, `${name}.args`);
   await writeFile(argsFile, args.map(quote).join("\n"));
 

@@ -41,8 +41,6 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "tests/unit/**/*.mjs",
-    "tests/reference/capture-header-branding.mjs",
-    "tests/reference/verify-header-branding.mjs",
     "*.config.ts"
   ],
   "exclude": [
