@@ -47,7 +47,7 @@ const assetInputNames = [
   "footer_separator.png",
 ];
 const assetInputReads = await Promise.allSettled(
-  assetInputNames.map((filename) => readFile(path.join(directory, filename)))
+  assetInputNames.map(async (filename) => await readFile(path.join(directory, filename)))
 );
 
 for (const name of [

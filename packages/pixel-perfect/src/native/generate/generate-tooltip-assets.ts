@@ -73,7 +73,7 @@ const assetInputNames = [
   "frame.png.mcmeta",
 ];
 const assetInputReads = await Promise.allSettled(
-  assetInputNames.map((filename) => readFile(path.join(input, filename)))
+  assetInputNames.map(async (filename) => await readFile(path.join(input, filename)))
 );
 
 for (const name of ["background", "frame"]) {

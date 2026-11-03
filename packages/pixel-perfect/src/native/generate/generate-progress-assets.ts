@@ -35,7 +35,7 @@ const rgba: Record<string, string> = {};
 
 const assetInputNames = Object.keys(inventory.assets).filter((member) => member.includes("/sprites/boss_bar/")).map((member) => path.basename(member));
 const assetInputReads = await Promise.allSettled(
-  assetInputNames.map((filename) => readFile(path.join(directory, filename)))
+  assetInputNames.map(async (filename) => await readFile(path.join(directory, filename)))
 );
 
 for (const [member, pin] of Object.entries(inventory.assets).filter(

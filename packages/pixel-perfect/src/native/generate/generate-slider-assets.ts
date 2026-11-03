@@ -52,7 +52,7 @@ const assetInputNames = [
   "slider_handle_highlighted.png.mcmeta",
 ];
 const assetInputReads = await Promise.allSettled(
-  assetInputNames.map((filename) => readFile(path.join(input, filename)))
+  assetInputNames.map(async (filename) => await readFile(path.join(input, filename)))
 );
 
 for (const name of [
