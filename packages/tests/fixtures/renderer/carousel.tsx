@@ -70,8 +70,7 @@ export const CarouselFixture = () => {
         <Arrow
           id="subject"
           disabled={(p.get("state") ?? "").startsWith("disabled")}
-          className="fixture-placement-static"
-          style={{ transform: "none" }}
+          className="fixture-placement-static fixture-carousel-untransformed"
           data-subject="true"
         />
       </Carousel>
@@ -106,8 +105,7 @@ export const CarouselFixture = () => {
           {Array.from({ length: count }, (_, i) => (
             <CarouselItem
               key={i}
-              className="fixture-height-180 fixture-owner-layout-1 fixture-owner-layout-42"
-              style={{ background: ["#505050", "#303030", "#707070"][i % 3] }}
+              className={`fixture-height-180 fixture-owner-layout-1 fixture-owner-layout-42 ${["fixture-carousel-slide-a", "fixture-carousel-slide-b", "fixture-carousel-slide-c"][i % 3] ?? ""}`}
             >
               <span>World {i + 1}</span>
               <input aria-label={`World ${i + 1} name`} />

@@ -55,12 +55,11 @@ export const TableFixture = () => {
     return (
       <Table
         scale={scale}
-        className="fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width"
+        className="fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width fixture-table-fixed"
         style={{
           "--fixture-width": `${width * scale}px`,
           "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
           "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
-          tableLayout: "fixed",
         }}
       >
         {part === "header" ? (
@@ -70,10 +69,9 @@ export const TableFixture = () => {
               style={{ "--fixture-height": `${height * scale}px` }}
             >
               <TableHead
-                className="fixture-geometry-height"
+                className="fixture-geometry-height fixture-table-padding-zero"
                 style={{
                   "--fixture-height": `${height * scale}px`,
-                  padding: 0,
                 }}
               />
             </TableRow>
@@ -85,10 +83,9 @@ export const TableFixture = () => {
               style={{ "--fixture-height": `${height * scale}px` }}
             >
               <TableCell
-                className="fixture-geometry-height"
+                className="fixture-geometry-height fixture-table-padding-zero"
                 style={{
                   "--fixture-height": `${height * scale}px`,
-                  padding: 0,
                 }}
               />
             </TableRow>
@@ -97,8 +94,8 @@ export const TableFixture = () => {
           <TableCaption
             id="subject"
             {...layout}
-            className="fixture-geometry-height"
-            style={{ "--fixture-height": `${height * scale}px`, padding: 0 }}
+            className="fixture-geometry-height fixture-table-padding-zero"
+            style={{ "--fixture-height": `${height * scale}px` }}
             data-subject="true"
           >
             {label}
@@ -118,11 +115,9 @@ export const TableFixture = () => {
               <TableHead
                 id="subject"
                 {...layout}
-                className="fixture-geometry-height"
+                className="fixture-geometry-height fixture-table-padding-zero fixture-table-align-top"
                 style={{
                   "--fixture-height": `${height * scale}px`,
-                  padding: 0,
-                  verticalAlign: "top",
                 }}
                 data-subject="true"
               >
@@ -132,9 +127,11 @@ export const TableFixture = () => {
           </TableHeader>
         ) : (
           <TableBody
-            style={{
-              backgroundImage: p.has("backgroundOnly") ? undefined : "none",
-            }}
+            className={
+              p.has("backgroundOnly")
+                ? undefined
+                : "fixture-table-background-none"
+            }
           >
             <TableRow
               className="fixture-geometry-height"
@@ -143,11 +140,9 @@ export const TableFixture = () => {
               <TableCell
                 id="subject"
                 {...layout}
-                className="fixture-geometry-height"
+                className="fixture-geometry-height fixture-table-padding-zero fixture-table-align-top"
                 style={{
                   "--fixture-height": `${height * scale}px`,
-                  padding: 0,
-                  verticalAlign: "top",
                 }}
                 data-subject="true"
               >

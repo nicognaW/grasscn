@@ -101,8 +101,7 @@ export const ToggleFixture = () => {
       </output>
       <span
         id="helper"
-        className={toggleVariants()}
-        style={{ display: "none" }}
+        className={`${toggleVariants()} fixture-toggle-hidden-helper`}
       />
     </>
   );

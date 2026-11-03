@@ -58,7 +58,7 @@ export const AvatarFixture = () => {
       >
         {part === "label" ? (
           <AvatarFallback
-            style={{ background: "transparent", display: "block" }}
+            className="fixture-avatar-reference-fallback"
             maxWidth={
               q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined
             }
