@@ -178,13 +178,26 @@ export const nativeTextTests = function nativeTextTests(
 
           await page.goto(`/?${params}`);
           const subject = page.locator("[data-subject]");
+          let slotSelection: string;
+
+          switch (true) {
+            case component === "breadcrumb": {
+              slotSelection = `breadcrumb-${part}`;
+              break;
+            }
+            case component === "typography" && part !== "default": {
+              slotSelection = `typography-${part === "code" ? "inline-code" : part}`;
+              break;
+            }
+            default: {
+              slotSelection = component;
+              break;
+            }
+          }
+
           await expect(subject).toHaveAttribute(
             "data-slot",
-            component === "breadcrumb"
-              ? `breadcrumb-${part}`
-              : component === "typography" && part !== "default"
-                ? `typography-${part === "code" ? "inline-code" : part}`
-                : component
+            slotSelection
           );
           await expect(subject).toBeVisible();
           await page.mouse.move(0, 0);

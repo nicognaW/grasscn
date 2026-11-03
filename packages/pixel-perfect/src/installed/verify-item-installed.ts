@@ -297,9 +297,26 @@ const worker = async function worker() {
           await expect(subject).toBeFocused();
         }
 
+        let mediaStateSelection: string;
+
+        switch (true) {
+          case c.state === "hover": {
+            mediaStateSelection = "1";
+            break;
+          }
+          case c.state === "icon-hover": {
+            mediaStateSelection = "2";
+            break;
+          }
+          default: {
+            mediaStateSelection = "0";
+            break;
+          }
+        }
+
         await expect(media).toHaveAttribute(
           "data-mc-item-media-state",
-          c.state === "hover" ? "1" : c.state === "icon-hover" ? "2" : "0"
+          mediaStateSelection
         );
       } else if (part === "title") {
         await expect(subject).toHaveAttribute(

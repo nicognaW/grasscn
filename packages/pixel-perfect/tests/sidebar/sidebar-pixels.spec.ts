@@ -216,19 +216,38 @@ test.describe("Sidebar original native constituent cases", () => {
 
             await page.goto(`/?component=sidebar&${params}`);
             const subject = page.locator("[data-subject]");
+            let slotSelection: string;
+
+            switch (true) {
+              case part === "sub-button": {
+                slotSelection = "sidebar-menu-sub-button";
+                break;
+              }
+              case part === "label": {
+                slotSelection = "sidebar-group-label";
+                break;
+              }
+              case part === "badge": {
+                slotSelection = "sidebar-menu-badge";
+                break;
+              }
+              case part === "panel": {
+                slotSelection = "sidebar";
+                break;
+              }
+              case part === "scroll": {
+                slotSelection = "sidebar-content";
+                break;
+              }
+              default: {
+                slotSelection = `sidebar-${part}`;
+                break;
+              }
+            }
+
             await expect(subject).toHaveAttribute(
               "data-slot",
-              part === "sub-button"
-                ? "sidebar-menu-sub-button"
-                : part === "label"
-                  ? "sidebar-group-label"
-                  : part === "badge"
-                    ? "sidebar-menu-badge"
-                    : part === "panel"
-                      ? "sidebar"
-                      : part === "scroll"
-                        ? "sidebar-content"
-                        : `sidebar-${part}`
+              slotSelection
             );
             await page.addStyleTag({
               content:
