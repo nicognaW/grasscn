@@ -110,10 +110,7 @@ export const ComboboxFixture = () => {
       >
         <ComboboxInput
           showTrigger={false}
-          className="fixture-placement-fixed fixture-left-0 fixture-top-0 fixture-width-1 fixture-height-1"
-          style={{
-            opacity: 0,
-          }}
+          className="fixture-placement-fixed fixture-left-0 fixture-top-0 fixture-width-1 fixture-height-1 fixture-combobox-native-anchor"
         />
         <ComboboxList
           id="subject"

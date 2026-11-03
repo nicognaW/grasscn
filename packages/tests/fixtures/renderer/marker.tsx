@@ -31,15 +31,12 @@ export const MarkerFixture = () => {
         scale={scale}
         variant={part === "line" ? "border" : "default"}
         separatorEdge={q.get("state") === "footer" ? "footer" : "header"}
-        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
+        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width fixture-marker-native-layout"
         style={{
           "--fixture-height": `${Number(q.get("height") ?? 9) * scale}px`,
           "--fixture-width": `${Number(q.get("width") ?? 200) * scale}px`,
           "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
           "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
-          alignItems: "flex-start",
-          minHeight: 0,
-          padding: 0,
         }}
         data-subject="true"
       >

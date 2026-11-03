@@ -311,3 +311,27 @@
 #root .fixture-collapsible-max-width {
   max-width: 100%;
 }
+
+/* Native fixture composition layout; public inline-style probes stay inline. */
+#root .fixture-questionnaire-native-choice {
+  display: flex;
+  min-height: 0;
+  gap: 0;
+}
+#root .fixture-marker-native-layout {
+  align-items: flex-start;
+  min-height: 0;
+  padding: 0;
+}
+#root .fixture-combobox-native-anchor {
+  opacity: 0;
+}
+#root .fixture-structural-min-width-zero {
+  min-width: 0;
+}
+#root .fixture-pagination-native-start {
+  justify-content: flex-start;
+}
+#root .fixture-pagination-native-hidden {
+  display: none;
+}
