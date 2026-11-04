@@ -1,0 +1,46 @@
+---
+title: Redstone Lamp Display
+description: Digits and k drawn as walls of lit and unlit Redstone Lamps.
+aliases: [RedstoneLampDisplay, RedstoneLampDisplayProps]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+Digits and k drawn as walls of lit and unlit Redstone Lamps.
+
+## Preview
+
+<ComponentExample name="redstone-lamp-display-example" />
+
+## Usage
+
+Import `RedstoneLampDisplay` from `@/components/ui/redstone-lamp-display` and pass `value` as a string. Each character must be a glyph `0` to `9` or `k`; any other character, or an empty value, throws. Format numbers before passing them, for example `12k` for 12 000.
+
+The display renders an `img` with `role="img"`. Its accessible name defaults to `value`; pass `aria-label` to override it, for example `aria-label="1234 stars"`. Other image props such as `className` and `id` are forwarded.
+
+Each glyph is a 3x5 grid of lamp cells, and glyphs are separated by one unlit column. Lit cells use the lit Redstone Lamp texture and unlit cells the unlit texture, so unlit cells stay visible. Cells are 8 px, so `1234` is 120x40 px. The image is drawn once its textures decode; until then it has its final size and no pixels.
+
+## Installation
+
+<Installation name="redstone-lamp-display" title="Redstone Lamp Display" />
+
+## Component source
+
+<ComponentSource name="redstone-lamp-display" title="Redstone Lamp Display" />
+
+## Interactive playground
+
+<MinecraftPlayground name="redstone-lamp-display" />
+
+## Verified coverage and limitations
+
+The display is a UI port of a Minecraft Java Edition 26.2 world rendering. Its references are projected references: the unmodified renderer draws each lamp wall in an isolated world at noon under a clear sky, with only the camera projection replaced by a front-on orthographic projection at 8 window pixels per block. The 16 px textures are therefore drawn at half size, and the port reproduces the block-atlas mipmap generation and level-1 sampling, the south-face shade, the noon lightmap and the atmospheric fog of that scene.
+
+Verified coverage: each glyph alone, `0`, `1234` and `12k`, compared within the geometry mask of the native frame with zero differing pixels at DPR 1. `1234` is the playground's default value.
+
+Web adaptations: the glyph shapes and their composition with a one-column gap are web compositions, and the backdrop around the wall is transparent rather than the sky. The fog in every rendering assumes the wall is centred on the camera, as in the reference scene.
+
+Unverified conditions: device pixel ratios above 1, CSS scaling of the image, other cameras, times of day, video options or shader packs, and browsers other than the tested Edge.

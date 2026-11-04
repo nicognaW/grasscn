@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { DocumentH1 } from "../../../components/document-elements";
 import { TableOfContents } from "../../../components/document-navigation";
+import { pageMetadata } from "../../../lib/site";
 import { source } from "../../../lib/source";
 import { getMDXComponents } from "../../../mdx-components";
 
@@ -24,7 +25,11 @@ export const generateMetadata = async ({
     notFound();
   }
 
-  return { description: page.data.description, title: page.data.title };
+  return pageMetadata({
+    description: page.data.description,
+    path: page.url,
+    title: page.data.title,
+  });
 };
 
 const DocsPage = async ({ params }: PageProps) => {

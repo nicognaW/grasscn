@@ -25,6 +25,8 @@ The separate `tests/reference/next-docs-navigation` family retains two independe
 
 Sidebar/TOC Button rows at scale 1/logical width 200 have a textured compositing context that this solid-#202020 family does not establish. Their exact native comparison, mobile control dimensions/new disclosure label, additional header link states and suggestion-result constituent comparisons remain explicit acceptance gaps. Additional old bare/path hash syntaxes are implemented but lack a qualifying default-path mapping and were not promoted into Base. No Full cases were executed and no whole-page native identity is claimed.
 
+Since #43 the header Components link is a text link rather than a Button, so its scale-2 comparison was retired and removed from Base. The `docs-header-components` captures remain only as part of this family's unchanged native capture and provenance (`cases.json` is hash-pinned by both manifests); they are no longer browser coverage.
+
 ## Final integrated checkpoint
 
 The branch merged integration `b503368` (including #14) as `0057144`. The sole MDX conflict retained the complete Button exemplar, the authored alias and its actual Usage search sentence. The following checks completed against that combined application plus the scoped source formatting changes:

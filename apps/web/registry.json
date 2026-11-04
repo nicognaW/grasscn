@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "grasscn",
-  "homepage": "http://localhost:5173",
+  "homepage": "https://grasscn.dev",
   "items": [
     {
       "name": "button",
@@ -64,6 +64,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -456,6 +460,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -616,6 +624,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -708,6 +720,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -924,6 +940,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -1044,6 +1064,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -1169,6 +1193,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -1314,6 +1342,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -1593,6 +1625,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -1697,6 +1733,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -1902,6 +1942,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2002,6 +2046,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -2112,6 +2160,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2188,6 +2240,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -2266,6 +2322,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2326,6 +2386,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -2448,6 +2512,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2569,6 +2637,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2645,6 +2717,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -2860,6 +2936,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3061,6 +3141,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3170,6 +3254,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3254,6 +3342,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -3384,6 +3476,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3464,6 +3560,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -3618,6 +3718,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -3802,6 +3906,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3927,6 +4035,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4017,6 +4129,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -4180,6 +4296,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4340,6 +4460,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4477,6 +4601,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4600,6 +4728,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -4738,6 +4870,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4864,6 +5000,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4944,6 +5084,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -5037,6 +5181,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -5163,6 +5311,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -5271,6 +5423,10 @@
         },
         {
           "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ]
@@ -5421,6 +5577,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -5546,6 +5706,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -5617,6 +5781,10 @@
         },
         {
           "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ],
@@ -5740,6 +5908,10 @@
         },
         {
           "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
           "type": "registry:ui"
         }
       ],
@@ -5953,6 +6125,10 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
     },
@@ -6070,8 +6246,82 @@
         {
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-canvas-connection.ts",
+          "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "redstone-lamp-display",
+      "type": "registry:ui",
+      "title": "Redstone Lamp Display",
+      "description": "Glyphs 0-9 and k as 3x5 walls of lit and unlit Redstone Lamps with block-atlas mip level 1, matching projected references at 8 px cells. Web adaptations: glyph composition with a one-column unlit gap, and a transparent backdrop.",
+      "files": [
+        {
+          "path": "registry/ui/redstone-lamp-display.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-block-atlas.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-redstone-lamp-assets.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "name": "fireworks",
+      "type": "registry:ui",
+      "title": "Fireworks",
+      "description": "useFireworks() returns launch(anchor): one firework rocket (flight, trail and large ball explosion at the fixed seeds) on a pointer-transparent 480x640 canvas per anchor, with the native launch, large_blast and twinkle sounds on their ticks at the master volume, matching projected references at partialTick 0. Web adaptations: placement on the anchor, fixed seed, transparent backdrop, near sounds without distance delay, and sound only under prefers-reduced-motion.",
+      "files": [
+        {
+          "path": "registry/ui/fireworks.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-firework-rocket.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-firework-explosion.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-random-source.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-png.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-firework-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-firework-sound.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-firework-sound-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-sound.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-sound-assets.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": []
     }
   ]
 }

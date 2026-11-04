@@ -2,7 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { API } from "typescript/unstable/sync";
+import { API } from "typescript/unstable/async";
 
 import groups from "../component-groups.json" with { type: "json" };
 import registry from "../registry.json" with { type: "json" };
@@ -22,15 +22,15 @@ interface RegistryPublicSymbols {
 const symbols: Record<string, RegistryPublicSymbols> = {};
 
 try {
-  const snapshot = api.updateSnapshot({ openProjects: [config] });
+  const snapshot = await api.updateSnapshot({ openProjects: [config] });
   const project = snapshot.getProject(config);
 
   if (!project) {
     throw new Error("Cannot read the authored registry TypeScript project");
   }
 
-  for (const item of registry.items) {
-    for (const name of [item.name, ...(groupedEntries[item.name] ?? [])]) {
+  const entries = registry.items.flatMap((item) =>
+    [item.name, ...(groupedEntries[item.name] ?? [])].map((name) => {
       const file = item.files.find(
         (entry) =>
           path.basename(entry.path).replace(/\.tsx?$/u, "") === name &&
@@ -43,33 +43,44 @@ try {
         );
       }
 
-      const source = project.program.getSourceFile(
-        path.resolve(webRoot, file.path)
-      );
+      return { file, name, registryItem: item.name };
+    })
+  );
 
-      const entryModule = source && project.checker.getSymbolAtLocation(source);
+  const publicExports = async ({ file, name }: (typeof entries)[number]) => {
+    const source = await project.program.getSourceFile(
+      path.resolve(webRoot, file.path)
+    );
 
-      if (!entryModule) {
-        throw new Error(`${name}: cannot resolve the public entry module`);
-      }
+    const entryModule = source
+      ? await project.checker.getSymbolAtLocation(source)
+      : undefined;
 
-      const exports = project.checker
-        .getExportsOfModule(entryModule)
-        .map((symbol) => symbol.name);
-
-      exports.sort();
-
-      if (!exports.length) {
-        throw new Error(`${name}: no public exports in the registry entry`);
-      }
-
-      symbols[name] = { exports, registryItem: item.name };
+    if (!entryModule) {
+      throw new Error(`${name}: cannot resolve the public entry module`);
     }
+
+    const moduleExports = await project.checker.getExportsOfModule(entryModule);
+    const exports = moduleExports.map((symbol) => symbol.name);
+
+    exports.sort();
+
+    if (!exports.length) {
+      throw new Error(`${name}: no public exports in the registry entry`);
+    }
+
+    return exports;
+  };
+
+  const resolved = await Promise.all(entries.map(publicExports));
+
+  for (const [index, { name, registryItem }] of entries.entries()) {
+    symbols[name] = { exports: resolved[index], registryItem };
   }
 
-  snapshot.dispose();
+  await snapshot.dispose();
 } finally {
-  api.close();
+  await api.close();
 }
 
 await mkdir(path.resolve(webRoot, ".source"), { recursive: true });

@@ -1,0 +1,4465 @@
+{
+  "backdropFrame": {
+    "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+    "file": "frames/flight.backdrop.png",
+    "height": 640,
+    "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+    "width": 480
+  },
+  "caseDefinitionSha256": "56558f676a04877efabc25ca798446ad19f3c36fe3f0b84a08ed7736163d8717",
+  "differenceTolerance": 0,
+  "emptyTicks": [
+    85,
+    86
+  ],
+  "explosion": {
+    "colors": [
+      4312372,
+      15790320
+    ],
+    "fadeColors": [
+      3887386
+    ]
+  },
+  "frames": [
+    {
+      "bounds": {
+        "height": 6,
+        "width": 3,
+        "x": 239,
+        "y": 579
+      },
+      "coveredPixels": 13,
+      "mask": {
+        "decodedRgbaSha256": "c21dfeab3efdcb26c6bac28156fc6c876bfce83ead93dc0e20c1cf39f550cdd0",
+        "file": "masks/flight.tick-001.png",
+        "height": 6,
+        "sha256": "8718b9b95c68432cfca30772aa6f0b37b5770b8984c8b0b83e40295430c1dfb7",
+        "width": 3
+      },
+      "name": "flight.tick-001",
+      "reference": {
+        "decodedRgbaSha256": "3adcadde54405018bb070d7d32357165006f255f07cfdd54cd6583870d94b324",
+        "file": "references/flight.tick-001.png",
+        "height": 6,
+        "sha256": "97fe9b755fb45d60fc226422fa54a4adad735d511305c949d95c1183e8b0a11f",
+        "width": 3
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "1984fc8baf3f54ab6a33862cba11a62fa1e7bb95cdb2083f923329d1ab92cfc8",
+        "file": "frames/flight.tick-001.png",
+        "height": 640,
+        "sha256": "480f3e32176c34f442e44424610c6973df2f6a7c33393cb7d3b83f8efe7053ba",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 1
+    },
+    {
+      "bounds": {
+        "height": 6,
+        "width": 3,
+        "x": 239,
+        "y": 578
+      },
+      "coveredPixels": 13,
+      "mask": {
+        "decodedRgbaSha256": "c21dfeab3efdcb26c6bac28156fc6c876bfce83ead93dc0e20c1cf39f550cdd0",
+        "file": "masks/flight.tick-002.png",
+        "height": 6,
+        "sha256": "8718b9b95c68432cfca30772aa6f0b37b5770b8984c8b0b83e40295430c1dfb7",
+        "width": 3
+      },
+      "name": "flight.tick-002",
+      "reference": {
+        "decodedRgbaSha256": "ef035fa94f62fe346d42f481a45ffe4f70270d4c5b90b6baa299e34edb8f32b5",
+        "file": "references/flight.tick-002.png",
+        "height": 6,
+        "sha256": "a3b8fd195b9d2c4ac2a5a5e772969a6bac25fa8e739daeb26e43a47f0dae4844",
+        "width": 3
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "840484ad1a480d67cbfe848e5ae3e434b745ef629bf3e7835190f38ba342465c",
+        "file": "frames/flight.tick-002.png",
+        "height": 640,
+        "sha256": "cd38e31c7fc705e7af93e0f80de6fcf53ff530c6968bf9e28963c9382b8aa481",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 2
+    },
+    {
+      "bounds": {
+        "height": 9,
+        "width": 5,
+        "x": 238,
+        "y": 576
+      },
+      "coveredPixels": 17,
+      "mask": {
+        "decodedRgbaSha256": "991c2d1b2f8fb4ecbc3c823578e1323b4b3200e1615e47126d7bb4695c668ff8",
+        "file": "masks/flight.tick-003.png",
+        "height": 9,
+        "sha256": "7994d57c1530cbd9851c205c891cbcfeb528d9df65b35ea7ad91b9abc61b61e9",
+        "width": 5
+      },
+      "name": "flight.tick-003",
+      "reference": {
+        "decodedRgbaSha256": "095eb69f9c2ea75a765e307f424f360519af64d63bee1560b516fcea1323f3e4",
+        "file": "references/flight.tick-003.png",
+        "height": 9,
+        "sha256": "e115ed2b8f37139cab89aaf838b9298180489abab079a94a05aacf58fd331ddd",
+        "width": 5
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "c54b31efa428fb54850259c760de08895eec483dbe43721b91d25579c1adedb5",
+        "file": "frames/flight.tick-003.png",
+        "height": 640,
+        "sha256": "3bd549f081c2c0edbfa413572e2db5053ac7bfecdde4829609238f67b8488ab9",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 3
+    },
+    {
+      "bounds": {
+        "height": 13,
+        "width": 4,
+        "x": 238,
+        "y": 573
+      },
+      "coveredPixels": 23,
+      "mask": {
+        "decodedRgbaSha256": "655103949f909c9c7212d877fc70e1212cdec744b304cbffa72c086089d95948",
+        "file": "masks/flight.tick-004.png",
+        "height": 13,
+        "sha256": "57e0306af327acaff004219bf095b4f322caf559bdcbd6bd134e848fb3e50d78",
+        "width": 4
+      },
+      "name": "flight.tick-004",
+      "reference": {
+        "decodedRgbaSha256": "02dfc319fe065b14fc31b32b640c5ea08299b6904adced03092232ddfe2b4d27",
+        "file": "references/flight.tick-004.png",
+        "height": 13,
+        "sha256": "b907d3542561cd2e384ae7f892fb03f3fb3f3056532ef5d65a85d399eee8207f",
+        "width": 4
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "f17e373efd4d8ec54bf3d34ab97fea91217bb651c456d23bebc2fdcc3f349938",
+        "file": "frames/flight.tick-004.png",
+        "height": 640,
+        "sha256": "50eae2c4198228dd821ee0a3f669ac92b40a5219af242b88d8c3d773a778f168",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 4
+    },
+    {
+      "bounds": {
+        "height": 16,
+        "width": 5,
+        "x": 238,
+        "y": 570
+      },
+      "coveredPixels": 30,
+      "mask": {
+        "decodedRgbaSha256": "522b23d6b065f5b9633616b71e5896e10677ee4717adfdb4bdfb179332d8c497",
+        "file": "masks/flight.tick-005.png",
+        "height": 16,
+        "sha256": "84f7283fe5af68bd8ad8f0c489014e3d778a0b762d2eb21478e44fef3f055d9f",
+        "width": 5
+      },
+      "name": "flight.tick-005",
+      "reference": {
+        "decodedRgbaSha256": "66d90404f07af678fdb68acd35506752103bfce1ab3212340b18bc0b66a265cb",
+        "file": "references/flight.tick-005.png",
+        "height": 16,
+        "sha256": "1d3da20ecf577d7463bac25310e7d91d340073310e9faa52c07e9bdded87a29b",
+        "width": 5
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "ba2e2135a3cd4ac0983cc6e271ff29dba67b6c4b2a7e8a2012ca2005bd2548ae",
+        "file": "frames/flight.tick-005.png",
+        "height": 640,
+        "sha256": "8881e4f311f849f08c0e8cb782e19764a60e381c91c44f39fa518732026bc4fd",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 5
+    },
+    {
+      "bounds": {
+        "height": 23,
+        "width": 6,
+        "x": 237,
+        "y": 565
+      },
+      "coveredPixels": 35,
+      "mask": {
+        "decodedRgbaSha256": "ad4d106e92dc72335e3e756c8d154ccd90f484932fee0f43fbdf254e96df4dad",
+        "file": "masks/flight.tick-006.png",
+        "height": 23,
+        "sha256": "e94579dda5ce2e9cb1380e215f70a2dbf2e286fecf41fb8eb576e2cc723c4559",
+        "width": 6
+      },
+      "name": "flight.tick-006",
+      "reference": {
+        "decodedRgbaSha256": "cc2a7b375801de90731fe4ab0e6d4010f58eb31074790b290aec5713008a20b4",
+        "file": "references/flight.tick-006.png",
+        "height": 23,
+        "sha256": "2d115b2e3dc0248fe926fefc74359e5a2d113ac88f881181b9d5bb5875eeee2a",
+        "width": 6
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "22b019a15b4c802ace208585992d48ca2c9293262d06ddc3140bcf1557784f62",
+        "file": "frames/flight.tick-006.png",
+        "height": 640,
+        "sha256": "e411c2602f00feaed7495647bc0bd3d523ce893d4ce982b31846eb89a883e20a",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 6
+    },
+    {
+      "bounds": {
+        "height": 28,
+        "width": 5,
+        "x": 237,
+        "y": 560
+      },
+      "coveredPixels": 40,
+      "mask": {
+        "decodedRgbaSha256": "f58c674296c01917fd286f18f31c520ce2caaf9668dbbe50713a98d4dd99d3b1",
+        "file": "masks/flight.tick-007.png",
+        "height": 28,
+        "sha256": "65b64c07a3e9fa1addb21a6886acf5ebdc37c3553034749bbad3bd84d69fd413",
+        "width": 5
+      },
+      "name": "flight.tick-007",
+      "reference": {
+        "decodedRgbaSha256": "1db3b64a8bdfc725e4d7032e635983e6d7e6ee5d1d03fedce7f63591a5b386a1",
+        "file": "references/flight.tick-007.png",
+        "height": 28,
+        "sha256": "9661c06aad789a08b3ca550303118057f9c23c5eb2493a1fc7faeb70efee90f7",
+        "width": 5
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "720471af7bcd5704e704a6e60e609a28350dc92e1cff0fe1aae8ac6aa7094d06",
+        "file": "frames/flight.tick-007.png",
+        "height": 640,
+        "sha256": "c99067ded7ea2d41ce6ea694ff51c0a7e4514197a8eabf2747255f2d5ecd288e",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 7
+    },
+    {
+      "bounds": {
+        "height": 35,
+        "width": 7,
+        "x": 236,
+        "y": 554
+      },
+      "coveredPixels": 50,
+      "mask": {
+        "decodedRgbaSha256": "0929729275850afe752517f33f20ae8a87ad18b2bb6b1f82c4c627e97ebaab03",
+        "file": "masks/flight.tick-008.png",
+        "height": 35,
+        "sha256": "5569cbedd712e20622f932c8a6afa59b391c4eb6672510367b50e427a2298c0d",
+        "width": 7
+      },
+      "name": "flight.tick-008",
+      "reference": {
+        "decodedRgbaSha256": "800c696f14d29d20020c70915df1140e4dbfb4b91891d70c903b3ab1f37952ba",
+        "file": "references/flight.tick-008.png",
+        "height": 35,
+        "sha256": "5b698dedbc72f7a414be04dfaa2730375919210dd4462b2dd88316575e1b384e",
+        "width": 7
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "80ce102c1591e9fb65b5bd7bcf185a34c640f77f21520695f7eee248b2cd321b",
+        "file": "frames/flight.tick-008.png",
+        "height": 640,
+        "sha256": "26371253733d35be517555d9174ecaf879ea504500a6eba136ea7120b29c602a",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 8
+    },
+    {
+      "bounds": {
+        "height": 43,
+        "width": 7,
+        "x": 236,
+        "y": 547
+      },
+      "coveredPixels": 55,
+      "mask": {
+        "decodedRgbaSha256": "7d733f72d939b64eab28a9cd75554f2185f88d390b0e9b937b71476aaec2d128",
+        "file": "masks/flight.tick-009.png",
+        "height": 43,
+        "sha256": "567be2408e60fd3d4b55b16b9be80c4a7fa8516a941baca468f7f8bbb69f8a4e",
+        "width": 7
+      },
+      "name": "flight.tick-009",
+      "reference": {
+        "decodedRgbaSha256": "add0ecf239319e936b9dedbdc084b4786dc045305afc6be4d53a79158ba26dba",
+        "file": "references/flight.tick-009.png",
+        "height": 43,
+        "sha256": "3bdf1748f2000183ead881cdef52193a80e8e0032c94b4e83a8393d1f6eaa119",
+        "width": 7
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "06c71cd98f008eacf8b37d599c0242ced0ec709ec0fedee1e7193c9e9cae6bc8",
+        "file": "frames/flight.tick-009.png",
+        "height": 640,
+        "sha256": "a1f1311ea6e5181dade4c26c3c4d8e9db61654869bcfc66a8f59739ad0c0ae0f",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 9
+    },
+    {
+      "bounds": {
+        "height": 51,
+        "width": 7,
+        "x": 236,
+        "y": 540
+      },
+      "coveredPixels": 56,
+      "mask": {
+        "decodedRgbaSha256": "20b0f9762f29e4b6e7946224ed95740dc5f74f2e6a7b6aa0bae67a6ceff165bd",
+        "file": "masks/flight.tick-010.png",
+        "height": 51,
+        "sha256": "fee5f013be4033e14d7455d9a96d3847dea4fd94729b7d57de30a994882f86a2",
+        "width": 7
+      },
+      "name": "flight.tick-010",
+      "reference": {
+        "decodedRgbaSha256": "4e9538b60eab4e2dd585954accb140aeb090d24b7a5575f910522468b08c74ee",
+        "file": "references/flight.tick-010.png",
+        "height": 51,
+        "sha256": "3beb42510bd518d0d211d86063a132b31c63837ef3a30323c5925abd2c796386",
+        "width": 7
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "f6732cb3d83dc1d89c32dc20b3fc10d48fcc3ea331f850c8ad1ca7526df5fff5",
+        "file": "frames/flight.tick-010.png",
+        "height": 640,
+        "sha256": "2d7181b0c9962bc87628d350bc4a213d8ff4db29096a6a8b875eddca72dcdaac",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 10
+    },
+    {
+      "bounds": {
+        "height": 59,
+        "width": 9,
+        "x": 235,
+        "y": 532
+      },
+      "coveredPixels": 63,
+      "mask": {
+        "decodedRgbaSha256": "186e45c311aac0dca057d9fab0f059a9b5424002f8c589b0f7579484992fc66e",
+        "file": "masks/flight.tick-011.png",
+        "height": 59,
+        "sha256": "b61d69aef77eb815b3b36630b9663ca958239a6f9e920c6ed6fe8e08923cf3ab",
+        "width": 9
+      },
+      "name": "flight.tick-011",
+      "reference": {
+        "decodedRgbaSha256": "8b2b2a5b67edeaa228836db76deded22654ba55f23c324588293a580c1af6e71",
+        "file": "references/flight.tick-011.png",
+        "height": 59,
+        "sha256": "66ccc50dd95a7132dd991d5c62d285d3c4b4af49da176114526650220e03d786",
+        "width": 9
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "46fa920014c9daa095fac40902f5df702a02f1ecbd183e28314a90372cc16b39",
+        "file": "frames/flight.tick-011.png",
+        "height": 640,
+        "sha256": "5077ad41c09eb12787200966c9d384a9e28c69c0251fb7dd50cf25a1a6262ac6",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 11
+    },
+    {
+      "bounds": {
+        "height": 69,
+        "width": 11,
+        "x": 234,
+        "y": 523
+      },
+      "coveredPixels": 71,
+      "mask": {
+        "decodedRgbaSha256": "02f06e4e0ebebb45ad92bd99a869f043d249093f1abcf38441d0f424f9f72094",
+        "file": "masks/flight.tick-012.png",
+        "height": 69,
+        "sha256": "a958a9993cd3d1af3810b58c6d4f14b2acce7ee7c47ac44a60e54ebedf8ede8c",
+        "width": 11
+      },
+      "name": "flight.tick-012",
+      "reference": {
+        "decodedRgbaSha256": "5015a8577491627198a74b875bee661649348cde5af3195e9115c6015e02268b",
+        "file": "references/flight.tick-012.png",
+        "height": 69,
+        "sha256": "5d0d611076f590767faa3035f84fd15738f6d7bfd248202b4b7d0ad263c6b952",
+        "width": 11
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "d7ca48808885ca18cf0c35a20fd8d04f6d8cce8747a981a234d03a928ca6c4fe",
+        "file": "frames/flight.tick-012.png",
+        "height": 640,
+        "sha256": "e75a6653b2e6039fb3266229ca150fc96df44b327cfacf5639f42547725df0a9",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 12
+    },
+    {
+      "bounds": {
+        "height": 78,
+        "width": 13,
+        "x": 232,
+        "y": 514
+      },
+      "coveredPixels": 77,
+      "mask": {
+        "decodedRgbaSha256": "3c8595f62f10ee3e9ea87636a443c46cde53d79fef3cc948c143f95361a5adfa",
+        "file": "masks/flight.tick-013.png",
+        "height": 78,
+        "sha256": "37cfc637cee19a87707503f3ce4980af1ae95add0c342977844028b9e4b7b4f6",
+        "width": 13
+      },
+      "name": "flight.tick-013",
+      "reference": {
+        "decodedRgbaSha256": "74f33a5bb0eec9cc63599ed632119a221200053a9e2b8e1bf34a542fec02f969",
+        "file": "references/flight.tick-013.png",
+        "height": 78,
+        "sha256": "fc642c1dbff626f447b7cb8c5cfb8dd6d84f9cd3c829adc9dc5227f4110c612e",
+        "width": 13
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "6737af064ac0a50eea76cf28ed806c06f4ae7298fdbd7f9187dc41bedbbc7f4a",
+        "file": "frames/flight.tick-013.png",
+        "height": 640,
+        "sha256": "75701817096d6391766ed9fd800c1083752f04317a6dc84528545c607d861f5b",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 13
+    },
+    {
+      "bounds": {
+        "height": 89,
+        "width": 14,
+        "x": 231,
+        "y": 504
+      },
+      "coveredPixels": 79,
+      "mask": {
+        "decodedRgbaSha256": "107a2df2891f919db2befcda0dd65546dda8faa0abeb6922ebf3fb0d6e64d4f0",
+        "file": "masks/flight.tick-014.png",
+        "height": 89,
+        "sha256": "0ec86cc31bc37fdee7c7871f7597879747546d17f40f0d82d4f9abb283ef4eff",
+        "width": 14
+      },
+      "name": "flight.tick-014",
+      "reference": {
+        "decodedRgbaSha256": "5e1bbbc3be26100170c5611852f50440f5d5551bf6f408c8e82a93868ea68bea",
+        "file": "references/flight.tick-014.png",
+        "height": 89,
+        "sha256": "7b4e826100585ff3bc3606d305cf790f922d40373728fbb2320ee219e7e17da3",
+        "width": 14
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "362bbc42fc2e7735af563075e5e77ab633cc8d0e9c4ae403965f7ed91374e240",
+        "file": "frames/flight.tick-014.png",
+        "height": 640,
+        "sha256": "af1ebcd706bd51b84df67c1c2ad2fe2a24dfe041b4d8190edfbbdf536be1fbaf",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 14
+    },
+    {
+      "bounds": {
+        "height": 100,
+        "width": 16,
+        "x": 230,
+        "y": 494
+      },
+      "coveredPixels": 80,
+      "mask": {
+        "decodedRgbaSha256": "306cd9054fdc518446d648870e4445530fb303b7078bcd241e699fbfa56a4a6c",
+        "file": "masks/flight.tick-015.png",
+        "height": 100,
+        "sha256": "b4831bac9a092cf9d7cde8e196856575b504daf300877673ad02734b40ea08bc",
+        "width": 16
+      },
+      "name": "flight.tick-015",
+      "reference": {
+        "decodedRgbaSha256": "5f8dd638a5fa7323619bb73e5ff3a4d7ce5a609872d1e74fc3a64df52ce61d86",
+        "file": "references/flight.tick-015.png",
+        "height": 100,
+        "sha256": "2a74cd27082c5e186048b43f7399a466832a9879654a9f961fecc66f13683fcd",
+        "width": 16
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "2fab1f4a9e93a7a660f3fc5cb9a73282be1aad51ba8f3e0d7f9935a1094571d9",
+        "file": "frames/flight.tick-015.png",
+        "height": 640,
+        "sha256": "e36f75df91ef985f312b898ce794ba4b9e1434e63aa56a98ce78a787e69540eb",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 15
+    },
+    {
+      "bounds": {
+        "height": 112,
+        "width": 17,
+        "x": 228,
+        "y": 483
+      },
+      "coveredPixels": 88,
+      "mask": {
+        "decodedRgbaSha256": "d3caf9eff05545c4dca2ed768c56da793e0a5c1eca0573912d1099bb3abe5627",
+        "file": "masks/flight.tick-016.png",
+        "height": 112,
+        "sha256": "093d512b39eaa8c4964cb5e7080e9a5d5cd0cef9dc64ff5aec6876d533ef8e79",
+        "width": 17
+      },
+      "name": "flight.tick-016",
+      "reference": {
+        "decodedRgbaSha256": "f34a8a7624d8d9eceaf75d82ac2ccbb7ae33973ba9d7337651e4c43b69af6b23",
+        "file": "references/flight.tick-016.png",
+        "height": 112,
+        "sha256": "fb35897aef7df7ed5fdb0e316c51b063d156d4b94c3389351846670880823789",
+        "width": 17
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "fb1ef453eedd810653a5ed584db348e4f8c565fc874bb7dcd756d29032575b39",
+        "file": "frames/flight.tick-016.png",
+        "height": 640,
+        "sha256": "0056fb28a7e061d9742fc791c1eabacb3f091c38a70b7220185a1f9877633d77",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 16
+    },
+    {
+      "bounds": {
+        "height": 125,
+        "width": 19,
+        "x": 227,
+        "y": 471
+      },
+      "coveredPixels": 104,
+      "mask": {
+        "decodedRgbaSha256": "ef46a2f8228f0e82626d72559eb5b2f75c20fe4ebaf3112bfddb89a111ad1666",
+        "file": "masks/flight.tick-017.png",
+        "height": 125,
+        "sha256": "b624363ad962cdb3c2366959f3e866400c60f2a999dee5c2077313439d5ab9b1",
+        "width": 19
+      },
+      "name": "flight.tick-017",
+      "reference": {
+        "decodedRgbaSha256": "f98cc46fc9f4519405871b60d470af462321d3f73df81af695a750e657748513",
+        "file": "references/flight.tick-017.png",
+        "height": 125,
+        "sha256": "1f489d2a63b2e43e1dd4d76a760d4ef0a739c5ebf2afdd79d7e7e478c13721f2",
+        "width": 19
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a36c261f002866f81fb9b0d63de4334273eb837bae305faf49e9f7d692033aa5",
+        "file": "frames/flight.tick-017.png",
+        "height": 640,
+        "sha256": "07f6cf6382136269e0994875f84205c3937e490531562174bdd913768087bbf7",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 17
+    },
+    {
+      "bounds": {
+        "height": 137,
+        "width": 20,
+        "x": 226,
+        "y": 459
+      },
+      "coveredPixels": 109,
+      "mask": {
+        "decodedRgbaSha256": "ec8cab23f934b39689f4622a55cc4a68a84933468cf4c8a8f2caff23bfb76d2b",
+        "file": "masks/flight.tick-018.png",
+        "height": 137,
+        "sha256": "bcf53e5c4a6597bed12ea8390a0f8ef9bf7e5727dd559d781ee5bf5e04ca43fe",
+        "width": 20
+      },
+      "name": "flight.tick-018",
+      "reference": {
+        "decodedRgbaSha256": "8bd764efcd4b113df69f25e55d4044324b5af0111df7ef04d08036b84f44e886",
+        "file": "references/flight.tick-018.png",
+        "height": 137,
+        "sha256": "e175dadcfb04dfc8b82bf197b31716ebb9f72fee82a19fd74036bcb42287c4d1",
+        "width": 20
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "7976c1c7b45e104f4e49b87a392a8ccf02423d834876b782d2cd56bd1216c8cc",
+        "file": "frames/flight.tick-018.png",
+        "height": 640,
+        "sha256": "c466dd06e1768c38af6d6bc81743b3db0c93ac98bc96241e660e3ccec555b9c3",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 18
+    },
+    {
+      "bounds": {
+        "height": 152,
+        "width": 22,
+        "x": 225,
+        "y": 445
+      },
+      "coveredPixels": 118,
+      "mask": {
+        "decodedRgbaSha256": "15a9cc9c28b194784a0bbd63afbabf4fecde72c2c6efb37235e2e7ed2a356a05",
+        "file": "masks/flight.tick-019.png",
+        "height": 152,
+        "sha256": "b7c95e1184bf04bf308f26bbe96b088c5db0a0906d8c022f03361f9c7bbbdf7d",
+        "width": 22
+      },
+      "name": "flight.tick-019",
+      "reference": {
+        "decodedRgbaSha256": "0da9f943bf11c5f545678b8cbbab8622a3c4e43597ae9eee90a36c0fdaffcfd5",
+        "file": "references/flight.tick-019.png",
+        "height": 152,
+        "sha256": "b9d2e45eed012f84999bfff12d525180c03ee3aeb4d216800a80362b16295b9e",
+        "width": 22
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "cb778e2c96bc1d553f90589749bddf6c12240e638f9f1ff5c90a2545f1905297",
+        "file": "frames/flight.tick-019.png",
+        "height": 640,
+        "sha256": "ade840ddcf9ce0af7281d34d830a8f64c73939e8cd5b8b4aa9872399ee42bef8",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 19
+    },
+    {
+      "bounds": {
+        "height": 166,
+        "width": 23,
+        "x": 224,
+        "y": 432
+      },
+      "coveredPixels": 114,
+      "mask": {
+        "decodedRgbaSha256": "89c0c66405a5b64dcacffa698baa195aa2d142babf4443f82c00daa997ca5610",
+        "file": "masks/flight.tick-020.png",
+        "height": 166,
+        "sha256": "e70eee7967febe0071ac405176190eb315c0fa38c68383bad5e619eccce61f6b",
+        "width": 23
+      },
+      "name": "flight.tick-020",
+      "reference": {
+        "decodedRgbaSha256": "dc43fbf88c958fb09c7b26ee15be18c57140087191e2acdada9bb7a6e7a1e446",
+        "file": "references/flight.tick-020.png",
+        "height": 166,
+        "sha256": "608a6de804425fad53816ee3784e720157e535edf8711c7fad5c7c1deb2bbe64",
+        "width": 23
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "36e0c39529ec39b50d9acafbcf84f9ad4038f0a21e3534f87af74681b58f620f",
+        "file": "frames/flight.tick-020.png",
+        "height": 640,
+        "sha256": "f6cfe1f9d84afb5627a317813a38f9341b7b239cb78dee5890c68b58fa887660",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 20
+    },
+    {
+      "bounds": {
+        "height": 180,
+        "width": 23,
+        "x": 224,
+        "y": 419
+      },
+      "coveredPixels": 120,
+      "mask": {
+        "decodedRgbaSha256": "59d11062aec8a8ebb45ce02a579e00874b3b702a26c9709abb27056400009b6e",
+        "file": "masks/flight.tick-021.png",
+        "height": 180,
+        "sha256": "8881f36be3a6fd97cb109a15e6178248201da27aac5fb8223de87cb49d580bfd",
+        "width": 23
+      },
+      "name": "flight.tick-021",
+      "reference": {
+        "decodedRgbaSha256": "05e80ba79cdd7266c577070eae7cc0d53f87f40e96be2a51b07415d4c8fc4c19",
+        "file": "references/flight.tick-021.png",
+        "height": 180,
+        "sha256": "e2242cfb3b0f9b37a324d5a07f01a7a864cf8690ad90857f348d6501c40a38a9",
+        "width": 23
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "316d90eaaf36ad24b2c35670396147ef7912971888f29ec4c4eaddbd262e0a20",
+        "file": "frames/flight.tick-021.png",
+        "height": 640,
+        "sha256": "91b5de8663a8b62e982863312b882712bb51379c4d2b88824f9c73c4e154efdd",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 21
+    },
+    {
+      "bounds": {
+        "height": 195,
+        "width": 24,
+        "x": 223,
+        "y": 404
+      },
+      "coveredPixels": 133,
+      "mask": {
+        "decodedRgbaSha256": "c5874315fc261d23be5eb0bd32624596df47aa3eb46514c56c697fca8655233d",
+        "file": "masks/flight.tick-022.png",
+        "height": 195,
+        "sha256": "a30de66fc3699d43da39ba299bedbca5ae136c0b42a9f0d63c7e0dca6b5d94ee",
+        "width": 24
+      },
+      "name": "flight.tick-022",
+      "reference": {
+        "decodedRgbaSha256": "fd0515cbb4cd6cdc80b9598649b5746f98dee858d468bc8e07c5826998159a5f",
+        "file": "references/flight.tick-022.png",
+        "height": 195,
+        "sha256": "1aaf19fa4ca14be088fdd4546c00e8b2e23c7dbcf7395343e769701cf0d5af6a",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "51ade130627791aede1a1cc41ca580851f207ff324d9f9883c6d7b8a675b2c15",
+        "file": "frames/flight.tick-022.png",
+        "height": 640,
+        "sha256": "5125a8ed4ad2b744c8f00c65627a2559edbbd0838fa1bf98a75a5bd628f02e0a",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 22
+    },
+    {
+      "bounds": {
+        "height": 213,
+        "width": 24,
+        "x": 223,
+        "y": 387
+      },
+      "coveredPixels": 137,
+      "mask": {
+        "decodedRgbaSha256": "0066ac28a790c266dfc49667861a16e09a4c003e5fb518cf43607b89b90f2e00",
+        "file": "masks/flight.tick-023.png",
+        "height": 213,
+        "sha256": "e45379467d03bd5e8456681e7abc937a027dcb60eeccb7723ac1848f1773fedf",
+        "width": 24
+      },
+      "name": "flight.tick-023",
+      "reference": {
+        "decodedRgbaSha256": "37e5dc19b7f17c6df1b80f94352df3b8b4e5bef002576baea7bba0d91d89374f",
+        "file": "references/flight.tick-023.png",
+        "height": 213,
+        "sha256": "5e9e20ad0c47a0fe7f8a509b5374f0b4d1858d80747f700bde2d1b4375721f38",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "c281c335c75983520d8a62c0690c425244fe57a48ceb844e1289566a4131b160",
+        "file": "frames/flight.tick-023.png",
+        "height": 640,
+        "sha256": "8d17ece9f43e0f20f931454b7e57dbf4bfe2d8aef870b841018a2a2309d8278e",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 23
+    },
+    {
+      "bounds": {
+        "height": 229,
+        "width": 25,
+        "x": 222,
+        "y": 372
+      },
+      "coveredPixels": 152,
+      "mask": {
+        "decodedRgbaSha256": "cbe04d3277f8de9d3122fd8a3878dec694868134439995b927adac742c9063f4",
+        "file": "masks/flight.tick-024.png",
+        "height": 229,
+        "sha256": "0f6f91e78205c307cc0b7ecc2e697121cad2505aa07da04ceb61f7bc18b3756d",
+        "width": 25
+      },
+      "name": "flight.tick-024",
+      "reference": {
+        "decodedRgbaSha256": "62cd075339494c8a7601cc1ce1daed0391f957310ba2e34e49b4f2dab45a9331",
+        "file": "references/flight.tick-024.png",
+        "height": 229,
+        "sha256": "9dd8445581794b1d85d32e128df91282fa1179967a17e6b1b1dd51cdcbf1b9d5",
+        "width": 25
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "1bc9a2623809db4513096743f7f12235ef84e5ca99b401ad145c0563ef86a368",
+        "file": "frames/flight.tick-024.png",
+        "height": 640,
+        "sha256": "2f2bd90a3bbbaf9bb434763e14cb26f902b7ee52c13bb25b107caa92ff97ae42",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 24
+    },
+    {
+      "bounds": {
+        "height": 230,
+        "width": 25,
+        "x": 222,
+        "y": 372
+      },
+      "coveredPixels": 131,
+      "mask": {
+        "decodedRgbaSha256": "54d9dde19c34110859aea4a46c6e5fe40964761658e1e350e5ab74af6b874835",
+        "file": "masks/flight.tick-025.png",
+        "height": 230,
+        "sha256": "6756719d49926ed1f693f33b9df9578635e537c9befc71d18c7935f4f43a4202",
+        "width": 25
+      },
+      "name": "flight.tick-025",
+      "reference": {
+        "decodedRgbaSha256": "38e3c170b86fb66ed6f34acd7df985d3cc31ecafdb5acdee883aae1778c4f1a5",
+        "file": "references/flight.tick-025.png",
+        "height": 230,
+        "sha256": "5c4daac3f0ff2cc9c8b482f676e9860ea73609463f9624f5e317ed27d4b91388",
+        "width": 25
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "8f4a19aacf024d40b7b92bf1d6186450309f82259f18a3d89b980540a7136328",
+        "file": "frames/flight.tick-025.png",
+        "height": 640,
+        "sha256": "6ff75abada9b4daeebf8f08823e003e9abfb065e1c355722373c5bc8d0573aae",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 25
+    },
+    {
+      "bounds": {
+        "height": 294,
+        "width": 126,
+        "x": 171,
+        "y": 308
+      },
+      "coveredPixels": 12468,
+      "mask": {
+        "decodedRgbaSha256": "e27eca3bb32e39ebcba1abff38a7340f1e9255e248b7bf79c681e6bbf79e12d2",
+        "file": "masks/flight.tick-026.png",
+        "height": 294,
+        "sha256": "e80d6db2e437edc61d77201abd6656f4e0565009708e0d12881241bee95e805e",
+        "width": 126
+      },
+      "name": "flight.tick-026",
+      "reference": {
+        "decodedRgbaSha256": "ce1543b99f6da818d4c97467edf507d2138585d76f45b9da8eecd3d568fe4a41",
+        "file": "references/flight.tick-026.png",
+        "height": 294,
+        "sha256": "20d487fdb08d4171860a97cbd66d935ebdf08604366585b30d585b5c67455461",
+        "width": 126
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "9d77292e1fce4da547a267df04f335869829791e9e4e6825acc0e3f44a47a8cf",
+        "file": "frames/flight.tick-026.png",
+        "height": 640,
+        "sha256": "759599674ac77336b4b497f09245367bfe7ffc3cf029c2ad8b0e8430e941f57e",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 26
+    },
+    {
+      "bounds": {
+        "height": 231,
+        "width": 27,
+        "x": 221,
+        "y": 372
+      },
+      "coveredPixels": 141,
+      "mask": {
+        "decodedRgbaSha256": "c9a910d129bc62dec864c8369d0b74cf20767b06457f132ac7c5c7d9c3e04297",
+        "file": "masks/flight.tick-027.png",
+        "height": 231,
+        "sha256": "7aadeb22398c51e6f61bee94d89b70157df492c76b2a842bd839fb214e148748",
+        "width": 27
+      },
+      "name": "flight.tick-027",
+      "reference": {
+        "decodedRgbaSha256": "1e8b8fc62c6287e266b9795628e57f6fda8528f7d6b9d840be25183cee0c203d",
+        "file": "references/flight.tick-027.png",
+        "height": 231,
+        "sha256": "1c2cfaaf42e61b96075238910adc99aba85eaa7e33de8c1402a61ed2fea81a7a",
+        "width": 27
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "826912ba9ff162b2922ff8ca4ab0d49b7cfc08e2584a711101ec99705e268148",
+        "file": "frames/flight.tick-027.png",
+        "height": 640,
+        "sha256": "daa481c09e9bb2240705f9e6c785283b6e3551b630d0a1143b8515b6bc9376e7",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 27
+    },
+    {
+      "bounds": {
+        "height": 286,
+        "width": 111,
+        "x": 181,
+        "y": 318
+      },
+      "coveredPixels": 9962,
+      "mask": {
+        "decodedRgbaSha256": "4249985478d94e566d8d30b786c18488bf8af42b2c5e1fc76fe2d8e388248e1d",
+        "file": "masks/flight.tick-028.png",
+        "height": 286,
+        "sha256": "8abe47239095f2f8b522e977dbce877c53cdaa0b52f711cb5bc944e1fa153e6f",
+        "width": 111
+      },
+      "name": "flight.tick-028",
+      "reference": {
+        "decodedRgbaSha256": "be27aa5032e3a72e9cbc6337714f59488f2b001e84c81ed1c10e73e6885a2feb",
+        "file": "references/flight.tick-028.png",
+        "height": 286,
+        "sha256": "feddec76e8a210742cd0d98131ffc571eddc7b67af8483d92ea115e54ec1a390",
+        "width": 111
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "8838c51bd778f66d02d43b2057a81957ad1ca9bd6ebc97b9721b1704abc1d5fb",
+        "file": "frames/flight.tick-028.png",
+        "height": 640,
+        "sha256": "0191344a7c5be0b9776ab958cd02d7469b4cb5eedbe3cac8bb0541e3b194e219",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 28
+    },
+    {
+      "bounds": {
+        "height": 302,
+        "width": 142,
+        "x": 166,
+        "y": 302
+      },
+      "coveredPixels": 16625,
+      "mask": {
+        "decodedRgbaSha256": "23368dc6ad750442e294db3e48cdd29cddef2e8ffc0c6352ec29c50a6569075f",
+        "file": "masks/flight.tick-029.png",
+        "height": 302,
+        "sha256": "de89cf46962321653824963a9671ff13134fec8a4ec6f8a4ad8a062b37deefcc",
+        "width": 142
+      },
+      "name": "flight.tick-029",
+      "reference": {
+        "decodedRgbaSha256": "e4fd48ddf8be2841207a93d9b72e6230e1ce8daa82b3e2df0c7637e35c4be6cf",
+        "file": "references/flight.tick-029.png",
+        "height": 302,
+        "sha256": "3ed3711c8db2dc50b8871d436c114a8ed5a0784d838718f79a1e0f0460790171",
+        "width": 142
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "024bde7a2401e71a0690040d82999c5252a9eb23a32876afaad66cc66b33424d",
+        "file": "frames/flight.tick-029.png",
+        "height": 640,
+        "sha256": "24f229d090e906ea94bccb5aaabd33072be2e3466ef06996075d9a8038cbda7a",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 29
+    },
+    {
+      "bounds": {
+        "height": 272,
+        "width": 85,
+        "x": 197,
+        "y": 333
+      },
+      "coveredPixels": 5676,
+      "mask": {
+        "decodedRgbaSha256": "f952987bb64f95513772791dc2472b3896ad43fb8eff9dd42af6f273999aba12",
+        "file": "masks/flight.tick-030.png",
+        "height": 272,
+        "sha256": "1798b0bdbfb7b8ee7fe1782b714402f7e1d8d265638212980f3834193ac53116",
+        "width": 85
+      },
+      "name": "flight.tick-030",
+      "reference": {
+        "decodedRgbaSha256": "34f98473269ae7f1a12403fbc17a8abeae00c1d59f03ac3dafc2d67b106643b7",
+        "file": "references/flight.tick-030.png",
+        "height": 272,
+        "sha256": "4c5a5c52fefec650688b25dee2ba78e6e15b69f1966c250295ff737e597bb533",
+        "width": 85
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "5a3137e1f1703c4b68b8b34daeab015e7dd85998aa1822e35645314012b800d4",
+        "file": "frames/flight.tick-030.png",
+        "height": 640,
+        "sha256": "21c78c1c4bfedf8bbee4e7ff717530b33df2a955345dd43d7122c7aa237c93a0",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 30
+    },
+    {
+      "bounds": {
+        "height": 262,
+        "width": 59,
+        "x": 207,
+        "y": 344
+      },
+      "coveredPixels": 1520,
+      "mask": {
+        "decodedRgbaSha256": "f03910f4864afc85edf97dc084ae9c8d885c3fe42e9898eb2705b980f3ad7c87",
+        "file": "masks/flight.tick-031.png",
+        "height": 262,
+        "sha256": "42bd6a93c0dec5a1ef4c2744fa17625117ab270ab5dcdcfdf6f940086d8db924",
+        "width": 59
+      },
+      "name": "flight.tick-031",
+      "reference": {
+        "decodedRgbaSha256": "62b01f1157be9c1bfa48d2e427864676ce552484927d1d77945b99bafde08d14",
+        "file": "references/flight.tick-031.png",
+        "height": 262,
+        "sha256": "515fe6aeb4862d678d5b1903e32236e2a3e284717bcc8a94148a220993c1db3b",
+        "width": 59
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "9da0343f30fd7e988197499de8e664c2d2da778a2f417dbf99a0ff231eb588e8",
+        "file": "frames/flight.tick-031.png",
+        "height": 640,
+        "sha256": "56cbe70433fe000839bfd71f9c3ae87eb584d90d1c8df092343c78ba8dcb444c",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 31
+    },
+    {
+      "bounds": {
+        "height": 268,
+        "width": 69,
+        "x": 202,
+        "y": 339
+      },
+      "coveredPixels": 1687,
+      "mask": {
+        "decodedRgbaSha256": "bd0f68e5cfc30b647002c1d0dc8be06ece36e350a616b23f367ac1f1644e43ca",
+        "file": "masks/flight.tick-032.png",
+        "height": 268,
+        "sha256": "26076673a49ffa68cf6c1e4436dac41c5e220244130607e002a57eb71561fadf",
+        "width": 69
+      },
+      "name": "flight.tick-032",
+      "reference": {
+        "decodedRgbaSha256": "92192ba8a3866efc157c77b78cea20507f498174b79829a30b39e4ba14fb3551",
+        "file": "references/flight.tick-032.png",
+        "height": 268,
+        "sha256": "d63bfb76ecebe43920f0f7ed63edf1915766f61a54bb9da56c37ff79e6e5d6b3",
+        "width": 69
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "2d775e0d3893d55a152c5286e156b6da99faf6f1844b5b78c0b5c54d5d62ed29",
+        "file": "frames/flight.tick-032.png",
+        "height": 640,
+        "sha256": "b959ce6fb568a3b34330a69e1f47ac563fda5f8f51ddcb2864a8dfe2b685a26d",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 32
+    },
+    {
+      "bounds": {
+        "height": 273,
+        "width": 79,
+        "x": 197,
+        "y": 334
+      },
+      "coveredPixels": 1753,
+      "mask": {
+        "decodedRgbaSha256": "3ac35f3d2a895d0870ed5ca8f976ddac934e781f516df6bab245e893fd02ba71",
+        "file": "masks/flight.tick-033.png",
+        "height": 273,
+        "sha256": "3aca99a81691a37eef92e5f023011ea8db5aaa31582da99558399f3283459e7b",
+        "width": 79
+      },
+      "name": "flight.tick-033",
+      "reference": {
+        "decodedRgbaSha256": "18ed55ed879062aaf5424b3c7b8912518af398271e5aa7c8eb4f2bff22a8893e",
+        "file": "references/flight.tick-033.png",
+        "height": 273,
+        "sha256": "e4a7e4ddb77a6920f9877c7ee909732397df5cceb9c1078e9715009169840c43",
+        "width": 79
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "378a005826ceb0a616254b69a8d776883a5553cf2884740df9475d4d03aa0d4b",
+        "file": "frames/flight.tick-033.png",
+        "height": 640,
+        "sha256": "1d5dc5df93e09ab1c02fd604aa772accf0be1f85e03b072ecb3815c2693d703c",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 33
+    },
+    {
+      "bounds": {
+        "height": 277,
+        "width": 88,
+        "x": 193,
+        "y": 331
+      },
+      "coveredPixels": 1786,
+      "mask": {
+        "decodedRgbaSha256": "1d99ce453d276091217ac9a4e448b5cdd53ac086c7e55eda38d2169472b27d0f",
+        "file": "masks/flight.tick-034.png",
+        "height": 277,
+        "sha256": "d246c9d083920682351493eca7e7dc6a759aa3f344ddbdd152b1bbc39df2f477",
+        "width": 88
+      },
+      "name": "flight.tick-034",
+      "reference": {
+        "decodedRgbaSha256": "ab4f47f483b5489a5bf85b001f659253d1944c23bdc341ae0226bea54823baa9",
+        "file": "references/flight.tick-034.png",
+        "height": 277,
+        "sha256": "21059cb5f5686a8f95c5e852cd9abc5f68555d3f5d7c7e71de5d97d767cf38cc",
+        "width": 88
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a6aff015e563896e17eb98c689e075f145f5a888240b33530148fa9edd2dae4f",
+        "file": "frames/flight.tick-034.png",
+        "height": 640,
+        "sha256": "0b9334ca93b3a914c67d898dd3610d49a82a917de2782e56636d861452fae668",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 34
+    },
+    {
+      "bounds": {
+        "height": 283,
+        "width": 96,
+        "x": 189,
+        "y": 326
+      },
+      "coveredPixels": 1893,
+      "mask": {
+        "decodedRgbaSha256": "78e068987c418df9cb27797f17af5ef0414d4cee6607beca27fb5332b2a5e6bf",
+        "file": "masks/flight.tick-035.png",
+        "height": 283,
+        "sha256": "619fa19735162d774bbaeecf0c23ec82977ea63219a23362b54806f6772fac56",
+        "width": 96
+      },
+      "name": "flight.tick-035",
+      "reference": {
+        "decodedRgbaSha256": "4e0e06c90f91315d5d754a31df03d3b1f18f3c100f154fecab25837cf11e5f57",
+        "file": "references/flight.tick-035.png",
+        "height": 283,
+        "sha256": "6f704395a902f6d3bdef735d00145b0ee15b87c4a34350ecf19aaeeba7f686dd",
+        "width": 96
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "e32d040d8245ef20131857446d3b1dab5cead161aaad3ca2147dd41bad14cc1c",
+        "file": "frames/flight.tick-035.png",
+        "height": 640,
+        "sha256": "02cd07b70f5bbe749f2f2092d8d6e0a84309a9c8b217aebf9da5401e744f520f",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 35
+    },
+    {
+      "bounds": {
+        "height": 286,
+        "width": 105,
+        "x": 184,
+        "y": 323
+      },
+      "coveredPixels": 1888,
+      "mask": {
+        "decodedRgbaSha256": "2fcf1e0b4579ab12ff42288a938d710ca570124a25907a6350df72df48735eb2",
+        "file": "masks/flight.tick-036.png",
+        "height": 286,
+        "sha256": "5ebca3a8dc53bd47ee9ad3a6b3d05016fb32a2c2a0d4729b24736c05efe023a5",
+        "width": 105
+      },
+      "name": "flight.tick-036",
+      "reference": {
+        "decodedRgbaSha256": "4327b6c4680423b042f50d5fae9a3534ef515d198cab559cecdfa258f76fb49d",
+        "file": "references/flight.tick-036.png",
+        "height": 286,
+        "sha256": "e7d128beb4264fe0ccff66756d34efb0c23eb71080ba8479a076f7d0a839a949",
+        "width": 105
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "830e501d9baeecfa61ca28454f46a8cf4432ab93ec87dd1f16bb283427f9c920",
+        "file": "frames/flight.tick-036.png",
+        "height": 640,
+        "sha256": "abd8d13bc9facb2433e71f3a19af5d4c604f097bdac58135311c07b3284b21ec",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 36
+    },
+    {
+      "bounds": {
+        "height": 290,
+        "width": 111,
+        "x": 181,
+        "y": 320
+      },
+      "coveredPixels": 1935,
+      "mask": {
+        "decodedRgbaSha256": "8a119be0a9e0bc8812d6818e0752c2fbbd4176df875674e53caaa0a923b08e20",
+        "file": "masks/flight.tick-037.png",
+        "height": 290,
+        "sha256": "5d2a4f01de49e16de5445d7150f51e5485f933d5e0865a73934edbefd0b586eb",
+        "width": 111
+      },
+      "name": "flight.tick-037",
+      "reference": {
+        "decodedRgbaSha256": "418af9e867c4f829a6cdc1bc634ceed8958c5ac0140596f67ba983442a92590a",
+        "file": "references/flight.tick-037.png",
+        "height": 290,
+        "sha256": "c140dc2ee781f5ad127dc6227b9695144bc2864ac0aa0dc64f70f24c06795776",
+        "width": 111
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "4e178f035fda181e56c9019fb48df0b0b586c0d92db247faec7cd8f3c037752c",
+        "file": "frames/flight.tick-037.png",
+        "height": 640,
+        "sha256": "0af00b840e4360f561e48ecffdf154a341ff0a06ba1283baec26ae7b321626f9",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 37
+    },
+    {
+      "bounds": {
+        "height": 293,
+        "width": 117,
+        "x": 178,
+        "y": 318
+      },
+      "coveredPixels": 1975,
+      "mask": {
+        "decodedRgbaSha256": "52bd1d866f6d6b5ea1ea63e8e5539f3470e11be64926b93ee42627819aebe78d",
+        "file": "masks/flight.tick-038.png",
+        "height": 293,
+        "sha256": "0d42746d3e5cf211299fc5894c89129c8f72b820a5a9c093d60c601117bc0920",
+        "width": 117
+      },
+      "name": "flight.tick-038",
+      "reference": {
+        "decodedRgbaSha256": "0fb1d6d75719f5d6df64eda4c816994c2404b1a6009290f08a93d7e9f9026abe",
+        "file": "references/flight.tick-038.png",
+        "height": 293,
+        "sha256": "f829fbe3d536d1709fef3eb8a5550d782dc3f2f545a2d33fc370dc182d0caa4b",
+        "width": 117
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "fb35226e640ea22d6a26ec793e2d2a258f9423282a5e48c75576b8bd3f5639fb",
+        "file": "frames/flight.tick-038.png",
+        "height": 640,
+        "sha256": "fba75d627aba8bcc482ddc229c4732ffd6b9fc031942d883d9939eebb937ab77",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 38
+    },
+    {
+      "bounds": {
+        "height": 297,
+        "width": 123,
+        "x": 175,
+        "y": 315
+      },
+      "coveredPixels": 1951,
+      "mask": {
+        "decodedRgbaSha256": "286edce1b683d61f9cc1191da0519163077cdc96d16553e776c96e0c8431b424",
+        "file": "masks/flight.tick-039.png",
+        "height": 297,
+        "sha256": "3a2dc1b817d91ea8e3d66369d4bfc1ae29011ba107eee37285a540a41467b1dd",
+        "width": 123
+      },
+      "name": "flight.tick-039",
+      "reference": {
+        "decodedRgbaSha256": "ca8f94d5d6f33f032bd5dae820185b371afab6edd512067d253ab85cd5169714",
+        "file": "references/flight.tick-039.png",
+        "height": 297,
+        "sha256": "4318b884ce74a65e3ee2288bfe9e8f182a02f05f47cbbd0a43409de768fe74b8",
+        "width": 123
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "886d4550bc5661e4c5b9d534a159afbea7487b271a35127860b5256033c7244a",
+        "file": "frames/flight.tick-039.png",
+        "height": 640,
+        "sha256": "f425fb911b459204b12f48ce4c9ef6ca524d98fb7b942da8b0c3f93380a506c3",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 39
+    },
+    {
+      "bounds": {
+        "height": 299,
+        "width": 129,
+        "x": 172,
+        "y": 313
+      },
+      "coveredPixels": 1937,
+      "mask": {
+        "decodedRgbaSha256": "610702c21896a32d65f9bf4d52aa27c558a9fc1753f6e8afb8379ae8a576b927",
+        "file": "masks/flight.tick-040.png",
+        "height": 299,
+        "sha256": "d0b09cc83ac4c97e931730fb502cfd404e4348e06078e0422a7db1a467d37e34",
+        "width": 129
+      },
+      "name": "flight.tick-040",
+      "reference": {
+        "decodedRgbaSha256": "9b11b8661a767fd040c0258da3b1e7f0e9901d03b6632a4078da4f63fd2dfd19",
+        "file": "references/flight.tick-040.png",
+        "height": 299,
+        "sha256": "54ea5a2edaf449bed87b5805583db7281ff49e6ef78e6d8cc55667f0963c5b70",
+        "width": 129
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "5eae47f85ae7477cc2307607e446851c4dbd7917da33551716c46784ba4d7feb",
+        "file": "frames/flight.tick-040.png",
+        "height": 640,
+        "sha256": "fca725faa5d50c237e5cefe51a250fa6b81466a2bf3f99d607f822387ec89c45",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 40
+    },
+    {
+      "bounds": {
+        "height": 301,
+        "width": 133,
+        "x": 170,
+        "y": 312
+      },
+      "coveredPixels": 1951,
+      "mask": {
+        "decodedRgbaSha256": "cc663a2541e4659924a983cd419c87f63b44021ed17443f06966f3b5a219f42e",
+        "file": "masks/flight.tick-041.png",
+        "height": 301,
+        "sha256": "5e060428aa3786a57d03f911dea06e2b52b90a6896f6de6fd944b8239e7dcb73",
+        "width": 133
+      },
+      "name": "flight.tick-041",
+      "reference": {
+        "decodedRgbaSha256": "ca038bad66e684acb2e0b2e392f26d517d5f15eb5d25a6a69fd6f716ce31dc2b",
+        "file": "references/flight.tick-041.png",
+        "height": 301,
+        "sha256": "9af931532c1f5ad7b142a48e68cac826ea4006dae4f05e19257ff44cc1e45ef8",
+        "width": 133
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "aca2ab98479b16ecb72d5ab11ffca01ac3b57598d14810c3eedc4d006a7d8a9f",
+        "file": "frames/flight.tick-041.png",
+        "height": 640,
+        "sha256": "69558e4f61a30939025d82567c8e3b6491551734e18210201f942c7e3fcf8480",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 41
+    },
+    {
+      "bounds": {
+        "height": 304,
+        "width": 137,
+        "x": 168,
+        "y": 310
+      },
+      "coveredPixels": 1655,
+      "mask": {
+        "decodedRgbaSha256": "e3ebbc04a54cd386d7f746c7a908cb7a7dfab1bcbd0c81609cd6474ff94f79d9",
+        "file": "masks/flight.tick-042.png",
+        "height": 304,
+        "sha256": "b99565d0aae287a6ba3b2a996b3f1e0c4f47dd4ff90e88a683b9daf6126ff358",
+        "width": 137
+      },
+      "name": "flight.tick-042",
+      "reference": {
+        "decodedRgbaSha256": "31d64cc7bf5452f210a2b5acfaeff5ced340ed103c108ff3f53e2e17e794808c",
+        "file": "references/flight.tick-042.png",
+        "height": 304,
+        "sha256": "ce7d1ba0370d2b1fcd412f7cb1eb50a70b03e3e84a3c01c4c780117b0e71976c",
+        "width": 137
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "2d2ff750fc771d41b995985259ff8f4f24301765565f4750632ef4d44d5c0815",
+        "file": "frames/flight.tick-042.png",
+        "height": 640,
+        "sha256": "b075242966ba7b545cd9bd97aec45953241ddf4804e4223d9d4f46143b175493",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 42
+    },
+    {
+      "bounds": {
+        "height": 306,
+        "width": 140,
+        "x": 166,
+        "y": 309
+      },
+      "coveredPixels": 1537,
+      "mask": {
+        "decodedRgbaSha256": "a047fa244655f08129046d78d7ab2e7505a6455eead74108eda002b8425c6147",
+        "file": "masks/flight.tick-043.png",
+        "height": 306,
+        "sha256": "569764e75c19b5cee83e17b9619c4b76ef7fe2df74c11418b66592528163084f",
+        "width": 140
+      },
+      "name": "flight.tick-043",
+      "reference": {
+        "decodedRgbaSha256": "f525ebf495b7385748b68381d2ea4915531196ec501c1feb4a6da8bfc39cb11e",
+        "file": "references/flight.tick-043.png",
+        "height": 306,
+        "sha256": "d25e7863717f93c46ee6ebf597d01a6d4fdb82c503a7d2390113b628de836a78",
+        "width": 140
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a0c1d2f075323f5ac952af37e4f605456acfad671fcd09b41e0b4406ba8e2534",
+        "file": "frames/flight.tick-043.png",
+        "height": 640,
+        "sha256": "98f3b4d0643cd1594d43d23bd02d3f11d2547998a930cb69ffcea9da651f044e",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 43
+    },
+    {
+      "bounds": {
+        "height": 307,
+        "width": 142,
+        "x": 165,
+        "y": 308
+      },
+      "coveredPixels": 1608,
+      "mask": {
+        "decodedRgbaSha256": "ff452a95bb46a10875e59546475eb6319ff6cefd542e8362323531b6d5a0300b",
+        "file": "masks/flight.tick-044.png",
+        "height": 307,
+        "sha256": "602604ee10e22e4aeb3fcfdd89f46146835361fc7baf12644e01ac9880979224",
+        "width": 142
+      },
+      "name": "flight.tick-044",
+      "reference": {
+        "decodedRgbaSha256": "fafff02fb2a7750e2e22f90b082a1d9ca83f6d6262c351db9f59a6f7c0d60a2b",
+        "file": "references/flight.tick-044.png",
+        "height": 307,
+        "sha256": "95f159ee602e2dd9e774d6fa439c5bdbced7839e336d0b52898e5a0363a88b03",
+        "width": 142
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "e6b314d215f31bc3f76404db260c44a5dbf0ed9d95537920b8c833bf41e765e4",
+        "file": "frames/flight.tick-044.png",
+        "height": 640,
+        "sha256": "a8c4026a595bd3cc8a9ea028fc23517a69e4406ef738ce6651daf1c1d45a7c6a",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 44
+    },
+    {
+      "bounds": {
+        "height": 307,
+        "width": 147,
+        "x": 162,
+        "y": 309
+      },
+      "coveredPixels": 1111,
+      "mask": {
+        "decodedRgbaSha256": "6fed10fccfbe718edf90640024921b311bbaeb9cae81cc368c37d4b5150467e7",
+        "file": "masks/flight.tick-045.png",
+        "height": 307,
+        "sha256": "1d8a6085a2f3edfd66743925675e9b9e8cb6918481672eb532b3ab33d97d0699",
+        "width": 147
+      },
+      "name": "flight.tick-045",
+      "reference": {
+        "decodedRgbaSha256": "0bff423852b36483488b77ed0a0890ff4c1fe8b9621eaa13b50f8ca766b2fa30",
+        "file": "references/flight.tick-045.png",
+        "height": 307,
+        "sha256": "f88369eca3c560a42679ffb77c012f034bdf77d740f27f3223ada6f26a36f21b",
+        "width": 147
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "52143b1a0b55dec4aceae729bdaecb3065d0ef450b0e090ee6cc0c1f9342057f",
+        "file": "frames/flight.tick-045.png",
+        "height": 640,
+        "sha256": "95a761bb34fd139b533f39052a7d9c1e312ab1e3c4208841fbb3e8e641c3ed3b",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 45
+    },
+    {
+      "bounds": {
+        "height": 311,
+        "width": 150,
+        "x": 162,
+        "y": 305
+      },
+      "coveredPixels": 1032,
+      "mask": {
+        "decodedRgbaSha256": "fd811decf946cf03b6761774288eb794c25a7130543a10e4e0bf2ff31f3249c1",
+        "file": "masks/flight.tick-046.png",
+        "height": 311,
+        "sha256": "fcc47ca7a2134541b9a456ce909a43c107a4400d7946dad0ab909fa117868866",
+        "width": 150
+      },
+      "name": "flight.tick-046",
+      "reference": {
+        "decodedRgbaSha256": "12bc4d5c8e42fc9d360135cb4293f8ba4691a072c22b22e12715d7738bf765a2",
+        "file": "references/flight.tick-046.png",
+        "height": 311,
+        "sha256": "b9e994a541bae8ef817f1f2c001610314ca47df67ce0a4e4189ed07fecd33e68",
+        "width": 150
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "f85e3d59c40e3937e3fe509f2a5fe832828ef6bde670207c4d14b4489197e8c4",
+        "file": "frames/flight.tick-046.png",
+        "height": 640,
+        "sha256": "f9a3393e3c0702657697c231bfb6a68e12152bb9f651beb4ed8f0d01a0644c7e",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 46
+    },
+    {
+      "bounds": {
+        "height": 313,
+        "width": 153,
+        "x": 160,
+        "y": 304
+      },
+      "coveredPixels": 1042,
+      "mask": {
+        "decodedRgbaSha256": "59c5277c8b77eb449eb7e129bd7628a282e869d54c0947594095afcff41d067e",
+        "file": "masks/flight.tick-047.png",
+        "height": 313,
+        "sha256": "1e4bd2ddcf2c83d82abd0c959fb010aa4b289de54913f8f6ddc5c4b2f54be3d8",
+        "width": 153
+      },
+      "name": "flight.tick-047",
+      "reference": {
+        "decodedRgbaSha256": "1442e89e92b673a4f3550ee133f6ffec53e549ca844a52ae3124ad30f6be4d06",
+        "file": "references/flight.tick-047.png",
+        "height": 313,
+        "sha256": "9fbfb4205b9413bc8e860c9f364651a6f2e9291cd911391009232aa9e4f5c1dc",
+        "width": 153
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a1994cdd0e25f114aba5b29c6e1e14345daf58b1ed5477559688b067f0834c06",
+        "file": "frames/flight.tick-047.png",
+        "height": 640,
+        "sha256": "b0d99e902f9dd97270191b6035d7b8e630b3e474765ed664c264ba97af0d4746",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 47
+    },
+    {
+      "bounds": {
+        "height": 314,
+        "width": 154,
+        "x": 160,
+        "y": 304
+      },
+      "coveredPixels": 1032,
+      "mask": {
+        "decodedRgbaSha256": "52e08d90aca11743820233f13610f1281f412593d93f0dbf00419d48582c27c2",
+        "file": "masks/flight.tick-048.png",
+        "height": 314,
+        "sha256": "81527cb1fa91071d3d476e6954444afad8bafa9dc052bc58542fe90ccd120453",
+        "width": 154
+      },
+      "name": "flight.tick-048",
+      "reference": {
+        "decodedRgbaSha256": "8a691c07bfc364f171eb3db6c35881079e1238223b3a9563a304c5c82b5cf76d",
+        "file": "references/flight.tick-048.png",
+        "height": 314,
+        "sha256": "c4e8b34773e592a6bd9313c599ea93e5ab736ab3172830156720e841f8a538cf",
+        "width": 154
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "09697b410c74db9c5b77a7e63ef2c3daf06ed52c195757cbf60cbc556acf3791",
+        "file": "frames/flight.tick-048.png",
+        "height": 640,
+        "sha256": "b51f7af2dee83c9ea2b21edeb75a3dd0541a579e4b5d07203f473efb003dc54c",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 48
+    },
+    {
+      "bounds": {
+        "height": 313,
+        "width": 154,
+        "x": 161,
+        "y": 305
+      },
+      "coveredPixels": 1064,
+      "mask": {
+        "decodedRgbaSha256": "9ff9d3aab80dd1c0e7be0befe72ff561a0d5ab0ce9678872ce9b604ce7300ba4",
+        "file": "masks/flight.tick-049.png",
+        "height": 313,
+        "sha256": "f4ac534b6000c774743fd18cd75e451a757c4d5be919f6c4f6d1bf780235d6ff",
+        "width": 154
+      },
+      "name": "flight.tick-049",
+      "reference": {
+        "decodedRgbaSha256": "5c5d33c5111a822a2d8a36894a7981eaeb77dafea67a508016b05698110ea6a8",
+        "file": "references/flight.tick-049.png",
+        "height": 313,
+        "sha256": "6094598eb6c77fc399d9bf215677f65105e4f3b8b8d1caf462bc6412c6d60121",
+        "width": 154
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a29668dd9eba381ba3bf1de448030889e9850231ed16fa968c8d9dac41b21087",
+        "file": "frames/flight.tick-049.png",
+        "height": 640,
+        "sha256": "38413dc2eda0feb75bd4650c61d4605d9cb5495b19db3e4f418320d96d5a1046",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 49
+    },
+    {
+      "bounds": {
+        "height": 315,
+        "width": 154,
+        "x": 160,
+        "y": 304
+      },
+      "coveredPixels": 1126,
+      "mask": {
+        "decodedRgbaSha256": "907692e410031cc0f1d3809075985a37817f23ebc04fbeb5dbe39ba8c309d7b4",
+        "file": "masks/flight.tick-050.png",
+        "height": 315,
+        "sha256": "21f368349898eae3a5f842ce98d2daf67d199383f08f8a4e05d13e9486a7198f",
+        "width": 154
+      },
+      "name": "flight.tick-050",
+      "reference": {
+        "decodedRgbaSha256": "9070b90c7221a54560740c8b9490a868721f9f0e2fd2f4d4629bdf00a0318013",
+        "file": "references/flight.tick-050.png",
+        "height": 315,
+        "sha256": "c41bd7c4c506829040ccbfe05cfe643b5576a3cc1c79fe7582b8818d7dcdd442",
+        "width": 154
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "44753a55fbf146cd969edfa78e2d22d793acbab218a8c7468e359e2c9515086a",
+        "file": "frames/flight.tick-050.png",
+        "height": 640,
+        "sha256": "8dbcc4f2c43fa38c386c70c622e2559c428774a5b0d8100330230dff69da6732",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 50
+    },
+    {
+      "bounds": {
+        "height": 314,
+        "width": 161,
+        "x": 155,
+        "y": 306
+      },
+      "coveredPixels": 1085,
+      "mask": {
+        "decodedRgbaSha256": "231d1c6b4300b881a1e53eebd31a29b808c1cf43fcf8b9423c38522da7cb7c83",
+        "file": "masks/flight.tick-051.png",
+        "height": 314,
+        "sha256": "e4db8cb183f685546d33dccdb84ad348e99bce2b4c1268bd0d2d6ae2ea0194c1",
+        "width": 161
+      },
+      "name": "flight.tick-051",
+      "reference": {
+        "decodedRgbaSha256": "41ee0de89308a02d0655187770f94355cb29707e3a0c63d085c41490a8ba79e5",
+        "file": "references/flight.tick-051.png",
+        "height": 314,
+        "sha256": "204eca264a217f33bbfc49940a48af828f02007571fc5d2056e786b914ff5141",
+        "width": 161
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a7c94868b950796643dda60bfe96dfb4e927222b0347fc5e1ff5d7a65aff854c",
+        "file": "frames/flight.tick-051.png",
+        "height": 640,
+        "sha256": "a84769bdddccfffb00f51459e7be494bd0190bd8229d4bc16c918b6198af76c2",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 51
+    },
+    {
+      "bounds": {
+        "height": 318,
+        "width": 163,
+        "x": 155,
+        "y": 302
+      },
+      "coveredPixels": 1037,
+      "mask": {
+        "decodedRgbaSha256": "9ba973d4c14ac64b70833bf7662cce6fb78888db91ac63bc61069a2a7bda803a",
+        "file": "masks/flight.tick-052.png",
+        "height": 318,
+        "sha256": "23324fe2aedc8d6d7a15112f47dc005b2bd9949b68d07d2eb61babfab94996e0",
+        "width": 163
+      },
+      "name": "flight.tick-052",
+      "reference": {
+        "decodedRgbaSha256": "1f943a2585b0d5f00fe3d5f01b484622693fa30e1a588757c02b5ca181b65110",
+        "file": "references/flight.tick-052.png",
+        "height": 318,
+        "sha256": "ebd5960fbd96ad6cf5ab45600839c8702935dfd736fd22636bdc1a9b4bd8ca1d",
+        "width": 163
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "c5cb5c509e74cd08a1c226f521a80d181249fdf6772855280388bfcda6596c8b",
+        "file": "frames/flight.tick-052.png",
+        "height": 640,
+        "sha256": "0397e7434e393a010db0c9e07f8626ec0d680023be48597ae873e0bbd8f8ed83",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 52
+    },
+    {
+      "bounds": {
+        "height": 319,
+        "width": 165,
+        "x": 154,
+        "y": 302
+      },
+      "coveredPixels": 1032,
+      "mask": {
+        "decodedRgbaSha256": "e3f6b69fb5f26051a3afefcbd463dd21ba74611336c11e4bc86a115ce5774e9a",
+        "file": "masks/flight.tick-053.png",
+        "height": 319,
+        "sha256": "97396e93d9f997ee5b54e78041e1b812c9767a59fa30470dc0fea1ee9a0baa7d",
+        "width": 165
+      },
+      "name": "flight.tick-053",
+      "reference": {
+        "decodedRgbaSha256": "eef96a0132c6286d05272af09c0a26f1ffea5e12c0ee779a787d7c32f3d25e50",
+        "file": "references/flight.tick-053.png",
+        "height": 319,
+        "sha256": "206671d418503e0ea272600e7f5a43db1e5d0af79a252f807a1a737dffe95393",
+        "width": 165
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "d96ab1bd7ee6de5a6605b74927b43263909b18a0933a5df9d16b295d222330b4",
+        "file": "frames/flight.tick-053.png",
+        "height": 640,
+        "sha256": "80ff6a48444b0025421a5b70e04b9a486a5d5d6e192bc64e5073d7a2f6094cb8",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 53
+    },
+    {
+      "bounds": {
+        "height": 320,
+        "width": 166,
+        "x": 154,
+        "y": 302
+      },
+      "coveredPixels": 999,
+      "mask": {
+        "decodedRgbaSha256": "97a4d9fcac5cf261a06414e3faafc195cef22f6b3c96544b111122f017afb24b",
+        "file": "masks/flight.tick-054.png",
+        "height": 320,
+        "sha256": "1662bf3946584ebc43df82d8c1c9ec120d8d43df8d8fdcf07eab5e79f8117a5b",
+        "width": 166
+      },
+      "name": "flight.tick-054",
+      "reference": {
+        "decodedRgbaSha256": "a0cf9021239d6009b05122304792dfd8e7134f43f0723465e9c4fd864e79d014",
+        "file": "references/flight.tick-054.png",
+        "height": 320,
+        "sha256": "6390f33921601ef02ffb0b970e9a3ce809f0329c44782eff098b2d0c35b87077",
+        "width": 166
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "404fe14afe3dfa086c0570e86223e25f260540dee50c3fa0062413ff9dbf0a3d",
+        "file": "frames/flight.tick-054.png",
+        "height": 640,
+        "sha256": "79833cacb757cc3af2da5d2b240e010be6c1c96b7bdbfefc48384c0900029a1f",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 54
+    },
+    {
+      "bounds": {
+        "height": 318,
+        "width": 162,
+        "x": 157,
+        "y": 304
+      },
+      "coveredPixels": 1025,
+      "mask": {
+        "decodedRgbaSha256": "a2dc2301cd69465c1c18ce1f326f7beb8fc2193c5d4b7699ed571e71b7583e74",
+        "file": "masks/flight.tick-055.png",
+        "height": 318,
+        "sha256": "c2f03a1a4403243b41064b40a56fdf14927bdf42cd5a6b98666dafcf610f3705",
+        "width": 162
+      },
+      "name": "flight.tick-055",
+      "reference": {
+        "decodedRgbaSha256": "c3d9604b3921fc21c75257eca868e32cfc01002d8e7f901e4b60b084f3cb4cfe",
+        "file": "references/flight.tick-055.png",
+        "height": 318,
+        "sha256": "ff9e19f7789e20f42e4217a7bdae7fadcf02646909919533c18cc4c1f639adfa",
+        "width": 162
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "adbc333d89acc4f89e95d4b62bf609f211294f74547ed74fb0a716f0ad161c3c",
+        "file": "frames/flight.tick-055.png",
+        "height": 640,
+        "sha256": "8ea59bed5398f0e1a63da2a2d61e19e91fe42fba8a52f2b20cca130e88e5414e",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 55
+    },
+    {
+      "bounds": {
+        "height": 319,
+        "width": 162,
+        "x": 156,
+        "y": 304
+      },
+      "coveredPixels": 1019,
+      "mask": {
+        "decodedRgbaSha256": "aa20236e94c7745d823007093f1ce7d5eb1b0a5a54a5c99940bcfef4a16479cc",
+        "file": "masks/flight.tick-056.png",
+        "height": 319,
+        "sha256": "6cad47299da34c1d1fc172237af40248f84297031d80ff299fb9bd3c185359eb",
+        "width": 162
+      },
+      "name": "flight.tick-056",
+      "reference": {
+        "decodedRgbaSha256": "992f59750aba7feccfadd39fbfe3c319111321f1f464edced9d735834c179b1e",
+        "file": "references/flight.tick-056.png",
+        "height": 319,
+        "sha256": "1cf2ed4d463092d5b3503565485c17c43296e88ef8cf53ea74ec026af1d5894e",
+        "width": 162
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a0ba89fd9287bf7c4a9b30c3dd285d681f5c6444208e5490dd4cd827e4041757",
+        "file": "frames/flight.tick-056.png",
+        "height": 640,
+        "sha256": "45e8c15871dd1ae03de47938f0729fb2c239233525bff96c56f12e7624c4c10a",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 56
+    },
+    {
+      "bounds": {
+        "height": 317,
+        "width": 168,
+        "x": 151,
+        "y": 306
+      },
+      "coveredPixels": 984,
+      "mask": {
+        "decodedRgbaSha256": "0c87f0e6cab637131de85b2140a71862f0bd780e07aa47fff717d7d3fd305c2f",
+        "file": "masks/flight.tick-057.png",
+        "height": 317,
+        "sha256": "12d533fda6f983b737c00b19b590e31cf56696bbe935d0d1ca2ada5e4283a6aa",
+        "width": 168
+      },
+      "name": "flight.tick-057",
+      "reference": {
+        "decodedRgbaSha256": "1410eac9f155489ba4c71d3187b6b2b26c93369405f4152a04bacaedcff1635c",
+        "file": "references/flight.tick-057.png",
+        "height": 317,
+        "sha256": "4a80cccb1d9b0517f7d1b42544520f20a769bda23ec9c260a7a44cb46ea2284b",
+        "width": 168
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "badbc8b419af9c24a6bb217560521b3629ef4e6972e4017cec65c98441a8e0b0",
+        "file": "frames/flight.tick-057.png",
+        "height": 640,
+        "sha256": "124b9e4d3282f16ba06db1e49bb88378a23a2326d17613100090850df89ccbca",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 57
+    },
+    {
+      "bounds": {
+        "height": 321,
+        "width": 170,
+        "x": 151,
+        "y": 303
+      },
+      "coveredPixels": 915,
+      "mask": {
+        "decodedRgbaSha256": "1e09eb7af097e9fbf5038fce1ddaaa4c18eb922606c6da92934b66309279bb07",
+        "file": "masks/flight.tick-058.png",
+        "height": 321,
+        "sha256": "f7f455b1a8fbe1993f1932be61db82e9657775729cc832b1b64600cf43f984ab",
+        "width": 170
+      },
+      "name": "flight.tick-058",
+      "reference": {
+        "decodedRgbaSha256": "67ca86995e496f7f78330ccd141ea6544f15204a42fd02959e220a0c464acf5f",
+        "file": "references/flight.tick-058.png",
+        "height": 321,
+        "sha256": "84b65a87903179327b1b84811d2dc72914a369aa5379a79373e5ee3156873740",
+        "width": 170
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "ce4dfbdd7d42b79deb434eb754afe10509d994e7d3dbf5b0f3a79975e83b5766",
+        "file": "frames/flight.tick-058.png",
+        "height": 640,
+        "sha256": "9c3cb11efad85c72e3be9650ff741ab42d5b1848a0dba60a6b56cc15345528f8",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 58
+    },
+    {
+      "bounds": {
+        "height": 322,
+        "width": 171,
+        "x": 151,
+        "y": 303
+      },
+      "coveredPixels": 913,
+      "mask": {
+        "decodedRgbaSha256": "b6f3d17d2170c9a767423679655f7771bb874bd2a3b73e789d798e8b97d62440",
+        "file": "masks/flight.tick-059.png",
+        "height": 322,
+        "sha256": "510883703631c56df542fbde5590aced43510c05b57c52d17615ff8833d2b447",
+        "width": 171
+      },
+      "name": "flight.tick-059",
+      "reference": {
+        "decodedRgbaSha256": "4b7cd9c6784eca1fb4f2d393878f83fd880438b9a61d78105a8ace491c6e7a97",
+        "file": "references/flight.tick-059.png",
+        "height": 322,
+        "sha256": "fd4ba5bc5b7646767c60b9615d3fcadec54d9e3915a56b7e41c0eae3e4e750ed",
+        "width": 171
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "007bf297f94adcbaba85c09c5c072b094709c974350feb21fa4e765c387f5bc8",
+        "file": "frames/flight.tick-059.png",
+        "height": 640,
+        "sha256": "b472782b3ea6fe96a3138b014210641747d5c7f307aa7c688a8c7a918b34240f",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 59
+    },
+    {
+      "bounds": {
+        "height": 321,
+        "width": 170,
+        "x": 152,
+        "y": 304
+      },
+      "coveredPixels": 851,
+      "mask": {
+        "decodedRgbaSha256": "cf27d36ce0eae5b1d206c3abd2cf6bf43fe6e9111f06f6f3bdcac9fe01472a67",
+        "file": "masks/flight.tick-060.png",
+        "height": 321,
+        "sha256": "fde19aea7a173f6b6f28f0e5bd3d3176c03ce6ab738fa209202088faceb23caf",
+        "width": 170
+      },
+      "name": "flight.tick-060",
+      "reference": {
+        "decodedRgbaSha256": "0f6d441a6686d0c3ed763834a861639441e4035b2f46d9132f9ae96ee96e5868",
+        "file": "references/flight.tick-060.png",
+        "height": 321,
+        "sha256": "157137dfe44314aec0d01e94fd9c2f560d408df1aeac7f2b5b4ba9998b1d47da",
+        "width": 170
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "2137587d35333266f1061a5f8fb7ac4f8e52572733abb1ae0b113f714a2e809a",
+        "file": "frames/flight.tick-060.png",
+        "height": 640,
+        "sha256": "ff7684a8ba2b62cc6f016d2ce08ee617eb1f7a1fabf84d7f1bcb478cf7457a8d",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 60
+    },
+    {
+      "bounds": {
+        "height": 308,
+        "width": 167,
+        "x": 154,
+        "y": 306
+      },
+      "coveredPixels": 828,
+      "mask": {
+        "decodedRgbaSha256": "304ae4c523412dc8cd0fbada2672b0559c45dc5020d6b24a1f2b87b288ed781f",
+        "file": "masks/flight.tick-061.png",
+        "height": 308,
+        "sha256": "ed2412c849f13c11a8e80523180dce40e018890b255f18a5a0772edd78cae63e",
+        "width": 167
+      },
+      "name": "flight.tick-061",
+      "reference": {
+        "decodedRgbaSha256": "3e7f4640e06c1e5316b25de4cd1faa17849afb9c5bf4e2b57d1785f116f072b7",
+        "file": "references/flight.tick-061.png",
+        "height": 308,
+        "sha256": "45eaae121f2c10a26f2ee48582646254f730a204f8ab7d522c154397fcdf1bc0",
+        "width": 167
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "31f60de49be8dd2bf3ae113ea14e3042a524728bf11076e4d8cf171d965e80fe",
+        "file": "frames/flight.tick-061.png",
+        "height": 640,
+        "sha256": "584f962771d1b4dac15630c3e29674f16dddcdcfa4c026c84761c8b0588e5699",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 61
+    },
+    {
+      "bounds": {
+        "height": 294,
+        "width": 167,
+        "x": 153,
+        "y": 306
+      },
+      "coveredPixels": 740,
+      "mask": {
+        "decodedRgbaSha256": "22ac714113e3bb6251216cccb1a0509ac0751ba6e3246f51f830b04d9b65839e",
+        "file": "masks/flight.tick-062.png",
+        "height": 294,
+        "sha256": "7d654b72656ab8620d222389745a89f7ba9f131d9f2333880fd70c567ee59e23",
+        "width": 167
+      },
+      "name": "flight.tick-062",
+      "reference": {
+        "decodedRgbaSha256": "9e4501fed8a0c3d4276e9a0980b97aa901cbc0363a9f93a42bebcdd8d54650c2",
+        "file": "references/flight.tick-062.png",
+        "height": 294,
+        "sha256": "a875df77b3ffde5545b15c2b49b456c9ec9445c9bd1bc26d2568438f79cc19ac",
+        "width": 167
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "02f43bba252776d27505602c09e99cd550a1b89c6dd0984c2dbedf8b37123496",
+        "file": "frames/flight.tick-062.png",
+        "height": 640,
+        "sha256": "c43f1364e23a77969e1f511bdafec2a65266a9a4ceee8d83fc6808c4589d6f49",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 62
+    },
+    {
+      "bounds": {
+        "height": 293,
+        "width": 172,
+        "x": 150,
+        "y": 308
+      },
+      "coveredPixels": 782,
+      "mask": {
+        "decodedRgbaSha256": "8a98f95a7034fb9fc71995b4170c78aa234b4ca452ddfcca8b3e45874d22ceab",
+        "file": "masks/flight.tick-063.png",
+        "height": 293,
+        "sha256": "640c3c660573610ff3083f0f33cc9cd897f4fe8f87910bc46992efc625f59b98",
+        "width": 172
+      },
+      "name": "flight.tick-063",
+      "reference": {
+        "decodedRgbaSha256": "d3ca57f01f9026aa85371c1cf8c126a54ab87a4f19062a899c6262a0f0b3d573",
+        "file": "references/flight.tick-063.png",
+        "height": 293,
+        "sha256": "e91d7f41ac4660edb417d053ebeda10d314747046853f7415807f77cabc10092",
+        "width": 172
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "86b6e87ff1c8b71fb44875ffe28df6f3b3bb6ed7d633483b559e059cfc5891ab",
+        "file": "frames/flight.tick-063.png",
+        "height": 640,
+        "sha256": "19513fa5c363101d6eecef825b04d990c2e8605de1df9569638b675ef2e227c3",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 63
+    },
+    {
+      "bounds": {
+        "height": 297,
+        "width": 175,
+        "x": 149,
+        "y": 305
+      },
+      "coveredPixels": 687,
+      "mask": {
+        "decodedRgbaSha256": "f7fe832f746204dcee419f46b967b0c71bf6e9307c34600422249dfc0b3a77e7",
+        "file": "masks/flight.tick-064.png",
+        "height": 297,
+        "sha256": "a708213bcb67d1d250287a4b03e4699f9d18e32d3a911db6262ebcfd7d67b6f6",
+        "width": 175
+      },
+      "name": "flight.tick-064",
+      "reference": {
+        "decodedRgbaSha256": "16a46883d68b4dd762c952d08a3520ccbd5cae3ae5bc2478e6d9e49024f62971",
+        "file": "references/flight.tick-064.png",
+        "height": 297,
+        "sha256": "9dac415f2492a2e3cd4074944c8b9fa0ce09dd497d6935bc17bed9144b89345b",
+        "width": 175
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "b1cb23189e8f45dfa76763b41a4839d8b8b4890bf527b52a39bcb75920c2b16d",
+        "file": "frames/flight.tick-064.png",
+        "height": 640,
+        "sha256": "2fd36ed1a91c12cd8b13125188d1f7a46f1955d7b4aa564b8d9c0b7b8266a64e",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 64
+    },
+    {
+      "bounds": {
+        "height": 296,
+        "width": 175,
+        "x": 149,
+        "y": 306
+      },
+      "coveredPixels": 700,
+      "mask": {
+        "decodedRgbaSha256": "cc83b8272d223f85661e76607e19ccec8caac7e6ca5f05aee95aa443043a089c",
+        "file": "masks/flight.tick-065.png",
+        "height": 296,
+        "sha256": "9b9902c0b32ca3a9aefe131ef7db02aad5440aa31269695edfe4a090eea6e217",
+        "width": 175
+      },
+      "name": "flight.tick-065",
+      "reference": {
+        "decodedRgbaSha256": "f00409476dcd7ee4aabc81df77cc487e326dff32d7f5a0032d2dad1b8f66f968",
+        "file": "references/flight.tick-065.png",
+        "height": 296,
+        "sha256": "fbbfa23005110806560a7f14a3d965c8d18c1074f9de186054a4f81cd28b80ca",
+        "width": 175
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "801114e25f3effb0b91389d6f9d95d6e1cdd8732db31ca50720466324e618e87",
+        "file": "frames/flight.tick-065.png",
+        "height": 640,
+        "sha256": "72d56944ed013205fe5731d8957723399621bf056718e6c002a038631e89e03d",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 65
+    },
+    {
+      "bounds": {
+        "height": 297,
+        "width": 174,
+        "x": 150,
+        "y": 306
+      },
+      "coveredPixels": 636,
+      "mask": {
+        "decodedRgbaSha256": "848323c82e79467c44c13ec6b8b3f282ce832ecd6a3e05225fbf030f6df2ced4",
+        "file": "masks/flight.tick-066.png",
+        "height": 297,
+        "sha256": "204eb7199e1313b434d3da1c4f10085b55d475561a073b7de538141507095c43",
+        "width": 174
+      },
+      "name": "flight.tick-066",
+      "reference": {
+        "decodedRgbaSha256": "a08e891e9a8483eb9491e029099b7641fe4b62a3b4c562bd7f9d733d505f73cf",
+        "file": "references/flight.tick-066.png",
+        "height": 297,
+        "sha256": "52aa54ea23b3ea857ba6f6d2f35edf0a4cd0e7663be6865f8fac2511df76b45a",
+        "width": 174
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "8cf046cee1ba40a339ba6127c22509d476844263d0ccdb0f77fbb8213b7b7487",
+        "file": "frames/flight.tick-066.png",
+        "height": 640,
+        "sha256": "257dfbb7b1a7e48cf0498d66bbbb628132e0aaac2637f00dc5e8f9fae6418d2c",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 66
+    },
+    {
+      "bounds": {
+        "height": 295,
+        "width": 169,
+        "x": 153,
+        "y": 309
+      },
+      "coveredPixels": 567,
+      "mask": {
+        "decodedRgbaSha256": "0af727204561cc9aa82adc22816fb06ac621817e747806eddf843e61f794c6fe",
+        "file": "masks/flight.tick-067.png",
+        "height": 295,
+        "sha256": "b6557731ec40844456f0b3092357541929b40045fad3d26421436ba540aa4c20",
+        "width": 169
+      },
+      "name": "flight.tick-067",
+      "reference": {
+        "decodedRgbaSha256": "8f7c9ed49cad0adba7a2387a376cdc508c8886669f4d923283c4ba0dfd1a4d2f",
+        "file": "references/flight.tick-067.png",
+        "height": 295,
+        "sha256": "2a7e48c74a2b0c6fc77e83455dbc6159436acc8c8b6bfb884e6a460d234702f2",
+        "width": 169
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "7e00c28d875edafd643b76967a438e44a00410afad163f428ae6a7307767862f",
+        "file": "frames/flight.tick-067.png",
+        "height": 640,
+        "sha256": "b88cebdd8291d06e7197e51a4ba260bd4eb448a49387d7314a87d2e2209f97e5",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 67
+    },
+    {
+      "bounds": {
+        "height": 295,
+        "width": 169,
+        "x": 152,
+        "y": 309
+      },
+      "coveredPixels": 511,
+      "mask": {
+        "decodedRgbaSha256": "d8a9ec450370b865280757d8625c3e04733705784640cea8a9d003cadbf8aa26",
+        "file": "masks/flight.tick-068.png",
+        "height": 295,
+        "sha256": "d835dc39676354aab6c46045de2c9acef3f27826a2e5e9f219eb99ae0b2d987c",
+        "width": 169
+      },
+      "name": "flight.tick-068",
+      "reference": {
+        "decodedRgbaSha256": "ac0c53aad1567ea67cc72f4047b7ba3497d61a1fe97d66a6c676fae6266e77bf",
+        "file": "references/flight.tick-068.png",
+        "height": 295,
+        "sha256": "4946486bf5db6a52b889b0ae790daeb5176c63dc40c5c6753e448c308c08ad8d",
+        "width": 169
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "496a9bfd0b072c27b3b04743c4f74bbaca663fd3fb44724db31c21c05d35c0bb",
+        "file": "frames/flight.tick-068.png",
+        "height": 640,
+        "sha256": "64a3cc0012ef5afa81d322f6f209c0cfa45c674b45bc33fa65b58b8d228ea484",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 68
+    },
+    {
+      "bounds": {
+        "height": 294,
+        "width": 175,
+        "x": 148,
+        "y": 311
+      },
+      "coveredPixels": 513,
+      "mask": {
+        "decodedRgbaSha256": "d7b4b9efa418705bbcf0e323d58a67a51b58b8fd03b0f893b84325daf0076cc0",
+        "file": "masks/flight.tick-069.png",
+        "height": 294,
+        "sha256": "c80cb371544f8e0f7d3b280faa4d7e76fbe1967d3e33bfc305c6ebbda86c91d5",
+        "width": 175
+      },
+      "name": "flight.tick-069",
+      "reference": {
+        "decodedRgbaSha256": "bfbbcda8f43d1f7fb5b65c5e32d0b2cfd5885369924d2e1ff84bf4f90837d404",
+        "file": "references/flight.tick-069.png",
+        "height": 294,
+        "sha256": "594f2e1af85fff3f543c5adde5f7044a0f695217ccaa00a262f75c7bc50d1d8d",
+        "width": 175
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "b679e15c53f31c461e50fc25444a5fd94b94abf865c315bb9a992e8be68da14a",
+        "file": "frames/flight.tick-069.png",
+        "height": 640,
+        "sha256": "e027fabd57a6da62e4ad08f9f52f3e5cd807f341cfe0605630500200d27da6a2",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 69
+    },
+    {
+      "bounds": {
+        "height": 277,
+        "width": 177,
+        "x": 148,
+        "y": 308
+      },
+      "coveredPixels": 484,
+      "mask": {
+        "decodedRgbaSha256": "21367c171ce01dc10a4b990c667a91e7f9fc17ea24bab52db69e690a89562877",
+        "file": "masks/flight.tick-070.png",
+        "height": 277,
+        "sha256": "97186eb869e3abed7547227d87fb46731fe03308ce6fe2e16a3ec144365b6f1c",
+        "width": 177
+      },
+      "name": "flight.tick-070",
+      "reference": {
+        "decodedRgbaSha256": "1b01813083dcbbaecb6fe3ed4d18142f5c8019db7e3774626e0993bba3b94929",
+        "file": "references/flight.tick-070.png",
+        "height": 277,
+        "sha256": "cab50260a18edb54ccf2e7697218df02dcea2d088ef6f04d5788cc42d61ab7cb",
+        "width": 177
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "e804f096f2311e5c90c5d0355dd71b6ecd4be343832f401353251093d2ce1068",
+        "file": "frames/flight.tick-070.png",
+        "height": 640,
+        "sha256": "53cea2b4b24d84f645b3941d2d948d177ccb23c183c6435d76132f14321c46f9",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 70
+    },
+    {
+      "bounds": {
+        "height": 260,
+        "width": 176,
+        "x": 148,
+        "y": 309
+      },
+      "coveredPixels": 476,
+      "mask": {
+        "decodedRgbaSha256": "3a610e7d6266811e7c4f4e9448736a9003d21ec86e0e55e457d9be544c69a0a4",
+        "file": "masks/flight.tick-071.png",
+        "height": 260,
+        "sha256": "f763d9a361d8ff0844e13fad483f77b7a3e354511ba58eb78ada872e46a69b58",
+        "width": 176
+      },
+      "name": "flight.tick-071",
+      "reference": {
+        "decodedRgbaSha256": "ada9db73a60f5b47d28f799ba0611e212b500c505640c90087d9f052ad0b070f",
+        "file": "references/flight.tick-071.png",
+        "height": 260,
+        "sha256": "9965dee697d2d88a297755aa43b9546825bbaeb0a1686c655409e13a9442fa86",
+        "width": 176
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "b1bdff844c68305cb93652e80c759476ab4eab19fe5a7c6f5cf9e3fe054df50e",
+        "file": "frames/flight.tick-071.png",
+        "height": 640,
+        "sha256": "843997dee62adb12cc21ca8d4cf476229ed44732b698de2d4511ed82cf81403f",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 71
+    },
+    {
+      "bounds": {
+        "height": 259,
+        "width": 176,
+        "x": 149,
+        "y": 310
+      },
+      "coveredPixels": 441,
+      "mask": {
+        "decodedRgbaSha256": "1b4fdf0fbaada8a2edda0e6de22f052e4c1fdc9d633d62b53a54a65d6e0ac915",
+        "file": "masks/flight.tick-072.png",
+        "height": 259,
+        "sha256": "51973461eb40732022c97038ed47e5857d9b9b39655aa643da5b0daaf8ab36d0",
+        "width": 176
+      },
+      "name": "flight.tick-072",
+      "reference": {
+        "decodedRgbaSha256": "3b2cecf2c60f4f21ef683668002cfe4f8484268029bf5400a646dee4494b3465",
+        "file": "references/flight.tick-072.png",
+        "height": 259,
+        "sha256": "99912ce854c56aebdc6cba11f208e13fc1873b34bf8590c9d00a45af43edaa3d",
+        "width": 176
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "097c3431aa2d1a0b3cf797fb553c0ed5a9add738cc88a49e1cc3ad210f6d47b1",
+        "file": "frames/flight.tick-072.png",
+        "height": 640,
+        "sha256": "81ca1e1643148979688974c1d31ca6fbcfee41af5c553ab46a7a8ee37f9fa055",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 72
+    },
+    {
+      "bounds": {
+        "height": 258,
+        "width": 171,
+        "x": 152,
+        "y": 312
+      },
+      "coveredPixels": 482,
+      "mask": {
+        "decodedRgbaSha256": "a908a46b816bded346cb47e119248de61ec0373f0428c11e6cba8324184a8854",
+        "file": "masks/flight.tick-073.png",
+        "height": 258,
+        "sha256": "5a3531297d6c48df39aad41f7c6f6675b6210761315dbb7f05d2d10124c10ec6",
+        "width": 171
+      },
+      "name": "flight.tick-073",
+      "reference": {
+        "decodedRgbaSha256": "71034c139d661a7e2d067cd178d2c984e08f1211806271d46ed7e1a390fa7c7d",
+        "file": "references/flight.tick-073.png",
+        "height": 258,
+        "sha256": "c50542e9c18eff13c563ffd168129325956c16bede6e5bdb608f775e1ed8fa0f",
+        "width": 171
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "1fd8b5003a2f576076feddf66f738658f3ce57857c2021676dc62fb5becadb90",
+        "file": "frames/flight.tick-073.png",
+        "height": 640,
+        "sha256": "f86ef3652b54f92399a7302bab4716e7d089a4f16a4b965d5ddfce3c75cb23d8",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 73
+    },
+    {
+      "bounds": {
+        "height": 258,
+        "width": 168,
+        "x": 152,
+        "y": 313
+      },
+      "coveredPixels": 372,
+      "mask": {
+        "decodedRgbaSha256": "f285cc8bfa6fdff9919c3ff96a7110a7f1adfb88d21fe0489759b207eff48974",
+        "file": "masks/flight.tick-074.png",
+        "height": 258,
+        "sha256": "8f61c1bddd87c8fc9cc1f6d11d87bf227205a4473cb3dc711001d0f9e8af0f2a",
+        "width": 168
+      },
+      "name": "flight.tick-074",
+      "reference": {
+        "decodedRgbaSha256": "bbbcd3e5cdc13e31975be3bbe1b5edfb86b1ed11b27e8ade1e1d7e4a5a1d3b28",
+        "file": "references/flight.tick-074.png",
+        "height": 258,
+        "sha256": "353460646c5e00351fdc202b77f173ab39e3f8a2d40a59b08a49bca6bd5d9c6e",
+        "width": 168
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "f2da146cf90f20161816f18aeb692106b83b98b939246655f9e30a422b30a43b",
+        "file": "frames/flight.tick-074.png",
+        "height": 640,
+        "sha256": "e02f77a065736180a96624112ce9fa8b33daca900bc0353ad9e17723027fef48",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 74
+    },
+    {
+      "bounds": {
+        "height": 247,
+        "width": 175,
+        "x": 148,
+        "y": 315
+      },
+      "coveredPixels": 300,
+      "mask": {
+        "decodedRgbaSha256": "754cc0790f0ed0f40b6f00aa574e6aaea0a03367b615ab32438b4cb2636490a6",
+        "file": "masks/flight.tick-075.png",
+        "height": 247,
+        "sha256": "0a38aa6528dcbb5e4e5edf97f8b71d5d2886f143cb0a06388e268943932c3056",
+        "width": 175
+      },
+      "name": "flight.tick-075",
+      "reference": {
+        "decodedRgbaSha256": "263d3b5bca6b1c1820c27b528f98c29467efad4b5726f4d12433ae76ee0e3512",
+        "file": "references/flight.tick-075.png",
+        "height": 247,
+        "sha256": "005de60cd94d7e68d52f2aa1c372ebc02c3c2ca00efaa52a7893e5dcd6456a35",
+        "width": 175
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "0af150d3c287562360eb64aab6d495ac917a0ae44c91910215f7435b65789a4b",
+        "file": "frames/flight.tick-075.png",
+        "height": 640,
+        "sha256": "01b70e896c1f8780cb9fa0ce67772943cd6cb3ecaced35689f4dfb2591bf4f44",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 75
+    },
+    {
+      "bounds": {
+        "height": 251,
+        "width": 177,
+        "x": 148,
+        "y": 312
+      },
+      "coveredPixels": 308,
+      "mask": {
+        "decodedRgbaSha256": "9bcf7e464fd50ff14dfc4e03984443b081c005e343c41e69b9a3b006483f06a9",
+        "file": "masks/flight.tick-076.png",
+        "height": 251,
+        "sha256": "600783e59c0b086926b7a94339b8163419f93c127213029c724c00c3be6c46a2",
+        "width": 177
+      },
+      "name": "flight.tick-076",
+      "reference": {
+        "decodedRgbaSha256": "15e4eb0a0e13042f69247b07e67587c11944fb8a38bda05bae12a80a6fff3c5d",
+        "file": "references/flight.tick-076.png",
+        "height": 251,
+        "sha256": "7f3976f67e137514e3eca939e3fe650cca3ba056c3eed0fa52c0140a3a02fae8",
+        "width": 177
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "413e5f528e8c65d1426bcf0c2455be2a767ebd40412df55450cc2040bf64a88b",
+        "file": "frames/flight.tick-076.png",
+        "height": 640,
+        "sha256": "c711d1dc532b26d922cf57e90b9ddf75bc41fb17fd32ddc443cfbc1f259ded99",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 76
+    },
+    {
+      "bounds": {
+        "height": 250,
+        "width": 177,
+        "x": 148,
+        "y": 313
+      },
+      "coveredPixels": 319,
+      "mask": {
+        "decodedRgbaSha256": "c5ea85ff2d4313d035288892b7a3c1ccc180126fa6cd4a5988eaeffbdf6289aa",
+        "file": "masks/flight.tick-077.png",
+        "height": 250,
+        "sha256": "a0f6ca9c607205b8774ed9c16f8f552b3b3bbce4e5d6f473817cc26ba3c95a49",
+        "width": 177
+      },
+      "name": "flight.tick-077",
+      "reference": {
+        "decodedRgbaSha256": "b9cd1421ede372bd2458352d5f92ad64c1d623e7cf850675a0813e60b0b757a2",
+        "file": "references/flight.tick-077.png",
+        "height": 250,
+        "sha256": "6b8ec51aa76417725fd2108a22f304275255b743cc6342d68cf32083fde95de1",
+        "width": 177
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "bf7626686ad7b6d0c0db64c435c061f390a833ed140a58c5b6069a505024e694",
+        "file": "frames/flight.tick-077.png",
+        "height": 640,
+        "sha256": "288bb58dd460c6b7a79359e31b817419ccf64453abb0c47e6b88ebae7fd0ca5b",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 77
+    },
+    {
+      "bounds": {
+        "height": 174,
+        "width": 174,
+        "x": 149,
+        "y": 315
+      },
+      "coveredPixels": 211,
+      "mask": {
+        "decodedRgbaSha256": "7217ae4d4c4e76bf246d7cfb081ba6649a5d5a8093d2d166c1c616586cfbaf74",
+        "file": "masks/flight.tick-078.png",
+        "height": 174,
+        "sha256": "ec5efafeafddac2233c40a81ac04cc2c2dc3c63387b83bbe0710837a3226c491",
+        "width": 174
+      },
+      "name": "flight.tick-078",
+      "reference": {
+        "decodedRgbaSha256": "5d6aa1d4a0dc459495955c5ab63095a7df85d7ba8e7046f1bae3391c0dd824a4",
+        "file": "references/flight.tick-078.png",
+        "height": 174,
+        "sha256": "f95ec698cd9ef71dedaaf44d0284990de7cf7c5a7e8dfd9173a1bde65fd6837a",
+        "width": 174
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a3293e6e5e99f306b36880a0d8b5d2a87006c1d34b5ae45b81c9bf89b6983b70",
+        "file": "frames/flight.tick-078.png",
+        "height": 640,
+        "sha256": "3201134aef8a32a1fa11375ff1a2969bd974a518c6546f0ea73a7285ca6418dd",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 78
+    },
+    {
+      "bounds": {
+        "height": 171,
+        "width": 161,
+        "x": 162,
+        "y": 319
+      },
+      "coveredPixels": 193,
+      "mask": {
+        "decodedRgbaSha256": "763d89f983f3435a86a31e2a0cf344d34c86265ae0ad5979d01c25e3087a8047",
+        "file": "masks/flight.tick-079.png",
+        "height": 171,
+        "sha256": "d8ac721a9883f9e3c0e768da55ab36fd249361de3c463dd664e5680034cb0339",
+        "width": 161
+      },
+      "name": "flight.tick-079",
+      "reference": {
+        "decodedRgbaSha256": "932c626a2e3dd3b41bf825980acfcb5f74cd529e06a6fc55a8df9b4d8297b83e",
+        "file": "references/flight.tick-079.png",
+        "height": 171,
+        "sha256": "c3de1ea3c6c5910d76bc4de04534ce889086a7eee653439e1a63298882290bcc",
+        "width": 161
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "e18ddf8b413596cbd5398f1914afbe5831566c5928c8a105f1ff65cbbb62d4b9",
+        "file": "frames/flight.tick-079.png",
+        "height": 640,
+        "sha256": "c51b7461b6356fd2cbf25f3e9d292a10238eaf5661d2a3475a1b7433abae1342",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 79
+    },
+    {
+      "bounds": {
+        "height": 165,
+        "width": 161,
+        "x": 156,
+        "y": 326
+      },
+      "coveredPixels": 149,
+      "mask": {
+        "decodedRgbaSha256": "ce36f1b5d1ee14e5e0a5392d8741d901334a4be407626a1c6aa8a0e071f505d6",
+        "file": "masks/flight.tick-080.png",
+        "height": 165,
+        "sha256": "e03b57af5281198581fdb4dccf181905ef7c4d52a8b861ded86918aa0e0770ca",
+        "width": 161
+      },
+      "name": "flight.tick-080",
+      "reference": {
+        "decodedRgbaSha256": "166d7eab00e0d3cce830b575b833ebd5c335b606b4d356dbe2cbcb4ea4402b2a",
+        "file": "references/flight.tick-080.png",
+        "height": 165,
+        "sha256": "cfb230648e6d83fbf773e342242a18cf06e90cc4f60f00651261130275ae39e0",
+        "width": 161
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "03ce2a56a119bf6d9d1a2d6739224ce996b89dd8901029f70a16d48fc2781b48",
+        "file": "frames/flight.tick-080.png",
+        "height": 640,
+        "sha256": "cf2bed1300e4e932bbaae8b80f0a682e97c9c4a78fddc89447796266522ab4dc",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 80
+    },
+    {
+      "bounds": {
+        "height": 160,
+        "width": 165,
+        "x": 148,
+        "y": 329
+      },
+      "coveredPixels": 114,
+      "mask": {
+        "decodedRgbaSha256": "e42ad02834b124cfbf07bf21bf7031e3b43afe63333cbf8116cb2572cda4859f",
+        "file": "masks/flight.tick-081.png",
+        "height": 160,
+        "sha256": "77ac99d73bbb59f90cf9dffb4bb771f9da80e3aabcab1d655b225aebeeff3b94",
+        "width": 165
+      },
+      "name": "flight.tick-081",
+      "reference": {
+        "decodedRgbaSha256": "b783aae3920f97b308fe3687e9c734180a4c4332cb7e82dd6de3a5d97d9383b4",
+        "file": "references/flight.tick-081.png",
+        "height": 160,
+        "sha256": "3b5e3c689243e934cb29b3ec5ed46e405f74eddff27fe8aabb6654c3693d3e26",
+        "width": 165
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "7d2b2d089ef8d532155f9812cb58392ccd46c843ebf380edcadd420559985264",
+        "file": "frames/flight.tick-081.png",
+        "height": 640,
+        "sha256": "d61cd67d7c17fef8311036b77495dcbec645092412da9ee41f04c173b6998dd7",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 81
+    },
+    {
+      "bounds": {
+        "height": 159,
+        "width": 161,
+        "x": 148,
+        "y": 331
+      },
+      "coveredPixels": 120,
+      "mask": {
+        "decodedRgbaSha256": "dade787435c01ce157e2d897369dfb4c22a5b87f38d83d306f96b076493887cf",
+        "file": "masks/flight.tick-082.png",
+        "height": 159,
+        "sha256": "328d786d392a547de0b6022e904ff7244ee7e476b006ced00a63575ebea36c68",
+        "width": 161
+      },
+      "name": "flight.tick-082",
+      "reference": {
+        "decodedRgbaSha256": "d1decdc2197d229753ada23ebf0456ad4700325fbd8c80ae7d8975f67ed31c63",
+        "file": "references/flight.tick-082.png",
+        "height": 159,
+        "sha256": "60345d01a717e727ecc75c4eb2b30dea6d847a5357cb881b5218090fbab3356b",
+        "width": 161
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "4dc57be911fbf8001fe4742e7adac1665afc99227f8cfb4cdaeec1a1459700cf",
+        "file": "frames/flight.tick-082.png",
+        "height": 640,
+        "sha256": "5f3690a2248252ddb6e054f52e276d48ad906a5af55a20bf929553e150734d6b",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 82
+    },
+    {
+      "bounds": {
+        "height": 170,
+        "width": 168,
+        "x": 148,
+        "y": 323
+      },
+      "coveredPixels": 183,
+      "mask": {
+        "decodedRgbaSha256": "e2afe98a18fc8c90edfed6f9af46c9b3e65a0557cd99c6c208da3175a2ab1581",
+        "file": "masks/flight.tick-083.png",
+        "height": 170,
+        "sha256": "9a63610779740c1342b71ae8f54134ce905679f4a89464608a65778e32e06d0a",
+        "width": 168
+      },
+      "name": "flight.tick-083",
+      "reference": {
+        "decodedRgbaSha256": "9b4f26e5ad57dd1c0deae55532713baa54afca52c9afcf760d84520c5a5a42ca",
+        "file": "references/flight.tick-083.png",
+        "height": 170,
+        "sha256": "1775049c63bfb794878eddad54422a247ed53644657be336f18eb97d62796bb8",
+        "width": 168
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a1a3d1a8918577a9382664efdb10604a41d699295b1ab45fa8e8247d745dbcb0",
+        "file": "frames/flight.tick-083.png",
+        "height": 640,
+        "sha256": "efe0df86d45c25dfdc9a74ca7b483cb68c2cd134dd462d1f77be85558bfef102",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 83
+    },
+    {
+      "bounds": {
+        "height": 137,
+        "width": 158,
+        "x": 149,
+        "y": 332
+      },
+      "coveredPixels": 40,
+      "mask": {
+        "decodedRgbaSha256": "75c1804ea0b3a2b22062ac77c90a5d60a95930c5b5e793a171b2a56099a8c644",
+        "file": "masks/flight.tick-084.png",
+        "height": 137,
+        "sha256": "83ef3a1a8df39cf3af0820659b7d5323794fc150814cee676d33aec02635c187",
+        "width": 158
+      },
+      "name": "flight.tick-084",
+      "reference": {
+        "decodedRgbaSha256": "cfd4319826e3086682b2748f4b5690fbf444c805175b7b7a61af2621dadd25dc",
+        "file": "references/flight.tick-084.png",
+        "height": 137,
+        "sha256": "c8772bdd2aedceeb2d09de8a5f84dfe67ba44b8944d4353cd22843b42ac2c986",
+        "width": 158
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "6599bef950faccd127e162f06ac78d3aad34768148586f42f1e09c3c88167546",
+        "file": "frames/flight.tick-084.png",
+        "height": 640,
+        "sha256": "085a912cb345db41097a30b65883211e19cf6434bb1dfee7f00ec727861ccb4c",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 84
+    }
+  ],
+  "harnessSources": [
+    {
+      "file": "source/ProjectedReferenceMain.java",
+      "sha256": "5f1480a11a2b932e92a8237cf8dad9fc72995ea942eb7e19253836a04042df98"
+    },
+    {
+      "file": "source/ParticleSeedAgent.java",
+      "sha256": "c532624a2f34872f76908cc672122d7b458dd2bc0d0739e7e29aabd8fe4008b3"
+    },
+    {
+      "file": "source/capture-projected-firework-rocket.ts.txt",
+      "sha256": "f20bc1dcd186547602b5e613182acc02f2a18ea7f605baa48b42b9ff99011fc8"
+    },
+    {
+      "file": "source/projected-firework-rocket-case.ts.txt",
+      "sha256": "15399a93128fa4b38efe200a48e22e969da5dfa5507531d0f68d6a03e419d0c6"
+    }
+  ],
+  "launches": [
+    {
+      "itemAtlas": {
+        "minecraft:textures/atlas/items.png": {
+          "width": 1024,
+          "height": 512,
+          "maxMipLevel": 0,
+          "textureMipLevels": 1,
+          "sampler": [
+            "NEAREST",
+            "NEAREST",
+            "CLAMP_TO_EDGE",
+            "CLAMP_TO_EDGE",
+            "OptionalDouble[0.0]"
+          ],
+          "fireworkRocket": {
+            "name": "minecraft:item/firework_rocket",
+            "x": 454,
+            "y": 90,
+            "width": 16,
+            "height": 16,
+            "uvBits": [
+              1055096832,
+              1055621120,
+              1043726336,
+              1045823488
+            ],
+            "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+          }
+        },
+        "minecraft:textures/atlas/blocks.png": {
+          "width": 2048,
+          "height": 2048,
+          "maxMipLevel": 4,
+          "textureMipLevels": 5,
+          "sampler": [
+            "NEAREST",
+            "NEAREST",
+            "CLAMP_TO_EDGE",
+            "CLAMP_TO_EDGE",
+            "OptionalDouble[0.0]"
+          ],
+          "fireworkRocket": {
+            "name": "minecraft:missingno",
+            "x": 96,
+            "y": 1552,
+            "width": 16,
+            "height": 16,
+            "uvBits": [
+              1029701632,
+              1031798784,
+              1061421056,
+              1061552128
+            ],
+            "transparency": "Transparency[hasTransparent=false, hasTranslucent=false]"
+          }
+        }
+      },
+      "name": "native-one",
+      "runtime": {
+        "device": "llvmpipe (LLVM 20.1.2, 256 bits)",
+        "vendor": "Mesa",
+        "driver": "4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4",
+        "backend": "OpenGL",
+        "window": [
+          480,
+          640
+        ],
+        "cameraPosition": [
+          0.5,
+          80.49999988079071,
+          0.5
+        ],
+        "cameraRotation": [
+          180,
+          0
+        ],
+        "projectionMatrix": [
+          0.06666667,
+          0,
+          0,
+          0,
+          0,
+          0.05,
+          0,
+          0,
+          0,
+          0,
+          -0.003907013,
+          0,
+          0,
+          -0.4,
+          -0.00019535066,
+          1
+        ],
+        "overworldClockTime": 6000,
+        "raining": false,
+        "gameType": "spectator",
+        "hudHidden": true,
+        "videoOptions": {
+          "graphicsPreset": "CUSTOM",
+          "renderDistance": 12,
+          "ambientOcclusion": true,
+          "mipmapLevels": 4,
+          "textureFiltering": "NONE",
+          "cloudStatus": "FANCY",
+          "fov": 70,
+          "bobView": true,
+          "particles": "ALL"
+        },
+        "fog": {
+          "color": [
+            0.70980394,
+            0.8156863,
+            1,
+            1
+          ],
+          "environmentalStart": 0,
+          "environmentalEnd": 1024,
+          "renderDistanceStart": 172.8,
+          "renderDistanceEnd": 192,
+          "skyEnd": 192,
+          "cloudEnd": 2048
+        },
+        "particleAtlas": {
+          "width": 512,
+          "height": 256,
+          "maxMipLevel": 0,
+          "mipLevelCount": 1,
+          "textureMipLevels": 1,
+          "sampler": [
+            "NEAREST",
+            "NEAREST",
+            "CLAMP_TO_EDGE",
+            "CLAMP_TO_EDGE",
+            "OptionalDouble[0.0]"
+          ],
+          "sprites": {
+            "spark_0": {
+              "x": 412,
+              "y": 80,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1050804224,
+                1051852800
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_1": {
+              "x": 412,
+              "y": 90,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1052114944,
+                1053163520
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_2": {
+              "x": 412,
+              "y": 100,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1053425664,
+                1054474240
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_3": {
+              "x": 412,
+              "y": 110,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1054736384,
+                1055784960
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_4": {
+              "x": 412,
+              "y": 120,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1056047104,
+                1057030144
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_5": {
+              "x": 412,
+              "y": 130,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057161216,
+                1057685504
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_6": {
+              "x": 412,
+              "y": 140,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057816576,
+                1058340864
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_7": {
+              "x": 412,
+              "y": 150,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1058471936,
+                1058996224
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "flash": {
+              "x": 68,
+              "y": 128,
+              "width": 32,
+              "height": 32,
+              "uvBits": [
+                1040842752,
+                1045037056,
+                1057030144,
+                1059127296
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=true]"
+            }
+          }
+        }
+      },
+      "spawnedRocket": {
+        "life": 0,
+        "lifetime": 24,
+        "movement": [
+          -0.0009671247779691829,
+          0.05,
+          -0.0003448803411555107
+        ],
+        "old": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          0.5,
+          72,
+          -21.5
+        ],
+        "rotation": [
+          0,
+          0
+        ],
+        "removed": false,
+        "horizontalCollision": false
+      }
+    },
+    {
+      "itemAtlas": {
+        "minecraft:textures/atlas/items.png": {
+          "width": 1024,
+          "height": 512,
+          "maxMipLevel": 0,
+          "textureMipLevels": 1,
+          "sampler": [
+            "NEAREST",
+            "NEAREST",
+            "CLAMP_TO_EDGE",
+            "CLAMP_TO_EDGE",
+            "OptionalDouble[0.0]"
+          ],
+          "fireworkRocket": {
+            "name": "minecraft:item/firework_rocket",
+            "x": 454,
+            "y": 90,
+            "width": 16,
+            "height": 16,
+            "uvBits": [
+              1055096832,
+              1055621120,
+              1043726336,
+              1045823488
+            ],
+            "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+          }
+        },
+        "minecraft:textures/atlas/blocks.png": {
+          "width": 2048,
+          "height": 2048,
+          "maxMipLevel": 4,
+          "textureMipLevels": 5,
+          "sampler": [
+            "NEAREST",
+            "NEAREST",
+            "CLAMP_TO_EDGE",
+            "CLAMP_TO_EDGE",
+            "OptionalDouble[0.0]"
+          ],
+          "fireworkRocket": {
+            "name": "minecraft:missingno",
+            "x": 96,
+            "y": 1552,
+            "width": 16,
+            "height": 16,
+            "uvBits": [
+              1029701632,
+              1031798784,
+              1061421056,
+              1061552128
+            ],
+            "transparency": "Transparency[hasTransparent=false, hasTranslucent=false]"
+          }
+        }
+      },
+      "name": "native-two",
+      "runtime": {
+        "device": "llvmpipe (LLVM 20.1.2, 256 bits)",
+        "vendor": "Mesa",
+        "driver": "4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4",
+        "backend": "OpenGL",
+        "window": [
+          480,
+          640
+        ],
+        "cameraPosition": [
+          0.5,
+          80.49999988079071,
+          0.5
+        ],
+        "cameraRotation": [
+          180,
+          0
+        ],
+        "projectionMatrix": [
+          0.06666667,
+          0,
+          0,
+          0,
+          0,
+          0.05,
+          0,
+          0,
+          0,
+          0,
+          -0.003907013,
+          0,
+          0,
+          -0.4,
+          -0.00019535066,
+          1
+        ],
+        "overworldClockTime": 6000,
+        "raining": false,
+        "gameType": "spectator",
+        "hudHidden": true,
+        "videoOptions": {
+          "graphicsPreset": "CUSTOM",
+          "renderDistance": 12,
+          "ambientOcclusion": true,
+          "mipmapLevels": 4,
+          "textureFiltering": "NONE",
+          "cloudStatus": "FANCY",
+          "fov": 70,
+          "bobView": true,
+          "particles": "ALL"
+        },
+        "fog": {
+          "color": [
+            0.70980394,
+            0.8156863,
+            1,
+            1
+          ],
+          "environmentalStart": 0,
+          "environmentalEnd": 1024,
+          "renderDistanceStart": 172.8,
+          "renderDistanceEnd": 192,
+          "skyEnd": 192,
+          "cloudEnd": 2048
+        },
+        "particleAtlas": {
+          "width": 512,
+          "height": 256,
+          "maxMipLevel": 0,
+          "mipLevelCount": 1,
+          "textureMipLevels": 1,
+          "sampler": [
+            "NEAREST",
+            "NEAREST",
+            "CLAMP_TO_EDGE",
+            "CLAMP_TO_EDGE",
+            "OptionalDouble[0.0]"
+          ],
+          "sprites": {
+            "spark_0": {
+              "x": 412,
+              "y": 80,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1050804224,
+                1051852800
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_1": {
+              "x": 412,
+              "y": 90,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1052114944,
+                1053163520
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_2": {
+              "x": 412,
+              "y": 100,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1053425664,
+                1054474240
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_3": {
+              "x": 412,
+              "y": 110,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1054736384,
+                1055784960
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_4": {
+              "x": 412,
+              "y": 120,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1056047104,
+                1057030144
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_5": {
+              "x": 412,
+              "y": 130,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057161216,
+                1057685504
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_6": {
+              "x": 412,
+              "y": 140,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057816576,
+                1058340864
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_7": {
+              "x": 412,
+              "y": 150,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1058471936,
+                1058996224
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "flash": {
+              "x": 68,
+              "y": 128,
+              "width": 32,
+              "height": 32,
+              "uvBits": [
+                1040842752,
+                1045037056,
+                1057030144,
+                1059127296
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=true]"
+            }
+          }
+        }
+      },
+      "spawnedRocket": {
+        "life": 0,
+        "lifetime": 24,
+        "movement": [
+          -0.0009671247779691829,
+          0.05,
+          -0.0003448803411555107
+        ],
+        "old": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          0.5,
+          72,
+          -21.5
+        ],
+        "rotation": [
+          0,
+          0
+        ],
+        "removed": false,
+        "horizontalCollision": false
+      }
+    }
+  ],
+  "minecraftVersion": "26.2",
+  "mods": [],
+  "nativeCamera": {
+    "position": [
+      0.5,
+      80.49999988079071,
+      0.5
+    ],
+    "rotation": [
+      180,
+      0
+    ]
+  },
+  "partialTick": 0,
+  "projection": {
+    "facing": "north",
+    "pixelsPerBlock": 16,
+    "type": "orthographic",
+    "zFar": 256,
+    "zNear": 0.05,
+    "eyeAt": [
+      240,
+      448
+    ],
+    "camera": {
+      "eye": [
+        0.5,
+        80.5,
+        0.5
+      ],
+      "xRot": 0,
+      "yRot": 180
+    },
+    "description": "Unmodified 26.2 renderer; only the main camera's projection matrix is replaced by a side-on orthographic projection with pixelsPerBlock window pixels per block that maps the camera eye to the eyeAt window pixel. The camera sits 22 blocks south of the rocket so that the vanilla perspective culling frustum (fov 70) contains the rocket, its trail and the explosion from launch to the last spark.",
+    "window": {
+      "height": 640,
+      "width": 480
+    }
+  },
+  "repeatDecodedRgbaEqual": true,
+  "resourcePacks": [],
+  "rocketLifetime": 24,
+  "scene": {
+    "description": "One firework rocket item entity spawned by the integrated server between two server ticks (as a player's use of the item does) and mirrored by the vanilla client from the spawn packet. The integrated server and the client run in lockstep: one vanilla server tick, then the client handles every packet that tick sent, then one vanilla client tick at partialTick 0. RandomSource.create() in Entity.<init> and Particle.<init> is replaced by RandomSource.create(seeds.nextLong()) with one seeds = RandomSource.create(seed) per declared stream (server entities, client entities, client particles; ParticleSeedAgent); the random source algorithm stays vanilla. Frame tick-N is the scene after N server and N client ticks since the spawn. At 22 blocks the explosion is farther than 16 blocks from the camera, so the native starter selects the _far blast and twinkle sounds and delays them by distance; the UI port plays the near variants as declared.",
+    "rocket": {
+      "at": [
+        0.5,
+        72,
+        -21.5
+      ],
+      "clientEntitySeed": 42,
+      "explosion": {
+        "colors": [
+          "lime",
+          "white"
+        ],
+        "fadeColors": [
+          "green"
+        ],
+        "shape": "large_ball",
+        "trail": false,
+        "twinkle": true
+      },
+      "flightDuration": 1,
+      "maxTicks": 160,
+      "name": "flight",
+      "particleSeed": 42,
+      "serverEntitySeed": 42
+    }
+  },
+  "scope": "Projected references (ADR 0005): masked rocket item, trail and explosion pixels of one firework rocket at every tick-aligned frame (partialTick 0) at the fixed seeds; the backdrop is a declared web adaptation. Interpolated frames between ticks, other seeds and other camera arrangements are unverified. Captured on llvmpipe under Xvfb.",
+  "seededParticles": 412,
+  "seeds": {
+    "clientEntity": 42,
+    "particle": 42,
+    "serverEntity": 42
+  },
+  "sequenceTicks": {
+    "explosion": 25,
+    "explosionBlast": 26,
+    "lastSpark": 86,
+    "launch": 1,
+    "twinkle": 42
+  },
+  "sounds": [
+    {
+      "call": "play",
+      "delayTicks": 0,
+      "pitch": 1,
+      "pitchBits": 1065353216,
+      "position": [
+        0.375,
+        72,
+        -21.5
+      ],
+      "sound": "minecraft:entity.firework_rocket.launch",
+      "source": "AMBIENT",
+      "thread": "Render thread",
+      "tick": 1,
+      "volume": 3,
+      "volumeBits": 1077936128
+    },
+    {
+      "call": "playDelayed",
+      "delayTicks": 11,
+      "pitch": 1.0203595,
+      "pitchBits": 1065524004,
+      "position": [
+        0.29520461880741494,
+        85.20001221373718,
+        -21.57277412852691
+      ],
+      "sound": "minecraft:entity.firework_rocket.large_blast_far",
+      "source": "AMBIENT",
+      "thread": "Render thread",
+      "tick": 26,
+      "volume": 20,
+      "volumeBits": 1101004800
+    },
+    {
+      "call": "playDelayed",
+      "delayTicks": 11,
+      "pitch": 0.9001209,
+      "pitchBits": 1063677523,
+      "position": [
+        0.29520461880741494,
+        85.20001221373718,
+        -21.57277412852691
+      ],
+      "sound": "minecraft:entity.firework_rocket.twinkle_far",
+      "source": "AMBIENT",
+      "thread": "Render thread",
+      "tick": 42,
+      "volume": 20,
+      "volumeBits": 1101004800
+    }
+  ],
+  "sourceJar": {
+    "path": "versions/26.2/26.2.jar",
+    "sha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
+  },
+  "tickRange": {
+    "first": 1,
+    "last": 86
+  },
+  "ticksPerSecond": 20,
+  "world": {
+    "clockTime": 6000,
+    "commands": [
+      "time set noon",
+      "weather clear"
+    ],
+    "description": "Fresh isolated singleplayer world from the vanilla world-creation flow: flat preset, fixed seed, spectator, peaceful, no structures. Noon with the clock paused, clear weather with the weather cycle paused, open sky around the rocket. options.txt sets no video option, so every video option is the vanilla default.",
+    "levelName": "grasscn-projected-firework-rocket",
+    "preset": "minecraft:flat",
+    "seed": 0
+  }
+}

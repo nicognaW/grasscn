@@ -27,7 +27,7 @@ export default withMDX({
     // Fumadocs customizes Webpack; release each compiler heap before prerendering.
     webpackBuildWorker: true,
   },
-  // Manual installation serves raw registry files, including bundled components.
+  // Manual installation reads raw authored registry sources through computed paths, including bundled components.
   outputFileTracingIncludes: {
     "/api/installation/**": ["./registry/**/*"],
   },

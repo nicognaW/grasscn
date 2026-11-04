@@ -11,10 +11,10 @@ declare global {
   }
 }
 
-test("Minecraft documentation delivers maintained examples for all nine installable items", async ({
+test("Minecraft documentation delivers maintained examples for all eleven installable items", async ({
   page,
 }) => {
-  test.setTimeout(120_000);
+  test.setTimeout(170_000);
 
   for (const slug of [
     "advancement-tree",
@@ -26,6 +26,8 @@ test("Minecraft documentation delivers maintained examples for all nine installa
     "map",
     "trading",
     "player-list",
+    "redstone-lamp-display",
+    "fireworks",
   ]) {
     // oxlint-disable-next-line no-await-in-loop -- Shared page route/link/code-copy validation workflow must finish before the next documentation navigation.
     await page.goto(`${origin}/docs/components/${slug}`);

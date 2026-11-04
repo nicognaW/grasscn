@@ -181,3 +181,30 @@ test("mobile documentation navigation opens the page tree without page overflow"
     path: testInfo.outputPath("actual-docs-mobile.png"),
   });
 });
+
+test("the header shows Components as a text link like the other main navigation links", async ({
+  page,
+}) => {
+  const navigation = page
+    .getByRole("banner")
+    .getByRole("navigation", { exact: true, name: "Main navigation" });
+
+  const components = navigation.getByRole("link", {
+    exact: true,
+    name: "Components",
+  });
+
+  const charts = navigation.getByRole("link", { exact: true, name: "Charts" });
+
+  await page.goto(`${website}/docs/components/button`);
+  await expect(components).toHaveAttribute("aria-current", "page");
+  await expect(components).not.toHaveAttribute("data-slot", "button");
+  await expect(components).not.toHaveClass(/\bmc-button\b/u);
+  expect(await components.getAttribute("class")).toBe(
+    await charts.getAttribute("class")
+  );
+
+  await page.goto(`${website}/charts`);
+  await expect(components).not.toHaveAttribute("aria-current");
+  await expect(charts).toHaveAttribute("aria-current", "page");
+});

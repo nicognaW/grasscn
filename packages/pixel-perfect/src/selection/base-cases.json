@@ -130,19 +130,6 @@
     },
     {
       "file": "integration/website/docs-navigation-pixels.spec.ts",
-      "title": "documentation header Components matches its captured Minecraft Button",
-      "titlePath": [
-        "documentation header Components matches its captured Minecraft Button"
-      ],
-      "components": ["website"],
-      "evidence": {
-        "kind": "website-default",
-        "route": "/docs",
-        "reason": "The default desktop header Components link is the actual scale2/logical100x20 Button on #202020. This single declared native constituent case does not select other labels, states or scales."
-      }
-    },
-    {
-      "file": "integration/website/docs-navigation-pixels.spec.ts",
       "title": "documentation search placeholder matches its captured Minecraft input",
       "titlePath": [
         "documentation search placeholder matches its captured Minecraft input"
@@ -385,6 +372,71 @@
         "kind": "website-default",
         "route": "/docs",
         "reason": "Actual default header preserves the byte-pinned176x64SVG with48pxgrass GUI3 on#202020. One1536x900/DPR1 constituent compares to two original renderer launches; composite badge/header remain web adaptations. No DOM-forced geometry or extra native variant."
+      }
+    },
+    {
+      "file": "redstone-lamp-display/pixels.spec.ts",
+      "title": "redstone lamp display 1234 matches its projected reference within the geometry mask",
+      "titlePath": [
+        "redstone lamp display 1234 matches its projected reference within the geometry mask"
+      ],
+      "components": ["redstone-lamp-display"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/redstone-lamp-display#interactive-playground",
+        "reason": "The playground's default value 1234 (spec #42 demo default) at 8 px lamp cells and DPR 1, compared within the native geometry mask against two launches of the unmodified renderer under the declared orthographic projection. Single glyphs, 0 and 12k are Full; the transparent backdrop and glyph composition remain web adaptations."
+      }
+    },
+    {
+      "file": "nether-star/glint-pixels.spec.ts",
+      "title": "nether star GUI item at glint time 0 ms matches its captured reference",
+      "titlePath": [
+        "nether star GUI item at glint time 0 ms matches its captured reference"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/",
+        "reason": "Every page's header star button draws the nether star UI port at GUI scale 2 on the #202020 header, with or without a star count. Glint time 0 (spec #42) is compared at DPR 1 against two launches of the unmodified 26.2 GUI item renderer with the glint clock fixed. The other captured glint times, the integrity check and the comparator negative control are Full; times between captured ones are unverified."
+      }
+    },
+    {
+      "file": "fireworks/rocket-pixels.spec.ts",
+      "title": "firework rocket tick 1 matches its projected reference within the geometry mask",
+      "titlePath": [
+        "firework rocket tick 1 matches its projected reference within the geometry mask"
+      ],
+      "components": ["fireworks"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/fireworks#interactive-playground",
+        "reason": "The launch-sound frame (spec #42: firework frames at each sound-event tick). Clicking the playground's Launch fireworks button, or the header star button on every page, runs the rocket sequence at the fixed seeds and plays the launch sound on this tick; the tick-aligned frame is compared within the native geometry mask at DPR 1 against two launches of the unmodified 26.2 renderer under the declared orthographic projection. Interpolated frames are unverified, and placement and the transparent backdrop are web adaptations. Every other tick, the integrity check and the negative control are Full."
+      }
+    },
+    {
+      "file": "fireworks/rocket-pixels.spec.ts",
+      "title": "firework rocket tick 26 matches its projected reference within the geometry mask",
+      "titlePath": [
+        "firework rocket tick 26 matches its projected reference within the geometry mask"
+      ],
+      "components": ["fireworks"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/fireworks#interactive-playground",
+        "reason": "The large_blast frame (spec #42: firework frames at each sound-event tick): the starter's first tick, with the particle ball and flash, shown by the playground's Launch fireworks button and the header star button at the fixed seeds. Compared within the native geometry mask at DPR 1 against two launches of the unmodified 26.2 renderer under the declared orthographic projection. Interpolated frames are unverified, and placement and the transparent backdrop are web adaptations. Every other tick is Full."
+      }
+    },
+    {
+      "file": "fireworks/rocket-pixels.spec.ts",
+      "title": "firework rocket tick 42 matches its projected reference within the geometry mask",
+      "titlePath": [
+        "firework rocket tick 42 matches its projected reference within the geometry mask"
+      ],
+      "components": ["fireworks"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/fireworks#interactive-playground",
+        "reason": "The twinkle frame (spec #42: firework frames at each sound-event tick): the starter's last tick, shown by the playground's Launch fireworks button and the header star button at the fixed seeds. Compared within the native geometry mask at DPR 1 against two launches of the unmodified 26.2 renderer under the declared orthographic projection. Interpolated frames are unverified, and placement and the transparent backdrop are web adaptations. Every other tick is Full."
       }
     }
   ]

@@ -2,7 +2,7 @@
 
 Pixel-perfect Minecraft UI components for the web. Copy, customize, and build on them. Built on [shadcn/ui](https://ui.shadcn.com). Open source.
 
-<!-- Add the showcase composition here. -->
+![grasscn homepage: Minecraft-style title and interactive example components](./docs/images/showcase.png)
 
 [![GitHub stars](https://shieldcn.dev/github/stars/nicognaW/grasscn.svg)](https://github.com/nicognaW/grasscn/stargazers) [![MIT license](https://shieldcn.dev/github/license/nicognaW/grasscn.svg)](./LICENSE) [![Built on shadcn/ui](https://shieldcn.dev/badge/built_on-shadcn%2Fui.svg?logo=shadcnui)](https://ui.shadcn.com)
 

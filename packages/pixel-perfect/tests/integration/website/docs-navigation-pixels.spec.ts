@@ -124,16 +124,6 @@ test.beforeEach(async ({ page }) => {
   expect(await page.evaluate(() => window.devicePixelRatio)).toBe(1);
 });
 
-test("documentation header Components matches its captured Minecraft Button", async ({
-  page,
-}, info) => {
-  const link = page
-    .getByRole("navigation", { name: "Main navigation" })
-    .getByRole("link", { exact: true, name: "Components" });
-
-  await compareNative(link, "docs-header-components-s2.png", info);
-});
-
 test("documentation search placeholder matches its captured Minecraft input", async ({
   page,
 }, info) => {

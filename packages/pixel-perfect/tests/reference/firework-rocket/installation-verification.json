@@ -1,0 +1,144 @@
+{
+  "assets": [
+    {
+      "key": "fireworkTextures.rocket",
+      "original": "assets/minecraft/textures/item/firework_rocket.png",
+      "sha256": "661a46e05516554d8ab2df91bd34dfa18dec1728e77a2d369270c429dedc208b"
+    },
+    {
+      "key": "fireworkTextures.flash",
+      "original": "assets/minecraft/textures/particle/flash.png",
+      "sha256": "fb43dd3a354fb84f31b00a1d286a4dcd8beeb5daba75986ca1a5d18594500f30"
+    },
+    {
+      "key": "fireworkTextures.spark.0",
+      "original": "assets/minecraft/textures/particle/spark_0.png",
+      "sha256": "be91dc02f3de33dd060b4d2d4e4987bd0853c4721b8db94c86f72e8d111ed9d9"
+    },
+    {
+      "key": "fireworkTextures.spark.1",
+      "original": "assets/minecraft/textures/particle/spark_1.png",
+      "sha256": "35dae570734d89e8d5c5ea6beacc61014da7b51103f3692ec89684f8f5b09078"
+    },
+    {
+      "key": "fireworkTextures.spark.2",
+      "original": "assets/minecraft/textures/particle/spark_2.png",
+      "sha256": "159017b370afa4e9cdca2fe4c95cb650d13b3743baa43ed49ca750564a83a3b8"
+    },
+    {
+      "key": "fireworkTextures.spark.3",
+      "original": "assets/minecraft/textures/particle/spark_3.png",
+      "sha256": "05a3815096149e8f65ed07957cbcc9abf607675393021b998a8e87d5d9bdac8b"
+    },
+    {
+      "key": "fireworkTextures.spark.4",
+      "original": "assets/minecraft/textures/particle/spark_4.png",
+      "sha256": "0b381533495f88ff21da0f99f3afd86c3608f9b181a3500fd4543abea97c7e52"
+    },
+    {
+      "key": "fireworkTextures.spark.5",
+      "original": "assets/minecraft/textures/particle/spark_5.png",
+      "sha256": "f9d042e733a39e386d199dbd90e7578f545fe09efd15ab5b1b5d3037b738af97"
+    },
+    {
+      "key": "fireworkTextures.spark.6",
+      "original": "assets/minecraft/textures/particle/spark_6.png",
+      "sha256": "dd4fd77518077dd6ca227c5499b3aa57c02a998cbe632245cf7680b254a5150b"
+    },
+    {
+      "key": "fireworkTextures.spark.7",
+      "original": "assets/minecraft/textures/particle/spark_7.png",
+      "sha256": "f9d042e733a39e386d199dbd90e7578f545fe09efd15ab5b1b5d3037b738af97"
+    },
+    {
+      "key": "fireworkSounds.launch.0",
+      "original": "minecraft/sounds/fireworks/launch1.ogg",
+      "sha256": "25dc188ddaeab5589f532e53e47d5882681a47a8c7a76078765cf670aacbda8e"
+    },
+    {
+      "key": "fireworkSounds.blast.0",
+      "original": "minecraft/sounds/fireworks/blast1.ogg",
+      "sha256": "7edcecfa2b6204c30a9629e001c16fe195d673b254f7d6c13ec601a13aca4d3b"
+    },
+    {
+      "key": "fireworkSounds.largeBlast.0",
+      "original": "minecraft/sounds/fireworks/largeblast1.ogg",
+      "sha256": "b11a1fef5e3f341fa5b93e561093d7a1536d612bbd9fb0a64c34482376cb656b"
+    },
+    {
+      "key": "fireworkSounds.twinkle.0",
+      "original": "minecraft/sounds/fireworks/twinkle1.ogg",
+      "sha256": "03f558b5afbbdcd16e13b50c33dd39f5f997b054b7699f1b2347d4f091acbce2"
+    }
+  ],
+  "command": "REGISTRY_URL=http://127.0.0.1:<mirror>/r shadcn@4.23.0 add http://127.0.0.1:<mirror>/r/fireworks.json --yes (external Bun consumer, TypeScript 5.9.3 strict with noUncheckedIndexedAccess, importing useFireworks, launchFireworks and the asset and sound modules; the offline mirror serves apps/web/public/r from bun run registry:build, plus empty styles/*/index.json and colors/*.json because ui.shadcn.com is unreachable)",
+  "consumerRsc": false,
+  "files": [
+    {
+      "installedSha256": "2a8054d31b66b0dc9d1e01b7edc839b765d2f6a5cec52d6530c2eb3256fee64e",
+      "path": "fireworks.tsx",
+      "sourcePath": "registry/ui/fireworks.tsx",
+      "sourceSha256": "2a8054d31b66b0dc9d1e01b7edc839b765d2f6a5cec52d6530c2eb3256fee64e"
+    },
+    {
+      "installedSha256": "7632945d7afd3d8fd39058d8a28f4d7923368dfd81f87fb02504175a35c34977",
+      "path": "minecraft-firework-rocket.ts",
+      "sourcePath": "registry/ui/minecraft-firework-rocket.ts",
+      "sourceSha256": "3d92bd59e814f1bd4b868c8127c2a54613db5636ef5a69b2418393cb0dff900c"
+    },
+    {
+      "installedSha256": "c6a0a72f853b0897e5ec72acdcaeb66099ca1c824afa8db79e50f9d4e3a9d991",
+      "path": "minecraft-firework-explosion.ts",
+      "sourcePath": "registry/ui/minecraft-firework-explosion.ts",
+      "sourceSha256": "148e7aa74cbcf64f5deed77b94f502b65da4990f0b57cea5d5c2e9fe7ae0894a"
+    },
+    {
+      "installedSha256": "6cbba485f07158843e8ab3a6e848b26a00d282e09c795e9941eca5fbc0ecafde",
+      "path": "minecraft-random-source.ts",
+      "sourcePath": "registry/ui/minecraft-random-source.ts",
+      "sourceSha256": "581657c5b15a82b10653ed32480f7613793f5ddc31e4668feb236918e509d588"
+    },
+    {
+      "installedSha256": "8a0a840da57338601a4666e9449f9dd77e284779c8a6c9f0b06ff99e8032e887",
+      "path": "minecraft-png.ts",
+      "sourcePath": "registry/ui/minecraft-png.ts",
+      "sourceSha256": "a84bf622d7499e6334127ef29c4d1166e672266e46a3b1088e3d50e2ac5c1ad1"
+    },
+    {
+      "installedSha256": "7949012568df4b04def79da6b1f84a77ee3e25b7dc3e4ab27d5d7fba58a18aab",
+      "path": "minecraft-firework-assets.ts",
+      "sourcePath": "registry/ui/minecraft-firework-assets.ts",
+      "sourceSha256": "fb9306c662e034ab4140c2684031abe82d4651118589956ab76efc54dd87ebe4"
+    },
+    {
+      "installedSha256": "552744c03eb3ce23fda720045293813bfefb558fd4c42e7e9674795f6c7d3020",
+      "path": "minecraft-firework-sound.ts",
+      "sourcePath": "registry/ui/minecraft-firework-sound.ts",
+      "sourceSha256": "552744c03eb3ce23fda720045293813bfefb558fd4c42e7e9674795f6c7d3020"
+    },
+    {
+      "installedSha256": "2dfd1141ffa7ca38442d0058c4d7958383d1ff6cb4ed73e0a03ffaf670c49ab8",
+      "path": "minecraft-firework-sound-assets.ts",
+      "sourcePath": "registry/ui/minecraft-firework-sound-assets.ts",
+      "sourceSha256": "dacc05c590cf6e4682f798081c0a5c016a8304f6b282fadc06a8339794f6608a"
+    },
+    {
+      "installedSha256": "a70ea433d3bbaf262e348ed0a92cb773247abb07795d834826d493da232cd954",
+      "path": "minecraft-sound.ts",
+      "sourcePath": "registry/ui/minecraft-sound.ts",
+      "sourceSha256": "a70ea433d3bbaf262e348ed0a92cb773247abb07795d834826d493da232cd954"
+    },
+    {
+      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
+      "path": "minecraft-sound-assets.ts",
+      "sourcePath": "registry/ui/minecraft-sound-assets.ts",
+      "sourceSha256": "b5c25b5f1bb56e3fdfbf8f76199983f92e8899424a5c47ef5816bbd63a6ef174"
+    }
+  ],
+  "item": "fireworks",
+  "scope": "External consumer outside the repository, installed with the shadcn CLI from the locally built registry. Files, types (useFireworks, launchFireworks, the asset and sound modules) and the embedded textures and near-variant sounds are verified; pixels are verified by the projected-reference PPTs and sound timing by the non-PPT sound checks against the repository source, which the installed files equal beyond CLI transforms.",
+  "typecheck": {
+    "passed": true,
+    "typescript": "5.9.3"
+  }
+}

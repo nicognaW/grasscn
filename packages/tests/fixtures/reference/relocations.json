@@ -5,5 +5,7 @@
   "packages/pixel-perfect/tests/reference/trading/scrollbar/trading-scroll-events.json": "packages/tests/fixtures/reference/trading/scrollbar/trading-scroll-events.json",
   "packages/pixel-perfect/tests/reference/title-splash/oracle-104.csv": "packages/tests/fixtures/reference/title-splash/oracle-104.csv",
   "packages/pixel-perfect/tests/reference/title-splash/provenance.json": "packages/tests/fixtures/reference/title-splash/provenance.json",
-  "packages/pixel-perfect/tests/reference/title-splash/SplashMotionOracle.java": "packages/tests/fixtures/reference/title-splash/SplashMotionOracle.java"
+  "packages/pixel-perfect/tests/reference/title-splash/SplashMotionOracle.java": "packages/tests/fixtures/reference/title-splash/SplashMotionOracle.java",
+  "packages/pixel-perfect/tests/reference/firework-sounds/case.json": "packages/tests/fixtures/reference/firework-sounds/case.json",
+  "packages/pixel-perfect/tests/reference/firework-sounds/manifest.json": "packages/tests/fixtures/reference/firework-sounds/manifest.json"
 }

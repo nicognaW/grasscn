@@ -1,23 +1,72 @@
-import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
 import grassBlockIcon from "../assets/grass-block-16.png";
+import grassBlockIcon48 from "../assets/grass-block-48.png";
 import { LegacyDocumentationLinks } from "../components/legacy-documentation-links";
 import { SiteFrame } from "../components/site-frame";
 import { componentSymbols } from "../lib/component-symbols";
+import { loadStarCount } from "../lib/github-stars";
+import {
+  siteDescription,
+  siteImage,
+  siteName,
+  siteTitle,
+  siteUrl,
+} from "../lib/site";
 import { source } from "../lib/source";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
-  description: "Pixel-perfect Minecraft UI. shadcn components. Yours to build.",
+  alternates: { canonical: "/" },
+  applicationName: siteName,
+  authors: [{ name: "nicognaW", url: "https://github.com/nicognaW" }],
+  description: siteDescription,
   icons: {
-    icon: { sizes: "16x16", type: "image/png", url: grassBlockIcon.src },
+    apple: { sizes: "180x180", url: "/apple-touch-icon.png" },
+    icon: [
+      { sizes: "16x16", type: "image/png", url: grassBlockIcon.src },
+      { sizes: "48x48", type: "image/png", url: grassBlockIcon48.src },
+    ],
   },
-  title: { default: "grasscn", template: "%s · grasscn" },
+  keywords: [
+    "Minecraft UI",
+    "shadcn",
+    "shadcn/ui",
+    "React components",
+    "pixel art UI",
+    "component registry",
+  ],
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    description: siteDescription,
+    images: [siteImage],
+    locale: "en_US",
+    siteName,
+    title: siteTitle,
+    type: "website",
+    url: "/",
+  },
+  title: { default: siteTitle, template: `%s · ${siteName}` },
+  twitter: {
+    card: "summary_large_image",
+    creator: "@nicongdev",
+    description: siteDescription,
+    images: [siteImage],
+    site: "@nicongdev",
+    title: siteTitle,
+  },
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#202020",
+};
+
+const RootLayout = async ({ children }: { children: ReactNode }) => {
   const pages: Record<string, string> = {};
 
   for (const page of source.getPages()) {
@@ -48,6 +97,8 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     }
   }
 
+  const starCount = await loadStarCount();
+
   return (
     <html lang="en">
       <body>
@@ -62,10 +113,13 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
             title: page.data.title,
             url: page.url,
           }))}
+          starCount={starCount}
         >
           {children}
         </SiteFrame>
         <LegacyDocumentationLinks pages={pages} groups={groups} />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
