@@ -92,6 +92,11 @@ export class LegacyRandomSource {
     return (high * 2 ** 27 + low) * DOUBLE_MULTIPLIER;
   }
 
+  // RandomSource.triangle(double, double)
+  triangle(mean: number, spread: number) {
+    return mean + spread * (this.nextDouble() - this.nextDouble());
+  }
+
   // MarsagliaPolarGaussian.nextGaussian
   nextGaussian() {
     if (this.#haveNextNextGaussian) {

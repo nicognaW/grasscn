@@ -433,41 +433,51 @@ class Starter extends Particle {
 }
 
 /**
- * The client particle engine for one explosion: ParticleEngine.tick ticks
- * live particles, then adds the particles created since, in order.
+ * The client particle engine for firework particles: ParticleEngine.tick
+ * ticks live particles, then adds the particles created since, in order.
+ * Every particle created draws its random source from one seed stream.
  */
-export class FireworkExplosionSimulation {
+export class FireworkParticleEngine {
+  readonly #seeds: ParticleSeeds;
   readonly #quads: QuadParticle[] = [];
   #starters: Starter[] = [];
   #pending: (QuadParticle | Starter)[] = [];
-  ticks = 0;
 
-  constructor(
-    position: readonly [number, number, number],
-    explosion: FireworkExplosionDefinition = STAR_FIREWORK,
-    seed: bigint = FIREWORK_SEED
-  ) {
-    const seeds = new ParticleSeeds(seed);
-    // ClientLevel.createFireworks queues the starter.
-    this.#pending.push(
-      new Starter(seeds, position, explosion, (particle) => {
-        this.#pending.push(particle);
-      })
-    );
+  constructor(seed: bigint = FIREWORK_SEED) {
+    this.#seeds = new ParticleSeeds(seed);
   }
 
-  get done() {
+  get empty() {
     return (
-      this.ticks > 0 &&
       this.#quads.length === 0 &&
       this.#starters.length === 0 &&
       this.#pending.length === 0
     );
   }
 
-  tick() {
-    this.ticks += 1;
+  // ClientLevel.createFireworks queues the starter.
+  createFireworks(
+    position: readonly [number, number, number],
+    explosion: FireworkExplosionDefinition = STAR_FIREWORK
+  ) {
+    this.#pending.push(
+      new Starter(this.#seeds, position, explosion, (particle) => {
+        this.#pending.push(particle);
+      })
+    );
+  }
 
+  // ParticleTypes.FIREWORK through SparkProvider: a white spark at alpha 0.99.
+  createSpark(
+    position: readonly [number, number, number],
+    motion: readonly [number, number, number]
+  ) {
+    const spark = new Spark(this.#seeds, position, motion);
+    spark.alpha = f(0.99);
+    this.#pending.push(spark);
+  }
+
+  tick() {
     for (const particle of [...this.#starters, ...this.#quads]) {
       particle.tick();
     }
@@ -498,10 +508,41 @@ export class FireworkExplosionSimulation {
   }
 }
 
+/** One explosion started through ClientLevel.createFireworks at rest. */
+export class FireworkExplosionSimulation {
+  readonly #engine: FireworkParticleEngine;
+  ticks = 0;
+
+  constructor(
+    position: readonly [number, number, number],
+    explosion: FireworkExplosionDefinition = STAR_FIREWORK,
+    seed: bigint = FIREWORK_SEED
+  ) {
+    this.#engine = new FireworkParticleEngine(seed);
+    this.#engine.createFireworks(position, explosion);
+  }
+
+  get done() {
+    return this.ticks > 0 && this.#engine.empty;
+  }
+
+  tick() {
+    this.ticks += 1;
+    this.#engine.tick();
+  }
+
+  quads(camera: Camera, partialTick: number) {
+    return this.#engine.quads(camera, partialTick);
+  }
+}
+
 // --- Rendering --------------------------------------------------------------
 
 export interface FireworkScene {
   camera: Camera;
+  // Window pixel (from the left, from the top) the camera eye projects to;
+  // the window centre when absent.
+  eyeAt?: readonly [number, number];
   height: number;
   pixelsPerBlock: number;
   width: number;
@@ -574,7 +615,7 @@ const ATLAS: Record<SpriteName, readonly [number, number]> = {
 const UNORM8_SCALE = f(255 / 256);
 const UNORM8_BIAS = 32_768;
 
-const unorm8 = (value: number) => {
+export const unorm8 = (value: number) => {
   const biased = f(
     f(Math.min(1, Math.max(0, value)) * UNORM8_SCALE) + UNORM8_BIAS
   );
@@ -589,13 +630,26 @@ const unorm8 = (value: number) => {
 // fall on a rounding tie.
 const UNORM8_TO_FLOAT = f(1 / 255);
 
-const unorm8ToFloat = (byte: number) => f(byte * UNORM8_TO_FLOAT);
+export const unorm8ToFloat = (byte: number) => f(byte * UNORM8_TO_FLOAT);
 
-// Normalised 8-bit multiply a * b / 255 with rounding.
+// apply_fog: linear atmospheric fog by the interpolated vertex distance.
+export const fogComponent = (
+  source: number,
+  component: number,
+  distance: number
+) => {
+  const fog = f(distance / FOG_END);
+
+  return f(source + f(f(f(FOG_COLOR[component] ?? 0) - source) * fog));
+};
+
+// Normalised 8-bit multiply a * b / 255 as llvmpipe approximates it:
+// (ab + (ab >> 8) + 0x80) >> 8. It is not always the correctly rounded
+// quotient (253 * 191 gives 189, not 190).
 const mulNorm = (a: number, b: number) => {
-  const product = a * b + 128;
+  const product = a * b;
 
-  return Math.floor((product + Math.floor(product / 256)) / 256);
+  return Math.floor((product + Math.floor(product / 256) + 128) / 256);
 };
 
 // particle.fsh discards fragments below this alpha.
@@ -612,7 +666,7 @@ const snap = (value: number) => {
   return rounded - scaled === 0.5 && rounded % 2 !== 0 ? rounded - 1 : rounded;
 };
 
-interface Vertex {
+export interface Vertex {
   // Camera-relative distance for the fog, per vertex.
   distance: number;
   u: number;
@@ -646,21 +700,24 @@ const plane = (
   return (x: number, y: number) => f(dady * y + f(dadx * x + a0));
 };
 
+/** A colour target with its depth buffer, for one scene. */
+export interface FireworkTarget {
+  color: Uint8ClampedArray;
+  depth: Float32Array;
+  scene: FireworkScene;
+}
+
 /**
- * Renders the camera-facing quads into straight RGBA, drawn in particle
- * order with the TRANSLUCENT blend function and the depth test of the
- * scene. Pass the native backdrop colour to composite over it exactly;
- * without one the backdrop stays transparent (a declared web adaptation).
+ * A cleared target. Pass the native backdrop colour to composite over it
+ * exactly; without one the backdrop stays transparent (a declared web
+ * adaptation).
  */
-export const renderFireworkQuads = (
-  quads: readonly Quad[],
+export const createFireworkTarget = (
   scene: FireworkScene,
-  sprites: FireworkSprites,
   backdrop?: readonly [number, number, number]
-) => {
-  const { height, pixelsPerBlock, width } = scene;
+): FireworkTarget => {
+  const { height, width } = scene;
   const color = new Uint8ClampedArray(width * height * 4);
-  const depth = new Float32Array(width * height).fill(-Infinity);
 
   if (backdrop !== undefined) {
     for (let pixel = 0; pixel < width * height; pixel += 1) {
@@ -668,167 +725,142 @@ export const renderFireworkQuads = (
     }
   }
 
+  return {
+    color,
+    depth: new Float32Array(width * height).fill(-Infinity),
+    scene,
+  };
+};
+
+/**
+ * Camera-relative position to window coordinates: Matrix4f.setOrtho for
+ * the declared projection, then the viewport transform. The fog distance is
+ * the vertex's camera-relative length.
+ */
+export const projectVertex = (scene: FireworkScene) => {
+  const { height, pixelsPerBlock, width } = scene;
   const halfWidth = width / 2;
   const halfHeight = height / 2;
-  // Matrix4f.setOrtho, then the viewport transform.
-  const scaleX = f(2 / f(f(width / f(2 * pixelsPerBlock)) * 2));
-  const scaleY = f(2 / f(f(height / f(2 * pixelsPerBlock)) * 2));
+  const [eyeX, eyeY] = scene.eyeAt ?? [halfWidth, halfHeight];
+  const left = f(-eyeX / pixelsPerBlock);
+  const right = f(f(width - eyeX) / pixelsPerBlock);
+  const bottom = -f(f(height - eyeY) / pixelsPerBlock);
+  const top = f(eyeY / pixelsPerBlock);
+  const scaleX = f(2 / f(right - left));
+  const scaleY = f(2 / f(top - bottom));
+  const offsetX = f(f(right + left) / f(left - right));
+  const offsetY = f(f(top + bottom) / f(bottom - top));
 
-  const vertex = (
-    x: number,
-    y: number,
-    z: number,
-    u: number,
-    v: number
-  ): Vertex => ({
+  return (x: number, y: number, z: number, u: number, v: number): Vertex => ({
     distance: f(Math.sqrt(f(f(f(x * x) + f(y * y)) + f(z * z)))),
     u,
     v,
-    x: f(f(f(scaleX * x) * halfWidth) + halfWidth),
-    y: f(f(f(scaleY * y) * halfHeight) + halfHeight),
+    x: f(f(f(f(scaleX * x) + offsetX) * halfWidth) + halfWidth),
+    y: f(f(f(f(scaleY * y) + offsetY) * halfHeight) + halfHeight),
+  });
+};
+
+/**
+ * Rasterizes one triangle as llvmpipe does and calls `shade` for every
+ * covered pixel (stored top-down) with the interpolated attributes.
+ */
+export const rasterizeTriangle = (
+  target: FireworkTarget,
+  a: Vertex,
+  b: Vertex,
+  c: Vertex,
+  shade: (pixel: number, u: number, v: number, distance: number) => void
+) => {
+  const { height, width } = target.scene;
+  const pa = [snap(a.x), snap(a.y)] as const;
+  const pb = [snap(b.x), snap(b.y)] as const;
+  const pc = [snap(c.x), snap(c.y)] as const;
+
+  const area =
+    (pb[0] - pa[0]) * (pc[1] - pa[1]) - (pb[1] - pa[1]) * (pc[0] - pa[0]);
+
+  if (area === 0) {
+    return;
+  }
+
+  const sign = area > 0 ? 1 : -1;
+
+  const edges = [
+    [pa, pb],
+    [pb, pc],
+    [pc, pa],
+  ].map(([from, to]) => {
+    const [fromX, fromY] = from;
+    const [toX, toY] = to;
+    const dx = (toX - fromX) * sign;
+    const dy = (toY - fromY) * sign;
+    // Fill rule: pixel centres on a left edge, or on a bottom edge in GL
+    // window coordinates (the top edge of the stored frame), are inside.
+    const inclusive = dy < 0 || (dy === 0 && dx > 0);
+
+    return { dx, dy, fromX, fromY, inclusive };
   });
 
-  const drawTriangle = (
-    a: Vertex,
-    b: Vertex,
-    c: Vertex,
-    quad: Quad,
-    sprite: PngRgba
-  ) => {
-    const pa = [snap(a.x), snap(a.y)] as const;
-    const pb = [snap(b.x), snap(b.y)] as const;
-    const pc = [snap(c.x), snap(c.y)] as const;
+  const minX = Math.max(
+    0,
+    Math.floor(Math.min(pa[0], pb[0], pc[0]) / SUBPIXEL) - 1
+  );
 
-    const area =
-      (pb[0] - pa[0]) * (pc[1] - pa[1]) - (pb[1] - pa[1]) * (pc[0] - pa[0]);
+  const maxX = Math.min(
+    width - 1,
+    Math.ceil(Math.max(pa[0], pb[0], pc[0]) / SUBPIXEL) + 1
+  );
 
-    if (area === 0) {
-      return;
-    }
+  const minY = Math.max(
+    0,
+    Math.floor(Math.min(pa[1], pb[1], pc[1]) / SUBPIXEL) - 1
+  );
 
-    const sign = area > 0 ? 1 : -1;
+  const maxY = Math.min(
+    height - 1,
+    Math.ceil(Math.max(pa[1], pb[1], pc[1]) / SUBPIXEL) + 1
+  );
 
-    const edges = [
-      [pa, pb],
-      [pb, pc],
-      [pc, pa],
-    ].map(([from, to]) => {
-      const [fromX, fromY] = from;
-      const [toX, toY] = to;
-      const dx = (toX - fromX) * sign;
-      const dy = (toY - fromY) * sign;
-      // Fill rule: pixel centres on a left edge, or on a bottom edge in GL
-      // window coordinates (the top edge of the stored frame), are inside.
-      const inclusive = dy < 0 || (dy === 0 && dx > 0);
+  const u = plane(a, b, c, "u");
+  const v = plane(a, b, c, "v");
+  const distance = plane(a, b, c, "distance");
 
-      return { dx, dy, fromX, fromY, inclusive };
-    });
+  for (let row = minY; row <= maxY; row += 1) {
+    const centerY = row * SUBPIXEL + SUBPIXEL / 2;
 
-    const minX = Math.max(
-      0,
-      Math.floor(Math.min(pa[0], pb[0], pc[0]) / SUBPIXEL) - 1
-    );
+    for (let column = minX; column <= maxX; column += 1) {
+      const centerX = column * SUBPIXEL + SUBPIXEL / 2;
 
-    const maxX = Math.min(
-      width - 1,
-      Math.ceil(Math.max(pa[0], pb[0], pc[0]) / SUBPIXEL) + 1
-    );
+      const inside = edges.every(({ dx, dy, fromX, fromY, inclusive }) => {
+        const value = dx * (centerY - fromY) - dy * (centerX - fromX);
 
-    const minY = Math.max(
-      0,
-      Math.floor(Math.min(pa[1], pb[1], pc[1]) / SUBPIXEL) - 1
-    );
+        return value > 0 || (value === 0 && inclusive);
+      });
 
-    const maxY = Math.min(
-      height - 1,
-      Math.ceil(Math.max(pa[1], pb[1], pc[1]) / SUBPIXEL) + 1
-    );
-
-    const u = plane(a, b, c, "u");
-    const v = plane(a, b, c, "v");
-    const distance = plane(a, b, c, "distance");
-    const vertexAlpha = unorm8ToFloat(quad.alpha);
-    const fragmentDepth = -quad.z;
-
-    for (let row = minY; row <= maxY; row += 1) {
-      const centerY = row * SUBPIXEL + SUBPIXEL / 2;
-
-      for (let column = minX; column <= maxX; column += 1) {
-        const centerX = column * SUBPIXEL + SUBPIXEL / 2;
-
-        const inside = edges.every(({ dx, dy, fromX, fromY, inclusive }) => {
-          const value = dx * (centerY - fromY) - dy * (centerX - fromX);
-
-          return value > 0 || (value === 0 && inclusive);
-        });
-
-        if (!inside) {
-          continue;
-        }
-
-        const atlas = ATLAS[quad.sprite];
-
-        const texelX = Math.min(
-          sprite.width - 1,
-          Math.max(0, Math.floor(f(u(column, row) * ATLAS_WIDTH)) - atlas[0])
-        );
-
-        const texelY = Math.min(
-          sprite.height - 1,
-          Math.max(0, Math.floor(f(v(column, row) * ATLAS_HEIGHT)) - atlas[1])
-        );
-
-        const texel = (texelY * sprite.width + texelX) * 4;
-
-        const alpha = f(
-          unorm8ToFloat(sprite.data[texel + 3] ?? 0) * vertexAlpha
-        );
-
-        if (alpha < ALPHA_CUTOFF) {
-          continue;
-        }
-
+      if (inside) {
         // Rows count from the bottom in GL; the frame is stored top-down.
-        const pixel = (height - 1 - row) * width + column;
-
-        // DepthStencilState.DEFAULT: GREATER_THAN_OR_EQUAL with depth writes.
-        // Under the declared projection the farther fragment has the larger
-        // depth, so it passes.
-        if (fragmentDepth < (depth[pixel] ?? 0)) {
-          continue;
-        }
-
-        depth[pixel] = fragmentDepth;
-        const fog = f(distance(column, row) / FOG_END);
-        const sourceAlpha = unorm8(alpha);
-
-        // The unorm8 target blends in 8-bit fixed point: source colour and
-        // alpha are converted to bytes, then multiplied with rounding.
-        for (let component = 0; component < 3; component += 1) {
-          const source = f(
-            unorm8ToFloat(sprite.data[texel + component] ?? 0) *
-              unorm8ToFloat([quad.red, quad.green, quad.blue][component] ?? 0)
-          );
-
-          const fogged = f(
-            source + f(f(f(FOG_COLOR[component] ?? 0) - source) * fog)
-          );
-
-          const offset = pixel * 4 + component;
-          color[offset] = Math.min(
-            255,
-            mulNorm(unorm8(fogged), sourceAlpha) +
-              mulNorm(color[offset] ?? 0, 255 - sourceAlpha)
-          );
-        }
-
-        color[pixel * 4 + 3] = Math.min(
-          255,
-          sourceAlpha + mulNorm(color[pixel * 4 + 3] ?? 0, 255 - sourceAlpha)
+        shade(
+          (height - 1 - row) * width + column,
+          u(column, row),
+          v(column, row),
+          distance(column, row)
         );
       }
     }
-  };
+  }
+};
+
+/**
+ * Draws the camera-facing quads into the target in particle order, with the
+ * TRANSLUCENT blend function and the depth test of the scene.
+ */
+export const drawFireworkQuads = (
+  target: FireworkTarget,
+  quads: readonly Quad[],
+  sprites: FireworkSprites
+) => {
+  const { color, depth } = target;
+  const vertex = projectVertex(target.scene);
 
   for (const quad of quads) {
     const sprite = sprites[quad.sprite];
@@ -841,6 +873,61 @@ export const renderFireworkQuads = (
     const left = f(quad.x - quad.size);
     const up = f(quad.y + quad.size);
     const down = f(quad.y - quad.size);
+    const vertexAlpha = unorm8ToFloat(quad.alpha);
+    const fragmentDepth = -quad.z;
+
+    const shade = (pixel: number, u: number, v: number, distance: number) => {
+      const texelX = Math.min(
+        sprite.width - 1,
+        Math.max(0, Math.floor(f(u * ATLAS_WIDTH)) - originX)
+      );
+
+      const texelY = Math.min(
+        sprite.height - 1,
+        Math.max(0, Math.floor(f(v * ATLAS_HEIGHT)) - originY)
+      );
+
+      const texel = (texelY * sprite.width + texelX) * 4;
+
+      const alpha = f(unorm8ToFloat(sprite.data[texel + 3] ?? 0) * vertexAlpha);
+
+      if (alpha < ALPHA_CUTOFF) {
+        return;
+      }
+
+      // DepthStencilState.DEFAULT: GREATER_THAN_OR_EQUAL with depth writes.
+      // Under the declared projection the farther fragment has the larger
+      // depth, so it passes.
+      if (fragmentDepth < (depth[pixel] ?? 0)) {
+        return;
+      }
+
+      depth[pixel] = fragmentDepth;
+      const sourceAlpha = unorm8(alpha);
+
+      // The unorm8 target blends in 8-bit fixed point: source colour and
+      // alpha are converted to bytes, then multiplied with rounding.
+      for (let component = 0; component < 3; component += 1) {
+        const source = f(
+          unorm8ToFloat(sprite.data[texel + component] ?? 0) *
+            unorm8ToFloat([quad.red, quad.green, quad.blue][component] ?? 0)
+        );
+
+        const offset = pixel * 4 + component;
+        color[offset] = Math.min(
+          255,
+          mulNorm(
+            unorm8(fogComponent(source, component, distance)),
+            sourceAlpha
+          ) + mulNorm(color[offset] ?? 0, 255 - sourceAlpha)
+        );
+      }
+
+      color[pixel * 4 + 3] = Math.min(
+        255,
+        sourceAlpha + mulNorm(color[pixel * 4 + 3] ?? 0, 255 - sourceAlpha)
+      );
+    };
 
     // QuadParticleRenderState.renderRotatedQuad corner order, drawn as the
     // triangles (0, 1, 2) and (2, 3, 0).
@@ -851,11 +938,27 @@ export const renderFireworkQuads = (
       vertex(left, down, quad.z, u0, v1),
     ] as const;
 
-    drawTriangle(corners[0], corners[1], corners[2], quad, sprite);
-    drawTriangle(corners[2], corners[3], corners[0], quad, sprite);
+    rasterizeTriangle(target, corners[0], corners[1], corners[2], shade);
+    rasterizeTriangle(target, corners[2], corners[3], corners[0], shade);
   }
+};
 
-  return color;
+/**
+ * Renders the camera-facing quads into straight RGBA, drawn in particle
+ * order with the TRANSLUCENT blend function and the depth test of the
+ * scene. Pass the native backdrop colour to composite over it exactly;
+ * without one the backdrop stays transparent (a declared web adaptation).
+ */
+export const renderFireworkQuads = (
+  quads: readonly Quad[],
+  scene: FireworkScene,
+  sprites: FireworkSprites,
+  backdrop?: readonly [number, number, number]
+) => {
+  const target = createFireworkTarget(scene, backdrop);
+  drawFireworkQuads(target, quads, sprites);
+
+  return target.color;
 };
 
 // The projected reference scene (ADR 0005, case in
