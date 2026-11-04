@@ -2075,6 +2075,29 @@ const DialogFixture = () => {
               <DialogDescription>{description}</DialogDescription>
             )}
           </DialogHeader>
+          {params.has("scrollForm") && (
+            <form className="flex flex-col gap-4">
+              {Array.from(
+                { length: 14 },
+                (_, index) => `entry ${index + 1}`
+              ).map((entry) => (
+                <fieldset key={entry} className="flex flex-col gap-2">
+                  <Input
+                    aria-label={`${entry} address`}
+                    defaultValue="127.0.0.1"
+                    scale={scale}
+                  />
+                  <Button
+                    scale={scale}
+                    type="button"
+                    onClick={() => setActions((current) => current + 1)}
+                  >
+                    {`Inspect ${entry}`}
+                  </Button>
+                </fieldset>
+              ))}
+            </form>
+          )}
           <DialogFooter>
             {labels.map((label, index) => (
               <Button
