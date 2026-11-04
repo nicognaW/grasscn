@@ -150,6 +150,8 @@ import { CustomApiFixture } from "./custom-api";
 import { DataTableFixture } from "./data-table";
 import { DialogFooterFixture } from "./dialog-footer";
 import type { FixtureLabels } from "./fixture-query-protocol";
+import { resolveFixtureRoute } from "./fixture-routing";
+import type { FixtureRoute } from "./fixture-routing";
 import { FormsFixture } from "./forms";
 import { InputGroupFixture } from "./input-group";
 import { InputOTPFixture } from "./input-otp";
@@ -3309,268 +3311,315 @@ const FixtureButton = () => {
   );
 };
 
+const fixtureRoutes: readonly FixtureRoute[] = [
+  {
+    fixture: TabsFallbackFixture,
+    kind: "name",
+    name: "tabs-fallback",
+  },
+  {
+    fixture: BaseUICompositionFixture,
+    kind: "name",
+    name: "base-ui-composition",
+  },
+  {
+    fixture: CollapsibleFirstFrameFixture,
+    kind: "name",
+    name: "collapsible-first-frame",
+  },
+  {
+    fixture: BadgeAdvancementFixture,
+    kind: "name",
+    name: "badge-advancement",
+  },
+  {
+    fixture: QuestionnaireFixture,
+    kind: "name",
+    name: "questionnaire",
+  },
+  {
+    fixture: DialogFooterFixture,
+    kind: "name",
+    name: "dialog-footer",
+  },
+  {
+    fixture: AlertDialogMediaFixture,
+    kind: "name",
+    name: "alert-dialog-media",
+  },
+  {
+    fixture: ComboboxFixture,
+    kind: "name",
+    name: "combobox",
+  },
+  {
+    fixture: AttachmentFixture,
+    kind: "name",
+    name: "attachment",
+  },
+  {
+    fixture: ColorPainterStressFixture,
+    kind: "name",
+    name: "color-painter-stress",
+  },
+  {
+    fixture: MarkerFixture,
+    kind: "name",
+    name: "marker",
+  },
+  {
+    fixture: ChartFixture,
+    kind: "name",
+    name: "chart",
+  },
+  {
+    fixture: TextWidgetsFixture,
+    kind: "aliases",
+    names: ["trace","message-scroller","spinner"],
+    nativeFixture: NativeTextCompositionsFixture,
+  },
+  {
+    fixture: NativeSelectFixture,
+    kind: "name",
+    name: "native-select",
+  },
+  {
+    fixture: CodeBlockFixture,
+    kind: "name",
+    name: "code-block",
+    nativeFixture: NativeTextCompositionsFixture,
+  },
+  {
+    fixture: InputOTPFixture,
+    kind: "name",
+    name: "input-otp",
+  },
+  {
+    fixture: CarouselFixture,
+    kind: "name",
+    name: "carousel",
+  },
+  {
+    fixture: FormsFixture,
+    kind: "aliases",
+    names: ["form","field"],
+  },
+  {
+    fixture: DataTableFixture,
+    kind: "name",
+    name: "data-table",
+  },
+  {
+    fixture: InputGroupFixture,
+    kind: "name",
+    name: "input-group",
+  },
+  {
+    fixture: CommandFixture,
+    kind: "name",
+    name: "command",
+  },
+  {
+    fixture: CalendarFixture,
+    kind: "aliases",
+    names: ["calendar","date-picker"],
+  },
+  {
+    fixture: ChatFamilyFixture,
+    kind: "aliases",
+    names: ["message","bubble"],
+  },
+  {
+    fixture: ResizableFixture,
+    kind: "name",
+    name: "resizable",
+  },
+  {
+    fixture: SidebarFixture,
+    kind: "name",
+    name: "sidebar",
+  },
+  {
+    fixture: TableFixture,
+    kind: "name",
+    name: "table",
+  },
+  {
+    fixture: ItemFixture,
+    kind: "name",
+    name: "item",
+  },
+  {
+    fixture: AvatarFixture,
+    kind: "name",
+    name: "avatar",
+  },
+  {
+    fixture: ToastFixture,
+    kind: "aliases",
+    names: ["sonner","sonner-strict"],
+  },
+  {
+    fixture: ButtonCompositionFixture,
+    kind: "name",
+    name: "button-composition",
+  },
+  {
+    fixture: TextComponentsFixture,
+    kind: "aliases",
+    names: ["badge","typography","breadcrumb","kbd","empty"],
+  },
+  {
+    fixture: OverlayFixture,
+    kind: "aliases",
+    names: ["sheet","drawer"],
+  },
+  {
+    fixture: StructuralFixture,
+    kind: "aliases",
+    names: ["aspect-ratio","button-group","pagination"],
+  },
+  {
+    fixture: ToggleGroupFixture,
+    kind: "name",
+    name: "toggle-group",
+  },
+  {
+    fixture: ToggleFixture,
+    kind: "name",
+    name: "toggle",
+  },
+  {
+    fixture: ContextFixture,
+    kind: "name",
+    name: "context-menu",
+  },
+  {
+    fixture: CollapsibleFixture,
+    kind: "name",
+    name: "collapsible",
+  },
+  {
+    fixture: MenubarFixture,
+    kind: "name",
+    name: "menubar",
+  },
+  {
+    fixture: DropdownFixture,
+    kind: "name",
+    name: "dropdown-menu",
+  },
+  {
+    fixture: PopoverCompositionFixture,
+    kind: "name",
+    name: "popover-composition",
+  },
+  {
+    fixture: PopoverFixture,
+    kind: "name",
+    name: "popover",
+  },
+  {
+    fixture: AlertDialogCompositionFixture,
+    kind: "name",
+    name: "alert-dialog-composition",
+  },
+  {
+    fixture: AlertDialogFixture,
+    kind: "name",
+    name: "alert-dialog",
+  },
+  {
+    fixture: DialogCompositionFixture,
+    kind: "name",
+    name: "dialog-composition",
+  },
+  {
+    fixture: DialogFixture,
+    kind: "name",
+    name: "dialog",
+  },
+  {
+    fixture: SwitchFixture,
+    kind: "name",
+    name: "switch",
+  },
+  {
+    fixture: RadioFixture,
+    kind: "prefix",
+    prefix: "radio-group",
+  },
+  {
+    fixture: SelectFixture,
+    kind: "prefix",
+    prefix: "select",
+  },
+  {
+    fixture: FixtureTabsTrigger,
+    kind: "name",
+    name: "tabs-trigger",
+  },
+  {
+    fixture: FixtureTabs,
+    kind: "name",
+    name: "tabs",
+  },
+  {
+    fixture: FixtureProgress,
+    kind: "name",
+    name: "progress",
+  },
+  {
+    fixture: FixtureScrollArea,
+    kind: "name",
+    name: "scroll-area",
+  },
+  {
+    fixture: FixtureSeparator,
+    kind: "name",
+    name: "separator",
+  },
+  {
+    fixture: FixtureLabel,
+    kind: "name",
+    name: "label",
+  },
+  {
+    fixture: FixtureTextarea,
+    kind: "name",
+    name: "textarea",
+  },
+  {
+    fixture: FixtureCard,
+    kind: "name",
+    name: "card",
+  },
+  {
+    fixture: FixtureTooltip,
+    kind: "name",
+    name: "tooltip",
+  },
+  {
+    fixture: FixtureInput,
+    kind: "name",
+    name: "input",
+  },
+  {
+    fixture: FixtureSlider,
+    kind: "name",
+    name: "slider",
+  },
+  {
+    fixture: FixtureCheckbox,
+    kind: "name",
+    name: "checkbox",
+  },
+];
+
 const Fixture = () => {
-  if (params.get("component") === "tabs-fallback") {
-    return <TabsFallbackFixture />;
-  }
+  const ActiveFixture = resolveFixtureRoute(params, fixtureRoutes, FixtureButton);
 
-  if (params.get("component") === "base-ui-composition") {
-    return <BaseUICompositionFixture />;
-  }
-
-  if (params.get("component") === "collapsible-first-frame") {
-    return <CollapsibleFirstFrameFixture />;
-  }
-
-  if (params.get("component") === "badge-advancement") {
-    return <BadgeAdvancementFixture />;
-  }
-
-  if (params.get("component") === "questionnaire") {
-    return <QuestionnaireFixture />;
-  }
-
-  if (params.get("component") === "dialog-footer") {
-    return <DialogFooterFixture />;
-  }
-
-  if (params.get("component") === "alert-dialog-media") {
-    return <AlertDialogMediaFixture />;
-  }
-
-  if (params.get("component") === "combobox") {
-    return <ComboboxFixture />;
-  }
-
-  if (params.get("component") === "attachment") {
-    return <AttachmentFixture />;
-  }
-
-  if (params.get("component") === "color-painter-stress") {
-    return <ColorPainterStressFixture />;
-  }
-
-  if (params.get("component") === "marker") {
-    return <MarkerFixture />;
-  }
-
-  if (params.get("component") === "chart") {
-    return <ChartFixture />;
-  }
-
-  if (
-    ["trace", "message-scroller", "spinner"].includes(
-      params.get("component") ?? ""
-    )
-  ) {
-    return params.has("native") ? (
-      <NativeTextCompositionsFixture />
-    ) : (
-      <TextWidgetsFixture />
-    );
-  }
-
-  if (params.get("component") === "native-select") {
-    return <NativeSelectFixture />;
-  }
-
-  if (params.get("component") === "code-block") {
-    return params.has("native") ? (
-      <NativeTextCompositionsFixture />
-    ) : (
-      <CodeBlockFixture />
-    );
-  }
-
-  if (params.get("component") === "input-otp") {
-    return <InputOTPFixture />;
-  }
-
-  if (params.get("component") === "carousel") {
-    return <CarouselFixture />;
-  }
-
-  if (["form", "field"].includes(params.get("component") ?? "")) {
-    return <FormsFixture />;
-  }
-
-  if (params.get("component") === "data-table") {
-    return <DataTableFixture />;
-  }
-
-  if (params.get("component") === "input-group") {
-    return <InputGroupFixture />;
-  }
-
-  if (params.get("component") === "command") {
-    return <CommandFixture />;
-  }
-
-  if (["calendar", "date-picker"].includes(params.get("component") ?? "")) {
-    return <CalendarFixture />;
-  }
-
-  if (["message", "bubble"].includes(params.get("component") ?? "")) {
-    return <ChatFamilyFixture />;
-  }
-
-  if (params.get("component") === "resizable") {
-    return <ResizableFixture />;
-  }
-
-  if (params.get("component") === "sidebar") {
-    return <SidebarFixture />;
-  }
-
-  if (params.get("component") === "table") {
-    return <TableFixture />;
-  }
-
-  if (params.get("component") === "item") {
-    return <ItemFixture />;
-  }
-
-  if (params.get("component") === "avatar") {
-    return <AvatarFixture />;
-  }
-
-  if (["sonner", "sonner-strict"].includes(params.get("component") ?? "")) {
-    return <ToastFixture />;
-  }
-
-  if (params.get("component") === "button-composition") {
-    return <ButtonCompositionFixture />;
-  }
-
-  if (
-    ["badge", "typography", "breadcrumb", "kbd", "empty"].includes(
-      params.get("component") ?? ""
-    )
-  ) {
-    return <TextComponentsFixture />;
-  }
-
-  if (["sheet", "drawer"].includes(params.get("component") ?? "")) {
-    return <OverlayFixture />;
-  }
-
-  if (
-    ["aspect-ratio", "button-group", "pagination"].includes(
-      params.get("component") ?? ""
-    )
-  ) {
-    return <StructuralFixture />;
-  }
-
-  if (params.get("component") === "toggle-group") {
-    return <ToggleGroupFixture />;
-  }
-
-  if (params.get("component") === "toggle") {
-    return <ToggleFixture />;
-  }
-
-  if (params.get("component") === "context-menu") {
-    return <ContextFixture />;
-  }
-
-  if (params.get("component") === "collapsible") {
-    return <CollapsibleFixture />;
-  }
-
-  if (params.get("component") === "menubar") {
-    return <MenubarFixture />;
-  }
-
-  if (params.get("component") === "dropdown-menu") {
-    return <DropdownFixture />;
-  }
-
-  if (params.get("component") === "popover-composition") {
-    return <PopoverCompositionFixture />;
-  }
-
-  if (params.get("component") === "popover") {
-    return <PopoverFixture />;
-  }
-
-  if (params.get("component") === "alert-dialog-composition") {
-    return <AlertDialogCompositionFixture />;
-  }
-
-  if (params.get("component") === "alert-dialog") {
-    return <AlertDialogFixture />;
-  }
-
-  if (params.get("component") === "dialog-composition") {
-    return <DialogCompositionFixture />;
-  }
-
-  if (params.get("component") === "dialog") {
-    return <DialogFixture />;
-  }
-
-  if (params.get("component") === "switch") {
-    return <SwitchFixture />;
-  }
-
-  if (params.get("component")?.startsWith("radio-group") === true) {
-    return <RadioFixture />;
-  }
-
-  if (params.get("component")?.startsWith("select") === true) {
-    return <SelectFixture />;
-  }
-
-  if (params.get("component") === "tabs-trigger") {
-    return <FixtureTabsTrigger />;
-  }
-
-  if (params.get("component") === "tabs") {
-    return <FixtureTabs />;
-  }
-
-  if (params.get("component") === "progress") {
-    return <FixtureProgress />;
-  }
-
-  if (params.get("component") === "scroll-area") {
-    return <FixtureScrollArea />;
-  }
-
-  if (params.get("component") === "separator") {
-    return <FixtureSeparator />;
-  }
-
-  if (params.get("component") === "label") {
-    return <FixtureLabel />;
-  }
-
-  if (params.get("component") === "textarea") {
-    return <FixtureTextarea />;
-  }
-
-  if (params.get("component") === "card") {
-    return <FixtureCard />;
-  }
-
-  if (params.get("component") === "tooltip") {
-    return <FixtureTooltip />;
-  }
-
-  if (params.get("component") === "input") {
-    return <FixtureInput />;
-  }
-
-  if (params.get("component") === "slider") {
-    return <FixtureSlider />;
-  }
-
-  if (params.get("component") === "checkbox") {
-    return <FixtureCheckbox />;
-  }
-
-  return <FixtureButton />;
+  return <ActiveFixture />;
 };
 
 const fixtureRoot3 = document.querySelector("#root");
