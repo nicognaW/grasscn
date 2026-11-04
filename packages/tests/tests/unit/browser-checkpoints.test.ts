@@ -18,6 +18,9 @@ import {
 import { testRoot } from "@grasscn/tests/paths";
 import { packageBin } from "@grasscn/tests/tooling";
 
+const hash = (value: string) =>
+  createHash("sha256").update(value).digest("hex");
+
 test("browser file filters select exact basenames on Windows and POSIX", () => {
   const pattern = new RegExp(browserFilePattern("select.spec.ts"), "u");
   assert.ok(pattern.test("C:\\repo\\tests\\select.spec.ts"));
@@ -64,9 +67,6 @@ const fixture = async function fixture(
     await mkdir(output, { recursive: true });
     await mkdir(path.join(root, "tests"));
     await writeFile(path.join(root, "tests", file), "stable source");
-
-    const hash = (value: string) =>
-      createHash("sha256").update(value).digest("hex");
 
     const id = "test-id";
 
@@ -141,10 +141,7 @@ test("failures and retries supersede earlier passes; interrupted writes do not c
       assert.deepEqual(await reusableBrowserTests([candidate], file, root), []);
     }
 
-    await writeFile(
-      journal,
-      `${JSON.stringify(record)}\n` + `{"id":"unfinished"`
-    );
+    await writeFile(journal, `${JSON.stringify(record)}\n{"id":"unfinished"`);
 
     const awaitedUnitRead1 = await reusableBrowserTests(
       [candidate],
@@ -272,9 +269,6 @@ test("nested helper-defined checkpoints retain only both source-identical inputs
     await writeFile(path.join(root, owner), "wrapper source");
     await writeFile(path.join(root, definition), "helper source");
 
-    const hash = (value: string) =>
-      createHash("sha256").update(value).digest("hex");
-
     const sourceFiles = [
       { file: owner, sha256: hash("wrapper source") },
       { file: definition, sha256: hash("helper source") },
@@ -375,7 +369,7 @@ test("Playwright checkpoints bind a nested owning file separately from its decla
       tests: Required<CheckpointDeclaration>[];
     };
 
-    const decl = metadata.tests[0];
+    const [decl] = metadata.tests;
 
     assert.equal(
       await readFile(path.join(root, "runs.txt"), "utf-8"),

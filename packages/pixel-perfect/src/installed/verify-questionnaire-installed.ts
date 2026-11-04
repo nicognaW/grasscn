@@ -218,10 +218,10 @@ const captureQuestionnaireAction = async (
 
   if (a.width !== b.width || a.height !== b.height) {
     throw new Error(
-      `Dimensions ${part} ${c.name} ${[a.width, a.height]} expected ${[
+      `Dimensions ${part} ${c.name} ${[a.width, a.height].join(",")} expected ${[
         b.width,
         b.height,
-      ]}`
+      ].join(",")}`
     );
   }
 
@@ -242,6 +242,8 @@ const captureQuestionnaireAction = async (
   return a;
 };
 
+const selectedParts = partsArg ? new Set(partsArg.split(",")) : undefined;
+
 const browser = await chromium.launch({ channel: "msedge" });
 
 let count = 0;
@@ -259,7 +261,7 @@ try {
     ["input", "input"],
   ].filter(
     ([constituentPart]) =>
-      !partsArg || partsArg.split(",").includes(constituentPart)
+      selectedParts === undefined || selectedParts.has(constituentPart)
   )) {
     // SAFETY: the existing part directory table selects the Label/Controls/Button/Input capture producers.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Questionnaire constituent capture producer boundary.
@@ -419,8 +421,8 @@ try {
 const textParts = ["title", "description", "error", "progress"];
 
 if (
-  !partsArg ||
-  textParts.every((part) => partsArg.split(",").includes(part))
+  selectedParts === undefined ||
+  textParts.every((part) => selectedParts.has(part))
 ) {
   const directory = pixelPerfectFile(
     path.join("tests/reference/questionnaire")

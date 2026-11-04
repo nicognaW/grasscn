@@ -163,7 +163,7 @@ const preserveInstalledDependencies = async () => {
   const backup = path.join(directory, "installed-dependency-backup");
   await mkdir(backup);
 
-  const targetsByDepth = targets.slice();
+  const targetsByDepth = [...targets];
   targetsByDepth.sort(
     (left, right) => right.target.length - left.target.length
   );
@@ -189,7 +189,7 @@ const generatedDocsIdentity = async () => {
   const visit = async (folder: string) => {
     const entries = await readdir(folder, { withFileTypes: true });
 
-    const sortedEntries = entries.slice();
+    const sortedEntries = [...entries];
     sortedEntries.sort((left, right) => left.name.localeCompare(right.name));
 
     for (const entry of sortedEntries) {

@@ -45,8 +45,9 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
       await page.setViewportSize({ height: 900, width: 1536 });
       const q = new URLSearchParams({ component, native: "1" });
 
+      // Captured renderedLines describes native output, not fixture input.
       for (const [key, value] of Object.entries(c)) {
-        if (typeof value === "string" || typeof value === "number") {
+        if (key !== "renderedLines") {
           q.set(key, String(value));
         }
       }

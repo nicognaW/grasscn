@@ -31,13 +31,6 @@ export const installedRegistryFile = function installedRegistryFile(
   );
   const sourceRoot = ui.slice(0, -path.normalize(uiAlias).length);
 
-  const aliases: Record<string, keyof InstalledComponentSettings["aliases"]> = {
-    components: "components",
-    hooks: "hooks",
-    lib: "lib",
-    ui: "ui",
-  };
-
   let target: string;
 
   const placeholder =
@@ -46,7 +39,13 @@ export const installedRegistryFile = function installedRegistryFile(
     );
 
   if (placeholder) {
-    const alias = settings.aliases[aliases[placeholder[1]]];
+    // SAFETY: the matched alias group contains exactly the four settings keys enumerated by this regex.
+    const alias =
+      settings.aliases[
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The matched regex alternatives are exactly these four settings keys.
+        placeholder[1] as keyof InstalledComponentSettings["aliases"]
+      ];
+
     assert.ok(alias, `Missing ${placeholder[1]} alias`);
     target = path.resolve(
       sourceRoot,

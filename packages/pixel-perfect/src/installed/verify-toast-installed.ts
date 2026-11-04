@@ -297,6 +297,8 @@ try {
     };
   };
 
+  const recordPageError = (error: Error) => errors.push(error.message);
+
   for (const c of cases) {
     const previousCaseCount = index;
     index += 1;
@@ -312,7 +314,7 @@ try {
         deviceScaleFactor: 1,
         viewport: { height: 900, width: 1536 },
       });
-      page.on("pageerror", (e) => errors.push(e.message));
+      page.on("pageerror", recordPageError);
       // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
       await page.clock.install({ time: new Date("2026-10-30T00:00:00Z") });
       // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.

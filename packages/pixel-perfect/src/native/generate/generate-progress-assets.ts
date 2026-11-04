@@ -33,9 +33,9 @@ const assets: Record<string, string> = {};
 
 const rgba: Record<string, string> = {};
 
-const assetInputNames = Object.keys(inventory.assets)
-  .filter((member) => member.includes("/sprites/boss_bar/"))
-  .map((member) => path.basename(member));
+const assetInputNames = Object.keys(inventory.assets).flatMap((member) =>
+  member.includes("/sprites/boss_bar/") ? [path.basename(member)] : []
+);
 
 const assetInputReads = await Promise.allSettled(
   assetInputNames.map(

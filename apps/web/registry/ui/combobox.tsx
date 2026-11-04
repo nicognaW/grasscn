@@ -7,10 +7,7 @@ import { Button } from "./button";
 import { Input } from "./input";
 import { minecraftCardSprite } from "./minecraft-card-sprite";
 import { MenuScaleContext, menuTextNodes } from "./minecraft-menu-text";
-import {
-  isMinecraftClassResolver,
-  isMinecraftStyleResolver,
-} from "./minecraft-render";
+import { isMinecraftClassResolver, minecraftStyle } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { Separator } from "./separator";
 
@@ -46,20 +43,6 @@ const classes = function classes<S>(
   return isMinecraftClassResolver(value)
     ? (state: S) => `${base} ${value(state) ?? ""}`
     : `${base} ${value ?? ""}`;
-};
-
-const scaled = function scaled<S>(
-  scale: Scale,
-  style?: React.CSSProperties | ((state: S) => React.CSSProperties | undefined)
-) {
-  const merge = (value?: React.CSSProperties): ComboboxScaleStyle => ({
-    "--mc-scale": scale,
-    ...value,
-  });
-
-  return isMinecraftStyleResolver(style)
-    ? (state: S) => merge(style(state))
-    : merge(style);
 };
 
 const Combobox = <
@@ -239,7 +222,10 @@ const ComboboxContent = ({
           <Primitive.Popup
             data-slot="combobox-content"
             className={classes("mc-combobox-content", className)}
-            style={scaled(scale, style)}
+            style={minecraftStyle(style, (__style): ComboboxScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {children}
@@ -334,7 +320,10 @@ const ComboboxList = ({
       data-surface={surface}
       ref={node}
       className={classes("mc-menu-content mc-combobox-list", className)}
-      style={scaled(scale, style)}
+      style={minecraftStyle(style, (__style): ComboboxScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {surface === "popup" && (
@@ -449,7 +438,10 @@ const ComboboxChips = ({
     <Primitive.Chips
       data-slot="combobox-chips"
       className={classes("mc-combobox-chips", className)}
-      style={scaled(scale, style)}
+      style={minecraftStyle(style, (__style): ComboboxScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   );

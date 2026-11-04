@@ -11,6 +11,12 @@ import {
   ChartTooltipContent,
   chartProfilerColor,
 } from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
+
+interface ProfilerRecipeStyle extends React.CSSProperties {
+  "--mc-profiler-chart-height": string;
+  "--mc-profiler-chart-width": string;
+}
 
 /** Ordinary counts, durations or revenue; Recharts calculates the shares. */
 export const ProfilerChartExample = ({
@@ -21,6 +27,7 @@ export const ProfilerChartExample = ({
   globalPercentage = 100,
   scale = 2,
   style,
+  className,
   "aria-label": ariaLabel,
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
@@ -30,47 +37,52 @@ export const ProfilerChartExample = ({
   rootName?: string;
   globalPercentage?: number;
   scale?: 1 | 2 | 3;
-}) => (
-  <ChartContainer
-    {...props}
-    config={{ [dataKey]: { label: dataKey } }}
-    scale={scale}
-    style={{
-      aspectRatio: "auto",
-      background: "rgba(80,80,80,0.5647058823529412)",
-      height: (139 + data.length * 9) * scale,
-      position: "relative",
-      width: 270 * scale,
-      ...style,
-    }}
-  >
-    <PieChart
-      accessibilityLayer
-      aria-label={ariaLabel}
-      margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
+}) => {
+  const containerStyle: ProfilerRecipeStyle = {
+    "--mc-profiler-chart-height": `${(139 + data.length * 9) * scale}px`,
+    "--mc-profiler-chart-width": `${270 * scale}px`,
+    ...style,
+  };
+
+  return (
+    <ChartContainer
+      {...props}
+      config={{ [dataKey]: { label: dataKey } }}
+      scale={scale}
+      className={cn(
+        "mc-chart-profiler-recipe relative aspect-auto h-(--mc-profiler-chart-height) w-(--mc-profiler-chart-width)",
+        className
+      )}
+      style={containerStyle}
     >
-      <Pie
-        data={data}
-        dataKey={dataKey}
-        nameKey={nameKey}
-        cx={135 * scale}
-        cy={67 * scale}
-        outerRadius={105 * scale}
-        startAngle={-90}
-        endAngle={270}
-        isAnimationActive={false}
-        // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Recharts requires this renderer prop's spelling.
-        shape={ChartProfilerSector}
+      <PieChart
+        accessibilityLayer
+        aria-label={ariaLabel}
+        margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
       >
-        {data.map((row, index) => (
-          <Cell key={index} fill={chartProfilerColor(String(row[nameKey]))} />
-        ))}
-      </Pie>
-      <ChartProfilerFrame
-        rootName={rootName}
-        globalPercentage={globalPercentage}
-      />
-      <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-    </PieChart>
-  </ChartContainer>
-);
+        <Pie
+          data={data}
+          dataKey={dataKey}
+          nameKey={nameKey}
+          cx={135 * scale}
+          cy={67 * scale}
+          outerRadius={105 * scale}
+          startAngle={-90}
+          endAngle={270}
+          isAnimationActive={false}
+          // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Recharts requires this renderer prop's spelling.
+          shape={ChartProfilerSector}
+        >
+          {data.map((row, index) => (
+            <Cell key={index} fill={chartProfilerColor(String(row[nameKey]))} />
+          ))}
+        </Pie>
+        <ChartProfilerFrame
+          rootName={rootName}
+          globalPercentage={globalPercentage}
+        />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+      </PieChart>
+    </ChartContainer>
+  );
+};

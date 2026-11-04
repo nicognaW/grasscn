@@ -149,27 +149,11 @@ export const environmentIdentity = function environmentIdentity() {
   };
 };
 
-export const authorizeFullRun = function authorizeFullRun(
-  number: string | number | undefined,
-  { executor = false, checkSnapshot = true } = {}
-) {
-  const data = readRunIssue(number);
+const requireMaintainerApproval = (data: ReturnType<typeof readRunIssue>) => {
   const { issue, events, comments } = data;
-  // SAFETY: the REST issue/PR guard below rejects PR numbers; a real open issue has GraphQL timestamps.
+  // SAFETY: the caller rejects PR numbers before checking approval; a real open issue has GraphQL timestamps.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const edit = data.edit as NonNullable<typeof data.edit>;
-
-  if (issue.pull_request || issue.state !== "open") {
-    throw new Error(
-      "Full run requires an open, dedicated issue, not a pull request"
-    );
-  }
-
-  const plan = parseRunPlan(issue.body ?? "");
-
-  if (plan.repository.toLowerCase() !== data.repo.toLowerCase()) {
-    throw new Error("Run plan belongs to another repository");
-  }
 
   const labelEvents = events.filter(
     (event) =>
@@ -246,6 +230,50 @@ export const authorizeFullRun = function authorizeFullRun(
     throw new Error("A completed run issue cannot authorize another execution");
   }
 
+  return {
+    actor: approval.actor.login,
+    createdAt: approval.created_at,
+    eventId: approval.id,
+  };
+};
+
+const assertApprovedRunSnapshot = (plan: ReturnType<typeof parseRunPlan>) => {
+  if (git(["rev-parse", "HEAD"]) !== plan.commit) {
+    throw new Error("Checkout does not match the approved commit");
+  }
+
+  if (git(["status", "--porcelain=v1", "--untracked-files=all"])) {
+    throw new Error("Full execution requires a clean isolated source snapshot");
+  }
+
+  if (
+    JSON.stringify(environmentIdentity()) !== JSON.stringify(plan.environment)
+  ) {
+    throw new Error("Environment does not match the approved run plan");
+  }
+};
+
+export const authorizeFullRun = function authorizeFullRun(
+  number: string | number | undefined,
+  { executor = false, checkSnapshot = true } = {}
+) {
+  const data = readRunIssue(number);
+  const { issue } = data;
+
+  if (issue.pull_request || issue.state !== "open") {
+    throw new Error(
+      "Full run requires an open, dedicated issue, not a pull request"
+    );
+  }
+
+  const plan = parseRunPlan(issue.body ?? "");
+
+  if (plan.repository.toLowerCase() !== data.repo.toLowerCase()) {
+    throw new Error("Run plan belongs to another repository");
+  }
+
+  const approval = requireMaintainerApproval(data);
+
   const paths = fullRunPaths(data.number);
 
   // SAFETY: the durable state is produced by writeRunState; the completed-phase guard is unchanged.
@@ -258,21 +286,7 @@ export const authorizeFullRun = function authorizeFullRun(
   }
 
   if (checkSnapshot) {
-    if (git(["rev-parse", "HEAD"]) !== plan.commit) {
-      throw new Error("Checkout does not match the approved commit");
-    }
-
-    if (git(["status", "--porcelain=v1", "--untracked-files=all"])) {
-      throw new Error(
-        "Full execution requires a clean isolated source snapshot"
-      );
-    }
-
-    if (
-      JSON.stringify(environmentIdentity()) !== JSON.stringify(plan.environment)
-    ) {
-      throw new Error("Environment does not match the approved run plan");
-    }
+    assertApprovedRunSnapshot(plan);
   }
 
   if (executor) {
@@ -313,11 +327,7 @@ export const authorizeFullRun = function authorizeFullRun(
 
   return {
     ...data,
-    approval: {
-      actor: approval.actor.login,
-      createdAt: approval.created_at,
-      eventId: approval.id,
-    },
+    approval,
     paths,
     plan,
     planHash: hash(json(plan)),
@@ -652,8 +662,7 @@ const execute = async function execute(number: number, resume: boolean) {
   }
 };
 
-export const main = async function main(args = process.argv.slice(2)) {
-  const command = args.shift();
+const parseFullRunOptions = (args: string[], command: string | undefined) => {
   const options = new Map<string, string>();
 
   for (let i = 0; i < args.length; i += 2) {
@@ -690,37 +699,48 @@ export const main = async function main(args = process.argv.slice(2)) {
     }
   }
 
+  return options;
+};
+
+const printFullRunPlan = (options: ReadonlyMap<string, string>) => {
+  const commit = options.get("--commit") ?? git(["rev-parse", "HEAD"]);
+
+  const plan: FullRunPlanDraft = {
+    commit,
+    environment: environmentIdentity(),
+    execution: {
+      fixturePort: Number(options.get("--fixture-port") ?? 5274),
+      previewPort: Number(options.get("--preview-port") ?? 5276),
+      proxyPort: Number(options.get("--proxy-port") ?? 5277),
+      workers: Number(options.get("--workers") ?? 1),
+    },
+    initiatingCheckout: fs.realpathSync(fullRoot),
+    initiatingThread: process.env.CODEX_SESSION_ID,
+    repository: repository(),
+    schemaVersion: 1,
+    scope: "full",
+  };
+
+  parseRunPlan(runPlanBody(plan));
+
+  if (
+    git(["rev-parse", "HEAD"]) !== commit ||
+    git(["status", "--porcelain=v1", "--untracked-files=all"])
+  ) {
+    throw new Error(
+      "Prepare the plan from a clean checkout of its exact commit with dependencies installed"
+    );
+  }
+
+  console.log(runPlanBody(plan));
+};
+
+export const main = async function main(args = process.argv.slice(2)) {
+  const command = args.shift();
+  const options = parseFullRunOptions(args, command);
+
   if (command === "plan") {
-    const commit = options.get("--commit") ?? git(["rev-parse", "HEAD"]);
-
-    const plan: FullRunPlanDraft = {
-      commit,
-      environment: environmentIdentity(),
-      execution: {
-        fixturePort: Number(options.get("--fixture-port") ?? 5274),
-        previewPort: Number(options.get("--preview-port") ?? 5276),
-        proxyPort: Number(options.get("--proxy-port") ?? 5277),
-        workers: Number(options.get("--workers") ?? 1),
-      },
-      initiatingCheckout: fs.realpathSync(fullRoot),
-      initiatingThread: process.env.CODEX_SESSION_ID,
-      repository: repository(),
-      schemaVersion: 1,
-      scope: "full",
-    };
-
-    parseRunPlan(runPlanBody(plan));
-
-    if (
-      git(["rev-parse", "HEAD"]) !== commit ||
-      git(["status", "--porcelain=v1", "--untracked-files=all"])
-    ) {
-      throw new Error(
-        "Prepare the plan from a clean checkout of its exact commit with dependencies installed"
-      );
-    }
-
-    console.log(runPlanBody(plan));
+    printFullRunPlan(options);
 
     return;
   }

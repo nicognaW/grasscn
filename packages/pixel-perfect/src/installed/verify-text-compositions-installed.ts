@@ -156,8 +156,9 @@ const verifyComposedTextCase = async (
   const url = new URL(origin);
   url.search = "";
 
+  // Captured renderedLines describes native output, not fixture input.
   for (const [key, value] of Object.entries(c)) {
-    if (typeof value === "string" || typeof value === "number") {
+    if (key !== "renderedLines") {
       url.searchParams.set(key, String(value));
     }
   }
@@ -239,14 +240,17 @@ const verifyComposedTextCase = async (
   await page.evaluate(async () => {
     await document.fonts.ready;
 
-    const images = [...document.querySelectorAll(".mc-surface>span")]
-      .map(
-        (node) =>
-          /url\(["']?(?<imageUrl>.*?)["']?\)/u.exec(
-            getComputedStyle(node).backgroundImage
-          )?.[1]
-      )
-      .filter((imageSource): imageSource is string => Boolean(imageSource));
+    const images = [...document.querySelectorAll(".mc-surface>span")].flatMap(
+      (node) => {
+        const imageSource = /url\(["']?(?<imageUrl>.*?)["']?\)/u.exec(
+          getComputedStyle(node).backgroundImage
+        )?.[1];
+
+        return imageSource === undefined || imageSource === ""
+          ? []
+          : [imageSource];
+      }
+    );
 
     await Promise.all(
       images.map(async (src) => {

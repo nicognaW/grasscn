@@ -260,13 +260,40 @@ const canonical = (bytes: Buffer) => {
   return text.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-for (const entry of item.files) {
-  const name = path.basename(entry.path);
-  const source = await readFile(webFile(path.join(entry.path)));
+const sourceFileReads = await Promise.allSettled(
+  item.files.map(async (entry) => {
+    const name = path.basename(entry.path);
 
-  const installed = await readFile(
-    path.join(consumer, "src/components/ui", name)
-  );
+    const [firstRead, secondRead] = await Promise.allSettled(
+      [
+        async () => await readFile(webFile(path.join(entry.path))),
+        async () =>
+          await readFile(path.join(consumer, "src/components/ui", name)),
+      ].map(async (read) => await read())
+    );
+
+    if (firstRead.status === "rejected") {
+      throw firstRead.reason;
+    }
+
+    if (secondRead.status === "rejected") {
+      throw secondRead.reason;
+    }
+
+    return {
+      installed: secondRead.value,
+      name,
+      source: firstRead.value,
+    };
+  })
+);
+
+for (const fileRead of sourceFileReads) {
+  if (fileRead.status === "rejected") {
+    throw fileRead.reason;
+  }
+
+  const { installed, name, source } = fileRead.value;
 
   assert.equal(
     canonical(installed),

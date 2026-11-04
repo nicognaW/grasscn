@@ -108,26 +108,25 @@ let light = "";
 let path = "";
 let shade = "";
 
+const outlineRun = (start: number, last: number, y: number) =>
+  `M${pos(point(start, y))}L${pos(point(last + 1, y))}L${pos(point(last + 1, y + 1))}L${pos(point(start, y + 1))}Z`;
+
 for (const [y, xs] of rows) {
   xs.sort((a, b) => a - b);
 
   let [start] = xs;
   let last = start;
 
-  const run = () => {
-    path += `M${pos(point(start, y))}L${pos(point(last + 1, y))}L${pos(point(last + 1, y + 1))}L${pos(point(start, y + 1))}Z`;
-  };
-
   for (const x of xs.slice(1)) {
     if (x !== last + 1) {
-      run();
+      path += outlineRun(start, last, y);
       start = x;
     }
 
     last = x;
   }
 
-  run();
+  path += outlineRun(start, last, y);
 }
 
 for (const key of fine) {

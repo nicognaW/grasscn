@@ -76,7 +76,10 @@ const registeredItems = await readRegistryItems();
 const item = registeredItems.items.find((candidate) => candidate.name === name);
 
 assert.ok(
-  component?.pixelVerification.manifest && item,
+  component?.pixelVerification.manifest !== undefined &&
+    component.pixelVerification.manifest !== null &&
+    component.pixelVerification.manifest !== "" &&
+    item,
   "Need a registered item with an independent native manifest"
 );
 
@@ -117,14 +120,49 @@ const canonical = (bytes: Buffer) => {
 
 const files = [];
 
-for (const entry of item.files) {
-  const filename = path.basename(entry.path);
+const sourceFileReads = await Promise.allSettled(
+  item.files.map(async (entry) => {
+    const filename = path.basename(entry.path);
 
-  const installed = await readFile(
-    installedRegistryFile(entry, consumerDir, consumerSettings, uiDirectory)
-  );
+    const [firstRead, secondRead] = await Promise.allSettled(
+      [
+        async () =>
+          await readFile(
+            installedRegistryFile(
+              entry,
+              consumerDir,
+              consumerSettings,
+              uiDirectory
+            )
+          ),
+        async () => await readFile(webFile(path.join(entry.path))),
+      ].map(async (read) => await read())
+    );
 
-  const source = await readFile(webFile(path.join(entry.path)));
+    if (firstRead.status === "rejected") {
+      throw firstRead.reason;
+    }
+
+    if (secondRead.status === "rejected") {
+      throw secondRead.reason;
+    }
+
+    return {
+      entry,
+      filename,
+      installed: firstRead.value,
+      source: secondRead.value,
+    };
+  })
+);
+
+for (const fileRead of sourceFileReads) {
+  if (fileRead.status === "rejected") {
+    throw fileRead.reason;
+  }
+
+  const { entry, filename, installed, source } = fileRead.value;
+
   assert.ok(
     canonical(installed) === canonical(source),
     `${filename} changed beyond permitted CLI transforms`

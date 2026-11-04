@@ -5,6 +5,7 @@
 @import "../../../../apps/web/registry/ui/minecraft-components.css";
 @import "./native-fixture-geometry.css";
 @source "../../../../apps/web/registry/ui";
+@source "../../../../apps/web/registry/blocks";
 html,
 body {
   margin: 0;

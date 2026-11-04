@@ -94,21 +94,22 @@ await Promise.all([
   mkdir(output, { recursive: true }),
 ]);
 
-const libraries = metadata.libraries
-  .filter(permitted)
-  .filter(
-    (library) =>
-      !/^(?:net\.fabricmc|net\.fabricmc\.|org\.ow2\.asm|io\.github\.llamalad7):/u.test(
-        library.name
-      )
-  )
-  .flatMap((library) => {
-    const relative = library.downloads?.artifact?.path;
+const libraries = metadata.libraries.flatMap((library) => {
+  if (
+    !permitted(library) ||
+    /^(?:net\.fabricmc|net\.fabricmc\.|org\.ow2\.asm|io\.github\.llamalad7):/u.test(
+      library.name
+    )
+  ) {
+    return [];
+  }
 
-    return relative !== undefined && relative !== ""
-      ? [path.join(minecraftRoot, "libraries", relative)]
-      : [];
-  });
+  const relative = library.downloads?.artifact?.path;
+
+  return relative !== undefined && relative !== ""
+    ? [path.join(minecraftRoot, "libraries", relative)]
+    : [];
+});
 
 const classpath = [classes, jar, ...libraries].join(path.delimiter);
 
