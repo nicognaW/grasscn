@@ -176,9 +176,7 @@ const selectable = function selectable(
   }
 
   if (Array.isArray(value)) {
-    return value.map((child, index) => (
-      <React.Fragment key={index}>{selectable(child)}</React.Fragment>
-    ));
+    return React.Children.map(value, selectable);
   }
 
   if (

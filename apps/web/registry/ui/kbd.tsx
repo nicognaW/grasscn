@@ -29,9 +29,7 @@ interface KbdScaleStyle extends React.CSSProperties {
 
 const keyText = function keyText(content: React.ReactNode): React.ReactNode {
   if (Array.isArray(content)) {
-    return content.map((child, index) => (
-      <React.Fragment key={index}>{keyText(child)}</React.Fragment>
-    ));
+    return React.Children.map(content, keyText);
   }
 
   if (!isMinecraftTextContent(content)) {

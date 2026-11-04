@@ -246,9 +246,7 @@ const MinecraftItemText = ({
     }
 
     if (Array.isArray(value)) {
-      return value.map((child, index) => (
-        <React.Fragment key={index}>{richText(child)}</React.Fragment>
-      ));
+      return React.Children.map(value, richText);
     }
 
     if (
