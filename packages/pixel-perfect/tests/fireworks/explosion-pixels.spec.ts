@@ -83,7 +83,9 @@ test("firework explosion projected references are bound to their native capture"
   const ticks = [
     ...manifest.frames.map((frame) => frame.tick),
     ...manifest.emptyTicks,
-  ].toSorted((a, b) => a - b);
+  ];
+
+  ticks.sort((a, b) => a - b);
 
   expect(ticks).toEqual(
     Array.from({ length: manifest.tickRange.last }, (_, index) => index + 1)
