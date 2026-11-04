@@ -48,6 +48,7 @@
     "./ui/label": "./registry/ui/label.tsx",
     "./ui/map": "./registry/ui/map.tsx",
     "./ui/marker": "./registry/ui/marker.tsx",
+    "./ui/redstone-lamp-display": "./registry/ui/redstone-lamp-display.tsx",
     "./ui/menubar": "./registry/ui/menubar.tsx",
     "./ui/message": "./registry/ui/message.tsx",
     "./ui/message-scroller": "./registry/ui/message-scroller.tsx",
