@@ -130,6 +130,25 @@ const HotbarPaint = ({
   );
 };
 
+const findEnabledHotbarSlot = (
+  items: readonly HotbarItem[],
+  start: number,
+  direction: 1 | -1
+): number | undefined => {
+  let enabled: number | undefined;
+
+  for (let offset = 0; offset < 9; offset += 1) {
+    const slot = (start + direction * offset + 9) % 9;
+
+    if (!(items[slot]?.disabled ?? false)) {
+      enabled = slot;
+      break;
+    }
+  }
+
+  return enabled;
+};
+
 const Hotbar = ({
   items = EMPTY_HOTBAR_ITEMS,
   value,
@@ -150,6 +169,11 @@ const Hotbar = ({
 
   const [internal, setInternal] = React.useState(defaultValue);
   const current = value ?? internal;
+  const firstEnabledSlot = findEnabledHotbarSlot(items, 0, 1);
+
+  const tabStop =
+    (items[current]?.disabled ?? false) ? firstEnabledSlot : current;
+
   const root = React.useRef<HTMLDivElement>(null);
 
   const cancelledWheel = React.useRef<WheelEvent | null>(null);
@@ -220,6 +244,7 @@ const Hotbar = ({
           : null;
       }}
       role="toolbar"
+      tabIndex={props.tabIndex ?? (tabStop === undefined ? 0 : -1)}
       aria-label={props["aria-label"] ?? "Hotbar"}
       data-slot="hotbar"
       className={cn("mc-hotbar mc-owned-base-hotbar-1", className)}
@@ -236,6 +261,12 @@ const Hotbar = ({
           return;
         }
 
+        const focusedSlot = [
+          ...event.currentTarget.querySelectorAll('[data-slot="hotbar-item"]'),
+        ].indexOf(document.activeElement ?? event.currentTarget);
+
+        const navigationSlot = focusedSlot === -1 ? current : focusedSlot;
+
         let next: number | undefined;
 
         if (/^[1-9]$/u.test(event.key)) {
@@ -243,19 +274,19 @@ const Hotbar = ({
         }
 
         if (event.key === "ArrowRight") {
-          next = (current + 1) % 9;
+          next = findEnabledHotbarSlot(items, (navigationSlot + 1) % 9, 1);
         }
 
         if (event.key === "ArrowLeft") {
-          next = (current + 8) % 9;
+          next = findEnabledHotbarSlot(items, (navigationSlot + 8) % 9, -1);
         }
 
         if (event.key === "Home") {
-          next = 0;
+          next = findEnabledHotbarSlot(items, 0, 1);
         }
 
         if (event.key === "End") {
-          next = 8;
+          next = findEnabledHotbarSlot(items, 8, -1);
         }
 
         if (next !== undefined) {
@@ -308,7 +339,7 @@ const Hotbar = ({
           aria-label={items[i]?.label ?? `Slot ${i + 1}`}
           aria-pressed={current === i}
           disabled={items[i]?.disabled}
-          tabIndex={current === i ? 0 : -1}
+          tabIndex={tabStop === i ? 0 : -1}
           onClick={(event) => {
             if (!event.defaultPrevented) {
               select(i);

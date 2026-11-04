@@ -29,7 +29,6 @@ import {
   SidebarFooter,
   SidebarInput,
   SidebarSeparator,
-  SidebarInset,
 } from "../registry/ui/sidebar";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
@@ -158,7 +157,7 @@ const SidebarDemo = ({ scale }: DemoProps) => {
               </SidebarMenu>
             </SidebarFooter>
           </Sidebar>
-          <SidebarInset role="group" aria-label="World workspace">
+          <section className="mc-sidebar-inset" aria-label="World workspace">
             <div
               className="flex min-w-0 flex-col gap-(--demo-gap) p-(--demo-padding)"
               style={
@@ -213,7 +212,7 @@ const SidebarDemo = ({ scale }: DemoProps) => {
                 </CardContent>
               </Card>
             </div>
-          </SidebarInset>
+          </section>
         </SidebarProvider>
       </div>
       <div className="demo-result">
