@@ -85,7 +85,7 @@ const nativeTokenColor = function nativeTokenColor(value?: string) {
       0
     );
 
-  let best = nativePalette[0];
+  let [best] = nativePalette;
 
   for (const color of nativePalette) {
     if (distance(color) < distance(best)) {
