@@ -96,7 +96,11 @@ export const sourceIdentity = async (directory: string = repoRoot) => {
 };
 
 type ProductionInput =
-  | { kind: "directory"; file: string }
+  | {
+      kind: "directory";
+      file: string;
+      children: PromiseSettledResult<ProductionInput | null>[];
+    }
   | { kind: "symlink"; file: string }
   | {
       kind: "file";
@@ -129,7 +133,11 @@ const readProductionInput = async (
   }
 
   if (info.isDirectory()) {
-    return { file, kind: "directory" };
+    return {
+      children: await readProductionDirectory(directory, file),
+      file,
+      kind: "directory",
+    };
   }
 
   let fingerprint: PromiseSettledResult<string>;
@@ -141,6 +149,77 @@ const readProductionInput = async (
   }
 
   return { fingerprint, kind: "file", relative };
+};
+
+const readProductionDirectory = async (
+  directory: string,
+  folder: string
+): Promise<PromiseSettledResult<ProductionInput | null>[]> => {
+  const entries = await readdir(folder);
+  entries.sort();
+
+  return await Promise.allSettled(
+    entries.map(
+      async (name) => await readProductionInput(directory, folder, name)
+    )
+  );
+};
+
+type GeneratedInput =
+  | Exclude<ProductionInput, { kind: "directory" }>
+  | {
+      kind: "directory";
+      file: string;
+      children: PromiseSettledResult<GeneratedInput>[];
+    };
+
+const readGeneratedInput = async (
+  directory: string,
+  folder: string,
+  name: string
+): Promise<GeneratedInput> => {
+  const file = path.join(folder, name);
+  const info = await lstat(file);
+
+  if (info.isSymbolicLink()) {
+    return { file, kind: "symlink" };
+  }
+
+  if (info.isDirectory()) {
+    return {
+      children: await readGeneratedDirectory(directory, file),
+      file,
+      kind: "directory",
+    };
+  }
+
+  let fingerprint: PromiseSettledResult<string>;
+
+  try {
+    fingerprint = { status: "fulfilled", value: digest(await readFile(file)) };
+  } catch (error) {
+    fingerprint = { reason: error, status: "rejected" };
+  }
+
+  return {
+    fingerprint,
+    kind: "file",
+    relative: path.relative(directory, file).replaceAll(path.sep, "/"),
+  };
+};
+
+const readGeneratedDirectory = async (
+  directory: string,
+  folder: string
+): Promise<PromiseSettledResult<GeneratedInput>[]> => {
+  const entries = await readdir(folder);
+  entries.sort();
+
+  return await Promise.allSettled(
+    entries.map(
+      async (name) => await readGeneratedInput(directory, folder, name)
+    )
+  );
 };
 
 /**
@@ -163,17 +242,7 @@ export const productionBuildIdentity = async ({
   /** @type {FileIdentity[]} */
   const files: FileIdentity[] = [];
 
-  /** @param {string} folder - Verification input. */
-  const visit = async (folder: string) => {
-    const entries = await readdir(folder);
-    entries.sort();
-
-    const pending = await Promise.allSettled(
-      entries.map(
-        async (name) => await readProductionInput(directory, folder, name)
-      )
-    );
-
+  const visit = (pending: PromiseSettledResult<ProductionInput | null>[]) => {
     for (const result of pending) {
       if (result.status === "rejected") {
         throw result.reason;
@@ -191,7 +260,7 @@ export const productionBuildIdentity = async ({
       );
 
       if (input.kind === "directory") {
-        await visit(input.file);
+        visit(input.children);
       } else {
         if (input.fingerprint.status === "rejected") {
           throw input.fingerprint.reason;
@@ -210,8 +279,19 @@ export const productionBuildIdentity = async ({
   const buildId = buildIdContents.trim();
 
   assert.ok(buildId, "Missing Next production build ID");
-  await visit(path.join(directory, ".next"));
-  await visit(path.join(directory, "public/r"));
+
+  const roots = await Promise.allSettled([
+    readProductionDirectory(directory, path.join(directory, ".next")),
+    readProductionDirectory(directory, path.join(directory, "public/r")),
+  ]);
+
+  for (const root of roots) {
+    if (root.status === "rejected") {
+      throw root.reason;
+    }
+
+    visit(root.value);
+  }
 
   return {
     buildId,
@@ -255,33 +335,47 @@ const preparationIdentity = async (root: string, directory: string) => {
   /** @type {FileIdentity[]} */
   const generated: FileIdentity[] = [];
 
-  /** @param {string} folder - Verification input. */
-  const visit = async (folder: string) => {
-    const entries = await readdir(folder);
-    entries.sort();
+  const visit = (pending: PromiseSettledResult<GeneratedInput>[]) => {
+    for (const result of pending) {
+      if (result.status === "rejected") {
+        throw result.reason;
+      }
 
-    for (const name of entries) {
-      const filename = path.join(folder, name);
-      const info = await lstat(filename);
+      const input = result.value;
 
       assert.ok(
-        !info.isSymbolicLink(),
+        input.kind !== "symlink",
         "Generated inputs cannot contain symlinks"
       );
 
-      if (info.isDirectory()) {
-        await visit(filename);
+      if (input.kind === "directory") {
+        visit(input.children);
       } else {
+        if (input.fingerprint.status === "rejected") {
+          throw input.fingerprint.reason;
+        }
+
         generated.push({
-          path: path.relative(directory, filename).replaceAll(path.sep, "/"),
-          sha256: digest(await readFile(filename)),
+          path: input.relative,
+          sha256: input.fingerprint.value,
         });
       }
     }
   };
 
-  await visit(path.join(directory, ".source"));
-  await visit(path.join(directory, ".next/types"));
+  const roots = await Promise.allSettled([
+    readGeneratedDirectory(directory, path.join(directory, ".source")),
+    readGeneratedDirectory(directory, path.join(directory, ".next/types")),
+  ]);
+
+  for (const root of roots) {
+    if (root.status === "rejected") {
+      throw root.reason;
+    }
+
+    visit(root.value);
+  }
+
   generated.push({
     path: "next-env.d.ts",
     sha256: digest(await readFile(path.join(directory, "next-env.d.ts"))),
