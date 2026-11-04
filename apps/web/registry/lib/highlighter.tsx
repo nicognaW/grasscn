@@ -5,19 +5,19 @@ import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 
 // Add the languages you need. Each one loads the first time it is used.
 const languages = {
-  bash: async () => import("shiki/langs/shellscript.mjs"),
-  css: async () => import("shiki/langs/css.mjs"),
-  diff: async () => import("shiki/langs/diff.mjs"),
-  html: async () => import("shiki/langs/html.mjs"),
-  javascript: async () => import("shiki/langs/javascript.mjs"),
-  json: async () => import("shiki/langs/json.mjs"),
-  jsx: async () => import("shiki/langs/jsx.mjs"),
-  markdown: async () => import("shiki/langs/markdown.mjs"),
-  python: async () => import("shiki/langs/python.mjs"),
-  sql: async () => import("shiki/langs/sql.mjs"),
-  tsx: async () => import("shiki/langs/tsx.mjs"),
-  typescript: async () => import("shiki/langs/typescript.mjs"),
-  yaml: async () => import("shiki/langs/yaml.mjs"),
+  bash: async () => await import("shiki/langs/shellscript.mjs"),
+  css: async () => await import("shiki/langs/css.mjs"),
+  diff: async () => await import("shiki/langs/diff.mjs"),
+  html: async () => await import("shiki/langs/html.mjs"),
+  javascript: async () => await import("shiki/langs/javascript.mjs"),
+  json: async () => await import("shiki/langs/json.mjs"),
+  jsx: async () => await import("shiki/langs/jsx.mjs"),
+  markdown: async () => await import("shiki/langs/markdown.mjs"),
+  python: async () => await import("shiki/langs/python.mjs"),
+  sql: async () => await import("shiki/langs/sql.mjs"),
+  tsx: async () => await import("shiki/langs/tsx.mjs"),
+  typescript: async () => await import("shiki/langs/typescript.mjs"),
+  yaml: async () => await import("shiki/langs/yaml.mjs"),
 };
 
 const aliases: Record<string, keyof typeof languages> = {
