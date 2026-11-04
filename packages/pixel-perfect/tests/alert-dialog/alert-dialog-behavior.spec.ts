@@ -4,6 +4,13 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+const capturedBackdropPixels = (name: string) =>
+  PNG.sync.read(
+    readFileSync(
+      pixelPerfectFile(`tests/reference/alert-dialog-backdrop/captures/${name}`)
+    )
+  ).data;
+
 test("AlertDialog refreshes native backdrop pixels when the underlying background changes without repaint loops", async ({
   page,
 }) => {
@@ -16,17 +23,8 @@ test("AlertDialog refreshes native backdrop pixels when the underlying backgroun
   });
   const overlay = page.locator('[data-slot="alert-dialog-overlay"]');
 
-  const expected = (name: string) =>
-    PNG.sync.read(
-      readFileSync(
-        pixelPerfectFile(
-          `tests/reference/alert-dialog-backdrop/captures/${name}`
-        )
-      )
-    ).data;
-
-  const dark = expected("alert-smoke-c2-s3.png");
-  const light = expected("alert-smoke-c3-s3.png");
+  const dark = capturedBackdropPixels("alert-smoke-c2-s3.png");
+  const light = capturedBackdropPixels("alert-smoke-c3-s3.png");
 
   await expect(overlay).toHaveAttribute(
     "data-mc-confirmation-gpu-ready",

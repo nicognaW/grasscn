@@ -14,13 +14,12 @@ if (!firstDir || !secondDir) {
   );
 }
 
-const read = async (dir: string): Promise<NativeCaptureManifest> => {
+const read = async (dir: string): Promise<NativeCaptureManifest> =>
   // SAFETY: both native reference directories use the retained capture-manifest producer; original identity/case/digest/pixel checks remain below.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-  return JSON.parse(
+  JSON.parse(
     await readFile(path.join(dir, "manifest.json"), "utf-8")
   ) as NativeCaptureManifest;
-};
 
 const [firstRead, secondRead] = await Promise.allSettled([
   read(firstDir),

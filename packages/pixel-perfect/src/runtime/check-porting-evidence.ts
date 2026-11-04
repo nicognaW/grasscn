@@ -102,11 +102,23 @@ export const verifyPortingEvidence = async function verifyPortingEvidence(
 
   const trading = "tests/reference/trading/scrollbar/";
 
-  const manifest = await readTradingManifest(`${trading}manifest.json`);
+  const [manifestRead, repeatRead, eventsRead] = await Promise.allSettled([
+    readTradingManifest(`${trading}manifest.json`),
+    readTradingRepeat(`${trading}interaction-repeatability.json`),
+    readTradingEvents(`${trading}trading-scroll-events.json`),
+  ]);
 
-  const repeat = await readTradingRepeat(
-    `${trading}interaction-repeatability.json`
-  );
+  if (manifestRead.status === "rejected") {
+    throw manifestRead.reason;
+  }
+
+  const manifest = manifestRead.value;
+
+  if (repeatRead.status === "rejected") {
+    throw repeatRead.reason;
+  }
+
+  const repeat = repeatRead.value;
 
   for (const key of [
     "sourceJarSha256",
@@ -118,9 +130,11 @@ export const verifyPortingEvidence = async function verifyPortingEvidence(
 
   assert.equal(repeat.identical, true, "Trading native trace repeat must pass");
 
-  const events = await readTradingEvents(
-    `${trading}trading-scroll-events.json`
-  );
+  if (eventsRead.status === "rejected") {
+    throw eventsRead.reason;
+  }
+
+  const events = eventsRead.value;
 
   const eventOfferCounts = Object.keys(events).map(Number);
 
@@ -147,15 +161,37 @@ export const verifyPortingEvidence = async function verifyPortingEvidence(
 
   const map = "tests/reference/map/demo-world/";
 
-  const provenance = await readTerrainProvenance(
-    `${map}terrain-provenance.json`
-  );
+  const [provenanceRead, generationRead, repeatedRead, inputBytesRead] =
+    await Promise.allSettled([
+      readTerrainProvenance(`${map}terrain-provenance.json`),
+      readMapGeneration(`${map}map-world-generation.json`),
+      readMapRepeat(`${map}generation-repeatability.json`),
+      bytes(`${map}inputs/map-world-input.json.gz`),
+    ]);
 
-  const generation = await readMapGeneration(`${map}map-world-generation.json`);
+  if (provenanceRead.status === "rejected") {
+    throw provenanceRead.reason;
+  }
 
-  const repeated = await readMapRepeat(`${map}generation-repeatability.json`);
+  const provenance = provenanceRead.value;
 
-  const inputBytes = await bytes(`${map}inputs/map-world-input.json.gz`);
+  if (generationRead.status === "rejected") {
+    throw generationRead.reason;
+  }
+
+  const generation = generationRead.value;
+
+  if (repeatedRead.status === "rejected") {
+    throw repeatedRead.reason;
+  }
+
+  const repeated = repeatedRead.value;
+
+  if (inputBytesRead.status === "rejected") {
+    throw inputBytesRead.reason;
+  }
+
+  const inputBytes = inputBytesRead.value;
   assert.equal(
     digest(inputBytes),
     provenance.inputSha256,
@@ -218,15 +254,33 @@ export const verifyPortingEvidence = async function verifyPortingEvidence(
     "tests/reference/player-preview/custom-skins/skin-provenance.json"
   );
 
-  for (const [name, record] of Object.entries(skins)) {
-    if (!isSkinPin(record) || !record.sha256) {
+  const skinReads = await Promise.allSettled(
+    Object.entries(skins).map(async ([name, record]) => {
+      if (!isSkinPin(record) || !record.sha256) {
+        return null;
+      }
+
+      const source = await bytes(`tests/fixture/${name}-skin.png`);
+
+      return { name, record, source };
+    })
+  );
+
+  for (const skinRead of skinReads) {
+    if (skinRead.status === "rejected") {
+      throw skinRead.reason;
+    }
+
+    const pin = skinRead.value;
+
+    if (pin === null) {
       continue;
     }
 
     assert.equal(
-      digest(await bytes(`tests/fixture/${name}-skin.png`)),
-      record.sha256,
-      `Frozen ${name} skin`
+      digest(pin.source),
+      pin.record.sha256,
+      `Frozen ${pin.name} skin`
     );
   }
 
