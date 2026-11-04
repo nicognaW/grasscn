@@ -743,7 +743,7 @@ const SidebarGroupAction = ({
       data-sidebar="group-action"
       scale={explicit ?? scale}
       className={cn(
-        "mc-sidebar-group-action mc-owned-base-sidebar-1",
+        "mc-sidebar-group-action mc-owned-base-sidebar-1 absolute",
         className
       )}
       style={minecraftStyle(style, (__style): OwnedSidebarDimensions1 => ({
@@ -927,7 +927,7 @@ const SidebarMenuAction = ({
       data-show-on-hover={showOnHover || undefined}
       scale={explicit ?? scale}
       className={cn(
-        "mc-sidebar-menu-action mc-owned-base-sidebar-2",
+        "mc-sidebar-menu-action mc-owned-base-sidebar-2 absolute",
         className
       )}
       style={minecraftStyle(style, (__style): OwnedSidebarDimensions2 => ({
