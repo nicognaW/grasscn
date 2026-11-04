@@ -1,0 +1,570 @@
+{
+  "caseDefinitionSha256": "25861d0cb5ff039d606ff6766c654df97cb45422976f098f4ce7f1f627a2b01b",
+  "harnessSources": [
+    {
+      "file": "packages/pixel-perfect/tests/reference/projected/ProjectedReferenceMain.java",
+      "sha256": "5f1480a11a2b932e92a8237cf8dad9fc72995ea942eb7e19253836a04042df98"
+    },
+    {
+      "file": "packages/pixel-perfect/tests/reference/projected/ParticleSeedAgent.java",
+      "sha256": "c532624a2f34872f76908cc672122d7b458dd2bc0d0739e7e29aabd8fe4008b3"
+    },
+    {
+      "file": "packages/pixel-perfect/src/native/capture/capture-firework-sounds.ts",
+      "sha256": "8d1a955c5d76723c18096054ed4d10fe073db62d4791b6b4f525bd258cca7bd9"
+    },
+    {
+      "file": "packages/pixel-perfect/src/native/firework-sound-case.ts",
+      "sha256": "48496bef58c09199ddb435410679b0e583daf28bd8e53ab882da983498fd5f24"
+    }
+  ],
+  "listeners": [
+    {
+      "camera": {
+        "position": [
+          0.5,
+          85.49999988079071,
+          -14.5
+        ],
+        "rotation": [
+          180,
+          0
+        ]
+      },
+      "lastTick": 86,
+      "name": "near",
+      "rocketLifetime": 24,
+      "runtime": {
+        "device": "llvmpipe (LLVM 20.1.2, 256 bits)",
+        "vendor": "Mesa",
+        "driver": "4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4",
+        "backend": "OpenGL",
+        "window": [
+          480,
+          640
+        ],
+        "cameraPosition": [
+          0.5,
+          85.49999988079071,
+          -14.5
+        ],
+        "cameraRotation": [
+          180,
+          0
+        ],
+        "projectionMatrix": [
+          0.06666667,
+          0,
+          0,
+          0,
+          0,
+          0.05,
+          0,
+          0,
+          0,
+          0,
+          -0.003907013,
+          0,
+          0,
+          -0.4,
+          -0.00019535066,
+          1
+        ],
+        "overworldClockTime": 6000,
+        "raining": false,
+        "gameType": "spectator",
+        "hudHidden": true,
+        "videoOptions": {
+          "graphicsPreset": "CUSTOM",
+          "renderDistance": 12,
+          "ambientOcclusion": true,
+          "mipmapLevels": 4,
+          "textureFiltering": "NONE",
+          "cloudStatus": "FANCY",
+          "fov": 70,
+          "bobView": true,
+          "particles": "ALL"
+        },
+        "fog": {
+          "color": [
+            0.70980394,
+            0.8156863,
+            1,
+            1
+          ],
+          "environmentalStart": 0,
+          "environmentalEnd": 1024,
+          "renderDistanceStart": 172.8,
+          "renderDistanceEnd": 192,
+          "skyEnd": 192,
+          "cloudEnd": 2048
+        },
+        "particleAtlas": {
+          "width": 512,
+          "height": 256,
+          "maxMipLevel": 0,
+          "mipLevelCount": 1,
+          "textureMipLevels": 1,
+          "sampler": [
+            "NEAREST",
+            "NEAREST",
+            "CLAMP_TO_EDGE",
+            "CLAMP_TO_EDGE",
+            "OptionalDouble[0.0]"
+          ],
+          "sprites": {
+            "spark_0": {
+              "x": 412,
+              "y": 80,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1050804224,
+                1051852800
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_1": {
+              "x": 412,
+              "y": 90,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1052114944,
+                1053163520
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_2": {
+              "x": 412,
+              "y": 100,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1053425664,
+                1054474240
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_3": {
+              "x": 412,
+              "y": 110,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1054736384,
+                1055784960
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_4": {
+              "x": 412,
+              "y": 120,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1056047104,
+                1057030144
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_5": {
+              "x": 412,
+              "y": 130,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057161216,
+                1057685504
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_6": {
+              "x": 412,
+              "y": 140,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057816576,
+                1058340864
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_7": {
+              "x": 412,
+              "y": 150,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1058471936,
+                1058996224
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "flash": {
+              "x": 68,
+              "y": 128,
+              "width": 32,
+              "height": 32,
+              "uvBits": [
+                1040842752,
+                1045037056,
+                1057030144,
+                1059127296
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=true]"
+            }
+          }
+        }
+      },
+      "seededParticles": 412,
+      "sounds": [
+        {
+          "call": "play",
+          "delayTicks": 0,
+          "pitch": 1,
+          "pitchBits": 1065353216,
+          "position": [
+            0.375,
+            72,
+            -21.5
+          ],
+          "sound": "minecraft:entity.firework_rocket.launch",
+          "source": "AMBIENT",
+          "thread": "Render thread",
+          "tick": 1,
+          "volume": 3,
+          "volumeBits": 1077936128
+        },
+        {
+          "call": "play",
+          "delayTicks": 0,
+          "pitch": 1.0203595,
+          "pitchBits": 1065524004,
+          "position": [
+            0.29520461880741494,
+            85.20001221373718,
+            -21.57277412852691
+          ],
+          "sound": "minecraft:entity.firework_rocket.large_blast",
+          "source": "AMBIENT",
+          "thread": "Render thread",
+          "tick": 26,
+          "volume": 20,
+          "volumeBits": 1101004800
+        },
+        {
+          "call": "play",
+          "delayTicks": 0,
+          "pitch": 0.9001209,
+          "pitchBits": 1063677523,
+          "position": [
+            0.29520461880741494,
+            85.20001221373718,
+            -21.57277412852691
+          ],
+          "sound": "minecraft:entity.firework_rocket.twinkle",
+          "source": "AMBIENT",
+          "thread": "Render thread",
+          "tick": 42,
+          "volume": 20,
+          "volumeBits": 1101004800
+        }
+      ]
+    },
+    {
+      "camera": {
+        "position": [
+          0.5,
+          85.49999988079071,
+          -8.5
+        ],
+        "rotation": [
+          180,
+          0
+        ]
+      },
+      "lastTick": 86,
+      "name": "near-delayed",
+      "rocketLifetime": 24,
+      "runtime": {
+        "device": "llvmpipe (LLVM 20.1.2, 256 bits)",
+        "vendor": "Mesa",
+        "driver": "4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4",
+        "backend": "OpenGL",
+        "window": [
+          480,
+          640
+        ],
+        "cameraPosition": [
+          0.5,
+          85.49999988079071,
+          -8.5
+        ],
+        "cameraRotation": [
+          180,
+          0
+        ],
+        "projectionMatrix": [
+          0.06666667,
+          0,
+          0,
+          0,
+          0,
+          0.05,
+          0,
+          0,
+          0,
+          0,
+          -0.003907013,
+          0,
+          0,
+          -0.4,
+          -0.00019535066,
+          1
+        ],
+        "overworldClockTime": 6000,
+        "raining": false,
+        "gameType": "spectator",
+        "hudHidden": true,
+        "videoOptions": {
+          "graphicsPreset": "CUSTOM",
+          "renderDistance": 12,
+          "ambientOcclusion": true,
+          "mipmapLevels": 4,
+          "textureFiltering": "NONE",
+          "cloudStatus": "FANCY",
+          "fov": 70,
+          "bobView": true,
+          "particles": "ALL"
+        },
+        "fog": {
+          "color": [
+            0.70980394,
+            0.8156863,
+            1,
+            1
+          ],
+          "environmentalStart": 0,
+          "environmentalEnd": 1024,
+          "renderDistanceStart": 172.8,
+          "renderDistanceEnd": 192,
+          "skyEnd": 192,
+          "cloudEnd": 2048
+        },
+        "particleAtlas": {
+          "width": 512,
+          "height": 256,
+          "maxMipLevel": 0,
+          "mipLevelCount": 1,
+          "textureMipLevels": 1,
+          "sampler": [
+            "NEAREST",
+            "NEAREST",
+            "CLAMP_TO_EDGE",
+            "CLAMP_TO_EDGE",
+            "OptionalDouble[0.0]"
+          ],
+          "sprites": {
+            "spark_0": {
+              "x": 412,
+              "y": 80,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1050804224,
+                1051852800
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_1": {
+              "x": 412,
+              "y": 90,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1052114944,
+                1053163520
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_2": {
+              "x": 412,
+              "y": 100,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1053425664,
+                1054474240
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_3": {
+              "x": 412,
+              "y": 110,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1054736384,
+                1055784960
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_4": {
+              "x": 412,
+              "y": 120,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1056047104,
+                1057030144
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_5": {
+              "x": 412,
+              "y": 130,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057161216,
+                1057685504
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_6": {
+              "x": 412,
+              "y": 140,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057816576,
+                1058340864
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_7": {
+              "x": 412,
+              "y": 150,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1058471936,
+                1058996224
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "flash": {
+              "x": 68,
+              "y": 128,
+              "width": 32,
+              "height": 32,
+              "uvBits": [
+                1040842752,
+                1045037056,
+                1057030144,
+                1059127296
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=true]"
+            }
+          }
+        }
+      },
+      "seededParticles": 412,
+      "sounds": [
+        {
+          "call": "play",
+          "delayTicks": 0,
+          "pitch": 1,
+          "pitchBits": 1065353216,
+          "position": [
+            0.375,
+            72,
+            -21.5
+          ],
+          "sound": "minecraft:entity.firework_rocket.launch",
+          "source": "AMBIENT",
+          "thread": "Render thread",
+          "tick": 1,
+          "volume": 3,
+          "volumeBits": 1077936128
+        },
+        {
+          "call": "playDelayed",
+          "delayTicks": 6,
+          "pitch": 1.0203595,
+          "pitchBits": 1065524004,
+          "position": [
+            0.29520461880741494,
+            85.20001221373718,
+            -21.57277412852691
+          ],
+          "sound": "minecraft:entity.firework_rocket.large_blast",
+          "source": "AMBIENT",
+          "thread": "Render thread",
+          "tick": 26,
+          "volume": 20,
+          "volumeBits": 1101004800
+        },
+        {
+          "call": "playDelayed",
+          "delayTicks": 6,
+          "pitch": 0.9001209,
+          "pitchBits": 1063677523,
+          "position": [
+            0.29520461880741494,
+            85.20001221373718,
+            -21.57277412852691
+          ],
+          "sound": "minecraft:entity.firework_rocket.twinkle",
+          "source": "AMBIENT",
+          "thread": "Render thread",
+          "tick": 42,
+          "volume": 20,
+          "volumeBits": 1101004800
+        }
+      ]
+    }
+  ],
+  "minecraftVersion": "26.2",
+  "mods": [],
+  "resourcePacks": [],
+  "rocketCaseSha256": "56558f676a04877efabc25ca798446ad19f3c36fe3f0b84a08ed7736163d8717",
+  "scope": "Native SoundManager.play and playDelayed calls (read-only hook) of one firework rocket at the #48 seeds, heard from the declared listeners; one launch per listener, with identical draws, ticks and gains across listeners. Captured on llvmpipe under Xvfb with no audio device, so the calls are recorded, not the audio output.",
+  "sourceJar": {
+    "path": "versions/26.2/26.2.jar",
+    "sha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
+  }
+}

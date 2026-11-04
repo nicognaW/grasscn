@@ -138,22 +138,34 @@ public final class ProjectedReferenceMain {
         net.minecraft.client.main.Main.main(args);
     }
 
-    /** Front-on orthographic projection centred on the camera: pixelsPerBlock window pixels per block. */
+    /**
+     * Front-on orthographic projection: pixelsPerBlock window pixels per block. Without an
+     * {@code eyeAt} it is centred on the camera eye; with one, the eye projects to that window pixel
+     * position (x from the left, y from the top), so the window frames the scene off-centre while
+     * the camera, and with it the vanilla culling frustum, stays where the case puts it.
+     */
     static final class DeclaredOrthographicProjection extends Projection {
         private final float pixelsPerBlock, zNear, zFar;
+        private final float[] eyeAt;
 
-        DeclaredOrthographicProjection(float pixelsPerBlock, float zNear, float zFar) {
+        DeclaredOrthographicProjection(float pixelsPerBlock, float zNear, float zFar, float[] eyeAt) {
             this.pixelsPerBlock = pixelsPerBlock;
             this.zNear = zNear;
             this.zFar = zFar;
+            this.eyeAt = eyeAt;
         }
 
         @Override public Matrix4f getMatrix(Matrix4f destination) {
             Minecraft client = Minecraft.getInstance();
-            float halfWidth = client.getWindow().getWidth() / (2.0F * pixelsPerBlock);
-            float halfHeight = client.getWindow().getHeight() / (2.0F * pixelsPerBlock);
             boolean zeroToOne = RenderSystem.getDevice().getDeviceInfo().isZZeroToOne();
-            return destination.setOrtho(-halfWidth, halfWidth, -halfHeight, halfHeight, zNear, zFar, zeroToOne);
+            if (eyeAt == null) {
+                float halfWidth = client.getWindow().getWidth() / (2.0F * pixelsPerBlock);
+                float halfHeight = client.getWindow().getHeight() / (2.0F * pixelsPerBlock);
+                return destination.setOrtho(-halfWidth, halfWidth, -halfHeight, halfHeight, zNear, zFar, zeroToOne);
+            }
+            float width = client.getWindow().getWidth(), height = client.getWindow().getHeight();
+            return destination.setOrtho(-eyeAt[0] / pixelsPerBlock, (width - eyeAt[0]) / pixelsPerBlock,
+                -(height - eyeAt[1]) / pixelsPerBlock, eyeAt[1] / pixelsPerBlock, zNear, zFar, zeroToOne);
         }
 
         @Override public long getMatrixVersion() {
@@ -204,7 +216,8 @@ public final class ProjectedReferenceMain {
 
         long noon = world.get("clockTime").getAsLong();
         Camera mainCamera = client.gameRenderer.mainCamera();
-        DeclaredOrthographicProjection declared = new DeclaredOrthographicProjection(projection.get("pixelsPerBlock").getAsFloat(), projection.get("zNear").getAsFloat(), projection.get("zFar").getAsFloat());
+        float[] eyeAt = projection.has("eyeAt") ? new float[] {projection.getAsJsonArray("eyeAt").get(0).getAsFloat(), projection.getAsJsonArray("eyeAt").get(1).getAsFloat()} : null;
+        DeclaredOrthographicProjection declared = new DeclaredOrthographicProjection(projection.get("pixelsPerBlock").getAsFloat(), projection.get("zNear").getAsFloat(), projection.get("zFar").getAsFloat(), eyeAt);
         onClient(client, () -> {
             Field field = Camera.class.getDeclaredField("projection");
             field.setAccessible(true);
@@ -230,6 +243,10 @@ public final class ProjectedReferenceMain {
             String name = capture.get("name").getAsString();
             if (capture.has("kind") && "firework".equals(capture.get("kind").getAsString())) {
                 captures.add(captureFirework(client, capture, OUTPUT));
+                continue;
+            }
+            if (capture.has("kind") && "firework-rocket".equals(capture.get("kind").getAsString())) {
+                captures.add(captureFireworkRocket(client, server, capture, OUTPUT));
                 continue;
             }
             Map<BlockPos, BlockState> blocks = new LinkedHashMap<>();
@@ -323,18 +340,7 @@ public final class ProjectedReferenceMain {
             dyeColors(declared.getAsJsonArray("colors")), dyeColors(declared.getAsJsonArray("fadeColors")),
             declared.get("trail").getAsBoolean(), declared.get("twinkle").getAsBoolean());
 
-        SteppedTimer timer = onClient(client, () -> {
-            Field field = Minecraft.class.getDeclaredField("deltaTracker");
-            field.setAccessible(true);
-            DeltaTracker.Timer vanilla = (DeltaTracker.Timer) field.get(client);
-            Field msPerTick = DeltaTracker.Timer.class.getDeclaredField("msPerTick");
-            Field provider = DeltaTracker.Timer.class.getDeclaredField("targetMsptProvider");
-            msPerTick.setAccessible(true);
-            provider.setAccessible(true);
-            SteppedTimer stepped = new SteppedTimer(1000.0F / msPerTick.getFloat(vanilla), net.minecraft.util.Util.getMillis(), (FloatUnaryOperator) provider.get(vanilla));
-            field.set(client, stepped);
-            return stepped;
-        });
+        SteppedTimer timer = installSteppedTimer(client);
         // A few stepped ticks settle the camera and any client state at partialTick 0.
         stepTick(timer, 20);
         waitFor("empty particle engine", () -> {
@@ -400,6 +406,354 @@ public final class ProjectedReferenceMain {
         record.put("ticks", ticks);
         record.put("randomSequences", randomSequences(seed));
         return record;
+    }
+
+    /** Replaces the client's game timer with a {@link SteppedTimer} at the vanilla tick rate. */
+    private static SteppedTimer installSteppedTimer(Minecraft client) throws Exception {
+        return onClient(client, () -> {
+            Field field = Minecraft.class.getDeclaredField("deltaTracker");
+            field.setAccessible(true);
+            DeltaTracker.Timer vanilla = (DeltaTracker.Timer) field.get(client);
+            if (vanilla instanceof SteppedTimer stepped) return stepped;
+            Field msPerTick = DeltaTracker.Timer.class.getDeclaredField("msPerTick");
+            Field provider = DeltaTracker.Timer.class.getDeclaredField("targetMsptProvider");
+            msPerTick.setAccessible(true);
+            provider.setAccessible(true);
+            SteppedTimer stepped = new SteppedTimer(1000.0F / msPerTick.getFloat(vanilla), net.minecraft.util.Util.getMillis(), (FloatUnaryOperator) provider.get(vanilla));
+            field.set(client, stepped);
+            return stepped;
+        });
+    }
+
+    private static volatile RandomSource serverEntitySeeds;
+    private static volatile Thread serverEntityThread;
+    private static volatile RandomSource clientEntitySeeds;
+    private static volatile Thread clientEntityThread;
+    private static final AtomicInteger seededServerEntities = new AtomicInteger();
+    private static final AtomicInteger seededClientEntities = new AtomicInteger();
+    private static final AtomicInteger foreignEntities = new AtomicInteger();
+
+    /**
+     * Called by {@code Entity.<init>} in place of {@code RandomSource.create()} (see
+     * {@code ParticleSeedAgent}). Unarmed it is exactly the vanilla call. Armed, the n-th entity the
+     * integrated server thread creates gets {@code RandomSource.create(serverSeeds.nextLong())}, and
+     * the n-th entity the client thread creates gets {@code RandomSource.create(clientSeeds.nextLong())}.
+     */
+    public static RandomSource entityRandom() {
+        Thread current = Thread.currentThread();
+        RandomSource server = serverEntitySeeds, clientSeeds = clientEntitySeeds;
+        if (server != null && current == serverEntityThread) {
+            seededServerEntities.incrementAndGet();
+            return RandomSource.create(server.nextLong());
+        }
+        if (clientSeeds != null && current == clientEntityThread) {
+            seededClientEntities.incrementAndGet();
+            return RandomSource.create(clientSeeds.nextLong());
+        }
+        if (server != null || clientSeeds != null) foreignEntities.incrementAndGet();
+        return RandomSource.create();
+    }
+
+    private static final List<Map<String, Object>> sounds = java.util.Collections.synchronizedList(new ArrayList<>());
+    private static volatile int soundTick = -1;
+
+    /** Read-only observation of {@code SoundManager.play(SoundInstance)} (see {@code ParticleSeedAgent}). */
+    public static void soundPlayed(Object instance) {
+        recordSound(instance, 0, "play");
+    }
+
+    /** Read-only observation of {@code SoundManager.playDelayed(SoundInstance, int)}. */
+    public static void soundDelayed(Object instance, int delay) {
+        recordSound(instance, delay, "playDelayed");
+    }
+
+    private static void recordSound(Object instance, int delay, String call) {
+        if (soundTick < 0) return;
+        try {
+            Map<String, Object> values = new LinkedHashMap<>();
+            values.put("tick", soundTick);
+            values.put("call", call);
+            values.put("delayTicks", delay);
+            values.put("sound", ((net.minecraft.client.resources.sounds.SoundInstance) instance).getIdentifier().toString());
+            values.put("source", String.valueOf(read(instance, "source")));
+            values.put("volumeBits", Float.floatToRawIntBits((Float) read(instance, "volume")));
+            values.put("pitchBits", Float.floatToRawIntBits((Float) read(instance, "pitch")));
+            values.put("volume", read(instance, "volume"));
+            values.put("pitch", read(instance, "pitch"));
+            values.put("position", List.of(read(instance, "x"), read(instance, "y"), read(instance, "z")));
+            values.put("thread", Thread.currentThread().getName());
+            sounds.add(values);
+        } catch (ReflectiveOperationException error) {
+            throw new IllegalStateException(error);
+        }
+    }
+
+    /**
+     * Holds the integrated server between ticks. While parked, the server thread runs only the
+     * actions the harness hands it; {@link #step} lets exactly one vanilla {@code MinecraftServer}
+     * tick run, then parks again. The server loop's schedule is reset on release, so it neither
+     * skips nor catches up ticks: every tick still runs through the vanilla loop and
+     * {@code tickServer}.
+     */
+    static final class ServerGate {
+        private static final Runnable RELEASE = () -> {};
+        private final MinecraftServer server;
+        private final Field nextTick, delayedTasksMax;
+        private java.util.concurrent.BlockingQueue<Runnable> actions;
+
+        ServerGate(MinecraftServer server) throws ReflectiveOperationException {
+            this.server = server;
+            nextTick = MinecraftServer.class.getDeclaredField("nextTickTimeNanos");
+            delayedTasksMax = MinecraftServer.class.getDeclaredField("delayedTasksMaxNextTickTimeNanos");
+            nextTick.setAccessible(true);
+            delayedTasksMax.setAccessible(true);
+        }
+
+        private java.util.concurrent.BlockingQueue<Runnable> queueGate() {
+            java.util.concurrent.BlockingQueue<Runnable> queue = new java.util.concurrent.LinkedBlockingQueue<>();
+            CompletableFuture<Void> parked = new CompletableFuture<>();
+            queue.add(() -> parked.complete(null));
+            server.execute(() -> {
+                try {
+                    while (true) {
+                        Runnable action = queue.take();
+                        if (action == RELEASE) break;
+                        action.run();
+                    }
+                    long now = net.minecraft.util.Util.getNanos();
+                    nextTick.setLong(server, now);
+                    delayedTasksMax.setLong(server, now);
+                } catch (Throwable error) {
+                    error.printStackTrace();
+                    System.exit(4);
+                }
+            });
+            return queue;
+        }
+
+        /** Parks the server at its next wait between ticks. */
+        void park() throws Exception {
+            actions = queueGate();
+            call(() -> null);
+        }
+
+        /** Runs an action on the parked server thread. */
+        <T> T call(Step<T> step) throws Exception {
+            CompletableFuture<T> result = new CompletableFuture<>();
+            actions.add(() -> { try { result.complete(step.run()); } catch (Throwable error) { result.completeExceptionally(error); } });
+            return result.get(STEP_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        }
+
+        /** Lets exactly one server tick run and parks again before the next. */
+        void step() throws Exception {
+            java.util.concurrent.BlockingQueue<Runnable> current = actions;
+            actions = queueGate();
+            current.add(RELEASE);
+            call(() -> null);
+        }
+
+        /** Releases the server for good. */
+        void open() {
+            actions.add(RELEASE);
+            actions = null;
+        }
+    }
+
+    /**
+     * One firework rocket through the vanilla server and client paths, captured at every tick at
+     * partialTick 0. The integrated server and the client advance in lockstep: one server tick
+     * (held by {@link ServerGate}), then every packet it sent is handled by the client, then one
+     * client tick. Frame {@code tick-N} shows the scene after N server and N client ticks since the
+     * server spawned the rocket between two ticks, as a player's use of the item does.
+     */
+    private static Map<String, Object> captureFireworkRocket(Minecraft client, MinecraftServer server, JsonObject capture, Path output) throws Exception {
+        String name = capture.get("name").getAsString();
+        long particleSeed = capture.get("particleSeed").getAsLong();
+        long serverSeed = capture.get("serverEntitySeed").getAsLong();
+        long clientSeed = capture.get("clientEntitySeed").getAsLong();
+        int maxTicks = capture.get("maxTicks").getAsInt();
+        int flightDuration = capture.get("flightDuration").getAsInt();
+        JsonArray at = capture.getAsJsonArray("at");
+        double x = at.get(0).getAsDouble(), y = at.get(1).getAsDouble(), z = at.get(2).getAsDouble();
+        JsonObject declared = capture.getAsJsonObject("explosion");
+        for (String hook : List.of("grasscn.particle.seed.hook", "grasscn.entity.seed.hook", "grasscn.sound.hook")) {
+            if (!"1".equals(System.getProperty(hook))) throw new IllegalStateException("ParticleSeedAgent hook missing: " + hook);
+        }
+
+        FireworkExplosion explosion = new FireworkExplosion(
+            FireworkExplosion.Shape.valueOf(declared.get("shape").getAsString().toUpperCase(Locale.ROOT)),
+            dyeColors(declared.getAsJsonArray("colors")), dyeColors(declared.getAsJsonArray("fadeColors")),
+            declared.get("trail").getAsBoolean(), declared.get("twinkle").getAsBoolean());
+
+        SteppedTimer timer = installSteppedTimer(client);
+        ServerGate gate = new ServerGate(server);
+        gate.park();
+        AtomicInteger marker = new AtomicInteger();
+        Runnable lockstep = () -> {
+            try {
+                gate.step();
+                int sent = marker.incrementAndGet();
+                // A vanilla packet after everything the tick sent: once the client shows it, the
+                // client has handled every packet of that tick (one connection keeps their order).
+                gate.call(() -> {
+                    server.getPlayerList().getPlayers().getFirst().connection.send(new net.minecraft.network.protocol.game.ClientboundSetExperiencePacket(0.0F, sent, 0));
+                    return null;
+                });
+                waitFor("client handled server tick", () -> {
+                    try { return onClient(client, () -> client.player.totalExperience == sent ? Boolean.TRUE : null); }
+                    catch (Exception error) { throw new IllegalStateException(error); }
+                });
+                stepTick(timer, 1);
+            } catch (Exception error) { throw new IllegalStateException(error); }
+        };
+        // Lockstep ticks settle the camera and any client state at partialTick 0.
+        for (int settle = 0; settle < 20; settle++) lockstep.run();
+        waitFor("empty particle engine", () -> {
+            try { return onClient(client, () -> particleCount(client) == 0 ? Boolean.TRUE : null); }
+            catch (Exception error) { throw new IllegalStateException(error); }
+        });
+
+        Path frames = output.resolve("frames");
+        Path states = output.resolve("states");
+        Files.createDirectories(states);
+        int[] backdropPixels = stableFrame(client, frames.resolve(name + ".backdrop.png"));
+        Map<String, Object> camera = onClient(client, () -> cameraState(client));
+
+        onClient(client, () -> {
+            particleSeedThread = Thread.currentThread();
+            seededParticles.set(0);
+            foreignParticles.set(0);
+            particleSeeds = RandomSource.create(particleSeed);
+            clientEntityThread = Thread.currentThread();
+            seededClientEntities.set(0);
+            clientEntitySeeds = RandomSource.create(clientSeed);
+            return null;
+        });
+        int rocketId = gate.call(() -> {
+            serverEntityThread = Thread.currentThread();
+            seededServerEntities.set(0);
+            foreignEntities.set(0);
+            serverEntitySeeds = RandomSource.create(serverSeed);
+            net.minecraft.world.item.ItemStack stack = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.FIREWORK_ROCKET);
+            stack.set(net.minecraft.core.component.DataComponents.FIREWORKS, new net.minecraft.world.item.component.Fireworks(flightDuration, List.of(explosion)));
+            var rocket = new net.minecraft.world.entity.projectile.FireworkRocketEntity(server.overworld(), x, y, z, stack);
+            serverEntitySeeds = null;
+            if (!server.overworld().addFreshEntity(rocket)) throw new IllegalStateException("Rocket was not added");
+            return rocket.getId();
+        });
+        Map<String, Object> spawned = gate.call(() -> serverRocketState(server, rocketId));
+        sounds.clear();
+
+        List<Map<String, Object>> ticks = new ArrayList<>();
+        int lastTick = -1;
+        for (int tick = 1; tick <= maxTicks; tick++) {
+            soundTick = tick;
+            lockstep.run();
+            String frame = String.format(Locale.ROOT, "frames/%s.tick-%03d.png", name, tick);
+            int[] pixels = stableFrame(client, output.resolve(frame), 6, 1);
+            Map<String, Object> serverState = gate.call(() -> serverRocketState(server, rocketId));
+            Map<String, Object> state = onClient(client, () -> {
+                Map<String, Object> values = particleState(client);
+                values.put("camera", cameraState(client));
+                values.put("rocket", clientRocketState(client, rocketId));
+                return values;
+            });
+            state.put("serverRocket", serverState);
+            Files.writeString(states.resolve(String.format(Locale.ROOT, "%s.tick-%03d.json", name, tick)), new com.google.gson.GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create().toJson(state) + "\n", StandardCharsets.UTF_8);
+            Map<String, Object> record = new LinkedHashMap<>();
+            record.put("tick", tick);
+            record.put("frame", frame);
+            record.put("particles", state.get("count"));
+            record.put("rocketPresent", state.get("rocket") != null);
+            record.put("equalsBackdrop", Arrays.equals(pixels, backdropPixels));
+            ticks.add(record);
+            if (((Number) state.get("count")).intValue() == 0 && state.get("rocket") == null && serverState == null) {
+                lastTick = tick;
+                break;
+            }
+        }
+        soundTick = -1;
+        particleSeeds = null;
+        clientEntitySeeds = null;
+        gate.open();
+        if (lastTick < 0) throw new IllegalStateException("Rocket sequence still running after " + maxTicks + " ticks");
+        if (foreignParticles.get() != 0) throw new IllegalStateException(foreignParticles.get() + " particles were created off the client thread while seeded");
+        if (foreignEntities.get() != 0) throw new IllegalStateException(foreignEntities.get() + " entities were created off the seeded threads while seeded");
+        if (seededServerEntities.get() != 1 || seededClientEntities.get() != 1) throw new IllegalStateException("Expected one seeded rocket per side, got server " + seededServerEntities.get() + ", client " + seededClientEntities.get());
+
+        Map<String, Object> colors = new LinkedHashMap<>();
+        colors.put("colors", new ArrayList<>(explosion.colors()));
+        colors.put("fadeColors", new ArrayList<>(explosion.fadeColors()));
+
+        Map<String, Object> record = new LinkedHashMap<>();
+        record.put("name", name);
+        record.put("kind", "firework-rocket");
+        record.put("backdrop", "frames/" + name + ".backdrop.png");
+        record.put("particleSeed", Long.toString(particleSeed));
+        record.put("serverEntitySeed", Long.toString(serverSeed));
+        record.put("clientEntitySeed", Long.toString(clientSeed));
+        record.put("seededParticles", seededParticles.get());
+        record.put("explosion", colors);
+        record.put("spawnedRocket", spawned);
+        record.put("cameraAtBackdrop", camera);
+        record.put("lastTick", lastTick);
+        record.put("sounds", new ArrayList<>(sounds));
+        record.put("ticks", ticks);
+        record.put("itemAtlas", itemAtlas(client));
+        return record;
+    }
+
+    /** Read-only: the server rocket's simulated state, or null once it is gone. */
+    private static Map<String, Object> serverRocketState(MinecraftServer server, int id) throws ReflectiveOperationException {
+        var entity = server.overworld().getEntity(id);
+        return entity == null ? null : rocketState(entity);
+    }
+
+    /** Read-only: the client rocket's simulated state, or null once it is gone. */
+    private static Map<String, Object> clientRocketState(Minecraft client, int id) throws ReflectiveOperationException {
+        var entity = client.level.getEntity(id);
+        return entity == null ? null : rocketState(entity);
+    }
+
+    private static Map<String, Object> rocketState(net.minecraft.world.entity.Entity entity) throws ReflectiveOperationException {
+        Map<String, Object> values = new LinkedHashMap<>();
+        values.put("position", List.of(entity.getX(), entity.getY(), entity.getZ()));
+        values.put("old", List.of(entity.xOld, entity.yOld, entity.zOld));
+        var movement = entity.getDeltaMovement();
+        values.put("movement", List.of(movement.x, movement.y, movement.z));
+        values.put("life", read(entity, "life"));
+        values.put("lifetime", read(entity, "lifetime"));
+        values.put("rotation", List.of(entity.getYRot(), entity.getXRot()));
+        values.put("removed", entity.isRemoved());
+        values.put("horizontalCollision", entity.horizontalCollision);
+        return values;
+    }
+
+    /** Read-only: the item atlas layout and sampler the rocket item is drawn with. */
+    private static Map<String, Object> itemAtlas(Minecraft client) throws ReflectiveOperationException {
+        Map<String, Object> values = new LinkedHashMap<>();
+        for (var location : List.of(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_ITEMS, net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS)) {
+            var atlas = (net.minecraft.client.renderer.texture.TextureAtlas) client.getTextureManager().getTexture(location);
+            Map<String, Object> entry = new LinkedHashMap<>();
+            entry.put("width", read(atlas, "width"));
+            entry.put("height", read(atlas, "height"));
+            entry.put("maxMipLevel", read(atlas, "maxMipLevel"));
+            entry.put("textureMipLevels", atlas.getTexture().getMipLevels());
+            var sampler = atlas.getSampler();
+            entry.put("sampler", List.of(String.valueOf(sampler.getMinFilter()), String.valueOf(sampler.getMagFilter()), String.valueOf(sampler.getAddressModeU()), String.valueOf(sampler.getAddressModeV()), String.valueOf(sampler.getMaxLod())));
+            var sprite = atlas.getSprite(net.minecraft.resources.Identifier.withDefaultNamespace("item/firework_rocket"));
+            Map<String, Object> rocket = new LinkedHashMap<>();
+            rocket.put("name", sprite.contents().name().toString());
+            rocket.put("x", sprite.getX());
+            rocket.put("y", sprite.getY());
+            rocket.put("width", sprite.contents().width());
+            rocket.put("height", sprite.contents().height());
+            rocket.put("uvBits", List.of(Float.floatToRawIntBits(sprite.getU0()), Float.floatToRawIntBits(sprite.getU1()), Float.floatToRawIntBits(sprite.getV0()), Float.floatToRawIntBits(sprite.getV1())));
+            rocket.put("transparency", String.valueOf(sprite.transparency()));
+            entry.put("fireworkRocket", rocket);
+            values.put(location.toString(), entry);
+        }
+        return values;
     }
 
     /** Read-only: the particle atlas layout and sampler the firework sprites are drawn with. */
