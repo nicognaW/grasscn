@@ -12,6 +12,8 @@ import {
 import type { ReactNode } from "react";
 import * as React from "react";
 
+import { MinecraftSelectableText } from "@/components/ui/minecraft-selectable-text";
+
 const q = new URLSearchParams(location.search);
 
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
@@ -19,6 +21,80 @@ const scale =
   // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
   Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
+const SelectableRefFixture = ({
+  text,
+  setText,
+}: {
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  const external = React.useRef<HTMLSpanElement>(null);
+  const [shown, setShown] = React.useState(true);
+  const [tag, setTag] = React.useState("");
+  const [events, setEvents] = React.useState<string[]>([]);
+
+  const callback = React.useCallback<React.RefCallback<HTMLSpanElement>>(
+    (node) => {
+      external.current = node;
+      let cleanup: (() => void) | undefined;
+
+      if (node === null) {
+        setEvents((previous) => [...previous, "null"]);
+      } else {
+        setEvents((previous) => [...previous, "attach:SPAN"]);
+        cleanup = () => {
+          external.current = null;
+          setEvents((previous) => [...previous, `cleanup:${node.isConnected}`]);
+        };
+      }
+
+      return cleanup;
+    },
+    []
+  );
+
+  return (
+    <>
+      {shown && (
+        <MinecraftSelectableText
+          ref={q.get("selectableRef") === "callback" ? callback : external}
+          text={text}
+          className="select-text"
+          title="Consumer selectable text"
+          data-consumer="ref-test"
+          data-testid="selectable-ref-subject"
+        />
+      )}
+      <button
+        type="button"
+        onClick={() => {
+          setTag(external.current?.tagName ?? "missing");
+        }}
+      >
+        Read selectable ref
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setShown((value) => !value);
+        }}
+      >
+        Toggle selectable
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setText((value) => `${value}!`);
+        }}
+      >
+        Update selectable text
+      </button>
+      <output aria-label="Selectable ref tag">{tag}</output>
+      <output aria-label="Selectable ref callbacks">{events.join("|")}</output>
+    </>
+  );
+};
 
 export const CodeBlockFixture = () => {
   const [text, setText] = React.useState(
@@ -51,6 +127,10 @@ export const CodeBlockFixture = () => {
     ) : (
       text
     );
+  }
+
+  if (q.has("selectableRef")) {
+    return <SelectableRefFixture text={text} setText={setText} />;
   }
 
   return (

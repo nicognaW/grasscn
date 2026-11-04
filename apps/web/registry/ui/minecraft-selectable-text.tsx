@@ -1,5 +1,6 @@
 "use client";
 
+import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 
 import { minecraftChatAtlas } from "./minecraft-chat-atlas";
@@ -24,6 +25,7 @@ interface Run {
 const MinecraftSelectableText = ({
   text,
   className,
+  ref,
   ...props
 }: React.ComponentProps<"span"> & {
   text: string;
@@ -129,39 +131,42 @@ const MinecraftSelectableText = ({
     };
   }, [text]);
 
-  return (
-    <span
-      ref={root}
-      data-mc-selectable-ready={ready ? "true" : "false"}
-      className={cn(`mc-selectable-text`, className)}
-      {...props}
-    >
-      <span ref={raw} className="mc-selectable-raw">
-        {text}
-      </span>
-      <span aria-hidden="true" className="mc-selectable-pixels">
-        {runs.map((run, index) => {
-          const nativeTextLayout1: NativeTextLayoutStyle = {
-            "--mc-selectable-text-left": `${run.x}px`,
-            "--mc-selectable-text-top": `${run.y}px`,
-          };
+  return useRender({
+    defaultTagName: "span",
+    ref: [root, ref ?? null],
+    render: (
+      <span
+        data-mc-selectable-ready={ready ? "true" : "false"}
+        className={cn(`mc-selectable-text`, className)}
+        {...props}
+      >
+        <span ref={raw} className="mc-selectable-raw">
+          {text}
+        </span>
+        <span aria-hidden="true" className="mc-selectable-pixels">
+          {runs.map((run, index) => {
+            const nativeTextLayout1: NativeTextLayoutStyle = {
+              "--mc-selectable-text-left": `${run.x}px`,
+              "--mc-selectable-text-top": `${run.y}px`,
+            };
 
-          return (
-            <span
-              key={index}
-              className="mc-layout-minecraft-selectable-text-1 top-(--mc-selectable-text-top) left-(--mc-selectable-text-left)"
-              style={nativeTextLayout1}
-            >
-              <MinecraftColorUnicodeLabel
-                text={run.text}
-                atlas={minecraftChatAtlas}
-              />
-            </span>
-          );
-        })}
+            return (
+              <span
+                key={index}
+                className="mc-layout-minecraft-selectable-text-1 top-(--mc-selectable-text-top) left-(--mc-selectable-text-left)"
+                style={nativeTextLayout1}
+              >
+                <MinecraftColorUnicodeLabel
+                  text={run.text}
+                  atlas={minecraftChatAtlas}
+                />
+              </span>
+            );
+          })}
+        </span>
       </span>
-    </span>
-  );
+    ),
+  });
 };
 
 export { MinecraftSelectableText };

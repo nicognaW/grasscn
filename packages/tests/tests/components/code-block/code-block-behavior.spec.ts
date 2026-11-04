@@ -252,3 +252,66 @@ test("Official streaming highlighter preserves lines/language aliases and native
     .fill('const x = "hello";\n// comment\nconst y = 42');
   await expect(page.locator('[data-slot="code-block-line"]')).toHaveCount(3);
 });
+
+for (const mode of ["object", "callback"] as const) {
+  test(`SelectableText composes its private painter with a public ${mode} ref`, async ({
+    page,
+  }) => {
+    await page.goto(
+      `?component=code-block&selectableRef=${mode}&text=Hello%20World`
+    );
+    const subject = page.getByTestId("selectable-ref-subject");
+    const tag = page.getByLabel("Selectable ref tag", { exact: true });
+    const events = page.getByLabel("Selectable ref callbacks", { exact: true });
+    await expect(subject).toHaveAttribute("data-mc-selectable-ready", "true");
+    await expect(subject).toHaveAttribute("data-consumer", "ref-test");
+    await expect(subject).toHaveAttribute("title", "Consumer selectable text");
+    await expect(subject).toHaveClass(/select-text/u);
+    await page
+      .getByRole("button", { exact: true, name: "Read selectable ref" })
+      .click();
+    await expect(tag).toHaveText("SPAN");
+
+    if (mode === "callback") {
+      await expect(events).toHaveText("attach:SPAN");
+    }
+
+    await page
+      .getByRole("button", { exact: true, name: "Update selectable text" })
+      .click();
+    await expect(subject).toHaveAttribute("data-mc-selectable-ready", "true");
+    await expect(subject.locator(".mc-selectable-raw")).toHaveText(
+      "Hello World!"
+    );
+
+    if (mode === "callback") {
+      await expect(events).toHaveText("attach:SPAN");
+    }
+
+    await page
+      .getByRole("button", { exact: true, name: "Toggle selectable" })
+      .click();
+    await expect(subject).toHaveCount(0);
+    await page
+      .getByRole("button", { exact: true, name: "Read selectable ref" })
+      .click();
+    await expect(tag).toHaveText("missing");
+
+    if (mode === "callback") {
+      await expect(events).toHaveText("attach:SPAN|cleanup:true");
+    }
+
+    await page
+      .getByRole("button", { exact: true, name: "Toggle selectable" })
+      .click();
+    await expect(subject).toHaveAttribute("data-mc-selectable-ready", "true");
+    await page
+      .getByRole("button", { exact: true, name: "Read selectable ref" })
+      .click();
+    await expect(tag).toHaveText("SPAN");
+
+    if (mode === "callback") {
+      await expect(events).toHaveText("attach:SPAN|cleanup:true|attach:SPAN");
+    }
+  });
+}
