@@ -56,20 +56,24 @@ const SignBoard = ({
     throw new Error("Sign color must be a six-digit hex color");
   }
 
-  const raw = Number.parseInt(color.slice(1), 16),
-    dark =
-      /* oxlint-disable no-bitwise -- Darken the packed RGB sign color channel by channel, then repack the native ink word. */
-      (Math.floor(((raw >> 16) & 255) * 0.4) << 16) |
-      (Math.floor(((raw >> 8) & 255) * 0.4) << 8) |
-      Math.floor((raw & 255) * 0.4),
-    /* oxlint-enable no-bitwise */
-    ink = glowing ? color : `#${dark.toString(16).padStart(6, "0")}`,
-    texture =
-      adventureAssets[`gui/${hanging ? "hanging_signs" : "signs"}/${wood}`],
-    origin = hanging ? 50 : 30,
-    factor = hanging ? 4.5 : 3.9,
-    textScale = hanging ? 1 : Math.fround(0.9765628),
-    width = hanging ? 60 : 90;
+  const raw = Number.parseInt(color.slice(1), 16);
+
+  const dark =
+    /* oxlint-disable no-bitwise -- Darken the packed RGB sign color channel by channel, then repack the native ink word. */
+    (Math.floor(((raw >> 16) & 255) * 0.4) << 16) |
+    (Math.floor(((raw >> 8) & 255) * 0.4) << 8) |
+    Math.floor((raw & 255) * 0.4);
+
+  /* oxlint-enable no-bitwise */
+  const ink = glowing ? color : `#${dark.toString(16).padStart(6, "0")}`;
+
+  const texture =
+    adventureAssets[`gui/${hanging ? "hanging_signs" : "signs"}/${wood}`];
+
+  const origin = hanging ? 50 : 30;
+  const factor = hanging ? 4.5 : 3.9;
+  const textScale = hanging ? 1 : Math.fround(0.9765628);
+  const width = hanging ? 60 : 90;
 
   return (
     <div

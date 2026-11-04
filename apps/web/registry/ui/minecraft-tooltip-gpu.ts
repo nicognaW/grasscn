@@ -173,12 +173,12 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
     ];
 
     for (
-      let row = 0, sy = 0, rowOffsetY = 0;
+      let row = 0, rowOffsetY = 0, sy = 0;
       row < 3;
       rowOffsetY += heights[row], sy += sizes[row], row += 1
     ) {
       for (
-        let col = 0, sx = 0, columnOffsetX = 0;
+        let col = 0, columnOffsetX = 0, sx = 0;
         col < 3;
         columnOffsetX += widths[col], sx += sizes[col], col += 1
       ) {

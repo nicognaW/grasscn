@@ -816,10 +816,10 @@ const HomePageShowcase = () => (
         </p>
         <div className="grass-hero-actions">
           <Button nativeButton={false} render={installationLink} scale={2}>
-            {"Get started"}
+            Get started
           </Button>
           <Button nativeButton={false} render={documentationLink} scale={2}>
-            {"Browse components"}
+            Browse components
           </Button>
         </div>
       </section>

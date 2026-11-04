@@ -67,15 +67,13 @@ const ItemDemo = ({ scale }: DemoProps) => {
               setOpens((v) => v + 1);
             }}
           >
-            {
-              <>
-                <ItemMedia />
-                <ItemContent>
-                  <ItemTitle>{name}</ItemTitle>
-                  <ItemDescription>{description}</ItemDescription>
-                </ItemContent>
-              </>
-            }
+            <>
+              <ItemMedia />
+              <ItemContent>
+                <ItemTitle>{name}</ItemTitle>
+                <ItemDescription>{description}</ItemDescription>
+              </ItemContent>
+            </>
           </Item>
           <ItemSeparator />
           <Item
@@ -87,15 +85,13 @@ const ItemDemo = ({ scale }: DemoProps) => {
               setOpens((v) => v + 1);
             }}
           >
-            {
-              <>
-                <ItemMedia />
-                <ItemContent>
-                  <ItemTitle>你好，世界</ItemTitle>
-                  <ItemDescription>{"world-2\nCreative Mode"}</ItemDescription>
-                </ItemContent>
-              </>
-            }
+            <>
+              <ItemMedia />
+              <ItemContent>
+                <ItemTitle>你好，世界</ItemTitle>
+                <ItemDescription>{"world-2\nCreative Mode"}</ItemDescription>
+              </ItemContent>
+            </>
           </Item>
         </ItemGroup>
         <Item scale={scale} className="demo-owned-item-4">

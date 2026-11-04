@@ -84,7 +84,7 @@ const BadgeDemo = ({ scale }: DemoProps) => {
             scale={scale}
             achievement="goal"
           >
-            {"View recipes"}
+            View recipes
           </Badge>
         </div>
       </div>

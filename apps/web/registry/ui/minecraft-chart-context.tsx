@@ -416,7 +416,8 @@ export const ChartPixelSurface = ({
     const mask = scratch.getContext("2d")!;
     const colorCanvas = document.createElement("canvas");
 
-    colorCanvas.width = colorCanvas.height = 1;
+    colorCanvas.height = 1;
+    colorCanvas.width = 1;
 
     const colorContext = colorCanvas.getContext("2d")!;
     const colors = new Map<string, { ink: string; alpha: number }>();

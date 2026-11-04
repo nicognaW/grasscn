@@ -64,7 +64,9 @@ export const MinecraftMenuCheckboxSprite = () => {
       if (next !== signature) {
         signature = next;
         const pixels = menuCheckboxPixels(name, scale, bounds.x, bounds.y);
-        canvas.width = canvas.height = 17 * scale;
+        const canvasSide = 17 * scale;
+        canvas.height = canvasSide;
+        canvas.width = canvasSide;
 
         if (pixels) {
           context.putImageData(

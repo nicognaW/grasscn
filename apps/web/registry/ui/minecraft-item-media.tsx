@@ -74,7 +74,9 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
         return;
       }
 
-      node.width = node.height = 32 * scale;
+      const canvasSide = 32 * scale;
+      node.height = canvasSide;
+      node.width = canvasSide;
       node
         .getContext("2d")!
         .putImageData(new ImageData(pixels, 32 * scale, 32 * scale), 0, 0);

@@ -23,7 +23,8 @@ const loadAlpha = function loadAlpha() {
     const image = new Image();
     image.addEventListener("load", () => {
       const c = document.createElement("canvas");
-      c.width = c.height = 128;
+      c.height = 128;
+      c.width = 128;
       const context = c.getContext("2d")!;
       context.drawImage(image, 0, 0);
       resolve(context.getImageData(0, 0, 128, 128).data);

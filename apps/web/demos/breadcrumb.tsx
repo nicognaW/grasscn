@@ -57,7 +57,7 @@ const BreadcrumbDemo = ({ scale }: DemoProps) => {
                   />
                 }
               >
-                {"Saved games"}
+                Saved games
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />

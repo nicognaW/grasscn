@@ -145,7 +145,8 @@ const loadImages = function loadImages() {
     )
   ).then(([normal, highlighted, atlas, scroller, track]) => {
     const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = 128;
+    canvas.height = 128;
+    canvas.width = 128;
     const context = canvas.getContext("2d")!;
     context.drawImage(atlas, 0, 0);
 

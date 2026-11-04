@@ -279,7 +279,8 @@ export const AnalyticsChartExample = ({
       <details
         className="mc-chart-data"
         style={
-          /* SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
+          // SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
+          {
             "--mc-scale": scale,
           } as React.CSSProperties
         }

@@ -123,7 +123,8 @@ const ComboboxDemo = ({ scale }: DemoProps) => {
       <div
         className="demo-result"
         style={
-          /* SAFETY: --mc-scale, --mc-pixel, --mc-ink, --mc-shadow are this owner's CSS custom-property channels; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
+          // SAFETY: --mc-scale, --mc-pixel, --mc-ink, --mc-shadow are this owner's CSS custom-property channels; this CSSProperties view passes the exact owned variable map to React without changing its values.
+          {
             "--mc-ink": "currentColor",
             "--mc-pixel": "1px",
             "--mc-scale": 1,

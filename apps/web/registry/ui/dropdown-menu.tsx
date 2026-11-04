@@ -345,7 +345,8 @@ const checkboxIcon = function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
       aria-hidden="true"
       className="mc-checkbox mc-menu-check"
       style={
-        /* SAFETY: --mc-checkbox-checked, --mc-checkbox-checked-focused, --mc-checkbox-focused, --mc-checkbox-normal, --mc-scale are this owner's CSS custom-property channels; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
+        // SAFETY: --mc-checkbox-checked, --mc-checkbox-checked-focused, --mc-checkbox-focused, --mc-checkbox-normal, --mc-scale are this owner's CSS custom-property channels; this CSSProperties view passes the exact owned variable map to React without changing its values.
+        {
           "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
           "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
           "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,

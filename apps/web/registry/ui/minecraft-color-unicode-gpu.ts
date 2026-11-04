@@ -188,11 +188,13 @@ export const paintColorUnihexGPU = function paintColorUnihexGPU(
 
   if (painter?.gl.isContextLost() === true) {
     releasePainter(painter);
-    sharedPainter = painter = undefined;
+    painter = undefined;
+    sharedPainter = painter;
   }
 
   if (painter === undefined) {
-    sharedPainter = painter = create();
+    painter = create();
+    sharedPainter = painter;
   }
 
   if (!painter) {

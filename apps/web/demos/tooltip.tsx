@@ -16,7 +16,7 @@ const TooltipDemo = ({ scale }: DemoProps) => (
           <TooltipTrigger
             render={<Button scale={scale} aria-label="Inspect tooltip" />}
           >
-            {"Hover or focus"}
+            Hover or focus
           </TooltipTrigger>
           <TooltipContent scale={scale}>Minecraft Tooltip</TooltipContent>
         </Tooltip>
@@ -25,7 +25,7 @@ const TooltipDemo = ({ scale }: DemoProps) => (
         <span>MULTILINE</span>
         <Tooltip>
           <TooltipTrigger render={<Button scale={scale} />}>
-            {"More information"}
+            More information
           </TooltipTrigger>
           <TooltipContent scale={scale}>
             {"Diamond Pickaxe\nA helpful description."}
