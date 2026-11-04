@@ -272,6 +272,41 @@ const ModelGraphic = ({
   );
 };
 
+const layoutToastStack = function layoutToastStack(
+  host: HTMLElement,
+  entries: Map<HTMLElement, Model>,
+  scale: number,
+  gap: number
+) {
+  for (const list of host.querySelectorAll<HTMLElement>(
+    "[data-sonner-toaster]"
+  )) {
+    let stackOffset = 0;
+
+    const nodes = [
+      ...list.querySelectorAll<HTMLElement>("[data-sonner-toast]"),
+    ].sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
+
+    for (const node of nodes) {
+      const model = entries.get(node);
+
+      if (!model) {
+        continue;
+      }
+
+      node.style.setProperty("--mc-native-offset", `${stackOffset}px`);
+
+      const actions = node.querySelector("[data-button],[data-close-button]");
+
+      stackOffset +=
+        (model.rich
+          ? node.offsetHeight
+          : (model.height + (actions ? 26 : 0)) * scale) + gap;
+      model.bounds = node.getBoundingClientRect();
+    }
+  }
+};
+
 const Toaster = ({
   scale = 2,
   richColors = false,
@@ -318,35 +353,7 @@ const Toaster = ({
     const entries = entriesRef.current;
 
     const relayout = () => {
-      for (const list of host.querySelectorAll<HTMLElement>(
-        "[data-sonner-toaster]"
-      )) {
-        let stackOffset = 0;
-
-        const nodes = [
-          ...list.querySelectorAll<HTMLElement>("[data-sonner-toast]"),
-        ].sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
-
-        for (const node of nodes) {
-          const model = entries.get(node);
-
-          if (!model) {
-            continue;
-          }
-
-          node.style.setProperty("--mc-native-offset", `${stackOffset}px`);
-
-          const actions = node.querySelector(
-            "[data-button],[data-close-button]"
-          );
-
-          stackOffset +=
-            (model.rich
-              ? node.offsetHeight
-              : (model.height + (actions ? 26 : 0)) * scale) + gap;
-          model.bounds = node.getBoundingClientRect();
-        }
-      }
+      layoutToastStack(host, entries, scale, gap);
     };
 
     const remove = (model: Model) => {
