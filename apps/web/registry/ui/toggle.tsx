@@ -93,6 +93,7 @@ const Toggle = ({
   );
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the upstream shadcn component-and-variant export API used by consumer styling composition.
 export { Toggle, toggleVariants };
 
 export type { ToggleProps };

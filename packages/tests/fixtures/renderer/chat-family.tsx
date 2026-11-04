@@ -22,7 +22,11 @@ interface ChatFamilyReferenceStyle extends React.CSSProperties {
   "--mc-pixel": string;
 }
 
-const readChatReferenceLayout = (q: URLSearchParams, scale: 1 | 2 | 3, native: boolean) => {
+const readChatReferenceLayout = (
+  q: URLSearchParams,
+  scale: 1 | 2 | 3,
+  native: boolean
+) => {
   const width = Number(q.get("width") ?? 172);
 
   const scaledWidth = width * scale;

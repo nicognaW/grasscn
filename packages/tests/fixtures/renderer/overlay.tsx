@@ -65,22 +65,32 @@ export const OverlayFixture = () => {
 
   const isDrawer = component === "drawer";
   const resolveOverlayParts = () => {
-  const engineRoot = isDrawer ? Drawer.Drawer : Sheet.Sheet;
-  const engineTrigger = isDrawer ? Drawer.DrawerTrigger : Sheet.SheetTrigger;
-  const engineContent = isDrawer ? Drawer.DrawerContent : Sheet.SheetContent;
-  const engineClose = isDrawer ? Drawer.DrawerClose : Sheet.SheetClose;
-  const engineHeader = isDrawer ? Drawer.DrawerHeader : Sheet.SheetHeader;
-  const engineFooter = isDrawer ? Drawer.DrawerFooter : Sheet.SheetFooter;
-  const engineTitle = isDrawer ? Drawer.DrawerTitle : Sheet.SheetTitle;
+    const engineRoot = isDrawer ? Drawer.Drawer : Sheet.Sheet;
+    const engineTrigger = isDrawer ? Drawer.DrawerTrigger : Sheet.SheetTrigger;
+    const engineContent = isDrawer ? Drawer.DrawerContent : Sheet.SheetContent;
+    const engineClose = isDrawer ? Drawer.DrawerClose : Sheet.SheetClose;
+    const engineHeader = isDrawer ? Drawer.DrawerHeader : Sheet.SheetHeader;
+    const engineFooter = isDrawer ? Drawer.DrawerFooter : Sheet.SheetFooter;
+    const engineTitle = isDrawer ? Drawer.DrawerTitle : Sheet.SheetTitle;
 
-  const engineDescription = isDrawer
-    ? Drawer.DrawerDescription
-    : Sheet.SheetDescription;
+    const engineDescription = isDrawer
+      ? Drawer.DrawerDescription
+      : Sheet.SheetDescription;
 
-    return { Close: engineClose, Content: engineContent, Description: engineDescription, Footer: engineFooter, Header: engineHeader, Root: engineRoot, Title: engineTitle, Trigger: engineTrigger };
+    return {
+      Close: engineClose,
+      Content: engineContent,
+      Description: engineDescription,
+      Footer: engineFooter,
+      Header: engineHeader,
+      Root: engineRoot,
+      Title: engineTitle,
+      Trigger: engineTrigger,
+    };
   };
 
-  const { Close, Content, Description, Footer, Header, Root, Title, Trigger } = resolveOverlayParts();
+  const { Close, Content, Description, Footer, Header, Root, Title, Trigger } =
+    resolveOverlayParts();
 
   interface OverlayTextProbeProps {
     align?: string;
@@ -92,26 +102,26 @@ export const OverlayFixture = () => {
   }
 
   const readOverlayTextProbeProps = () => {
-  const probeProps: OverlayTextProbeProps = {};
+    const probeProps: OverlayTextProbeProps = {};
 
-  if (native && part !== "surface") {
-    probeProps.id = "subject";
-    probeProps.scale = scale;
-    probeProps.style = {
-      height: height * scale,
-      left: x,
-      position: "fixed",
-      top: y,
-      width: width * scale,
-    } satisfies React.CSSProperties;
+    if (native && part !== "surface") {
+      probeProps.id = "subject";
+      probeProps.scale = scale;
+      probeProps.style = {
+        height: height * scale,
+        left: x,
+        position: "fixed",
+        top: y,
+        width: width * scale,
+      } satisfies React.CSSProperties;
 
-    if (p.has("wrapWidth")) {
-      probeProps.maxWidth = Number(p.get("wrapWidth"));
+      if (p.has("wrapWidth")) {
+        probeProps.maxWidth = Number(p.get("wrapWidth"));
+      }
+
+      probeProps.align = p.get("align") ?? "left";
+      probeProps["data-subject"] = "true";
     }
-
-    probeProps.align = p.get("align") ?? "left";
-    probeProps["data-subject"] = "true";
-  }
 
     return probeProps;
   };
@@ -119,80 +129,80 @@ export const OverlayFixture = () => {
   const textProps = readOverlayTextProbeProps();
 
   const renderOverlayContents = () => {
-  let panelBody: ReactNode;
+    let panelBody: ReactNode;
 
-  if (native && part === "surface") {
-    panelBody = p.has("text") ? (
-      <>
-        <CardHeader>
-          <Title render={<CardTitle />}>{p.get("label")}</Title>
-          <Description render={<CardDescription />}>
-            {p.get("text")}
+    if (native && part === "surface") {
+      panelBody = p.has("text") ? (
+        <>
+          <CardHeader>
+            <Title render={<CardTitle />}>{p.get("label")}</Title>
+            <Description render={<CardDescription />}>
+              {p.get("text")}
+            </Description>
+          </CardHeader>
+          <CardFooter>
+            <Close>Done</Close>
+          </CardFooter>
+        </>
+      ) : null;
+    } else {
+      panelBody = native ? (
+        <>
+          <Title
+            {...(part === "title" ? textProps : { style: { display: "none" } })}
+          >
+            {p.get("label") ?? "Hello Minecraft"}
+          </Title>
+          <Description
+            {...(part === "description"
+              ? textProps
+              : { style: { display: "none" } })}
+          >
+            {p.get("label") ?? "Hello Minecraft"}
           </Description>
-        </CardHeader>
-        <CardFooter>
-          <Close>Done</Close>
-        </CardFooter>
-      </>
-    ) : null;
-  } else {
-    panelBody = native ? (
-      <>
-        <Title
-          {...(part === "title" ? textProps : { style: { display: "none" } })}
-        >
-          {p.get("label") ?? "Hello Minecraft"}
-        </Title>
-        <Description
-          {...(part === "description"
-            ? textProps
-            : { style: { display: "none" } })}
-        >
-          {p.get("label") ?? "Hello Minecraft"}
-        </Description>
-      </>
-    ) : (
-      <>
-        <Header>
-          <Title>World settings 世界</Title>
-          <Description>{"Settings\n第二行"}</Description>
-        </Header>
-        <label>
-          Name
-          <Input aria-label="World name" defaultValue="Minecraft" />
-        </label>
-        <div
-          className={
-            p.has("scroll")
-              ? "fixture-overlay-scroll-spacer"
-              : "fixture-overlay-empty-spacer"
-          }
-        />
-        <Footer>
-          {p.has("snap") && (
+        </>
+      ) : (
+        <>
+          <Header>
+            <Title>World settings 世界</Title>
+            <Description>{"Settings\n第二行"}</Description>
+          </Header>
+          <label>
+            Name
+            <Input aria-label="World name" defaultValue="Minecraft" />
+          </label>
+          <div
+            className={
+              p.has("scroll")
+                ? "fixture-overlay-scroll-spacer"
+                : "fixture-overlay-empty-spacer"
+            }
+          />
+          <Footer>
+            {p.has("snap") && (
+              <Button
+                id="snap-next"
+                scale={scale}
+                onClick={() => {
+                  setSnap(snap === 0.5 ? 1 : 0.5);
+                }}
+              >
+                Change snap
+              </Button>
+            )}
             <Button
-              id="snap-next"
               scale={scale}
               onClick={() => {
-                setSnap(snap === 0.5 ? 1 : 0.5);
+                setCount((v) => v + 1);
               }}
             >
-              Change snap
+              Save
             </Button>
-          )}
-          <Button
-            scale={scale}
-            onClick={() => {
-              setCount((v) => v + 1);
-            }}
-          >
-            Save
-          </Button>
-          <Close>Cancel</Close>
-        </Footer>
-      </>
-    );
-  }
+            <Close>Cancel</Close>
+          </Footer>
+        </>
+      );
+    }
 
     return panelBody;
   };
@@ -200,30 +210,30 @@ export const OverlayFixture = () => {
   const selectedFixtureBranch1 = renderOverlayContents();
 
   const readDrawerFixtureOptions = () => {
-  const drawerConfiguration: Pick<
-    React.ComponentProps<typeof Drawer.Drawer>,
-    "swipeDirection" | "snapPoints" | "snapPoint" | "onSnapPointChange"
-  > = {};
+    const drawerConfiguration: Pick<
+      React.ComponentProps<typeof Drawer.Drawer>,
+      "swipeDirection" | "snapPoints" | "snapPoint" | "onSnapPointChange"
+    > = {};
 
-  if (isDrawer) {
-    let swipeDirection: NonNullable<
-      React.ComponentProps<typeof Drawer.Drawer>["swipeDirection"]
-    >;
+    if (isDrawer) {
+      let swipeDirection: NonNullable<
+        React.ComponentProps<typeof Drawer.Drawer>["swipeDirection"]
+      >;
 
-    if (side === "bottom") {
-      swipeDirection = "down" as const;
-    } else {
-      swipeDirection = side === "top" ? ("up" as const) : side;
+      if (side === "bottom") {
+        swipeDirection = "down" as const;
+      } else {
+        swipeDirection = side === "top" ? ("up" as const) : side;
+      }
+
+      drawerConfiguration.swipeDirection = swipeDirection;
+
+      if (p.has("snap")) {
+        drawerConfiguration.onSnapPointChange = setSnap;
+        drawerConfiguration.snapPoint = snap;
+        drawerConfiguration.snapPoints = [0.25, 0.5, 1];
+      }
     }
-
-    drawerConfiguration.swipeDirection = swipeDirection;
-
-    if (p.has("snap")) {
-      drawerConfiguration.onSnapPointChange = setSnap;
-      drawerConfiguration.snapPoint = snap;
-      drawerConfiguration.snapPoints = [0.25, 0.5, 1];
-    }
-  }
 
     return drawerConfiguration;
   };
@@ -231,16 +241,16 @@ export const OverlayFixture = () => {
   const drawerOptions = readDrawerFixtureOptions();
 
   const readOverlayContentStyle = () => {
-  const panelStyleOptions: Pick<
-    React.ComponentProps<typeof Content>,
-    "style"
-  > = {};
+    const panelStyleOptions: Pick<
+      React.ComponentProps<typeof Content>,
+      "style"
+    > = {};
 
-  if (native) {
-    panelStyleOptions.style = geom;
-  } else if (p.has("snap")) {
-    panelStyleOptions.style = { height: "100dvh" };
-  }
+    if (native) {
+      panelStyleOptions.style = geom;
+    } else if (p.has("snap")) {
+      panelStyleOptions.style = { height: "100dvh" };
+    }
 
     return panelStyleOptions;
   };

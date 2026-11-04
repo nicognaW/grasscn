@@ -129,152 +129,153 @@ export const CalendarFixture = () => {
 
   if (q.get("native") === "1") {
     const renderNativeCalendar = () => {
-    // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
-    type NativeCalendarCaptionProps = NonNullable<
-      CalendarProps["captionTextProps"]
-    > & { "data-subject"?: "true" };
+      // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
+      type NativeCalendarCaptionProps = NonNullable<
+        CalendarProps["captionTextProps"]
+      > & { "data-subject"?: "true" };
 
-    type NativeCalendarProps = CalendarProps & {
-      "data-subject"?: "true";
-      captionTextProps?: NativeCalendarCaptionProps;
-    };
+      type NativeCalendarProps = CalendarProps & {
+        "data-subject"?: "true";
+        captionTextProps?: NativeCalendarCaptionProps;
+      };
 
-    const calendarOptions: NativeCalendarProps = {
-      className:
+      const calendarOptions: NativeCalendarProps = {
+        className:
+          part === "surface"
+            ? "native-reference-geometry native-reference-size native-reference-calendar-surface"
+            : undefined,
+        defaultMonth: new Date(2026, 9),
+        disableNavigation: state.startsWith("disabled"),
+        id: part === "surface" ? "subject" : undefined,
+        mode: "single",
+        scale,
+        showOutsideDays: false,
+      };
+
+      if (part === "surface") {
+        calendarOptions["data-subject"] = "true";
+      }
+
+      calendarOptions.classNames =
         part === "surface"
-          ? "native-reference-geometry native-reference-size native-reference-calendar-surface"
-          : undefined,
-      defaultMonth: new Date(2026, 9),
-      disableNavigation: state.startsWith("disabled"),
-      id: part === "surface" ? "subject" : undefined,
-      mode: "single",
-      scale,
-      showOutsideDays: false,
-    };
+          ? { months: "mc-native-hidden", nav: "mc-native-hidden" }
+          : undefined;
 
-    if (part === "surface") {
-      calendarOptions["data-subject"] = "true";
-    }
+      if (part === "label") {
+        // SAFETY: the existing native-reference stylesheet consumes this exact finite CSS-variable map; satisfies checks its values before the CSSProperties view.
+        calendarOptions.captionTextProps = {
+          align: q.get("align") === "center" ? "center" : "left",
+          className: "native-reference-geometry native-reference-size",
+          "data-subject": "true",
+          id: "subject",
+          maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
+          style: {
+            "--reference-height": `${height * scale}px`,
+            "--reference-width": `${width * scale}px`,
+            "--reference-x": `${x}px`,
+            "--reference-y": `${y}px`,
+          } satisfies CalendarReferenceStyle as CalendarReferenceStyle,
+        };
+        calendarOptions.formatters = { formatCaption: () => label };
+      }
 
-    calendarOptions.classNames =
-      part === "surface"
-        ? { months: "mc-native-hidden", nav: "mc-native-hidden" }
-        : undefined;
+      if (part === "surface" && q.has("text")) {
+        calendarOptions.components = {
+          Months: () => (
+            <>
+              <CardHeader>
+                <CardTitle>{label}</CardTitle>
+                <CardDescription>{q.get("text")}</CardDescription>
+              </CardHeader>
+              <CardFooter>
+                <Button scale={scale}>Done</Button>
+              </CardFooter>
+            </>
+          ),
+          Nav: () => <></>,
+        };
+      }
 
-    if (part === "label") {
-      // SAFETY: the existing native-reference stylesheet consumes this exact finite CSS-variable map; satisfies checks its values before the CSSProperties view.
-      calendarOptions.captionTextProps = {
-        align: q.get("align") === "center" ? "center" : "left",
-        className: "native-reference-geometry native-reference-size",
-        "data-subject": "true",
-        id: "subject",
-        maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
-        style: {
-          "--reference-height": `${height * scale}px`,
-          "--reference-width": `${width * scale}px`,
-          "--reference-x": `${x}px`,
-          "--reference-y": `${y}px`,
-        } satisfies CalendarReferenceStyle as CalendarReferenceStyle,
-      };
-      calendarOptions.formatters = { formatCaption: () => label };
-    }
+      if (part === "cell") {
+        // SAFETY: the existing native-reference stylesheet consumes this exact finite CSS-variable map; satisfies checks its values before the CSSProperties view.
+        calendarOptions.components = {
+          DayButton: ({ day, modifiers, ...p }) => (
+            <CalendarDayButton
+              {...p}
+              day={day}
+              modifiers={{
+                ...modifiers,
+                focused:
+                  state === "focus" &&
+                  day.date.getDate() === Number(label) &&
+                  day.date.getDate() === Number(label),
+                range_end: q.get("range") === "end",
+                range_middle: q.get("range") === "middle",
+                range_start: q.get("range") === "start",
+                selected: q.get("selected") === "true",
+                today: q.get("today") === "true",
+              }}
+              id={day.date.getDate() === Number(label) ? "subject" : undefined}
+              disabled={state.startsWith("disabled")}
+              className={`${p.className ?? ""} native-reference-geometry native-reference-size`}
+              style={
+                {
+                  "--reference-height": `${height * scale}px`,
+                  "--reference-width": `${width * scale}px`,
+                  "--reference-x": `${x}px`,
+                  "--reference-y": `${y}px`,
+                } satisfies CalendarReferenceStyle as CalendarReferenceStyle
+              }
+              data-subject={
+                (day.date.getDate() === Number(label)
+                  ? "subject"
+                  : undefined) === "subject"
+                  ? "true"
+                  : undefined
+              }
+            >
+              {label}
+            </CalendarDayButton>
+          ),
+        };
+      }
 
-    if (part === "surface" && q.has("text")) {
-      calendarOptions.components = {
-        Months: () => (
-          <>
-            <CardHeader>
-              <CardTitle>{label}</CardTitle>
-              <CardDescription>{q.get("text")}</CardDescription>
-            </CardHeader>
-            <CardFooter>
-              <Button scale={scale}>Done</Button>
-            </CardFooter>
-          </>
-        ),
-        Nav: () => <></>,
-      };
-    }
-
-    if (part === "cell") {
-      // SAFETY: the existing native-reference stylesheet consumes this exact finite CSS-variable map; satisfies checks its values before the CSSProperties view.
-      calendarOptions.components = {
-        DayButton: ({ day, modifiers, ...p }) => (
-          <CalendarDayButton
-            {...p}
-            day={day}
-            modifiers={{
-              ...modifiers,
-              focused:
-                state === "focus" &&
-                day.date.getDate() === Number(label) &&
-                day.date.getDate() === Number(label),
-              range_end: q.get("range") === "end",
-              range_middle: q.get("range") === "middle",
-              range_start: q.get("range") === "start",
-              selected: q.get("selected") === "true",
-              today: q.get("today") === "true",
-            }}
-            id={day.date.getDate() === Number(label) ? "subject" : undefined}
-            disabled={state.startsWith("disabled")}
-            className={`${p.className ?? ""} native-reference-geometry native-reference-size`}
-            style={
-              {
+      const props = {
+        ...calendarOptions,
+        // SAFETY: this is the original single native-reference style map; satisfies checks the same finite values before the CSSProperties view.
+        style:
+          part === "surface"
+            ? ({
                 "--reference-height": `${height * scale}px`,
+                "--reference-padding": `${q.has("text") ? 18 * scale : 0}px`,
                 "--reference-width": `${width * scale}px`,
                 "--reference-x": `${x}px`,
                 "--reference-y": `${y}px`,
-              } satisfies CalendarReferenceStyle as CalendarReferenceStyle
-            }
-            data-subject={
-              (day.date.getDate() === Number(label) ? "subject" : undefined) ===
-              "subject"
-                ? "true"
-                : undefined
-            }
-          >
-            {label}
-          </CalendarDayButton>
-        ),
+              } satisfies CalendarReferenceStyle as CalendarReferenceStyle)
+            : undefined,
       };
-    }
 
-    const props = {
-      ...calendarOptions,
-      // SAFETY: this is the original single native-reference style map; satisfies checks the same finite values before the CSSProperties view.
-      style:
-        part === "surface"
-          ? ({
-              "--reference-height": `${height * scale}px`,
-              "--reference-padding": `${q.has("text") ? 18 * scale : 0}px`,
-              "--reference-width": `${width * scale}px`,
-              "--reference-x": `${x}px`,
-              "--reference-y": `${y}px`,
-            } satisfies CalendarReferenceStyle as CalendarReferenceStyle)
-          : undefined,
+      return (
+        <>
+          {component === "date-picker" ? (
+            <Popover scale={scale} open>
+              <PopoverTrigger render={<Button scale={scale} />}>
+                Pick a date
+              </PopoverTrigger>
+              <PopoverContent
+                data-slot="date-picker-content"
+                initialFocus={false}
+                className="native-reference-popover native-reference-popover-native"
+              >
+                <Calendar {...props} />
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <Calendar {...props} />
+          )}
+        </>
+      );
     };
-
-    return (
-      <>
-        {component === "date-picker" ? (
-          <Popover scale={scale} open>
-            <PopoverTrigger render={<Button scale={scale} />}>
-              Pick a date
-            </PopoverTrigger>
-            <PopoverContent
-              data-slot="date-picker-content"
-              initialFocus={false}
-              className="native-reference-popover native-reference-popover-native"
-            >
-              <Calendar {...props} />
-            </PopoverContent>
-          </Popover>
-        ) : (
-          <Calendar {...props} />
-        )}
-      </>
-    );
-      };
 
     return renderNativeCalendar();
   }
