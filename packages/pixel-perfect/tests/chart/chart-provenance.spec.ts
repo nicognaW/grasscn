@@ -85,11 +85,15 @@ for (const kind of ["fps", "pie"]) {
       expect(hash(bytes)).toBe(c.sha256);
       expect(hash(frameBytes)).toBe(
         // SAFETY: Each retained FPS/Pie case page/scale has exactly one frame pin in its paired manifest; this bounded retained relation preserves the original lookup and raw failure path.
+        // SAFETY: Each retained FPS/Pie case page and scale has exactly one matching original frame-name/hash pin; preserve the existing lookup and complete PNG crop verification.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
         (
           m.frames.find(
             (f: { name: string }) => f.name === frameName
           ) as ChartFramePin
-        ).sha256
+        )
+          /* oxlint-enable typescript/no-unsafe-type-assertion */
+          .sha256
       );
 
       for (let y = 0; y < expected.height; y += 1) {

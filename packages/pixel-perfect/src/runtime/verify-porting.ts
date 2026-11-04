@@ -448,6 +448,8 @@ try {
       const file = name.slice("browser:".length);
       const directory = path.join(output, "checkpoints", file);
 
+      const currentWebsiteBuild = report.websiteBuild;
+
       reusedTests = browserReuseResults(
         // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered verification phase consumes prior outputs and must finish before the next phase.
         await reusableBrowserTests(
@@ -456,19 +458,15 @@ try {
               candidate.report.suite === suite &&
               candidate.report.websiteBuild?.outputSha256 ===
                 // SAFETY: this synchronous filter follows the current browser owner's websiteIdentity assignment above.
-                (
-                  report.websiteBuild as NonNullable<
-                    RuntimeVerificationReceipt["websiteBuild"]
-                  >
-                ).outputSha256 &&
+                currentWebsiteBuild.outputSha256 &&
               (!managedFixture ||
                 candidate.report.fixtureBundle?.sha256 ===
                   // SAFETY: this arm executes only for managedFixture; its startup branch records the fixture bundle before assigning either host.
-                  (
-                    report.fixtureBundle as NonNullable<
-                      RuntimeVerificationReceipt["fixtureBundle"]
-                    >
-                  ).sha256)
+                  // SAFETY: The managed fixture startup above records the exact fixtureManifest owner before assigning either live fixture host; this branch retains its original bundle hash read and failure path.
+                  /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact fixture startup producer boundary; no additional runtime guard. */
+                  (report.fixtureBundle as ReturnType<typeof fixtureManifest>)
+                    /* oxlint-enable typescript/no-unsafe-type-assertion */
+                    .sha256)
           ),
           file,
           pixelPerfectRoot,

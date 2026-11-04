@@ -47,7 +47,14 @@ const pixels = [];
 let cursor = 0;
 
 for (const char of "GRASSCN") {
-  const [gx, gy, advance] = minecraftGlyphs[char.codePointAt(0)! - 32];
+  const [gx, gy, advance] =
+    minecraftGlyphs[
+      // SAFETY: Every character yielded by the existing fixed nonempty branding-string iteration contains at least one code point; String.codePointAt(0) is therefore numeric.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact nonempty String-iterator API contract; no additional runtime guard. */
+      (char.codePointAt(0) as number) -
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
+        32
+    ];
 
   for (let y = 0; y < 8; y += 1) {
     for (let x = 0; x < advance; x += 1) {
