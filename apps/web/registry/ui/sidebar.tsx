@@ -57,6 +57,10 @@ interface SidebarWidthStyle extends React.CSSProperties {
   "--sidebar-width-mobile": string;
 }
 
+interface SidebarMobileStyle extends React.CSSProperties {
+  "--sidebar-width-mobile": string;
+}
+
 interface SidebarScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -285,10 +289,9 @@ const Sidebar = ({
           data-mobile="true"
           data-state={openMobile ? "expanded" : "collapsed"}
           className={cn(`mc-sidebar mc-sidebar-mobile`, className)}
-          style={minecraftStyle(style, (__style) => ({
-            width: Math.min(140 * scale, innerWidth),
+          style={minecraftStyle(style, (__style): SidebarMobileStyle => ({
+            "--sidebar-width-mobile": `${Math.min(140 * scale, innerWidth)}px`,
             ...__style,
-            position: "fixed",
           }))}
           {...props}
         >

@@ -64,6 +64,8 @@
     gap: 0;
     padding: calc(6 * var(--mc-pixel)) calc(6 * var(--mc-pixel))
       calc(26 * var(--mc-pixel));
+  }
+  .mc-sidebar.mc-sidebar-mobile.mc-sheet-content {
     width: var(--sidebar-width-mobile);
   }
   .mc-sidebar-accessible {

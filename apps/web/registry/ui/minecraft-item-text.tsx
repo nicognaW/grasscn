@@ -39,7 +39,13 @@ interface MinecraftItemTextLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-minecraft-item-text-1-padding-left": number;
 }
 
+interface NativeTextWidthLayout {
+  className?: string;
+  width?: string;
+}
+
 interface MinecraftItemTextScaleStyle extends React.CSSProperties {
+  "--mc-prose-max-width"?: string;
   "--mc-scale": number;
 }
 
@@ -112,6 +118,27 @@ const splitLines = function splitLines(text: string, width?: number) {
   }
 
   return lines;
+};
+
+/** Measure glyph lines and resolve their measured, configured and native width bounds. */
+const measureItemTextLayout = function measureItemTextLayout(
+  lines: readonly string[],
+  containerWidth: number | undefined,
+  maxWidth: number | null | undefined,
+  scale: number
+) {
+  const widest = Math.max(0, ...lines.map(textWidth));
+  const width = containerWidth ?? maxWidth ?? widest;
+
+  const boundedLayout: NativeTextWidthLayout =
+    maxWidth === undefined || maxWidth === null
+      ? {}
+      : {
+          className: "w-(--mc-prose-max-width)",
+          width: `${maxWidth * scale}px`,
+        };
+
+  return { boundedLayout, widest, width };
 };
 
 type MinecraftItemTextProps = React.HTMLAttributes<HTMLElement> & {
@@ -231,8 +258,13 @@ const MinecraftItemText = ({
     hasSupportedParagraphGlyphs(text);
 
   const lines = supported && text !== null ? splitLines(text, maxWidth) : [];
-  const widest = Math.max(0, ...lines.map(textWidth));
-  const width = containerWidth ?? maxWidth ?? widest;
+
+  const { boundedLayout, widest, width } = measureItemTextLayout(
+    lines,
+    containerWidth,
+    maxWidth,
+    scale
+  );
 
   const richText = (value: React.ReactNode): React.ReactNode => {
     if (isMinecraftTextContent(value)) {
@@ -311,13 +343,10 @@ const MinecraftItemText = ({
       ref={node}
       data-slot="minecraft-prose"
       data-mc-label-layout-ready={!unicode || fontReady}
-      className={cn(`mc-label`, className)}
+      className={cn(`mc-label`, boundedLayout.className, className)}
       style={minecraftStyle(style, (__style): MinecraftItemTextScaleStyle => ({
+        "--mc-prose-max-width": boundedLayout.width,
         "--mc-scale": scale,
-        width:
-          maxWidth === undefined || maxWidth === null
-            ? undefined
-            : maxWidth * scale,
         ...__style,
       }))}
       {...props}

@@ -21,13 +21,6 @@ import {
 } from "../registry/ui/minecraft-menu-text";
 import type { DemoProps } from "../types";
 
-interface ComboboxResultPaint extends React.CSSProperties {
-  "--mc-ink": string;
-  "--mc-pixel": string;
-  "--mc-scale": number;
-  "--mc-shadow": string;
-}
-
 const biomes = ["Grasslands", "Birch Forest", "你好，世界", "Deep Dark"];
 const blocks = ["Oak Planks", "Stone", "你好，世界", "Bedrock"];
 
@@ -127,18 +120,7 @@ const ComboboxDemo = ({ scale }: DemoProps) => {
           </ComboboxContent>
         </Combobox>
       </div>
-      <div
-        className="demo-result"
-        style={
-          // SAFETY: --mc-scale, --mc-pixel, --mc-ink, --mc-shadow are this owner's CSS custom-property channels; this CSSProperties view passes the exact owned variable map to React without changing its values.
-          {
-            "--mc-ink": "currentColor",
-            "--mc-pixel": "1px",
-            "--mc-scale": 1,
-            "--mc-shadow": "#2a2a2a",
-          } satisfies ComboboxResultPaint as ComboboxResultPaint
-        }
-      >
+      <div className="demo-result demo-combobox-result">
         <span />
         <output aria-label="Biome choice">
           <MinecraftMenuText>{value ?? "Choose a biome"}</MinecraftMenuText>

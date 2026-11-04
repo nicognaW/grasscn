@@ -72,6 +72,13 @@
   }
 }
 
+@utility demo-combobox-result {
+  --mc-ink: currentColor;
+  --mc-pixel: 1px;
+  --mc-scale: 1;
+  --mc-shadow: #2a2a2a;
+}
+
 @utility demo-result {
   .documentation-playground & {
     margin-top: 24px;
