@@ -11,6 +11,11 @@ import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+interface DialogUnicodeStyle extends React.CSSProperties {
+  "--mc-dialog-unicode-height": string;
+  "--mc-dialog-unicode-width": string;
+}
+
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
   minecraftGlyphs;
 
@@ -150,13 +155,18 @@ export const DialogUnicodeLine = ({
     };
   }, [text, bold, scale, width]);
 
+  const canvasStyle: DialogUnicodeStyle = {
+    "--mc-dialog-unicode-height": `${9 * scale}px`,
+    "--mc-dialog-unicode-width": `${width * scale}px`,
+  };
+
   return (
     <canvas
       ref={ref}
       data-mc-dialog-unicode-ready={ready}
       aria-hidden="true"
-      className="block"
-      style={{ height: 9 * scale, width: width * scale }}
+      className="block h-(--mc-dialog-unicode-height) w-(--mc-dialog-unicode-width)"
+      style={canvasStyle}
     />
   );
 };

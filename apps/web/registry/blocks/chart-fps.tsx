@@ -11,10 +11,16 @@ import {
   ChartTooltipContent,
   chartFpsColor,
 } from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
 
 const DEFAULT_FPS_DOMAIN: [number, number] = [0, 1000 / 30];
 
 const formatFrameDuration = (value: number) => `${Math.round(value)} ms`;
+
+interface FpsRecipeStyle extends React.CSSProperties {
+  "--mc-fps-chart-height": string;
+  "--mc-fps-chart-width": string;
+}
 
 /** Example composition. Values and domains use ordinary application units. */
 export const FpsChartExample = ({
@@ -27,6 +33,7 @@ export const FpsChartExample = ({
   width = 242,
   scale = 2,
   style,
+  className,
   "aria-label": ariaLabel,
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
@@ -60,11 +67,9 @@ export const FpsChartExample = ({
       )
     : [];
 
-  const containerStyle: React.CSSProperties = {
-    aspectRatio: "auto",
-    height: 69 * scale,
-    position: "relative",
-    width: width * scale,
+  const containerStyle: FpsRecipeStyle = {
+    "--mc-fps-chart-height": `${69 * scale}px`,
+    "--mc-fps-chart-width": `${width * scale}px`,
     ...style,
   };
   // Preserve eager color reads after the style spread. Recharts can skip
@@ -83,6 +88,10 @@ export const FpsChartExample = ({
       {...props}
       config={{ [dataKey]: { color: "#55ff55", label: dataKey } }}
       scale={scale}
+      className={cn(
+        "relative aspect-auto h-(--mc-fps-chart-height) w-(--mc-fps-chart-width)",
+        className
+      )}
       style={containerStyle}
     >
       <BarChart

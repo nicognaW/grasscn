@@ -32,6 +32,11 @@ import {
   ChartAxisTick,
 } from "@/components/ui/chart";
 import type { ChartConfig } from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
+
+interface AnalyticsRecipeStyle extends React.CSSProperties {
+  "--mc-analytics-chart-height": string;
+}
 
 export type AnalyticsChartType =
   | "bar"
@@ -61,6 +66,7 @@ export const AnalyticsChartExample = ({
   scale = 2,
   height = 140,
   style,
+  className,
   "aria-label": ariaLabel,
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
@@ -261,18 +267,22 @@ export const AnalyticsChartExample = ({
     );
   }
 
+  const containerStyle: AnalyticsRecipeStyle = {
+    "--mc-analytics-chart-height": `${height * scale}px`,
+    ...style,
+  };
+
   return (
     <div data-slot="chart-example" data-chart-type={type}>
       <ChartContainer
         {...props}
         config={config}
         scale={scale}
-        style={{
-          aspectRatio: "auto",
-          height: height * scale,
-          width: "100%",
-          ...style,
-        }}
+        className={cn(
+          "aspect-auto h-(--mc-analytics-chart-height) w-full",
+          className
+        )}
+        style={containerStyle}
       >
         {chart}
       </ChartContainer>

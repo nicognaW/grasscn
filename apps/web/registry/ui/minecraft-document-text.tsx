@@ -5,7 +5,7 @@ import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
-import { minecraftStyle } from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
 
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
@@ -13,6 +13,15 @@ const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-registry-ui-minecraft-document-text-1-visibility": string;
+}
+
+interface DocumentLayoutStyle extends React.CSSProperties {
+  "--mc-document-height": string;
+  "--mc-document-width": string;
+}
+
+interface DocumentFallbackStyle extends React.CSSProperties {
+  "--mc-document-fallback-color": string;
 }
 
 let bitmap: Promise<HTMLImageElement> | undefined;
@@ -194,17 +203,24 @@ const MinecraftDocumentText = ({
     };
   }, [text, width, scale, color, align, wrap]);
 
+  const fallbackStyle: DocumentFallbackStyle | undefined = ready
+    ? undefined
+    : {
+        "--mc-document-fallback-color": color,
+      };
+
   return (
     <span
       {...props}
       data-slot="document-text"
       data-ready={ready}
-      className={className}
-      style={minecraftStyle(style, (__style) => ({
-        display: "block",
-        height: height * scale,
-        position: "relative",
-        width: width * scale,
+      className={cn(
+        "relative block h-(--mc-document-height) w-(--mc-document-width)",
+        className
+      )}
+      style={minecraftStyle(style, (__style): DocumentLayoutStyle => ({
+        "--mc-document-height": `${height * scale}px`,
+        "--mc-document-width": `${width * scale}px`,
         ...__style,
       }))}
     >
@@ -221,17 +237,12 @@ const MinecraftDocumentText = ({
         }
       />
       <span
-        style={
+        className={
           ready
-            ? {
-                clipPath: "inset(50%)",
-                height: 1,
-                overflow: "hidden",
-                position: "absolute",
-                width: 1,
-              }
-            : { color, inset: 0, position: "absolute" }
+            ? "absolute h-px w-px overflow-hidden [clip-path:inset(50%)]"
+            : "absolute inset-0 text-(--mc-document-fallback-color)"
         }
+        style={fallbackStyle}
       >
         {text}
       </span>

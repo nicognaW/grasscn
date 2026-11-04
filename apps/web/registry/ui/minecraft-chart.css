@@ -233,3 +233,9 @@
     width: var(--mc-native-width);
   }
 }
+
+@layer components {
+  .mc-chart.mc-chart-profiler-recipe {
+    background: rgba(80, 80, 80, 0.5647058823529412);
+  }
+}
