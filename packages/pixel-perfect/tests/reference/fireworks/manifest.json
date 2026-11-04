@@ -1,0 +1,3136 @@
+{
+  "backdropFrame": {
+    "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+    "file": "frames/large-ball.backdrop.png",
+    "height": 640,
+    "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+    "width": 480
+  },
+  "caseDefinitionSha256": "21bf8658c807bafedec50741c32f804c07a7a382c93794ea4f8ad5ce1b9d6342",
+  "differenceTolerance": 0,
+  "emptyTicks": [
+    1,
+    61,
+    62
+  ],
+  "explosion": {
+    "colors": [
+      4312372,
+      15790320
+    ],
+    "fadeColors": [
+      3887386
+    ]
+  },
+  "frames": [
+    {
+      "bounds": {
+        "height": 130,
+        "width": 125,
+        "x": 175,
+        "y": 255
+      },
+      "coveredPixels": 12275,
+      "mask": {
+        "decodedRgbaSha256": "26f75f06062b12604ce2b2a00e826fbc9d80e7ea6dc589f119b750e26e3963ca",
+        "file": "masks/large-ball.tick-002.png",
+        "height": 130,
+        "sha256": "dd58d10bb820ef8e2e152d54de9bbcf868dbb4a2d3f121ef1fc418f70fc48d8a",
+        "width": 125
+      },
+      "name": "large-ball.tick-002",
+      "reference": {
+        "decodedRgbaSha256": "6c054eab685d7e9189d1ca503118cea0a5d550a117bc1c7ae89efbae57d82621",
+        "file": "references/large-ball.tick-002.png",
+        "height": 130,
+        "sha256": "c420c43eb8131ee7fad01f74e658ed25103778ab9934e9ca0ab0a460a7789591",
+        "width": 125
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "e60329e68e23e325aee04b5ca3e7e723376aa064f761e913937bb15cb2d80aa3",
+        "file": "frames/large-ball.tick-002.png",
+        "height": 640,
+        "sha256": "6542590bd1e805a61f5064eb16ca0a816bf3da6b1c8bcad07247392317a2a7e7",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 2
+    },
+    {
+      "bounds": {
+        "height": 4,
+        "width": 4,
+        "x": 238,
+        "y": 318
+      },
+      "coveredPixels": 10,
+      "mask": {
+        "decodedRgbaSha256": "5f44ca2600bd748ae16a0ae2ddfeafe4174c1152cd87b670232bb21ba2da11bc",
+        "file": "masks/large-ball.tick-003.png",
+        "height": 4,
+        "sha256": "80f8d98be6617c3772cd4fea2881039eec9dbdc736655cd8815d94daa47cbd92",
+        "width": 4
+      },
+      "name": "large-ball.tick-003",
+      "reference": {
+        "decodedRgbaSha256": "e3d8cd9ae55dc34de8b7a403c58b38e94d2a99885a2c35fcb8e2b546d6553560",
+        "file": "references/large-ball.tick-003.png",
+        "height": 4,
+        "sha256": "12c9d791a8ea61f19e90b63909fba6d1f3db04860bf4327c0b7bfd14fb0edae6",
+        "width": 4
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "8aa93bab99d901d42ad61e9647635f313db910eb27248f5aa16b8c5e5d10a456",
+        "file": "frames/large-ball.tick-003.png",
+        "height": 640,
+        "sha256": "ddcffdb55cad4bf886a1b3fafbdc1cef3adbe19316165918f41958a55f56d10f",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 3
+    },
+    {
+      "bounds": {
+        "height": 110,
+        "width": 110,
+        "x": 185,
+        "y": 265
+      },
+      "coveredPixels": 9800,
+      "mask": {
+        "decodedRgbaSha256": "988e94b2ace65d42fda996b7598d1637517ff3c1066205fec85a01c7e5b8c66f",
+        "file": "masks/large-ball.tick-004.png",
+        "height": 110,
+        "sha256": "2095044c6f832035206e779e0d60ac1e409571f07256f7c57279ea37bbff03e2",
+        "width": 110
+      },
+      "name": "large-ball.tick-004",
+      "reference": {
+        "decodedRgbaSha256": "96f7ca195ab1c3bb0e12126f4f49f559cee023e959c9ad13e889c6a9b577e264",
+        "file": "references/large-ball.tick-004.png",
+        "height": 110,
+        "sha256": "70dcffeb4150d612d705c5188ef8076dbe4f9d37b697f12f058fe41d6f9c39ad",
+        "width": 110
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "6fbd6e0e1bef467d704feeb1abe8ef3692b3e71ed05cf058706807e87937a3d1",
+        "file": "frames/large-ball.tick-004.png",
+        "height": 640,
+        "sha256": "4b816a4a21621d47f497eb764284ed331f2d1cd1a1e9b7f04b7e24791776df30",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 4
+    },
+    {
+      "bounds": {
+        "height": 142,
+        "width": 142,
+        "x": 169,
+        "y": 249
+      },
+      "coveredPixels": 16524,
+      "mask": {
+        "decodedRgbaSha256": "85d360753d606d97330fc1776635e742ed06a6b44c0d416ed02a56a28c73023e",
+        "file": "masks/large-ball.tick-005.png",
+        "height": 142,
+        "sha256": "965bde85dc1b660d3734a087eb7389a03ab8ce4a559ff018ae1518cddf904e3e",
+        "width": 142
+      },
+      "name": "large-ball.tick-005",
+      "reference": {
+        "decodedRgbaSha256": "4bf6a06a3d3b433d705b95fddcc379522e399bb59d63273b3dd6bf05a76015bf",
+        "file": "references/large-ball.tick-005.png",
+        "height": 142,
+        "sha256": "61b6736667cf5fd1407fb0ce713b1048d545eecedb3adf1ffd9e1ba1212201b1",
+        "width": 142
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "2e3c107e644666857c2b4975e1ac1fac6ef4bba1f670955e1bc2363093f13c91",
+        "file": "frames/large-ball.tick-005.png",
+        "height": 640,
+        "sha256": "9786ca7efcdca4b2ac7fdc81cb6b9deebfaa7b81c9c54df78320c513f6e47d39",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 5
+    },
+    {
+      "bounds": {
+        "height": 80,
+        "width": 85,
+        "x": 200,
+        "y": 280
+      },
+      "coveredPixels": 5550,
+      "mask": {
+        "decodedRgbaSha256": "3406a066cdb77c9245d380f53b728ead4ccc96cbd35c17068db67162cd95e4ae",
+        "file": "masks/large-ball.tick-006.png",
+        "height": 80,
+        "sha256": "29162032928af6c30c5e368f1952f960d82b2bcf710313c5dfaccf1df2437cd3",
+        "width": 85
+      },
+      "name": "large-ball.tick-006",
+      "reference": {
+        "decodedRgbaSha256": "e175cf0714c5b9f14b5eea58d9a626af22e83943f39e174a28f9e0bc912b8c86",
+        "file": "references/large-ball.tick-006.png",
+        "height": 80,
+        "sha256": "3d7864b696f16496a0e5c41cf942449f1891939689fba303c228bc8b20ab783e",
+        "width": 85
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "db7e0d97c095c1332eb7ab8d299a41d3aac54004f194c65da63d42bddcfc398b",
+        "file": "frames/large-ball.tick-006.png",
+        "height": 640,
+        "sha256": "15e853a043f42bda393f1ae4c010a8dda6222a0613684b2429515f58802927e3",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 6
+    },
+    {
+      "bounds": {
+        "height": 59,
+        "width": 58,
+        "x": 211,
+        "y": 292
+      },
+      "coveredPixels": 1400,
+      "mask": {
+        "decodedRgbaSha256": "193311563c5c8894a84adc73909c2dd30ed998f5a7415de9eadaa91cf759c632",
+        "file": "masks/large-ball.tick-007.png",
+        "height": 59,
+        "sha256": "03dbefbb1c74ed915987bd6b98f8a747db9aa98bc9f984007a037a4dcfab21d1",
+        "width": 58
+      },
+      "name": "large-ball.tick-007",
+      "reference": {
+        "decodedRgbaSha256": "66ae457635fabb3eedad758856f65937e6c5d774548c3c348d6eca58ff784a50",
+        "file": "references/large-ball.tick-007.png",
+        "height": 59,
+        "sha256": "1d110d38d2507a11c3fc7c6a6a926c0a33bc1c4f5541eff89f7b1eb1f9ba2223",
+        "width": 58
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "3883df61ccb81e4bea524ff3d60760a204505d96b95b6d562db4f540c291652c",
+        "file": "frames/large-ball.tick-007.png",
+        "height": 640,
+        "sha256": "10311aec86e06bb45c220dab211fa5939e00f0feb648056c1bd039ec09121859",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 7
+    },
+    {
+      "bounds": {
+        "height": 70,
+        "width": 69,
+        "x": 206,
+        "y": 287
+      },
+      "coveredPixels": 1542,
+      "mask": {
+        "decodedRgbaSha256": "6770bc0d949c136373aad708289a040b3adc6b5132a2b97e3f014bfbb38d253f",
+        "file": "masks/large-ball.tick-008.png",
+        "height": 70,
+        "sha256": "9b990e2b1503c79f8d664dcdf1193a91a68588bcc52473c6318a6a11ab6a4f0e",
+        "width": 69
+      },
+      "name": "large-ball.tick-008",
+      "reference": {
+        "decodedRgbaSha256": "f7cd67cfdc6ea0ef92ba3aed2abe507aeb4009aef0ea88222de1ccb0e6cb3864",
+        "file": "references/large-ball.tick-008.png",
+        "height": 70,
+        "sha256": "2d1102935883a29dbb2104df274c9500c10dc36ad6c4545db19d7a8bad7ea9af",
+        "width": 69
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "885240d247a95aff2bcc442b155e28bbb68e9f72226c1af7163d81d9763c9c1c",
+        "file": "frames/large-ball.tick-008.png",
+        "height": 640,
+        "sha256": "58610e2538d2e982eabd4dd065188efe1f550d4533d45f9dae707b2b49226da7",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 8
+    },
+    {
+      "bounds": {
+        "height": 79,
+        "width": 79,
+        "x": 201,
+        "y": 282
+      },
+      "coveredPixels": 1654,
+      "mask": {
+        "decodedRgbaSha256": "634dc2da14f6de6de99a04b300a84a41619f20a2fcad3ea4a32c7bd3ae625f87",
+        "file": "masks/large-ball.tick-009.png",
+        "height": 79,
+        "sha256": "8412c26f04ac10f1eca137506f308b47675c18896f14af303edb3248ad015ce8",
+        "width": 79
+      },
+      "name": "large-ball.tick-009",
+      "reference": {
+        "decodedRgbaSha256": "bdb040cade48d4462414c4f8cd001eabbc4b155c25bd3e61da942f67e32fb468",
+        "file": "references/large-ball.tick-009.png",
+        "height": 79,
+        "sha256": "150f731f022f2c917e2c9be8b6a4c6b7b658e04c27c3ec051a8ecd6473ebb0f3",
+        "width": 79
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "91a5669e8be1c4efe2bf2a98b9a1107a25271c3977a90b31922e990c64ddc6e1",
+        "file": "frames/large-ball.tick-009.png",
+        "height": 640,
+        "sha256": "695e5c97bab0193fd701e5287247e26b90b40d16de2517567ab0a2593a051d7f",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 9
+    },
+    {
+      "bounds": {
+        "height": 89,
+        "width": 88,
+        "x": 196,
+        "y": 278
+      },
+      "coveredPixels": 1726,
+      "mask": {
+        "decodedRgbaSha256": "d4202d7957aa5e131c14afacaa175fc5873265f98d207a3bc3a41dae503cb768",
+        "file": "masks/large-ball.tick-010.png",
+        "height": 89,
+        "sha256": "9d0633711dff84cd6781b62353edc0a060ff23b65970beed4678a11f0a29104a",
+        "width": 88
+      },
+      "name": "large-ball.tick-010",
+      "reference": {
+        "decodedRgbaSha256": "bcda00905ae98643c504c2cd65a521af512eab9151bc7238d07316e9fe02783a",
+        "file": "references/large-ball.tick-010.png",
+        "height": 89,
+        "sha256": "de5191af47c89a31eb9c3f35bb2ba2e35af9ca24b4415988168fcbff3e26d6d9",
+        "width": 88
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "d4237b6fb0311419e84310659f0940191d36b5951b9356a8cac2e31916f5c480",
+        "file": "frames/large-ball.tick-010.png",
+        "height": 640,
+        "sha256": "af3fd94ffe208639f68b757a2f48bf980bb6934ac2a84e42f28d7d8c03326227",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 10
+    },
+    {
+      "bounds": {
+        "height": 97,
+        "width": 96,
+        "x": 192,
+        "y": 274
+      },
+      "coveredPixels": 1781,
+      "mask": {
+        "decodedRgbaSha256": "9b20a20e65efe775d67c64d0ea5ef58b7968e5f498d3c6936239b090be8b750e",
+        "file": "masks/large-ball.tick-011.png",
+        "height": 97,
+        "sha256": "f89d538f289c9f4f12ecd92cacd2306ea4da6151a242d58accf8c93060bffea2",
+        "width": 96
+      },
+      "name": "large-ball.tick-011",
+      "reference": {
+        "decodedRgbaSha256": "d716b12849e2b456bda8315c45b9f4a1f2b079b039d3a0055dff6f70cee804ef",
+        "file": "references/large-ball.tick-011.png",
+        "height": 97,
+        "sha256": "ba4503d4ca5aea3fbd8fdd36ecbe26412c4cf6b8023470a0bd0ba3288354ef46",
+        "width": 96
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "fcdd31d6f8fcf3914f952be22e01a524902106f16cf431cf926ec74b612634a1",
+        "file": "frames/large-ball.tick-011.png",
+        "height": 640,
+        "sha256": "35724a4c16267d407590a8274811627b9da9dfa9d11bb887f9288c031ade6092",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 11
+    },
+    {
+      "bounds": {
+        "height": 104,
+        "width": 103,
+        "x": 189,
+        "y": 271
+      },
+      "coveredPixels": 1810,
+      "mask": {
+        "decodedRgbaSha256": "b065f451c1151296958781be02beb1d6317c55d3b746fe3aec994a8b7111f6a3",
+        "file": "masks/large-ball.tick-012.png",
+        "height": 104,
+        "sha256": "9dea6b81758fa882d735f209b9f7d1422d1422b5c775ee066671e02a9e5143a8",
+        "width": 103
+      },
+      "name": "large-ball.tick-012",
+      "reference": {
+        "decodedRgbaSha256": "519001666788332da379f8bc0ef1f39498b0f33e4b04f64a5c12ee2ed576bb09",
+        "file": "references/large-ball.tick-012.png",
+        "height": 104,
+        "sha256": "ef2a2a7746fd44e3936f10a9e89323367833cab73181969053061612d5ab69a4",
+        "width": 103
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "6b3af807f62faaa2e2418eb3cdd8826cd9df6cbd23dcc2919dd529d8ac3fa454",
+        "file": "frames/large-ball.tick-012.png",
+        "height": 640,
+        "sha256": "b1ba042f28685fa0a41170ee235786910a5c067c17c4eda06719f4a21dd4ef95",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 12
+    },
+    {
+      "bounds": {
+        "height": 111,
+        "width": 110,
+        "x": 185,
+        "y": 268
+      },
+      "coveredPixels": 1829,
+      "mask": {
+        "decodedRgbaSha256": "95adae237f7aef617d3cb9a2abf6c38e6eb8da4142cd1f12a5bdb27f34b8d519",
+        "file": "masks/large-ball.tick-013.png",
+        "height": 111,
+        "sha256": "65c1b364ae4139b9bf8aa17f3574429de5d68c269e69a99c9ab9126892cf0307",
+        "width": 110
+      },
+      "name": "large-ball.tick-013",
+      "reference": {
+        "decodedRgbaSha256": "244bc6865bcb8fd92d147fc5137a5a621fac0be3981487b81b3a5bd9da9cd6de",
+        "file": "references/large-ball.tick-013.png",
+        "height": 111,
+        "sha256": "e8ceaade020f4af0c7205b418e6ee668fb14c634cc44687e01f728d81b4ae9d7",
+        "width": 110
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "649995ac2574a0cfd04448c882362f0e39ea6fd8b42f969b801f05c455a84232",
+        "file": "frames/large-ball.tick-013.png",
+        "height": 640,
+        "sha256": "c16f9e23f6048a989252b924850460a70874c97cf8d2d9edd242f99d366662d9",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 13
+    },
+    {
+      "bounds": {
+        "height": 118,
+        "width": 117,
+        "x": 182,
+        "y": 265
+      },
+      "coveredPixels": 1862,
+      "mask": {
+        "decodedRgbaSha256": "5e622834008d777d06723b0283348751a1539eaa1ae8d94e1099f2d97c687521",
+        "file": "masks/large-ball.tick-014.png",
+        "height": 118,
+        "sha256": "96a162be43c1b8412403d2ba85e295cd2624835cc546282e72d0f1473fd14aec",
+        "width": 117
+      },
+      "name": "large-ball.tick-014",
+      "reference": {
+        "decodedRgbaSha256": "928bd4f1e95dc8b5e1dd516a984980f5647bcea4413051e79e6c1a83d45ae261",
+        "file": "references/large-ball.tick-014.png",
+        "height": 118,
+        "sha256": "f8486de23e73fbc5cd89ab5b050dac1a52639145f6e884259dcc4fea86330ff2",
+        "width": 117
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "397b66b9168702ac8e43f679db6aa7d1946ba5049d18a0af7c84dbfa59835a0a",
+        "file": "frames/large-ball.tick-014.png",
+        "height": 640,
+        "sha256": "7713bb99eb556a919ee81dc33ad31405276f575f08b27bcb7d5fc9a62f5b47fb",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 14
+    },
+    {
+      "bounds": {
+        "height": 123,
+        "width": 123,
+        "x": 179,
+        "y": 263
+      },
+      "coveredPixels": 1837,
+      "mask": {
+        "decodedRgbaSha256": "8951c230b2f0c2c192fb7f653a6b40ee09afbd10cb65a6008568de1d3b8403c4",
+        "file": "masks/large-ball.tick-015.png",
+        "height": 123,
+        "sha256": "3fdbffa0ea24271a0d1f7312368511f52119dc0cac520998e6a11913bab850eb",
+        "width": 123
+      },
+      "name": "large-ball.tick-015",
+      "reference": {
+        "decodedRgbaSha256": "3185d1b0e15590ff36270d1058bca30adfaac0a5b99a4b1149b24c719d3fc8d3",
+        "file": "references/large-ball.tick-015.png",
+        "height": 123,
+        "sha256": "5c8fc14b7fa92b4d0c352dce80a00f58cad96456ddbcd36645b33cdc028c02e9",
+        "width": 123
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "759617cbb060e6a7da771b61397bbf07c0394659e186ede23a56dd48b1768e27",
+        "file": "frames/large-ball.tick-015.png",
+        "height": 640,
+        "sha256": "138ff9c0b28a2931097c2f1470a85f6d2c32dd8f599b38bb9e9de94c97ce851c",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 15
+    },
+    {
+      "bounds": {
+        "height": 128,
+        "width": 127,
+        "x": 177,
+        "y": 261
+      },
+      "coveredPixels": 1853,
+      "mask": {
+        "decodedRgbaSha256": "23fb6d474aaa8d04d70cbe2ae3a20015de638ebe4624a22d6b3815c6a977dc9e",
+        "file": "masks/large-ball.tick-016.png",
+        "height": 128,
+        "sha256": "dc8076a984fb8145dc5691b8dfb93a46774cb712d195e70f498d01d976c451ef",
+        "width": 127
+      },
+      "name": "large-ball.tick-016",
+      "reference": {
+        "decodedRgbaSha256": "d4043023a07cb083228a57577acaadce38e02de8b135124579fd6ba36842a015",
+        "file": "references/large-ball.tick-016.png",
+        "height": 128,
+        "sha256": "afc6442833000066769f76244ae01dc289f5528986be1528663001f03f76c8b3",
+        "width": 127
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "21e2850fbd5418ab4b50f5a4fe61231e17c0dc585339ffe9f246928e2db860be",
+        "file": "frames/large-ball.tick-016.png",
+        "height": 640,
+        "sha256": "7066c52e5d1d8d7c9a47943a4c2ca5c57d0eb65b65e700a6f58f36a9e32c87c0",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 16
+    },
+    {
+      "bounds": {
+        "height": 133,
+        "width": 132,
+        "x": 174,
+        "y": 259
+      },
+      "coveredPixels": 1908,
+      "mask": {
+        "decodedRgbaSha256": "e5cf2a63256c93b7cd53bf2e1bd8348f64ab3e84478fa60a01815ce9d928c7fd",
+        "file": "masks/large-ball.tick-017.png",
+        "height": 133,
+        "sha256": "901181b42d38128e2e728bf1424e277f65e920974cfefe8e82a1239d4886c752",
+        "width": 132
+      },
+      "name": "large-ball.tick-017",
+      "reference": {
+        "decodedRgbaSha256": "ed656f0d19d0e020d2bb853b549fea4df86c037e8e5e5f45efdcc8c02ccae977",
+        "file": "references/large-ball.tick-017.png",
+        "height": 133,
+        "sha256": "2b90d93b8ba6864b201c5bdf6cc8cca4fdff63f90a2509215fb68797598e2364",
+        "width": 132
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "51eaf6d282dd389b41efd06d1bc82104eb48c4413e62684e265697bc7a8cd7e0",
+        "file": "frames/large-ball.tick-017.png",
+        "height": 640,
+        "sha256": "f05a8fef311d0f3739f0a9feb6d6b12b3fdeab684e3e876d45e35ca7989a3795",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 17
+    },
+    {
+      "bounds": {
+        "height": 137,
+        "width": 135,
+        "x": 172,
+        "y": 258
+      },
+      "coveredPixels": 1592,
+      "mask": {
+        "decodedRgbaSha256": "da88b19a6b5c982785c5a726143de081437e857af2cabb542b4aeb27ec5b4fc1",
+        "file": "masks/large-ball.tick-018.png",
+        "height": 137,
+        "sha256": "431f812221c3da34b1347bc13a03b4d2398a2479748c5a09c48232491aad4cd0",
+        "width": 135
+      },
+      "name": "large-ball.tick-018",
+      "reference": {
+        "decodedRgbaSha256": "1eda830c04f346b7fb34b05d869133b44563469ca53aa37a4986e478593ff147",
+        "file": "references/large-ball.tick-018.png",
+        "height": 137,
+        "sha256": "3c59cf70da67666d15f065c262a729d78106085e68680a956db357368cd80a02",
+        "width": 135
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "faaf9830e1c1582b3b81a62037617f4b6d441107ef97e4e3f62cb681e4ca48eb",
+        "file": "frames/large-ball.tick-018.png",
+        "height": 640,
+        "sha256": "1f8fee15645dfe4d606329135d46c6ea4155074310d30ba9f5d4bca11867ddda",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 18
+    },
+    {
+      "bounds": {
+        "height": 141,
+        "width": 140,
+        "x": 170,
+        "y": 256
+      },
+      "coveredPixels": 1478,
+      "mask": {
+        "decodedRgbaSha256": "fe5de92c4bba8dbcc17db2e9e8442d4b01673686a556e8ce0775ccaeb9245158",
+        "file": "masks/large-ball.tick-019.png",
+        "height": 141,
+        "sha256": "c3066b279c8dd77b39cac28ad77e1dd1500d4f45154f17daf7c33160b64fe8a9",
+        "width": 140
+      },
+      "name": "large-ball.tick-019",
+      "reference": {
+        "decodedRgbaSha256": "03aa8e362ae5cee5e221ac0b911f338902858620645889b9f13ce7125c8f25c7",
+        "file": "references/large-ball.tick-019.png",
+        "height": 141,
+        "sha256": "79d4189a6eb50b563dca3e8c48914ef91767e3965cf28d8973454136f661a565",
+        "width": 140
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "20d232bf9a4652a0c200c793fd5f5cb65f47d7e4d0f1597f25322597892dbe07",
+        "file": "frames/large-ball.tick-019.png",
+        "height": 640,
+        "sha256": "76d64a5145ea2a1ccabe3577fa5b9ff5b287c727e10ce8149af8a2ecc3e2a6be",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 19
+    },
+    {
+      "bounds": {
+        "height": 145,
+        "width": 144,
+        "x": 169,
+        "y": 255
+      },
+      "coveredPixels": 1554,
+      "mask": {
+        "decodedRgbaSha256": "26c226e9fb7fe7be95ddf94a80d50fb1be04112723f2ce07de3ba91434950921",
+        "file": "masks/large-ball.tick-020.png",
+        "height": 145,
+        "sha256": "1b0127a59477a2cd7c520757ba86b30247494471cbaaf58533aed6025d1d6c96",
+        "width": 144
+      },
+      "name": "large-ball.tick-020",
+      "reference": {
+        "decodedRgbaSha256": "1fa30ee65fed81d1404d294876e1bd68a092babb2c3c095df31a106e4b0246e9",
+        "file": "references/large-ball.tick-020.png",
+        "height": 145,
+        "sha256": "46c7061a8d5c094beb40e717f64bd49e0310208c291eb3d85fdf029733fe54fe",
+        "width": 144
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "84dc3e85fc1ff534ce3646232fee43d4831febe64f7dbb6fc5080563ba6aff4c",
+        "file": "frames/large-ball.tick-020.png",
+        "height": 640,
+        "sha256": "c50e8b0528c69ae2387af1a0d05b0c97d1dbf30b4b6cb60e15bfbdf704bbf08a",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 20
+    },
+    {
+      "bounds": {
+        "height": 147,
+        "width": 147,
+        "x": 167,
+        "y": 254
+      },
+      "coveredPixels": 1009,
+      "mask": {
+        "decodedRgbaSha256": "5aaf240aba5ce1cf3f3dde4b20ae5d6f5cad96e7ed92e6de3b9c7dd9f11e4b95",
+        "file": "masks/large-ball.tick-021.png",
+        "height": 147,
+        "sha256": "6c834572a40c91e7ba0b74840d8e7b49038e6848dc9efe368392c768d7bd6d1c",
+        "width": 147
+      },
+      "name": "large-ball.tick-021",
+      "reference": {
+        "decodedRgbaSha256": "cb1a0bdc43ebab6548d77663ad6e64309d2a4b7ab665e1aec59c222eeead97b5",
+        "file": "references/large-ball.tick-021.png",
+        "height": 147,
+        "sha256": "872dec571c4670715e1dd7d23133c2a102ff7929d4646b351a2da02244ba55a1",
+        "width": 147
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "53b7f660783a036b40209e451323e36ab3396f78bc04000bf75138e1f49ca873",
+        "file": "frames/large-ball.tick-021.png",
+        "height": 640,
+        "sha256": "132f5ab6fb8b9f643ea5deebed8d5a03b7bb91af884c543c115f7838807a15a0",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 21
+    },
+    {
+      "bounds": {
+        "height": 148,
+        "width": 149,
+        "x": 166,
+        "y": 253
+      },
+      "coveredPixels": 956,
+      "mask": {
+        "decodedRgbaSha256": "ad487a2c1ca3214742671a127df763fbab8da6fa8b0d1ee934c550b58c2c7d71",
+        "file": "masks/large-ball.tick-022.png",
+        "height": 148,
+        "sha256": "63dc9000ecf2f8e85628877211190d3bb0adca1f4c6c9c5a5a6e3755416694a6",
+        "width": 149
+      },
+      "name": "large-ball.tick-022",
+      "reference": {
+        "decodedRgbaSha256": "5b8903a15ea68760d024b94857ff5795a08abc7164bcb6a47967f7826032698b",
+        "file": "references/large-ball.tick-022.png",
+        "height": 148,
+        "sha256": "a3b86df8275639a70f49f6d956dc6b0ccb6eddb4450e27bb683392edec191b0c",
+        "width": 149
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "d98e3dca9a63d2e33218e0c135b5a8aab81a943af7caf60cd952aa181d37bc3e",
+        "file": "frames/large-ball.tick-022.png",
+        "height": 640,
+        "sha256": "d4ebe9a468567a0e5b9955226ab7ffa3023a92b8d88e073c41a70581d2653e84",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 22
+    },
+    {
+      "bounds": {
+        "height": 146,
+        "width": 151,
+        "x": 164,
+        "y": 252
+      },
+      "coveredPixels": 961,
+      "mask": {
+        "decodedRgbaSha256": "9882dfaa6bfe91c31c69263543c056871697c9b592f01bfe801ecc1b87e1308e",
+        "file": "masks/large-ball.tick-023.png",
+        "height": 146,
+        "sha256": "c057205b42beaf72761d83638837d105ecc418f633c2baf5914cc922f1d3f937",
+        "width": 151
+      },
+      "name": "large-ball.tick-023",
+      "reference": {
+        "decodedRgbaSha256": "1206be10da4368da35e97283944f9df2b0515d820ae5913201d94bd937eda686",
+        "file": "references/large-ball.tick-023.png",
+        "height": 146,
+        "sha256": "cbb52cdfbd592c08bd23e36f0a5556b1f1637221497ae334d41f3a6c933ed7a6",
+        "width": 151
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "5332c12593a279e72bce54241a77ba1610736bfe03c12de4b9ed0a384f0dc48a",
+        "file": "frames/large-ball.tick-023.png",
+        "height": 640,
+        "sha256": "49b9898f8d39341fa5627ea3718925a8cbfea0446b67de329ee733582e56e3fb",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 23
+    },
+    {
+      "bounds": {
+        "height": 153,
+        "width": 152,
+        "x": 164,
+        "y": 252
+      },
+      "coveredPixels": 951,
+      "mask": {
+        "decodedRgbaSha256": "71485ff121dbf6e7bb7c80b95526169f3100a15a43772a89835d9cba6223da60",
+        "file": "masks/large-ball.tick-024.png",
+        "height": 153,
+        "sha256": "2502436e37dbffe5f3b2fa731a16946b38bcf31a8874df3657c8babed94d8c7b",
+        "width": 152
+      },
+      "name": "large-ball.tick-024",
+      "reference": {
+        "decodedRgbaSha256": "4e229dec8bbb8a56d1d4ab7c0a04e889ee05dc119ce33550aa463904826ef9b3",
+        "file": "references/large-ball.tick-024.png",
+        "height": 153,
+        "sha256": "3f9ed051ed90884823d461fada2b4f6b2627ea58ff3dc7d30a193377e6a85ee2",
+        "width": 152
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "34c386c4e9b7b4a2f3a9d889996ed1a62cb4fd5c73f773c43dff8244655e57de",
+        "file": "frames/large-ball.tick-024.png",
+        "height": 640,
+        "sha256": "8cbefaa0fc6e733e599caf6c93a853bbdfab0f411ffaf651156d4b4fc814acc9",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 24
+    },
+    {
+      "bounds": {
+        "height": 157,
+        "width": 155,
+        "x": 162,
+        "y": 252
+      },
+      "coveredPixels": 1010,
+      "mask": {
+        "decodedRgbaSha256": "b6ee4cf67df1e9460a650cebf2a2a7279246ef4933edbf2c9672b802bcd47f78",
+        "file": "masks/large-ball.tick-025.png",
+        "height": 157,
+        "sha256": "2dc3435fadb5fe61c4e701687b573b0c9784ee4542a7431a0ed5bab2635fb345",
+        "width": 155
+      },
+      "name": "large-ball.tick-025",
+      "reference": {
+        "decodedRgbaSha256": "d9654558094d0209f294f0d9d06b0e874cd5b05d998d7fa5efe315cfeeceed5d",
+        "file": "references/large-ball.tick-025.png",
+        "height": 157,
+        "sha256": "15d519867bea99b0c4b43abc5f72421eed8e8715ac99e419706b254adbefee86",
+        "width": 155
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "2938d4cfce06e9124fb224b0b9101d27c74493e044c27d64ec37c539e87e05a6",
+        "file": "frames/large-ball.tick-025.png",
+        "height": 640,
+        "sha256": "facd7dc851a55183b0f216893053f4646f304c1002ec9296f287e35ff41551ab",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 25
+    },
+    {
+      "bounds": {
+        "height": 159,
+        "width": 159,
+        "x": 161,
+        "y": 252
+      },
+      "coveredPixels": 1015,
+      "mask": {
+        "decodedRgbaSha256": "d5b1637c822fa9441bb02b8893d85d501a7d23c9075c19664182d832a09911c5",
+        "file": "masks/large-ball.tick-026.png",
+        "height": 159,
+        "sha256": "6c00ebc42b7af842ff37fecfc004f672ff9dbf1f060c003f6a2e4ec8d0c864ca",
+        "width": 159
+      },
+      "name": "large-ball.tick-026",
+      "reference": {
+        "decodedRgbaSha256": "c5838c044a78c32188bb96d1638cffe2a9ca32bbbb5c62a7f0bd6efeb253092d",
+        "file": "references/large-ball.tick-026.png",
+        "height": 159,
+        "sha256": "a16a3c1435f199b52848ecd1582931666f95549fe802aa15b14e0e0106a8df59",
+        "width": 159
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "799a9dd74482382d1f1890252cdbe9e6976c1d77a62b06612a3429c16eca8bfc",
+        "file": "frames/large-ball.tick-026.png",
+        "height": 640,
+        "sha256": "e4a739741c84e2e617c7381a7fe491c4edd9abc9cf00afc0777c63ff40f6ac3f",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 26
+    },
+    {
+      "bounds": {
+        "height": 162,
+        "width": 161,
+        "x": 160,
+        "y": 251
+      },
+      "coveredPixels": 1022,
+      "mask": {
+        "decodedRgbaSha256": "ba3e4c01843c626d11921f83347eac79967e0ac0b885efc7219dee988b2cf8c1",
+        "file": "masks/large-ball.tick-027.png",
+        "height": 162,
+        "sha256": "d7af8daecfb624f2b7ad003a71c4422e52cf86cb2c26f8d6daa3b6cf7efc8fc3",
+        "width": 161
+      },
+      "name": "large-ball.tick-027",
+      "reference": {
+        "decodedRgbaSha256": "ceb727b644a7f25875d84e951294b386a018d8bae1e58d784e27584ba398f0c4",
+        "file": "references/large-ball.tick-027.png",
+        "height": 162,
+        "sha256": "d319cc95350df9052577a6e00c431e2e822d9da0e115e7c3b04ba277cfaa3ff5",
+        "width": 161
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "6ff04a399a6c0ba51c9c24fb59574affb135e5171de9f88a362f9ae728e70039",
+        "file": "frames/large-ball.tick-027.png",
+        "height": 640,
+        "sha256": "5a100a9b78354657eda82ba261e6559c6d02d1eb21569e15e9b606d1c5ce57f6",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 27
+    },
+    {
+      "bounds": {
+        "height": 162,
+        "width": 163,
+        "x": 159,
+        "y": 250
+      },
+      "coveredPixels": 994,
+      "mask": {
+        "decodedRgbaSha256": "a53955898e4d17d3c1396a72b78867503c347ccdb3de8db9b2c49f2bb1f63e7f",
+        "file": "masks/large-ball.tick-028.png",
+        "height": 162,
+        "sha256": "2e52864b55f39ea19f7631056007325756a633ae553e35b34db5c7dd6b924445",
+        "width": 163
+      },
+      "name": "large-ball.tick-028",
+      "reference": {
+        "decodedRgbaSha256": "cf48cc0d0a72f8eef7ee1f0a7709da650555fbf8e32a0b6a29f56f0d61eb3871",
+        "file": "references/large-ball.tick-028.png",
+        "height": 162,
+        "sha256": "1376f5de6ab805a70f4dba0b33debd18d3edf6c46c4baf9454a700c4012da2a8",
+        "width": 163
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "afe0ec435cf349c7074cc16a4013cd0af2c8d507d75515a113bafe59b0c4cb7e",
+        "file": "frames/large-ball.tick-028.png",
+        "height": 640,
+        "sha256": "a60e7f4fb9e1c78dc373ac92e7d44f3c4de26f654d87631b2eb60d8dd9885415",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 28
+    },
+    {
+      "bounds": {
+        "height": 157,
+        "width": 164,
+        "x": 158,
+        "y": 250
+      },
+      "coveredPixels": 965,
+      "mask": {
+        "decodedRgbaSha256": "a5f1648c332b3c2aea57876029bd0fe5504641856ae1cd3861245e0401fdbc26",
+        "file": "masks/large-ball.tick-029.png",
+        "height": 157,
+        "sha256": "29c98ded3f58e4c9f65080bd96efa932ef5ce69eec49d4a75c0ff0bc43595bfc",
+        "width": 164
+      },
+      "name": "large-ball.tick-029",
+      "reference": {
+        "decodedRgbaSha256": "172d7d26040f267c0ea52b6aa3b9e12dabf3af65d288deddcbc9619bbb6f0c8b",
+        "file": "references/large-ball.tick-029.png",
+        "height": 157,
+        "sha256": "8950b61ac139705f3b2de43e50b3ade2586b71d9e799c12cf659f6e660bb63f3",
+        "width": 164
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a3257c061ee0bc6b4d9f3a96a3f58a50790a30e07f4b1fc36fc50af577bb5f53",
+        "file": "frames/large-ball.tick-029.png",
+        "height": 640,
+        "sha256": "9af2068a8c8763131bce2957c746833561bb84bdc165164697a3ed02e61d162e",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 29
+    },
+    {
+      "bounds": {
+        "height": 163,
+        "width": 163,
+        "x": 158,
+        "y": 251
+      },
+      "coveredPixels": 973,
+      "mask": {
+        "decodedRgbaSha256": "ffd6cef652ca5870190e4f99095a54739f3a7e0bb668f757fe3d7a1805b81f0c",
+        "file": "masks/large-ball.tick-030.png",
+        "height": 163,
+        "sha256": "6c2d746a31c033b5b00cc6b54ef5ece18e565f2774ad6fb1592b21ca08984976",
+        "width": 163
+      },
+      "name": "large-ball.tick-030",
+      "reference": {
+        "decodedRgbaSha256": "73e0027a71664737dcf9d8ef5d9eaa96c395e338002a8fb471f2b6097b7e3903",
+        "file": "references/large-ball.tick-030.png",
+        "height": 163,
+        "sha256": "ab6a81e87137ef957efd6077a30eae9466429b8ebf36082e8e0e6c375532be6d",
+        "width": 163
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "763ee163dd2ed2126005ccfe6d59d244f901ae8a387dd40f3cb71e8281d6bf1a",
+        "file": "frames/large-ball.tick-030.png",
+        "height": 640,
+        "sha256": "b176c82bc9db196fe5f94be4f06fbdc742875b57bbb422bb77d1a5685c5e6a20",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 30
+    },
+    {
+      "bounds": {
+        "height": 167,
+        "width": 163,
+        "x": 158,
+        "y": 251
+      },
+      "coveredPixels": 972,
+      "mask": {
+        "decodedRgbaSha256": "a56758d5de4f1ebc36ef69dea7702b903e117a3426d488ae6f294a228fe5ba16",
+        "file": "masks/large-ball.tick-031.png",
+        "height": 167,
+        "sha256": "6ccbb75cfd06ef25ebf13a6cea45fc95febc08bf6d98bd0f397277e4e3c60ae0",
+        "width": 163
+      },
+      "name": "large-ball.tick-031",
+      "reference": {
+        "decodedRgbaSha256": "32753bf7b9561344d21fac8899cdad6ebfdbd3c72ce81e408dc6289de03a5815",
+        "file": "references/large-ball.tick-031.png",
+        "height": 167,
+        "sha256": "9e804cad2e49818a223356f34ba57c44d206c15c6b9d23f47d126eb47ed73215",
+        "width": 163
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a11fb58c00f1bfdd845158f5c44921b7966c0c1fe9d74efdb1abd82fb9c75da1",
+        "file": "frames/large-ball.tick-031.png",
+        "height": 640,
+        "sha256": "fc4ef3785e7ac76384031dca473def3d80d4e15570be8aeaafaa95d56f5a34f8",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 31
+    },
+    {
+      "bounds": {
+        "height": 167,
+        "width": 167,
+        "x": 158,
+        "y": 252
+      },
+      "coveredPixels": 924,
+      "mask": {
+        "decodedRgbaSha256": "590c606a17856081c73777649da44a459d7808e97c849b1edc1015c3ea332d43",
+        "file": "masks/large-ball.tick-032.png",
+        "height": 167,
+        "sha256": "e56569befff20d5f1c4464dae65596478d772013bcd2ed06cdbce7e4295020be",
+        "width": 167
+      },
+      "name": "large-ball.tick-032",
+      "reference": {
+        "decodedRgbaSha256": "38256a9d3afa1f31d68dc7eae01f70c926d3200fb3e5725594b081caf2d8e811",
+        "file": "references/large-ball.tick-032.png",
+        "height": 167,
+        "sha256": "7c1a7a5fb30cf6fd6536291e383d36428e8794c3b1499932f1fde27d704d41f4",
+        "width": 167
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "5f2424d1e90ab1efce90b4ddd265a1f7d1ff24d0fa39cbf323a1d108b0f49205",
+        "file": "frames/large-ball.tick-032.png",
+        "height": 640,
+        "sha256": "41ff90cfdf867ae17311f891dbcf19b1b59f82877692b5e88522417f3b93a4ff",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 32
+    },
+    {
+      "bounds": {
+        "height": 170,
+        "width": 169,
+        "x": 156,
+        "y": 251
+      },
+      "coveredPixels": 930,
+      "mask": {
+        "decodedRgbaSha256": "1737b85a16b8ce874f85605dbaa7f93b43a48b125c04013115265c805c00f797",
+        "file": "masks/large-ball.tick-033.png",
+        "height": 170,
+        "sha256": "b472f50f2caafddf7a092a96746f77c64eaea9503c1ab84c58444a1c18e7b9f4",
+        "width": 169
+      },
+      "name": "large-ball.tick-033",
+      "reference": {
+        "decodedRgbaSha256": "75ed2730202625c925c7f8a5a8e8ea315f11a487b6c8893b55ac538d17b0c0d2",
+        "file": "references/large-ball.tick-033.png",
+        "height": 170,
+        "sha256": "8808d03802d630534b9e2e6a55ba1dddc3a8c904874af73c9fd91a4f6f580dcd",
+        "width": 169
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "d5c71c792ca0c8e67fd1e1a297fd9f688494660a9160134954bcd8225872d0a3",
+        "file": "frames/large-ball.tick-033.png",
+        "height": 640,
+        "sha256": "62f54a28ca462fa497191bd9b819e8e7ca8893373171b9758f67345c315d01fc",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 33
+    },
+    {
+      "bounds": {
+        "height": 168,
+        "width": 170,
+        "x": 156,
+        "y": 251
+      },
+      "coveredPixels": 869,
+      "mask": {
+        "decodedRgbaSha256": "8d66e1020042680b1009375da150670775c39b6934bea31ed3ef63e6973ab6c0",
+        "file": "masks/large-ball.tick-034.png",
+        "height": 168,
+        "sha256": "2e6612838a331b3ab6489d5cea98fa4a8839e6cfe97fb90d8232b974197f6504",
+        "width": 170
+      },
+      "name": "large-ball.tick-034",
+      "reference": {
+        "decodedRgbaSha256": "654605cc6bc57818ec055afd3831dadf5565628a6154e62e90839dd9aaf971a3",
+        "file": "references/large-ball.tick-034.png",
+        "height": 168,
+        "sha256": "995d7a119aa3f9e1fcd5e8aef86295a6003bd60972b6ff7612466b6f75815bcc",
+        "width": 170
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "eacdb17e47c35188fc8503d6398d3fe70a6402c75398d665f74c964683346da9",
+        "file": "frames/large-ball.tick-034.png",
+        "height": 640,
+        "sha256": "57a41aecb62c4a5c3247a0e8f1b83431b5b07675136cb0954bf60068bbf21bf1",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 34
+    },
+    {
+      "bounds": {
+        "height": 163,
+        "width": 169,
+        "x": 155,
+        "y": 251
+      },
+      "coveredPixels": 847,
+      "mask": {
+        "decodedRgbaSha256": "fefbff25c3ea2529de762a7682717382817c7409d6ea2afca55e139c6a66dfcf",
+        "file": "masks/large-ball.tick-035.png",
+        "height": 163,
+        "sha256": "d1ac976f4c4f4c696aadf721fc64ef6573d8154063627e2bb7ae60e696d90391",
+        "width": 169
+      },
+      "name": "large-ball.tick-035",
+      "reference": {
+        "decodedRgbaSha256": "6752f397bd690a014ec96d8146c7311906b1ae7d46fa70d839171a04d23515b8",
+        "file": "references/large-ball.tick-035.png",
+        "height": 163,
+        "sha256": "eedab7d85b72c87af404fcabc75b0481739ac6482ec3382a296ceac1eac5dd7e",
+        "width": 169
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "301a6ddfd744bd0f73a358fdb7f97ec66e20299b11bad40ce4f869938af895b5",
+        "file": "frames/large-ball.tick-035.png",
+        "height": 640,
+        "sha256": "923c1ea76815df0b3a73e0d24de7edb95f53e4a21d8c10e11803fa003137a1d6",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 35
+    },
+    {
+      "bounds": {
+        "height": 169,
+        "width": 168,
+        "x": 156,
+        "y": 252
+      },
+      "coveredPixels": 814,
+      "mask": {
+        "decodedRgbaSha256": "1991d30e99ac1d462833a2ae11e20406e028b2756e752f9a9b953f51ba552734",
+        "file": "masks/large-ball.tick-036.png",
+        "height": 169,
+        "sha256": "126b6f19d7c148183b844102004fb12af6b7d873eb1196fcd5d791773f69f696",
+        "width": 168
+      },
+      "name": "large-ball.tick-036",
+      "reference": {
+        "decodedRgbaSha256": "b66011979474c082bf63f6ea582766d7ab6a6071277f6154e3e49d2a48b9a2e4",
+        "file": "references/large-ball.tick-036.png",
+        "height": 169,
+        "sha256": "688665667addf9af0228ae5576fb5f815f3dba078fb2312b819e0a6997010346",
+        "width": 168
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a3c7955208b6929c8161d353053d6fddc8baa8a820787bdfde065c1d6d3e265d",
+        "file": "frames/large-ball.tick-036.png",
+        "height": 640,
+        "sha256": "68ad49fcb77086ed48c8cc0e487f08de7d5c86a5a61b3fd76a8dad4d4253601f",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 36
+    },
+    {
+      "bounds": {
+        "height": 172,
+        "width": 168,
+        "x": 156,
+        "y": 252
+      },
+      "coveredPixels": 824,
+      "mask": {
+        "decodedRgbaSha256": "d30f35ef767a64cb3d239a1b2238726c0fbcafc24b93d313df4ac48c57461258",
+        "file": "masks/large-ball.tick-037.png",
+        "height": 172,
+        "sha256": "1c24d5486ec77c6f04b06cc4ab6aeebff3baa4aff69851e73ed95b8aaa12d98a",
+        "width": 168
+      },
+      "name": "large-ball.tick-037",
+      "reference": {
+        "decodedRgbaSha256": "85e43e451e2b2e5376546a1f4b59cea911463a69b1862b12122834e6fb090ff1",
+        "file": "references/large-ball.tick-037.png",
+        "height": 172,
+        "sha256": "5cb356d609590813f2a034709e7901652c9250ade664129e3728b523f30b7cc4",
+        "width": 168
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "ae95edeea52dddef271bcddafe27b3280823b6c7196650036530e49dd1706143",
+        "file": "frames/large-ball.tick-037.png",
+        "height": 640,
+        "sha256": "92386da50efe1b5c6c86d8bc70ea27aeffa77a299be627d9fa8b32e075bb5552",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 37
+    },
+    {
+      "bounds": {
+        "height": 171,
+        "width": 172,
+        "x": 155,
+        "y": 254
+      },
+      "coveredPixels": 688,
+      "mask": {
+        "decodedRgbaSha256": "bd016e32a145df3f7217e611f7268d1075020d5b8bd6175bf014b278cea2b9ad",
+        "file": "masks/large-ball.tick-038.png",
+        "height": 171,
+        "sha256": "443489416900146d333cc50aed4d890bf9331a1b5192136815d16a25b633b62c",
+        "width": 172
+      },
+      "name": "large-ball.tick-038",
+      "reference": {
+        "decodedRgbaSha256": "59bbd5f70dabd57f11ff2a6746aed1e306817af2c9375ac4dda3c611792216f3",
+        "file": "references/large-ball.tick-038.png",
+        "height": 171,
+        "sha256": "f16053f9b0e0042e6171a7966ed42829815e44281d5e577662aad4da7ddc28ab",
+        "width": 172
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "b6ebf338e71e9c2faffb4680a5618e225accee88c0c450889cb122c11801989d",
+        "file": "frames/large-ball.tick-038.png",
+        "height": 640,
+        "sha256": "0ed4a4378181220feb9a1505400bddc22551b2058dd68e47dc56592808b313bd",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 38
+    },
+    {
+      "bounds": {
+        "height": 174,
+        "width": 173,
+        "x": 154,
+        "y": 252
+      },
+      "coveredPixels": 742,
+      "mask": {
+        "decodedRgbaSha256": "2b2300b1b41904c466877bd44463df650ee73680c5a5dd1cc34de2ec5f1ead80",
+        "file": "masks/large-ball.tick-039.png",
+        "height": 174,
+        "sha256": "978455f9144ce542d285556593579aad03c2907a56949f5bf59d58dec0f922ec",
+        "width": 173
+      },
+      "name": "large-ball.tick-039",
+      "reference": {
+        "decodedRgbaSha256": "22d0206456a9ca15794c41f25cc297e5bab72673ec98a523712745c65903a15e",
+        "file": "references/large-ball.tick-039.png",
+        "height": 174,
+        "sha256": "83ac1a4610d07af45db66678d8223fd8e9e269be0dee23c88406490fa04a0d74",
+        "width": 173
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "fa0ea261cd8ed6644f74ca8d0ca28ff7d98b4a090e4144610fb21593950fd718",
+        "file": "frames/large-ball.tick-039.png",
+        "height": 640,
+        "sha256": "614f0be0880192945d99c8b08d4974d5fdc1aa230aedfe44c12eed7bd8a43400",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 39
+    },
+    {
+      "bounds": {
+        "height": 172,
+        "width": 174,
+        "x": 154,
+        "y": 253
+      },
+      "coveredPixels": 661,
+      "mask": {
+        "decodedRgbaSha256": "44928053660c4dd28c04dfcc395cb385c39a74733793f3bb9d403f434b96436e",
+        "file": "masks/large-ball.tick-040.png",
+        "height": 172,
+        "sha256": "bfc62ea680ed3b38e3f7a48b18543209fd9127d6bd2c85d49c6503b8f36e0bd4",
+        "width": 174
+      },
+      "name": "large-ball.tick-040",
+      "reference": {
+        "decodedRgbaSha256": "64646da7f0fabc55c30e7d1115c867897ff02abd19f32ec4122e1f5937c5d49b",
+        "file": "references/large-ball.tick-040.png",
+        "height": 172,
+        "sha256": "3f8882d270da702514f8d693e0b98e632d2f7f38c5ce92c0e213ff193cdcf783",
+        "width": 174
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "58de1d141464b214544495955a4e4335944526da7deaf55fb5571731c2a6ff4f",
+        "file": "frames/large-ball.tick-040.png",
+        "height": 640,
+        "sha256": "fd5d436d94e475235241858f8d9e7016821251a6bbd57e0b9b8ac34c5e1150e4",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 40
+    },
+    {
+      "bounds": {
+        "height": 166,
+        "width": 172,
+        "x": 154,
+        "y": 253
+      },
+      "coveredPixels": 678,
+      "mask": {
+        "decodedRgbaSha256": "e81da72d2dfd7bef21dfa303ffaad3187b2e14b4f30d97d63af9d789f88194a4",
+        "file": "masks/large-ball.tick-041.png",
+        "height": 166,
+        "sha256": "6b80d77abbcc7db91e63d04522c34ebdd84bb39c829323e770840012d0f06481",
+        "width": 172
+      },
+      "name": "large-ball.tick-041",
+      "reference": {
+        "decodedRgbaSha256": "438777b87292b1b03437c4d15bf0001a98c82dc5d2f33c37fd64cb0e563f19c0",
+        "file": "references/large-ball.tick-041.png",
+        "height": 166,
+        "sha256": "ed625347c45718f3d309e0d4e4a7aa628de467a0beb8d74a0aae8f6ca3824319",
+        "width": 172
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "306af7a478d46c1885be74ea9f7c60d4e269e88c97a0ce693dc74a87a4ba71bc",
+        "file": "frames/large-ball.tick-041.png",
+        "height": 640,
+        "sha256": "47bf3842c78e92aba0a8d247a5abc410ca71ac7d8c74fc890d6f138b38562b81",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 41
+    },
+    {
+      "bounds": {
+        "height": 172,
+        "width": 172,
+        "x": 154,
+        "y": 255
+      },
+      "coveredPixels": 630,
+      "mask": {
+        "decodedRgbaSha256": "827b8470dfe3a570b5049f4cc4739ec42bebc9b79906a33b3797d416c8fae3ff",
+        "file": "masks/large-ball.tick-042.png",
+        "height": 172,
+        "sha256": "571a83859301be759adb160c1bca72185b6aaef9d9c61b8e6861718b52f3a37a",
+        "width": 172
+      },
+      "name": "large-ball.tick-042",
+      "reference": {
+        "decodedRgbaSha256": "0b9bb298014bca1ae1d68509dc6980b868b0993ca22a474a8fce72e31a62e63e",
+        "file": "references/large-ball.tick-042.png",
+        "height": 172,
+        "sha256": "dedd9d9d7ff3f397f9af2d04806a80ad2e63008a4ce31c8c0dac28e576359ac5",
+        "width": 172
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "0c41892674982001e9ad6dd21fb576ed05a208c8db10196f2ee378ff0b507f1f",
+        "file": "frames/large-ball.tick-042.png",
+        "height": 640,
+        "sha256": "643cb1ebc92207a1cf8b50babbaf10593e6932719792be40a3c0d83655ee0804",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 42
+    },
+    {
+      "bounds": {
+        "height": 175,
+        "width": 171,
+        "x": 154,
+        "y": 255
+      },
+      "coveredPixels": 523,
+      "mask": {
+        "decodedRgbaSha256": "aa37ca226a5c13d089baf2610e4ce0e18db95c2162e69b4d7d9da3b0a3ce77c3",
+        "file": "masks/large-ball.tick-043.png",
+        "height": 175,
+        "sha256": "b823084808cbcc230c06364c3453f2b8ff2d57b5875f53571da2129e925d344a",
+        "width": 171
+      },
+      "name": "large-ball.tick-043",
+      "reference": {
+        "decodedRgbaSha256": "86a4dfaf877d93197e09c3302cca10a582b341ab0464d6db4f09aa6044c72fef",
+        "file": "references/large-ball.tick-043.png",
+        "height": 175,
+        "sha256": "e53eeb1947364c325ff4262d12525f160a206770a829e5500786a4a783a5ec21",
+        "width": 171
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "8675a3f45b060104e2d3f2331bf2d924db83ef884e1277e43d587d838702415a",
+        "file": "frames/large-ball.tick-043.png",
+        "height": 640,
+        "sha256": "4e429e9ab3516b5743777ef2a9115189e7ae8b7107c7d2afae566713e711ab38",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 43
+    },
+    {
+      "bounds": {
+        "height": 174,
+        "width": 174,
+        "x": 154,
+        "y": 257
+      },
+      "coveredPixels": 494,
+      "mask": {
+        "decodedRgbaSha256": "7a04d76ac94b844a84a70f791f1b5f0ce67c02e8366f1fecf6b92cc21da7ebd9",
+        "file": "masks/large-ball.tick-044.png",
+        "height": 174,
+        "sha256": "5f7ed32e5b117436902f399820be0431b2fa3438e280d156c8babcbd72f99081",
+        "width": 174
+      },
+      "name": "large-ball.tick-044",
+      "reference": {
+        "decodedRgbaSha256": "6cd2a1ed150d88211c588e732e8e65bf4df04c6a2281bcea0e8441969a775e74",
+        "file": "references/large-ball.tick-044.png",
+        "height": 174,
+        "sha256": "dfa59196535c29f93e7bd384d2354f7272e2c9566a2ab687f5f84aeb286dd918",
+        "width": 174
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "c5e6f2bba1e925591cb207d9ec2559c3cb82d9ccde241213db1f870a44bcaad7",
+        "file": "frames/large-ball.tick-044.png",
+        "height": 640,
+        "sha256": "62cbe7dc99d4ac0591f2b8413e22a0d8f9eda3c1ce341c5b9c4fb22602273577",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 44
+    },
+    {
+      "bounds": {
+        "height": 177,
+        "width": 175,
+        "x": 153,
+        "y": 255
+      },
+      "coveredPixels": 468,
+      "mask": {
+        "decodedRgbaSha256": "26d282d4bc041f6df031f959bdbafd1056dabe3381b1ef80dd651816e49fa572",
+        "file": "masks/large-ball.tick-045.png",
+        "height": 177,
+        "sha256": "ce00175196a198a664730cf50a663e7b36773dc3f310fe059e822259cea3eab4",
+        "width": 175
+      },
+      "name": "large-ball.tick-045",
+      "reference": {
+        "decodedRgbaSha256": "6b7adfda1b9cef409ccda7be0907fbab97991665eaa9468cb50aa11ae5e94c66",
+        "file": "references/large-ball.tick-045.png",
+        "height": 177,
+        "sha256": "8493e9654309bd4a5c3732614d7700d174f63c401855691e52c150e8e9c402b4",
+        "width": 175
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a6d0f9c658661deb8accebee62998a3375d14a5eceba9d6b15581490b42f818e",
+        "file": "frames/large-ball.tick-045.png",
+        "height": 640,
+        "sha256": "9981fdd3676032545aa9a675ef227107809d55f8e8c27c5f656d2214e8603e4d",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 45
+    },
+    {
+      "bounds": {
+        "height": 174,
+        "width": 175,
+        "x": 153,
+        "y": 256
+      },
+      "coveredPixels": 492,
+      "mask": {
+        "decodedRgbaSha256": "f61f6ee79b19696b41e3cb4ccdef586269e4c4616e89dd743ce806712e03161d",
+        "file": "masks/large-ball.tick-046.png",
+        "height": 174,
+        "sha256": "bfa9608a4c4c31ce8e83a293e31f10733194bf6f2c75ceabc6c61233cee0ce85",
+        "width": 175
+      },
+      "name": "large-ball.tick-046",
+      "reference": {
+        "decodedRgbaSha256": "d0184af8c641398ff8a75ba467d3f9bd2aa92f00f55d3b0406a5174d734797c4",
+        "file": "references/large-ball.tick-046.png",
+        "height": 174,
+        "sha256": "3b18bde3f5330e3916af1fd5af7560d433e156db23e97cd555a580a26bf478a8",
+        "width": 175
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "bea69cffb641906e0f468cc85189a22d8c94eed11e54ab804c0f79ad9d5fd829",
+        "file": "frames/large-ball.tick-046.png",
+        "height": 640,
+        "sha256": "62f7bf1f83bed89552e8ebcca7076af2bfb4c1b2acaf2865e736ea19d4b628e2",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 46
+    },
+    {
+      "bounds": {
+        "height": 169,
+        "width": 174,
+        "x": 153,
+        "y": 256
+      },
+      "coveredPixels": 470,
+      "mask": {
+        "decodedRgbaSha256": "4b51b074d9843030a7b52002ab5dbe39adf8f9311de1c182644e880658c27e4c",
+        "file": "masks/large-ball.tick-047.png",
+        "height": 169,
+        "sha256": "d281e135c433353751d8ae4752c62525c27a0d20aea2f1df604cf36e13ab360e",
+        "width": 174
+      },
+      "name": "large-ball.tick-047",
+      "reference": {
+        "decodedRgbaSha256": "87133c3f539033356760e95b8d0e4d8469aceede487e6267de4afed1ff1b6c6c",
+        "file": "references/large-ball.tick-047.png",
+        "height": 169,
+        "sha256": "6d0d29abd4bf0e4e4c529b700d244f6ab459e32cad8c999398ae701e72f77807",
+        "width": 174
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a91b240393ee6184f4e72266e07cf36df17007c07291728d109eb1da9661073c",
+        "file": "frames/large-ball.tick-047.png",
+        "height": 640,
+        "sha256": "e7f31ecd865143e98ec3a2619e3519438d37259b82ee66e28bb47450deef1c65",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 47
+    },
+    {
+      "bounds": {
+        "height": 174,
+        "width": 172,
+        "x": 154,
+        "y": 258
+      },
+      "coveredPixels": 429,
+      "mask": {
+        "decodedRgbaSha256": "2ff7f347590284babbb276b62edacabe9c60367d10d2f02532a256959b855f8d",
+        "file": "masks/large-ball.tick-048.png",
+        "height": 174,
+        "sha256": "db587378aa7f49c04213a46862a6e819a43f7d597f498f9b0112c37d969b4873",
+        "width": 172
+      },
+      "name": "large-ball.tick-048",
+      "reference": {
+        "decodedRgbaSha256": "96d49ef94289092b36310b9f6c406a799fea4c519dc27d99b8b9190e63d247ad",
+        "file": "references/large-ball.tick-048.png",
+        "height": 174,
+        "sha256": "2b039a6b4f50f066fdb0f3f43511bcc196d55e0ada295c7bd16cb50f38b17bd3",
+        "width": 172
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "19a8a5c8c70259ad0c18cf1aa69cb91005a3d0e2a7ba3b0b38132908a062d558",
+        "file": "frames/large-ball.tick-048.png",
+        "height": 640,
+        "sha256": "6b6d7bcee882d1c1c12fffb181cdf9cf883c78c04b569ff519290e78f59dbb43",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 48
+    },
+    {
+      "bounds": {
+        "height": 177,
+        "width": 172,
+        "x": 154,
+        "y": 258
+      },
+      "coveredPixels": 479,
+      "mask": {
+        "decodedRgbaSha256": "1f200540d9eeed1ce4c2eda78fd6c498b73311b5f434045fdcf95309280e0c52",
+        "file": "masks/large-ball.tick-049.png",
+        "height": 177,
+        "sha256": "e3339194bddb469778f45bdcdf8e0fbaab2c05365f7bba23d456d29a17f598e0",
+        "width": 172
+      },
+      "name": "large-ball.tick-049",
+      "reference": {
+        "decodedRgbaSha256": "99ef61bdabab0920780e826620d9fef052c653a8a14b6fb2ddad978165a9a0de",
+        "file": "references/large-ball.tick-049.png",
+        "height": 177,
+        "sha256": "a65bcb5d08dd6a3c3fc62cb26651f17c6288e6a91a2a861a078fd6a15a385aca",
+        "width": 172
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "08c5c351bd5cf8fe074a2f169c40cdffad2f9cc2af429bbb24145589d5b9c10b",
+        "file": "frames/large-ball.tick-049.png",
+        "height": 640,
+        "sha256": "ed9a5cb6336f41b63709715e32b4f2e7c3f364234c8af6858a7d50631f4ac66f",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 49
+    },
+    {
+      "bounds": {
+        "height": 175,
+        "width": 172,
+        "x": 154,
+        "y": 260
+      },
+      "coveredPixels": 339,
+      "mask": {
+        "decodedRgbaSha256": "14ca4ac69a37ad021e1fb9e9c5b6454d9193ec7869a58a405fa324727873d1a5",
+        "file": "masks/large-ball.tick-050.png",
+        "height": 175,
+        "sha256": "cf8128e4200e60fcee55e63846f805a1551161f6278e8a3facff8d4ebed13c7f",
+        "width": 172
+      },
+      "name": "large-ball.tick-050",
+      "reference": {
+        "decodedRgbaSha256": "57fe9cfdef16a97ff8641c431b23dcefabac50527d7e967727cc8b2d5b7d3103",
+        "file": "references/large-ball.tick-050.png",
+        "height": 175,
+        "sha256": "d877c1b7c8f78f0b5b5b58102cc1ec3f8ccbbc20f152b86fc4c749c549073cde",
+        "width": 172
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "b7eb142784885a3e6d3d1c3f77437ea69c9a945742f213ba27e8cb6e5c4ba882",
+        "file": "frames/large-ball.tick-050.png",
+        "height": 640,
+        "sha256": "436653669baac4ff78e8f1ca600b5df721825295cc476ee48c1e70d62cbae119",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 50
+    },
+    {
+      "bounds": {
+        "height": 177,
+        "width": 176,
+        "x": 152,
+        "y": 259
+      },
+      "coveredPixels": 310,
+      "mask": {
+        "decodedRgbaSha256": "ebd67909c66f9115cfcd508b611f4071fc8f19b58f6db6409ba9df1b9295fa50",
+        "file": "masks/large-ball.tick-051.png",
+        "height": 177,
+        "sha256": "73ef6c6e285549c26fcd39bbd345d1253c7e89dfb807442624f5d0a291ee655c",
+        "width": 176
+      },
+      "name": "large-ball.tick-051",
+      "reference": {
+        "decodedRgbaSha256": "acf75d161ab01d0350cea2e03ffb8b8675758c13eee86806aa9b7c2e30277266",
+        "file": "references/large-ball.tick-051.png",
+        "height": 177,
+        "sha256": "dca997ed50567b1184fc1b87955c18025dcd7f9c0d09f2b4c0ac9b6ff304e9fe",
+        "width": 176
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "900dce4740189605eb16ab9ee6837d82cc6f5e252ff373d311d5903230b01845",
+        "file": "frames/large-ball.tick-051.png",
+        "height": 640,
+        "sha256": "41f2332053c944bd77b09071c638ee3f2d63a2a4b0469fa57793601affdaaa20",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 51
+    },
+    {
+      "bounds": {
+        "height": 176,
+        "width": 175,
+        "x": 152,
+        "y": 259
+      },
+      "coveredPixels": 300,
+      "mask": {
+        "decodedRgbaSha256": "44ad2e9a87a2c7808650835c79ff34dfe42dd3df93959c3a9334cc1cd2878bb8",
+        "file": "masks/large-ball.tick-052.png",
+        "height": 176,
+        "sha256": "ddb7ee47f71536e8a17571bdfa4e85f825d2779aaa273c75dbe7a167ed814f37",
+        "width": 175
+      },
+      "name": "large-ball.tick-052",
+      "reference": {
+        "decodedRgbaSha256": "2fcb79909bf84aaf3bc65a53629fe09bdc6c132bbf201cd7220b1af7d0a96d7c",
+        "file": "references/large-ball.tick-052.png",
+        "height": 176,
+        "sha256": "59cd18fa9d63c19b58dc5e1b68c122dd8c6e26ffbd0be31f819cbea73f0b1408",
+        "width": 175
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "3f5ec2bde1e0f7b17063e71a5d768367cd2de5d447b047bc3e1b345d9bc3b0a0",
+        "file": "frames/large-ball.tick-052.png",
+        "height": 640,
+        "sha256": "6228f93c8c475f32df8d664901bbf784e353ad77a371674061c1e78285789f7c",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 52
+    },
+    {
+      "bounds": {
+        "height": 169,
+        "width": 174,
+        "x": 153,
+        "y": 260
+      },
+      "coveredPixels": 328,
+      "mask": {
+        "decodedRgbaSha256": "06c78cb7a06256053534dbfdebe7459ffeddf1fcdff316e5c1872db0e6df5ca2",
+        "file": "masks/large-ball.tick-053.png",
+        "height": 169,
+        "sha256": "8c4882f2de04cc5c6968fe1fce2ad5aa0a6f9081b5d9b8a988543fdb1d38149a",
+        "width": 174
+      },
+      "name": "large-ball.tick-053",
+      "reference": {
+        "decodedRgbaSha256": "b42b42c690230d54d8f46487b655271ae13a858ed57faf4eb7e9691f7f105b91",
+        "file": "references/large-ball.tick-053.png",
+        "height": 169,
+        "sha256": "fddd62487861e54334299a3430ec0a9c60028e82b75b202030ab9776405b926c",
+        "width": 174
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "55b3c85ab4ea013c181f41222e4ce0fbda22fc7ee7ddefa45d305c8563c30a98",
+        "file": "frames/large-ball.tick-053.png",
+        "height": 640,
+        "sha256": "98c4207c6cd77c22e42415d4a4e86edf51cd2a0600221a62c9d969051fff7060",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 53
+    },
+    {
+      "bounds": {
+        "height": 174,
+        "width": 173,
+        "x": 154,
+        "y": 262
+      },
+      "coveredPixels": 216,
+      "mask": {
+        "decodedRgbaSha256": "cabd4535e5d068c6c841b839ffad1531f3ce363889284047371b4c6eb6a63310",
+        "file": "masks/large-ball.tick-054.png",
+        "height": 174,
+        "sha256": "0a2959406c05c457e7ee486387bf6b64d4aa18a8ff06bc435e0707b3c3f3b966",
+        "width": 173
+      },
+      "name": "large-ball.tick-054",
+      "reference": {
+        "decodedRgbaSha256": "57d283d7f7b82e3652728cf2bd9f85ace54bd7ac42fddba2b06623fbbfe42c13",
+        "file": "references/large-ball.tick-054.png",
+        "height": 174,
+        "sha256": "e5bdad494d352b50098a2d3a5cd9818cf127a494ad56b2f71e25a30828168bd5",
+        "width": 173
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "7deba6c8e1f358ff774f2b3fe9e81aa0151210fccc402037f02bdaa7c2393515",
+        "file": "frames/large-ball.tick-054.png",
+        "height": 640,
+        "sha256": "b13d71135daebf7e4e8f5105a4d9397dad96efbdbb7c490a42a64ab5c9df1095",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 54
+    },
+    {
+      "bounds": {
+        "height": 176,
+        "width": 168,
+        "x": 154,
+        "y": 263
+      },
+      "coveredPixels": 201,
+      "mask": {
+        "decodedRgbaSha256": "38c574e24a9ab13186f3be242e7bde96c8b9e1e8d83ccfdb020a8224da5cbfb9",
+        "file": "masks/large-ball.tick-055.png",
+        "height": 176,
+        "sha256": "0f66894ab5c17032ba94d2f725a6031495b8b84f2db3c4bc899f49f28963863a",
+        "width": 168
+      },
+      "name": "large-ball.tick-055",
+      "reference": {
+        "decodedRgbaSha256": "744ca38ed20752211b7ea488f2ca68c43ec07a46687926a29f6fd5dde84b2bc4",
+        "file": "references/large-ball.tick-055.png",
+        "height": 176,
+        "sha256": "6c32df3937317f13953cc2fbf09077a8b5d74aeba91648e421df292a780560f6",
+        "width": 168
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "214d3c39d154d2f4c6e02854465b61356b5f6d2ab7a5f6b3a0eada6829ddd1a4",
+        "file": "frames/large-ball.tick-055.png",
+        "height": 640,
+        "sha256": "75ed88e6db5ebf205dc56818d9e0ea2c82a68488820b455b4f34ce1153b25dfe",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 55
+    },
+    {
+      "bounds": {
+        "height": 166,
+        "width": 157,
+        "x": 154,
+        "y": 274
+      },
+      "coveredPixels": 133,
+      "mask": {
+        "decodedRgbaSha256": "8f84f9aa618843464ba16b076a7447225c512710cda7429f5c18691c13c45103",
+        "file": "masks/large-ball.tick-056.png",
+        "height": 166,
+        "sha256": "e5747ede27a4165d6ae3fcbe1fa929b0b6ad4f347d29624afdb0cfc424402bb9",
+        "width": 157
+      },
+      "name": "large-ball.tick-056",
+      "reference": {
+        "decodedRgbaSha256": "9364b28bc109640badc6dd91af11db73621a82a6a4bbb4519f2c73897cd90ecf",
+        "file": "references/large-ball.tick-056.png",
+        "height": 166,
+        "sha256": "3c7331f3b71a01a96385d3b7313a195f9c9e980ab7ef7587a1d77ac9af4ec57b",
+        "width": 157
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "fd397353365a9b60b98fe29d4bbcbbcace53f1fa045f3ae5068cf28fdfde53ec",
+        "file": "frames/large-ball.tick-056.png",
+        "height": 640,
+        "sha256": "2783cfd3fbd519ab52119cb776568a1ccf616d879c113dfde12b0412b915bc21",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 56
+    },
+    {
+      "bounds": {
+        "height": 178,
+        "width": 176,
+        "x": 152,
+        "y": 263
+      },
+      "coveredPixels": 109,
+      "mask": {
+        "decodedRgbaSha256": "c746d4b2f76350dfff0e3e8d32242a0256f2fce9e6db46a4558b77da6d7aabd6",
+        "file": "masks/large-ball.tick-057.png",
+        "height": 178,
+        "sha256": "4f92addc79b251582e3b323723f09b6313ec53db4f8f5a6102f201ae22416cc0",
+        "width": 176
+      },
+      "name": "large-ball.tick-057",
+      "reference": {
+        "decodedRgbaSha256": "c6ceb6d47ae80e446b94abf4827cc354720e8b019776670bcd72309f3e79a71b",
+        "file": "references/large-ball.tick-057.png",
+        "height": 178,
+        "sha256": "56361ccf1f9e9a4f07e58fd06b79188c800efcffa79e28010301adbcf5636249",
+        "width": 176
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "123787874d27228af11cf10868c5e6a470a2e48944ebe66ae27b8c446f294677",
+        "file": "frames/large-ball.tick-057.png",
+        "height": 640,
+        "sha256": "b2f2d7f4aaa7f94d405de130c862a6d98faae54811ef0a3543feeb05c04859d2",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 57
+    },
+    {
+      "bounds": {
+        "height": 164,
+        "width": 176,
+        "x": 152,
+        "y": 264
+      },
+      "coveredPixels": 127,
+      "mask": {
+        "decodedRgbaSha256": "39ef2be250fb6a857d331ccc768fc2f4e623ea334f8ba802f7b676e906519b5e",
+        "file": "masks/large-ball.tick-058.png",
+        "height": 164,
+        "sha256": "e3630ec0ee5bf5be308d2eeeb2ac3803710a1acab1be5f58338a64abcda267c5",
+        "width": 176
+      },
+      "name": "large-ball.tick-058",
+      "reference": {
+        "decodedRgbaSha256": "70adfb092765c30adfc0e2f1f328aad895291dfe2aa800f15243c22844cc7cd9",
+        "file": "references/large-ball.tick-058.png",
+        "height": 164,
+        "sha256": "24677f53acd0e31e8b6a299b291d15f7eb5484024476ffb0a69dedf0549f1391",
+        "width": 176
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "2cf0bc5d180daff854eff74bce298bafce59a08580c1b66b75813e23b09dbb7b",
+        "file": "frames/large-ball.tick-058.png",
+        "height": 640,
+        "sha256": "76dbf6fbe3bd2b7b9511198238669c80a7d6d8454f6ffb037d158de1e62e1bf5",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 58
+    },
+    {
+      "bounds": {
+        "height": 165,
+        "width": 176,
+        "x": 152,
+        "y": 264
+      },
+      "coveredPixels": 174,
+      "mask": {
+        "decodedRgbaSha256": "20ada354d3f9d3317875ad02e7eef67b730ee65e5b9536dcbe712133feb705ff",
+        "file": "masks/large-ball.tick-059.png",
+        "height": 165,
+        "sha256": "185cb5419f9a55c4641ad28e3c6ece3c1077467ab12fb222456477d41ec778f2",
+        "width": 176
+      },
+      "name": "large-ball.tick-059",
+      "reference": {
+        "decodedRgbaSha256": "c13f12c7184998af780b53105df1be9ffe96d1ad1ff47e37f7598cb689a0d91c",
+        "file": "references/large-ball.tick-059.png",
+        "height": 165,
+        "sha256": "88dd961cf507443cd87bf4a832e055d7ff3dc6c786e07bb64f8d5ccd68b6fddf",
+        "width": 176
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "94accc0abe9390bd16cbdb339b577c1ae5875321cef45d1908071ca0376dad61",
+        "file": "frames/large-ball.tick-059.png",
+        "height": 640,
+        "sha256": "96badcd374bf1c549ff2ff4e32b84c5b1b3a24ea2e5b00fcfc69b6c78edf1194",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 59
+    },
+    {
+      "bounds": {
+        "height": 145,
+        "width": 161,
+        "x": 166,
+        "y": 269
+      },
+      "coveredPixels": 30,
+      "mask": {
+        "decodedRgbaSha256": "2fa2ec49ce4dbf266fd8b2c474b54e824e867711ca126be2ad71d934fa752b0f",
+        "file": "masks/large-ball.tick-060.png",
+        "height": 145,
+        "sha256": "dd0b92781f3cf10f80271e2aee911f5f38ef7d3a2f2e555e9d5c87b84f41a638",
+        "width": 161
+      },
+      "name": "large-ball.tick-060",
+      "reference": {
+        "decodedRgbaSha256": "68304082bc6ce3c2eb511dd91c0d1d8f8e52f2504391ae4749ef7bfa7ad3e2a4",
+        "file": "references/large-ball.tick-060.png",
+        "height": 145,
+        "sha256": "d7b4135fb957d76361d711a7845482d5b9cbd5b8443fb525377580ea22c7444b",
+        "width": 161
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "08a14fc253f1946bf792885c13ef4c125ca01a5c10605a2a278e55e6dc38a432",
+        "file": "frames/large-ball.tick-060.png",
+        "height": 640,
+        "sha256": "693d1a0fcaa28472275bc7710d2f4c3f43adb8c2ec7962689bbc346aa0aa904c",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          8,
+          8
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "tick": 60
+    }
+  ],
+  "harnessSources": [
+    {
+      "file": "source/ProjectedReferenceMain.java",
+      "sha256": "19df3d582b19272f5e4108ce22ee01646f9ad1987844315d6f590d548abb8ffe"
+    },
+    {
+      "file": "source/ParticleSeedAgent.java",
+      "sha256": "3f006a1993fe6cd17a347c44cf22168fc7cd47616c82a749c59392ba34487880"
+    },
+    {
+      "file": "source/capture-projected-firework.ts.txt",
+      "sha256": "496670c2025625a444fac8b5174eec0b41d030ab6f92c0515422ff46971eb895"
+    },
+    {
+      "file": "source/projected-firework-case.ts.txt",
+      "sha256": "bb6f069a8c54284a0c25f3c1151e109e68422d2ba59aa85f5c34819e2abd4408"
+    }
+  ],
+  "launches": [
+    {
+      "name": "native-one",
+      "runtime": {
+        "device": "llvmpipe (LLVM 20.1.2, 256 bits)",
+        "vendor": "Mesa",
+        "driver": "4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4",
+        "backend": "OpenGL",
+        "window": [
+          480,
+          640
+        ],
+        "cameraPosition": [
+          0.5,
+          80.49999988079071,
+          0.5
+        ],
+        "cameraRotation": [
+          180,
+          0
+        ],
+        "projectionMatrix": [
+          0.06666667,
+          0,
+          0,
+          0,
+          0,
+          0.05,
+          0,
+          0,
+          0,
+          0,
+          -0.003907013,
+          0,
+          0,
+          0,
+          -0.00019535066,
+          1
+        ],
+        "overworldClockTime": 6000,
+        "raining": false,
+        "gameType": "spectator",
+        "hudHidden": true,
+        "videoOptions": {
+          "graphicsPreset": "CUSTOM",
+          "renderDistance": 12,
+          "ambientOcclusion": true,
+          "mipmapLevels": 4,
+          "textureFiltering": "NONE",
+          "cloudStatus": "FANCY",
+          "fov": 70,
+          "bobView": true,
+          "particles": "ALL"
+        },
+        "fog": {
+          "color": [
+            0.70980394,
+            0.8156863,
+            1,
+            1
+          ],
+          "environmentalStart": 0,
+          "environmentalEnd": 1024,
+          "renderDistanceStart": 172.8,
+          "renderDistanceEnd": 192,
+          "skyEnd": 192,
+          "cloudEnd": 2048
+        },
+        "particleAtlas": {
+          "width": 512,
+          "height": 256,
+          "maxMipLevel": 0,
+          "mipLevelCount": 1,
+          "textureMipLevels": 1,
+          "sampler": [
+            "NEAREST",
+            "NEAREST",
+            "CLAMP_TO_EDGE",
+            "CLAMP_TO_EDGE",
+            "OptionalDouble[0.0]"
+          ],
+          "sprites": {
+            "spark_0": {
+              "x": 412,
+              "y": 80,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1050804224,
+                1051852800
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_1": {
+              "x": 412,
+              "y": 90,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1052114944,
+                1053163520
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_2": {
+              "x": 412,
+              "y": 100,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1053425664,
+                1054474240
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_3": {
+              "x": 412,
+              "y": 110,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1054736384,
+                1055784960
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_4": {
+              "x": 412,
+              "y": 120,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1056047104,
+                1057030144
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_5": {
+              "x": 412,
+              "y": 130,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057161216,
+                1057685504
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_6": {
+              "x": 412,
+              "y": 140,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057816576,
+                1058340864
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_7": {
+              "x": 412,
+              "y": 150,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1058471936,
+                1058996224
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "flash": {
+              "x": 68,
+              "y": 128,
+              "width": 32,
+              "height": 32,
+              "uvBits": [
+                1040842752,
+                1045037056,
+                1057030144,
+                1059127296
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=true]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "native-two",
+      "runtime": {
+        "device": "llvmpipe (LLVM 20.1.2, 256 bits)",
+        "vendor": "Mesa",
+        "driver": "4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4",
+        "backend": "OpenGL",
+        "window": [
+          480,
+          640
+        ],
+        "cameraPosition": [
+          0.5,
+          80.49999988079071,
+          0.5
+        ],
+        "cameraRotation": [
+          180,
+          0
+        ],
+        "projectionMatrix": [
+          0.06666667,
+          0,
+          0,
+          0,
+          0,
+          0.05,
+          0,
+          0,
+          0,
+          0,
+          -0.003907013,
+          0,
+          0,
+          0,
+          -0.00019535066,
+          1
+        ],
+        "overworldClockTime": 6000,
+        "raining": false,
+        "gameType": "spectator",
+        "hudHidden": true,
+        "videoOptions": {
+          "graphicsPreset": "CUSTOM",
+          "renderDistance": 12,
+          "ambientOcclusion": true,
+          "mipmapLevels": 4,
+          "textureFiltering": "NONE",
+          "cloudStatus": "FANCY",
+          "fov": 70,
+          "bobView": true,
+          "particles": "ALL"
+        },
+        "fog": {
+          "color": [
+            0.70980394,
+            0.8156863,
+            1,
+            1
+          ],
+          "environmentalStart": 0,
+          "environmentalEnd": 1024,
+          "renderDistanceStart": 172.8,
+          "renderDistanceEnd": 192,
+          "skyEnd": 192,
+          "cloudEnd": 2048
+        },
+        "particleAtlas": {
+          "width": 512,
+          "height": 256,
+          "maxMipLevel": 0,
+          "mipLevelCount": 1,
+          "textureMipLevels": 1,
+          "sampler": [
+            "NEAREST",
+            "NEAREST",
+            "CLAMP_TO_EDGE",
+            "CLAMP_TO_EDGE",
+            "OptionalDouble[0.0]"
+          ],
+          "sprites": {
+            "spark_0": {
+              "x": 412,
+              "y": 80,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1050804224,
+                1051852800
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_1": {
+              "x": 412,
+              "y": 90,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1052114944,
+                1053163520
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_2": {
+              "x": 412,
+              "y": 100,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1053425664,
+                1054474240
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_3": {
+              "x": 412,
+              "y": 110,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1054736384,
+                1055784960
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_4": {
+              "x": 412,
+              "y": 120,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1056047104,
+                1057030144
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_5": {
+              "x": 412,
+              "y": 130,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057161216,
+                1057685504
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_6": {
+              "x": 412,
+              "y": 140,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1057816576,
+                1058340864
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "spark_7": {
+              "x": 412,
+              "y": 150,
+              "width": 8,
+              "height": 8,
+              "uvBits": [
+                1062109184,
+                1062371328,
+                1058471936,
+                1058996224
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=false]"
+            },
+            "flash": {
+              "x": 68,
+              "y": 128,
+              "width": 32,
+              "height": 32,
+              "uvBits": [
+                1040842752,
+                1045037056,
+                1057030144,
+                1059127296
+              ],
+              "transparency": "Transparency[hasTransparent=true, hasTranslucent=true]"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "minecraftVersion": "26.2",
+  "mods": [],
+  "nativeCamera": {
+    "position": [
+      0.5,
+      80.49999988079071,
+      0.5
+    ],
+    "rotation": [
+      180,
+      0
+    ]
+  },
+  "partialTick": 0,
+  "projection": {
+    "facing": "north",
+    "pixelsPerBlock": 16,
+    "type": "orthographic",
+    "zFar": 256,
+    "zNear": 0.05,
+    "camera": {
+      "eye": [
+        0.5,
+        80.5,
+        0.5
+      ],
+      "xRot": 0,
+      "yRot": 180
+    },
+    "description": "Unmodified 26.2 renderer; only the main camera's projection matrix is replaced by a side-on orthographic projection centred on the camera eye with pixelsPerBlock window pixels per block. The vanilla perspective culling frustum is unchanged and contains the explosion.",
+    "window": {
+      "height": 640,
+      "width": 480
+    }
+  },
+  "randomSequences": {
+    "file": "random-sequences.json",
+    "sha256": "30dd45f15e78c651a608db17e5d9f6b52776fe75250841efc06f4bb516533ce4"
+  },
+  "repeatDecodedRgbaEqual": true,
+  "resourcePacks": [],
+  "scene": {
+    "description": "One explosion started through the vanilla ClientLevel.createFireworks with zero velocity. Every particle's RandomSource.create() in Particle.<init> is replaced by RandomSource.create(seeds.nextLong()) with seeds = RandomSource.create(seed) (ParticleSeedAgent); the random source algorithm stays vanilla. The client game timer runs only harness-requested ticks through the vanilla Minecraft.tick and reports partialTick 0. Frame tick-N is the scene after N client ticks since createFireworks.",
+    "firework": {
+      "at": [
+        0.5,
+        80.5,
+        -14.5
+      ],
+      "explosion": {
+        "colors": [
+          "lime",
+          "white"
+        ],
+        "fadeColors": [
+          "green"
+        ],
+        "shape": "large_ball",
+        "trail": false,
+        "twinkle": true
+      },
+      "maxTicks": 120,
+      "name": "large-ball",
+      "seed": 42
+    }
+  },
+  "scope": "Projected references (ADR 0005): masked particle pixels of one firework explosion at every tick-aligned frame (partialTick 0) at the fixed seed; the backdrop is a declared web adaptation. Interpolated frames between ticks and other seeds are unverified. Captured on llvmpipe under Xvfb.",
+  "seed": 42,
+  "seededParticles": 388,
+  "sourceJar": {
+    "path": "versions/26.2/26.2.jar",
+    "sha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
+  },
+  "tickRange": {
+    "first": 2,
+    "last": 62
+  },
+  "ticksPerSecond": 20,
+  "world": {
+    "clockTime": 6000,
+    "commands": [
+      "time set noon",
+      "weather clear"
+    ],
+    "description": "Fresh isolated singleplayer world from the vanilla world-creation flow: flat preset, fixed seed, spectator, peaceful, no structures. Noon with the clock paused, clear weather with the weather cycle paused, open sky around the explosion. options.txt sets no video option, so every video option is the vanilla default.",
+    "levelName": "grasscn-projected-fireworks",
+    "preset": "minecraft:flat",
+    "seed": 0
+  }
+}
