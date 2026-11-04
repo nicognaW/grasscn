@@ -263,6 +263,7 @@ const MinecraftMap = ({
         ref={ref}
         width={128}
         height={128}
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This role describes the dynamically painted HTMLCanvasElement; img cannot provide the owned 2D drawing API.
         role="img"
         aria-label={props["aria-label"] ?? "Map terrain"}
         className="mc-dynamic-layout-map-1"
@@ -316,10 +317,12 @@ const MinecraftMap = ({
 };
 
 const LocatorDot = ({
+  // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
   shape,
   color,
   scale,
 }: {
+  // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
   shape: "default_0" | "default_1" | "default_2" | "default_3" | "bowtie";
   color: string;
   scale: number;
@@ -371,12 +374,14 @@ const LocatorDot = ({
 
     image.addEventListener("load", handleImageLoad);
 
+    // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
     image.src = adventureAssets[`gui/sprites/hud/locator_bar_dot/${shape}`].src;
 
     return () => {
       live = false;
       image.removeEventListener("load", handleImageLoad);
     };
+    // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
   }, [shape, color]);
 
   return (
@@ -403,6 +408,7 @@ interface LocatorMarker {
   bearing: number;
   direction?: "up" | "down";
   color?: string;
+  // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
   shape?: "default_0" | "default_1" | "default_2" | "default_3" | "bowtie";
 }
 
@@ -468,6 +474,7 @@ const LocatorBar = ({
           }
         >
           <LocatorDot
+            // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
             shape={marker.shape ?? "default_0"}
             color={marker.color ?? "#ffffff"}
             scale={scale}

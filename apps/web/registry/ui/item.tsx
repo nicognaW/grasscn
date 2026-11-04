@@ -159,6 +159,7 @@ const ItemGroup = ({
     <ItemScale value={scale}>
       <div
         data-slot="item-group"
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn ItemGroup's div list, div props/ref and Item composition contract.
         role="list"
         className={cn(`mc-item-group`, className)}
         style={minecraftStyle(style, (__style): ItemScaleStyle => ({

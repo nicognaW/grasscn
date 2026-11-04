@@ -564,6 +564,7 @@ const Scoreboard = ({
     <div
       {...props}
       data-slot="scoreboard"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
       role="table"
       aria-label={title}
       className={cn(`mc-scoreboard`, className)}
@@ -575,6 +576,7 @@ const Scoreboard = ({
       }))}
     >
       <div
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
         role="row"
         className="mc-scoreboard-title mc-dynamic-layout-player-list-9"
         style={
@@ -585,6 +587,7 @@ const Scoreboard = ({
         }
       >
         <span
+          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
           role="columnheader"
           aria-colspan={2}
           className="mc-layout-player-list-10 mc-dynamic-layout-player-list-10"
@@ -618,6 +621,7 @@ const Scoreboard = ({
       />
       {visible.map((entry, i) => (
         <div
+          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
           role="row"
           key={entry.id}
           className="mc-scoreboard-row mc-dynamic-layout-player-list-12"
@@ -630,6 +634,7 @@ const Scoreboard = ({
           }
         >
           <span
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
             role="cell"
             className="mc-layout-player-list-13 mc-dynamic-layout-player-list-13"
             style={
@@ -646,7 +651,11 @@ const Scoreboard = ({
               color="#ffffff"
             />
           </span>
-          <span role="cell" className="mc-layout-player-list-14">
+          <span
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
+            role="cell"
+            className="mc-layout-player-list-14"
+          >
             <MinecraftDocumentText
               text={String(entry.score)}
               width={documentTextWidth(String(entry.score))}

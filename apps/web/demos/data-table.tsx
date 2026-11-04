@@ -131,7 +131,13 @@ const DataTableDemo = ({ scale }: DemoProps) => {
                 "--demo-width": `${160 * scale}px`,
               } satisfies DemoVariables as DemoVariables
             }
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            value={
+              // SAFETY: This private name filter starts unset and is written only by this Input string value; the SDK intentionally returns unknown.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve shadcn's controlled filter design at this exact string-or-unset producer boundary.
+              (table.getColumn("name")?.getFilterValue() as
+                | string
+                | undefined) ?? ""
+            }
             onChange={(e) =>
               table.getColumn("name")?.setFilterValue(e.target.value)
             }

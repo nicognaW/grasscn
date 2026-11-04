@@ -79,6 +79,7 @@ const IconMeter = ({
     <div
       {...props}
       data-slot={`${kind}-meter`}
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve this div meter's live Minecraft sprite children and HTMLDivElement props/ref; a native meter is a different rendering control.
       role="meter"
       aria-label={props["aria-label"] ?? kind}
       aria-valuemin={0}
@@ -183,6 +184,7 @@ const ExperienceBar = ({
     <div
       {...props}
       data-slot="experience-bar"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve this div meter's live Minecraft sprite children and HTMLDivElement props/ref; a native meter is a different rendering control.
       role="meter"
       aria-label={props["aria-label"] ?? "Experience"}
       aria-valuemin={0}

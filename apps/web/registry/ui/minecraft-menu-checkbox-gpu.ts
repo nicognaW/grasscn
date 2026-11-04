@@ -221,5 +221,6 @@ export const menuCheckboxPixels = function menuCheckboxPixels(
     }
   }
 
+  // oxlint-disable-next-line typescript/consistent-return -- An unavailable native rendering resource intentionally returns undefined; explicit undefined conflicts with unicorn/no-useless-undefined, while successful rendering returns these original pixels or backdrop.
   return result;
 };

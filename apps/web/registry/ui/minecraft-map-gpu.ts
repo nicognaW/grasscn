@@ -233,5 +233,6 @@ export const mapGpuPixels = function mapGpuPixels(
   gl.deleteShader(fs);
   gl.getExtension("WEBGL_lose_context")?.loseContext();
 
+  // oxlint-disable-next-line typescript/consistent-return -- An unavailable native rendering resource intentionally returns undefined; explicit undefined conflicts with unicorn/no-useless-undefined, while successful rendering returns these original pixels or backdrop.
   return output;
 };

@@ -62,6 +62,7 @@ const MapDemo = ({ scale }: DemoProps) => {
               color: "#55ff55",
               id: "Home",
               label: "Home waypoint",
+              // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
               shape: "default_3",
             },
             {
@@ -69,6 +70,7 @@ const MapDemo = ({ scale }: DemoProps) => {
               color: "#ffffff",
               id: "Village",
               label: "Village waypoint",
+              // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
               shape: "default_3",
             },
           ]}
