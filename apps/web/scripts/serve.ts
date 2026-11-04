@@ -11,12 +11,12 @@ const port = Number(portText === "" ? 5173 : portText);
 const root = new URL("../public/r/", import.meta.url);
 
 createServer(async (request, response) => {
-  const pathname = new URL(
+  const { pathname } = new URL(
     // SAFETY: Node's Server request event supplies the request-target URL; client response messages are the variant without this field.
     // eslint-disable-next-line typescript/no-unsafe-type-assertion -- This local server-request view expresses the actual Node producer contract without changing URL parsing.
     (request as RegistryServerRequest).url,
     "http://localhost"
-  ).pathname;
+  );
 
   if (request.method !== "GET" && request.method !== "HEAD") {
     response.writeHead(405, { Allow: "GET, HEAD" }).end();
@@ -25,7 +25,7 @@ createServer(async (request, response) => {
   }
 
   // Serve only registry JSON, never source files or HTML.
-  const match = /^\/r\/([a-zA-Z0-9_-]+\.json)$/u.exec(pathname);
+  const match = /^\/r\/(?<filename>[a-zA-Z0-9_-]+\.json)$/u.exec(pathname);
 
   if (!match) {
     response.writeHead(404, { "Content-Type": "application/json" });
