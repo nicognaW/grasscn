@@ -49,10 +49,11 @@ const sortDirection = (
 
 const WorldTableScale = React.createContext<1 | 2 | 3>(2);
 
-const WorldValueCell = function WorldValueCell<Value extends string | number>(
+const WorldValueCell = <Value extends string | number>(
   info: CellContext<DataTableFeatures, World, Value>
-) {
+) => {
   const scale = React.useContext(WorldTableScale);
+
   return (
     <MinecraftDisclosureText scale={scale}>
       {info.getValue()}
@@ -60,9 +61,9 @@ const WorldValueCell = function WorldValueCell<Value extends string | number>(
   );
 };
 
-const WorldNameHeader = function WorldNameHeader({
+const WorldNameHeader = ({
   column,
-}: HeaderContext<DataTableFeatures, World, string>) {
+}: HeaderContext<DataTableFeatures, World, string>) => {
   const scale = React.useContext(WorldTableScale);
 
   let sortIndicator = "";

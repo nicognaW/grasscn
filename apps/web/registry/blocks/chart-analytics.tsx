@@ -69,10 +69,11 @@ const abbreviateAnalyticsTick = function abbreviateAnalyticsTick(
   return String(value).slice(0, 3);
 };
 
-const AnalyticsAxisTick = function AnalyticsAxisTick(
+const AnalyticsAxisTick = (
   tickProps: React.ComponentProps<typeof ChartAxisTick>
-) {
+) => {
   const scale = React.useContext(AnalyticsScale);
+
   return (
     <ChartAxisTick
       {...tickProps}

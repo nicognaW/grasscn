@@ -25,10 +25,11 @@ interface DataTableProps<TData extends RowData> {
 
 const DataTableScale = React.createContext<1 | 2 | 3>(2);
 
-const DataTableValueCell = function DataTableValueCell(
+const DataTableValueCell = (
   info: Pick<CellContext<DataTableFeatures, RowData>, "getValue">
-) {
+) => {
   const scale = React.useContext(DataTableScale);
+
   return (
     <MinecraftDisclosureText scale={scale}>
       {String(info.getValue() ?? "")}

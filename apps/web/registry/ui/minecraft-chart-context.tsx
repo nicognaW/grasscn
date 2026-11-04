@@ -96,6 +96,7 @@ export const chartColorChannels = function chartColorChannels(
   element?: Element | null
 ): number[] {
   let resolvedColor = color;
+
   const variable =
     /^var\(\s*(?<customProperty>--[^,)]+)(?:,\s*(?<fallback>[^)]*))?\)/u.exec(
       resolvedColor

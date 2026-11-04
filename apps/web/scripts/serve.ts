@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
-import type { IncomingMessage } from "node:http";
+import type { IncomingMessage, ServerResponse } from "node:http";
 
 interface RegistryServerRequest extends IncomingMessage {
   url: string;
@@ -10,7 +10,10 @@ const portText = process.env.PORT ?? "";
 const port = Number(portText === "" ? 5173 : portText);
 const root = new URL("../public/r/", import.meta.url);
 
-createServer(async (request, response) => {
+const serveRegistryRequest = async (
+  request: IncomingMessage,
+  response: ServerResponse
+) => {
   const { pathname } = new URL(
     // SAFETY: Node's Server request event supplies the request-target URL; client response messages are the variant without this field.
     // eslint-disable-next-line typescript/no-unsafe-type-assertion -- This local server-request view expresses the actual Node producer contract without changing URL parsing.
@@ -58,6 +61,13 @@ createServer(async (request, response) => {
       })
     );
   }
+};
+
+createServer((request, response) => {
+  serveRegistryRequest(request, response).catch((error) => {
+    console.error("Registry request failed", error);
+    response.destroy();
+  });
 }).listen(port, "127.0.0.1", () => {
   console.log(`Registry catalog: http://localhost:${port}/r/registry.json`);
   console.log(`Button: http://localhost:${port}/r/button.json`);
