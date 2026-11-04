@@ -98,7 +98,6 @@ const PopoverContent = ({
 }: PopoverContentProps) => {
   const inherited = React.useContext(ScaleContext);
   const scale = explicitScale ?? inherited;
-  const id = React.useId();
 
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
   const [width, setWidth] = React.useState(214);
@@ -171,14 +170,7 @@ const PopoverContent = ({
       mutation.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, [
-    node,
-    scale,
-    id,
-    props["aria-labelledby"],
-    props["aria-describedby"],
-    props["aria-label"],
-  ]);
+  }, [node, scale]);
 
   const text = children;
 
