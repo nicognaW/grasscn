@@ -154,10 +154,14 @@ for (const scale of [1, 2, 3]) {
   test(`ScrollArea asChild retains native pixels at scale ${scale}`, async ({
     page,
   }, testInfo) => {
-    const c = manifest.cases.find(
-      (scrollAreaCase) =>
-        scrollAreaCase.name === `scroll-area-c67-s${scale}.png`
-    )!;
+    const c =
+      // SAFETY: The retained Scroll Area producer includes exactly one scroll-area-c67 capture at each of GUI scales 1, 2 and 3; preserve the original lookup and pixel assertions.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+      manifest.cases.find(
+        (scrollAreaCase) =>
+          scrollAreaCase.name === `scroll-area-c67-s${scale}.png`
+      ) as (typeof manifest)["cases"][number];
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
 
     await page.goto(
       `/?component=scroll-area&width=${c.width}&height=${c.height}&contentHeight=${c.contentHeight}&scroll=${c.value}&scale=${scale}&asChild=1&defaults=1`

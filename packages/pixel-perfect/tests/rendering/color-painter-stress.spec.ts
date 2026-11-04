@@ -274,9 +274,15 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
   ).toBe(true);
   await page.evaluate(() => {
     // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-    (window as GpuTrackingWindow).__gpu[0]
-      .getExtension("WEBGL_lose_context")!
+
+    // SAFETY: The immediately preceding existing assertion requires this same tracked WebGL context to return the lose-context extension; no context mutation occurs before this existing loss call.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+    (
+      (window as GpuTrackingWindow).__gpu[0].getExtension(
+        "WEBGL_lose_context"
+      ) as WEBGL_lose_context
+    )
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
       .loseContext();
   });
   const checks: { mismatchedPixels: number; scale: number }[] = [];

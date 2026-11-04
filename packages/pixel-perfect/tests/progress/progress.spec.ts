@@ -216,9 +216,13 @@ for (const scale of [1, 2, 3]) {
   test(`Progress asChild native pixels at scale ${scale}`, async ({
     page,
   }, testInfo) => {
-    const c = manifest.cases.find(
-      (progressCase) => progressCase.name === `progress-c18-s${scale}.png`
-    )!;
+    const c =
+      // SAFETY: The retained Progress producer includes exactly one progress-c18 capture at each of GUI scales 1, 2 and 3; preserve the original lookup and pixel assertions.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+      manifest.cases.find(
+        (progressCase) => progressCase.name === `progress-c18-s${scale}.png`
+      ) as (typeof manifest)["cases"][number];
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
 
     await page.goto(
       `/?component=progress&value=0.5&max=1&overlay=notched_6&asChild=1&scale=${scale}`

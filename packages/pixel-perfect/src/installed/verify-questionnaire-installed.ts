@@ -464,13 +464,19 @@ if (
     assert.equal(hash(bytes), sample.sha256);
     const expected = hash(PNG.sync.read(bytes).data);
 
-    const records = reports.map((report) =>
-      report.cases.find((record) => record.name === sample.name)
+    const records = reports.map(
+      (report) =>
+        // SAFETY: Each earlier per-part verifier emits one case result per retained Label manifest name; this final join follows existing equal case-count, file, browser and page-error checks.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+        report.cases.find(
+          (record) => record.name === sample.name
+        ) as QuestionnaireCaseResult
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
     );
 
     for (const record of records) {
-      assert.equal(record!.mismatchedPixels, 0);
-      assert.equal(record!.decodedRgbaSha256, expected);
+      assert.equal(record.mismatchedPixels, 0);
+      assert.equal(record.decodedRgbaSha256, expected);
     }
 
     return {
@@ -480,7 +486,7 @@ if (
           .slice(1)
           .map((part, index) => [
             `${part}DecodedRgbaSha256`,
-            records[index + 1]!.decodedRgbaSha256,
+            records[index + 1].decodedRgbaSha256,
           ])
       ),
     };
