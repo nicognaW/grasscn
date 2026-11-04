@@ -255,25 +255,21 @@ export const CalendarFixture = () => {
             : undefined,
       };
 
-      return (
-        <>
-          {component === "date-picker" ? (
-            <Popover scale={scale} open>
-              <PopoverTrigger render={<Button scale={scale} />}>
-                Pick a date
-              </PopoverTrigger>
-              <PopoverContent
-                data-slot="date-picker-content"
-                initialFocus={false}
-                className="native-reference-popover native-reference-popover-native"
-              >
-                <Calendar {...props} />
-              </PopoverContent>
-            </Popover>
-          ) : (
+      return component === "date-picker" ? (
+        <Popover scale={scale} open>
+          <PopoverTrigger render={<Button scale={scale} />}>
+            Pick a date
+          </PopoverTrigger>
+          <PopoverContent
+            data-slot="date-picker-content"
+            initialFocus={false}
+            className="native-reference-popover native-reference-popover-native"
+          >
             <Calendar {...props} />
-          )}
-        </>
+          </PopoverContent>
+        </Popover>
+      ) : (
+        <Calendar {...props} />
       );
     };
 

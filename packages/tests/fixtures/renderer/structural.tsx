@@ -115,33 +115,31 @@ export const StructuralFixture = () => {
 
   if (kind === "aspect-ratio") {
     return (
-      <>
-        <div
-          id="container"
-          className="fixture-geometry-width fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
+      <div
+        id="container"
+        className="fixture-geometry-width fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
+        style={{
+          ...position,
+          "--fixture-width": `${Number(p.get("containerWidth") ?? 320)}px`,
+        }}
+      >
+        <AspectRatio
+          id="ratio"
+          ratio={Number(p.get("ratio") ?? 16 / 9)}
           style={{
-            ...position,
-            "--fixture-width": `${Number(p.get("containerWidth") ?? 320)}px`,
+            // oxlint-disable-next-line shadcn/no-inline-styles -- Approved AspectRatio caller-style API probe: the existing clipping test supplies this explicit overflow override.
+            overflow: p.has("clip") ? "hidden" : "visible",
+          }}
+          ref={(node) => {
+            if (node) {
+              node.dataset.ref = "true";
+            }
           }}
         >
-          <AspectRatio
-            id="ratio"
-            ratio={Number(p.get("ratio") ?? 16 / 9)}
-            style={{
-              // oxlint-disable-next-line shadcn/no-inline-styles -- Approved AspectRatio caller-style API probe: the existing clipping test supplies this explicit overflow override.
-              overflow: p.has("clip") ? "hidden" : "visible",
-            }}
-            ref={(node) => {
-              if (node) {
-                node.dataset.ref = "true";
-              }
-            }}
-          >
-            <div id="art" className="fixture-structural-art" />
-            {native ? subject : null}
-          </AspectRatio>
-        </div>
-      </>
+          <div id="art" className="fixture-structural-art" />
+          {native ? subject : null}
+        </AspectRatio>
+      </div>
     );
   }
 
