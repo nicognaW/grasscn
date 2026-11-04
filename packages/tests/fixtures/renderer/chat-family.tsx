@@ -22,22 +22,7 @@ interface ChatFamilyReferenceStyle extends React.CSSProperties {
   "--mc-pixel": string;
 }
 
-export const ChatFamilyFixture = () => {
-  const q = new URLSearchParams(location.search);
-  const component = q.get("component") ?? q.get("part") ?? "message";
-
-  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
-  const scale =
-    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
-    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
-
-  const native = q.has("native");
-  const label = q.get("label") ?? "Hello Minecraft!";
-  const [text, setText] = React.useState(label);
-  const [events, setEvents] = React.useState(0);
-  const [tag, setTag] = React.useState("");
-  const ref = React.useRef<HTMLDivElement>(null);
+const readChatReferenceLayout = (q: URLSearchParams, scale: 1 | 2 | 3, native: boolean) => {
   const width = Number(q.get("width") ?? 172);
 
   const scaledWidth = width * scale;
@@ -60,6 +45,27 @@ export const ChatFamilyFixture = () => {
     "--mc-scale": scale,
     "--mc-pixel": `${scale}px`,
   };
+
+  return { common, scaledWidth };
+};
+
+export const ChatFamilyFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const component = q.get("component") ?? q.get("part") ?? "message";
+
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
+  const native = q.has("native");
+  const label = q.get("label") ?? "Hello Minecraft!";
+  const [text, setText] = React.useState(label);
+  const [events, setEvents] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+  const ref = React.useRef<HTMLDivElement>(null);
+  const { common, scaledWidth } = readChatReferenceLayout(q, scale, native);
 
   const background = q.get("background") ?? "#202020";
 

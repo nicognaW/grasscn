@@ -32,26 +32,7 @@ const labels = JSON.parse(
   p.get("labels") ?? '["Stone","Stick","世界"]'
 ) as FixtureLabels;
 
-export const CommandFixture = () => {
-  React.useLayoutEffect(() => {
-    document.documentElement.style.background =
-      p.get("background") ?? "#202020";
-    document.body.style.background = p.get("background") ?? "#202020";
-  }, []);
-
-  const root = React.useRef<HTMLDivElement>(null);
-  const input = React.useRef<HTMLInputElement>(null);
-
-  const [selected, setSelected] = React.useState(
-    Number(p.get("selectedIndex") ?? -1) >= 0
-      ? `row-${p.get("selectedIndex")}`
-      : ""
-  );
-
-  const [search, setSearch] = React.useState(p.get("text") ?? "");
-  const [output, setOutput] = React.useState("");
-  const [open, setOpen] = React.useState(p.has("open"));
-
+const readCommandReferenceLayout = () => {
   const commandFixtureWidth = `${Number(p.get("width") ?? 200) * scale}px`;
   const commandFixtureX = `${Number(p.get("x") ?? 16) * scale}px`;
   const commandFixtureY = `${Number(p.get("y") ?? 16) * scale}px`;
@@ -74,6 +55,31 @@ export const CommandFixture = () => {
     "--fixture-y": commandFixtureY,
     ...commandNativeDimensions,
   };
+
+  return position;
+};
+
+export const CommandFixture = () => {
+  React.useLayoutEffect(() => {
+    document.documentElement.style.background =
+      p.get("background") ?? "#202020";
+    document.body.style.background = p.get("background") ?? "#202020";
+  }, []);
+
+  const root = React.useRef<HTMLDivElement>(null);
+  const input = React.useRef<HTMLInputElement>(null);
+
+  const [selected, setSelected] = React.useState(
+    Number(p.get("selectedIndex") ?? -1) >= 0
+      ? `row-${p.get("selectedIndex")}`
+      : ""
+  );
+
+  const [search, setSearch] = React.useState(p.get("text") ?? "");
+  const [output, setOutput] = React.useState("");
+  const [open, setOpen] = React.useState(p.has("open"));
+
+  const position = readCommandReferenceLayout();
 
   const nativeInput = native && part === "input";
 

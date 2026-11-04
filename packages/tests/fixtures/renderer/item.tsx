@@ -52,6 +52,22 @@ const CustomAction = ({
   />
 );
 
+const readItemReferenceLayout = (width: number) => {
+  const height = Number(q.get("height") ?? 36) * scale;
+  const x = Number(q.get("x") ?? 16) * scale;
+  const y = Number(q.get("y") ?? 16) * scale;
+
+  const commonStyle = {
+    "--fixture-height": `${height}px`,
+    "--fixture-x": `${x}px`,
+
+    "--fixture-y": `${y}px`,
+    width: width * scale,
+  } satisfies React.CSSProperties;
+
+  return { commonStyle, height, x, y };
+};
+
 const ItemFixture = () => {
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
@@ -111,17 +127,7 @@ const ItemFixture = () => {
     </>
   );
 
-  const height = Number(q.get("height") ?? 36) * scale;
-  const x = Number(q.get("x") ?? 16) * scale;
-  const y = Number(q.get("y") ?? 16) * scale;
-
-  const commonStyle = {
-    "--fixture-height": `${height}px`,
-    "--fixture-x": `${x}px`,
-
-    "--fixture-y": `${y}px`,
-    width: width * scale,
-  } satisfies React.CSSProperties;
+  const { commonStyle, height, x, y } = readItemReferenceLayout(width);
 
   let selectedSubject: React.JSX.Element;
 

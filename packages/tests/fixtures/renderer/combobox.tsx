@@ -41,6 +41,33 @@ const labels = JSON.parse(
 const nativeItems = labels.map((label, i) => ({ id: `row-${i}`, label }));
 const blocks = ["Stone", "Stick", "世界", "Bedrock"];
 
+const readComboboxReferenceLayout = () => {
+  const comboboxFixtureWidth = `${Number(p.get("width") ?? 200) * scale}px`;
+  const comboboxFixtureX = `${Number(p.get("x") ?? 16) * scale}px`;
+  const comboboxFixtureY = `${Number(p.get("y") ?? 16) * scale}px`;
+
+  const comboboxNativeDimensions: Pick<
+    React.CSSProperties,
+    "height" | "maxHeight"
+  > = {};
+
+  if (part === "list") {
+    comboboxNativeDimensions.height = Number(p.get("height") ?? 36) * scale;
+    comboboxNativeDimensions.maxHeight = Number(p.get("height") ?? 36) * scale;
+  }
+
+  const pos = {
+    "--fixture-width": comboboxFixtureWidth,
+
+    "--fixture-x": comboboxFixtureX,
+
+    "--fixture-y": comboboxFixtureY,
+    ...comboboxNativeDimensions,
+  };
+
+  return pos;
+};
+
 export const ComboboxFixture = () => {
   React.useLayoutEffect(() => {
     const bg = p.get("background") ?? "#202020";
@@ -68,28 +95,7 @@ export const ComboboxFixture = () => {
   const list = React.useRef<HTMLDivElement>(null);
   const anchor = useComboboxAnchor();
 
-  const comboboxFixtureWidth = `${Number(p.get("width") ?? 200) * scale}px`;
-  const comboboxFixtureX = `${Number(p.get("x") ?? 16) * scale}px`;
-  const comboboxFixtureY = `${Number(p.get("y") ?? 16) * scale}px`;
-
-  const comboboxNativeDimensions: Pick<
-    React.CSSProperties,
-    "height" | "maxHeight"
-  > = {};
-
-  if (part === "list") {
-    comboboxNativeDimensions.height = Number(p.get("height") ?? 36) * scale;
-    comboboxNativeDimensions.maxHeight = Number(p.get("height") ?? 36) * scale;
-  }
-
-  const pos = {
-    "--fixture-width": comboboxFixtureWidth,
-
-    "--fixture-x": comboboxFixtureX,
-
-    "--fixture-y": comboboxFixtureY,
-    ...comboboxNativeDimensions,
-  };
+  const pos = readComboboxReferenceLayout();
 
   if (native) {
     return part === "input" ? (
