@@ -167,6 +167,10 @@ const sourceMatches = async function sourceMatches(
       required.delete(name);
     }
 
+    if (required.size !== 0) {
+      return false;
+    }
+
     // Establish complete declared owner membership before starting any independent source read.
     const sourceInputs = await Promise.allSettled(
       sourceTargets.map(async (target) => ({
@@ -175,16 +179,11 @@ const sourceMatches = async function sourceMatches(
       }))
     );
 
-    for (const sourceInput of sourceInputs) {
-      if (
-        sourceInput.status === "rejected" ||
-        digest(sourceInput.value.bytes) !== sourceInput.value.sha256
-      ) {
-        return false;
-      }
-    }
-
-    return required.size === 0;
+    return sourceInputs.every(
+      (input) =>
+        input.status === "fulfilled" &&
+        digest(input.value.bytes) === input.value.sha256
+    );
   } catch {
     return false;
   }
@@ -296,6 +295,7 @@ export const reusableBrowserTests = async function reusableBrowserTests(
     nativeSortValues.map(async (candidate) => {
       const run = path.dirname(candidate.filename);
       const directory = path.join(run, "checkpoints", file);
+
       const [journalInput] = await Promise.allSettled([
         readCheckpointJournal(directory),
       ]);
@@ -305,6 +305,7 @@ export const reusableBrowserTests = async function reusableBrowserTests(
       }
 
       const { expected, records } = journalInput.value;
+
       const declarations = new Map(
         expected.tests.map((test) => [test.id, test])
       );

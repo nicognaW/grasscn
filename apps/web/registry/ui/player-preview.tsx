@@ -406,13 +406,13 @@ const PlayerPreview = ({
   onPointerCancel,
   ...props
 }: PlayerPreviewProps) => {
-  let requestedModel: "wide" | "slim" | undefined;
-
-  if (model !== undefined && model !== null) {
-    requestedModel = model;
-  } else if (!(src ?? "") && !(username ?? "")) {
-    requestedModel = skin.startsWith("slim/") ? "slim" : "wide";
-  }
+  const requestedModel =
+    model ??
+    (!(src ?? "") && !(username ?? "")
+      ? skin.startsWith("slim/")
+        ? "slim"
+        : "wide"
+      : undefined);
 
   const [resolvedModel, setResolvedModel] = React.useState<
     "wide" | "slim" | undefined
