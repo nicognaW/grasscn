@@ -174,6 +174,7 @@ const QuestionnaireChoice = ({
       <Primitive.ChoiceInput
         data-slot="questionnaire-choice-input"
         render={(native, state) => {
+          // SAFETY: @shadcn/react ChoiceInput merges its intrinsic inputProps and input attributes, then passes that map directly to this private callback. The callback returns only a literal input and forwards its original ref, styles and handlers.
           const input = native as React.ComponentPropsWithRef<"input">;
 
           return (
