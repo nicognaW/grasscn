@@ -177,7 +177,7 @@ const prepareControlAppearance = async (
     await expect(subject).toHaveAttribute("data-mc-scroll-ready", "true");
     const viewport = subject.locator('[data-slot="scroll-area-viewport"]');
     await expect
-      .poll(() => viewport.evaluate((node) => node.scrollTop))
+      .poll(async () => await viewport.evaluate((node) => node.scrollTop))
       .toBe(c.value * c.scale);
   }
 
