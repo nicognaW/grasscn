@@ -27,11 +27,14 @@ import {
 import type {
   FireworkExplosionDefinition,
   FireworkScene,
+  FireworkSound,
   FireworkSprites,
   FireworkTarget,
 } from "./minecraft-firework-explosion";
 import type { PngRgba } from "./minecraft-png";
 import { LegacyRandomSource } from "./minecraft-random-source";
+
+export type { FireworkSound } from "./minecraft-firework-explosion";
 
 type Vec3 = readonly [number, number, number];
 
@@ -269,18 +272,24 @@ export class FireworkRocketSimulation {
     return this.ticks > 0 && this.#client.removed && this.#particles.empty;
   }
 
-  tick() {
+  /**
+   * One lockstep tick. Returns the sounds the native client asks for in it,
+   * in order: the launch packet the server tick sent, then the starter's.
+   */
+  tick(): readonly FireworkSound[] {
     this.ticks += 1;
-    this.#serverTick();
-    this.#clientTick();
+    const server = this.#serverTick();
+
+    return [...server, ...this.#clientTick()];
   }
 
   // ServerLevel.tick: entity tracking runs before the entities tick.
-  #serverTick() {
+  #serverTick(): FireworkSound[] {
     if (this.#server.removed) {
-      return;
+      return [];
     }
 
+    const sounds: FireworkSound[] = [];
     const packets = this.#tracking.sendChanges(this.#server);
 
     // ClientPacketListener: the motion packet goes first, then the position.
@@ -313,6 +322,14 @@ export class FireworkRocketSimulation {
 
     if (this.#server.life === 1) {
       this.events.launch = this.ticks;
+      // FireworkRocketEntity.tick: level.playSound(null, x, y, z, LAUNCH,
+      // AMBIENT, 3.0F, 1.0F); the client plays the packet undelayed.
+      sounds.push({
+        pitch: 1,
+        sound: "entity.firework_rocket.launch",
+        source: "AMBIENT",
+        volume: 3,
+      });
     }
 
     if (this.#server.life > this.lifetime) {
@@ -322,10 +339,12 @@ export class FireworkRocketSimulation {
       this.#particles.createFireworks(this.#client.position, this.#explosion);
       this.#client.removed = true;
     }
+
+    return sounds;
   }
 
   // Minecraft.tick: entities, then the particle engine.
-  #clientTick() {
+  #clientTick(): readonly FireworkSound[] {
     const rocket = this.#client;
 
     if (!rocket.removed) {
@@ -338,7 +357,7 @@ export class FireworkRocketSimulation {
       this.#particles.createSpark(rocket.position, [xd, yd, zd]);
     }
 
-    this.#particles.tick();
+    return this.#particles.tick();
   }
 
   /** The client rocket as the renderer sees it, or undefined once gone. */

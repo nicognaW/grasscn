@@ -37,6 +37,22 @@ export const STAR_FIREWORK: FireworkExplosionDefinition = {
   twinkle: true,
 };
 
+/**
+ * One sound the native client asks SoundManager for: the event, its sound
+ * source (category) and the SoundInstance volume and pitch floats. Only the
+ * near variants exist here (declared web adaptation: the listener is within
+ * 10 blocks of the firework, so no _far variant and no distance delay).
+ */
+export interface FireworkSound {
+  pitch: number;
+  sound:
+    | "entity.firework_rocket.large_blast"
+    | "entity.firework_rocket.launch"
+    | "entity.firework_rocket.twinkle";
+  source: "AMBIENT";
+  volume: number;
+}
+
 // One fixed particle seed for every launch (declared web adaptation): the
 // n-th particle created draws RandomSource.create(seeds.nextLong()).
 export const FIREWORK_SEED = 42n;
@@ -347,25 +363,35 @@ class Starter extends Particle {
   readonly #explosion: FireworkExplosionDefinition;
   readonly #seeds: ParticleSeeds;
   readonly #spawn: (particle: QuadParticle) => void;
+  readonly #play: (sound: FireworkSound) => void;
 
   constructor(
     seeds: ParticleSeeds,
     position: readonly [number, number, number],
     explosion: FireworkExplosionDefinition,
-    spawn: (particle: QuadParticle) => void
+    spawn: (particle: QuadParticle) => void,
+    play: (sound: FireworkSound) => void
   ) {
     super(seeds, position[0], position[1], position[2]);
     this.#seeds = seeds;
     this.#explosion = explosion;
     this.#spawn = spawn;
+    this.#play = play;
     // One explosion: lifetime 2n - 1, plus 15 ticks of twinkle delay.
     this.lifetime = 1 + (explosion.twinkle ? 15 : 0);
   }
 
   override tick() {
     if (this.life === 0) {
-      // The blast sound's pitch draw (ClientLevel.playLocalSound).
-      this.random.nextFloat();
+      // ClientLevel.playLocalSound(..., AMBIENT, 20.0F, 0.95F +
+      // random.nextFloat() * 0.1F, true). The starter selects large_blast
+      // for a large ball, the only shape ported.
+      this.#play({
+        pitch: f(f(0.95) + f(this.random.nextFloat() * f(0.1))),
+        sound: "entity.firework_rocket.large_blast",
+        source: "AMBIENT",
+        volume: 20,
+      });
       this.createParticleBall(0.5, 4);
       this.#spawn(
         new Flash(
@@ -380,8 +406,14 @@ class Starter extends Particle {
 
     if (this.life > this.lifetime) {
       if (this.#explosion.twinkle) {
-        // The twinkle sound's pitch draw.
-        this.random.nextFloat();
+        // ClientLevel.playLocalSound(..., AMBIENT, 20.0F, 0.9F +
+        // random.nextFloat() * 0.15F, true).
+        this.#play({
+          pitch: f(f(0.9) + f(this.random.nextFloat() * f(0.15))),
+          sound: "entity.firework_rocket.twinkle",
+          source: "AMBIENT",
+          volume: 20,
+        });
       }
 
       this.removed = true;
@@ -442,6 +474,7 @@ export class FireworkParticleEngine {
   readonly #quads: QuadParticle[] = [];
   #starters: Starter[] = [];
   #pending: (QuadParticle | Starter)[] = [];
+  #sounds: FireworkSound[] = [];
 
   constructor(seed: bigint = FIREWORK_SEED) {
     this.#seeds = new ParticleSeeds(seed);
@@ -461,9 +494,17 @@ export class FireworkParticleEngine {
     explosion: FireworkExplosionDefinition = STAR_FIREWORK
   ) {
     this.#pending.push(
-      new Starter(this.#seeds, position, explosion, (particle) => {
-        this.#pending.push(particle);
-      })
+      new Starter(
+        this.#seeds,
+        position,
+        explosion,
+        (particle) => {
+          this.#pending.push(particle);
+        },
+        (sound) => {
+          this.#sounds.push(sound);
+        }
+      )
     );
   }
 
@@ -477,7 +518,10 @@ export class FireworkParticleEngine {
     this.#pending.push(spark);
   }
 
-  tick() {
+  /** One tick; returns the sounds the starters asked for in it. */
+  tick(): readonly FireworkSound[] {
+    this.#sounds = [];
+
     for (const particle of [...this.#starters, ...this.#quads]) {
       particle.tick();
     }
@@ -497,6 +541,8 @@ export class FireworkParticleEngine {
         this.#quads.push(particle);
       }
     }
+
+    return this.#sounds;
   }
 
   quads(camera: Camera, partialTick: number) {
@@ -526,9 +572,11 @@ export class FireworkExplosionSimulation {
     return this.ticks > 0 && this.#engine.empty;
   }
 
+  /** One tick; returns the sounds asked for in it. */
   tick() {
     this.ticks += 1;
-    this.#engine.tick();
+
+    return this.#engine.tick();
   }
 
   quads(camera: Camera, partialTick: number) {

@@ -1,0 +1,18 @@
+{
+  "component": "fireworks",
+  "minecraftVersion": "26.2",
+  "description": "Native sound record of the #48 firework rocket (same world, projection, rocket, seeds and lockstep ticks as rocketCase) heard from listeners within 16 blocks of the explosion, where FireworkParticles.Starter selects the near blast and twinkle sounds. Only the camera eye differs from the rocket case; one launch per listener; frames are not retained.",
+  "rocketCase": "packages/pixel-perfect/tests/reference/firework-rocket/case.json",
+  "listeners": [
+    {
+      "name": "near",
+      "description": "About 7 blocks from the explosion: near variants, and within 10 blocks, so ClientLevel.playSound plays them without a distance delay. The UI port declares this listener.",
+      "camera": { "eye": [0.5, 85.5, -14.5], "yRot": 180, "xRot": 0 }
+    },
+    {
+      "name": "near-delayed",
+      "description": "About 13 blocks from the explosion: still near variants (within 16 blocks), but farther than 10 blocks, so ClientLevel.playSound delays them by (int)(distance / 40 * 20) ticks.",
+      "camera": { "eye": [0.5, 85.5, -8.5], "yRot": 180, "xRot": 0 }
+    }
+  ]
+}
