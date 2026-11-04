@@ -84,9 +84,9 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
       setPainted(true);
     };
 
-    const enter = (event: Event) => {
+    const enter = (event: PointerEvent) => {
       inside = true;
-      const pointerEvent = event as PointerEvent;
+      const pointerEvent = event;
       pointer = { x: pointerEvent.clientX, y: pointerEvent.clientY };
       paint();
     };
@@ -97,8 +97,8 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
       paint();
     };
 
-    const move = (event: Event) => {
-      const pointerEvent = event as PointerEvent;
+    const move = (event: PointerEvent) => {
+      const pointerEvent = event;
       pointer = { x: pointerEvent.clientX, y: pointerEvent.clientY };
       paint();
     };

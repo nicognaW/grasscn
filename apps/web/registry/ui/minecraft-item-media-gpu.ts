@@ -61,13 +61,9 @@ const create = function create(): Painter | null {
 
   gl.deleteShader(vertex);
   gl.deleteShader(fragment);
-  const textures = {} as Painter["textures"];
-
-  for (const name of Object.keys(assets) as (keyof typeof assets)[]) {
-    const asset = assets[name];
+  const uploadTexture = (asset: (typeof assets)[keyof typeof assets]) => {
     const texture = gl.createTexture();
 
-    textures[name] = texture;
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
     for (const parameter of [gl.TEXTURE_MIN_FILTER, gl.TEXTURE_MAG_FILTER]) {
@@ -92,7 +88,15 @@ const create = function create(): Painter | null {
         (char) => char.codePointAt(0) ?? Number.NaN
       )
     );
-  }
+
+    return texture;
+  };
+
+  const textures: Painter["textures"] = {
+    join: uploadTexture(assets.join),
+    join_highlighted: uploadTexture(assets.join_highlighted),
+    thumbnail: uploadTexture(assets.thumbnail),
+  };
 
   const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
