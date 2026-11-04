@@ -38,21 +38,19 @@ if (q.has("volume")) {
 const CustomAction = ({
   onClick,
   ...props
-}: React.ComponentProps<"button">) => {
-  return (
-    <button
-      type="button"
-      {...props}
-      onClick={(event) => {
-        onClick?.(event);
+}: React.ComponentProps<"button">) => (
+  <button
+    type="button"
+    {...props}
+    onClick={(event) => {
+      onClick?.(event);
 
-        if (!event.defaultPrevented) {
-          playMinecraftClick();
-        }
-      }}
-    />
-  );
-};
+      if (!event.defaultPrevented) {
+        playMinecraftClick();
+      }
+    }}
+  />
+);
 
 const ItemFixture = () => {
   React.useLayoutEffect(() => {

@@ -154,7 +154,7 @@ export const StructuralFixture = () => {
           style={position}
         >
           {selectedFixtureBranch1}
-          {!native ? (
+          {native ? null : (
             <>
               <ButtonGroupSeparator scale={scale} role="separator" />
               <ButtonGroupText scale={scale}>Game</ButtonGroupText>
@@ -172,7 +172,7 @@ export const StructuralFixture = () => {
                 Next
               </Button>
             </>
-          ) : null}
+          )}
         </ButtonGroup>
         <output id="events" className="fixture-structural-events">
           {events}

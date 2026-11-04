@@ -1,5 +1,7 @@
 import { test, expect } from "@grasscn/tests/test";
 
+import type { AdventureFixtureSample } from "../../../fixtures/renderer/fixture-query-protocol";
+
 interface PlayerListPlaybackState extends Window {
   played?: number;
 }
@@ -12,7 +14,7 @@ type InitializedPlayerListPlaybackState = typeof window &
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 
-const url = (sample: object) =>
+const url = (sample: AdventureFixtureSample) =>
   `${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify(sample))}`;
 
 test("player list supports pointer and keyboard selection without UI sound", async ({

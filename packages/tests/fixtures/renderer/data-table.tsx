@@ -78,7 +78,7 @@ export const DataTableFixture = () => {
     defaultColumn: {
       cell: (info) => (
         <MinecraftDisclosureText scale={scale}>
-          {String(info.getValue() ?? "")}
+          {String(info.getValue<World[keyof World] | null | undefined>() ?? "")}
         </MinecraftDisclosureText>
       ),
     },

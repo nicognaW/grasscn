@@ -7,6 +7,7 @@ import { tradingSounds as clips } from "@grasscn/web/ui/minecraft-trading-sound-
 import { referenceFile } from "@tests/paths";
 
 import type TradingSoundReference from "../../../fixtures/reference/native-expansion/trading-sound-provenance.json";
+import type { AdventureFixtureSample } from "../../../fixtures/renderer/fixture-query-protocol";
 
 interface TradingAudioPlayback {
   pitch: number;
@@ -21,7 +22,7 @@ interface TradingAudioWindow extends Window {
 const base =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 
-const url = (sample: object = {}) =>
+const url = (sample: Partial<AdventureFixtureSample> = {}) =>
   `${base}?scale=2&case=${encodeURIComponent(JSON.stringify({ element: "trading", value: 0, ...sample }))}`;
 
 test("trading original sound bytes decode in the browser", async ({ page }) => {

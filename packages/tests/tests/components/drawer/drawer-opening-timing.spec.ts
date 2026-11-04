@@ -98,7 +98,7 @@ for (const scale of [2] as const) {
 
           mutationCompletion.resolve({
             opacity: getComputedStyle(overlay).opacity,
-            ready: overlay.getAttribute("data-mc-backdrop-ready"),
+            ready: overlay.dataset.mcBackdropReady ?? null,
           });
         });
 

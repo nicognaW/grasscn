@@ -67,7 +67,12 @@ const TextComponentsFixture = () => {
 
   const [events, setEvents] = React.useState(0);
   const [tag, setTag] = React.useState("");
-  const ref = React.useRef<any>(null);
+  const ref = React.useRef<Element>(null);
+
+  const subjectRef = React.useCallback((node: Element | null) => {
+    ref.current = node;
+  }, []);
+
   const width = q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined;
   const align = q.get("align") === "center" ? "center" : "left";
 
@@ -87,7 +92,7 @@ const TextComponentsFixture = () => {
     onClick: () => {
       setEvents((n) => n + 1);
     },
-    ref,
+    ref: subjectRef,
     style: {
       "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
       "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
@@ -130,7 +135,7 @@ const TextComponentsFixture = () => {
       }
     } else {
       subject = (
-        <Empty scale={scale} ref={ref}>
+        <Empty scale={scale} ref={subjectRef}>
           <EmptyHeader>
             <EmptyMedia>
               <span data-testid="media">*</span>
@@ -289,7 +294,7 @@ const TextComponentsFixture = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage ref={ref}>Current page</BreadcrumbPage>
+            <BreadcrumbPage ref={subjectRef}>Current page</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

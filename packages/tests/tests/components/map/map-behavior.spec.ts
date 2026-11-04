@@ -1,10 +1,12 @@
 import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
+import type { AdventureFixtureSample } from "../../../fixtures/renderer/fixture-query-protocol";
+
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 
-const url = (sample: object) =>
+const url = (sample: AdventureFixtureSample) =>
   `${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify(sample))}`;
 
 test("map terrain coordinates and keyboard markers", async ({ page }) => {

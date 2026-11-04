@@ -86,7 +86,7 @@ for (const scale of [2] as const) {
             frameCompletion.reject(error);
           }
 
-          return await frameCompletion.promise;
+          await frameCompletion.promise;
         });
         const after = await popup.boundingBox();
         expectNotNull(after, "Missing required bounding box: after");

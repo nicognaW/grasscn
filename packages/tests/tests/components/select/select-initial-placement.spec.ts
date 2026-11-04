@@ -39,7 +39,7 @@ for (const scale of [2] as const) {
               );
 
         for (
-          let index = 0, count = await triggers.count();
+          let count = await triggers.count(), index = 0;
           index < count;
           index += 1
         ) {

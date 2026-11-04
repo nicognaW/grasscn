@@ -15,6 +15,7 @@ import { setMinecraftSoundVolume } from "@grasscn/web/ui/minecraft-sound";
 import { PlayerList, Scoreboard } from "@grasscn/web/ui/player-list";
 import { PlayerPreview } from "@grasscn/web/ui/player-preview";
 import { Sign, HangingSign } from "@grasscn/web/ui/sign";
+import type { SignWood } from "@grasscn/web/ui/sign";
 import { Trading } from "@grasscn/web/ui/trading";
 import * as React from "react";
 
@@ -308,9 +309,7 @@ const DraftDemos = ({
       content = (
         <Sign
           {...common}
-          wood={
-            (sample.state as import("@grasscn/web/ui/sign").SignWood) ?? "oak"
-          }
+          wood={(sample.state as SignWood) ?? "oak"}
           glowing={sample.checked}
           lines={
             sample.labels ?? ["Welcome", "to grasscn", "", "Make it yours."]
@@ -324,9 +323,7 @@ const DraftDemos = ({
       content = (
         <HangingSign
           {...common}
-          wood={
-            (sample.state as import("@grasscn/web/ui/sign").SignWood) ?? "oak"
-          }
+          wood={(sample.state as SignWood) ?? "oak"}
           glowing={sample.checked}
           lines={sample.labels ?? ["Open", "for business", "", "Welcome!"]}
         />
