@@ -14,7 +14,9 @@ const ScrollAreaDemo = ({ scale }: DemoProps) => {
   const [disabled, setDisabled] = React.useState(false);
 
   const jump = (fraction: number) => {
-    const node = viewport.current!;
+    // SAFETY: This private demo always mounts the SDK default div viewport and passes no viewport render/ref override; only its mounted buttons invoke jump synchronously.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The fixed viewport producer and synchronous post-commit click lifetime prove this exact HTMLDivElement capture.
+    const node = viewport.current as HTMLDivElement;
     node.scrollTop = (node.scrollHeight - node.clientHeight) * fraction;
   };
 

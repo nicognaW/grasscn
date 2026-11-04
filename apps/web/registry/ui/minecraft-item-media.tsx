@@ -28,7 +28,9 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
       canvas.current as HTMLCanvasElement;
 
-    const media = node.parentElement!;
+    // SAFETY: The default artwork is mounted directly inside the owned intrinsic div in ItemMedia or AttachmentMedia; its private canvas commits before layout setup.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Both registered composition producers guarantee this exact HTMLDivElement parent while the artwork is mounted.
+    const media = node.parentElement as HTMLDivElement;
     const root = node.closest<HTMLElement>(".mc-item") ?? media;
 
     let signature = "";

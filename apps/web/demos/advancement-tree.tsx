@@ -50,7 +50,9 @@ const AdvancementDemo = ({ scale }: DemoProps) => {
   const [selected, setSelected] = React.useState("plan");
   const [reset, setReset] = React.useState(0);
 
-  const node = nodes.find((n) => n.id === selected)!;
+  // SAFETY: Selection starts at the existing plan ID and only receives IDs from the tree's mapped nodes; this private demo changes completed flags without deleting or replacing IDs.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The closed selection producer and ID-preserving node updates guarantee this exact required AdvancementNode result.
+  const node = nodes.find((n) => n.id === selected) as AdvancementNode;
 
   return (
     <div
