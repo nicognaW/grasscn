@@ -1,4 +1,4 @@
-/** Measure both native paint boxes in one browser frame, independent of tooltip translation. */
+/** Measure native paint boxes together; viewport coordinates can retain transform-rounding error. */
 export const nativeTextGap = (
   element: Element,
   expected: { label: string; value: string }
