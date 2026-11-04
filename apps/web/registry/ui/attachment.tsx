@@ -72,7 +72,10 @@ const Attachment = ({
     []
   );
   React.useLayoutEffect(() => {
-    const root = node.current!;
+    const root =
+      // SAFETY: React attaches this always-rendered <div> before layout effect setup. Its private ref has one attachment and no other writer; the public ref is removed from the trailing props spread.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit proves this exact HTMLDivElement capture.
+      node.current as HTMLDivElement;
 
     const update = () => {
       root.dataset.mcItemInteractive = String(
@@ -162,7 +165,10 @@ const AttachmentContent = ({
     []
   );
   React.useLayoutEffect(() => {
-    const element = node.current!;
+    const element =
+      // SAFETY: React attaches this always-rendered <div> before layout effect setup. Its private ref has one attachment and no other writer; the public ref is removed from the trailing props spread.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit proves this exact HTMLDivElement capture.
+      node.current as HTMLDivElement;
 
     const measure = () => {
       setWidth(Math.floor(element.clientWidth / scale));

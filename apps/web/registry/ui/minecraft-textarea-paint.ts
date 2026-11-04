@@ -85,7 +85,11 @@ const wrap = function wrap(value: string, width: number): Line[] {
           space = count;
         }
 
-        const char = String.fromCodePoint(remaining.codePointAt(count)!);
+        const char = String.fromCodePoint(
+          // SAFETY: This loop calls codePointAt only with count below the current string length; count starts at zero and advances by each nonempty character length.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The existing in-bounds string traversal proves this exact codePointAt result.
+          remaining.codePointAt(count) as number
+        );
         const next = glyphAdvance(char);
 
         if (used + next > width && count > 0) {
