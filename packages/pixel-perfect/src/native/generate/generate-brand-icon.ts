@@ -61,14 +61,50 @@ const generated: Record<
   }
 > = {};
 
+const nativeCaseReadJobs = [];
+
 for (const scale of one.scales) {
+  for (const background of ["black", "white"]) {
+    nativeCaseReadJobs.push(
+      (async () => {
+        const filename = `grass-block-${background}-s${scale}.png`;
+
+        const [firstRead, secondRead] = await Promise.allSettled(
+          [
+            async () => await readFile(path.join(first, filename)),
+            async () => await readFile(path.join(second, filename)),
+          ].map(async (read) => await read())
+        );
+
+        if (firstRead.status === "rejected") {
+          throw firstRead.reason;
+        }
+
+        if (secondRead.status === "rejected") {
+          throw secondRead.reason;
+        }
+
+        return { a: firstRead.value, b: secondRead.value };
+      })()
+    );
+  }
+}
+
+const nativeCaseReads = await Promise.allSettled(nativeCaseReadJobs);
+
+for (const [scaleIndex, scale] of one.scales.entries()) {
   const images = [];
 
-  for (const background of ["black", "white"]) {
+  for (const [backgroundIndex, background] of ["black", "white"].entries()) {
     const filename = `grass-block-${background}-s${scale}.png`;
 
-    const a = await readFile(path.join(first, filename));
-    const b = await readFile(path.join(second, filename));
+    const caseRead = nativeCaseReads[scaleIndex * 2 + backgroundIndex];
+
+    if (caseRead.status === "rejected") {
+      throw caseRead.reason;
+    }
+
+    const { a, b } = caseRead.value;
 
     const p = PNG.sync.read(a);
     const q = PNG.sync.read(b);
@@ -169,10 +205,14 @@ for (let row = 0, y = 12; row < 3; row += 1) {
 
 let x = 68;
 
-for (const [index, char] of [..."grass cn"].entries()) {
+const wordmark = "grass cn";
+
+for (let index = 0; index < wordmark.length; index += 1) {
+  const char = wordmark[index];
+
   const [gx, gy, advance] =
     minecraftGlyphs[
-      // SAFETY: Every character yielded by the existing fixed nonempty branding-string iteration contains at least one code point; String.codePointAt(0) is therefore numeric.
+      // SAFETY: The bounded ASCII wordmark index selects one existing character, so String.codePointAt(0) is numeric.
       /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact nonempty String-iterator API contract; no additional runtime guard. */
       (char.codePointAt(0) as number) -
         /* oxlint-enable typescript/no-unsafe-type-assertion */
