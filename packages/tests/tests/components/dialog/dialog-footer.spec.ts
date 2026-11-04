@@ -18,7 +18,7 @@ const verifyDefaultDialogFooter = async (page: Page, suffix: string) => {
   await page.getByRole("button", { exact: true, name: "Open footer" }).click();
   const footer = page.locator("[data-slot=dialog-footer]");
   await expect(footer).toHaveAttribute("data-forwarded", "kept");
-  await expect(footer).toHaveClass(/custom-footer/);
+  await expect(footer).toHaveClass(/custom-footer/u);
   await expect(footer.getByRole("button")).toHaveCount(1);
   await expect(
     footer.getByRole("button", { exact: true, name: "Close" })

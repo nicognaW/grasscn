@@ -59,6 +59,6 @@ test("nested consumer roots and custom component aliases remain independent", ()
   assert.throws(
     () =>
       installedRegistryFile({ target: "../../outside.ts" }, consumer, settings),
-    /inside the consumer/
+    /inside the consumer/u
   );
 });

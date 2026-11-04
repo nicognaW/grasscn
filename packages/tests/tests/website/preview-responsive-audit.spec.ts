@@ -134,7 +134,7 @@ test("calendar family and native select have inset preview stages", async ({
     const stage = card.locator(`[data-stage="${name}"]`);
 
     // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
-    await expect(stage).toHaveClass(/demo-stage/);
+    await expect(stage).toHaveClass(/demo-stage/u);
     expect(
       // oxlint-disable-next-line no-await-in-loop -- Fill/submit error-state checks, route switches and active tab transitions use one live page; observations complete before next mutation.
       await stage.evaluate((el) =>

@@ -45,7 +45,8 @@ test("production fixture serves bundle assets and skin inputs without exposing o
   const host = await serveProductionFixture({ ...fixture, port: 0 });
 
   try {
-    assert.equal(await (await fetch(host.url)).text(), "<div>fixture</div>");
+    const awaitedUnitRead1 = await fetch(host.url);
+    assert.equal(await awaitedUnitRead1.text(), "<div>fixture</div>");
     const script = await fetch(`${host.url}/asset.js`);
     assert.match(script.headers.get("content-type") ?? "", /javascript/u);
     const image = await fetch(`${host.url}/dream-skin.png`);
@@ -53,7 +54,8 @@ test("production fixture serves bundle assets and skin inputs without exposing o
     assert.equal(await image.text(), "dream texture");
 
     for (const name of ["private.txt", "..%2Foutside.txt", "missing.html"]) {
-      assert.equal((await fetch(`${host.url}/${name}`)).status, 404);
+      const awaitedUnitRead2 = await fetch(`${host.url}/${name}`);
+      assert.equal(awaitedUnitRead2.status, 404);
     }
   } finally {
     await host.close();

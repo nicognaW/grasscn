@@ -90,7 +90,7 @@ test("Combobox preserves render functions, state classes, DOM refs and labeled g
   const input = page.getByRole("combobox");
   await input.click();
   await expect(input).toHaveAttribute("data-custom", "open");
-  await expect(input).toHaveClass(/custom-open/);
+  await expect(input).toHaveClass(/custom-open/u);
   await expect(page.locator("[data-rendered]")).toHaveCount(4);
   await page.locator("#ref").dispatchEvent("click");
   await expect(page.locator("#refs")).toHaveText("INPUT/DIV");

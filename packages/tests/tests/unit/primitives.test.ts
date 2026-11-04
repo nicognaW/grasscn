@@ -117,10 +117,12 @@ test("primitive policy checks built source and catches obsolete registry payload
       result.stderr,
       /obsolete built payload: removed-component\.json/u
     );
-    assert.ok(
-      (await readFile(path.join(directory, "public/r/removed-component.json")))
-        .length
+
+    const awaitedUnitRead1 = await readFile(
+      path.join(directory, "public/r/removed-component.json")
     );
+
+    assert.ok(awaitedUnitRead1.length);
   });
 });
 
