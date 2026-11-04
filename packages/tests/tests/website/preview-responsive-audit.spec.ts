@@ -140,7 +140,7 @@ test("recipe labels select their own filter and keyboard focus survives wrapping
     single.getByRole("button", { name: "Stonecutter recipes" })
   ).toHaveAttribute("aria-pressed", "true");
 
-  const readOnlyItems30 = await card.locator(".demo-filter-choice").all();
+  const readOnlyItems30 = await card.locator("[data-demo-filter-choice]").all();
 
   const readOnlyResults30 = await Promise.allSettled(
     readOnlyItems30.map(async (label) => {

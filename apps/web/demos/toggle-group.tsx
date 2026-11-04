@@ -6,6 +6,21 @@ import { ToggleGroup, ToggleGroupItem } from "../registry/ui/toggle-group";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
+const filters = [
+  {
+    label: "Crafting recipes",
+    value: "crafting",
+  },
+  {
+    label: "Furnace recipes",
+    value: "furnace",
+  },
+  {
+    label: "Stonecutter recipes",
+    value: "stonecutter",
+  },
+];
+
 const ToggleGroupDemo = ({ scale }: DemoProps) => {
   const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
   const id = React.useId();
@@ -13,21 +28,6 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
   const [single, setSingle] = React.useState("crafting");
   const [multiple, setMultiple] = React.useState<string[]>(["crafting"]);
   const [disabled, setDisabled] = React.useState(false);
-
-  const filters = [
-    {
-      label: "Crafting recipes",
-      value: "crafting",
-    },
-    {
-      label: "Furnace recipes",
-      value: "furnace",
-    },
-    {
-      label: "Stonecutter recipes",
-      value: "stonecutter",
-    },
-  ];
 
   return (
     <>
@@ -64,7 +64,7 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
             multiple={false}
           >
             {filters.map((f) => (
-              <div className="demo-filter-choice" key={f.value}>
+              <div data-demo-filter-choice="" key={f.value}>
                 <ToggleGroupItem
                   id={`${id}-single-${f.value}`}
                   value={f.value}
@@ -92,7 +92,7 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
             multiple={true}
           >
             {filters.map((f) => (
-              <div className="demo-filter-choice" key={f.value}>
+              <div data-demo-filter-choice="" key={f.value}>
                 <ToggleGroupItem
                   id={`${id}-multiple-${f.value}`}
                   value={f.value}
