@@ -49,6 +49,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
     let version = 0;
 
     setReady(false);
+    // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
     host.dataset.mcConfirmationGpuReady = "false";
 
     if (radius <= 0) {

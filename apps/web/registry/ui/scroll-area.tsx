@@ -150,6 +150,7 @@ const ScrollBar = ({
         if (
           !(event.target as Element).closest('[data-slot="scroll-area-thumb"]')
         ) {
+          // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
           element.scrollTop = Math.max(
             0,
             Math.min(
@@ -171,6 +172,7 @@ const ScrollBar = ({
 
         if (!event.defaultPrevented && drag.current && !disabled) {
           event.preventDefault();
+          // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
           viewport.current!.scrollTop =
             drag.current.scroll +
             ((event.clientY - drag.current.y) * geometry.maximum) /
@@ -240,6 +242,7 @@ const ScrollArea = ({
           };
         }
       } else if (viewportRef) {
+        // oxlint-disable-next-line react/immutability -- React commit forwards this mutable object ref outside render; preserve the existing callback and cleanup order.
         viewportRef.current = element;
       }
 

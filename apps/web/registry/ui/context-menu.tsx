@@ -78,6 +78,7 @@ const useMenuFrame = function useMenuFrame(
           };
         }
       } else if (ref) {
+        // oxlint-disable-next-line react/immutability -- React commit forwards this mutable object ref outside render; preserve the existing callback and cleanup order.
         ref.current = element;
       }
 
@@ -102,6 +103,7 @@ const useMenuFrame = function useMenuFrame(
     let frame = 0;
 
     const measure = () => {
+      // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
       if (!node.clientWidth || !node.clientHeight) {
         return;
       }

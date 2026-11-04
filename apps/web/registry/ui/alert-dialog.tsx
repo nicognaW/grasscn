@@ -172,6 +172,7 @@ const AlertDialogContent = ({
     const measure = () => {
       setViewport(innerWidth);
 
+      // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
       if (!node.offsetWidth) {
         return;
       }

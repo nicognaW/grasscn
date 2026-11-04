@@ -63,6 +63,7 @@ const useElement = function useElement<T extends HTMLElement>(
           };
         }
       } else if (ref) {
+        // oxlint-disable-next-line react/immutability -- React commit forwards this mutable object ref outside render; preserve the existing callback and cleanup order.
         ref.current = node;
       }
 
@@ -552,6 +553,7 @@ const SelectScrollbar = () => {
         drag.current = { top: viewport.scrollTop, y: event.clientY };
 
         if (y < offset || y > offset + thumb) {
+          // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
           viewport.scrollTop =
             Math.floor(
               (Math.max(0, y - thumb / 2) * (content - height)) /
@@ -580,6 +582,7 @@ const SelectScrollbar = () => {
           )
         );
 
+        // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
         viewport.scrollTop =
           Math.floor(
             (drag.current.top +

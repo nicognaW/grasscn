@@ -76,6 +76,7 @@ const useLocalRef = function useLocalRef<T extends HTMLElement>(
           };
         }
       } else if (forwarded) {
+        // oxlint-disable-next-line react/immutability -- React commit forwards this mutable object ref outside render; preserve the existing callback and cleanup order.
         forwarded.current = node;
       }
 
@@ -210,6 +211,7 @@ const TabsList = ({
     }
 
     const measure = () => {
+      // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
       const width = Math.floor(element.clientWidth / scale);
 
       const count = Math.max(

@@ -124,6 +124,7 @@ const CollapsibleContent = ({
     }
 
     const measure = () => {
+      // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
       const computed = getComputedStyle(element);
       const root = element.closest<HTMLElement>('[data-slot="collapsible"]');
 
