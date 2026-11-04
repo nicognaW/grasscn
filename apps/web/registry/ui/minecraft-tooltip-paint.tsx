@@ -91,7 +91,9 @@ const solidBackdrop = function solidBackdrop(node: HTMLElement) {
     }
 
     const ownText = [...element.childNodes].some(
-      (child) => child.nodeType === Node.TEXT_NODE && child.textContent?.trim()
+      (child) =>
+        child.nodeType === Node.TEXT_NODE &&
+        (child.textContent?.trim() ?? "") !== ""
     );
 
     const background = style.backgroundColor.match(/[\d.]+/gu)?.map(Number);

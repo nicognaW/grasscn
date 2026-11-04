@@ -127,7 +127,9 @@ const BubbleContent = ({
     const update = () => {
       const ownStyle = getComputedStyle(element);
       const parentStyle = getComputedStyle(parent);
-      const fixed = element.style.width && element.style.width !== "auto";
+
+      const fixed =
+        element.style.width !== "" && element.style.width !== "auto";
 
       let pixels = fixed
         ? element.clientWidth
@@ -178,7 +180,7 @@ const BubbleContent = ({
   const original = children;
 
   const content =
-    author && isMinecraftTextContent(original)
+    (author ?? "") !== "" && isMinecraftTextContent(original)
       ? `<${author}> ${original}`
       : original;
 

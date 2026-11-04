@@ -860,6 +860,7 @@ const SidebarMenuButton = ({
     );
   }
 
+  const hasTooltip = Boolean(tooltip);
   const raw = children;
   const label = props["aria-label"] ?? plainText(raw);
   const display = collapsed ? collapsedContent(raw) : raw;
@@ -868,7 +869,7 @@ const SidebarMenuButton = ({
 
   const button = (
     <SidebarControl
-      render={tooltip ? <TooltipTrigger render={render} /> : render}
+      render={hasTooltip ? <TooltipTrigger render={render} /> : render}
       type="button"
       data-slot="sidebar-menu-button"
       data-sidebar="menu-button"
@@ -887,7 +888,7 @@ const SidebarMenuButton = ({
     </SidebarControl>
   );
 
-  if (!tooltip) {
+  if (!hasTooltip) {
     return button;
   }
 

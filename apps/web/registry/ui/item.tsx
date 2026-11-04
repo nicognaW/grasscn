@@ -71,7 +71,7 @@ const Item = ({
   const child = React.isValidElement(render) ? render : null;
 
   const interactive =
-    (render ?? props.role === "button") || props.role === "link";
+    Boolean(render ?? props.role === "button") || props.role === "link";
 
   const inactive =
     props["aria-disabled"] === true || props["aria-disabled"] === "true";

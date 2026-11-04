@@ -260,7 +260,7 @@ const Hotbar = ({
         }
       }}
     >
-      {background ? (
+      {background !== undefined && background !== "" ? (
         <HotbarPaint value={current} background={background} scale={scale} />
       ) : (
         <>

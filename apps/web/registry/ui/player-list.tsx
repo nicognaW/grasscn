@@ -279,11 +279,14 @@ const PlayerList = ({
   const columnWidth = Math.max(22, rowWidth ?? 9 + nameWidth + scoreWidth + 13);
   const bodyWidth = columns * columnWidth + (columns - 1) * 5;
 
+  const hasHeader = Boolean(header);
+  const hasFooter = Boolean(footer);
+
   let _selectedHead: React.ReactNode[];
 
   if (typeof header === "string") {
     _selectedHead = header.split("\n");
-  } else if (header) {
+  } else if (hasHeader) {
     _selectedHead = [header];
   } else {
     _selectedHead = [];
@@ -295,7 +298,7 @@ const PlayerList = ({
 
   if (typeof footer === "string") {
     _selectedFoot = footer.split("\n");
-  } else if (footer) {
+  } else if (hasFooter) {
     _selectedFoot = [footer];
   } else {
     _selectedFoot = [];
@@ -311,8 +314,8 @@ const PlayerList = ({
   );
 
   const width = Math.floor(fullWidth / 2) * 2 + 2;
-  const headHeight = header ? head.length * 9 + 1 : 0;
-  const footHeight = footer ? foot.length * 9 + 1 : 0;
+  const headHeight = hasHeader ? head.length * 9 + 1 : 0;
+  const footHeight = hasFooter ? foot.length * 9 + 1 : 0;
   const bodyLeft = 1 + Math.floor(fullWidth / 2) - Math.floor(bodyWidth / 2);
 
   return (
@@ -330,7 +333,7 @@ const PlayerList = ({
           ...__style,
         }))}
       >
-        {header && (
+        {hasHeader ? (
           <div
             className="mc-roster-heading mc-dynamic-layout-player-list-1"
             style={
@@ -371,6 +374,8 @@ const PlayerList = ({
               </div>
             ))}
           </div>
+        ) : (
+          header
         )}
         <div
           role="list"
@@ -399,7 +404,7 @@ const PlayerList = ({
             )
           )}
         </div>
-        {footer && (
+        {hasFooter ? (
           <div
             className="mc-roster-heading mc-dynamic-layout-player-list-7"
             style={
@@ -441,6 +446,8 @@ const PlayerList = ({
               </div>
             ))}
           </div>
+        ) : (
+          footer
         )}
       </div>
     </MenuScaleContext.Provider>

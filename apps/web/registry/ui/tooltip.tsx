@@ -132,7 +132,7 @@ const TooltipContent = ({
 
     return (
       <>
-        {width && height ? (
+        {width !== undefined && height !== undefined ? (
           <MinecraftTooltipSurface
             width={width}
             height={height}

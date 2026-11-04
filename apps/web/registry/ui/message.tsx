@@ -202,7 +202,9 @@ const MessageContent = ({
           maxWidth={(width ?? 0) > 0 ? width : undefined}
           className="mc-owned-paint-message-2"
         >
-          {author ? `<${author}> ${children}` : children}
+          {author === undefined || author === ""
+            ? children
+            : `<${author}> ${children}`}
         </MinecraftChatText>
       ) : (
         children

@@ -78,8 +78,8 @@ const useChart = function useChart() {
 };
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(
-    ([, seriesConfig]) => seriesConfig.theme ?? seriesConfig.color
+  const colorConfig = Object.entries(config).filter(([, seriesConfig]) =>
+    Boolean(seriesConfig.theme ?? seriesConfig.color)
   );
 
   if (!colorConfig.length) {
@@ -101,7 +101,7 @@ ${colorConfig
       itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ??
       itemConfig.color;
 
-    return color ? `  --color-${key}: ${color};` : null;
+    return (color ?? "") === "" ? null : `  --color-${key}: ${color};`;
   })
   .join("\n")}
 }
@@ -269,7 +269,7 @@ const ChartTooltipContent = ({
   };
 
   const tooltipLabel = React.useMemo(() => {
-    if (hideLabel || !payload?.length) {
+    if (hideLabel || !payload || payload.length === 0) {
       return null;
     }
 
@@ -310,7 +310,7 @@ const ChartTooltipContent = ({
     tooltipScale,
   ]);
 
-  if (!(active ?? false) || !payload?.length) {
+  if (!(active ?? false) || !payload || payload.length === 0) {
     return null;
   }
 
@@ -419,7 +419,7 @@ const ChartLegendContent = ({
 } & RechartsPrimitive.DefaultLegendContentProps) => {
   const { config } = useChart();
 
-  if (!payload?.length) {
+  if (!payload || payload.length === 0) {
     return null;
   }
 
