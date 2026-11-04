@@ -68,8 +68,8 @@ const Carousel = ({
     plugins
   );
 
-  const [canScrollPrev, setPrev] = React.useState(false);
-  const [canScrollNext, setNext] = React.useState(false);
+  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
+  const [canScrollNext, setCanScrollNext] = React.useState(false);
 
   const scrollPrev = React.useCallback(() => {
     api?.scrollPrev();
@@ -90,8 +90,8 @@ const Carousel = ({
     }
 
     const update = () => {
-      setPrev(api.canScrollPrev());
-      setNext(api.canScrollNext());
+      setCanScrollPrev(api.canScrollPrev());
+      setCanScrollNext(api.canScrollNext());
     };
 
     update();
@@ -281,7 +281,11 @@ const CarouselArrow = ({
         onClick?.(event);
 
         if (!event.defaultPrevented) {
-          forward ? context.scrollNext() : context.scrollPrev();
+          if (forward) {
+            context.scrollNext();
+          } else {
+            context.scrollPrev();
+          }
           playMinecraftClick();
         }
       }}
