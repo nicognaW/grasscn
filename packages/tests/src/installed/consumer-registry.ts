@@ -215,15 +215,16 @@ export const assertRegistryInstallation = async (
 
           const candidateInputs = await Promise.all(
             candidates.map(async (candidate) => {
+              let isFile = false;
+
               try {
                 const candidateStat = await stat(candidate);
-
-                return candidateStat.isFile() ? candidate : undefined;
+                isFile = candidateStat.isFile();
               } catch {
                 /* Missing candidates are expected while walking package/import resolution. */
               }
 
-              return undefined;
+              return isFile ? candidate : undefined;
             })
           );
 

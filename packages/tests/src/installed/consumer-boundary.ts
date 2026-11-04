@@ -194,13 +194,15 @@ export const assertIndependentDependencies = async (project: string) => {
 
       const metadataInputs = await Promise.all(
         metadataFiles.map(async (file) => {
+          let matchedIdentity: (typeof identities)[string] | undefined;
+
           try {
             const bytes = await readFile(file);
             /** @type {unknown} */
             const installed: unknown = JSON.parse(bytes.toString("utf-8"));
 
             if (isInstalledMetadata(installed) && installed.name === name) {
-              return {
+              matchedIdentity = {
                 packageSha256: sha256(bytes),
                 path: physical,
                 version: installed.version,
@@ -210,7 +212,7 @@ export const assertIndependentDependencies = async (project: string) => {
             /* Missing candidates are expected while walking package/import resolution. */
           }
 
-          return undefined;
+          return matchedIdentity;
         })
       );
 
