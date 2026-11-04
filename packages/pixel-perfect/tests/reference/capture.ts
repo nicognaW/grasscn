@@ -148,9 +148,9 @@ const javaCommand = async function javaCommand(
   const result = spawnSync(executable(command), [`@${argsFile}`], {
     cwd: gameDir,
     encoding: "utf-8",
+    maxBuffer: 10 * 1024 * 1024,
     timeout: 240_000,
     windowsHide: true,
-    maxBuffer: 10 * 1024 * 1024,
   });
 
   await writeFile(

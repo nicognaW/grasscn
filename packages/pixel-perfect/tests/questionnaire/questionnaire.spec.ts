@@ -164,7 +164,10 @@ for (const [part, dir] of parts) {
                   p.cursor < p.anchor ? "backward" : "forward"
                 );
               },
-              { cursor, anchor }
+              {
+                anchor,
+                cursor,
+              }
             );
             // SAFETY: This same captured Input route supplies the retained case's required numeric caretMs; the existing clock call and property read stay in place.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing closed-route correlation to the exact Input artifact.
