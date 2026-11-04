@@ -649,9 +649,9 @@ const PlayerPreview = ({
         }
       />
       {status !== "loaded" && (
-        <span role="status">
+        <output className="mc-player-preview-status">
           {status === "loading" ? "Loading skin..." : "3D preview unavailable"}
-        </span>
+        </output>
       )}
       <span className="mc-player-preview-accessible">
         Drag to rotate. Arrow keys rotate; Home resets.

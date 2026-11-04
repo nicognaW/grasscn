@@ -61,7 +61,7 @@ const ScrollAreaDemo = ({ scale }: DemoProps) => {
         <div className="demo-pair">
           <span>VERTICAL SCROLLING</span>
           <ScrollArea
-            role="region"
+            render={<section />}
             aria-label="Demo scroll area"
             scale={scale}
             disabled={disabled}

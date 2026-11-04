@@ -17,7 +17,7 @@
     display: block;
     image-rendering: pixelated;
   }
-  .mc-player-preview > span[role="status"] {
+  .mc-player-preview > output.mc-player-preview-status {
     position: absolute;
     inset: 0;
     display: grid;
