@@ -1,9 +1,9 @@
 "use client";
 
 // The Minecraft Java Edition 26.2 firework rocket as a page effect: each
-// launch runs one rocket simulation (flight, trail, star explosion) at 20
+// launch runs one rocket simulation (flight, trail, large ball explosion) at 20
 // ticks per second, plays the native sounds each tick returns, and draws the
-// frames into one shared canvas whose launch point sits on the anchor.
+// frames into its anchor's canvas, whose launch point sits on the anchor.
 import { fireworkTextures } from "./minecraft-firework-assets";
 import {
   createFireworkTarget,
@@ -46,14 +46,20 @@ type Textures = Awaited<ReturnType<typeof loadTextures>>;
 let texturesRequested = false;
 let textures: Textures | undefined;
 const launches = new Set<Launch>();
-let canvas: HTMLCanvasElement | undefined;
+
+// One canvas per anchor: launches from the same anchor share it, and a
+// launch from another anchor never moves an in-flight rocket.
+const canvases = new Map<Element, HTMLCanvasElement>();
 let frame = 0;
 
-const sharedCanvas = (page: Document) => {
-  if (canvas !== undefined) {
-    return canvas;
+const canvasFor = (anchor: Element) => {
+  const existing = canvases.get(anchor);
+
+  if (existing !== undefined) {
+    return existing;
   }
 
+  const page = anchor.ownerDocument;
   const element = page.createElement("canvas");
   element.width = WIDTH;
   element.height = HEIGHT;
@@ -70,14 +76,13 @@ const sharedCanvas = (page: Document) => {
     zIndex: "2147483647",
   });
   page.body.append(element);
-  canvas = element;
+  canvases.set(anchor, element);
 
   return element;
 };
 
-// The shared canvas follows the latest drawn launch's anchor: the scene's
-// launch pixel sits on the anchor's bottom centre. A detached anchor (the
-// page navigated away) leaves the canvas where it was.
+// The scene's launch pixel sits on the anchor's bottom centre. A detached
+// anchor (the page navigated away) leaves its canvas where it was.
 const place = (element: HTMLCanvasElement, anchor: Element) => {
   if (!anchor.isConnected) {
     return;
@@ -89,21 +94,12 @@ const place = (element: HTMLCanvasElement, anchor: Element) => {
   element.style.transform = `translate(${left}px, ${top}px)`;
 };
 
-const draw = (now: number) => {
-  const drawn = [...launches].filter((launch) => launch.drawn);
-  const latest = drawn.at(-1);
-
-  if (latest === undefined) {
-    canvas?.remove();
-    canvas = undefined;
-
-    return;
-  }
-
-  const element = sharedCanvas(latest.anchor.ownerDocument);
+const drawAnchor = (
+  element: HTMLCanvasElement,
+  drawn: readonly Launch[],
+  now: number
+) => {
   const context = element.getContext("2d");
-
-  place(element, latest.anchor);
 
   if (textures === undefined || context === null) {
     return;
@@ -131,6 +127,32 @@ const draw = (now: number) => {
   element.dataset.rendered = "true";
 };
 
+const draw = (now: number) => {
+  const byAnchor = new Map<Element, Launch[]>();
+
+  for (const launch of launches) {
+    if (launch.drawn) {
+      byAnchor.set(launch.anchor, [
+        ...(byAnchor.get(launch.anchor) ?? []),
+        launch,
+      ]);
+    }
+  }
+
+  for (const [anchor, element] of canvases) {
+    if (!byAnchor.has(anchor)) {
+      element.remove();
+      canvases.delete(anchor);
+    }
+  }
+
+  for (const [anchor, drawn] of byAnchor) {
+    const element = canvasFor(anchor);
+    place(element, anchor);
+    drawAnchor(element, drawn, now);
+  }
+};
+
 const step = (now: number) => {
   for (const launch of launches) {
     // Tick 1 ran on the click; tick n is due (n - 1) ticks later.
@@ -156,8 +178,9 @@ const prefersReducedMotion = (anchor: Element) =>
 
 /**
  * Launches one firework rocket from `anchor`. Every launch uses the same
- * fixed seeds, and overlapping launches run as independent instances on the
- * one shared canvas. Under `prefers-reduced-motion` only the sounds play.
+ * fixed seeds, and overlapping launches run as independent instances:
+ * launches from one anchor share its canvas, and each anchor keeps its own.
+ * Under `prefers-reduced-motion` only the sounds play.
  */
 export const launchFireworks = (anchor: Element) => {
   const launch: Launch = {

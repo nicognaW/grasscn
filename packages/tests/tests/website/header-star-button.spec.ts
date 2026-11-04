@@ -384,6 +384,62 @@ test("Rapid header star clicks launch overlapping fireworks on one canvas", asyn
   await expect(fireworksCanvas(page)).toHaveCount(0, { timeout: 10_000 });
 });
 
+interface Box {
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+}
+
+// The canvas's launch pixel (240, 584) and an anchor's bottom centre, in
+// whole viewport pixels.
+const launchPoint = (box: Box | null) =>
+  box === null ? null : [Math.round(box.x + 240), Math.round(box.y + 584)];
+
+const bottomCentre = (box: Box | null) =>
+  box === null
+    ? null
+    : [Math.round(box.x + box.width / 2), Math.round(box.y + box.height)];
+
+test("A launch from another anchor leaves the header launch where it is", async ({
+  page,
+}) => {
+  await recordVoices(page);
+  // Tall enough that the header and the playground both show, so neither
+  // click scrolls the page.
+  await page.setViewportSize({ height: 3200, width: 1280 });
+  await page.goto(`${origin}docs/components/fireworks`);
+  const star = starButton(page).locator('[data-slot="nether-star"]');
+
+  const launchButton = page
+    .locator(".documentation-playground")
+    .getByRole("button", { exact: true, name: "Launch fireworks" });
+
+  await starButton(page).click();
+  const header = fireworksCanvas(page).first();
+  await expect(header).toHaveAttribute("data-rendered", "true");
+  const before = await header.boundingBox();
+
+  await launchButton.click();
+  await expect(fireworksCanvas(page)).toHaveCount(2);
+  const playground = fireworksCanvas(page).nth(1);
+  await expect(playground).toHaveAttribute("data-rendered", "true");
+
+  const [after, playgroundBox, starBox, buttonBox] = await Promise.all([
+    header.boundingBox(),
+    playground.boundingBox(),
+    star.boundingBox(),
+    launchButton.boundingBox(),
+  ]);
+
+  // The header rocket keeps rising from the star; the second rocket rises
+  // from the launch button on its own canvas.
+  expect(after).toEqual(before);
+  expect(launchPoint(after)).toEqual(bottomCentre(starBox));
+  expect(launchPoint(playgroundBox)).toEqual(bottomCentre(buttonBox));
+  await expect(fireworksCanvas(page)).toHaveCount(0, { timeout: 10_000 });
+});
+
 test("Under reduced motion the header star button plays the firework sounds with no canvas", async ({
   page,
 }) => {

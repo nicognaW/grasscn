@@ -19,7 +19,7 @@ A Minecraft firework rocket launched from any element, with its native sounds.
 
 Call `useFireworks()` in a client component. It returns `launch(anchor)`; call it from an event handler with the element the rocket should rise from, for example `launch(event.currentTarget)`. The grasscn header launches the fireworks from the nether star in its star button.
 
-Each launch runs one firework rocket at 20 ticks per second: a one-second flight with its trail, then a large star-shaped explosion. All launches draw into one shared 480x640 canvas, portaled to the page body above everything else. The canvas ignores the pointer, so whatever lies beneath it stays clickable. Its launch point, 56 px above its bottom centre, sits on the bottom centre of the latest anchor, and the 56 px below leave room for falling sparks.
+Each launch runs one firework rocket at 20 ticks per second: a one-second flight with its trail, then a large ball explosion (the game's `large_ball` shape). Launches draw into a 480x640 canvas per anchor, portaled to the page body above everything else; launches from the same anchor share its canvas, and a launch from another anchor never moves a rocket already in flight. The canvas ignores the pointer, so whatever lies beneath it stays clickable. Its launch point, 56 px above its bottom centre, sits on the bottom centre of its anchor, and the 56 px below leave room for falling sparks.
 
 Every launch uses the same fixed seed, so every rocket flies and explodes the same way. Launches that overlap run as independent instances. When the user prefers reduced motion, a launch plays the sounds on the same ticks and draws nothing.
 

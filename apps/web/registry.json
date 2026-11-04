@@ -5922,7 +5922,7 @@
       "name": "fireworks",
       "type": "registry:ui",
       "title": "Fireworks",
-      "description": "useFireworks() returns launch(anchor): one firework rocket (flight, trail and star explosion at the fixed seeds) on a shared pointer-transparent 480x640 canvas, with the native launch, large_blast and twinkle sounds on their ticks at the master volume, matching projected references at partialTick 0. Web adaptations: placement on the anchor, fixed seed, transparent backdrop, near sounds without distance delay, and sound only under prefers-reduced-motion.",
+      "description": "useFireworks() returns launch(anchor): one firework rocket (flight, trail and large ball explosion at the fixed seeds) on a pointer-transparent 480x640 canvas per anchor, with the native launch, large_blast and twinkle sounds on their ticks at the master volume, matching projected references at partialTick 0. Web adaptations: placement on the anchor, fixed seed, transparent backdrop, near sounds without distance delay, and sound only under prefers-reduced-motion.",
       "files": [
         {
           "path": "registry/ui/fireworks.tsx",
