@@ -344,9 +344,15 @@ export const attachMinecraftInput = function attachMinecraftInput(
         paint();
       };
 
-      repaintAfterFontLoading().catch((error: unknown) => {
-        console.error(error);
-      });
+      const superviseFontRepaint = async () => {
+        try {
+          await repaintAfterFontLoading();
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      void superviseFontRepaint();
     }
 
     const supported =
@@ -553,12 +559,18 @@ export const attachMinecraftInput = function attachMinecraftInput(
     }
   };
 
-  startPaintingAfterImages().catch((error: unknown) => {
-    if (!cancelled) {
-      input.dataset.mcBitmap = "false";
-      console.error(error);
+  const superviseImageStartup = async () => {
+    try {
+      await startPaintingAfterImages();
+    } catch (error) {
+      if (!cancelled) {
+        input.dataset.mcBitmap = "false";
+        console.error(error);
+      }
     }
-  });
+  };
+
+  void superviseImageStartup();
 
   return () => {
     cancelled = true;

@@ -351,9 +351,15 @@ export const attachMinecraftOTPSlot = function attachMinecraftOTPSlot(
         paint();
       };
 
-      repaintAfterFontLoading().catch((error: unknown) => {
-        console.error(error);
-      });
+      const superviseFontRepaint = async () => {
+        try {
+          await repaintAfterFontLoading();
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      void superviseFontRepaint();
     }
 
     const supported =
@@ -560,12 +566,18 @@ export const attachMinecraftOTPSlot = function attachMinecraftOTPSlot(
     }
   };
 
-  startPaintingAfterImages().catch((error: unknown) => {
-    if (!cancelled) {
-      input.dataset.mcBitmap = "false";
-      console.error(error);
+  const superviseImageStartup = async () => {
+    try {
+      await startPaintingAfterImages();
+    } catch (error) {
+      if (!cancelled) {
+        input.dataset.mcBitmap = "false";
+        console.error(error);
+      }
     }
-  });
+  };
+
+  void superviseImageStartup();
 
   return () => {
     cancelled = true;
