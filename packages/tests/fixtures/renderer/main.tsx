@@ -701,54 +701,60 @@ const ContextFixture = () => {
     }
   };
 
-  let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
+  const renderNativeMenuBody = () => {
+    let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
 
-  if (part === "menu-checkbox") {
-    selectedNativeBody = (
-      <ContextMenuCheckboxItem
-        checked={nativeChecked}
-        disabled={nativeDisabled}
-      >
-        {nativeLabel}
-      </ContextMenuCheckboxItem>
-    );
-  } else if (part === "menu-radio") {
-    selectedNativeBody = (
-      <ContextMenuRadioGroup value={nativeChecked ? "on" : "off"}>
-        <ContextMenuRadioItem value="on" disabled={nativeDisabled}>
+    if (part === "menu-checkbox") {
+      selectedNativeBody = (
+        <ContextMenuCheckboxItem
+          checked={nativeChecked}
+          disabled={nativeDisabled}
+        >
           {nativeLabel}
-        </ContextMenuRadioItem>
-      </ContextMenuRadioGroup>
-    );
-  } else if (part === "menu-label" || part === "menu-label-inset") {
-    selectedNativeBody = (
-      <ContextMenuGroup>
-        <ContextMenuLabel inset={part === "menu-label-inset"}>
-          {nativeLabel}
-        </ContextMenuLabel>
-      </ContextMenuGroup>
-    );
-  } else if (part === "menu-separator") {
-    selectedNativeBody = <ContextMenuSeparator />;
-  } else if (part === "menu-sub-trigger") {
-    selectedNativeBody = (
-      <ContextMenuSub>
-        <ContextMenuSubTrigger>{nativeLabel}</ContextMenuSubTrigger>
-      </ContextMenuSub>
-    );
-  } else if (part === "menu-disabled") {
-    selectedNativeBody = (
-      <ContextMenuItem disabled>{nativeLabel}</ContextMenuItem>
-    );
-  } else {
-    selectedNativeBody = labels.map((contextItemLabel, index) => (
-      <ContextMenuItem key={index} data-native-index={index}>
-        {contextItemLabel}
-      </ContextMenuItem>
-    ));
-  }
+        </ContextMenuCheckboxItem>
+      );
+    } else if (part === "menu-radio") {
+      selectedNativeBody = (
+        <ContextMenuRadioGroup value={nativeChecked ? "on" : "off"}>
+          <ContextMenuRadioItem value="on" disabled={nativeDisabled}>
+            {nativeLabel}
+          </ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
+      );
+    } else if (part === "menu-label" || part === "menu-label-inset") {
+      selectedNativeBody = (
+        <ContextMenuGroup>
+          <ContextMenuLabel inset={part === "menu-label-inset"}>
+            {nativeLabel}
+          </ContextMenuLabel>
+        </ContextMenuGroup>
+      );
+    } else if (part === "menu-separator") {
+      selectedNativeBody = <ContextMenuSeparator />;
+    } else if (part === "menu-sub-trigger") {
+      selectedNativeBody = (
+        <ContextMenuSub>
+          <ContextMenuSubTrigger>{nativeLabel}</ContextMenuSubTrigger>
+        </ContextMenuSub>
+      );
+    } else if (part === "menu-disabled") {
+      selectedNativeBody = (
+        <ContextMenuItem disabled>{nativeLabel}</ContextMenuItem>
+      );
+    } else {
+      selectedNativeBody = labels.map((contextItemLabel, index) => (
+        <ContextMenuItem key={index} data-native-index={index}>
+          {contextItemLabel}
+        </ContextMenuItem>
+      ));
+    }
 
-  const nativeBody = selectedNativeBody;
+    const nativeMenuBody = selectedNativeBody;
+
+    return nativeMenuBody;
+  };
+
+  const nativeBody = renderNativeMenuBody();
 
   const handleOpen = (
     next: boolean,
@@ -814,67 +820,73 @@ const ContextFixture = () => {
     </>
   );
 
-  let selectedFixtureBranch4: ReactNode;
+  const renderMenuPopup = () => {
+    let selectedFixtureBranch4: ReactNode;
 
-  if (params.has("contentAsChild")) {
-    selectedFixtureBranch4 = (
-      <ContextMenuItem
-        render={
-          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ContextMenuItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
-          <a href="#menu-composed" />
+    if (params.has("contentAsChild")) {
+      selectedFixtureBranch4 = (
+        <ContextMenuItem
+          render={
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ContextMenuItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+            <a href="#menu-composed" />
+          }
+          onClick={choose}
+        >
+          Composed action
+        </ContextMenuItem>
+      );
+    } else {
+      selectedFixtureBranch4 = native ? nativeBody : rows;
+    }
+
+    let popupNativeHeight: string | undefined;
+    let popupNativeWidth: string | undefined;
+    let popupMaximumHeight: number | undefined;
+
+    if (native) {
+      popupNativeHeight = `${Number(params.get("height")) * scale}px`;
+      popupNativeWidth = `${Number(params.get("width")) * scale}px`;
+    } else if (params.has("maxHeight")) {
+      popupMaximumHeight = Number(params.get("maxHeight"));
+    }
+
+    const popupElement = (
+      <ContextMenuContent
+        render={params.has("contentAsChild") ? <section /> : undefined}
+        id="subject"
+        data-subject="true"
+        ref={content}
+        side={
+          // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("side") ?? "right") as "top" | "right" | "bottom" | "left"
         }
-        onClick={choose}
+        align={
+          // SAFETY: owned fixture callers serialize the align option from the actual component protocol ("start" | "center" | "end"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("align") ?? "start") as "start" | "center" | "end"
+        }
+        sideOffset={native ? 0 : 4}
+        surface={
+          params.get("surface") === "suggestions" ? "suggestions" : "popup"
+        }
+        className={cn({
+          "fixture-geometry-height fixture-geometry-width": native,
+        })}
+        style={{
+          "--fixture-height": popupNativeHeight,
+          "--fixture-width": popupNativeWidth,
+          maxHeight: popupMaximumHeight,
+        }}
       >
-        Composed action
-      </ContextMenuItem>
+        {selectedFixtureBranch4}
+      </ContextMenuContent>
     );
-  } else {
-    selectedFixtureBranch4 = native ? nativeBody : rows;
-  }
 
-  let popupNativeHeight: string | undefined;
-  let popupNativeWidth: string | undefined;
-  let popupMaximumHeight: number | undefined;
+    return popupElement;
+  };
 
-  if (native) {
-    popupNativeHeight = `${Number(params.get("height")) * scale}px`;
-    popupNativeWidth = `${Number(params.get("width")) * scale}px`;
-  } else if (params.has("maxHeight")) {
-    popupMaximumHeight = Number(params.get("maxHeight"));
-  }
-
-  const popup = (
-    <ContextMenuContent
-      render={params.has("contentAsChild") ? <section /> : undefined}
-      id="subject"
-      data-subject="true"
-      ref={content}
-      side={
-        // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
-        (params.get("side") ?? "right") as "top" | "right" | "bottom" | "left"
-      }
-      align={
-        // SAFETY: owned fixture callers serialize the align option from the actual component protocol ("start" | "center" | "end"); preserve this URL read, original default and component handling.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
-        (params.get("align") ?? "start") as "start" | "center" | "end"
-      }
-      sideOffset={native ? 0 : 4}
-      surface={
-        params.get("surface") === "suggestions" ? "suggestions" : "popup"
-      }
-      className={cn({
-        "fixture-geometry-height fixture-geometry-width": native,
-      })}
-      style={{
-        "--fixture-height": popupNativeHeight,
-        "--fixture-width": popupNativeWidth,
-        maxHeight: popupMaximumHeight,
-      }}
-    >
-      {selectedFixtureBranch4}
-    </ContextMenuContent>
-  );
+  const popup = renderMenuPopup();
 
   return (
     <>
@@ -1158,49 +1170,55 @@ const MenubarFixture = () => {
     }
   };
 
-  let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
+  const renderNativeMenuBody = () => {
+    let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
 
-  if (part === "menu-checkbox") {
-    selectedNativeBody = (
-      <MenubarCheckboxItem checked={nativeChecked} disabled={nativeDisabled}>
-        {nativeLabel}
-      </MenubarCheckboxItem>
-    );
-  } else if (part === "menu-radio") {
-    selectedNativeBody = (
-      <MenubarRadioGroup value={nativeChecked ? "on" : "off"}>
-        <MenubarRadioItem value="on" disabled={nativeDisabled}>
+    if (part === "menu-checkbox") {
+      selectedNativeBody = (
+        <MenubarCheckboxItem checked={nativeChecked} disabled={nativeDisabled}>
           {nativeLabel}
-        </MenubarRadioItem>
-      </MenubarRadioGroup>
-    );
-  } else if (part === "menu-label" || part === "menu-label-inset") {
-    selectedNativeBody = (
-      <MenubarGroup>
-        <MenubarLabel inset={part === "menu-label-inset"}>
-          {nativeLabel}
-        </MenubarLabel>
-      </MenubarGroup>
-    );
-  } else if (part === "menu-separator") {
-    selectedNativeBody = <MenubarSeparator />;
-  } else if (part === "menu-sub-trigger") {
-    selectedNativeBody = (
-      <MenubarSub>
-        <MenubarSubTrigger>{nativeLabel}</MenubarSubTrigger>
-      </MenubarSub>
-    );
-  } else if (part === "menu-disabled") {
-    selectedNativeBody = <MenubarItem disabled>{nativeLabel}</MenubarItem>;
-  } else {
-    selectedNativeBody = labels.map((menubarItemLabel, index) => (
-      <MenubarItem key={index} data-native-index={index}>
-        {menubarItemLabel}
-      </MenubarItem>
-    ));
-  }
+        </MenubarCheckboxItem>
+      );
+    } else if (part === "menu-radio") {
+      selectedNativeBody = (
+        <MenubarRadioGroup value={nativeChecked ? "on" : "off"}>
+          <MenubarRadioItem value="on" disabled={nativeDisabled}>
+            {nativeLabel}
+          </MenubarRadioItem>
+        </MenubarRadioGroup>
+      );
+    } else if (part === "menu-label" || part === "menu-label-inset") {
+      selectedNativeBody = (
+        <MenubarGroup>
+          <MenubarLabel inset={part === "menu-label-inset"}>
+            {nativeLabel}
+          </MenubarLabel>
+        </MenubarGroup>
+      );
+    } else if (part === "menu-separator") {
+      selectedNativeBody = <MenubarSeparator />;
+    } else if (part === "menu-sub-trigger") {
+      selectedNativeBody = (
+        <MenubarSub>
+          <MenubarSubTrigger>{nativeLabel}</MenubarSubTrigger>
+        </MenubarSub>
+      );
+    } else if (part === "menu-disabled") {
+      selectedNativeBody = <MenubarItem disabled>{nativeLabel}</MenubarItem>;
+    } else {
+      selectedNativeBody = labels.map((menubarItemLabel, index) => (
+        <MenubarItem key={index} data-native-index={index}>
+          {menubarItemLabel}
+        </MenubarItem>
+      ));
+    }
 
-  const nativeBody = selectedNativeBody;
+    const nativeMenuBody = selectedNativeBody;
+
+    return nativeMenuBody;
+  };
+
+  const nativeBody = renderNativeMenuBody();
 
   const handleOpen = (
     next: boolean,
@@ -1266,106 +1284,128 @@ const MenubarFixture = () => {
     </>
   );
 
-  let selectedFixtureBranch8: ReactNode;
+  const renderMenuPopup = () => {
+    let selectedFixtureBranch8: ReactNode;
 
-  if (params.has("contentAsChild")) {
-    selectedFixtureBranch8 = (
-      <MenubarItem
-        render={
-          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- MenubarItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
-          <a href="#menu-composed" />
+    if (params.has("contentAsChild")) {
+      selectedFixtureBranch8 = (
+        <MenubarItem
+          render={
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- MenubarItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+            <a href="#menu-composed" />
+          }
+          onClick={choose}
+        >
+          Composed action
+        </MenubarItem>
+      );
+    } else {
+      selectedFixtureBranch8 = native ? nativeBody : rows;
+    }
+
+    let popupNativeHeight: string | undefined;
+    let popupNativeWidth: string | undefined;
+    let popupMaximumHeight: number | undefined;
+
+    if (native) {
+      popupNativeHeight = `${Number(params.get("height")) * scale}px`;
+      popupNativeWidth = `${Number(params.get("width")) * scale}px`;
+    } else if (params.has("maxHeight")) {
+      popupMaximumHeight = Number(params.get("maxHeight"));
+    }
+
+    const popupElement = (
+      <MenubarContent
+        render={params.has("contentAsChild") ? <section /> : undefined}
+        id="subject"
+        data-subject="true"
+        ref={content}
+        side={
+          // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("side") ?? "bottom") as
+            | "top"
+            | "right"
+            | "bottom"
+            | "left"
         }
-        onClick={choose}
+        align={
+          // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "start" | "center" | "end"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("align") ?? (native ? "start" : "center")) as
+            | "start"
+            | "center"
+            | "end"
+        }
+        sideOffset={native ? 0 : 4}
+        surface={
+          params.get("surface") === "suggestions" ? "suggestions" : "popup"
+        }
+        className={cn({
+          "fixture-geometry-height fixture-geometry-width": native,
+        })}
+        style={{
+          "--fixture-height": popupNativeHeight,
+          "--fixture-width": popupNativeWidth,
+          maxHeight: popupMaximumHeight,
+        }}
       >
-        Composed action
-      </MenubarItem>
+        {selectedFixtureBranch8}
+      </MenubarContent>
     );
-  } else {
-    selectedFixtureBranch8 = native ? nativeBody : rows;
-  }
 
-  let popupNativeHeight: string | undefined;
-  let popupNativeWidth: string | undefined;
-  let popupMaximumHeight: number | undefined;
+    return popupElement;
+  };
 
-  if (native) {
-    popupNativeHeight = `${Number(params.get("height")) * scale}px`;
-    popupNativeWidth = `${Number(params.get("width")) * scale}px`;
-  } else if (params.has("maxHeight")) {
-    popupMaximumHeight = Number(params.get("maxHeight"));
-  }
-
-  const popup = (
-    <MenubarContent
-      render={params.has("contentAsChild") ? <section /> : undefined}
-      id="subject"
-      data-subject="true"
-      ref={content}
-      side={
-        // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
-        (params.get("side") ?? "bottom") as "top" | "right" | "bottom" | "left"
-      }
-      align={
-        // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "start" | "center" | "end"); preserve this URL read, original default and component handling.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
-        (params.get("align") ?? (native ? "start" : "center")) as
-          | "start"
-          | "center"
-          | "end"
-      }
-      sideOffset={native ? 0 : 4}
-      surface={
-        params.get("surface") === "suggestions" ? "suggestions" : "popup"
-      }
-      className={cn({
-        "fixture-geometry-height fixture-geometry-width": native,
-      })}
-      style={{
-        "--fixture-height": popupNativeHeight,
-        "--fixture-width": popupNativeWidth,
-        maxHeight: popupMaximumHeight,
-      }}
-    >
-      {selectedFixtureBranch8}
-    </MenubarContent>
-  );
+  const popup = renderMenuPopup();
 
   const nativeTriggerPositioned =
     triggerPixels && (!native || params.has("nativeButtonChild"));
 
-  let selectedFixtureBranch9: ReactNode;
+  const readMenuOpenState = () => {
+    let requestedOpenState: ReactNode;
 
-  if (native || (triggerPixels && params.has("open"))) {
-    selectedFixtureBranch9 = true;
-  } else {
-    selectedFixtureBranch9 = params.has("controlled")
-      ? menuValue === "game"
-      : undefined;
-  }
+    if (native || (triggerPixels && params.has("open"))) {
+      requestedOpenState = true;
+    } else {
+      requestedOpenState = params.has("controlled")
+        ? menuValue === "game"
+        : undefined;
+    }
 
-  let selectedFixtureBranch10: ReactNode;
+    return requestedOpenState;
+  };
 
-  if (params.has("nativeButtonChild")) {
-    selectedFixtureBranch10 = <Button scale={scale} />;
-  } else {
-    selectedFixtureBranch10 =
-      native || params.has("triggerAsChild") ? (
-        <button
-          type="button"
-          aria-label={fixtureFallbackLabel("Game menu", triggerLabel)}
-          className={native ? "fixture-native-anchor" : undefined}
-          style={
-            native
-              ? {
-                  "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
-                  "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
-                }
-              : undefined
-          }
-        />
-      ) : undefined;
-  }
+  const selectedFixtureBranch9 = readMenuOpenState();
+
+  const renderMenuTriggerReceiver = () => {
+    let triggerReceiver: ReactNode;
+
+    if (params.has("nativeButtonChild")) {
+      triggerReceiver = <Button scale={scale} />;
+    } else {
+      triggerReceiver =
+        native || params.has("triggerAsChild") ? (
+          <button
+            type="button"
+            aria-label={fixtureFallbackLabel("Game menu", triggerLabel)}
+            className={native ? "fixture-native-anchor" : undefined}
+            style={
+              native
+                ? {
+                    "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
+                    "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
+                  }
+                : undefined
+            }
+          />
+        ) : undefined;
+    }
+
+    return triggerReceiver;
+  };
+
+  const selectedFixtureBranch10 = renderMenuTriggerReceiver();
 
   return (
     <>
@@ -1485,54 +1525,60 @@ const DropdownFixture = () => {
     }
   };
 
-  let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
+  const renderNativeMenuBody = () => {
+    let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
 
-  if (part === "menu-checkbox") {
-    selectedNativeBody = (
-      <DropdownMenuCheckboxItem
-        checked={nativeChecked}
-        disabled={nativeDisabled}
-      >
-        {nativeLabel}
-      </DropdownMenuCheckboxItem>
-    );
-  } else if (part === "menu-radio") {
-    selectedNativeBody = (
-      <DropdownMenuRadioGroup value={nativeChecked ? "on" : "off"}>
-        <DropdownMenuRadioItem value="on" disabled={nativeDisabled}>
+    if (part === "menu-checkbox") {
+      selectedNativeBody = (
+        <DropdownMenuCheckboxItem
+          checked={nativeChecked}
+          disabled={nativeDisabled}
+        >
           {nativeLabel}
-        </DropdownMenuRadioItem>
-      </DropdownMenuRadioGroup>
-    );
-  } else if (part === "menu-label" || part === "menu-label-inset") {
-    selectedNativeBody = (
-      <DropdownMenuGroup>
-        <DropdownMenuLabel inset={part === "menu-label-inset"}>
-          {nativeLabel}
-        </DropdownMenuLabel>
-      </DropdownMenuGroup>
-    );
-  } else if (part === "menu-separator") {
-    selectedNativeBody = <DropdownMenuSeparator />;
-  } else if (part === "menu-sub-trigger") {
-    selectedNativeBody = (
-      <DropdownMenuSub>
-        <DropdownMenuSubTrigger>{nativeLabel}</DropdownMenuSubTrigger>
-      </DropdownMenuSub>
-    );
-  } else if (part === "menu-disabled") {
-    selectedNativeBody = (
-      <DropdownMenuItem disabled>{nativeLabel}</DropdownMenuItem>
-    );
-  } else {
-    selectedNativeBody = labels.map((dropdownItemLabel, index) => (
-      <DropdownMenuItem key={index} data-native-index={index}>
-        {dropdownItemLabel}
-      </DropdownMenuItem>
-    ));
-  }
+        </DropdownMenuCheckboxItem>
+      );
+    } else if (part === "menu-radio") {
+      selectedNativeBody = (
+        <DropdownMenuRadioGroup value={nativeChecked ? "on" : "off"}>
+          <DropdownMenuRadioItem value="on" disabled={nativeDisabled}>
+            {nativeLabel}
+          </DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      );
+    } else if (part === "menu-label" || part === "menu-label-inset") {
+      selectedNativeBody = (
+        <DropdownMenuGroup>
+          <DropdownMenuLabel inset={part === "menu-label-inset"}>
+            {nativeLabel}
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
+      );
+    } else if (part === "menu-separator") {
+      selectedNativeBody = <DropdownMenuSeparator />;
+    } else if (part === "menu-sub-trigger") {
+      selectedNativeBody = (
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>{nativeLabel}</DropdownMenuSubTrigger>
+        </DropdownMenuSub>
+      );
+    } else if (part === "menu-disabled") {
+      selectedNativeBody = (
+        <DropdownMenuItem disabled>{nativeLabel}</DropdownMenuItem>
+      );
+    } else {
+      selectedNativeBody = labels.map((dropdownItemLabel, index) => (
+        <DropdownMenuItem key={index} data-native-index={index}>
+          {dropdownItemLabel}
+        </DropdownMenuItem>
+      ));
+    }
 
-  const nativeBody = selectedNativeBody;
+    const nativeMenuBody = selectedNativeBody;
+
+    return nativeMenuBody;
+  };
+
+  const nativeBody = renderNativeMenuBody();
 
   const handleOpen = (
     next: boolean,
@@ -1598,70 +1644,80 @@ const DropdownFixture = () => {
     </>
   );
 
-  let selectedFixtureBranch11: ReactNode;
+  const renderMenuPopup = () => {
+    let selectedFixtureBranch11: ReactNode;
 
-  if (params.has("contentAsChild")) {
-    selectedFixtureBranch11 = (
-      <DropdownMenuItem
-        render={
-          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- DropdownMenuItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
-          <a href="#menu-composed" />
+    if (params.has("contentAsChild")) {
+      selectedFixtureBranch11 = (
+        <DropdownMenuItem
+          render={
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- DropdownMenuItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+            <a href="#menu-composed" />
+          }
+          onClick={choose}
+        >
+          Composed action
+        </DropdownMenuItem>
+      );
+    } else {
+      selectedFixtureBranch11 = native ? nativeBody : rows;
+    }
+
+    let popupNativeHeight: string | undefined;
+    let popupNativeWidth: string | undefined;
+    let popupMaximumHeight: number | undefined;
+
+    if (native) {
+      popupNativeHeight = `${Number(params.get("height")) * scale}px`;
+      popupNativeWidth = `${Number(params.get("width")) * scale}px`;
+    } else if (params.has("maxHeight")) {
+      popupMaximumHeight = Number(params.get("maxHeight"));
+    }
+
+    const popupElement = (
+      <DropdownMenuContent
+        render={params.has("contentAsChild") ? <section /> : undefined}
+        id="subject"
+        data-subject="true"
+        ref={content}
+        side={
+          // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("side") ?? "bottom") as
+            | "top"
+            | "right"
+            | "bottom"
+            | "left"
         }
-        onClick={choose}
+        align={
+          // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "start" | "center" | "end"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("align") ?? (native ? "start" : "center")) as
+            | "start"
+            | "center"
+            | "end"
+        }
+        sideOffset={native ? 0 : 4}
+        surface={
+          params.get("surface") === "suggestions" ? "suggestions" : "popup"
+        }
+        className={cn({
+          "fixture-geometry-height fixture-geometry-width": native,
+        })}
+        style={{
+          "--fixture-height": popupNativeHeight,
+          "--fixture-width": popupNativeWidth,
+          maxHeight: popupMaximumHeight,
+        }}
       >
-        Composed action
-      </DropdownMenuItem>
+        {selectedFixtureBranch11}
+      </DropdownMenuContent>
     );
-  } else {
-    selectedFixtureBranch11 = native ? nativeBody : rows;
-  }
 
-  let popupNativeHeight: string | undefined;
-  let popupNativeWidth: string | undefined;
-  let popupMaximumHeight: number | undefined;
+    return popupElement;
+  };
 
-  if (native) {
-    popupNativeHeight = `${Number(params.get("height")) * scale}px`;
-    popupNativeWidth = `${Number(params.get("width")) * scale}px`;
-  } else if (params.has("maxHeight")) {
-    popupMaximumHeight = Number(params.get("maxHeight"));
-  }
-
-  const popup = (
-    <DropdownMenuContent
-      render={params.has("contentAsChild") ? <section /> : undefined}
-      id="subject"
-      data-subject="true"
-      ref={content}
-      side={
-        // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
-        (params.get("side") ?? "bottom") as "top" | "right" | "bottom" | "left"
-      }
-      align={
-        // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "start" | "center" | "end"); preserve this URL read, original default and component handling.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
-        (params.get("align") ?? (native ? "start" : "center")) as
-          | "start"
-          | "center"
-          | "end"
-      }
-      sideOffset={native ? 0 : 4}
-      surface={
-        params.get("surface") === "suggestions" ? "suggestions" : "popup"
-      }
-      className={cn({
-        "fixture-geometry-height fixture-geometry-width": native,
-      })}
-      style={{
-        "--fixture-height": popupNativeHeight,
-        "--fixture-width": popupNativeWidth,
-        maxHeight: popupMaximumHeight,
-      }}
-    >
-      {selectedFixtureBranch11}
-    </DropdownMenuContent>
-  );
+  const popup = renderMenuPopup();
 
   const nativeTriggerPositioned =
     triggerPixels && (!native || params.has("nativeButtonChild"));
@@ -1674,28 +1730,34 @@ const DropdownFixture = () => {
     selectedFixtureBranch12 = params.has("controlled") ? open : undefined;
   }
 
-  let selectedFixtureBranch13: ReactNode;
+  const renderMenuTriggerReceiver = () => {
+    let triggerReceiver: ReactNode;
 
-  if (params.has("nativeButtonChild")) {
-    selectedFixtureBranch13 = <Button scale={scale} />;
-  } else {
-    selectedFixtureBranch13 =
-      native || params.has("triggerAsChild") ? (
-        <button
-          type="button"
-          aria-label={fixtureFallbackLabel("Game menu", triggerLabel)}
-          className={native ? "fixture-native-anchor" : undefined}
-          style={
-            native
-              ? {
-                  "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
-                  "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
-                }
-              : undefined
-          }
-        />
-      ) : undefined;
-  }
+    if (params.has("nativeButtonChild")) {
+      triggerReceiver = <Button scale={scale} />;
+    } else {
+      triggerReceiver =
+        native || params.has("triggerAsChild") ? (
+          <button
+            type="button"
+            aria-label={fixtureFallbackLabel("Game menu", triggerLabel)}
+            className={native ? "fixture-native-anchor" : undefined}
+            style={
+              native
+                ? {
+                    "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
+                    "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
+                  }
+                : undefined
+            }
+          />
+        ) : undefined;
+    }
+
+    return triggerReceiver;
+  };
+
+  const selectedFixtureBranch13 = renderMenuTriggerReceiver();
 
   return (
     <>
@@ -1761,6 +1823,63 @@ const PopoverFixture = () => {
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLButtonElement>(null);
   const anchor = React.useRef<HTMLDivElement>(null);
+
+  const renderPopoverBody = () =>
+    (!native || params.has("text")) && (
+      <>
+        <PopoverHeader>
+          <PopoverTitle>{params.get("label") ?? "World Settings"}</PopoverTitle>
+          <PopoverDescription>
+            {params.get("text") ?? "Configure the world."}
+          </PopoverDescription>
+        </PopoverHeader>
+        {!native && (
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setActions((n) => n + 1);
+              setOpen(false);
+            }}
+          >
+            <label htmlFor="popover-input">World name</label>
+            <Input
+              id="popover-input"
+              scale={scale}
+              defaultValue="Minecraft"
+              className="fixture-main-full-width"
+            />
+            <Button type="submit" scale={scale}>
+              Save
+            </Button>
+          </form>
+        )}
+        <div
+          style={{ "--fixture-layout-8": `${6 * scale}px` }}
+          className="fixture-owner-layout-18 fixture-owner-layout-19"
+        >
+          <PopoverClose
+            className="fixture-owner-layout-20"
+            onClick={() => {
+              setActions((n) => n + 1);
+            }}
+          >
+            Done
+          </PopoverClose>
+        </div>
+        {!native && (
+          <Button
+            scale={scale}
+            onClick={() => {
+              setRefs(
+                [trigger.current?.tagName, content.current?.tagName].join(",")
+              );
+            }}
+          >
+            Inspect popover refs
+          </Button>
+        )}
+      </>
+    );
 
   return (
     <>
@@ -1833,65 +1952,7 @@ const PopoverFixture = () => {
           initialFocus={native ? () => content.current : undefined}
           data-subject="true"
         >
-          {(!native || params.has("text")) && (
-            <>
-              <PopoverHeader>
-                <PopoverTitle>
-                  {params.get("label") ?? "World Settings"}
-                </PopoverTitle>
-                <PopoverDescription>
-                  {params.get("text") ?? "Configure the world."}
-                </PopoverDescription>
-              </PopoverHeader>
-              {!native && (
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    setActions((n) => n + 1);
-                    setOpen(false);
-                  }}
-                >
-                  <label htmlFor="popover-input">World name</label>
-                  <Input
-                    id="popover-input"
-                    scale={scale}
-                    defaultValue="Minecraft"
-                    className="fixture-main-full-width"
-                  />
-                  <Button type="submit" scale={scale}>
-                    Save
-                  </Button>
-                </form>
-              )}
-              <div
-                style={{ "--fixture-layout-8": `${6 * scale}px` }}
-                className="fixture-owner-layout-18 fixture-owner-layout-19"
-              >
-                <PopoverClose
-                  className="fixture-owner-layout-20"
-                  onClick={() => {
-                    setActions((n) => n + 1);
-                  }}
-                >
-                  Done
-                </PopoverClose>
-              </div>
-              {!native && (
-                <Button
-                  scale={scale}
-                  onClick={() => {
-                    setRefs(
-                      [trigger.current?.tagName, content.current?.tagName].join(
-                        ","
-                      )
-                    );
-                  }}
-                >
-                  Inspect popover refs
-                </Button>
-              )}
-            </>
-          )}
+          {renderPopoverBody()}
         </PopoverContent>
       </Popover>
       <button
