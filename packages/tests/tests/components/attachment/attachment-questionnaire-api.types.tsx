@@ -53,7 +53,7 @@ const label = React.createRef<HTMLLabelElement>();
   }}
   shortcuts="numbers"
   onSubmit={(event) => {
-    new FormData(event.currentTarget);
+    event.currentTarget satisfies HTMLFormElement;
   }}
 >
   <QuestionnaireProgress

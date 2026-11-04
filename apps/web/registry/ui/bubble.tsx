@@ -116,7 +116,7 @@ const BubbleContent = ({
   children,
   ref,
   ...props
-}: MinecraftPolymorphicProps<"div"> & {}) => {
+}: MinecraftPolymorphicProps<"div">) => {
   const scale = React.useContext(MessageScale);
   const author = React.useContext(MessageAuthor);
   const node = React.useRef<HTMLElement>(null);

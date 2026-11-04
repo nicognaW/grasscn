@@ -302,11 +302,18 @@ const ItemTitle = ({
     ...props,
   };
 
-  return inside ||
-    (providedClip !== undefined && providedClip !== null) ||
-    props.style?.color != null ||
-    Boolean(className) ||
-    !isMinecraftTextContent(props.children) ? (
+  let needsItemText =
+    inside || (providedClip !== undefined && providedClip !== null);
+
+  if (!needsItemText) {
+    const color = props.style?.color;
+    needsItemText =
+      (color !== undefined && color !== null) ||
+      Boolean(className) ||
+      !isMinecraftTextContent(props.children);
+  }
+
+  return needsItemText ? (
     <MinecraftItemText {...common} clipWidth={providedClip ?? clipWidth} />
   ) : (
     <MinecraftProse {...common} />

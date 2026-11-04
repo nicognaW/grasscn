@@ -90,9 +90,9 @@ for (const scale of [1, 2, 3]) {
             const rect = content.getBoundingClientRect();
             const style = getComputedStyle(content);
 
-            const lines = Array.from(
-              label.querySelectorAll<HTMLElement>(".mc-label-line")
-            ).map((line) => {
+            const lines = [
+              ...label.querySelectorAll<HTMLElement>(".mc-label-line"),
+            ].map((line) => {
               const lineText =
                 line.querySelector(".mc-text-accessible")?.textContent ??
                 line.textContent;

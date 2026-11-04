@@ -287,7 +287,7 @@ const AttachmentTrigger = ({
   onClickCapture,
   type,
   ...props
-}: MinecraftPolymorphicProps<"button"> & {}) => {
+}: MinecraftPolymorphicProps<"button">) => {
   const context = React.useContext(AttachmentContext);
   const inactive = context.disabled || disabled;
   const Root = MinecraftRender;
