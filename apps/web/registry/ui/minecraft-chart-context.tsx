@@ -57,9 +57,10 @@ const createGeometryStore = () => {
       entries: [...entries.values()].sort((a, b) => a.index - b.index),
       revision: snapshot.revision + 1,
     };
-    listeners.forEach((listener) => {
+
+    for (const listener of listeners) {
       listener();
-    });
+    }
   };
 
   return {
@@ -443,9 +444,10 @@ export const ChartPixelSurface = ({
 
     return () => {
       observer.disconnect();
-      svg.querySelectorAll("[data-mc-pixel-source]").forEach((element) => {
+
+      for (const element of svg.querySelectorAll("[data-mc-pixel-source]")) {
         element.removeAttribute("data-mc-pixel-source");
-      });
+      }
     };
   }, []);
   React.useLayoutEffect(() => {

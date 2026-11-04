@@ -79,6 +79,57 @@ const advance = (char: string) =>
   getUnihexGlyph(char)?.advance ??
   0;
 
+const paintUnihex = function paintUnihex(
+  context: CanvasRenderingContext2D,
+  glyph: UnihexGlyph,
+  x: number,
+  y: number,
+  scale: number
+) {
+  if (paintColorUnihexGPU(context, glyph, x, y, scale)) {
+    return;
+  }
+
+  const left = x * scale;
+  const top = y * scale;
+  const width = (glyph.width / 2) * scale;
+  const height = 8 * scale;
+
+  for (
+    let py = Math.floor(top + 0.5);
+    py < Math.floor(top + height + 0.5);
+    py += 1
+  ) {
+    const sy = Math.max(
+      0,
+      Math.min(
+        15,
+        Math.floor(0.01 + ((py + 0.5 - top) / height) * 15.98 - 1e-6)
+      )
+    );
+
+    for (
+      let px = Math.ceil(left - 0.5);
+      px < Math.ceil(left + width - 0.5);
+      px += 1
+    ) {
+      const sx =
+        Math.floor(
+          0.01 + ((px + 0.5 - left) / width) * (glyph.width - 0.02) - 1e-6
+        ) + glyph.left;
+
+      if (
+        sx >= 0 &&
+        sx < glyph.bitWidth &&
+        // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
+        (glyph.rows[sy] >>> (glyph.bitWidth - 1 - sx)) & 1
+      ) {
+        context.fillRect(px, py, 1, 1);
+      }
+    }
+  }
+};
+
 export const MinecraftColorUnicodeLabel = ({
   text,
   atlas,
@@ -268,55 +319,4 @@ export const MinecraftColorUnicodeLabel = ({
       <span className={bitmap ? "mc-text-accessible" : undefined}>{text}</span>
     </span>
   );
-};
-
-const paintUnihex = function paintUnihex(
-  context: CanvasRenderingContext2D,
-  glyph: UnihexGlyph,
-  x: number,
-  y: number,
-  scale: number
-) {
-  if (paintColorUnihexGPU(context, glyph, x, y, scale)) {
-    return;
-  }
-
-  const left = x * scale;
-  const top = y * scale;
-  const width = (glyph.width / 2) * scale;
-  const height = 8 * scale;
-
-  for (
-    let py = Math.floor(top + 0.5);
-    py < Math.floor(top + height + 0.5);
-    py += 1
-  ) {
-    const sy = Math.max(
-      0,
-      Math.min(
-        15,
-        Math.floor(0.01 + ((py + 0.5 - top) / height) * 15.98 - 1e-6)
-      )
-    );
-
-    for (
-      let px = Math.ceil(left - 0.5);
-      px < Math.ceil(left + width - 0.5);
-      px += 1
-    ) {
-      const sx =
-        Math.floor(
-          0.01 + ((px + 0.5 - left) / width) * (glyph.width - 0.02) - 1e-6
-        ) + glyph.left;
-
-      if (
-        sx >= 0 &&
-        sx < glyph.bitWidth &&
-        // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
-        (glyph.rows[sy] >>> (glyph.bitWidth - 1 - sx)) & 1
-      ) {
-        context.fillRect(px, py, 1, 1);
-      }
-    }
-  }
 };

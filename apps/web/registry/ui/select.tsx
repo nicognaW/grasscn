@@ -344,6 +344,99 @@ const ListContext = React.createContext<ContentContext>({
   viewport: null,
 });
 
+const SelectScrollbar = () => {
+  const { viewport, scale } = React.useContext(ListContext);
+
+  const drag = React.useRef<{
+    y: number;
+    top: number;
+  } | null>(null);
+
+  return (
+    <div
+      className="mc-select-scrollbar"
+      aria-hidden="true"
+      onPointerDown={(event) => {
+        if (!viewport) {
+          return;
+        }
+
+        event.preventDefault();
+
+        const rect = event.currentTarget.getBoundingClientRect();
+        const content = viewport.scrollHeight / scale;
+        const height = viewport.clientHeight / scale;
+
+        const thumb = Math.min(
+          height - 8,
+          Math.max(
+            32,
+            Math.trunc(
+              Math.fround(Math.fround(height * height) / Math.fround(content))
+            )
+          )
+        );
+
+        const offset = Math.floor(
+          (Math.floor(viewport.scrollTop / scale) * (height - thumb)) /
+            (content - height)
+        );
+
+        const y = (event.clientY - rect.top) / scale;
+        drag.current = { top: viewport.scrollTop, y: event.clientY };
+
+        if (y < offset || y > offset + thumb) {
+          // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
+          viewport.scrollTop =
+            Math.floor(
+              (Math.max(0, y - thumb / 2) * (content - height)) /
+                (height - thumb)
+            ) * scale;
+          drag.current.top = viewport.scrollTop;
+        }
+
+        event.currentTarget.setPointerCapture(event.pointerId);
+      }}
+      onPointerMove={(event) => {
+        if (!viewport || !drag.current) {
+          return;
+        }
+
+        const content = viewport.scrollHeight / scale;
+        const height = viewport.clientHeight / scale;
+
+        const thumb = Math.min(
+          height - 8,
+          Math.max(
+            32,
+            Math.trunc(
+              Math.fround(Math.fround(height * height) / Math.fround(content))
+            )
+          )
+        );
+
+        // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
+        viewport.scrollTop =
+          Math.floor(
+            (drag.current.top +
+              ((event.clientY - drag.current.y) * (content - height)) /
+                (height - thumb)) /
+              scale
+          ) * scale;
+      }}
+      onPointerUp={(event) => {
+        drag.current = null;
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }}
+      onLostPointerCapture={() => {
+        drag.current = null;
+      }}
+    >
+      <span />
+    </div>
+  );
+};
+
 const SelectContent = ({
   children,
   className,
@@ -509,99 +602,6 @@ const SelectContent = ({
         </SelectPrimitive.Positioner>
       </ListContext.Provider>
     </SelectPrimitive.Portal>
-  );
-};
-
-const SelectScrollbar = () => {
-  const { viewport, scale } = React.useContext(ListContext);
-
-  const drag = React.useRef<{
-    y: number;
-    top: number;
-  } | null>(null);
-
-  return (
-    <div
-      className="mc-select-scrollbar"
-      aria-hidden="true"
-      onPointerDown={(event) => {
-        if (!viewport) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const rect = event.currentTarget.getBoundingClientRect();
-        const content = viewport.scrollHeight / scale;
-        const height = viewport.clientHeight / scale;
-
-        const thumb = Math.min(
-          height - 8,
-          Math.max(
-            32,
-            Math.trunc(
-              Math.fround(Math.fround(height * height) / Math.fround(content))
-            )
-          )
-        );
-
-        const offset = Math.floor(
-          (Math.floor(viewport.scrollTop / scale) * (height - thumb)) /
-            (content - height)
-        );
-
-        const y = (event.clientY - rect.top) / scale;
-        drag.current = { top: viewport.scrollTop, y: event.clientY };
-
-        if (y < offset || y > offset + thumb) {
-          // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
-          viewport.scrollTop =
-            Math.floor(
-              (Math.max(0, y - thumb / 2) * (content - height)) /
-                (height - thumb)
-            ) * scale;
-          drag.current.top = viewport.scrollTop;
-        }
-
-        event.currentTarget.setPointerCapture(event.pointerId);
-      }}
-      onPointerMove={(event) => {
-        if (!viewport || !drag.current) {
-          return;
-        }
-
-        const content = viewport.scrollHeight / scale;
-        const height = viewport.clientHeight / scale;
-
-        const thumb = Math.min(
-          height - 8,
-          Math.max(
-            32,
-            Math.trunc(
-              Math.fround(Math.fround(height * height) / Math.fround(content))
-            )
-          )
-        );
-
-        // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
-        viewport.scrollTop =
-          Math.floor(
-            (drag.current.top +
-              ((event.clientY - drag.current.y) * (content - height)) /
-                (height - thumb)) /
-              scale
-          ) * scale;
-      }}
-      onPointerUp={(event) => {
-        drag.current = null;
-        event.currentTarget.releasePointerCapture(event.pointerId);
-      }}
-      onLostPointerCapture={() => {
-        drag.current = null;
-      }}
-    >
-      <span />
-    </div>
   );
 };
 

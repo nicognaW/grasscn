@@ -44,6 +44,37 @@ type MarkerProps = MinecraftPolymorphicProps<"div"> &
     separatorEdge?: "header" | "footer";
   };
 
+const MarkerContent = ({
+  className,
+  children,
+  maxWidth,
+  align = "left",
+  ...props
+}: MinecraftProps<"span"> & Pick<LabelProps, "maxWidth" | "align">) => {
+  const scale = React.useContext(MarkerScale);
+
+  return (
+    <span
+      data-slot="marker-content"
+      className={cn(`mc-marker-content`, className)}
+      {...props}
+    >
+      {isMinecraftTextContent(children) ? (
+        <Label
+          scale={scale}
+          maxWidth={maxWidth}
+          align={align}
+          className="mc-owned-paint-marker-1"
+        >
+          {children}
+        </Label>
+      ) : (
+        children
+      )}
+    </span>
+  );
+};
+
 const Marker = ({
   variant = "default",
   render,
@@ -97,37 +128,6 @@ const MarkerIcon = ({ className, ...props }: MinecraftProps<"span">) => (
     {...props}
   />
 );
-
-const MarkerContent = ({
-  className,
-  children,
-  maxWidth,
-  align = "left",
-  ...props
-}: MinecraftProps<"span"> & Pick<LabelProps, "maxWidth" | "align">) => {
-  const scale = React.useContext(MarkerScale);
-
-  return (
-    <span
-      data-slot="marker-content"
-      className={cn(`mc-marker-content`, className)}
-      {...props}
-    >
-      {isMinecraftTextContent(children) ? (
-        <Label
-          scale={scale}
-          maxWidth={maxWidth}
-          align={align}
-          className="mc-owned-paint-marker-1"
-        >
-          {children}
-        </Label>
-      ) : (
-        children
-      )}
-    </span>
-  );
-};
 
 export { Marker, MarkerIcon, MarkerContent, markerVariants };
 

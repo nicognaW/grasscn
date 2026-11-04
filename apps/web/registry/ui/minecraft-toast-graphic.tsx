@@ -43,6 +43,8 @@ export const MinecraftToastGraphic = ({
 
     const layoutLoading = toastLayout(title, message);
 
+    let cleanup = () => {};
+
     const startToastRendering = async () => {
       const layout = await layoutLoading;
 
@@ -124,7 +126,6 @@ export const MinecraftToastGraphic = ({
     };
 
     void startToastRendering();
-    let cleanup = () => {};
 
     return () => {
       disposed = true;
