@@ -6,7 +6,7 @@ A pixel-perfect port of the unmodified Minecraft interface, provided as a shadcn
 
 ### UI and compatibility
 
-**UI port**: A Grasscn component that reproduces a Minecraft interface element through a shadcn-compatible API and web semantics. _Avoid_: Minecraft skin
+**UI port**: A Grasscn component that reproduces a Minecraft interface element or game rendering, such as a block, item or particle effect, through a shadcn-compatible API and web semantics. _Avoid_: Minecraft skin
 
 **Web adaptation**: An interaction or composition introduced for web use that has no corresponding Minecraft behavior or layout.
 
