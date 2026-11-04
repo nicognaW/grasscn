@@ -28,6 +28,10 @@ export default withMDX({
     // Fumadocs customizes Webpack; release each compiler heap before prerendering.
     webpackBuildWorker: true,
   },
+  // Manual installation routes read authored registry sources through computed paths.
+  outputFileTracingIncludes: {
+    "/api/installation/**": ["./registry/**/*"],
+  },
   outputFileTracingRoot: workspaceRoot,
   // Shiki is used by the client code viewer; bundle it rather than externalizing Bun's isolated package alias.
   transpilePackages: ["shiki"],
