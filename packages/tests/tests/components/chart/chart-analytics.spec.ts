@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@playwright/test";
 import { PNG } from "pngjs";
@@ -54,8 +55,9 @@ for (const scale of [2]) {
         const readOnlyResults3 = await Promise.allSettled(
           readOnlyItems3.map(async (control) => {
             const b = await control.boundingBox();
-            expect(b!.x).toBeGreaterThanOrEqual(0);
-            expect(b!.x + b!.width).toBeLessThanOrEqual(mobile ? 390 : 1440);
+            expectNotNull(b, "Missing required bounding box: b");
+            expect(b.x).toBeGreaterThanOrEqual(0);
+            expect(b.x + b.width).toBeLessThanOrEqual(mobile ? 390 : 1440);
           })
         );
 
@@ -70,8 +72,9 @@ for (const scale of [2]) {
         await expect(canvas).toBeVisible();
         // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         const bounds = await canvas.boundingBox();
-        expect(bounds!.x).toBeGreaterThanOrEqual(0);
-        expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(
+        expectNotNull(bounds, "Missing required bounding box: bounds");
+        expect(bounds.x).toBeGreaterThanOrEqual(0);
+        expect(bounds.x + bounds.width).toBeLessThanOrEqual(
           mobile ? 390 : 1440
         );
         // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.

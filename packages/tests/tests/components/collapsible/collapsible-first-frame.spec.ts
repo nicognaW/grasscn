@@ -42,7 +42,11 @@ for (const scale of [1, 2, 3]) {
         const frames = await page.evaluate(async () => {
           const trigger = document.querySelector<HTMLButtonElement>(
             '[data-slot="collapsible-trigger"]'
-          )!;
+          );
+
+          if (trigger === null) {
+            throw new Error("Missing required dom query: trigger");
+          }
 
           const start = performance.now();
 
@@ -66,11 +70,19 @@ for (const scale of [1, 2, 3]) {
 
             const content = document.querySelector<HTMLElement>(
               '[data-slot="collapsible-content"]'
-            )!;
+            );
+
+            if (content === null) {
+              throw new Error("Missing required dom query: content");
+            }
 
             const label = content.querySelector<HTMLElement>(
               "[data-mc-label-layout-ready]"
-            )!;
+            );
+
+            if (label === null) {
+              throw new Error("Missing required dom query: label");
+            }
 
             const rect = content.getBoundingClientRect();
             const style = getComputedStyle(content);

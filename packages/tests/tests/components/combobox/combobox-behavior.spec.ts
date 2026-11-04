@@ -183,10 +183,20 @@ test("Combobox IME Enter cannot commit a suggestion before CJK composition compl
   await input.focus();
   await input.dispatchEvent("compositionstart", { data: "世" });
   await input.evaluate((node) => {
-    const setter = Object.getOwnPropertyDescriptor(
+    const nativeValueDescriptor26 = Object.getOwnPropertyDescriptor(
       HTMLInputElement.prototype,
       "value"
-    )!.set!;
+    );
+
+    if (nativeValueDescriptor26 === undefined) {
+      throw new Error("Missing required native input descriptor");
+    }
+
+    const setter = nativeValueDescriptor26.set;
+
+    if (setter === undefined) {
+      throw new Error("Missing required native input setter: setter");
+    }
 
     setter.call(node, "世界");
     node.dispatchEvent(

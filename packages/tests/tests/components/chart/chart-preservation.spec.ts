@@ -23,15 +23,21 @@ for (const scale of [2] as const) {
       await expect(profiler).toBeVisible();
       expect(await native.locator("details").count()).toBe(0);
       expect(
-        await native.evaluate(
-          (n) =>
-            !!(
-              // oxlint-disable-next-line no-bitwise -- compareDocumentPosition returns combined DOM position flags; test the FOLLOWING bit while retaining other flags.
-              n.compareDocumentPosition(
-                document.querySelector('[data-slot="chart-example"]')!
-              ) & Node.DOCUMENT_POSITION_FOLLOWING
-            )
-        )
+        await native.evaluate((n) => {
+          const requiredElement28 = document.querySelector(
+            '[data-slot="chart-example"]'
+          );
+
+          if (requiredElement28 === null) {
+            throw new Error("Missing required dom query");
+          }
+
+          return !!(
+            // oxlint-disable-next-line no-bitwise -- compareDocumentPosition returns combined DOM position flags; test the FOLLOWING bit while retaining other flags.
+            n.compareDocumentPosition(requiredElement28) &
+            Node.DOCUMENT_POSITION_FOLLOWING
+          );
+        })
       ).toBe(true);
       await expect(
         profiler.locator("[data-slot=chart-profiler-frame]")

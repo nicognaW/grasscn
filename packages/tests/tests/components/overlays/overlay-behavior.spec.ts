@@ -237,13 +237,23 @@ test("Drawer supports controlled Base UI snap points", async ({ page }) => {
   await expect(panel).toBeVisible();
   await expect(page.locator("#snap")).toHaveText("0.5");
   await expect
-    .poll(async () => Math.round((await panel.boundingBox())!.y))
+    .poll(async () => {
+      const requiredBounds23 = await panel.boundingBox();
+      expectNotNull(requiredBounds23, "Missing required bounding box");
+
+      return Math.round(requiredBounds23.y);
+    })
     .toBe(450);
   await panel.locator("#snap-next").evaluate((node: HTMLButtonElement) => {
     node.click();
   });
   await expect(page.locator("#snap")).toHaveText("1");
   await expect
-    .poll(async () => Math.round((await panel.boundingBox())!.y))
+    .poll(async () => {
+      const requiredBounds24 = await panel.boundingBox();
+      expectNotNull(requiredBounds24, "Missing required bounding box");
+
+      return Math.round(requiredBounds24.y);
+    })
     .toBe(0);
 });

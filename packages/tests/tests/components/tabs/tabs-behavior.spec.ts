@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 declare global {
@@ -66,9 +67,10 @@ test("Tabs keyboard navigation visits disabled tabs without selecting them", asy
     .getByRole("tab", { exact: true, name: "World" })
     .boundingBox();
 
+  expectNotNull(disabled, "Missing required bounding box: disabled");
   await page.mouse.click(
-    disabled!.x + disabled!.width / 2,
-    disabled!.y + disabled!.height / 2
+    disabled.x + disabled.width / 2,
+    disabled.y + disabled.height / 2
   );
   await expect(
     page.getByRole("tab", { exact: true, name: "More" })
@@ -105,8 +107,9 @@ test("Tabs controlled value supports user and external changes", async ({
   await expect(
     page.getByRole("tab", { exact: true, name: "More" })
   ).toHaveAttribute("aria-selected", "true");
+  expectNotNull(changes, "Missing required text result: changes");
   await expect(page.getByLabel("Tab changes", { exact: true })).toHaveText(
-    changes!
+    changes
   );
 });
 

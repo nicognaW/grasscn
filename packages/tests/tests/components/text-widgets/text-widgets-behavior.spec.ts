@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 test("Trace preserves eight slots, status colors, controlled keyboard disclosure and content-class contract", async ({
@@ -129,13 +130,21 @@ test("MessageScroller preserves visible anchor position on prepend", async ({
   await page.goto("?component=message-scroller&noauto=1");
   await page.getByRole("button", { exact: true, name: "API message" }).click();
   await expect(page.getByTestId("visible")).toContainText('"15"');
-  const before = (await page.getByTestId("message-15").boundingBox())!.y;
+  const requiredBounds9 = await page.getByTestId("message-15").boundingBox();
+  expectNotNull(requiredBounds9, "Missing required bounding box");
+  const before = requiredBounds9.y;
   await page.getByRole("button", { exact: true, name: "Prepend" }).click();
   await expect(page.getByTestId("message-0")).toBeAttached();
   await expect
-    .poll(async () =>
-      Math.abs((await page.getByTestId("message-15").boundingBox())!.y - before)
-    )
+    .poll(async () => {
+      const requiredBounds10 = await page
+        .getByTestId("message-15")
+        .boundingBox();
+
+      expectNotNull(requiredBounds10, "Missing required bounding box");
+
+      return Math.abs(requiredBounds10.y - before);
+    })
     .toBeLessThanOrEqual(1);
 });
 

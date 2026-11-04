@@ -57,9 +57,23 @@ for (const scale of [2]) {
         content.style.cssText = "width:600px;height:800px";
         content.textContent = "Scrollable world list";
         region.append(content);
-        (portal ? document.body : document.querySelector("main")!).append(
-          region
-        );
+        let insertionTarget: HTMLElement;
+
+        if (portal) {
+          insertionTarget = document.body;
+        } else {
+          const requiredMain = document.querySelector("main");
+
+          if (requiredMain === null) {
+            throw new Error(
+              "Missing required main container for nested scrollbar probe"
+            );
+          }
+
+          insertionTarget = requiredMain;
+        }
+
+        insertionTarget.append(region);
       }
     });
 

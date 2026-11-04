@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 test("Label associates its input, forwards its ref and preserves events", async ({
@@ -16,7 +17,8 @@ test("Label associates its input, forwards its ref and preserves events", async 
 test("Label keeps disabled association and rich children", async ({ page }) => {
   await page.goto("/?component=label&label=World%20name&state=disabled");
   const bounds = await page.locator("[data-subject]").boundingBox();
-  await page.mouse.click(bounds!.x + 5, bounds!.y + 5);
+  expectNotNull(bounds, "Missing required bounding box: bounds");
+  await page.mouse.click(bounds.x + 5, bounds.y + 5);
   await expect(
     page.getByRole("textbox", { name: "World name" })
   ).toBeDisabled();

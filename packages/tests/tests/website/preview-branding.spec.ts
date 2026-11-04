@@ -49,15 +49,20 @@ test("Header serves the preserved branding source at its actual production geome
 
   // The original SVG is served at its intrinsic176x64 geometry. Native
   // constituent coverage is independently tested at the actual header backdrop.
-  const iconBytes = await page.evaluate(async () => [
-    ...new Uint8Array(
-      await (
-        await fetch(
-          document.querySelector<HTMLLinkElement>('link[rel="icon"]')!.href
-        )
-      ).arrayBuffer()
-    ),
-  ]);
+  const iconBytes = await page.evaluate(async () => {
+    const requiredElement48 =
+      document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+
+    if (requiredElement48 === null) {
+      throw new Error("Missing required dom query");
+    }
+
+    return [
+      ...new Uint8Array(
+        await (await fetch(requiredElement48.href)).arrayBuffer()
+      ),
+    ];
+  });
 
   expect(
     Buffer.from(iconBytes).equals(

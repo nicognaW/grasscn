@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const origin = (
@@ -15,7 +16,9 @@ for (const scale of [2]) {
       const stage = page.locator('[data-stage="badge"]');
       const badge = stage.locator('[data-slot="badge"]').first();
 
-      expect((await badge.boundingBox())!.height).toBe(26 * scale);
+      const requiredBounds13 = await badge.boundingBox();
+      expectNotNull(requiredBounds13, "Missing required bounding box");
+      expect(requiredBounds13.height).toBe(26 * scale);
       await page.getByLabel("Badge text").fill("挑战完成！");
       await expect(
         badge.locator('[data-mc-label-layout-ready="false"]')
