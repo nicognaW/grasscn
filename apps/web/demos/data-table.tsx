@@ -1,4 +1,5 @@
 import { createColumnHelper, useTable } from "@tanstack/react-table";
+import type { CellContext, HeaderContext } from "@tanstack/react-table";
 import * as React from "react";
 
 import type { DemoVariables } from "../demo-variables";
@@ -46,59 +47,66 @@ const sortDirection = (
   return "none";
 };
 
-const DataTableDemo = ({ scale }: DemoProps) => {
-  const columns = React.useMemo(
-    () =>
-      helper.columns([
-        helper.accessor("name", {
-          cell: (info) => (
-            <MinecraftDisclosureText scale={scale}>
-              {info.getValue()}
-            </MinecraftDisclosureText>
-          ),
-          filterFn: "includesString",
-          header: ({ column }) => {
-            let sortIndicator = "";
+const WorldTableScale = React.createContext<1 | 2 | 3>(2);
 
-            if (column.getIsSorted() === "asc") {
-              sortIndicator = " ^";
-            } else if (column.getIsSorted() === "desc") {
-              sortIndicator = " v";
-            }
-
-            return (
-              <Button
-                type="button"
-                scale={scale}
-                aria-label="World"
-                className="w-(--demo-width) max-w-full"
-                style={
-                  /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-                  {
-                    "--demo-width": `${100 * scale}px`,
-                  } satisfies DemoVariables as DemoVariables
-                }
-                onClick={() => {
-                  column.toggleSorting();
-                }}
-              >{`World${sortIndicator}`}</Button>
-            );
-          },
-          sortFn: "text",
-        }),
-        helper.accessor("players", {
-          cell: (info) => (
-            <MinecraftDisclosureText scale={scale}>
-              {info.getValue()}
-            </MinecraftDisclosureText>
-          ),
-          header: "Players",
-          sortFn: "alphanumeric",
-        }),
-      ]),
-    [scale]
+const WorldValueCell = function WorldValueCell<Value extends string | number>(
+  info: CellContext<DataTableFeatures, World, Value>
+) {
+  const scale = React.useContext(WorldTableScale);
+  return (
+    <MinecraftDisclosureText scale={scale}>
+      {info.getValue()}
+    </MinecraftDisclosureText>
   );
+};
 
+const WorldNameHeader = function WorldNameHeader({
+  column,
+}: HeaderContext<DataTableFeatures, World, string>) {
+  const scale = React.useContext(WorldTableScale);
+
+  let sortIndicator = "";
+
+  if (column.getIsSorted() === "asc") {
+    sortIndicator = " ^";
+  } else if (column.getIsSorted() === "desc") {
+    sortIndicator = " v";
+  }
+
+  return (
+    <Button
+      type="button"
+      scale={scale}
+      aria-label="World"
+      className="w-(--demo-width) max-w-full"
+      style={
+        /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+        {
+          "--demo-width": `${100 * scale}px`,
+        } satisfies DemoVariables as DemoVariables
+      }
+      onClick={() => {
+        column.toggleSorting();
+      }}
+    >{`World${sortIndicator}`}</Button>
+  );
+};
+
+const columns = helper.columns([
+  helper.accessor("name", {
+    cell: WorldValueCell,
+    filterFn: "includesString",
+    header: WorldNameHeader,
+    sortFn: "text",
+  }),
+  helper.accessor("players", {
+    cell: WorldValueCell,
+    header: "Players",
+    sortFn: "alphanumeric",
+  }),
+]);
+
+const DataTableDemo = ({ scale }: DemoProps) => {
   const table = useTable({
     columns,
     data: worlds,
@@ -108,152 +116,159 @@ const DataTableDemo = ({ scale }: DemoProps) => {
   });
 
   return (
-    <div className="demo-stage" data-stage="data-table">
-      <div className="demo-options">
-        <Input
-          aria-label="Filter worlds"
-          placeholder="Search worlds"
-          scale={scale}
-          className="w-(--demo-width) max-w-full"
-          style={
-            /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-            {
-              "--demo-width": `${160 * scale}px`,
-            } satisfies DemoVariables as DemoVariables
-          }
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(e) =>
-            table.getColumn("name")?.setFilterValue(e.target.value)
-          }
-        />
-        <Button
-          type="button"
-          scale={scale}
-          className="w-(--demo-width) max-w-full"
-          style={
-            /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-            {
-              "--demo-width": `${100 * scale}px`,
-            } satisfies DemoVariables as DemoVariables
-          }
-          aria-pressed={table.getColumn("players")?.getIsVisible()}
-          onClick={() => table.getColumn("players")?.toggleVisibility()}
-        >
-          Players column
-        </Button>
-      </div>
-      <Table scale={scale} aria-label="World browser">
-        <TableHeader>
-          {table.getHeaderGroups().map((group) => (
-            <TableRow key={group.id}>
-              {group.headers.map((header) => {
-                const _precedingkey = header.id;
+    <WorldTableScale.Provider value={scale}>
+      <div className="demo-stage" data-stage="data-table">
+        <div className="demo-options">
+          <Input
+            aria-label="Filter worlds"
+            placeholder="Search worlds"
+            scale={scale}
+            className="w-(--demo-width) max-w-full"
+            style={
+              /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+              {
+                "--demo-width": `${160 * scale}px`,
+              } satisfies DemoVariables as DemoVariables
+            }
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(e) =>
+              table.getColumn("name")?.setFilterValue(e.target.value)
+            }
+          />
+          <Button
+            type="button"
+            scale={scale}
+            className="w-(--demo-width) max-w-full"
+            style={
+              /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+              {
+                "--demo-width": `${100 * scale}px`,
+              } satisfies DemoVariables as DemoVariables
+            }
+            aria-pressed={table.getColumn("players")?.getIsVisible()}
+            onClick={() => table.getColumn("players")?.toggleVisibility()}
+          >
+            Players column
+          </Button>
+        </div>
+        <Table scale={scale} aria-label="World browser">
+          <TableHeader>
+            {table.getHeaderGroups().map((group) => (
+              <TableRow key={group.id}>
+                {group.headers.map((header) => {
+                  const _precedingkey = header.id;
 
-                const _precedingariasort = sortDirection(
-                  header.column.getIsSorted()
-                );
+                  const _precedingariasort = sortDirection(
+                    header.column.getIsSorted()
+                  );
 
-                let _selectedContent: React.ReactNode;
+                  let _selectedContent: React.ReactNode;
 
-                if (header.isPlaceholder) {
-                  _selectedContent = null;
-                } else if (typeof header.column.columnDef.header === "string") {
-                  _selectedContent = header.column.columnDef.header;
-                } else {
-                  _selectedContent = <table.FlexRender header={header} />;
-                }
-
-                return (
-                  <TableHead key={_precedingkey} aria-sort={_precedingariasort}>
-                    {_selectedContent}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                tabIndex={0}
-                aria-selected={row.getIsSelected()}
-                data-state={row.getIsSelected() ? "selected" : undefined}
-                onClick={() => {
-                  row.toggleSelected();
-                }}
-                onKeyDown={(e) => {
-                  if (
-                    e.target === e.currentTarget &&
-                    (e.key === " " || e.key === "Enter")
+                  if (header.isPlaceholder) {
+                    _selectedContent = null;
+                  } else if (
+                    typeof header.column.columnDef.header === "string"
                   ) {
-                    e.preventDefault();
-                    row.toggleSelected();
+                    _selectedContent = header.column.columnDef.header;
+                  } else {
+                    _selectedContent = <table.FlexRender header={header} />;
                   }
-                }}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    <table.FlexRender cell={cell} />
-                  </TableCell>
-                ))}
+
+                  return (
+                    <TableHead
+                      key={_precedingkey}
+                      aria-sort={_precedingariasort}
+                    >
+                      {_selectedContent}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={table.getVisibleLeafColumns().length}>
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-      <div className="demo-options">
-        <Button
-          scale={scale}
-          type="button"
-          className="w-(--demo-width)"
-          style={
-            /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-            {
-              "--demo-width": `${80 * scale}px`,
-            } satisfies DemoVariables as DemoVariables
-          }
-          disabled={!table.getCanPreviousPage()}
-          onClick={() => {
-            table.previousPage();
-          }}
-        >
-          Previous
-        </Button>
-        <Button
-          scale={scale}
-          type="button"
-          className="w-(--demo-width)"
-          style={
-            /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-            {
-              "--demo-width": `${80 * scale}px`,
-            } satisfies DemoVariables as DemoVariables
-          }
-          disabled={!table.getCanNextPage()}
-          onClick={() => {
-            table.nextPage();
-          }}
-        >
-          Next
-        </Button>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  tabIndex={0}
+                  aria-selected={row.getIsSelected()}
+                  data-state={row.getIsSelected() ? "selected" : undefined}
+                  onClick={() => {
+                    row.toggleSelected();
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      e.target === e.currentTarget &&
+                      (e.key === " " || e.key === "Enter")
+                    ) {
+                      e.preventDefault();
+                      row.toggleSelected();
+                    }
+                  }}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      <table.FlexRender cell={cell} />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={table.getVisibleLeafColumns().length}>
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+        <div className="demo-options">
+          <Button
+            scale={scale}
+            type="button"
+            className="w-(--demo-width)"
+            style={
+              /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+              {
+                "--demo-width": `${80 * scale}px`,
+              } satisfies DemoVariables as DemoVariables
+            }
+            disabled={!table.getCanPreviousPage()}
+            onClick={() => {
+              table.previousPage();
+            }}
+          >
+            Previous
+          </Button>
+          <Button
+            scale={scale}
+            type="button"
+            className="w-(--demo-width)"
+            style={
+              /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+              {
+                "--demo-width": `${80 * scale}px`,
+              } satisfies DemoVariables as DemoVariables
+            }
+            disabled={!table.getCanNextPage()}
+            onClick={() => {
+              table.nextPage();
+            }}
+          >
+            Next
+          </Button>
+        </div>
+        <div className="demo-result">
+          <span />
+          <output aria-label="World selection">
+            {table.getFilteredSelectedRowModel().rows.length} selected / Page{" "}
+            {table.getPageCount() ? table.state.pagination.pageIndex + 1 : 0} of{" "}
+            {table.getPageCount()}
+          </output>
+        </div>
       </div>
-      <div className="demo-result">
-        <span />
-        <output aria-label="World selection">
-          {table.getFilteredSelectedRowModel().rows.length} selected / Page{" "}
-          {table.getPageCount() ? table.state.pagination.pageIndex + 1 : 0} of{" "}
-          {table.getPageCount()}
-        </output>
-      </div>
-    </div>
+    </WorldTableScale.Provider>
   );
 };
 
