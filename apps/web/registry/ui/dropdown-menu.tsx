@@ -485,7 +485,7 @@ const DropdownMenuSeparator = ({
       style={style}
       {...props}
     >
-      {render ? children : <Separator scale={scale} role="separator" />}
+      {render ? children : <Separator scale={scale} />}
     </Primitive.Separator>
   );
 };
