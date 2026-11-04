@@ -235,13 +235,13 @@ const getPayloadConfigFromPayload = function getPayloadConfigFromPayload(
 
   if (
     key in payload &&
-    typeof payload[key as keyof typeof payload] === "string"
+    isChartLabelText(payload[key as keyof typeof payload])
   ) {
     configLabelKey = payload[key as keyof typeof payload];
   } else if (
     payloadPayload &&
     key in payloadPayload &&
-    typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
+    isChartLabelText(payloadPayload[key as keyof typeof payloadPayload])
   ) {
     configLabelKey = payloadPayload[key as keyof typeof payloadPayload];
   }
