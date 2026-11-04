@@ -110,13 +110,41 @@ const canonical = (bytes: Buffer) => {
 
 const files = [];
 
-for (const entry of item.files) {
-  const filename = path.basename(entry.path);
-  const source = await readFile(webFile(path.join(entry.path)));
+const sourceFileReads = await Promise.allSettled(
+  item.files.map(async (entry) => {
+    const filename = path.basename(entry.path);
 
-  const installed = await readFile(
-    installedRegistryFile(entry, consumer, settings)
-  );
+    const [firstRead, secondRead] = await Promise.allSettled(
+      [
+        async () => await readFile(webFile(path.join(entry.path))),
+        async () =>
+          await readFile(installedRegistryFile(entry, consumer, settings)),
+      ].map(async (read) => await read())
+    );
+
+    if (firstRead.status === "rejected") {
+      throw firstRead.reason;
+    }
+
+    if (secondRead.status === "rejected") {
+      throw secondRead.reason;
+    }
+
+    return {
+      entry,
+      filename,
+      installed: secondRead.value,
+      source: firstRead.value,
+    };
+  })
+);
+
+for (const fileRead of sourceFileReads) {
+  if (fileRead.status === "rejected") {
+    throw fileRead.reason;
+  }
+
+  const { entry, filename, installed, source } = fileRead.value;
 
   assert.equal(
     canonical(installed),
