@@ -128,6 +128,7 @@ export const CalendarFixture = () => {
   }
 
   if (q.get("native") === "1") {
+    const renderNativeCalendar = () => {
     // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
     type NativeCalendarCaptionProps = NonNullable<
       CalendarProps["captionTextProps"]
@@ -273,6 +274,9 @@ export const CalendarFixture = () => {
         )}
       </>
     );
+      };
+
+    return renderNativeCalendar();
   }
 
   if (q.get("scenario") === "disabled") {

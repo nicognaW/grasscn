@@ -64,17 +64,23 @@ export const OverlayFixture = () => {
   } satisfies React.CSSProperties;
 
   const isDrawer = component === "drawer";
-  const Root = isDrawer ? Drawer.Drawer : Sheet.Sheet;
-  const Trigger = isDrawer ? Drawer.DrawerTrigger : Sheet.SheetTrigger;
-  const Content = isDrawer ? Drawer.DrawerContent : Sheet.SheetContent;
-  const Close = isDrawer ? Drawer.DrawerClose : Sheet.SheetClose;
-  const Header = isDrawer ? Drawer.DrawerHeader : Sheet.SheetHeader;
-  const Footer = isDrawer ? Drawer.DrawerFooter : Sheet.SheetFooter;
-  const Title = isDrawer ? Drawer.DrawerTitle : Sheet.SheetTitle;
+  const resolveOverlayParts = () => {
+  const engineRoot = isDrawer ? Drawer.Drawer : Sheet.Sheet;
+  const engineTrigger = isDrawer ? Drawer.DrawerTrigger : Sheet.SheetTrigger;
+  const engineContent = isDrawer ? Drawer.DrawerContent : Sheet.SheetContent;
+  const engineClose = isDrawer ? Drawer.DrawerClose : Sheet.SheetClose;
+  const engineHeader = isDrawer ? Drawer.DrawerHeader : Sheet.SheetHeader;
+  const engineFooter = isDrawer ? Drawer.DrawerFooter : Sheet.SheetFooter;
+  const engineTitle = isDrawer ? Drawer.DrawerTitle : Sheet.SheetTitle;
 
-  const Description = isDrawer
+  const engineDescription = isDrawer
     ? Drawer.DrawerDescription
     : Sheet.SheetDescription;
+
+    return { Close: engineClose, Content: engineContent, Description: engineDescription, Footer: engineFooter, Header: engineHeader, Root: engineRoot, Title: engineTitle, Trigger: engineTrigger };
+  };
+
+  const { Close, Content, Description, Footer, Header, Root, Title, Trigger } = resolveOverlayParts();
 
   interface OverlayTextProbeProps {
     align?: string;
@@ -85,12 +91,13 @@ export const OverlayFixture = () => {
     style?: React.CSSProperties;
   }
 
-  const textProps: OverlayTextProbeProps = {};
+  const readOverlayTextProbeProps = () => {
+  const probeProps: OverlayTextProbeProps = {};
 
   if (native && part !== "surface") {
-    textProps.id = "subject";
-    textProps.scale = scale;
-    textProps.style = {
+    probeProps.id = "subject";
+    probeProps.scale = scale;
+    probeProps.style = {
       height: height * scale,
       left: x,
       position: "fixed",
@@ -99,17 +106,23 @@ export const OverlayFixture = () => {
     } satisfies React.CSSProperties;
 
     if (p.has("wrapWidth")) {
-      textProps.maxWidth = Number(p.get("wrapWidth"));
+      probeProps.maxWidth = Number(p.get("wrapWidth"));
     }
 
-    textProps.align = p.get("align") ?? "left";
-    textProps["data-subject"] = "true";
+    probeProps.align = p.get("align") ?? "left";
+    probeProps["data-subject"] = "true";
   }
 
-  let selectedFixtureBranch1: ReactNode;
+    return probeProps;
+  };
+
+  const textProps = readOverlayTextProbeProps();
+
+  const renderOverlayContents = () => {
+  let panelBody: ReactNode;
 
   if (native && part === "surface") {
-    selectedFixtureBranch1 = p.has("text") ? (
+    panelBody = p.has("text") ? (
       <>
         <CardHeader>
           <Title render={<CardTitle />}>{p.get("label")}</Title>
@@ -123,7 +136,7 @@ export const OverlayFixture = () => {
       </>
     ) : null;
   } else {
-    selectedFixtureBranch1 = native ? (
+    panelBody = native ? (
       <>
         <Title
           {...(part === "title" ? textProps : { style: { display: "none" } })}
@@ -181,7 +194,13 @@ export const OverlayFixture = () => {
     );
   }
 
-  const drawerOptions: Pick<
+    return panelBody;
+  };
+
+  const selectedFixtureBranch1 = renderOverlayContents();
+
+  const readDrawerFixtureOptions = () => {
+  const drawerConfiguration: Pick<
     React.ComponentProps<typeof Drawer.Drawer>,
     "swipeDirection" | "snapPoints" | "snapPoint" | "onSnapPointChange"
   > = {};
@@ -197,25 +216,36 @@ export const OverlayFixture = () => {
       swipeDirection = side === "top" ? ("up" as const) : side;
     }
 
-    drawerOptions.swipeDirection = swipeDirection;
+    drawerConfiguration.swipeDirection = swipeDirection;
 
     if (p.has("snap")) {
-      drawerOptions.onSnapPointChange = setSnap;
-      drawerOptions.snapPoint = snap;
-      drawerOptions.snapPoints = [0.25, 0.5, 1];
+      drawerConfiguration.onSnapPointChange = setSnap;
+      drawerConfiguration.snapPoint = snap;
+      drawerConfiguration.snapPoints = [0.25, 0.5, 1];
     }
   }
 
-  const contentStyleOptions: Pick<
+    return drawerConfiguration;
+  };
+
+  const drawerOptions = readDrawerFixtureOptions();
+
+  const readOverlayContentStyle = () => {
+  const panelStyleOptions: Pick<
     React.ComponentProps<typeof Content>,
     "style"
   > = {};
 
   if (native) {
-    contentStyleOptions.style = geom;
+    panelStyleOptions.style = geom;
   } else if (p.has("snap")) {
-    contentStyleOptions.style = { height: "100dvh" };
+    panelStyleOptions.style = { height: "100dvh" };
   }
+
+    return panelStyleOptions;
+  };
+
+  const contentStyleOptions = readOverlayContentStyle();
 
   return (
     <>
