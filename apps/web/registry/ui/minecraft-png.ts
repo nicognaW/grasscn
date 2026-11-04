@@ -1,7 +1,9 @@
 // Exact PNG decoding for UI ports that sample translucent Minecraft
 // textures. Canvas getImageData premultiplies alpha and loses colour bits of
 // partly transparent texels; this decoder returns the file's RGBA bytes
-// unchanged. It supports the 8-bit, non-interlaced PNGs Minecraft ships.
+// unchanged. It supports the non-interlaced PNGs Minecraft ships: 8-bit
+// gray, gray-alpha, RGB and RGBA, and indexed colour at 1, 2, 4 or 8 bits
+// with optional tRNS alpha.
 
 export interface PngRgba {
   data: Uint8Array;
@@ -11,9 +13,12 @@ export interface PngRgba {
 
 const SIGNATURE = [137, 80, 78, 71, 13, 10, 26, 10];
 
+const INDEXED = 3;
+
 const channelsOf = new Map([
   [0, 1],
   [2, 3],
+  [INDEXED, 1],
   [4, 2],
   [6, 4],
 ]);
@@ -53,9 +58,14 @@ const base64Bytes = (dataUri: string) => {
 };
 
 interface PngChunks {
+  bitDepth: number;
   channels: number;
+  colorType: number;
   compressed: Uint8Array<ArrayBuffer>;
   height: number;
+  // Indexed colour only: RGB triples (PLTE) and per-entry alpha (tRNS).
+  palette: Uint8Array;
+  paletteAlpha: Uint8Array;
   width: number;
 }
 
@@ -70,6 +80,9 @@ const readChunks = (bytes: Uint8Array): PngChunks => {
   let width = 0;
   let height = 0;
   let colorType = -1;
+  let bitDepth = 0;
+  let palette: Uint8Array = new Uint8Array();
+  let paletteAlpha: Uint8Array = new Uint8Array();
   const parts: Uint8Array[] = [];
 
   for (let offset = 8; offset < bytes.length;) {
@@ -88,11 +101,26 @@ const readChunks = (bytes: Uint8Array): PngChunks => {
     if (type === "IHDR") {
       width = view.getUint32(offset + 8);
       height = view.getUint32(offset + 12);
+      bitDepth = body[8] ?? 0;
       colorType = body[9] ?? -1;
 
-      if (body[8] !== 8 || body[12] !== 0) {
-        throw new Error("Only 8-bit non-interlaced PNGs are supported");
+      const depthSupported =
+        bitDepth === 8 ||
+        (colorType === INDEXED && [1, 2, 4].includes(bitDepth));
+
+      if (!depthSupported || body[12] !== 0) {
+        throw new Error(
+          "Only 8-bit or indexed non-interlaced PNGs are supported"
+        );
       }
+    }
+
+    if (type === "PLTE") {
+      palette = body;
+    }
+
+    if (type === "tRNS" && colorType === INDEXED) {
+      paletteAlpha = body;
     }
 
     if (type === "IDAT") {
@@ -119,7 +147,20 @@ const readChunks = (bytes: Uint8Array): PngChunks => {
     at += part.length;
   }
 
-  return { channels, compressed, height, width };
+  if (colorType === INDEXED && palette.length === 0) {
+    throw new Error("Indexed PNG without a palette");
+  }
+
+  return {
+    bitDepth,
+    channels,
+    colorType,
+    compressed,
+    height,
+    palette,
+    paletteAlpha,
+    width,
+  };
 };
 
 // PNG filter types 0-4: the value each filtered byte was predicted from.
@@ -135,9 +176,15 @@ const predictors: readonly ((
   paeth,
 ];
 
+// Bytes per scanline, and the filter's byte distance to the left pixel.
+const layout = ({ bitDepth, channels, width }: PngChunks) => ({
+  pixelBytes: Math.max(1, (channels * bitDepth) / 8),
+  stride: Math.ceil((width * channels * bitDepth) / 8),
+});
+
 const unfilter = (raw: Uint8Array, chunks: PngChunks) => {
-  const { channels, height, width } = chunks;
-  const stride = width * channels;
+  const { height } = chunks;
+  const { pixelBytes: channels, stride } = layout(chunks);
   const rows = new Uint8Array(height * stride);
 
   for (let y = 0; y < height; y += 1) {
@@ -164,9 +211,42 @@ const unfilter = (raw: Uint8Array, chunks: PngChunks) => {
   return rows;
 };
 
+// Palette indices, packed most significant bits first, to RGBA bytes.
+const indexedToRgba = (rows: Uint8Array, chunks: PngChunks) => {
+  const { bitDepth, height, palette, paletteAlpha, width } = chunks;
+  const { stride } = layout(chunks);
+  const data = new Uint8Array(width * height * 4);
+  const entries = 2 ** bitDepth;
+
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      const bit = x * bitDepth;
+      const byte = rows[y * stride + Math.floor(bit / 8)] ?? 0;
+
+      const entry =
+        Math.floor(byte / 2 ** (8 - bitDepth - (bit % 8))) % entries;
+
+      if (entry * 3 + 2 >= palette.length) {
+        throw new Error("PNG palette index out of range");
+      }
+
+      const pixel = (y * width + x) * 4;
+      data.set(palette.subarray(entry * 3, entry * 3 + 3), pixel);
+      data[pixel + 3] = paletteAlpha[entry] ?? 255;
+    }
+  }
+
+  return data;
+};
+
 // Gray, gray-alpha, RGB and RGBA samples to RGBA bytes.
 const toRgba = (rows: Uint8Array, chunks: PngChunks) => {
   const { channels, height, width } = chunks;
+
+  if (chunks.colorType === INDEXED) {
+    return indexedToRgba(rows, chunks);
+  }
+
   const data = new Uint8Array(width * height * 4);
   const color = channels >= 3;
   const alphaOffset = color ? 3 : 1;

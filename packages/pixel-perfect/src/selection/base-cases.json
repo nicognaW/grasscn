@@ -386,6 +386,19 @@
         "route": "/docs/components/redstone-lamp-display#interactive-playground",
         "reason": "The playground's default value 1234 (spec #42 demo default) at 8 px lamp cells and DPR 1, compared within the native geometry mask against two launches of the unmodified renderer under the declared orthographic projection. Single glyphs, 0 and 12k are Full; the transparent backdrop and glyph composition remain web adaptations."
       }
+    },
+    {
+      "file": "nether-star/glint-pixels.spec.ts",
+      "title": "nether star GUI item at glint time 0 ms matches its captured reference",
+      "titlePath": [
+        "nether star GUI item at glint time 0 ms matches its captured reference"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/",
+        "reason": "Every page's header star button draws the nether star UI port at GUI scale 2 on the #202020 header, with or without a star count. Glint time 0 (spec #42) is compared at DPR 1 against two launches of the unmodified 26.2 GUI item renderer with the glint clock fixed. The other captured glint times, the integrity check and the comparator negative control are Full; times between captured ones are unverified."
+      }
     }
   ]
 }
