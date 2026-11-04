@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useChartWidth, useChartHeight, useYAxisScale } from "recharts";
 
+import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import {
   useChartGeometry,
   chartColorChannels,
@@ -621,7 +622,17 @@ const ChartProfilerFrame = ({
   const height = useChartHeight() ?? 0;
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
-  const [ready, setReady] = React.useState(false);
+  const { attach: attachCanvas, connection } = useCanvasPaintConnection(canvas);
+
+  const paintInput = React.useMemo(
+    () => ({ connection, data, revision, unit }),
+    [connection, data, unit, revision]
+  );
+
+  const [completedInput, setCompletedInput] =
+    React.useState<typeof paintInput>();
+
+  const ready = completedInput === paintInput;
 
   React.useLayoutEffect((): (() => void) | undefined => {
     if (!data.length) {
@@ -631,15 +642,13 @@ const ChartProfilerFrame = ({
     let disposed = false;
     let frame = 0;
 
-    setReady(false);
-
     const render = () => {
       if (disposed) {
         return;
       }
 
-      if (canvas.current && paintProfiler(canvas.current, data, unit)) {
-        setReady(true);
+      if (connection && paintProfiler(connection.canvas, data, unit)) {
+        setCompletedInput(paintInput);
       } else {
         frame = requestAnimationFrame(render);
       }
@@ -652,7 +661,7 @@ const ChartProfilerFrame = ({
       cancelAnimationFrame(frame);
     };
     // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Geometry-store revision is the existing native repaint signal even when serialized sector data is unchanged.
-  }, [data, unit, revision]);
+  }, [data, unit, revision, paintInput, connection]);
 
   if (data.some((d) => !Number.isFinite(d.percentage) || d.percentage < 0)) {
     throw new Error("Profiler percentages must be finite and nonnegative");
@@ -692,7 +701,7 @@ const ChartProfilerFrame = ({
       >
         <canvas
           key="profiler-2d-surface"
-          ref={canvas}
+          ref={attachCanvas}
           aria-hidden="true"
           className="mc-layout-minecraft-chart-native-12 mc-chart-native-paint-10"
           style={nativePaint10}
