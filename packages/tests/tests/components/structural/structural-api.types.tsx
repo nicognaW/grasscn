@@ -17,8 +17,8 @@ import {
 import * as React from "react";
 
 const StructuralTypes = () => {
-  const div = React.createRef<HTMLDivElement>();
-  const anchor = React.createRef<HTMLAnchorElement>();
+  const div = React.useRef<HTMLDivElement>(null);
+  const anchor = React.useRef<HTMLAnchorElement>(null);
 
   return (
     <>

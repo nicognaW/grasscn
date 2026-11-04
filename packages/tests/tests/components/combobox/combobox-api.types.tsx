@@ -29,6 +29,9 @@ interface World {
 const worlds: World[] = [{ id: "a", name: "世界" }];
 
 export const SingleApi = () => {
+  const input = React.useRef<HTMLInputElement>(null);
+  const list = React.useRef<HTMLDivElement>(null);
+
   return (
     <Combobox
       items={worlds}
@@ -45,7 +48,7 @@ export const SingleApi = () => {
       name="world"
     >
       <ComboboxInput
-        ref={React.createRef<HTMLInputElement>()}
+        ref={input}
         showClear
         showTrigger
         className={(state) => (state.open ? "open" : "")}
@@ -67,7 +70,7 @@ export const SingleApi = () => {
       >
         <ComboboxGroup>
           <ComboboxLabel>Worlds</ComboboxLabel>
-          <ComboboxList ref={React.createRef<HTMLDivElement>()}>
+          <ComboboxList ref={list}>
             <ComboboxCollection>
               {(item: World, index: number) => (
                 <ComboboxItem
@@ -93,6 +96,7 @@ export const SingleApi = () => {
 
 export const MultipleApi = () => {
   const anchor = useComboboxAnchor();
+  const chipsInput = React.useRef<HTMLInputElement>(null);
 
   return (
     <Combobox<string, true>
@@ -111,7 +115,7 @@ export const MultipleApi = () => {
             ))
           }
         </ComboboxValue>
-        <ComboboxChipsInput ref={React.createRef<HTMLInputElement>()} />
+        <ComboboxChipsInput ref={chipsInput} />
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
         <ComboboxList>

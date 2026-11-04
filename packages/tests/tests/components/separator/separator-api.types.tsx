@@ -1,5 +1,11 @@
 import { Separator } from "@grasscn/web/ui/separator";
 
+// @ts-expect-error No native vertical separator is established.
+const vertical = <Separator orientation="vertical" />;
+
+// @ts-expect-error Only original header/footer surfaces are available.
+const invented = <Separator edge="outline" />;
+
 export const SeparatorApiContract = function SeparatorApiContract() {
   const supported = (
     <Separator
@@ -12,10 +18,6 @@ export const SeparatorApiContract = function SeparatorApiContract() {
   );
 
   const composed = <Separator render={<hr />}>{undefined}</Separator>;
-  // @ts-expect-error No native vertical separator is established.
-  const vertical = <Separator orientation="vertical" />;
-  // @ts-expect-error Only original header/footer surfaces are available.
-  const invented = <Separator edge="outline" />;
 
   return [supported, composed, vertical, invented];
 };

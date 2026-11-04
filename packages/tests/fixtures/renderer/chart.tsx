@@ -26,6 +26,22 @@ const style = {
   "--fixture-y": `${(c.y ?? 16) * scale}px`,
 };
 
+const DesktopFixtureIcon = () => (
+  <svg aria-label="Desktop icon" width="12" height="12">
+    <rect width="12" height="12" fill="green" />
+  </svg>
+);
+
+const formatFixtureTooltip: NonNullable<
+  React.ComponentProps<typeof ChartTooltipContent>["formatter"]
+> = (value, name) => <span data-testid="formatted">{`${name}:${value}`}</span>;
+
+const formatFixtureTooltipLabel: NonNullable<
+  React.ComponentProps<typeof ChartTooltipContent>["labelFormatter"]
+> = (value) => (
+  <strong data-testid="label-formatted">{`Season:${String(value)}`}</strong>
+);
+
 const ApiFixture = () => {
   let apiScale: 1 | 2 | 3 = 2;
 
@@ -50,11 +66,7 @@ const ApiFixture = () => {
 
   const config = {
     desktop: {
-      icon: () => (
-        <svg aria-label="Desktop icon" width="12" height="12">
-          <rect width="12" height="12" fill="green" />
-        </svg>
-      ),
+      icon: DesktopFixtureIcon,
       label: "世界",
       theme: { dark: "#00aa11", light: "#22dd44" },
     },
@@ -98,17 +110,11 @@ const ApiFixture = () => {
                 nameKey={p.get("nameKey") ?? undefined}
                 labelKey={p.get("labelKey") ?? undefined}
                 formatter={
-                  p.has("formatter")
-                    ? (value, name) => (
-                        <span data-testid="formatted">{`${name}:${value}`}</span>
-                      )
-                    : undefined
+                  p.has("formatter") ? formatFixtureTooltip : undefined
                 }
                 labelFormatter={
                   p.has("labelFormatter")
-                    ? (value) => (
-                        <strong data-testid="label-formatted">{`Season:${String(value)}`}</strong>
-                      )
+                    ? formatFixtureTooltipLabel
                     : undefined
                 }
               />

@@ -30,8 +30,6 @@ test("book navigation and native page-turn sound", async ({ page }) => {
           src: this.src,
           volume: this.volume,
         });
-
-        return;
       }
     }
 

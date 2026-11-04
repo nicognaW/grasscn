@@ -93,8 +93,6 @@ test("trading selection, result feedback and native scrollbar controls", async (
           src: this.src,
           volume: this.volume,
         });
-
-        return;
       }
     }
 

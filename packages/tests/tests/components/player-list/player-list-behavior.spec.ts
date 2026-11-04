@@ -28,8 +28,6 @@ test("player list supports pointer and keyboard selection without UI sound", asy
         // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
         (window as InitializedPlayerListPlaybackState).played += 1;
         // oxlint-enable typescript/no-unsafe-type-assertion
-
-        return;
       }
     };
     Object.defineProperty(window, "Audio", audioMockDescriptor);
