@@ -229,8 +229,19 @@ await writeFile(
 
 const file = actualCase.name;
 
-for (const relative of [file, `frames/${file}`]) {
-  const bytes = await readFile(path.join(output, relative));
+const imageInputs = await Promise.allSettled(
+  [file, `frames/${file}`].map(async (relative) => ({
+    bytes: await readFile(path.join(output, relative)),
+    relative,
+  }))
+);
+
+for (const imageInput of imageInputs) {
+  if (imageInput.status === "rejected") {
+    throw imageInput.reason;
+  }
+
+  const { bytes, relative } = imageInput.value;
   const image = PNG.sync.read(bytes);
   await writeFile(
     path.join(output, relative.replace(/\.png$/u, ".identity.json")),
