@@ -606,32 +606,34 @@ const MenubarSubContent = ({
 
   return (
     <MenuScaleContext.Provider value={scale}>
-      <Primitive.Positioner
-        data-mc-positioner=""
-        side={side}
-        align={align}
-        sideOffset={sideOffset}
-        alignOffset={alignOffset}
-        collisionPadding={collisionPadding}
-        collisionBoundary={collisionBoundary}
-        collisionAvoidance={collisionAvoidance}
-        className="z-50"
-      >
-        <Primitive.Popup
-          render={render}
-          data-slot="menubar-sub-content"
-          data-surface={surface}
-          ref={forwarded}
-          className={cn("mc-menu-content", className)}
-          style={minecraftStyle(style, (__style): MenubarScaleStyle => ({
-            "--mc-scale": scale,
-            ...__style,
-          }))}
-          {...props}
+      <Primitive.Portal keepMounted={keepMounted}>
+        <Primitive.Positioner
+          data-mc-positioner=""
+          side={side}
+          align={align}
+          sideOffset={sideOffset}
+          alignOffset={alignOffset}
+          collisionPadding={collisionPadding}
+          collisionBoundary={collisionBoundary}
+          collisionAvoidance={collisionAvoidance}
+          className="z-50"
         >
-          {contentChildren(children, surface)}
-        </Primitive.Popup>
-      </Primitive.Positioner>
+          <Primitive.Popup
+            render={render}
+            data-slot="menubar-sub-content"
+            data-surface={surface}
+            ref={forwarded}
+            className={cn("mc-menu-content", className)}
+            style={minecraftStyle(style, (__style): MenubarScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
+            {...props}
+          >
+            {contentChildren(children, surface)}
+          </Primitive.Popup>
+        </Primitive.Positioner>
+      </Primitive.Portal>
     </MenuScaleContext.Provider>
   );
 };
