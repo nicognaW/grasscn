@@ -60,6 +60,7 @@ export const DataTable = <TData extends RowData>({
               <TableRow key={group.id}>
                 {group.headers.map((header) => {
                   const headerId = header.id;
+
                   const headerContent = header.isPlaceholder
                     ? null
                     : flexRender(

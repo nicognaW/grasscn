@@ -175,6 +175,7 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
               <TableRow key={group.id}>
                 {group.headers.map((header) => {
                   const headerId = header.id;
+
                   const headerContent = header.isPlaceholder
                     ? null
                     : flexRender(
