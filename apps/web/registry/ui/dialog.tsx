@@ -178,6 +178,22 @@ const DialogContent = ({
       );
 
       const bounds = element.getBoundingClientRect();
+      element.style.setProperty(
+        "--mc-dialog-background-left",
+        `${bounds.left + element.clientLeft}px`
+      );
+      element.style.setProperty(
+        "--mc-dialog-background-top",
+        `${bounds.top + element.clientTop}px`
+      );
+      element.style.setProperty(
+        "--mc-dialog-background-width",
+        `${element.clientWidth}px`
+      );
+      element.style.setProperty(
+        "--mc-dialog-background-height",
+        `${element.clientHeight}px`
+      );
       const inside = logicalWidth - 36;
 
       for (const node of element.querySelectorAll<HTMLElement>(
