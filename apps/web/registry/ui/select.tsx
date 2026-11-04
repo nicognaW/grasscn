@@ -77,9 +77,8 @@ const useElement = function useElement<T extends HTMLElement>(
 
 const textSkin = function textSkin(children: React.ReactNode): React.ReactNode {
   if (Array.isArray(children)) {
-    return children.map((child, index) => (
-      <React.Fragment key={index}>{textSkin(child)}</React.Fragment>
-    ));
+    // oxlint-disable-next-line react/no-react-children -- This recursive renderer adapts opaque ReactNode children; React owns supplied-key composition and nested sibling scopes. Preserve the public children ABI without fabricating IDs or reimplementing key escaping.
+    return React.Children.map(children, textSkin);
   }
 
   if (isMinecraftTextContent(children)) {

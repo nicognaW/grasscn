@@ -20,7 +20,7 @@ const languages = {
   yaml: async () => await import("shiki/langs/yaml.mjs"),
 };
 
-const aliases: Record<string, keyof typeof languages> = {
+const aliases = {
   js: "javascript",
   md: "markdown",
   py: "python",
@@ -30,7 +30,7 @@ const aliases: Record<string, keyof typeof languages> = {
   ts: "typescript",
   yml: "yaml",
   zsh: "bash",
-};
+} satisfies Record<string, keyof typeof languages>;
 
 const minecraftTheme = {
   colors: { "editor.background": "#000000", "editor.foreground": "#FFFFFF" },
@@ -109,6 +109,12 @@ const getHighlighter = function getHighlighter() {
   return highlighter;
 };
 
+const isRegisteredLanguage = (name: string): name is keyof typeof languages =>
+  Object.hasOwn(languages, name);
+
+const isLanguageAlias = (name: string): name is keyof typeof aliases =>
+  Object.hasOwn(aliases, name);
+
 const getLanguage = function getLanguage(language: string) {
   const name = language.toLowerCase();
 
@@ -116,11 +122,11 @@ const getLanguage = function getLanguage(language: string) {
     return name;
   }
 
-  if (name in languages) {
-    return name as keyof typeof languages;
+  if (isRegisteredLanguage(name)) {
+    return name;
   }
 
-  return aliases[name] ?? null;
+  return isLanguageAlias(name) ? aliases[name] : null;
 };
 
 // Loads a language and returns a highlighter for it, or null for a language

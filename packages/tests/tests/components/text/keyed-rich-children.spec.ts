@@ -5,6 +5,7 @@ for (const adapter of [
   "code-block",
   "item-text",
   "chat-text",
+  "select-value",
 ] as const) {
   test(`${adapter} keeps caller-keyed child state with its identity after reordering`, async ({
     page,

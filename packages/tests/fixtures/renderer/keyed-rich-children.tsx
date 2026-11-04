@@ -1,5 +1,6 @@
 import { CodeBlock, CodeBlockContent } from "@grasscn/web/ui/code-block";
 import { Kbd } from "@grasscn/web/ui/kbd";
+import { Select, SelectValue } from "@grasscn/web/ui/select";
 import * as React from "react";
 
 import { MinecraftChatText } from "@/components/ui/minecraft-chat-text";
@@ -54,6 +55,12 @@ export const KeyedRichChildrenFixture = () => {
       <MinecraftChatText data-testid="rich-key-adapter">
         {children}
       </MinecraftChatText>
+    );
+  } else if (adapter === "select-value") {
+    content = (
+      <Select defaultValue="known" items={[{ label: "Known", value: "known" }]}>
+        <SelectValue data-testid="rich-key-adapter">{children}</SelectValue>
+      </Select>
     );
   } else {
     content = <Kbd data-testid="rich-key-adapter">{children}</Kbd>;
