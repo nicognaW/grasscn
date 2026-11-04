@@ -8,6 +8,8 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-hotbar.css";
 
+const EMPTY_HOTBAR_ITEMS = [] as const;
+
 interface HotbarLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-hotbar-1-height": number;
   "--mc-dynamic-hotbar-1-width": number;
@@ -119,7 +121,7 @@ const HotbarPaint = ({
 };
 
 const Hotbar = ({
-  items = [],
+  items = EMPTY_HOTBAR_ITEMS,
   value,
   defaultValue = 0,
   onValueChange,

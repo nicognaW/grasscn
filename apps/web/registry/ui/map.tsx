@@ -11,6 +11,8 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-map.css";
 
+const EMPTY_MAP_MARKERS = [] as const;
+
 interface OwnedMapDimensions1 extends React.CSSProperties {
   "--mc-z-map-base-1-height"?: string;
   "--mc-z-map-base-1-width"?: string;
@@ -84,7 +86,7 @@ type MinecraftMapProps = React.ComponentProps<"div"> & {
 
 const MinecraftMap = ({
   pixels,
-  markers = [],
+  markers = EMPTY_MAP_MARKERS,
   scale = 2,
   onMarkerSelect,
   onMapClick,

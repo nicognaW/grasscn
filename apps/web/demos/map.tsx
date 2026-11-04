@@ -10,7 +10,7 @@ const MapDemo = ({ scale }: DemoProps) => {
   const [selected, setSelected] = React.useState("Home");
   const [point, setPoint] = React.useState<{ x: number; y: number }>();
 
-  const pixels = React.useMemo(getWorldMapPixels, []);
+  const pixels = React.useMemo(() => getWorldMapPixels(), []);
 
   return (
     <div

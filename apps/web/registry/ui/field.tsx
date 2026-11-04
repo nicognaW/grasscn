@@ -178,7 +178,7 @@ const FieldError = ({
         )}
       </ul>
     );
-  }, [children, errors]);
+  }, [children, errors, scale]);
 
   if (!content) {
     return null;

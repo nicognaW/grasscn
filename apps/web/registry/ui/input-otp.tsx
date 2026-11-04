@@ -35,24 +35,29 @@ const InputOTP = ({
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
   scale?: Scale;
-}) => (
-  <OTPStyle.Provider
-    value={{
+}) => {
+  const otpStyle = React.useMemo(
+    () => ({
       disabled: !!(props.disabled ?? false),
       readOnly: !!(props.readOnly ?? false),
       scale,
-    }}
-  >
-    <OTPInput
-      spellCheck={spellCheck}
-      autoCorrect={autoCorrect}
-      data-slot="input-otp"
-      containerClassName={`mc-otp ${containerClassName ?? ""}`}
-      className={className}
-      {...props}
-    />
-  </OTPStyle.Provider>
-);
+    }),
+    [props.disabled, props.readOnly, scale]
+  );
+
+  return (
+    <OTPStyle.Provider value={otpStyle}>
+      <OTPInput
+        spellCheck={spellCheck}
+        autoCorrect={autoCorrect}
+        data-slot="input-otp"
+        containerClassName={`mc-otp ${containerClassName ?? ""}`}
+        className={className}
+        {...props}
+      />
+    </OTPStyle.Provider>
+  );
+};
 
 const InputOTPGroup = ({
   className,

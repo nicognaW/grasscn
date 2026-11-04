@@ -338,8 +338,13 @@ const ScrollArea = ({
     </>
   );
 
+  const scrollContext = React.useMemo(
+    () => ({ disabled, geometry, scale, viewport }),
+    [disabled, geometry, scale, viewport]
+  );
+
   return (
-    <ScrollContext.Provider value={{ disabled, geometry, scale, viewport }}>
+    <ScrollContext.Provider value={scrollContext}>
       <ScrollAreaPrimitive.Root
         render={render}
         ref={ref}

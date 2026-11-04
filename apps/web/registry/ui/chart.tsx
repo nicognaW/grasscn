@@ -143,8 +143,13 @@ const ChartContainer = ({
   const uniqueId = React.useId();
   const chartId = `chart-${id ?? uniqueId.replaceAll(":", "")}`;
 
+  const chartContext = React.useMemo(
+    () => ({ config, scale }),
+    [config, scale]
+  );
+
   return (
-    <ChartContext.Provider value={{ config, scale }}>
+    <ChartContext.Provider value={chartContext}>
       <ChartGeometryProvider scale={scale} host={host} colors={config}>
         <div
           ref={host}

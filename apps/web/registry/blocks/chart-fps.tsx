@@ -12,12 +12,16 @@ import {
   chartFpsColor,
 } from "@/components/ui/chart";
 
+const DEFAULT_FPS_DOMAIN: [number, number] = [0, 1000 / 30];
+
+const formatFrameDuration = (value: number) => `${Math.round(value)} ms`;
+
 /** Example composition. Values and domains use ordinary application units. */
 export const FpsChartExample = ({
   data,
   dataKey,
-  domain = [0, 1000 / 30],
-  formatValue = (value) => `${Math.round(value)} ms`,
+  domain = DEFAULT_FPS_DOMAIN,
+  formatValue = formatFrameDuration,
   guides,
   framerateLimit = 260,
   width = 242,

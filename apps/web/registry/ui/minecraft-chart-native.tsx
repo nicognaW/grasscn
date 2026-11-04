@@ -13,6 +13,8 @@ import { MinecraftText } from "./minecraft-text";
 
 import "./minecraft-chart.css";
 
+const EMPTY_CHART_LABELS = [] as const;
+
 interface NativeChartPaintStyle extends React.CSSProperties {
   "--mc-native-background"?: string;
   "--mc-native-background-channels"?: string;
@@ -111,7 +113,7 @@ export const chartFpsColor = function chartFpsColor(nanos: number) {
 
 /** Decoration inside a Recharts BarChart. The bar shape supplies engine geometry. */
 const ChartFpsFrame = ({
-  labels = [],
+  labels = EMPTY_CHART_LABELS,
   guides,
   framerateLimit = 260,
 }: {

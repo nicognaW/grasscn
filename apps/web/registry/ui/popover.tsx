@@ -195,11 +195,13 @@ const PopoverContent = ({
     </>
   );
 
+  const popoverText = React.useMemo(() => ({ scale, width }), [scale, width]);
+
   return (
     <Primitive.Portal keepMounted={keepMounted}>
       <ScaleContext.Provider value={scale}>
         <CardScaleContext.Provider value={scale}>
-          <PopoverTextContext.Provider value={{ scale, width }}>
+          <PopoverTextContext.Provider value={popoverText}>
             <Primitive.Positioner
               anchor={anchor}
               data-mc-positioner=""

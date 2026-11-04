@@ -41,8 +41,13 @@ const RadioGroup = <Value = string,>({
 }) => {
   const keyboardSelection = React.useRef(false);
 
+  const radioContext = React.useMemo(
+    () => ({ disabled, scale }),
+    [disabled, scale]
+  );
+
   return (
-    <RadioContext.Provider value={{ disabled, scale }}>
+    <RadioContext.Provider value={radioContext}>
       <RadioGroupPrimitive<Value>
         disabled={disabled}
         onPointerDownCapture={(event) => {

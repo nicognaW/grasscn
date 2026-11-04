@@ -456,9 +456,14 @@ const SelectContent = ({
     </>
   );
 
+  const listContext = React.useMemo(
+    () => ({ scale, viewport }),
+    [scale, viewport]
+  );
+
   return (
     <SelectPrimitive.Portal>
-      <ListContext.Provider value={{ scale, viewport }}>
+      <ListContext.Provider value={listContext}>
         <SelectPrimitive.Positioner
           data-mc-positioner=""
           className="z-50"

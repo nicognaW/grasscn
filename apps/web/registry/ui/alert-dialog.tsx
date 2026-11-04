@@ -307,20 +307,23 @@ const AlertDialogContent = ({
     };
   }, [node, scale]);
 
+  const confirmationText = React.useMemo(
+    () => ({
+      compact,
+      contentWidth: compact
+        ? measuredWidth
+        : Math.max(1, Math.ceil(viewport / scale) - 50),
+      nativeContentWidth: Math.max(1, Math.ceil(viewport / scale) - 50),
+      scale,
+    }),
+    [compact, measuredWidth, viewport, scale]
+  );
+
   return (
     <AlertDialogPortal keepMounted={keepMounted}>
       <AlertDialogOverlay blur={blur} />
       <ScaleContext.Provider value={scale}>
-        <ConfirmationTextContext.Provider
-          value={{
-            compact,
-            contentWidth: compact
-              ? measuredWidth
-              : Math.max(1, Math.ceil(viewport / scale) - 50),
-            nativeContentWidth: Math.max(1, Math.ceil(viewport / scale) - 50),
-            scale,
-          }}
-        >
+        <ConfirmationTextContext.Provider value={confirmationText}>
           <Primitive.Popup
             render={render}
             data-slot="alert-dialog-content"

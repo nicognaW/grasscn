@@ -38,6 +38,8 @@ type PlayerPreviewProps = React.ComponentProps<"div"> & {
   onLoadingStatusChange?: (status: "loading" | "loaded" | "error") => void;
 };
 
+const DEFAULT_PLAYER_ROTATION = { pitch: -5, yaw: 30 };
+
 const vs = `attribute vec3 position;attribute vec2 uv;attribute vec3 normal;uniform mat4 projection;uniform mat4 modelView;varying vec2 vUv;varying vec3 vNormal;void main(){gl_Position=projection*modelView*vec4(position,1.);vUv=uv;vNormal=normal;}`;
 const fs = `precision highp float;uniform sampler2D skin;varying vec2 vUv;varying vec3 vNormal;void main(){vec4 color=texture2D(skin,vUv);if(color.a<.1)discard;vec3 n=sign(vNormal)*floor(abs(vNormal)*127.)/127.;if(!gl_FrontFacing)n=-n;vec3 l0=normalize(vec3(.2,-1.,1.));vec3 l1=normalize(vec3(-.2,-1.,0.));float brightness=min(1.,(max(0.,dot(l0,n))+max(0.,dot(l1,n)))*.6+.4);gl_FragColor=vec4(color.rgb*brightness,color.a);}`;
 
@@ -389,7 +391,7 @@ const PlayerPreview = ({
   username,
   model,
   rotation,
-  defaultRotation = { pitch: -5, yaw: 30 },
+  defaultRotation = DEFAULT_PLAYER_ROTATION,
   onRotationChange,
   width = 80,
   height = 120,
