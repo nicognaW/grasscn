@@ -21,6 +21,39 @@ import * as React from "react";
 // Navigation owns this immutable fixture query; state updates keep the same document.
 const q = new URLSearchParams(location.search);
 
+const readQuestionnaireReferenceBounds = (scale: 1 | 2 | 3) => {
+  const bounds = {
+    border: 0,
+    height: Number(q.get("height") ?? 20) * scale,
+    left: Number(q.get("x") ?? 16) * scale,
+    margin: 0,
+    padding: 0,
+    position: "fixed",
+    top: Number(q.get("y") ?? 16) * scale,
+    width: Number(q.get("width") ?? 200) * scale,
+  } satisfies React.CSSProperties;
+
+  return bounds;
+};
+
+const readQuestionnaireReferenceProbe = (bounds: React.CSSProperties) => {
+  const part = q.get("part") ?? "title";
+  const text = q.get("label") ?? "Hello Minecraft";
+
+  const textProps = {
+    align:
+      // SAFETY: owned fixture callers serialize the align option from the actual component protocol ("left" | "center"); preserve this URL read, original default and component handling.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+      (q.get("align") ?? "left") as "left" | "center",
+    "data-subject": "true",
+    id: "subject",
+    maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
+    style: bounds,
+  };
+
+  return { part, text, textProps };
+};
+
 export const QuestionnaireFixture = () => {
   // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
   const scale =
@@ -42,31 +75,10 @@ export const QuestionnaireFixture = () => {
     chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
-  const bounds = {
-    border: 0,
-    height: Number(q.get("height") ?? 20) * scale,
-    left: Number(q.get("x") ?? 16) * scale,
-    margin: 0,
-    padding: 0,
-    position: "fixed",
-    top: Number(q.get("y") ?? 16) * scale,
-    width: Number(q.get("width") ?? 200) * scale,
-  } satisfies React.CSSProperties;
+  const bounds = readQuestionnaireReferenceBounds(scale);
 
   if (q.has("native")) {
-    const part = q.get("part") ?? "title";
-    const text = q.get("label") ?? "Hello Minecraft";
-
-    const textProps = {
-      align:
-        // SAFETY: owned fixture callers serialize the align option from the actual component protocol ("left" | "center"); preserve this URL read, original default and component handling.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
-        (q.get("align") ?? "left") as "left" | "center",
-      "data-subject": "true",
-      id: "subject",
-      maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
-      style: bounds,
-    };
+    const { part, text, textProps } = readQuestionnaireReferenceProbe(bounds);
 
     if (part === "input") {
       return (

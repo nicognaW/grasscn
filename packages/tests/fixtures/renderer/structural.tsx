@@ -41,6 +41,45 @@ const position: React.CSSProperties = {
   "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
 };
 
+const renderButtonGroupSubject = (subject: ReactNode) => {
+  let selectedFixtureBranch1: ReactNode;
+
+  if (p.get("part") === "text") {
+    selectedFixtureBranch1 = (
+      <ButtonGroupText
+        id="subject"
+        scale={scale}
+        maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
+        align={p.get("alignment") === "center" ? "center" : "left"}
+        className="fixture-geometry-width fixture-geometry-height fixture-owner-layout-40 fixture-owner-layout-41"
+        style={{
+          "--fixture-height": `${height * scale}px`,
+          "--fixture-width": `${width * scale}px`,
+        }}
+        data-subject="true"
+      >
+        {label}
+      </ButtonGroupText>
+    );
+  } else {
+    selectedFixtureBranch1 =
+      p.get("part") === "separator" ? (
+        <ButtonGroupSeparator
+          id="subject"
+          scale={scale}
+          orientation="horizontal"
+          edge={p.get("edge") === "footer" ? "footer" : "header"}
+          className="fixture-geometry-width fixture-structural-min-width-zero"
+          style={{ "--fixture-width": `${width * scale}px` }}
+          data-subject="true"
+        />
+      ) : (
+        subject
+      );
+  }
+  return selectedFixtureBranch1;
+};
+
 export const StructuralFixture = () => {
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
@@ -105,41 +144,7 @@ export const StructuralFixture = () => {
   }
 
   if (kind === "button-group") {
-    let selectedFixtureBranch1: ReactNode;
-
-    if (p.get("part") === "text") {
-      selectedFixtureBranch1 = (
-        <ButtonGroupText
-          id="subject"
-          scale={scale}
-          maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
-          align={p.get("alignment") === "center" ? "center" : "left"}
-          className="fixture-geometry-width fixture-geometry-height fixture-owner-layout-40 fixture-owner-layout-41"
-          style={{
-            "--fixture-height": `${height * scale}px`,
-            "--fixture-width": `${width * scale}px`,
-          }}
-          data-subject="true"
-        >
-          {label}
-        </ButtonGroupText>
-      );
-    } else {
-      selectedFixtureBranch1 =
-        p.get("part") === "separator" ? (
-          <ButtonGroupSeparator
-            id="subject"
-            scale={scale}
-            orientation="horizontal"
-            edge={p.get("edge") === "footer" ? "footer" : "header"}
-            className="fixture-geometry-width fixture-structural-min-width-zero"
-            style={{ "--fixture-width": `${width * scale}px` }}
-            data-subject="true"
-          />
-        ) : (
-          subject
-        );
-    }
+    const selectedFixtureBranch1 = renderButtonGroupSubject(subject);
 
     return (
       <>
