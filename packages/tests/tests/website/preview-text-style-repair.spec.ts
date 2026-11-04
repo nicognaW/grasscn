@@ -39,15 +39,35 @@ test("Kbd texture fits ASCII, CJK and shortcut labels at every GUI scale", async
         .fill(text);
       const key = card.locator('[data-slot="kbd"]').first();
 
-      for (const glyph of await key.locator("[data-mc-label-ready]").all()) {
-        await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+      const readOnlyItems33 = await key.locator("[data-mc-label-ready]").all();
+
+      const readOnlyResults33 = await Promise.allSettled(
+        readOnlyItems33.map(async (glyph) => {
+          await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+        })
+      );
+
+      for (const readOnlyResult33 of readOnlyResults33) {
+        if (readOnlyResult33.status === "rejected") {
+          throw readOnlyResult33.reason;
+        }
       }
 
       await labelFits(key);
     }
 
-    for (const key of await card.locator('[data-slot="kbd"]').all()) {
-      await labelFits(key);
+    const readOnlyItems34 = await card.locator('[data-slot="kbd"]').all();
+
+    const readOnlyResults34 = await Promise.allSettled(
+      readOnlyItems34.map(async (key) => {
+        await labelFits(key);
+      })
+    );
+
+    for (const readOnlyResult34 of readOnlyResults34) {
+      if (readOnlyResult34.status === "rejected") {
+        throw readOnlyResult34.reason;
+      }
     }
   }
 });
@@ -59,10 +79,20 @@ test("Questionnaire action labels fit, CJK submission works and restart clears t
   await card.getByRole("radio", { exact: true, name: "Survival" }).check();
   await card.getByRole("button", { exact: true, name: "Next" }).click();
   {
-    for (const button of await card
+    const readOnlyItems35 = await card
       .locator('[data-slot="questionnaire-actions"] button:visible')
-      .all()) {
-      await labelFits(button);
+      .all();
+
+    const readOnlyResults35 = await Promise.allSettled(
+      readOnlyItems35.map(async (button) => {
+        await labelFits(button);
+      })
+    );
+
+    for (const readOnlyResult35 of readOnlyResults35) {
+      if (readOnlyResult35.status === "rejected") {
+        throw readOnlyResult35.reason;
+      }
     }
 
     expect(

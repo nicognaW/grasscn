@@ -46,6 +46,7 @@ test("overlay documentation exposes exact examples, own grouped source and retai
   );
 
   const overlaySlugs = slugs;
+
   const verifyOverlayDocumentation = async (
     slug: (typeof overlaySlugs)[number]
   ) => {
@@ -65,8 +66,18 @@ test("overlay documentation exposes exact examples, own grouped source and retai
       );
     }
 
-    for (const id of ["preview", "usage", "composition", "installation"]) {
-      await expect(page.locator(`h2#${id}`)).toBeVisible();
+    const readOnlyItems27 = ["preview", "usage", "composition", "installation"];
+
+    const readOnlyResults27 = await Promise.allSettled(
+      readOnlyItems27.map(async (id) => {
+        await expect(page.locator(`h2#${id}`)).toBeVisible();
+      })
+    );
+
+    for (const readOnlyResult27 of readOnlyResults27) {
+      if (readOnlyResult27.status === "rejected") {
+        throw readOnlyResult27.reason;
+      }
     }
 
     const example = page.locator(".documentation-example").first();
@@ -164,6 +175,7 @@ test("documentation edge panels expose labelled Done actions", async ({
   page,
 }) => {
   const edgePanelSlugs = ["sheet", "drawer"];
+
   const verifyEdgePanelComposition = async (
     slug: (typeof edgePanelSlugs)[number]
   ) => {
@@ -397,6 +409,7 @@ test("overlay documentation remains usable at its default mobile width", async (
     "message-scroller",
     "chart",
   ];
+
   const verifyMobileOverlayDocumentation = async (
     slug: (typeof mobileOverlaySlugs)[number]
   ) => {

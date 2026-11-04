@@ -100,8 +100,18 @@ test("Collapsible keeps native CJK text accessible", async ({ page }) => {
     "true"
   );
 
-  for (const glyph of await body.locator("[data-mc-label-ready]").all()) {
-    await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems12 = await body.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults12 = await Promise.allSettled(
+    readOnlyItems12.map(async (glyph) => {
+      await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult12 of readOnlyResults12) {
+    if (readOnlyResult12.status === "rejected") {
+      throw readOnlyResult12.reason;
+    }
   }
 
   await expect(body).toContainText("你好，世界");

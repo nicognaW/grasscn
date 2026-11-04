@@ -6,12 +6,32 @@ interface CodeBlockClipboardState {
 }
 
 const ready = async function ready(page: Page) {
-  for (const text of await page.locator("[data-mc-selectable-ready]").all()) {
-    await expect(text).toHaveAttribute("data-mc-selectable-ready", "true");
+  const readOnlyItems9 = await page.locator("[data-mc-selectable-ready]").all();
+
+  const readOnlyResults9 = await Promise.allSettled(
+    readOnlyItems9.map(async (text) => {
+      await expect(text).toHaveAttribute("data-mc-selectable-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult9 of readOnlyResults9) {
+    if (readOnlyResult9.status === "rejected") {
+      throw readOnlyResult9.reason;
+    }
   }
 
-  for (const text of await page.locator("[data-mc-label-ready]").all()) {
-    await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems10 = await page.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults10 = await Promise.allSettled(
+    readOnlyItems10.map(async (text) => {
+      await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult10 of readOnlyResults10) {
+    if (readOnlyResult10.status === "rejected") {
+      throw readOnlyResult10.reason;
+    }
   }
 };
 
@@ -21,7 +41,7 @@ test("CodeBlock all eight exports retain semantics, ref, keyboard focus and real
   await page.goto("?component=code-block&lines=1");
   await ready(page);
 
-  for (const slot of [
+  const readOnlyItems11 = [
     "code-block",
     "code-block-header",
     "code-block-title",
@@ -30,8 +50,18 @@ test("CodeBlock all eight exports retain semantics, ref, keyboard focus and real
     "code-block-content",
     "code-block-line",
     "code-block-footer",
-  ]) {
-    await expect(page.locator(`[data-slot=${slot}]`).first()).toBeVisible();
+  ];
+
+  const readOnlyResults11 = await Promise.allSettled(
+    readOnlyItems11.map(async (slot) => {
+      await expect(page.locator(`[data-slot=${slot}]`).first()).toBeVisible();
+    })
+  );
+
+  for (const readOnlyResult11 of readOnlyResults11) {
+    if (readOnlyResult11.status === "rejected") {
+      throw readOnlyResult11.reason;
+    }
   }
 
   await page.locator("#read-ref").click();

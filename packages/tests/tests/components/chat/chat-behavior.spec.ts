@@ -5,15 +5,25 @@ test("Message preserves all six slots, CJK, alignment, refs and native line dime
 }) => {
   await page.goto("?component=message&rich=1&align=end&label=你好世界");
 
-  for (const slot of [
+  const readOnlyItems6 = [
     "message-group",
     "message",
     "message-avatar",
     "message-header",
     "message-content",
     "message-footer",
-  ]) {
-    await expect(page.locator(`[data-slot=${slot}]`).first()).toBeVisible();
+  ];
+
+  const readOnlyResults6 = await Promise.allSettled(
+    readOnlyItems6.map(async (slot) => {
+      await expect(page.locator(`[data-slot=${slot}]`).first()).toBeVisible();
+    })
+  );
+
+  for (const readOnlyResult6 of readOnlyResults6) {
+    if (readOnlyResult6.status === "rejected") {
+      throw readOnlyResult6.reason;
+    }
   }
 
   await expect(page.getByTestId("message")).toHaveAttribute(
@@ -54,13 +64,23 @@ test("Bubble preserves four slots, reaction positioning and rich text", async ({
 }) => {
   await page.goto("?component=bubble&rich=1&align=end&side=top&label=你好世界");
 
-  for (const slot of [
+  const readOnlyItems7 = [
     "bubble-group",
     "bubble",
     "bubble-content",
     "bubble-reactions",
-  ]) {
-    await expect(page.locator(`[data-slot=${slot}]`)).toBeVisible();
+  ];
+
+  const readOnlyResults7 = await Promise.allSettled(
+    readOnlyItems7.map(async (slot) => {
+      await expect(page.locator(`[data-slot=${slot}]`)).toBeVisible();
+    })
+  );
+
+  for (const readOnlyResult7 of readOnlyResults7) {
+    if (readOnlyResult7.status === "rejected") {
+      throw readOnlyResult7.reason;
+    }
   }
 
   await expect(page.getByTestId("reactions")).toHaveAttribute(
@@ -106,8 +126,18 @@ test("Chat palette and rich intrinsic children retain native canvas colors", asy
   await page.goto("?component=bubble&rich=1&color=%23ff5555&label=你好");
   const subject = page.locator("[data-subject]");
 
-  for (const glyph of await subject.locator("[data-mc-label-ready]").all()) {
-    await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems8 = await subject.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults8 = await Promise.allSettled(
+    readOnlyItems8.map(async (glyph) => {
+      await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult8 of readOnlyResults8) {
+    if (readOnlyResult8.status === "rejected") {
+      throw readOnlyResult8.reason;
+    }
   }
 
   await expect(subject).toHaveCSS("color", "rgb(255, 85, 85)");

@@ -81,26 +81,46 @@ for (const scale of [2]) {
     await expect(name).toHaveAttribute("aria-invalid", "false");
     await expect(notes).toHaveValue("第一行\nSecond line\n第三行");
 
-    for (const control of [name, world, notes]) {
-      await expect(control).toHaveAttribute("spellcheck", "false");
-      expect(
-        await control.evaluate((n) =>
-          Number(getComputedStyle(n).getPropertyValue("--mc-scale"))
-        )
-      ).toBe(scale);
+    const readOnlyItems14 = [name, world, notes];
+
+    const readOnlyResults14 = await Promise.allSettled(
+      readOnlyItems14.map(async (control) => {
+        await expect(control).toHaveAttribute("spellcheck", "false");
+        expect(
+          await control.evaluate((n) =>
+            Number(getComputedStyle(n).getPropertyValue("--mc-scale"))
+          )
+        ).toBe(scale);
+      })
+    );
+
+    for (const readOnlyResult14 of readOnlyResults14) {
+      if (readOnlyResult14.status === "rejected") {
+        throw readOnlyResult14.reason;
+      }
     }
 
     await card
       .getByRole("button", { exact: true, name: "Disable fields" })
       .click();
 
-    for (const control of [
+    const readOnlyItems15 = [
       name,
       world,
       notes,
       form.getByRole("button", { exact: true, name: "Save player" }),
-    ]) {
-      await expect(control).toBeDisabled();
+    ];
+
+    const readOnlyResults15 = await Promise.allSettled(
+      readOnlyItems15.map(async (control) => {
+        await expect(control).toBeDisabled();
+      })
+    );
+
+    for (const readOnlyResult15 of readOnlyResults15) {
+      if (readOnlyResult15.status === "rejected") {
+        throw readOnlyResult15.reason;
+      }
     }
 
     await card

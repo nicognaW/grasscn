@@ -63,38 +63,48 @@ for (const scale of [2]) {
       }
     });
 
-    for (const selector of [
+    const readOnlyItems31 = [
       "html",
       "#scrollbar-nested-proof",
       "#scrollbar-portal-proof",
       ".minecraft-docs-sidebar nav",
-    ]) {
-      const result = await page.locator(selector).evaluate((element) => {
-        const bar = getComputedStyle(element, "::-webkit-scrollbar");
-        const track = getComputedStyle(element, "::-webkit-scrollbar-track");
-        const thumb = getComputedStyle(element, "::-webkit-scrollbar-thumb");
+    ];
 
-        return {
-          buttons: getComputedStyle(element, "::-webkit-scrollbar-button")
-            .display,
-          color: getComputedStyle(element).scrollbarColor,
-          height: bar.height,
-          radius: thumb.borderRadius,
-          thumb: thumb.borderImageSource,
-          track: track.borderImageSource,
-          width: bar.width,
-        };
-      });
+    const readOnlyResults31 = await Promise.allSettled(
+      readOnlyItems31.map(async (selector) => {
+        const result = await page.locator(selector).evaluate((element) => {
+          const bar = getComputedStyle(element, "::-webkit-scrollbar");
+          const track = getComputedStyle(element, "::-webkit-scrollbar-track");
+          const thumb = getComputedStyle(element, "::-webkit-scrollbar-thumb");
 
-      expect(result.width).toBe(`${6 * scale}px`);
-      expect(result.height).toBe(`${6 * scale}px`);
-      expect(result.color).toBe("auto");
-      expect(result.thumb).toContain(minecraftTextareaAssets.scroller);
-      expect(result.track).toContain(
-        minecraftTextareaAssets.scroller_background
-      );
-      expect(result.radius).toBe("0px");
-      expect(result.buttons).toBe("none");
+          return {
+            buttons: getComputedStyle(element, "::-webkit-scrollbar-button")
+              .display,
+            color: getComputedStyle(element).scrollbarColor,
+            height: bar.height,
+            radius: thumb.borderRadius,
+            thumb: thumb.borderImageSource,
+            track: track.borderImageSource,
+            width: bar.width,
+          };
+        });
+
+        expect(result.width).toBe(`${6 * scale}px`);
+        expect(result.height).toBe(`${6 * scale}px`);
+        expect(result.color).toBe("auto");
+        expect(result.thumb).toContain(minecraftTextareaAssets.scroller);
+        expect(result.track).toContain(
+          minecraftTextareaAssets.scroller_background
+        );
+        expect(result.radius).toBe("0px");
+        expect(result.buttons).toBe("none");
+      })
+    );
+
+    for (const readOnlyResult31 of readOnlyResults31) {
+      if (readOnlyResult31.status === "rejected") {
+        throw readOnlyResult31.reason;
+      }
     }
 
     const nested = page.locator("#scrollbar-nested-proof");
@@ -157,30 +167,40 @@ test("Retired components are absent from supported catalog and served payloads",
   expect(served.items).toHaveLength(registry.items.length);
   await page.goto(`${origin}docs`);
 
-  for (const name of [
+  const readOnlyItems32 = [
     "Direction",
     "Toast",
     "Hover Card",
     "Navigation Menu",
     "Accordion",
     "Alert",
-  ]) {
-    await expect(
-      page
-        .getByRole("navigation", { name: "Documentation" })
-        .getByRole("link", { exact: true, name })
-    ).toHaveCount(0);
-    expect(
-      registry.items.some(
-        (item: { name: string }) =>
-          item.name === name.toLowerCase().replaceAll(" ", "-")
-      )
-    ).toBe(false);
+  ];
 
-    const awaitedGet2 = await request.get(
-      `${new URL(origin).origin}/r/${name.toLowerCase().replaceAll(" ", "-")}.json`
-    );
+  const readOnlyResults32 = await Promise.allSettled(
+    readOnlyItems32.map(async (name) => {
+      await expect(
+        page
+          .getByRole("navigation", { name: "Documentation" })
+          .getByRole("link", { exact: true, name })
+      ).toHaveCount(0);
+      expect(
+        registry.items.some(
+          (item: { name: string }) =>
+            item.name === name.toLowerCase().replaceAll(" ", "-")
+        )
+      ).toBe(false);
 
-    expect(awaitedGet2.status()).toBe(404);
+      const awaitedGet2 = await request.get(
+        `${new URL(origin).origin}/r/${name.toLowerCase().replaceAll(" ", "-")}.json`
+      );
+
+      expect(awaitedGet2.status()).toBe(404);
+    })
+  );
+
+  for (const readOnlyResult32 of readOnlyResults32) {
+    if (readOnlyResult32.status === "rejected") {
+      throw readOnlyResult32.reason;
+    }
   }
 });

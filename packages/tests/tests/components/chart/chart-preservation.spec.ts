@@ -91,13 +91,23 @@ for (const scale of [2] as const) {
           .not.toBe(scroll.top);
       } else {
         // Base UI may show the entire list when item alignment has enough room.
-        for (const option of await popup.getByRole("option").all()) {
-          const bounds = await option.boundingBox();
-          expectNotNull(bounds, "Missing required bounding box: bounds");
-          expect(bounds.y).toBeGreaterThanOrEqual(before.y);
-          expect(bounds.y + bounds.height).toBeLessThanOrEqual(
-            before.y + before.height
-          );
+        const readOnlyItems5 = await popup.getByRole("option").all();
+
+        const readOnlyResults5 = await Promise.allSettled(
+          readOnlyItems5.map(async (option) => {
+            const bounds = await option.boundingBox();
+            expectNotNull(bounds, "Missing required bounding box: bounds");
+            expect(bounds.y).toBeGreaterThanOrEqual(before.y);
+            expect(bounds.y + bounds.height).toBeLessThanOrEqual(
+              before.y + before.height
+            );
+          })
+        );
+
+        for (const readOnlyResult5 of readOnlyResults5) {
+          if (readOnlyResult5.status === "rejected") {
+            throw readOnlyResult5.reason;
+          }
         }
       }
 

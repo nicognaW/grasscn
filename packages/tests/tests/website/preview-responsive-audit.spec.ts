@@ -40,8 +40,18 @@ for (const scale of [2]) {
       const card = await open(page, name);
       await expect(card.locator(selector).first()).toBeVisible();
 
-      for (const control of await card.locator(selector).all()) {
-        await inside(control, card);
+      const readOnlyItems28 = await card.locator(selector).all();
+
+      const readOnlyResults28 = await Promise.allSettled(
+        readOnlyItems28.map(async (control) => {
+          await inside(control, card);
+        })
+      );
+
+      for (const readOnlyResult28 of readOnlyResults28) {
+        if (readOnlyResult28.status === "rejected") {
+          throw readOnlyResult28.reason;
+        }
       }
     });
   }
@@ -55,8 +65,18 @@ for (const scale of [2]) {
     const cells = card.locator(".mc-otp-slot");
     await expect(cells).toHaveCount(18);
 
-    for (const cell of await cells.all()) {
-      await inside(cell, card);
+    const readOnlyItems29 = await cells.all();
+
+    const readOnlyResults29 = await Promise.allSettled(
+      readOnlyItems29.map(async (cell) => {
+        await inside(cell, card);
+      })
+    );
+
+    for (const readOnlyResult29 of readOnlyResults29) {
+      if (readOnlyResult29.status === "rejected") {
+        throw readOnlyResult29.reason;
+      }
     }
   });
   test(`form errors wrap and CJK names save at GUI ${scale}`, async ({
@@ -120,8 +140,18 @@ test("recipe labels select their own filter and keyboard focus survives wrapping
     single.getByRole("button", { name: "Stonecutter recipes" })
   ).toHaveAttribute("aria-pressed", "true");
 
-  for (const label of await card.locator(".demo-filter-choice").all()) {
-    await inside(label, card);
+  const readOnlyItems30 = await card.locator(".demo-filter-choice").all();
+
+  const readOnlyResults30 = await Promise.allSettled(
+    readOnlyItems30.map(async (label) => {
+      await inside(label, card);
+    })
+  );
+
+  for (const readOnlyResult30 of readOnlyResults30) {
+    if (readOnlyResult30.status === "rejected") {
+      throw readOnlyResult30.reason;
+    }
   }
 });
 

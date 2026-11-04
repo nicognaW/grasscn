@@ -125,8 +125,18 @@ test("Collapsible preview supports CJK content, line breaks and external control
     "true"
   );
 
-  for (const glyphs of await body.locator("[data-mc-label-ready]").all()) {
-    await expect(glyphs).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems36 = await body.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults36 = await Promise.allSettled(
+    readOnlyItems36.map(async (glyphs) => {
+      await expect(glyphs).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult36 of readOnlyResults36) {
+    if (readOnlyResult36.status === "rejected") {
+      throw readOnlyResult36.reason;
+    }
   }
 
   await trigger.press("Enter");
@@ -280,10 +290,23 @@ test("Context Menu preview supports CJK actions, toggles and right-click submenu
     menu.locator('[data-slot="context-menu-label"] .mc-menu-accessible')
   ).toHaveText("你好，世界");
 
-  for (const glyphs of await menu
+  const readOnlyItems37 = await menu
     .locator("[data-mc-menu-unicode-ready]")
-    .all()) {
-    await expect(glyphs).toHaveAttribute("data-mc-menu-unicode-ready", "true");
+    .all();
+
+  const readOnlyResults37 = await Promise.allSettled(
+    readOnlyItems37.map(async (glyphs) => {
+      await expect(glyphs).toHaveAttribute(
+        "data-mc-menu-unicode-ready",
+        "true"
+      );
+    })
+  );
+
+  for (const readOnlyResult37 of readOnlyResults37) {
+    if (readOnlyResult37.status === "rejected") {
+      throw readOnlyResult37.reason;
+    }
   }
 
   const checkbox = page.getByRole("menuitemcheckbox", {
@@ -345,10 +368,23 @@ test("Dropdown Menu preview supports CJK actions, toggles and nested menus", asy
     menu.locator('[data-slot="dropdown-menu-label"] .mc-menu-accessible')
   ).toHaveText("你好，世界");
 
-  for (const glyphs of await menu
+  const readOnlyItems38 = await menu
     .locator("[data-mc-menu-unicode-ready]")
-    .all()) {
-    await expect(glyphs).toHaveAttribute("data-mc-menu-unicode-ready", "true");
+    .all();
+
+  const readOnlyResults38 = await Promise.allSettled(
+    readOnlyItems38.map(async (glyphs) => {
+      await expect(glyphs).toHaveAttribute(
+        "data-mc-menu-unicode-ready",
+        "true"
+      );
+    })
+  );
+
+  for (const readOnlyResult38 of readOnlyResults38) {
+    if (readOnlyResult38.status === "rejected") {
+      throw readOnlyResult38.reason;
+    }
   }
 
   await expect(
@@ -497,17 +533,27 @@ test("Preview Separator width control updates both original surfaces", async ({
       .getByLabel("Separator width", { exact: true })
   ).toHaveText("257 px");
 
-  for (const name of ["Menu header separator", "Menu footer separator"]) {
-    await expect(
-      page
-        .locator(".documentation-playground")
-        .getByRole("separator", { exact: true, name })
-    ).toHaveCSS("width", "514px");
-    await expect(
-      page
-        .locator(".documentation-playground")
-        .getByRole("separator", { exact: true, name })
-    ).toHaveCSS("height", "4px");
+  const readOnlyItems39 = ["Menu header separator", "Menu footer separator"];
+
+  const readOnlyResults39 = await Promise.allSettled(
+    readOnlyItems39.map(async (name) => {
+      await expect(
+        page
+          .locator(".documentation-playground")
+          .getByRole("separator", { exact: true, name })
+      ).toHaveCSS("width", "514px");
+      await expect(
+        page
+          .locator(".documentation-playground")
+          .getByRole("separator", { exact: true, name })
+      ).toHaveCSS("height", "4px");
+    })
+  );
+
+  for (const readOnlyResult39 of readOnlyResults39) {
+    if (readOnlyResult39.status === "rejected") {
+      throw readOnlyResult39.reason;
+    }
   }
 });
 
@@ -720,11 +766,21 @@ test("Text entry defaults disable browser spelling and correction", async ({
   ) => {
     await page.goto(`${origin}docs/components/${component.name}`);
 
-    for (const field of await page
+    const readOnlyItems40 = await page
       .locator('input[data-slot="input"], textarea[data-slot="textarea"]')
-      .all()) {
-      await expect(field).toHaveAttribute("spellcheck", "false");
-      await expect(field).toHaveAttribute("autocorrect", "off");
+      .all();
+
+    const readOnlyResults40 = await Promise.allSettled(
+      readOnlyItems40.map(async (field) => {
+        await expect(field).toHaveAttribute("spellcheck", "false");
+        await expect(field).toHaveAttribute("autocorrect", "off");
+      })
+    );
+
+    for (const readOnlyResult40 of readOnlyResults40) {
+      if (readOnlyResult40.status === "rejected") {
+        throw readOnlyResult40.reason;
+      }
     }
   };
 
@@ -756,10 +812,23 @@ test("Dialog preview supports editable CJK titles, multiline messages and footer
   await expect(dialog).toBeVisible();
   await expect(dialog).toHaveAccessibleDescription("Hello 世界 こんにちは");
 
-  for (const line of await dialog
+  const readOnlyItems41 = await dialog
     .locator("[data-mc-dialog-unicode-ready]")
-    .all()) {
-    await expect(line).toHaveAttribute("data-mc-dialog-unicode-ready", "true");
+    .all();
+
+  const readOnlyResults41 = await Promise.allSettled(
+    readOnlyItems41.map(async (line) => {
+      await expect(line).toHaveAttribute(
+        "data-mc-dialog-unicode-ready",
+        "true"
+      );
+    })
+  );
+
+  for (const readOnlyResult41 of readOnlyResults41) {
+    if (readOnlyResult41.status === "rejected") {
+      throw readOnlyResult41.reason;
+    }
   }
 
   await dialog.getByRole("button", { exact: true, name: "Continue" }).click();
@@ -809,8 +878,18 @@ test("Alert Dialog preview supports CJK text, native blur, confirmation and canc
     timeout: 15_000,
   });
 
-  for (const line of await dialog.locator("[data-mc-label-ready]").all()) {
-    await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems42 = await dialog.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults42 = await Promise.allSettled(
+    readOnlyItems42.map(async (line) => {
+      await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult42 of readOnlyResults42) {
+    if (readOnlyResult42.status === "rejected") {
+      throw readOnlyResult42.reason;
+    }
   }
 
   await expect(
@@ -844,18 +923,28 @@ test("Editable, read-only and disabled textarea examples render real line breaks
 }) => {
   await page.goto(`${origin}docs/components/textarea`);
 
-  for (const name of [
+  const readOnlyItems43 = [
     "Demo textarea",
     "Read-only demo textarea",
     "Disabled demo textarea",
-  ]) {
-    const field = page
-      .locator(".documentation-playground")
-      .getByRole("textbox", { exact: true, name });
+  ];
 
-    await expect(field).toHaveValue("Line one\nLine two\nLine three");
-    await expect(field).toHaveAttribute("data-mc-ready", "true");
-    await expect(field).toHaveAttribute("data-mc-bitmap", "true");
+  const readOnlyResults43 = await Promise.allSettled(
+    readOnlyItems43.map(async (name) => {
+      const field = page
+        .locator(".documentation-playground")
+        .getByRole("textbox", { exact: true, name });
+
+      await expect(field).toHaveValue("Line one\nLine two\nLine three");
+      await expect(field).toHaveAttribute("data-mc-ready", "true");
+      await expect(field).toHaveAttribute("data-mc-bitmap", "true");
+    })
+  );
+
+  for (const readOnlyResult43 of readOnlyResults43) {
+    if (readOnlyResult43.status === "rejected") {
+      throw readOnlyResult43.reason;
+    }
   }
 
   await page.getByRole("heading", { exact: true, name: "Textarea" }).click();
@@ -1048,8 +1137,18 @@ test("Radio Group preview supports exclusive selection, CJK labels and disabled 
     .getByRole("button", { exact: true, name: "Group: Enabled" })
     .click();
 
-  for (const radio of await group.getByRole("radio").all()) {
-    await expect(radio).toBeDisabled();
+  const readOnlyItems44 = await group.getByRole("radio").all();
+
+  const readOnlyResults44 = await Promise.allSettled(
+    readOnlyItems44.map(async (radio) => {
+      await expect(radio).toBeDisabled();
+    })
+  );
+
+  for (const readOnlyResult44 of readOnlyResults44) {
+    if (readOnlyResult44.status === "rejected") {
+      throw readOnlyResult44.reason;
+    }
   }
 });
 
@@ -1125,10 +1224,23 @@ test("Popover preview supports editable CJK text, world settings and dismissal",
     await dialog.locator("[data-mc-popover-unicode-ready]").count()
   ).toBeGreaterThan(0);
 
-  for (const line of await dialog
+  const readOnlyItems45 = await dialog
     .locator("[data-mc-popover-unicode-ready]")
-    .all()) {
-    await expect(line).toHaveAttribute("data-mc-popover-unicode-ready", "true");
+    .all();
+
+  const readOnlyResults45 = await Promise.allSettled(
+    readOnlyItems45.map(async (line) => {
+      await expect(line).toHaveAttribute(
+        "data-mc-popover-unicode-ready",
+        "true"
+      );
+    })
+  );
+
+  for (const readOnlyResult45 of readOnlyResults45) {
+    if (readOnlyResult45.status === "rejected") {
+      throw readOnlyResult45.reason;
+    }
   }
 
   await dialog

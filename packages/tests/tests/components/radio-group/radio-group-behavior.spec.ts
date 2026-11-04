@@ -123,8 +123,18 @@ test("Radio Group keeps required form behavior and excludes disabled groups", as
   );
   await page.goto("/?component=radio-group&rootDisabled=1&form=1");
 
-  for (const radio of await page.getByRole("radio").all()) {
-    await expect(radio).toBeDisabled();
+  const readOnlyItems20 = await page.getByRole("radio").all();
+
+  const readOnlyResults20 = await Promise.allSettled(
+    readOnlyItems20.map(async (radio) => {
+      await expect(radio).toBeDisabled();
+    })
+  );
+
+  for (const readOnlyResult20 of readOnlyResults20) {
+    if (readOnlyResult20.status === "rejected") {
+      throw readOnlyResult20.reason;
+    }
   }
 
   await page.getByRole("button", { exact: true, name: "Save mode" }).click();

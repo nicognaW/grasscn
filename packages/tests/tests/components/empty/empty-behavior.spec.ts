@@ -22,8 +22,18 @@ test("Empty keeps scalar native-row text, CJK rendering, refs and events", async
     "true"
   );
 
-  for (const line of await subject.locator("[data-mc-label-ready]").all()) {
-    await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems13 = await subject.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults13 = await Promise.allSettled(
+    readOnlyItems13.map(async (line) => {
+      await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult13 of readOnlyResults13) {
+    if (readOnlyResult13.status === "rejected") {
+      throw readOnlyResult13.reason;
+    }
   }
 
   await subject.click();
