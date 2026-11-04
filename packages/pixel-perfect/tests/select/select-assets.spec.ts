@@ -10,15 +10,15 @@ import type BoundaryReference2 from "../reference/select-extra/glyph-atlas.json"
 import type BoundaryReference3 from "../reference/select-extra/repeatability.json";
 import type BoundaryReference1 from "../reference/select/asset-provenance.json";
 
-const json = (file: string): unknown =>
-  JSON.parse(readFileSync(pixelPerfectFile(file), "utf-8"));
-
 test("Select retains original list texture bytes", () => {
   const provenance =
     // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
-    json(
-      "tests/reference/select/asset-provenance.json"
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/select/asset-provenance.json"),
+        "utf-8"
+      )
     ) as typeof BoundaryReference1 & {
       sources: Record<
         string,
@@ -42,7 +42,12 @@ test("Select uses the observed CJK atlas without changing the original renderer"
   const observed =
     // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
-    json("tests/reference/select-extra/glyph-atlas.json") as Record<
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/select-extra/glyph-atlas.json"),
+        "utf-8"
+      )
+    ) as Record<
       string,
       (typeof BoundaryReference2)[keyof typeof BoundaryReference2]
     >;
@@ -68,8 +73,11 @@ test("Select uses the observed CJK atlas without changing the original renderer"
   const repeat =
     // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
-    json(
-      "tests/reference/select-extra/repeatability.json"
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/select-extra/repeatability.json"),
+        "utf-8"
+      )
     ) as typeof BoundaryReference3;
 
   expect(repeat.glyphObservationEnabled).toEqual({
