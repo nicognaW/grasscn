@@ -12,6 +12,14 @@ const isAssetUrl = (asset: unknown): asset is string =>
 const AspectRatioDemo = ({ scale }: DemoProps) => {
   const [ratio, setRatio] = React.useState(16 / 9);
 
+  let ratioLabel = "16:9";
+
+  if (ratio === 1) {
+    ratioLabel = "1:1";
+  } else if (ratio === 4 / 3) {
+    ratioLabel = "4:3";
+  }
+
   const demoLayout1: DemoVariables = {
     "--demo-owned-aspect-ratio-1-width": `${Math.min(320, 160 * scale)}px`,
   };
@@ -62,9 +70,7 @@ const AspectRatioDemo = ({ scale }: DemoProps) => {
       </div>
       <div className="demo-result">
         <span />
-        <output aria-label="Aspect ratio">
-          {ratio === 1 ? "1:1" : ratio === 4 / 3 ? "4:3" : "16:9"}
-        </output>
+        <output aria-label="Aspect ratio">{ratioLabel}</output>
         <span>Resize content while preserving its proportions.</span>
       </div>
     </>

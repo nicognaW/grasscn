@@ -17,7 +17,11 @@ import {
 } from "../registry/ui/table";
 import type { DemoProps } from "../types";
 
-type World = { id: string; name: string; players: number };
+interface World {
+  id: string;
+  name: string;
+  players: number;
+}
 
 const helper = createColumnHelper<DataTableFeatures, World>();
 
@@ -48,23 +52,33 @@ const DataTableDemo = ({ scale }: DemoProps) => {
       helper.columns([
         helper.accessor("name", {
           filterFn: "includesString",
-          header: ({ column }) => (
-            <Button
-              type="button"
-              scale={scale}
-              aria-label="World"
-              className="w-(--demo-width) max-w-full"
-              style={
-                /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-                {
-                  "--demo-width": `${100 * scale}px`,
-                } satisfies DemoVariables as DemoVariables
-              }
-              onClick={() => {
-                column.toggleSorting();
-              }}
-            >{`World${column.getIsSorted() === "asc" ? " ^" : column.getIsSorted() === "desc" ? " v" : ""}`}</Button>
-          ),
+          header: ({ column }) => {
+            let sortIndicator = "";
+
+            if (column.getIsSorted() === "asc") {
+              sortIndicator = " ^";
+            } else if (column.getIsSorted() === "desc") {
+              sortIndicator = " v";
+            }
+
+            return (
+              <Button
+                type="button"
+                scale={scale}
+                aria-label="World"
+                className="w-(--demo-width) max-w-full"
+                style={
+                  /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+                  {
+                    "--demo-width": `${100 * scale}px`,
+                  } satisfies DemoVariables as DemoVariables
+                }
+                onClick={() => {
+                  column.toggleSorting();
+                }}
+              >{`World${sortIndicator}`}</Button>
+            );
+          },
           sortFn: "text",
         }),
         helper.accessor("players", {

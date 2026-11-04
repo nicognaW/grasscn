@@ -24,6 +24,14 @@ const AvatarDemo = ({ scale }: DemoProps) => {
   const [player, setPlayer] = React.useState("Nyanki");
   const [status, setStatus] = React.useState("loading");
 
+  let statusLabel = "Loading player skin...";
+
+  if (status === "loaded") {
+    statusLabel = "Player skin";
+  } else if (status === "error") {
+    statusLabel = "Avatar unavailable. Try again later.";
+  }
+
   return (
     <div
       className="demo-stage demo-stage-display-grid demo-stage-gap-16"
@@ -83,13 +91,7 @@ const AvatarDemo = ({ scale }: DemoProps) => {
         </Avatar>
         <div>
           <strong>{player}</strong>
-          <span role="status">
-            {status === "loaded"
-              ? "Player skin"
-              : status === "error"
-                ? "Avatar unavailable. Try again later."
-                : "Loading player skin..."}
-          </span>
+          <span role="status">{statusLabel}</span>
         </div>
       </div>
       <p className="grass-note">

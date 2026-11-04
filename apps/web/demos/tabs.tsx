@@ -27,6 +27,14 @@ const TabsDemo = ({ scale }: DemoProps) => {
     "--demo-owned-tabs-1-width": `${303 * scale}px`,
   };
 
+  let activeTitle = "More";
+
+  if (value === "game") {
+    activeTitle = title || " ";
+  } else if (value === "world") {
+    activeTitle = "World";
+  }
+
   return (
     <>
       <div className="demo-options">
@@ -101,7 +109,7 @@ const TabsDemo = ({ scale }: DemoProps) => {
                 scale={scale}
                 checked={structures}
                 onCheckedChange={(next) => {
-                  setStructures(next === true);
+                  setStructures(next);
                 }}
               />
               <Label
@@ -132,13 +140,7 @@ const TabsDemo = ({ scale }: DemoProps) => {
       </div>
       <div className="demo-result">
         <span />
-        <output aria-label="Active settings tab">
-          {value === "game"
-            ? title || " "
-            : value === "world"
-              ? "World"
-              : "More"}
-        </output>
+        <output aria-label="Active settings tab">{activeTitle}</output>
         <span>Arrow keys change tabs</span>
       </div>
     </>

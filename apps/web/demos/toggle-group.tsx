@@ -56,13 +56,7 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
           <ToggleGroup
             aria-label="One recipe station"
             scale={scale}
-            value={
-              single === undefined
-                ? undefined
-                : Array.isArray(single)
-                  ? single
-                  : [single]
-            }
+            value={[single]}
             onValueChange={(__values) => {
               setSingle(__values[0] ?? "");
             }}
@@ -90,13 +84,7 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
           <ToggleGroup
             aria-label="Several recipe stations"
             scale={scale}
-            value={
-              multiple === undefined
-                ? undefined
-                : Array.isArray(multiple)
-                  ? multiple
-                  : [multiple]
-            }
+            value={multiple}
             onValueChange={(__values) => {
               setMultiple(__values);
             }}

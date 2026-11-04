@@ -38,7 +38,11 @@ interface ForwardedLayoutStyle5 extends IntrinsicLayoutCSSProperties {
   "--mc-forwarded-examples-overlays-data-table-features-example-5-width": `${number}px`;
 }
 
-type World = { id: string; name: string; players: number };
+interface World {
+  id: string;
+  name: string;
+  players: number;
+}
 
 const helper = createColumnHelper<DataTableFeatures, World>();
 
@@ -55,23 +59,33 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
       helper.columns([
         helper.accessor("name", {
           filterFn: "includesString",
-          header: ({ column }) => (
-            <Button
-              type="button"
-              scale={scale}
-              aria-label="World"
-              className="w-(--mc-forwarded-examples-overlays-data-table-features-example-1-width) max-w-full"
-              style={
-                // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
-                {
-                  "--mc-forwarded-examples-overlays-data-table-features-example-1-width": `${100 * scale}px`,
-                } satisfies ForwardedLayoutStyle1 as ForwardedLayoutStyle1
-              }
-              onClick={() => {
-                column.toggleSorting();
-              }}
-            >{`World${column.getIsSorted() === "asc" ? " ^" : column.getIsSorted() === "desc" ? " v" : ""}`}</Button>
-          ),
+          header: ({ column }) => {
+            let sortIndicator = "";
+
+            if (column.getIsSorted() === "asc") {
+              sortIndicator = " ^";
+            } else if (column.getIsSorted() === "desc") {
+              sortIndicator = " v";
+            }
+
+            return (
+              <Button
+                type="button"
+                scale={scale}
+                aria-label="World"
+                className="w-(--mc-forwarded-examples-overlays-data-table-features-example-1-width) max-w-full"
+                style={
+                  // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                  {
+                    "--mc-forwarded-examples-overlays-data-table-features-example-1-width": `${100 * scale}px`,
+                  } satisfies ForwardedLayoutStyle1 as ForwardedLayoutStyle1
+                }
+                onClick={() => {
+                  column.toggleSorting();
+                }}
+              >{`World${sortIndicator}`}</Button>
+            );
+          },
           sortFn: "text",
         }),
         helper.accessor("players", {
