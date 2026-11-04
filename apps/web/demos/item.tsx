@@ -27,6 +27,7 @@ const ItemDemo = ({ scale }: DemoProps) => {
 
   const [selected, setSelected] = React.useState("");
   const [opens, setOpens] = React.useState(0);
+  const hasFirstWorldLabel = name.trim() !== "" || description.trim() !== "";
 
   return (
     <>
@@ -59,6 +60,7 @@ const ItemDemo = ({ scale }: DemoProps) => {
       <div className="demo-stage" data-stage="item">
         <ItemGroup scale={scale} className="demo-owned-item-1">
           <Item
+            aria-label={hasFirstWorldLabel ? undefined : "Open first world"}
             render={<a href="#item" />}
             selected={selected === "first"}
             className="demo-owned-item-2"
