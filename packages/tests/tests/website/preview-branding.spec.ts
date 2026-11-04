@@ -25,7 +25,7 @@ test("Header serves the preserved branding source at its actual production geome
   const logo = brand.locator("img");
   await expect(logo).toHaveAttribute(
     "src",
-    /grasscn-logo(?:-[A-Za-z0-9_-]+)?\.svg(?:\?.*)?$/
+    /grasscn-logo(?:-[A-Za-z0-9_-]+)?\.svg(?:\?.*)?$/u
   );
   await logo.evaluate(async (node: HTMLImageElement) => {
     await node.decode();

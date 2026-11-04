@@ -21,7 +21,7 @@ test("Calendar single selection, disabled dates, keyboard and month navigation u
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("#selected")).toHaveText("10/11/2026");
-  await calendar.getByRole("button", { name: /next month/i }).click();
+  await calendar.getByRole("button", { name: /next month/iu }).click();
   await expect(calendar).toContainText("November 2026");
 });
 
@@ -68,12 +68,12 @@ test("Calendar multiple selection and custom Minecraft month/year dropdowns pres
   await multiple.getByRole("button", { name: /October 10th/u }).click();
   await expect(page.locator("#multiple")).toHaveText("1");
   const dropdown = page.getByLabel("Dropdown calendar", { exact: true });
-  await dropdown.getByRole("combobox", { name: /month/i }).click();
+  await dropdown.getByRole("combobox", { name: /month/iu }).click();
   await page.getByRole("option", { exact: true, name: "November" }).click();
   await expect(
     dropdown.getByRole("gridcell", { name: /November 10th/u })
   ).toBeVisible();
-  await dropdown.getByRole("combobox", { name: /year/i }).focus();
+  await dropdown.getByRole("combobox", { name: /year/iu }).focus();
   await page.keyboard.press("Enter");
   await page.getByRole("option", { exact: true, name: "2027" }).click();
   await expect(
@@ -117,7 +117,7 @@ test("Calendar cell and navigation activation preserve original one-voice click 
   await calendar.getByRole("button", { name: /October 10th/u }).hover();
   expect(await recordedAudioPlayback(page)).toHaveLength(0);
   await calendar.getByRole("button", { name: /October 10th/u }).click();
-  await calendar.getByRole("button", { name: /next month/i }).click();
+  await calendar.getByRole("button", { name: /next month/iu }).click();
   const voices = await recordedAudioPlayback(page);
   expect(voices).toHaveLength(2);
   expect(
