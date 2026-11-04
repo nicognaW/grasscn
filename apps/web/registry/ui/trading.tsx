@@ -172,6 +172,305 @@ const TradeItemGraphic = ({
   </span>
 );
 
+const renderTradeOffers = function renderTradeOffers(
+  visibleOffers: readonly TradeOffer[],
+  offer: TradeOffer | undefined,
+  scale: 1 | 2 | 3,
+  choose: (id: string) => void
+) {
+  return visibleOffers.map((item) => (
+    <Tooltip key={item.id}>
+      <TooltipTrigger
+        render={
+          <Button
+            type="button"
+            scale={scale}
+            aria-label={item.label}
+            aria-pressed={offer?.id === item.id}
+            onClick={(event) => {
+              if (!event.defaultPrevented) {
+                choose(item.id);
+              }
+            }}
+            className="mc-trade-offer mc-layout-trading-7 mc-dynamic-layout-trading-6 block"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-trading-6 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-trading-6-height": 20 * scale,
+                "--mc-dynamic-trading-6-width": 88 * scale,
+              } satisfies TradingLayoutStyle6 as TradingLayoutStyle6
+            }
+          />
+        }
+      >
+        <span className="mc-trade-offer-content">
+          <span
+            className="mc-dynamic-layout-trading-7"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-trading-7 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-trading-7-left": 5 * scale,
+                "--mc-dynamic-trading-7-top": scale,
+              } satisfies TradingLayoutStyle7 as TradingLayoutStyle7
+            }
+          >
+            <TradeItemGraphic item={item.cost} scale={scale} />
+          </span>
+          {item.secondCost && (
+            <span
+              className="mc-dynamic-layout-trading-8"
+              style={
+                /* SAFETY: The owned mc-dynamic-layout-trading-8 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                {
+                  "--mc-dynamic-trading-8-left": 35 * scale,
+                  "--mc-dynamic-trading-8-top": scale,
+                } satisfies TradingLayoutStyle8 as TradingLayoutStyle8
+              }
+            >
+              <TradeItemGraphic item={item.secondCost} scale={scale} />
+            </span>
+          )}
+          <AdventureImage
+            texture={`gui/sprites/container/villager/trade_arrow${item.inStock === false ? "_out_of_stock" : ""}`}
+            scale={scale}
+            className="mc-layout-trading-10 mc-dynamic-layout-trading-9"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-trading-9 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-trading-9-left": 55 * scale,
+                "--mc-dynamic-trading-9-top": 4 * scale,
+              } satisfies TradingLayoutStyle9 as TradingLayoutStyle9
+            }
+          />
+          <span
+            className="mc-dynamic-layout-trading-10"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-trading-10 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-trading-10-left": 68 * scale,
+                "--mc-dynamic-trading-10-top": scale,
+              } satisfies TradingLayoutStyle10 as TradingLayoutStyle10
+            }
+          >
+            <TradeItemGraphic item={item.result} scale={scale} />
+          </span>
+        </span>
+      </TooltipTrigger>
+      <TooltipContent scale={scale}>
+        {item.label}
+        {item.inStock === false ? " — Out of stock" : ""}
+      </TooltipContent>
+    </Tooltip>
+  ));
+};
+
+const renderSelectedTrade = function renderSelectedTrade(
+  offer: TradeOffer,
+  scale: 1 | 2 | 3,
+  onTrade: TradingProps["onTrade"]
+) {
+  return (
+    <>
+      <span
+        className="mc-trade-payment mc-dynamic-layout-trading-13"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-trading-13 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-trading-13-left": 136 * scale,
+            "--mc-dynamic-trading-13-top": 37 * scale,
+          } satisfies TradingLayoutStyle13 as TradingLayoutStyle13
+        }
+      >
+        <TradeItemGraphic item={offer.cost} scale={scale} />
+      </span>
+      {offer.secondCost && (
+        <span
+          className="mc-trade-payment mc-dynamic-layout-trading-14"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-trading-14 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-trading-14-left": 162 * scale,
+              "--mc-dynamic-trading-14-top": 37 * scale,
+            } satisfies TradingLayoutStyle14 as TradingLayoutStyle14
+          }
+        >
+          <TradeItemGraphic item={offer.secondCost} scale={scale} />
+        </span>
+      )}
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <button
+              type="button"
+              className="mc-trade-result mc-dynamic-layout-trading-15"
+              aria-label={`Trade for ${offer.result.label}`}
+              disabled={offer.inStock === false}
+              onClick={(event) => {
+                if (!event.defaultPrevented) {
+                  onTrade?.(offer.id);
+                  playTradingSound();
+                }
+              }}
+              style={
+                /* SAFETY: The owned mc-dynamic-layout-trading-15 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                {
+                  "--mc-dynamic-trading-15-height": 16 * scale,
+                  "--mc-dynamic-trading-15-left": 220 * scale,
+                  "--mc-dynamic-trading-15-top": 37 * scale,
+                  "--mc-dynamic-trading-15-width": 16 * scale,
+                } satisfies TradingLayoutStyle15 as TradingLayoutStyle15
+              }
+            />
+          }
+        >
+          {offer.inStock !== false && (
+            <TradeItemGraphic item={offer.result} scale={scale} />
+          )}
+        </TooltipTrigger>
+        <TooltipContent scale={scale}>
+          {offer.inStock === false ? "Out of stock" : offer.result.label}
+        </TooltipContent>
+      </Tooltip>
+      {offer.inStock === false && (
+        <AdventureImage
+          texture="gui/sprites/container/villager/out_of_stock"
+          scale={scale}
+          className="mc-layout-trading-17 mc-dynamic-layout-trading-16"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-trading-16 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-trading-16-left": 182 * scale,
+              "--mc-dynamic-trading-16-top": 35 * scale,
+            } satisfies TradingLayoutStyle16 as TradingLayoutStyle16
+          }
+        />
+      )}
+    </>
+  );
+};
+
+const renderTradeScrollbar = function renderTradeScrollbar({
+  changeOffset,
+  listId,
+  maxOffset,
+  offset,
+  rail,
+  scale,
+  thumbY,
+}: {
+  changeOffset: (next: number) => void;
+  listId: string;
+  maxOffset: number;
+  offset: number;
+  rail: React.RefObject<HTMLDivElement | null>;
+  scale: 1 | 2 | 3;
+  thumbY: number;
+}) {
+  const dragThumb = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!maxOffset) {
+      return;
+    }
+
+    const bounds = event.currentTarget.getBoundingClientRect();
+
+    const f = Math.fround;
+    const y = f((event.clientY - bounds.top) / scale + 18);
+    const fraction = f(f(f(y - 18) - 13.5) / 112);
+
+    changeOffset(Math.trunc(f(f(fraction * maxOffset) + 0.5)));
+  };
+
+  return (
+    <div
+      ref={rail}
+      role="scrollbar"
+      aria-label="Trade offers scroll"
+      aria-controls={listId}
+      aria-orientation="vertical"
+      aria-valuemin={0}
+      aria-valuemax={maxOffset}
+      aria-valuenow={offset}
+      aria-disabled={!maxOffset}
+      tabIndex={maxOffset ? 0 : -1}
+      className="mc-trade-scroll mc-dynamic-layout-trading-11"
+      style={
+        /* SAFETY: The owned mc-dynamic-layout-trading-11 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+        {
+          "--mc-dynamic-trading-11-height": 140 * scale,
+          "--mc-dynamic-trading-11-left": 94 * scale,
+          "--mc-dynamic-trading-11-top": 18 * scale,
+          "--mc-dynamic-trading-11-width": 6 * scale,
+        } satisfies TradingLayoutStyle11 as TradingLayoutStyle11
+      }
+      onKeyDown={(event) => {
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        const next = (
+          {
+            ArrowDown: offset + 1,
+            ArrowUp: offset - 1,
+            End: maxOffset,
+            Home: 0,
+            PageDown: offset + 7,
+            PageUp: offset - 7,
+          } as Record<string, number>
+        )[event.key];
+
+        if (next !== undefined) {
+          event.preventDefault();
+          changeOffset(next);
+        }
+      }}
+      onContextMenu={(event) => {
+        event.preventDefault();
+      }}
+      onPointerDown={(event) => {
+        if (event.defaultPrevented || !maxOffset) {
+          return;
+        }
+
+        const bounds = event.currentTarget.getBoundingClientRect();
+
+        if (
+          event.clientX <= bounds.left ||
+          event.clientX >= bounds.right ||
+          event.clientY <= bounds.top ||
+          event.clientY > bounds.bottom
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+        event.currentTarget.setPointerCapture(event.pointerId);
+      }}
+      onPointerMove={(event) => {
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+          dragThumb(event);
+        }
+      }}
+      onPointerUp={(event) => {
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+          event.currentTarget.releasePointerCapture(event.pointerId);
+        }
+      }}
+    >
+      <AdventureImage
+        texture={`gui/sprites/container/villager/scroller${maxOffset ? "" : "_disabled"}`}
+        scale={scale}
+        className="mc-layout-trading-13 mc-dynamic-layout-trading-12"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-trading-12 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-trading-12-top": thumbY * scale,
+          } satisfies TradingLayoutStyle12 as TradingLayoutStyle12
+        }
+      />
+    </div>
+  );
+};
+
 const Trading = ({
   offers,
   selectedId,
@@ -287,20 +586,6 @@ const Trading = ({
   const thumbY =
     offset === maxOffset && maxOffset ? 113 : Math.min(113, offset * step);
 
-  const dragThumb = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!maxOffset) {
-      return;
-    }
-
-    const bounds = event.currentTarget.getBoundingClientRect();
-
-    const f = Math.fround;
-    const y = f((event.clientY - bounds.top) / scale + 18);
-    const fraction = f(f(f(y - 18) - 13.5) / 112);
-
-    changeOffset(Math.trunc(f(f(fraction * maxOffset) + 0.5)));
-  };
-
   return (
     <TooltipProvider>
       <div
@@ -387,256 +672,23 @@ const Trading = ({
             } satisfies TradingLayoutStyle5 as TradingLayoutStyle5
           }
         >
-          {offers.slice(offset, offset + 7).map((item) => (
-            <Tooltip key={item.id}>
-              <TooltipTrigger
-                render={
-                  <Button
-                    type="button"
-                    scale={scale}
-                    aria-label={item.label}
-                    aria-pressed={offer?.id === item.id}
-                    onClick={(event) => {
-                      if (!event.defaultPrevented) {
-                        choose(item.id);
-                      }
-                    }}
-                    className="mc-trade-offer mc-layout-trading-7 mc-dynamic-layout-trading-6 block"
-                    style={
-                      /* SAFETY: The owned mc-dynamic-layout-trading-6 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                      {
-                        "--mc-dynamic-trading-6-height": 20 * scale,
-                        "--mc-dynamic-trading-6-width": 88 * scale,
-                      } satisfies TradingLayoutStyle6 as TradingLayoutStyle6
-                    }
-                  />
-                }
-              >
-                <span className="mc-trade-offer-content">
-                  <span
-                    className="mc-dynamic-layout-trading-7"
-                    style={
-                      /* SAFETY: The owned mc-dynamic-layout-trading-7 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                      {
-                        "--mc-dynamic-trading-7-left": 5 * scale,
-                        "--mc-dynamic-trading-7-top": scale,
-                      } satisfies TradingLayoutStyle7 as TradingLayoutStyle7
-                    }
-                  >
-                    <TradeItemGraphic item={item.cost} scale={scale} />
-                  </span>
-                  {item.secondCost && (
-                    <span
-                      className="mc-dynamic-layout-trading-8"
-                      style={
-                        /* SAFETY: The owned mc-dynamic-layout-trading-8 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                        {
-                          "--mc-dynamic-trading-8-left": 35 * scale,
-                          "--mc-dynamic-trading-8-top": scale,
-                        } satisfies TradingLayoutStyle8 as TradingLayoutStyle8
-                      }
-                    >
-                      <TradeItemGraphic item={item.secondCost} scale={scale} />
-                    </span>
-                  )}
-                  <AdventureImage
-                    texture={`gui/sprites/container/villager/trade_arrow${item.inStock === false ? "_out_of_stock" : ""}`}
-                    scale={scale}
-                    className="mc-layout-trading-10 mc-dynamic-layout-trading-9"
-                    style={
-                      /* SAFETY: The owned mc-dynamic-layout-trading-9 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                      {
-                        "--mc-dynamic-trading-9-left": 55 * scale,
-                        "--mc-dynamic-trading-9-top": 4 * scale,
-                      } satisfies TradingLayoutStyle9 as TradingLayoutStyle9
-                    }
-                  />
-                  <span
-                    className="mc-dynamic-layout-trading-10"
-                    style={
-                      /* SAFETY: The owned mc-dynamic-layout-trading-10 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                      {
-                        "--mc-dynamic-trading-10-left": 68 * scale,
-                        "--mc-dynamic-trading-10-top": scale,
-                      } satisfies TradingLayoutStyle10 as TradingLayoutStyle10
-                    }
-                  >
-                    <TradeItemGraphic item={item.result} scale={scale} />
-                  </span>
-                </span>
-              </TooltipTrigger>
-              <TooltipContent scale={scale}>
-                {item.label}
-                {item.inStock === false ? " — Out of stock" : ""}
-              </TooltipContent>
-            </Tooltip>
-          ))}
+          {renderTradeOffers(
+            offers.slice(offset, offset + 7),
+            offer,
+            scale,
+            choose
+          )}
         </div>
-        <div
-          ref={rail}
-          role="scrollbar"
-          aria-label="Trade offers scroll"
-          aria-controls={listId}
-          aria-orientation="vertical"
-          aria-valuemin={0}
-          aria-valuemax={maxOffset}
-          aria-valuenow={offset}
-          aria-disabled={!maxOffset}
-          tabIndex={maxOffset ? 0 : -1}
-          className="mc-trade-scroll mc-dynamic-layout-trading-11"
-          style={
-            /* SAFETY: The owned mc-dynamic-layout-trading-11 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-            {
-              "--mc-dynamic-trading-11-height": 140 * scale,
-              "--mc-dynamic-trading-11-left": 94 * scale,
-              "--mc-dynamic-trading-11-top": 18 * scale,
-              "--mc-dynamic-trading-11-width": 6 * scale,
-            } satisfies TradingLayoutStyle11 as TradingLayoutStyle11
-          }
-          onKeyDown={(event) => {
-            if (event.defaultPrevented) {
-              return;
-            }
-
-            const next = (
-              {
-                ArrowDown: offset + 1,
-                ArrowUp: offset - 1,
-                End: maxOffset,
-                Home: 0,
-                PageDown: offset + 7,
-                PageUp: offset - 7,
-              } as Record<string, number>
-            )[event.key];
-
-            if (next !== undefined) {
-              event.preventDefault();
-              changeOffset(next);
-            }
-          }}
-          onContextMenu={(event) => {
-            event.preventDefault();
-          }}
-          onPointerDown={(event) => {
-            if (event.defaultPrevented || !maxOffset) {
-              return;
-            }
-
-            const bounds = event.currentTarget.getBoundingClientRect();
-
-            if (
-              event.clientX <= bounds.left ||
-              event.clientX >= bounds.right ||
-              event.clientY <= bounds.top ||
-              event.clientY > bounds.bottom
-            ) {
-              return;
-            }
-
-            event.preventDefault();
-            event.currentTarget.setPointerCapture(event.pointerId);
-          }}
-          onPointerMove={(event) => {
-            if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-              dragThumb(event);
-            }
-          }}
-          onPointerUp={(event) => {
-            if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-              event.currentTarget.releasePointerCapture(event.pointerId);
-            }
-          }}
-        >
-          <AdventureImage
-            texture={`gui/sprites/container/villager/scroller${maxOffset ? "" : "_disabled"}`}
-            scale={scale}
-            className="mc-layout-trading-13 mc-dynamic-layout-trading-12"
-            style={
-              /* SAFETY: The owned mc-dynamic-layout-trading-12 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-              {
-                "--mc-dynamic-trading-12-top": thumbY * scale,
-              } satisfies TradingLayoutStyle12 as TradingLayoutStyle12
-            }
-          />
-        </div>
-        {offer && (
-          <>
-            <span
-              className="mc-trade-payment mc-dynamic-layout-trading-13"
-              style={
-                /* SAFETY: The owned mc-dynamic-layout-trading-13 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                {
-                  "--mc-dynamic-trading-13-left": 136 * scale,
-                  "--mc-dynamic-trading-13-top": 37 * scale,
-                } satisfies TradingLayoutStyle13 as TradingLayoutStyle13
-              }
-            >
-              <TradeItemGraphic item={offer.cost} scale={scale} />
-            </span>
-            {offer.secondCost && (
-              <span
-                className="mc-trade-payment mc-dynamic-layout-trading-14"
-                style={
-                  /* SAFETY: The owned mc-dynamic-layout-trading-14 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                  {
-                    "--mc-dynamic-trading-14-left": 162 * scale,
-                    "--mc-dynamic-trading-14-top": 37 * scale,
-                  } satisfies TradingLayoutStyle14 as TradingLayoutStyle14
-                }
-              >
-                <TradeItemGraphic item={offer.secondCost} scale={scale} />
-              </span>
-            )}
-            <Tooltip>
-              <TooltipTrigger
-                render={
-                  <button
-                    type="button"
-                    className="mc-trade-result mc-dynamic-layout-trading-15"
-                    aria-label={`Trade for ${offer.result.label}`}
-                    disabled={offer.inStock === false}
-                    onClick={(event) => {
-                      if (!event.defaultPrevented) {
-                        onTrade?.(offer.id);
-                        playTradingSound();
-                      }
-                    }}
-                    style={
-                      /* SAFETY: The owned mc-dynamic-layout-trading-15 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                      {
-                        "--mc-dynamic-trading-15-height": 16 * scale,
-                        "--mc-dynamic-trading-15-left": 220 * scale,
-                        "--mc-dynamic-trading-15-top": 37 * scale,
-                        "--mc-dynamic-trading-15-width": 16 * scale,
-                      } satisfies TradingLayoutStyle15 as TradingLayoutStyle15
-                    }
-                  />
-                }
-              >
-                {offer.inStock !== false && (
-                  <TradeItemGraphic item={offer.result} scale={scale} />
-                )}
-              </TooltipTrigger>
-              <TooltipContent scale={scale}>
-                {offer.inStock === false ? "Out of stock" : offer.result.label}
-              </TooltipContent>
-            </Tooltip>
-            {offer.inStock === false && (
-              <AdventureImage
-                texture="gui/sprites/container/villager/out_of_stock"
-                scale={scale}
-                className="mc-layout-trading-17 mc-dynamic-layout-trading-16"
-                style={
-                  /* SAFETY: The owned mc-dynamic-layout-trading-16 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                  {
-                    "--mc-dynamic-trading-16-left": 182 * scale,
-                    "--mc-dynamic-trading-16-top": 35 * scale,
-                  } satisfies TradingLayoutStyle16 as TradingLayoutStyle16
-                }
-              />
-            )}
-          </>
-        )}
+        {renderTradeScrollbar({
+          changeOffset,
+          listId,
+          maxOffset,
+          offset,
+          rail,
+          scale,
+          thumbY,
+        })}
+        {offer && renderSelectedTrade(offer, scale, onTrade)}
         <div
           className="mc-trade-inventory mc-dynamic-layout-trading-17"
           style={
