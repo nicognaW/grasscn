@@ -44,15 +44,19 @@ test("Input Group addon alignment and cancelled focus remain functional", async 
     "block-start",
     "block-end",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(`/?component=input-group&align=${align}`);
 
     const addon = page.locator("[data-slot=input-group-addon]");
     const field = page.getByRole("textbox");
 
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(addon).toHaveAttribute("data-align", align);
 
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     const a = await addon.boundingBox();
     expectNotNull(a, "Missing required bounding box: a");
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     const f = await field.boundingBox();
     expectNotNull(f, "Missing required bounding box: f");
 

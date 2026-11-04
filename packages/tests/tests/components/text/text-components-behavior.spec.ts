@@ -84,6 +84,7 @@ test("Typography retains native text inside semantic headings and prose elements
     p: "P",
     small: "SMALL",
   })) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyTypographyElement(page, part, tag);
   }
 });
@@ -170,6 +171,7 @@ test("Badge supports native plain/CJK content, rich children and asChild links",
     "text=Rich&rich=1",
     "text=Continue&asChild=1",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyBadgeComposition(page, suffix);
   }
 });
@@ -207,6 +209,7 @@ test("Text and passive keyboard components remain silent on pointer and keyboard
   });
 
   for (const component of ["badge", "typography", "breadcrumb", "kbd"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifySilentTextComponent(page, component);
   }
 });

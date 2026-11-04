@@ -71,7 +71,9 @@ test("Grasscn logo stays crisp and contained on narrow preview screens", async (
   page,
 }) => {
   for (const width of [320, 390]) {
+    // oxlint-disable-next-line no-await-in-loop -- Changes this page viewport and route, then checks that rendered state before the next viewport replaces it.
     await page.setViewportSize({ height: 844, width });
+    // oxlint-disable-next-line no-await-in-loop -- Changes this page viewport and route, then checks that rendered state before the next viewport replaces it.
     await page.goto(`${origin}docs`);
 
     const logo = page
@@ -79,9 +81,12 @@ test("Grasscn logo stays crisp and contained on narrow preview screens", async (
       .getByRole("link", { exact: true, name: "grasscn home" })
       .locator("img");
 
+    // oxlint-disable-next-line no-await-in-loop -- Changes this page viewport and route, then checks that rendered state before the next viewport replaces it.
     await expect(logo).toHaveCSS("width", "176px");
+    // oxlint-disable-next-line no-await-in-loop -- Changes this page viewport and route, then checks that rendered state before the next viewport replaces it.
     await expect(logo).toHaveCSS("height", "64px");
     expect(
+      // oxlint-disable-next-line no-await-in-loop -- Changes this page viewport and route, then checks that rendered state before the next viewport replaces it.
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth
       )

@@ -106,6 +106,7 @@ test("Toggle disabled button and composed link cannot activate", async ({
   page,
 }) => {
   for (const extra of ["", "&asChild=1&anchor=1"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyDisabledToggle(page, extra);
   }
 });
@@ -114,6 +115,7 @@ test("Toggle retains refs, rich children and asChild composition", async ({
   page,
 }) => {
   for (const anchor of [false, true]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyToggleComposition(page, anchor);
   }
 });
@@ -191,6 +193,7 @@ test("Toggle plays original game audio once per accepted activation", async ({
     "state=disabled",
     "state=disabled&asChild=1&anchor=1",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifySilentToggle(page, suffix);
   }
 });

@@ -135,7 +135,9 @@ test("failures and retries supersede earlier passes; interrupted writes do not c
       { ...record, status: "failed" },
       { ...record, retry: 1 },
     ]) {
+      // oxlint-disable-next-line no-await-in-loop -- Rewrites one checkpoint journal for the current failure/retry state and verifies it before the next rewrite.
       await save([record, failed]);
+      // oxlint-disable-next-line no-await-in-loop -- Rewrites one checkpoint journal for the current failure/retry state and verifies it before the next rewrite.
       assert.deepEqual(await reusableBrowserTests([candidate], file, root), []);
     }
 

@@ -108,6 +108,7 @@ test("Toggle Group roving keyboard focus supports RTL and vertical layout", asyn
     ["&dir=rtl", "ArrowLeft"],
     ["&orientation=vertical", "ArrowDown"],
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyToggleGroupKeyboard(page, extra, key);
   }
 });
@@ -127,6 +128,7 @@ test("Toggle Group supports controlled external values and rejected updates", as
   page,
 }) => {
   for (const type of ["single", "multiple"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyControlledToggleGroup(page, type);
   }
 
@@ -146,6 +148,7 @@ test("Toggle Group cancelled activation and disabled roots remain unchanged", as
     "state=disabled",
     "state=disabled&asChild=1",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyBlockedToggleGroup(page, extra);
   }
 });
@@ -211,6 +214,7 @@ test("Toggle Group uses original click audio and silent focus navigation", async
     "state=disabled",
     "state=disabled&asChild=1",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifySilentToggleGroup(page, extra);
   }
 });

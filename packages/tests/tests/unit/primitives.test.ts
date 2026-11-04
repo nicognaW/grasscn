@@ -82,6 +82,7 @@ test("primitive policy rejects direct, transitive and optional Radix routes", as
       "optionalDependencies",
       "peerDependencies",
     ]) {
+      // oxlint-disable-next-line no-await-in-loop -- Updates one shared manifest/lockfile fixture and verifies that precise policy state before the next case changes it.
       await json("bun.lock", {
         lockfileVersion: 2,
         packages: {
@@ -134,13 +135,16 @@ test("primitive policy rejects version-pinned packages in registry payloads", as
       "radix-ui@1.0.0",
       "@radix-ui/react-dialog@1.0.0",
     ]) {
+      // oxlint-disable-next-line no-await-in-loop -- Updates one shared manifest/lockfile fixture and verifies that precise policy state before the next case changes it.
       await json("registry.json", {
         items: [{ dependencies: [dependency], name: "button" }],
       });
       assert.equal(check().status, 1, dependency);
+      // oxlint-disable-next-line no-await-in-loop -- Updates one shared manifest/lockfile fixture and verifies that precise policy state before the next case changes it.
       await json("registry.json", {
         items: [{ dependencies: ["@base-ui/react"], name: "button" }],
       });
+      // oxlint-disable-next-line no-await-in-loop -- Updates one shared manifest/lockfile fixture and verifies that precise policy state before the next case changes it.
       await json("public/r/button.json", {
         dependencies: [dependency],
         files: [],

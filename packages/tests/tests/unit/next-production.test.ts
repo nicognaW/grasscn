@@ -57,6 +57,7 @@ test("production identity separates Next response cache from compiled pages, chu
         path.join(directory, filename),
         "changed immutable output"
       );
+      // oxlint-disable-next-line no-await-in-loop -- Mutates one shared build tree, checks that exact immutable-output change, then restores it before the next mutation.
       const changed = await productionBuildIdentity({ directory, source });
       assert.notEqual(changed.outputSha256, baseline.outputSha256, filename);
       fs.writeFileSync(path.join(directory, filename), `original ${filename}`);
@@ -196,6 +197,7 @@ test("prepared production requires a completed matching build instead of silentl
     ]) {
       const original = fs.readFileSync(filename);
       fs.writeFileSync(filename, "changed bytes");
+      // oxlint-disable-next-line no-await-in-loop -- Mutates one shared build tree, checks that exact immutable-output change, then restores it before the next mutation.
       await assert.rejects(
         async () => await readPreparedProductionBuild(options),
         /changed/iu

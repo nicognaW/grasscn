@@ -97,11 +97,15 @@ test("Button installation copies and remembers the visitor package manager", asy
   };
 
   for (const [manager, command] of Object.entries(commands)) {
+    // oxlint-disable-next-line no-await-in-loop -- Selects a package-manager tab, copies its command, and verifies the shared clipboard before another tab can replace it.
     await installation.getByRole("tab", { exact: true, name: manager }).click();
+    // oxlint-disable-next-line no-await-in-loop -- Selects a package-manager tab, copies its command, and verifies the shared clipboard before another tab can replace it.
     await installation
       .getByRole("button", { exact: true, name: "Copy" })
       .click();
+    // oxlint-disable-next-line no-await-in-loop -- Selects a package-manager tab, copies its command, and verifies the shared clipboard before another tab can replace it.
     await expect(installation.getByRole("status")).toHaveText("Copied");
+    // oxlint-disable-next-line no-await-in-loop -- Selects a package-manager tab, copies its command, and verifies the shared clipboard before another tab can replace it.
     expect(await page.evaluate(() => window.copied)).toBe(command);
   }
 
