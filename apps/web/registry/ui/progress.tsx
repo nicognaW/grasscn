@@ -67,7 +67,7 @@ const ProgressTrack = ({
 const Progress = ({
   className,
   value,
-  max,
+  max = 100,
   color = "pink",
   overlay = "progress",
   scale = 2,
@@ -77,11 +77,11 @@ const Progress = ({
   ref,
   ...props
 }: ProgressProps) => {
-  const maximum =
-    typeof max === "number" && !Number.isNaN(max) && max > 0 ? max : 100;
+  const maximum = !Number.isNaN(max) && max > 0 ? max : 100;
 
   const valid =
-    typeof value === "number" &&
+    value !== undefined &&
+    value !== null &&
     !Number.isNaN(value) &&
     value >= 0 &&
     value <= maximum;

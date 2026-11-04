@@ -428,7 +428,7 @@ const paintProfiler = function paintProfiler(
 
     const program = gl.createProgram();
 
-    if (!program || !vs || !fs) {
+    if (!vs || !fs) {
       return false;
     }
 

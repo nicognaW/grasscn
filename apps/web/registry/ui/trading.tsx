@@ -208,7 +208,7 @@ const Trading = ({
   );
 
   const selected = selectedId ?? current;
-  const offer = offers.find((o) => o.id === selected) ?? offers[0];
+  const offer = offers.find((o) => o.id === selected) ?? offers.at(0);
 
   const latestOffset = React.useRef(offset);
   latestOffset.current = offset;

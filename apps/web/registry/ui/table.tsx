@@ -83,11 +83,7 @@ const TableText = ({
   const scale = React.useContext(TableScale);
   const value = literalText(children);
 
-  if (
-    children === undefined ||
-    children === null ||
-    typeof children === "boolean"
-  ) {
+  if (isMinecraftEmptyChild(children)) {
     return null;
   }
 

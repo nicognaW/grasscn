@@ -1,5 +1,8 @@
 import { minecraftGlyphs } from "./minecraft-font";
 
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
+
 export const paintSignGpu = function paintSignGpu(
   texture: HTMLImageElement,
   font: HTMLImageElement,
@@ -169,14 +172,14 @@ export const paintSignGpu = function paintSignGpu(
     const glyphs = Array.from(
       line,
       (char) =>
-        minecraftGlyphs[
+        asciiGlyphs[
           // SAFETY: String Array.from iteration supplies a nonempty character. Its first code point therefore exists.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
           (char.codePointAt(0) as number) - 32
         ]
     );
 
-    if (glyphs.some((g) => !g)) {
+    if (!glyphs.every((g) => g !== undefined)) {
       continue;
     }
 
