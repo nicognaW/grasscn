@@ -33,6 +33,7 @@ const SelectableRefFixture = ({
   const [shown, setShown] = React.useState(true);
   const [tag, setTag] = React.useState("");
   const [events, setEvents] = React.useState<string[]>([]);
+  const [baselineEvents, setBaselineEvents] = React.useState<string[]>([]);
 
   const callback = React.useCallback<React.RefCallback<HTMLSpanElement>>(
     (node) => {
@@ -54,6 +55,24 @@ const SelectableRefFixture = ({
     []
   );
 
+  const baselineCallback = React.useCallback<
+    React.RefCallback<HTMLSpanElement>
+  >((node) => {
+    let cleanup: (() => void) | undefined;
+    if (node === null) {
+      setBaselineEvents((previous) => [...previous, "null"]);
+    } else {
+      setBaselineEvents((previous) => [...previous, "attach:SPAN"]);
+      cleanup = () => {
+        setBaselineEvents((previous) => [
+          ...previous,
+          `cleanup:${node.isConnected}`,
+        ]);
+      };
+    }
+    return cleanup;
+  }, []);
+
   return (
     <>
       {shown && (
@@ -65,6 +84,11 @@ const SelectableRefFixture = ({
           data-consumer="ref-test"
           data-testid="selectable-ref-subject"
         />
+      )}
+      {shown && (
+        <span ref={baselineCallback} hidden>
+          {text}
+        </span>
       )}
       <button
         type="button"
@@ -92,6 +116,9 @@ const SelectableRefFixture = ({
       </button>
       <output aria-label="Selectable ref tag">{tag}</output>
       <output aria-label="Selectable ref callbacks">{events.join("|")}</output>
+      <output aria-label="Intrinsic ref callbacks">
+        {baselineEvents.join("|")}
+      </output>
     </>
   );
 };
