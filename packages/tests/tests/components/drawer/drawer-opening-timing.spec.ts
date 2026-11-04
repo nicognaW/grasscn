@@ -90,6 +90,7 @@ for (const scale of [2] as const) {
     const states: unknown[] = [];
 
     for (const ms of [0, 16, 32, 50, 100, 200, 500]) {
+      // oxlint-disable-next-line no-await-in-loop -- Sets one shared drawer animation frame, reads its geometry, and attaches that exact screenshot before advancing the frame.
       const state = await page.evaluate((frame) => {
         const overlay = document.querySelector<HTMLElement>(
           "[data-slot=drawer-overlay]"
@@ -128,7 +129,9 @@ for (const scale of [2] as const) {
       }, ms);
 
       states.push(state);
+      // oxlint-disable-next-line no-await-in-loop -- Sets one shared drawer animation frame, reads its geometry, and attaches that exact screenshot before advancing the frame.
       const bytes = await page.screenshot();
+      // oxlint-disable-next-line no-await-in-loop -- Sets one shared drawer animation frame, reads its geometry, and attaches that exact screenshot before advancing the frame.
       await info.attach(`frame-${ms}.png`, {
         body: bytes,
         contentType: "image/png",

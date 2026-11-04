@@ -60,6 +60,7 @@ test("Resizable preserves horizontal and vertical geometry and standard separato
   page,
 }) => {
   for (const orientation of ["horizontal", "vertical"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyResizableOrientation(page, orientation);
   }
 });
@@ -133,6 +134,7 @@ test("Resizable honors disabled separators and disabled groups", async ({
   page,
 }) => {
   for (const disabled of ["disabled", "groupDisabled"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyDisabledResizable(page, disabled);
   }
 });

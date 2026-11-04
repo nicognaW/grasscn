@@ -139,6 +139,7 @@ test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
 }) => {
   for (const ratio of [1, 4 / 3, 16 / 9]) {
     for (const width of [160, 320, 640]) {
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await verifyAspectRatioGeometry(page, ratio, width);
     }
   }
@@ -167,6 +168,7 @@ test("Button Group preserves horizontal/vertical geometry and independent activa
   page,
 }) => {
   for (const orientation of ["horizontal", "vertical"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyButtonGroupOrientation(page, orientation);
   }
 });
@@ -218,6 +220,7 @@ test("Pagination cancellation and disabled links prevent activation and navigati
   page,
 }) => {
   for (const suffix of ["cancel=1", "state=disabled"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyBlockedPaginationAction(page, suffix);
   }
 });
@@ -264,6 +267,7 @@ test("Pagination uses original audio once per accepted action and stays silent w
   ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
 
   for (const suffix of ["cancel=1", "state=disabled"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyCanceledPaginationAudio(page, suffix);
   }
 });
@@ -290,6 +294,7 @@ test("Pagination original arrows retain native links and keyboard activation wit
   });
 
   for (const forward of [false, true]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyPaginationArrowKeyboard(page, forward);
   }
 });
@@ -314,6 +319,7 @@ test("Pagination original arrows preserve custom content and cancel disabled or 
   });
 
   for (const suffix of ["cancel=1", "state=disabled"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifySuppressedPaginationArrow(page, suffix);
   }
 });

@@ -45,6 +45,7 @@ test("consumer build identity excludes only Next's response-cache path and prese
 
     for (const file of immutable) {
       writeFileSync(path.join(build, file), "changed compiled delivery");
+      // oxlint-disable-next-line no-await-in-loop -- Mutates one shared build tree, checks that exact immutable-output change, then restores it before the next mutation.
       expect(await consumerBuildIdentity(build, "next")).not.toEqual(baseline);
       writeFileSync(path.join(build, file), `original ${file}`);
     }

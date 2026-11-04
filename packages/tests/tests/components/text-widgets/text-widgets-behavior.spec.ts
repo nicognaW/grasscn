@@ -151,6 +151,7 @@ test("Spinner retains SVG semantics, ref, custom children, events and exact1200m
   expect(await spinner.innerHTML()).not.toBe(start);
 
   for (let i = 0; i < 3; i += 1) {
+    // oxlint-disable-next-line no-await-in-loop -- Advances the same focus/pointer/widget state; the next transition depends on completion and observation of the current one.
     await page.getByRole("button", { name: "Next phase" }).click();
   }
 

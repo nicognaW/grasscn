@@ -27,10 +27,13 @@ for (const viewport of [
     await page.setViewportSize(viewport);
 
     for (const name of names) {
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await page.goto(origin + "docs/components/" + name);
       const card = page.locator(".documentation-playground");
 
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await expect(card).toBeVisible();
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await expect
         .poll(
           async () =>
@@ -40,6 +43,7 @@ for (const viewport of [
         )
         .toBe(true);
       expect(
+        // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
         await page.locator("[id]").evaluateAll((nodes) => {
           const seen = new Set<string>();
 

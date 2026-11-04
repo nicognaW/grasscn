@@ -48,6 +48,7 @@ test("layout documentation exposes its actual examples and complete source", asy
 
     const readOnlyItems26 = ["preview", "usage", "composition", "installation"];
 
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     const readOnlyResults26 = await Promise.allSettled(
       readOnlyItems26.map(async (id) => {
         await expect(page.locator(`h2#${id}`)).toBeVisible();

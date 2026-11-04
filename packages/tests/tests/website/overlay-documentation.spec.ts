@@ -127,6 +127,7 @@ test("overlay documentation exposes exact examples, own grouped source and retai
   };
 
   for (const slug of overlaySlugs) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyOverlayDocumentation(slug);
   }
 
@@ -201,6 +202,7 @@ test("documentation edge panels expose labelled Done actions", async ({
   };
 
   for (const slug of edgePanelSlugs) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyEdgePanelComposition(slug);
   }
 });
@@ -425,6 +427,7 @@ test("overlay documentation remains usable at its default mobile width", async (
   };
 
   for (const slug of mobileOverlaySlugs) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyMobileOverlayDocumentation(slug);
   }
 });

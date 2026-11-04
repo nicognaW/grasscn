@@ -114,16 +114,22 @@ test("custom skin can fail, recover, and replace another model without remountin
     ["Classic", "wide"],
     ["Dream", "slim"],
   ] as const) {
+    // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
     await input.fill(name);
+    // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
     await page.getByRole("button", { exact: true, name: "Load skin" }).click();
 
     if (model === null) {
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await expect(player.getByRole("status")).toHaveText(
         "3D preview unavailable"
       );
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await expect(player).toHaveAttribute("data-ready", "false");
     } else {
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await expect(player).toHaveAttribute("data-ready", "true");
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await expect(player).toHaveAttribute("data-model", model);
     }
   }

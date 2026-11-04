@@ -71,11 +71,14 @@ test("Tooltip wraps and stays inside a mobile viewport at each edge", async ({
   await page.setViewportSize({ height: 844, width: 390 });
 
   for (const side of ["top", "bottom", "left", "right"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(
       `/?component=tooltip&open=1&scale=3&side=${side}&edge=${side}&text=${encodeURIComponent("Use this component to show a helpful description.")}`
     );
     const content = page.locator('[data-slot="tooltip-content"]');
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(content).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect
       .poll(async () => {
         const box = await content.boundingBox();

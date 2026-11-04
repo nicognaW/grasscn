@@ -34,13 +34,16 @@ test("Kbd texture fits ASCII, CJK and shortcut labels at every GUI scale", async
   const card = await open(page, "kbd");
   {
     for (const text of ["Space", "跳跃 Space", "Ctrl + Shift + P"]) {
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await card
         .getByRole("textbox", { name: "Keyboard key label" })
         .fill(text);
       const key = card.locator('[data-slot="kbd"]').first();
 
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       const readOnlyItems33 = await key.locator("[data-mc-label-ready]").all();
 
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       const readOnlyResults33 = await Promise.allSettled(
         readOnlyItems33.map(async (glyph) => {
           await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
@@ -53,6 +56,7 @@ test("Kbd texture fits ASCII, CJK and shortcut labels at every GUI scale", async
         }
       }
 
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await labelFits(key);
     }
 

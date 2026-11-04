@@ -70,8 +70,10 @@ for (const component of ["sheet", "drawer"]) {
     await page.setViewportSize({ height: 900, width: 1280 });
 
     for (const side of ["top", "right", "bottom", "left"]) {
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await page.goto(`/?component=${component}&side=${side}&open=1`);
       const panel = page.getByRole("dialog");
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await expect(panel).toBeVisible();
       let selectedFixtureBranch2: 900 | 1280 | 0;
 
@@ -81,6 +83,7 @@ for (const component of ["sheet", "drawer"]) {
         selectedFixtureBranch2 = side === "right" ? 1280 : 0;
       }
 
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await expect
         .poll(async () => {
           const r = await panel.boundingBox();
@@ -130,8 +133,10 @@ for (const component of ["sheet", "drawer"]) {
     await panel.getByRole("textbox").focus();
 
     for (let i = 0; i < 8; i += 1) {
+      // oxlint-disable-next-line no-await-in-loop -- Advances the same focus/pointer/widget state; the next transition depends on completion and observation of the current one.
       await page.keyboard.press("Tab");
       // Base UI wraps through an external focus guard, then queues the internal target on the next animation frame.
+      // oxlint-disable-next-line no-await-in-loop -- Advances the same focus/pointer/widget state; the next transition depends on completion and observation of the current one.
       await expect
         .poll(
           async () =>

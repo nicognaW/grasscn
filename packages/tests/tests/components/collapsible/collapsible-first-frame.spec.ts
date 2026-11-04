@@ -62,6 +62,7 @@ for (const scale of [1, 2, 3]) {
               samplingCompletion.reject(error);
             }
 
+            // oxlint-disable-next-line no-await-in-loop -- Samples one live animation at ordered milestones; each frame observation must follow its timer and precede the next sample.
             await samplingCompletion.promise;
 
             const content = document.querySelector<HTMLElement>(

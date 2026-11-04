@@ -39,6 +39,7 @@ test("DialogFooter defaultfalse keeps children/ref/attributes and no DOM boolean
   page,
 }) => {
   for (const suffix of ["", "?explicitFalse=1"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await verifyDefaultDialogFooter(page, suffix);
   }
 });

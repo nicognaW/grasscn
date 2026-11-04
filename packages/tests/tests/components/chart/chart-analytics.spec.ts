@@ -50,6 +50,7 @@ for (const scale of [2]) {
         // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         const readOnlyItems3 = await stage.getByRole("combobox").all();
 
+        // oxlint-disable-next-line no-await-in-loop -- Advances the same focus/pointer/widget state; the next transition depends on completion and observation of the current one.
         const readOnlyResults3 = await Promise.allSettled(
           readOnlyItems3.map(async (control) => {
             const b = await control.boundingBox();

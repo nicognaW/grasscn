@@ -148,8 +148,11 @@ test("Collapsible clicks use the original asset once and disabled actions are si
   expect(await voices()).toHaveLength(2);
 
   for (const query of ["disabled=1", "prevent=1"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(`/?component=collapsible&${query}`);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await trigger(page).click({ force: true });
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     expect(await voices()).toEqual([]);
   }
 });

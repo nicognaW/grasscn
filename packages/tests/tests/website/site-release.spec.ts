@@ -50,12 +50,17 @@ test("all production sections share navigation and omit internal status content"
     "charts",
     "charts/line",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(`${origin}${path}`);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(
       page.getByRole("navigation", { name: "Main navigation" })
     ).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(page.getByRole("contentinfo")).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(page.locator("h1")).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     expect(await page.locator("body").textContent()).not.toMatch(internal);
   }
 

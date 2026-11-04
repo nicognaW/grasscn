@@ -52,17 +52,23 @@ test("InputOTP supports disabled and readonly without changing controlled value"
   page,
 }) => {
   for (const state of ["disabled", "readOnly"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(`/?component=input-otp&text=123&${state}=1`);
     const input = page.getByRole("textbox", { name: "One-time code" });
 
     if (state === "disabled") {
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await expect(input).toBeDisabled();
     } else {
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await expect(input).toHaveAttribute("readonly", "");
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await input.focus();
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await input.pressSequentially("4");
     }
 
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(page.getByLabel("Code value")).toHaveText("123");
   }
 });
