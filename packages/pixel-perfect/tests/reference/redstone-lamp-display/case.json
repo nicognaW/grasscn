@@ -1,0 +1,37 @@
+{
+  "component": "redstone-lamp-display",
+  "minecraftVersion": "26.2",
+  "window": { "width": 480, "height": 640 },
+  "world": {
+    "description": "Fresh isolated singleplayer world from the vanilla world-creation flow: flat preset, fixed seed, spectator, peaceful, no structures. Noon with the clock paused, clear weather with the weather cycle paused, open sky above the wall. options.txt sets no video option, so every video option is the vanilla default.",
+    "levelName": "grasscn-projected",
+    "preset": "minecraft:flat",
+    "seed": 0,
+    "clockTime": 6000,
+    "commands": ["time set noon", "weather clear"]
+  },
+  "camera": { "eye": [0.5, 72.5, 0.5], "yRot": 180, "xRot": 0 },
+  "projection": {
+    "type": "orthographic",
+    "facing": "north",
+    "pixelsPerBlock": 8,
+    "zNear": 0.05,
+    "zFar": 256
+  },
+  "lamps": {
+    "lit": "minecraft:redstone_lamp[lit=true]",
+    "unlit": "minecraft:redstone_lamp[lit=false]"
+  },
+  "sentinel": {
+    "at": [240, 280],
+    "description": "Open sky 20 window pixels above the wall; it must be identical in the scene and backdrop frames and must not be the dark loading or menu background."
+  },
+  "cases": [
+    {
+      "name": "glyph-0",
+      "value": "0",
+      "origin": [-1, 74, -10],
+      "rows": ["###", "#.#", "#.#", "#.#", "###"]
+    }
+  ]
+}

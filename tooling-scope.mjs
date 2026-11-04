@@ -44,5 +44,6 @@ export const generatedCode = [
   "apps/web/registry/ui/minecraft-unifont-atlas.ts",
   "apps/web/registry/ui/minecraft-unifont-data.ts",
   "apps/web/registry/ui/minecraft-unifont-metrics.css",
+  "packages/pixel-perfect/tests/reference/redstone-lamp-display/manifest.json",
   "packages/tests/fixtures/reference/header-star/asset-provenance.json",
 ];

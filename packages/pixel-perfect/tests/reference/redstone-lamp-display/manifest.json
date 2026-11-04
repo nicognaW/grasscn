@@ -1,0 +1,246 @@
+{
+  "caseDefinitionSha256": "738d009d20eaf74cd8ff0c3208bf525cfeb11c7ebc8c9a1ca7bebbcd58406641",
+  "cases": [
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-0.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-0.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-0",
+      "reference": {
+        "decodedRgbaSha256": "3dccb55f0ba8318bb5f2cae836c00929a43352ce94751fc3ee485eb66b1f7c93",
+        "file": "references/glyph-0.png",
+        "height": 40,
+        "sha256": "2dc9becb6ba8fd027f800402ffa70848d78aa8722fe39f601a972c52fba21f0f",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "a4455abed6169528b9cbbd6fb39419963774d4072a82da7486c528c69d051090",
+        "file": "frames/glyph-0.scene.png",
+        "height": 640,
+        "sha256": "6d44af657b83f912329ad9750d26356fba7305ad2385637f8d10647fa3c00bd7",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "0"
+    }
+  ],
+  "differenceTolerance": 0,
+  "harnessSources": [
+    {
+      "file": "source/ProjectedReferenceMain.java",
+      "sha256": "9da9388ebb04da53231cb1e72c2b472f6c00b5e87c77a38bb664f22d85cc0036"
+    },
+    {
+      "file": "source/capture-projected-reference.ts.txt",
+      "sha256": "d813c5172bc495abb222980873b3a297f10556b8b8c1d8a8d06c7262b3623dfa"
+    }
+  ],
+  "launches": [
+    {
+      "name": "native-one",
+      "runtime": {
+        "device": "llvmpipe (LLVM 20.1.2, 256 bits)",
+        "vendor": "Mesa",
+        "driver": "4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4",
+        "backend": "OpenGL",
+        "window": [
+          480,
+          640
+        ],
+        "cameraPosition": [
+          0.5,
+          72.49999988079071,
+          0.5
+        ],
+        "cameraRotation": [
+          180,
+          0
+        ],
+        "projectionMatrix": [
+          0.033333335,
+          0,
+          0,
+          0,
+          0,
+          0.025,
+          0,
+          0,
+          0,
+          0,
+          -0.003907013,
+          0,
+          0,
+          0,
+          -0.00019535066,
+          1
+        ],
+        "overworldClockTime": 6000,
+        "raining": false,
+        "gameType": "spectator",
+        "hudHidden": true,
+        "videoOptions": {
+          "graphicsPreset": "CUSTOM",
+          "renderDistance": 12,
+          "ambientOcclusion": true,
+          "mipmapLevels": 4,
+          "textureFiltering": "NONE",
+          "cloudStatus": "FANCY",
+          "fov": 70,
+          "bobView": true
+        },
+        "fog": {
+          "color": [
+            0.70980394,
+            0.8156863,
+            1,
+            1
+          ],
+          "environmentalStart": 0,
+          "environmentalEnd": 1024,
+          "renderDistanceStart": 172.8,
+          "renderDistanceEnd": 192,
+          "skyEnd": 192,
+          "cloudEnd": 2048
+        }
+      }
+    },
+    {
+      "name": "native-two",
+      "runtime": {
+        "device": "llvmpipe (LLVM 20.1.2, 256 bits)",
+        "vendor": "Mesa",
+        "driver": "4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4",
+        "backend": "OpenGL",
+        "window": [
+          480,
+          640
+        ],
+        "cameraPosition": [
+          0.5,
+          72.49999988079071,
+          0.5
+        ],
+        "cameraRotation": [
+          180,
+          0
+        ],
+        "projectionMatrix": [
+          0.033333335,
+          0,
+          0,
+          0,
+          0,
+          0.025,
+          0,
+          0,
+          0,
+          0,
+          -0.003907013,
+          0,
+          0,
+          0,
+          -0.00019535066,
+          1
+        ],
+        "overworldClockTime": 6000,
+        "raining": false,
+        "gameType": "spectator",
+        "hudHidden": true,
+        "videoOptions": {
+          "graphicsPreset": "CUSTOM",
+          "renderDistance": 12,
+          "ambientOcclusion": true,
+          "mipmapLevels": 4,
+          "textureFiltering": "NONE",
+          "cloudStatus": "FANCY",
+          "fov": 70,
+          "bobView": true
+        },
+        "fog": {
+          "color": [
+            0.70980394,
+            0.8156863,
+            1,
+            1
+          ],
+          "environmentalStart": 0,
+          "environmentalEnd": 1024,
+          "renderDistanceStart": 172.8,
+          "renderDistanceEnd": 192,
+          "skyEnd": 192,
+          "cloudEnd": 2048
+        }
+      }
+    }
+  ],
+  "minecraftVersion": "26.2",
+  "mods": [],
+  "projection": {
+    "facing": "north",
+    "pixelsPerBlock": 8,
+    "type": "orthographic",
+    "zFar": 256,
+    "zNear": 0.05,
+    "camera": {
+      "eye": [
+        0.5,
+        72.5,
+        0.5
+      ],
+      "xRot": 0,
+      "yRot": 180
+    },
+    "description": "Unmodified 26.2 renderer; only the main camera's projection matrix is replaced by a front-on orthographic projection centred on the camera eye with pixelsPerBlock window pixels per block. The vanilla perspective culling frustum is unchanged and contains the declared geometry.",
+    "window": {
+      "height": 640,
+      "width": 480
+    }
+  },
+  "repeatDecodedRgbaEqual": true,
+  "resourcePacks": [],
+  "scope": "Projected references (ADR 0005): masked geometry pixels of the declared lamp walls only; the backdrop is a declared web adaptation. Captured on llvmpipe under Xvfb.",
+  "sourceJar": {
+    "path": "versions/26.2/26.2.jar",
+    "sha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
+  },
+  "world": {
+    "clockTime": 6000,
+    "commands": [
+      "time set noon",
+      "weather clear"
+    ],
+    "description": "Fresh isolated singleplayer world from the vanilla world-creation flow: flat preset, fixed seed, spectator, peaceful, no structures. Noon with the clock paused, clear weather with the weather cycle paused, open sky above the wall. options.txt sets no video option, so every video option is the vanilla default.",
+    "levelName": "grasscn-projected",
+    "preset": "minecraft:flat",
+    "seed": 0
+  }
+}
