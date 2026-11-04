@@ -102,16 +102,23 @@ export const buildProductionFixture = async function buildProductionFixture() {
     );
   }
 
+  const entrypoints: string[] = [];
+
+  for (const entry of fs.readdirSync(fixtureRoot, { withFileTypes: true })) {
+    if (entry.isFile() && entry.name.endsWith(".html")) {
+      entrypoints.push(fixtureFile(entry.name));
+    }
+  }
+
+  entrypoints.sort();
+
   const { build } = await import("vite");
   await build({
     build: {
       emptyOutDir: true,
       outDir: fixtureDirectory,
       rolldownOptions: {
-        input: {
-          adventure: fixtureFile("adventure.html"),
-          index: fixtureFile("index.html"),
-        },
+        input: entrypoints,
       },
     },
     cacheDir: repositoryFile(
