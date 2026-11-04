@@ -478,9 +478,9 @@ const PlayerPreview = ({
     const node = canvas.current;
 
     return () => {
-      if (renderer.current) {
+      if (renderer.current && node?.isConnected === false) {
         node
-          ?.getContext("webgl2")
+          .getContext("webgl2")
           ?.getExtension("WEBGL_lose_context")
           ?.loseContext();
       }
