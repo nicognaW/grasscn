@@ -246,8 +246,13 @@ try {
         );
       }
 
+      // SAFETY: The existing rotation counter starts at zero, so the first processed case awaits browser.newPage before this use; every later rotation assigns the new Page before use and startup errors leave the loop. Capture that same owner for this iteration.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact completed browser.newPage producer/lifecycle boundary; no runtime guard. */
+      const activePage = page as Page;
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
+
       // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
-      results.push(await verifyNativeSelectCase(c, dir, page!));
+      results.push(await verifyNativeSelectCase(c, dir, activePage));
 
       if (results.length % 128 === 0) {
         console.log(dir, results.length, "exact");

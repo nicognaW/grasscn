@@ -297,12 +297,17 @@ try {
         });
       }
 
-      page!.on("pageerror", (e) => pageErrors.push(e.message));
+      // SAFETY: The existing rotation counter starts at zero, so the first processed case awaits browser.newPage before this use; every later rotation assigns the new Page before use and startup errors leave the loop. Capture that same owner for this iteration.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact completed browser.newPage producer/lifecycle boundary; no runtime guard. */
+      const activePage = page as Page;
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
+
+      activePage.on("pageerror", (e) => pageErrors.push(e.message));
 
       const c = m.cases[i];
 
       // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
-      cases.push(await verifyAttachmentCase(c, part, dir, m, page!));
+      cases.push(await verifyAttachmentCase(c, part, dir, m, activePage));
     }
 
     const expected = PNG.sync.read(
