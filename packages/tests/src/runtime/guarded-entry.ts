@@ -22,7 +22,7 @@ let admitted = false;
 while (Date.now() < deadline) {
   try {
     // SAFETY: the parent writes this process budget receipt; existing pid/enforced guards remain unchanged.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Consume the enforced-budget writer contract without adding runtime validation.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion, no-await-in-loop -- Consume the enforced-budget writer contract without adding runtime validation. Read the current enforced-budget receipt before delaying and trying the same gate again.
     const budget = JSON.parse(await fs.readFile(gate, "utf-8")) as {
       pid: number;
       enforced?: boolean;
@@ -40,6 +40,7 @@ while (Date.now() < deadline) {
     }
   }
 
+  // oxlint-disable-next-line no-await-in-loop -- Read the current enforced-budget receipt before delaying and trying the same gate again.
   await setTimeout(25);
 }
 

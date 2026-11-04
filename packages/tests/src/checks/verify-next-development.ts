@@ -56,8 +56,11 @@ for (const [index, name] of [
   const target = path.resolve(webRoot, name);
 
   try {
+    // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
     const physicalInput = await realpath(target);
+    // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
     assert.ok(physicalInput.startsWith((await realpath(webRoot)) + path.sep));
+    // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
     await rename(target, path.join(directory, `generated-backup-${index}`));
 
     if (index < 2) {
@@ -227,8 +230,11 @@ try {
     const target = path.resolve(webRoot, name);
 
     try {
+      // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
       const physicalInput = await realpath(target);
+      // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
       assert.ok(physicalInput.startsWith((await realpath(webRoot)) + path.sep));
+      // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
       await rename(
         target,
         path.join(directory, `generated-dev-after-${index}`)
@@ -243,10 +249,13 @@ try {
     }
 
     const saved = path.join(directory, `generated-backup-${index}`);
+    // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
     const physicalSavedInput = await realpath(saved);
     assert.ok(
+      // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
       physicalSavedInput.startsWith((await realpath(directory)) + path.sep)
     );
+    // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
     await rename(saved, target);
   }
 

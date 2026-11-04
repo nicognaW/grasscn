@@ -279,12 +279,15 @@ try {
 
   for (const [index, name] of outputPaths.entries()) {
     const target = path.resolve(webRoot, name);
+    // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
     const resolved = await realpath(target);
 
     assert.ok(
+      // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
       resolved.startsWith((await realpath(webRoot)) + path.sep),
       "Generated backup must stay in this web workspace"
     );
+    // oxlint-disable-next-line no-await-in-loop -- Keep physical-path validation and the ordered backup/restore transaction serial; stop later moves if an earlier safety check or move fails.
     await rename(target, path.join(backup, String(index)));
   }
 
