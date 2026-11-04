@@ -50,34 +50,66 @@ test("Grasscn project identity and native branding assets are consistent", async
     "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
   );
 
-  for (const [file, record] of Object.entries(provenance.generated)) {
-    const bytes = await readFile(
-      evidenceFile(`preview/assets/${file}`, pixelPerfectRoot)
-    );
+  const generatedInputs = await Promise.allSettled(
+    Object.entries(provenance.generated).map(async ([file, record]) => ({
+      bytes: await readFile(
+        evidenceFile(`preview/assets/${file}`, pixelPerfectRoot)
+      ),
+      record,
+    }))
+  );
+
+  for (const input of generatedInputs) {
+    if (input.status === "rejected") {
+      throw input.reason;
+    }
+
+    const { bytes, record } = input.value;
 
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       record.sha256
     );
   }
 
-  for (const c of provenance.cases) {
-    const one = PNG.sync.read(
-      await readFile(
-        evidenceFile(
-          `tests/reference/branding/native-one/${c.filename}`,
-          pixelPerfectRoot
-        )
-      )
-    );
+  const caseInputs = await Promise.allSettled(
+    provenance.cases.map(async (c) => {
+      const [one, two] = await Promise.allSettled([
+        readFile(
+          evidenceFile(
+            `tests/reference/branding/native-one/${c.filename}`,
+            pixelPerfectRoot
+          )
+        ),
+        readFile(
+          evidenceFile(
+            `tests/reference/branding/native-two/${c.filename}`,
+            pixelPerfectRoot
+          )
+        ),
+      ]);
 
-    const two = PNG.sync.read(
-      await readFile(
-        evidenceFile(
-          `tests/reference/branding/native-two/${c.filename}`,
-          pixelPerfectRoot
-        )
-      )
-    );
+      return { c, one, two };
+    })
+  );
+
+  for (const input of caseInputs) {
+    if (input.status === "rejected") {
+      throw input.reason;
+    }
+
+    const { c, one: oneInput, two: twoInput } = input.value;
+
+    if (oneInput.status === "rejected") {
+      throw oneInput.reason;
+    }
+
+    const one = PNG.sync.read(oneInput.value);
+
+    if (twoInput.status === "rejected") {
+      throw twoInput.reason;
+    }
+
+    const two = PNG.sync.read(twoInput.value);
 
     expect(one.data.equals(two.data)).toBe(true);
     expect(c.mismatchedPixels).toBe(0);
