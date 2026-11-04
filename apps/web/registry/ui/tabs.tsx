@@ -182,7 +182,7 @@ const Tabs = ({
 
 const tabsListVariants = cva("mc-tabs-list", {
   defaultVariants: { variant: "default" },
-  variants: { variant: { default: "mc-tabs-list-default" } },
+  variants: { variant: { default: "" } },
 });
 
 type TabsListProps = MinecraftProps<typeof TabsPrimitive.List> &

@@ -164,7 +164,8 @@ export const loadHighlighter = async function loadHighlighter(
               <span
                 key={index}
                 style={tokenStyle}
-                className="mc-code-token text-(--mc-token-color)"
+                data-mc-code-token=""
+                className="text-(--mc-token-color)"
               >
                 {token.content}
               </span>

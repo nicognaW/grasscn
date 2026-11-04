@@ -58,7 +58,7 @@ const ScrollerFixture = () => {
         >
           <MessageScrollerContent
             data-testid="content"
-            spacerClassName="test-spacer"
+            spacerClassName="box-border"
           >
             {ids.map((id) => (
               <MessageScrollerItem

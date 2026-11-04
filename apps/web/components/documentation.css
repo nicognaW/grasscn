@@ -90,7 +90,7 @@
   user-select: none;
   cursor: inherit;
 }
-.document-text .mc-code-token {
+.document-text [data-mc-code-token] {
   --mc-ink: currentColor;
 }
 .documentation-example,

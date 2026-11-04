@@ -236,11 +236,11 @@ test("Official streaming highlighter preserves lines/language aliases and native
   await page.goto(
     "?component=code-block&highlight=1&language=ts&text=const%20x%20%3D%20%22hello%22%3B%0A%2F%2F%20comment"
   );
-  await expect(page.locator(".mc-code-token").first()).toBeVisible();
+  await expect(page.locator("[data-mc-code-token]").first()).toBeVisible();
   await ready(page);
 
   const colors = await page
-    .locator(".mc-code-token")
+    .locator("[data-mc-code-token]")
     .evaluateAll((nodes) => [
       ...new Set(nodes.map((n) => getComputedStyle(n).color)),
     ]);

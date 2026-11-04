@@ -313,7 +313,9 @@ test("website code uses the shared Shiki highlighter without changing source tex
   await implementation
     .getByRole("button", { exact: true, name: "Expand" })
     .click();
-  await expect(implementation.locator(".mc-code-token").first()).toBeVisible();
+  await expect(
+    implementation.locator("[data-mc-code-token]").first()
+  ).toBeVisible();
   const displayedCode = await implementation.locator("code").textContent();
   expect(displayedCode?.replaceAll("\r\n", "\n")).toBe(
     readFileSync(registryFile("ui/button.tsx"), "utf-8").replaceAll(
@@ -323,7 +325,7 @@ test("website code uses the shared Shiki highlighter without changing source tex
   );
 
   const colors = await implementation
-    .locator(".mc-code-token")
+    .locator("[data-mc-code-token]")
     .evaluateAll((tokens) => [
       ...new Set(tokens.map((token) => getComputedStyle(token).color)),
     ]);
