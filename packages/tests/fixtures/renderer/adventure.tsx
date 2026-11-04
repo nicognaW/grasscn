@@ -44,15 +44,18 @@ const nodes: React.ComponentProps<typeof AdvancementTree>["nodes"] =
     };
   });
 
+const caseSource = params.get("case");
+
 // SAFETY: owned Adventure callers serialize DraftDemos samples and optional native positions into this query.
 // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Adventure fixture query producer boundary.
-const sample: AdventureFixtureSample = params.has("case")
-  ? (JSON.parse(params.get("case")!) as AdventureFixtureSample)
-  : {
-      element: params.get("kind") ?? "advancement-tree",
-      state: params.get("state") ?? undefined,
-      value: params.has("value") ? Number(params.get("value")) : undefined,
-    };
+const sample: AdventureFixtureSample =
+  caseSource === null
+    ? {
+        element: params.get("kind") ?? "advancement-tree",
+        state: params.get("state") ?? undefined,
+        value: params.has("value") ? Number(params.get("value")) : undefined,
+      }
+    : (JSON.parse(caseSource) as AdventureFixtureSample);
 // oxlint-enable typescript/no-unsafe-type-assertion
 
 const hasBackgroundText = (

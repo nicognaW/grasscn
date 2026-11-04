@@ -186,11 +186,14 @@ const state = params.get("state") ?? "normal";
 const label = params.get("label") ?? "Button";
 
 const SelectFixture = () => {
+  const labelsSource = params.get("labels");
+
   // SAFETY: owned Select titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
   // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Select titles query-label producer boundary.
-  const titles: string[] = params.has("labels")
-    ? (JSON.parse(params.get("labels")!) as FixtureLabels)
-    : ["Survival", "Creative", "Adventure"];
+  const titles: string[] =
+    labelsSource === null
+      ? ["Survival", "Creative", "Adventure"]
+      : (JSON.parse(labelsSource) as FixtureLabels);
   // oxlint-enable typescript/no-unsafe-type-assertion
 
   const initial = Number(params.get("selectedIndex") ?? 0);
@@ -2211,11 +2214,14 @@ const DialogFixture = () => {
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLButtonElement>(null);
 
+  const labelsSource = params.get("labels");
+
   // SAFETY: owned Dialog actions callers serialize string label arrays; preserve this branch's existing parameter/default read.
   // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Dialog actions query-label producer boundary.
-  const labels: string[] = params.has("labels")
-    ? (JSON.parse(params.get("labels")!) as FixtureLabels)
-    : ["Cancel", "Continue"];
+  const labels: string[] =
+    labelsSource === null
+      ? ["Cancel", "Continue"]
+      : (JSON.parse(labelsSource) as FixtureLabels);
   // oxlint-enable typescript/no-unsafe-type-assertion
 
   let selectedDescription: string | null;
@@ -2387,11 +2393,14 @@ const FixtureTabs = () => {
     `tab-${params.get("selectedIndex") ?? 0}`
   );
 
+  const labelsSource = params.get("labels");
+
   // SAFETY: owned Tabs titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
   // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Tabs titles query-label producer boundary.
-  const titles: string[] = params.has("labels")
-    ? (JSON.parse(params.get("labels")!) as FixtureLabels)
-    : ["Game", "World", "More"];
+  const titles: string[] =
+    labelsSource === null
+      ? ["Game", "World", "More"]
+      : (JSON.parse(labelsSource) as FixtureLabels);
   // oxlint-enable typescript/no-unsafe-type-assertion
 
   const panel = Number(params.get("contentHeight") ?? 0);
