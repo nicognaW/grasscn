@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import { documentTextWidth } from "./minecraft-document-text";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
@@ -81,8 +82,18 @@ export const MinecraftSignPaint = ({
   hanging: boolean;
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
-  const [ready, setReady] = React.useState(false);
+  const { attach, connection } = useCanvasPaintConnection(ref);
   const [revision, setRevision] = React.useState(0);
+
+  const paintInputs = React.useMemo(
+    () => ({ color, connection, hanging, lines, revision, scale, src }),
+    [src, lines, scale, color, hanging, revision, connection]
+  );
+
+  const [paintedInputs, setPaintedInputs] =
+    React.useState<typeof paintInputs>();
+
+  const ready = paintedInputs === paintInputs;
 
   React.useEffect(() => {
     const repaint = () => {
@@ -107,18 +118,23 @@ export const MinecraftSignPaint = ({
       window.removeEventListener("resize", repaint);
     };
   }, []);
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
+    const attachment = paintInputs.connection;
+
+    if (attachment === null) {
+      return undefined;
+    }
+
     // SAFETY: React attaches this private, unkeyed <canvas> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLCanvasElement capture.
     const canvas = ref.current as HTMLCanvasElement;
 
     let live = true;
-    setReady(false);
 
     const glyphResources = Promise.all([
-      load(src),
+      load(paintInputs.src),
       load(minecraftInputAssets.atlas),
-      lines.some((line) => /[^\u0020-\u007E]/u.test(line))
+      paintInputs.lines.some((line) => /[^\u0020-\u007E]/u.test(line))
         ? loadUnihex()
         : Promise.resolve(),
     ]);
@@ -131,7 +147,11 @@ export const MinecraftSignPaint = ({
       }
 
       const { ctx, height, output, sc, scratch, width } =
-        createSignRasterSurfaces(canvas, scale, hanging);
+        createSignRasterSurfaces(
+          canvas,
+          paintInputs.scale,
+          paintInputs.hanging
+        );
 
       const f = Math.fround;
 
@@ -193,12 +213,12 @@ export const MinecraftSignPaint = ({
       scratch.height = texture.naturalHeight;
       sc.drawImage(texture, 0, 0);
 
-      const factor = f((hanging ? 4.5 : 3.9) * scale);
-      const origin = (hanging ? 50 : 30) * scale;
-      const tx = 60 * scale;
-      const ty = origin + (hanging ? -13 : 27) * scale;
-      const halfX = hanging ? 8 : 12;
-      const halfY = hanging ? 8 : 13;
+      const factor = f((paintInputs.hanging ? 4.5 : 3.9) * paintInputs.scale);
+      const origin = (paintInputs.hanging ? 50 : 30) * paintInputs.scale;
+      const tx = 60 * paintInputs.scale;
+      const ty = origin + (paintInputs.hanging ? -13 : 27) * paintInputs.scale;
+      const halfX = paintInputs.hanging ? 8 : 12;
+      const halfY = paintInputs.hanging ? 8 : 13;
 
       draw(
         sc.getImageData(0, 0, scratch.width, scratch.height),
@@ -207,9 +227,12 @@ export const MinecraftSignPaint = ({
         f(tx + f(halfX * factor)),
         f(ty + f(halfY * factor))
       );
-      const textScale = f((hanging ? 1 : f(0.9765628)) * scale);
 
-      for (const [index, line] of lines.entries()) {
+      const textScale = f(
+        (paintInputs.hanging ? 1 : f(0.9765628)) * paintInputs.scale
+      );
+
+      for (const [index, line] of paintInputs.lines.entries()) {
         const textWidth = documentTextWidth(line);
 
         if (!textWidth) {
@@ -257,12 +280,15 @@ export const MinecraftSignPaint = ({
         }
 
         sc.globalCompositeOperation = "source-in";
-        sc.fillStyle = color;
+        sc.fillStyle = paintInputs.color;
         sc.fillRect(0, 0, scratch.width, scratch.height);
         sc.globalCompositeOperation = "source-over";
 
         const left = -Math.floor(textWidth / 2);
-        const top = index * (hanging ? 9 : 10) - (hanging ? 18 : 20);
+
+        const top =
+          index * (paintInputs.hanging ? 9 : 10) -
+          (paintInputs.hanging ? 18 : 20);
 
         draw(
           sc.getImageData(0, 0, scratch.width, 9),
@@ -275,38 +301,39 @@ export const MinecraftSignPaint = ({
 
       const bounds = canvas.getBoundingClientRect();
 
-      const gpu = lines.every((line) => /^[\u0020-\u007E]*$/u.test(line))
+      const gpu = paintInputs.lines.every((line) =>
+        /^[\u0020-\u007E]*$/u.test(line)
+      )
         ? paintSignGpu(
             texture,
             font,
-            lines,
-            scale,
-            color,
-            hanging,
+            paintInputs.lines,
+            paintInputs.scale,
+            paintInputs.color,
+            paintInputs.hanging,
             bounds.x,
             bounds.y
           )
         : undefined;
 
       ctx.putImageData(gpu ? new ImageData(gpu, width, height) : output, 0, 0);
-      setReady(true);
+      setPaintedInputs(paintInputs);
     };
 
     paintAfterGlyphResources().catch(() => {
       if (live) {
-        setReady(false);
+        setPaintedInputs(undefined);
       }
     });
 
     return () => {
       live = false;
     };
-    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Revision is the existing viewport/intersection repaint signal; GPU readback depends on current canvas page coordinates.
-  }, [src, lines, scale, color, hanging, revision]);
+  }, [paintInputs]);
 
   return (
     <canvas
-      ref={ref}
+      ref={attach}
       width={120 * scale}
       height={(hanging ? 74 : 110) * scale}
       data-ready={ready}

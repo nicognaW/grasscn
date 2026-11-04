@@ -3,6 +3,7 @@
 import * as React from "react";
 import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
+import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
@@ -118,20 +119,37 @@ const MinecraftDocumentText = ({
   wrap?: boolean;
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
-  const [ready, setReady] = React.useState(false);
+  const { attach, connection } = useCanvasPaintConnection(ref);
+
+  const paintInputs = React.useMemo(
+    () => ({ align, color, connection, scale, text, width, wrap }),
+    [text, width, scale, color, align, wrap, connection]
+  );
+
+  const [paintedInputs, setPaintedInputs] =
+    React.useState<typeof paintInputs>();
+
+  const ready = paintedInputs === paintInputs;
   const [height, setHeight] = React.useState(9);
 
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
+    const attachment = paintInputs.connection;
+
+    if (attachment === null) {
+      return undefined;
+    }
+
     // SAFETY: React attaches this private, unkeyed <canvas> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLCanvasElement capture.
     const canvas = ref.current as HTMLCanvasElement;
 
     let live = true;
-    setReady(false);
 
     const glyphResources = Promise.all([
       fontImage(),
-      /[^\u0020-\u007E\n]/u.test(text) ? loadUnihex() : Promise.resolve(),
+      /[^\u0020-\u007E\n]/u.test(paintInputs.text)
+        ? loadUnihex()
+        : Promise.resolve(),
     ]);
 
     const paintAfterGlyphResources = async () => {
@@ -141,10 +159,12 @@ const MinecraftDocumentText = ({
         return;
       }
 
-      const lines = wrap ? documentLines(text, width) : [text];
+      const lines = paintInputs.wrap
+        ? documentLines(paintInputs.text, paintInputs.width)
+        : [paintInputs.text];
 
-      canvas.width = width * scale;
-      canvas.height = lines.length * 9 * scale;
+      canvas.width = paintInputs.width * paintInputs.scale;
+      canvas.height = lines.length * 9 * paintInputs.scale;
       setHeight(lines.length * 9);
       const ctx = canvas.getContext("2d");
 
@@ -159,10 +179,12 @@ const MinecraftDocumentText = ({
       for (const [lineIndex, line] of lines.entries()) {
         let x = 0;
 
-        if (align === "right") {
-          x = width - documentTextWidth(line);
-        } else if (align === "center") {
-          x = Math.floor(width / 2) - Math.floor(documentTextWidth(line) / 2);
+        if (paintInputs.align === "right") {
+          x = paintInputs.width - documentTextWidth(line);
+        } else if (paintInputs.align === "center") {
+          x =
+            Math.floor(paintInputs.width / 2) -
+            Math.floor(documentTextWidth(line) / 2);
         }
 
         for (const char of line) {
@@ -181,10 +203,10 @@ const MinecraftDocumentText = ({
                 glyph[1],
                 glyph[2],
                 8,
-                x * scale,
-                lineIndex * 9 * scale,
-                glyph[2] * scale,
-                8 * scale
+                x * paintInputs.scale,
+                lineIndex * 9 * paintInputs.scale,
+                glyph[2] * paintInputs.scale,
+                8 * paintInputs.scale
               );
             }
 
@@ -193,8 +215,14 @@ const MinecraftDocumentText = ({
             const unicodeGlyph = getUnihexGlyph(char);
 
             if (unicodeGlyph) {
-              ctx.fillStyle = color;
-              paintUnihex(ctx, unicodeGlyph, x, lineIndex * 9, scale);
+              ctx.fillStyle = paintInputs.color;
+              paintUnihex(
+                ctx,
+                unicodeGlyph,
+                x,
+                lineIndex * 9,
+                paintInputs.scale
+              );
               x += unicodeGlyph.advance;
             }
           }
@@ -202,21 +230,21 @@ const MinecraftDocumentText = ({
       }
 
       ctx.globalCompositeOperation = "source-in";
-      ctx.fillStyle = color;
+      ctx.fillStyle = paintInputs.color;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      setReady(true);
+      setPaintedInputs(paintInputs);
     };
 
     paintAfterGlyphResources().catch(() => {
       if (live) {
-        setReady(false);
+        setPaintedInputs(undefined);
       }
     });
 
     return () => {
       live = false;
     };
-  }, [text, width, scale, color, align, wrap]);
+  }, [paintInputs]);
 
   const fallbackStyle: DocumentFallbackStyle | undefined = ready
     ? undefined
@@ -240,7 +268,7 @@ const MinecraftDocumentText = ({
       }))}
     >
       <canvas
-        ref={ref}
+        ref={attach}
         aria-hidden="true"
         className="[visibility:var(--mc-intrinsic-registry-ui-minecraft-document-text-1-visibility)] block [image-rendering:pixelated]"
         style={
