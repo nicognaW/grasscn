@@ -130,19 +130,6 @@
     },
     {
       "file": "integration/website/docs-navigation-pixels.spec.ts",
-      "title": "documentation header Components matches its captured Minecraft Button",
-      "titlePath": [
-        "documentation header Components matches its captured Minecraft Button"
-      ],
-      "components": ["website"],
-      "evidence": {
-        "kind": "website-default",
-        "route": "/docs",
-        "reason": "The default desktop header Components link is the actual scale2/logical100x20 Button on #202020. This single declared native constituent case does not select other labels, states or scales."
-      }
-    },
-    {
-      "file": "integration/website/docs-navigation-pixels.spec.ts",
       "title": "documentation search placeholder matches its captured Minecraft input",
       "titlePath": [
         "documentation search placeholder matches its captured Minecraft input"
