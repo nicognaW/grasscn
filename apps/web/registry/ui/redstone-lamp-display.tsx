@@ -185,6 +185,14 @@ const renderDataUrl = async (rows: readonly string[]) => {
   return canvas.toDataURL("image/png");
 };
 
+// Until the lamp pixels are ready (and on the server) the image shows a
+// transparent placeholder of its final size, so the first paint is already a
+// valid named image that reserves its space.
+const placeholder = (width: number, height: number) =>
+  `data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"/>`
+  )}`;
+
 export interface RedstoneLampDisplayProps extends Omit<
   React.ComponentProps<"img">,
   "alt" | "children" | "height" | "role" | "src" | "width"
@@ -226,18 +234,28 @@ export const RedstoneLampDisplay = ({
   }, [key]);
 
   const url = rendered?.key === key ? rendered.url : undefined;
+  const [loaded, setLoaded] = React.useState<string>();
+  const width = (rows[0]?.length ?? 0) * CELL;
+  const height = rows.length * CELL;
 
   return (
     <img
       {...props}
       alt={label}
       aria-label={label}
-
       data-slot="redstone-lamp-display"
-      data-rendered={url === undefined ? undefined : "true"}
-      width={(rows[0]?.length ?? 0) * CELL}
-      height={rows.length * CELL}
-      src={url}
+      // Set once the lamp pixels themselves have loaded, not the placeholder.
+      data-rendered={url !== undefined && loaded === url ? "true" : undefined}
+      width={width}
+      height={height}
+      src={url ?? placeholder(width, height)}
+      onLoad={(event) => {
+        if (url !== undefined && event.currentTarget.src === url) {
+          setLoaded(url);
+        }
+
+        props.onLoad?.(event);
+      }}
     />
   );
 };
