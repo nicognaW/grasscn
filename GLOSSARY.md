@@ -22,6 +22,8 @@ A pixel-perfect port of the unmodified Minecraft interface, provided as a shadcn
 
 **Captured reference**: An appearance or interaction result captured from Minecraft, with its game version and reference conditions identified.
 
+**Projected reference**: A captured reference produced by the Minecraft renderer with only its camera projection replaced by a declared orthographic projection. It establishes a pixel-perfect match under that projection only.
+
 **Pixel-perfect match**: Zero differing pixels between a UI port and its captured reference for a particular reference case, including textures, glyphs, spacing and text shadows. _Avoid_: Visually close
 
 **Pixel Perfect Test**: A test of a UI port's pixel-perfect match with a captured Minecraft reference, including original-asset and captured-reference integrity checks. Appearance comparisons require zero differing decoded RGBA pixels for a declared reference case. _Avoid_: Browser test (when referring to pixel verification)
