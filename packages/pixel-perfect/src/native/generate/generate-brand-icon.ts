@@ -161,6 +161,7 @@ for (const [scaleIndex, scale] of one.scales.entries()) {
   const bytes = PNG.sync.write(result);
   const filename = `grass-block-${16 * scale}.png`;
 
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await writeFile(path.join(assets, filename), bytes);
   generated[filename] = {
     width: result.width,

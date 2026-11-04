@@ -229,6 +229,7 @@ for (const component of ["sheet", "drawer"]) {
           for (const part of directory === "label"
             ? ["title", "description"]
             : ["surface"]) {
+            // oxlint-disable-next-line eslint/no-await-in-loop -- This ordered constituent probe reuses one Page; finish its current mutation/capture before the next part.
             await verifyOverlayConstituent(part);
           }
         });

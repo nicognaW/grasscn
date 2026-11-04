@@ -109,7 +109,9 @@ const glyphAtlas = await readFile(
 );
 
 for (const component of ["textarea", "textarea-cjk"]) {
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await writeFile(`tests/reference/${component}/glyph-atlas.json`, glyphAtlas);
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await writeFile(
     `tests/reference/${component}/asset-provenance.json`,
     `${JSON.stringify(

@@ -40,9 +40,12 @@ for (const name of verificationNames) {
     continue;
   }
 
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Keep each ordered snapshot read/mkdir/write phase and its original failure/partial-output boundary before the next retained file.
   const bytes = await readFile(path.join(repoRoot, name));
   const target = path.join(output, "sources", name);
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Keep each ordered snapshot read/mkdir/write phase and its original failure/partial-output boundary before the next retained file.
   await mkdir(path.dirname(target), { recursive: true });
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Keep each ordered snapshot read/mkdir/write phase and its original failure/partial-output boundary before the next retained file.
   await writeFile(target, bytes);
   records.push({
     bytes: bytes.length,

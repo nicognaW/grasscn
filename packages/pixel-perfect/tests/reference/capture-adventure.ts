@@ -180,10 +180,13 @@ for (const textureInput of textureInputs) {
     throw new Error(`Texture input changed: ${name}`);
   }
 
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await writeFile(path.join(runtime, name), bytes);
 
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await mkdir(path.join(outputDir, "inputs"), { recursive: true });
 
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await writeFile(path.join(outputDir, "inputs", name), bytes);
 
   inputResources[name] = {
@@ -476,6 +479,7 @@ for (const frameRead of frameReads) {
 
   const { bytes, name } = frameRead.value;
 
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await writeFile(path.join(outputDir, "frames", name), bytes);
 
   frameRecords.push({ name, sha256: sha256(bytes) });

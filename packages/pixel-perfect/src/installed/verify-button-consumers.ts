@@ -324,9 +324,12 @@ try {
       browser.version(),
       "Ordinary runtime and PPT browser versions must match"
     );
+    // oxlint-disable-next-line eslint/no-await-in-loop -- This consumer server is owned by one verify/close cycle; finish its check and close before starting the next target.
     host = await servePreparedConsumer(project, { port: 5194 + index });
 
+    // oxlint-disable-next-line eslint/no-await-in-loop -- This consumer server is owned by one verify/close cycle; finish its check and close before starting the next target.
     await verifyPreparedButton(project, host, browser);
+    // oxlint-disable-next-line eslint/no-await-in-loop -- This consumer server is owned by one verify/close cycle; finish its check and close before starting the next target.
     await host.close();
     host = undefined;
   }

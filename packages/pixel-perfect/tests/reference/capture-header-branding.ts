@@ -254,6 +254,7 @@ for (const imageInput of imageInputs) {
 
   const { bytes, relative } = imageInput.value;
   const image = PNG.sync.read(bytes);
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await writeFile(
     path.join(output, relative.replace(/\.png$/u, ".identity.json")),
     `${JSON.stringify({ decodedRgbaSha256: hash(image.data), file: relative, height: image.height, sha256: hash(bytes), width: image.width }, null, 2)}\n`

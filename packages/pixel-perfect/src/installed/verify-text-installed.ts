@@ -599,6 +599,7 @@ for (const group of groups) {
     ? `tests/reference/${name}/diagnostic-${partArgument}.json`
     : (registered ?? `tests/reference/${name}/installation-verification.json`);
 
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Keep ordered per-group verification/report phases and their original failure attribution; browser workers already own disjoint Pages.
   await mkdir(path.dirname(pixelPerfectFile(output)), { recursive: true });
   const reportFile = pixelPerfectFile(output);
 
@@ -625,6 +626,7 @@ for (const group of groups) {
     Object.assign(report, { partialPart: partArgument });
   }
 
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Keep ordered per-group verification/report phases and their original failure attribution; browser workers already own disjoint Pages.
   await writeFile(reportFile, `${JSON.stringify(report, null, 2)}\n`);
 }
 

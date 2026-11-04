@@ -408,6 +408,7 @@ for (const frameRead of frameReads) {
 
   const { bytes, name } = frameRead.value;
 
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await writeFile(path.join(outputDir, "frames", name), bytes);
 
   frameRecords.push({ name, sha256: sha256(bytes) });
