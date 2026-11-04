@@ -70,11 +70,6 @@ const SignBoard = ({
   const texture =
     adventureAssets[`gui/${hanging ? "hanging_signs" : "signs"}/${wood}`];
 
-  const origin = hanging ? 50 : 30;
-  const factor = hanging ? 4.5 : 3.9;
-  const textScale = hanging ? 1 : Math.fround(0.9765628);
-  const width = hanging ? 60 : 90;
-
   return (
     <div
       {...props}

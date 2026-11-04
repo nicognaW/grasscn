@@ -182,8 +182,6 @@ const ChartDemo = ({ scale }: DemoProps) => {
       visitors: row.visitors + (webStep % 3) * (i + 1) * 5,
     }));
 
-    const total = rows.reduce((sum, row) => sum + row.visitors, 0);
-
     return rows.map((row) => ({ name: row.name, visitors: row.visitors }));
   }, [webStep]);
 
@@ -259,8 +257,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
         style={
           /* SAFETY: satisfies checks --mc-scale, --demo-stage-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
           {
-            "--mc-scale": scale,
             "--demo-stage-gap": `${10 * scale}px`,
+            "--mc-scale": scale,
           } satisfies DemoVariables as DemoVariables
         }
       >
@@ -492,7 +490,7 @@ const ChartDemo = ({ scale }: DemoProps) => {
           {!circular && (
             <>
               <Select
-                items={{ "6": "Last 6 months", "3": "Last 3 months" }}
+                items={{ "3": "Last 3 months", "6": "Last 6 months" }}
                 scale={scale}
                 value={period}
                 onValueChange={(value) => {

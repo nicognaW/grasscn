@@ -160,8 +160,8 @@ const ModelGraphic = ({ model, scale }: { model: Model; scale: 1 | 2 | 3 }) => {
 
         const total = graphicHeight + (actions ? 26 : 0);
 
-        model.node.style.width = `${width * scale}px`;
-        model.node.style.height = `${total * scale}px`;
+        model.node.style.setProperty("width", `${width * scale}px`);
+        model.node.style.setProperty("height", `${total * scale}px`);
         model.node.style.setProperty(
           "--mc-toast-height",
           String(graphicHeight)

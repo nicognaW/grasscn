@@ -164,8 +164,8 @@ const SidebarDemo = ({ scale }: DemoProps) => {
               style={
                 /* SAFETY: satisfies checks --demo-padding, --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
                 {
-                  "--demo-padding": `${8 * scale}px`,
                   "--demo-gap": `${8 * scale}px`,
+                  "--demo-padding": `${8 * scale}px`,
                 } satisfies DemoVariables as DemoVariables
               }
             >

@@ -47,6 +47,7 @@ const DataTableDemo = ({ scale }: DemoProps) => {
     () =>
       helper.columns([
         helper.accessor("name", {
+          filterFn: "includesString",
           header: ({ column }) => (
             <Button
               type="button"
@@ -64,7 +65,6 @@ const DataTableDemo = ({ scale }: DemoProps) => {
               }}
             >{`World${column.getIsSorted() === "asc" ? " ^" : column.getIsSorted() === "desc" ? " v" : ""}`}</Button>
           ),
-          filterFn: "includesString",
           sortFn: "text",
         }),
         helper.accessor("players", {
@@ -76,11 +76,8 @@ const DataTableDemo = ({ scale }: DemoProps) => {
   );
 
   const table = useTable({
-    features,
     columns,
     data: worlds,
-    getRowId: (row) => row.id,
-    initialState: { pagination: { pageIndex: 0, pageSize: 2 } },
     defaultColumn: {
       cell: (info) => (
         <MinecraftDisclosureText scale={scale}>
@@ -88,6 +85,9 @@ const DataTableDemo = ({ scale }: DemoProps) => {
         </MinecraftDisclosureText>
       ),
     },
+    features,
+    getRowId: (row) => row.id,
+    initialState: { pagination: { pageIndex: 0, pageSize: 2 } },
   });
 
   return (

@@ -30,14 +30,14 @@ const HotbarDemo = ({ scale }: DemoProps) => {
         scale={scale}
         background="#202020"
         items={tools.map((label, i) => ({
-          id: label,
-          label,
           icon:
             i === 0 ? (
               <img src={minecraftBadgeAssets.diamond} alt="" />
             ) : (
               <span aria-hidden="true">{i + 1}</span>
             ),
+          id: label,
+          label,
         }))}
       />
       <p>{tools[value]}</p>

@@ -94,7 +94,7 @@ const SelectDemo = ({ scale }: DemoProps) => {
             scale={scale}
             items={initial
               .slice(0, 3)
-              .map((label, index) => ({ value: `choice-${index}`, label }))}
+              .map((label, index) => ({ label, value: `choice-${index}` }))}
           >
             <SelectTrigger id="preview-mode-empty" aria-label="Empty game mode">
               <SelectValue placeholder="Choose game mode" />

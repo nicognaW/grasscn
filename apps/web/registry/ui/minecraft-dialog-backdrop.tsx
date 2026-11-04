@@ -99,9 +99,9 @@ export const MinecraftDialogBackdrop = () => {
           last.height += 1 / devicePixelRatio;
         } else {
           next.push({
-            start: y / devicePixelRatio,
-            height: 1 / devicePixelRatio,
             alpha,
+            height: 1 / devicePixelRatio,
+            start: y / devicePixelRatio,
           });
         }
       }
