@@ -532,7 +532,7 @@ const manifest = {
     ...definition.projection,
     camera: definition.camera,
     description:
-      "Unmodified 26.2 renderer; only the main camera's projection matrix is replaced by a front-on orthographic projection centred on the camera eye with pixelsPerBlock window pixels per block. The vanilla perspective culling frustum is unchanged and contains the declared geometry.",
+      "Unmodified 26.2 renderer; only the main camera's projection matrix is replaced by a front-on orthographic projection centred on the camera eye with pixelsPerBlock window pixels per block. The vanilla perspective culling frustum is unchanged. It culls whole render sections, and it intersects every section that holds declared geometry, so wide walls that extend past the frustum are still rendered whole; every case asserts full coverage of its declared footprint.",
     window: definition.window,
   },
   repeatDecodedRgbaEqual: true,

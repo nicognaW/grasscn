@@ -1,5 +1,5 @@
 {
-  "caseDefinitionSha256": "738d009d20eaf74cd8ff0c3208bf525cfeb11c7ebc8c9a1ca7bebbcd58406641",
+  "caseDefinitionSha256": "bdea92d36b2e504e1740991009b8460c6b1f615ef5a00f29928b9630f8ff8647",
   "cases": [
     {
       "backdropFrame": {
@@ -51,6 +51,618 @@
         ]
       },
       "value": "0"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-1.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-1.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-1",
+      "reference": {
+        "decodedRgbaSha256": "34b80728fae1968ab29a1cf0d7a22a65d1b1f0bbd8aeba8219097addfd8a05d6",
+        "file": "references/glyph-1.png",
+        "height": 40,
+        "sha256": "4f5c27721e3c8706fa7c4b60d0cb97c529132006ce95efc761cbbc8304ba9f9f",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "edc6272d2f3c60a42d412ba71807b754a4b82abb9a6485092d1de85a319d18e9",
+        "file": "frames/glyph-1.scene.png",
+        "height": 640,
+        "sha256": "13c41c40ef1591346f46f52ff63155af98d15982e4d80bd11b76fb832fb7ded1",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "1"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-2.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-2.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-2",
+      "reference": {
+        "decodedRgbaSha256": "f6831252c38918e220faf02081aa66e79de2e4b9bf8673319b9bec2c2adc4e34",
+        "file": "references/glyph-2.png",
+        "height": 40,
+        "sha256": "4b3bb6627af029147f7fff4446cc3e333934d174bd96b9dbd268cbd68c5481f0",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "23befac90cdc080e1f391b7f4d4566edd3d98ea981200b7e623297f3e5536dd9",
+        "file": "frames/glyph-2.scene.png",
+        "height": 640,
+        "sha256": "c74303be41545bc04510d12ddf7ce3d1d111631a63a21b9c8d4c5344cce2d4ef",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "2"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-3.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-3.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-3",
+      "reference": {
+        "decodedRgbaSha256": "0724ff43e491f29d4a2fa4871094cc0a4e1f3b2e7bb002b47eebf5cc96798caf",
+        "file": "references/glyph-3.png",
+        "height": 40,
+        "sha256": "b0e18515057687e17087f2be752e810601b4f88fd61b7c42329fad9b11e87214",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "fe69eae672f9f62d8cdf55e4d14530f4fa400b9c14f9bde7a945e38743d0e840",
+        "file": "frames/glyph-3.scene.png",
+        "height": 640,
+        "sha256": "a860e02d5580ffb11be18a6ec48fad4263a5d3b8d8436621674d0482c773feac",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "3"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-4.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-4.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-4",
+      "reference": {
+        "decodedRgbaSha256": "9465e79942758f06cb4ee7d5fec8b74ddb4eee7fe0953a4471631f27539e5682",
+        "file": "references/glyph-4.png",
+        "height": 40,
+        "sha256": "90811c2e3fa572cd2930f53c3675dc9669d418819d7023e4364c1d967b50a783",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "fd29c583daf6996ab6286ea2f654b13ffa049e82f86384c4e7a7aeb6700504b4",
+        "file": "frames/glyph-4.scene.png",
+        "height": 640,
+        "sha256": "6d11505b453e2539f336d016910fc4ae56c154c83464f96bbf332eb97a9bce98",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "4"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-5.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-5.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-5",
+      "reference": {
+        "decodedRgbaSha256": "d23b683540b870efbacce98d29928013232d7a9e530643b876bedc996035ee35",
+        "file": "references/glyph-5.png",
+        "height": 40,
+        "sha256": "2659e926910d133436fee029da43788e9173df14cea844bdc0649e537e4220dc",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "30e366c27332dbe1784e1c270137937ecc49552e13611c40b6abacf72ad2655b",
+        "file": "frames/glyph-5.scene.png",
+        "height": 640,
+        "sha256": "71bdcca96106ee9f1ad5aeb70d5d3dfc91dfd4c03ef7cfffafe142e6a77ca0fe",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "5"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-6.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-6.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-6",
+      "reference": {
+        "decodedRgbaSha256": "066f59d45c2f73a4eeb0542c14a7fc390d94e4ba23c66748d87f655afa55a111",
+        "file": "references/glyph-6.png",
+        "height": 40,
+        "sha256": "d77bb72d97934b701124118fde532ba8ce78d0b4a8cfa20f57c5b8095255e5cc",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "88ef6de567da1689dec824a10ab78c76c47e6c3f825bf1552c65a43278902579",
+        "file": "frames/glyph-6.scene.png",
+        "height": 640,
+        "sha256": "60dc95bd4db7fe2bb02cf5949694ac669f4dc626d98cd9bed1f827f544a0e094",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "6"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-7.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-7.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-7",
+      "reference": {
+        "decodedRgbaSha256": "b41f1528a96cd3d8b07475ab33342e9875216eb48560211e3c4466553405dfdf",
+        "file": "references/glyph-7.png",
+        "height": 40,
+        "sha256": "7f49147a14bfb4d2dc16b0d9976c6ee56bf3762a8ecfdf382b94c7699da77a44",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "d080784453f41232e65aab1cb6324051d048b1b2d6196532cf688f666415f897",
+        "file": "frames/glyph-7.scene.png",
+        "height": 640,
+        "sha256": "cc797571073f45f15358a4bd1a1f7df74ac2b6a818dfb7f9bf7e7755da24c93c",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "7"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-8.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-8.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-8",
+      "reference": {
+        "decodedRgbaSha256": "511284948629ed5ad04452aca75dc66dd29ea765b5abeaa582a0a9296a9233c9",
+        "file": "references/glyph-8.png",
+        "height": 40,
+        "sha256": "895540242754f2c34db50a98788126e92361ff028d3e58fe716ce9885b74cdb4",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "d8d58f1b5abc305d25cf281f7e4569e60a395aa0043d8ce5206c90c05a1e8e7f",
+        "file": "frames/glyph-8.scene.png",
+        "height": 640,
+        "sha256": "d98ad759d085f5366596cf4f38876a2d5775aff0c19b64edb28abc771e6c3ecd",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "8"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-9.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-9.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-9",
+      "reference": {
+        "decodedRgbaSha256": "99d33d55b29b72fed198ef541a7a599ccb4ada32511a269d214611ff465a4b4f",
+        "file": "references/glyph-9.png",
+        "height": 40,
+        "sha256": "0ed863215fa65ac7e96f22cfff59263b82bb74dd7b84e95c419e6e199a98fdd6",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "5a9135aaf01dc5f681f774e15c76c46e13e16679e1311e1cd3f8467cd15afd54",
+        "file": "frames/glyph-9.scene.png",
+        "height": 640,
+        "sha256": "0c63590572b65c92a450f2d472d8132e73169c6b77d5c538de0d98891f696333",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "9"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/glyph-k.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 24,
+        "x": 228,
+        "y": 300
+      },
+      "coveredPixels": 960,
+      "mask": {
+        "decodedRgbaSha256": "877efe413fb39caaf868c25879411ca55649261dafde6ce5301bfe6ce713180b",
+        "file": "masks/glyph-k.png",
+        "height": 40,
+        "sha256": "1e4e6c14ee0de7d701adc4b8f235669092f21b28cf9f27234e4e04e9eb06880c",
+        "width": 24
+      },
+      "name": "glyph-k",
+      "reference": {
+        "decodedRgbaSha256": "259e8c61d61b49d656acc34b74432d5d75b8feb0eaa71f23dfdb842e095e2ea7",
+        "file": "references/glyph-k.png",
+        "height": 40,
+        "sha256": "08a558cd4eabf157c7913c35305f6678a64dc1b35838191331171463655170b7",
+        "width": 24
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "5c501095e94bcc46f683c02f5634dc0d25fe5b7ba5076de3d4d99ff8007ae6af",
+        "file": "frames/glyph-k.scene.png",
+        "height": 640,
+        "sha256": "c16461733dc08f515a0d5cb94174cf17dd9a6724df16e522f2311134aa651449",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "k"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/value-1234.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 120,
+        "x": 180,
+        "y": 300
+      },
+      "coveredPixels": 4800,
+      "mask": {
+        "decodedRgbaSha256": "bd720a5704fa8160ef0a7dc2e31c155e89d6a314b3b0fec0f52f5cb8075381c6",
+        "file": "masks/value-1234.png",
+        "height": 40,
+        "sha256": "f9b554fa9299f4ac748f1a0ff5e1a33a6f470fb3ad836540d38e21b5e667a72a",
+        "width": 120
+      },
+      "name": "value-1234",
+      "reference": {
+        "decodedRgbaSha256": "d91a58328ec6c48592dabd93ae8deaf3feea4eb534da9ba52d10d080fdd3285c",
+        "file": "references/value-1234.png",
+        "height": 40,
+        "sha256": "cdc7cdfc7ae4c006054246ccd56bdac6fd4704371265d81a1a06249f96d4d7a8",
+        "width": 120
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "be3bacdd4deb1b0320c66b2b004de0d5b00de20b6f10cfad51625200987f5ea5",
+        "file": "frames/value-1234.scene.png",
+        "height": 640,
+        "sha256": "bdd14d8c163a0916c3bfdad9e8c34df0c989a32604be18bbcfd1c088a22ae3cb",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "1234"
+    },
+    {
+      "backdropFrame": {
+        "decodedRgbaSha256": "9b4b529cafd688014c57ded75015a284ab9335123620b538dde8057ee70a89de",
+        "file": "frames/value-12k.backdrop.png",
+        "height": 640,
+        "sha256": "311bfb9cd969288d290de4daf426781e5446ef88e53b0f7d713ad09dab814643",
+        "width": 480
+      },
+      "bounds": {
+        "height": 40,
+        "width": 88,
+        "x": 196,
+        "y": 300
+      },
+      "coveredPixels": 3520,
+      "mask": {
+        "decodedRgbaSha256": "17ef8437864682a3a1048c235fefa7312f275174e319a4d7a7e59f5a1ed2228e",
+        "file": "masks/value-12k.png",
+        "height": 40,
+        "sha256": "4feb84b15ca9dd84a04a91de2c4edca7409495ed9e091682312377f5c1dd40ea",
+        "width": 88
+      },
+      "name": "value-12k",
+      "reference": {
+        "decodedRgbaSha256": "cc2299dfa849d2ff20a98dc998725a2375b674178590fc790ecfd44ad3066a05",
+        "file": "references/value-12k.png",
+        "height": 40,
+        "sha256": "eee84237aa5c9cfe2b6be885b0581e46d1892b4969b91de77a1f0033647849eb",
+        "width": 88
+      },
+      "sceneFrame": {
+        "decodedRgbaSha256": "7aa71964cd9454c50fa6fff2a67ea820fd840e9795593abee17b23d19f4f7f10",
+        "file": "frames/value-12k.scene.png",
+        "height": 640,
+        "sha256": "da2cbf8787838b3f61cbd66add2151a3d6249cb1b2d4e269efbed8cba399d674",
+        "width": 480
+      },
+      "sentinel": {
+        "at": [
+          240,
+          280
+        ],
+        "rgba": [
+          181,
+          208,
+          255,
+          255
+        ]
+      },
+      "value": "12k"
     }
   ],
   "differenceTolerance": 0,
@@ -61,7 +673,7 @@
     },
     {
       "file": "source/capture-projected-reference.ts.txt",
-      "sha256": "d813c5172bc495abb222980873b3a297f10556b8b8c1d8a8d06c7262b3623dfa"
+      "sha256": "fa67178f2b59a4c6d524fa0aa9b44605d82a2ab92cd61b78d4d936929cf4d009"
     }
   ],
   "launches": [
@@ -219,7 +831,7 @@
       "xRot": 0,
       "yRot": 180
     },
-    "description": "Unmodified 26.2 renderer; only the main camera's projection matrix is replaced by a front-on orthographic projection centred on the camera eye with pixelsPerBlock window pixels per block. The vanilla perspective culling frustum is unchanged and contains the declared geometry.",
+    "description": "Unmodified 26.2 renderer; only the main camera's projection matrix is replaced by a front-on orthographic projection centred on the camera eye with pixelsPerBlock window pixels per block. The vanilla perspective culling frustum is unchanged. It culls whole render sections, and it intersects every section that holds declared geometry, so wide walls that extend past the frustum are still rendered whole; every case asserts full coverage of its declared footprint.",
     "window": {
       "height": 640,
       "width": 480

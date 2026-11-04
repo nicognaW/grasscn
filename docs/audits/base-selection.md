@@ -53,3 +53,7 @@ The catalogue therefore currently contains32 prepared Base PPT identities (the a
 ## Redstone Lamp display projected references (#45)
 
 `packages/pixel-perfect/tests/redstone-lamp-display/pixels.spec.ts` adds three PPTs: the corpus integrity check, the masked comparison of glyph `0` against its projected reference, and the one-pixel negative control in a temporary copy. All three are Full. Spec #42 names the display demo value `1234` as the lamp's Base mapping, and no website default path shows `0` yet; the header star count (#49) has not landed. Revisit glyph `0` when the header renders the repository's current count of `0` by default, and add `1234` as Base when #46 captures it.
+
+## Redstone Lamp display registry item (#46)
+
+The projected-reference corpus now holds 13 cases: each glyph `0`-`9` and `k` alone, plus `1234` and `12k` (glyph `0` doubles as the `0` case). `pixels.spec.ts` generates one masked comparison per case. Only `redstone lamp display 1234 matches its projected reference within the geometry mask` is Base, mapped to the website default path `/docs/components/redstone-lamp-display#interactive-playground` (the playground default value `1234`, spec #42). Every other comparison, the corpus integrity check and the one-pixel negative control remain Full. The negative control exercises the same fixture route and comparator as the Base case, so no new comparator route was added. The header star count (#49) will show `0` by default; revisit glyph `0` then.

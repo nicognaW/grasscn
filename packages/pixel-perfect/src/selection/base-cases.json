@@ -373,6 +373,19 @@
         "route": "/docs",
         "reason": "Actual default header preserves the byte-pinned176x64SVG with48pxgrass GUI3 on#202020. One1536x900/DPR1 constituent compares to two original renderer launches; composite badge/header remain web adaptations. No DOM-forced geometry or extra native variant."
       }
+    },
+    {
+      "file": "redstone-lamp-display/pixels.spec.ts",
+      "title": "redstone lamp display 1234 matches its projected reference within the geometry mask",
+      "titlePath": [
+        "redstone lamp display 1234 matches its projected reference within the geometry mask"
+      ],
+      "components": ["redstone-lamp-display"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/redstone-lamp-display#interactive-playground",
+        "reason": "The playground's default value 1234 (spec #42 demo default) at 8 px lamp cells and DPR 1, compared within the native geometry mask against two launches of the unmodified renderer under the declared orthographic projection. Single glyphs, 0 and 12k are Full; the transparent backdrop and glyph composition remain web adaptations."
+      }
     }
   ]
 }
