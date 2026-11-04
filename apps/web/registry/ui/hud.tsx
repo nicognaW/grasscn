@@ -34,6 +34,62 @@ type MeterProps = React.ComponentProps<"div"> & {
   max?: number;
 };
 
+type MeterKind = "health" | "armor" | "hunger" | "air";
+
+type HeartCondition =
+  | "normal"
+  | "poisoned"
+  | "withered"
+  | "frozen"
+  | "absorbing";
+
+interface MeterArtwork {
+  empty: AdventureTexture;
+  full: AdventureTexture;
+  half: AdventureTexture;
+}
+
+/** Select the actual native sprite family before laying out individual icons. */
+const meterArtwork = function meterArtwork(
+  kind: MeterKind,
+  condition: HeartCondition
+): MeterArtwork {
+  if (kind === "health") {
+    const prefix =
+      condition === "normal"
+        ? "gui/sprites/hud/heart/"
+        : (`gui/sprites/hud/heart/${condition}_` as const);
+
+    return {
+      empty: "gui/sprites/hud/heart/container",
+      full: `${prefix}full`,
+      half: `${prefix}half`,
+    };
+  }
+
+  if (kind === "hunger") {
+    return {
+      empty: "gui/sprites/hud/food_empty",
+      full: "gui/sprites/hud/food_full",
+      half: "gui/sprites/hud/food_half",
+    };
+  }
+
+  if (kind === "armor") {
+    return {
+      empty: "gui/sprites/hud/armor_empty",
+      full: "gui/sprites/hud/armor_full",
+      half: "gui/sprites/hud/armor_half",
+    };
+  }
+
+  return {
+    empty: "gui/sprites/hud/air_empty",
+    full: "gui/sprites/hud/air",
+    half: "gui/sprites/hud/air",
+  };
+};
+
 const IconMeter = ({
   value,
   max = 20,
@@ -44,8 +100,8 @@ const IconMeter = ({
   style,
   ...props
 }: MeterProps & {
-  kind: "health" | "armor" | "hunger" | "air";
-  condition?: "normal" | "poisoned" | "withered" | "frozen" | "absorbing";
+  kind: MeterKind;
+  condition?: HeartCondition;
 }) => {
   const limit = kind === "air" ? 10 : 20;
 
@@ -61,19 +117,7 @@ const IconMeter = ({
 
   const step = kind === "air" ? 1 : 2;
 
-  let _selectedPrefix: string;
-
-  if (kind === "health") {
-    _selectedPrefix = `gui/sprites/hud/heart/${condition === "normal" ? "" : `${condition}_`}`;
-  } else if (kind === "hunger") {
-    _selectedPrefix = "gui/sprites/hud/food_";
-  } else if (kind === "armor") {
-    _selectedPrefix = "gui/sprites/hud/armor_";
-  } else {
-    _selectedPrefix = "gui/sprites/hud/air";
-  }
-
-  const prefix = _selectedPrefix;
+  const artwork = meterArtwork(kind, condition);
 
   return (
     <div
@@ -98,22 +142,8 @@ const IconMeter = ({
           const i = kind === "health" ? count - 1 - order : order;
           const filled = Math.max(0, Math.min(step, amount - i * step));
 
-          let selectedEmpty: string;
-
-          if (kind === "health") {
-            selectedEmpty = "gui/sprites/hud/heart/container";
-          } else if (kind === "air") {
-            selectedEmpty = "gui/sprites/hud/air_empty";
-          } else {
-            selectedEmpty = prefix + "empty";
-          }
-
-          const empty = selectedEmpty;
-
-          const fill =
-            kind === "air"
-              ? "gui/sprites/hud/air"
-              : prefix + (filled >= step ? "full" : "half");
+          const { empty } = artwork;
+          const fill = filled >= step ? artwork.full : artwork.half;
 
           return (
             <span
@@ -134,18 +164,8 @@ const IconMeter = ({
               {!(
                 kind === "air" &&
                 (filled > 0 || (amount > 0 && i === Math.ceil(amount)))
-              ) && (
-                <AdventureImage
-                  texture={empty as AdventureTexture}
-                  scale={scale}
-                />
-              )}
-              {filled > 0 && (
-                <AdventureImage
-                  texture={fill as AdventureTexture}
-                  scale={scale}
-                />
-              )}
+              ) && <AdventureImage texture={empty} scale={scale} />}
+              {filled > 0 && <AdventureImage texture={fill} scale={scale} />}
             </span>
           );
         }

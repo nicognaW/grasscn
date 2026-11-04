@@ -11,7 +11,12 @@ interface SpinnerScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
 
-const frames = ["O o o", "o O o", "o o O", "o O o"] as const;
+const frames = [
+  ["O", " ", "o", " ", "o"],
+  ["o", " ", "O", " ", "o"],
+  ["o", " ", "o", " ", "O"],
+  ["o", " ", "O", " ", "o"],
+] as const;
 
 const Spinner = ({
   className,
@@ -58,7 +63,7 @@ const Spinner = ({
       continue;
     }
 
-    const glyph = minecraftLoadingGlyphs[char as "O" | "o"];
+    const glyph = minecraftLoadingGlyphs[char];
 
     for (const [px, py] of glyph.pixels) {
       pixels.push([x + px, py]);
