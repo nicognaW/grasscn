@@ -12,6 +12,9 @@ interface FixedPseudo {
   transform: string;
 }
 
+const opaque = (value: string) =>
+  value !== "transparent" && !/rgba\([^)]*,\s*0\s*\)/u.test(value);
+
 // Pseudo-elements use their originating element's containing block; real elements start at their parent.
 const viewportAnchored = (start: HTMLElement | null) => {
   for (let parent = start; parent; parent = parent.parentElement) {
@@ -122,9 +125,6 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
         ).backgroundColor;
 
         const bodyColor = getComputedStyle(document.body).backgroundColor;
-
-        const opaque = (value: string) =>
-          value !== "transparent" && !/rgba\([^)]*,\s*0\s*\)/u.test(value);
 
         const offsetX = scrollX;
         const offsetY = scrollY;

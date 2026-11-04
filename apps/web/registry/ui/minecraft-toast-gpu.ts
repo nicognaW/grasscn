@@ -18,6 +18,11 @@ interface Painter {
   font: WebGLTexture;
 }
 
+const uv = (start: number, end: number, v: number, size: number) =>
+  Math.fround(
+    start + Math.fround(Math.fround(v / size) * Math.fround(end - start))
+  );
+
 let shared: Painter | null | undefined;
 
 const create = function create(): Painter | null {
@@ -257,11 +262,6 @@ export const paintToast = function paintToast(
 
   gl.bindTexture(gl.TEXTURE_2D, p.sprite);
   gl.uniform4f(gl.getUniformLocation(program, "ink"), 1, 1, 1, 1);
-
-  const uv = (start: number, end: number, v: number, size: number) =>
-    Math.fround(
-      start + Math.fround(Math.fround(v / size) * Math.fround(end - start))
-    );
 
   const region = (
     x: number,

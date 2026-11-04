@@ -78,14 +78,14 @@ const nativeTokenColor = function nativeTokenColor(value?: string) {
 
   const rgb = [1, 3, 5].map((i) => Number.parseInt(value.slice(i, i + 2), 16));
 
-  return nativePalette.reduce((best, color) => {
-    const distance = (c: string) =>
-      [1, 3, 5].reduce(
-        (sum, index, i) =>
-          sum + (Number.parseInt(c.slice(index, index + 2), 16) - rgb[i]) ** 2,
-        0
-      );
+  const distance = (c: string) =>
+    [1, 3, 5].reduce(
+      (sum, index, i) =>
+        sum + (Number.parseInt(c.slice(index, index + 2), 16) - rgb[i]) ** 2,
+      0
+    );
 
+  return nativePalette.reduce((best, color) => {
     return distance(color) < distance(best) ? color : best;
   }, nativePalette[0]);
 };
