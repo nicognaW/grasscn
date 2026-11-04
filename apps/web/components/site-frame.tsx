@@ -10,6 +10,8 @@ import { MinecraftText } from "../registry/ui/minecraft-text";
 import { DocumentSearch } from "./document-search";
 import { DocumentSelection } from "./document-selection";
 import { StarButton } from "./star-button";
+// Applies the site's sound volume on every page, before any sound plays.
+import "../sound";
 
 export const SiteFrame = ({
   children,

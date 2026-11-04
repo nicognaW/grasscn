@@ -191,6 +191,7 @@ test("Header star button stays on the brand row at 720 px and below", async ({
 interface LaunchVoice {
   source: string;
   time: number;
+  volume: number;
 }
 
 declare global {
@@ -209,7 +210,11 @@ const recordVoices = async (page: Page) => {
     window.__fireworkVoices = voices;
     // oxlint-disable-next-line require-await -- the stub records the voice and resolves at once.
     HTMLMediaElement.prototype.play = async function play() {
-      voices.push({ source: this.src, time: performance.now() });
+      voices.push({
+        source: this.src,
+        time: performance.now(),
+        volume: this.volume,
+      });
     };
   });
 };
@@ -287,6 +292,28 @@ test("Clicking the header star button launches the fireworks from the nether sta
     .poll(async () => await playedClips(page), { timeout: 10_000 })
     .toEqual(["launch", "largeBlast", "twinkle"]);
   await expect(canvas).toHaveCount(0, { timeout: 10_000 });
+});
+
+test("Header fireworks play at the site sound volume on a page without an input playground", async ({
+  page,
+}) => {
+  await recordVoices(page);
+  // The charts page renders no input playground (whose slider demo also
+  // reads the site volume), so only the site frame can apply it here.
+  await page.goto(`${origin}charts`);
+  await starButton(page).click();
+
+  await expect
+    .poll(async () => await playedClips(page), { timeout: 10_000 })
+    .toEqual(["launch", "largeBlast", "twinkle"]);
+
+  // Each firework sound has gain 1 in game, so it plays at the site's 50%
+  // master volume, not the registry default of 100%.
+  const volumes = await page.evaluate(() =>
+    window.__fireworkVoices.map((voice) => voice.volume)
+  );
+
+  expect(volumes).toEqual([0.5, 0.5, 0.5]);
 });
 
 test("The fireworks canvas ignores the pointer", async ({ page }) => {
