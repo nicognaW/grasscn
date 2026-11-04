@@ -41,6 +41,13 @@ interface ActionModel {
 }
 
 interface Model {
+  applyMeasurements: (
+    width: number,
+    graphicHeight: number,
+    scale: 1 | 2 | 3,
+    commitHeight: (height: number) => void
+  ) => void;
+  readDimensions: () => { height: number; width: number };
   key: number;
   node: HTMLElement;
   title: string;
@@ -57,6 +64,81 @@ interface Model {
   geometryChanged?: () => void;
 }
 
+interface ToastPresentation extends Readonly<
+  Pick<
+    Model,
+    | "applyMeasurements"
+    | "bounds"
+    | "buttons"
+    | "ghost"
+    | "key"
+    | "message"
+    | "motion"
+    | "node"
+    | "readDimensions"
+    | "rich"
+    | "title"
+  >
+> {
+  readonly initialHeight: number;
+}
+
+/** Mutable toast geometry belongs to this imperative adapter, not React props. */
+const createToastModel = function createToastModel(
+  initial: Omit<Model, "applyMeasurements" | "readDimensions">
+): Model {
+  const model: Model = {
+    ...initial,
+    applyMeasurements(width, graphicHeight, scale, commitHeight) {
+      model.width = width;
+      model.height = graphicHeight;
+      commitHeight(graphicHeight);
+
+      if (model.node.isConnected) {
+        const actions = model.node.querySelector(
+          "[data-button],[data-close-button]"
+        );
+
+        const total = graphicHeight + (actions ? 26 : 0);
+
+        model.node.style.setProperty("width", `${width * scale}px`);
+        model.node.style.setProperty("height", `${total * scale}px`);
+        model.node.style.setProperty(
+          "--mc-toast-height",
+          String(graphicHeight)
+        );
+        model.bounds = model.node.getBoundingClientRect();
+        model.geometryChanged?.();
+      }
+    },
+    readDimensions() {
+      return { height: model.height, width: model.width };
+    },
+  };
+
+  return model;
+};
+
+/** Snapshot presentation fields while retaining stable imperative capabilities. */
+const presentToastModel = function presentToastModel(
+  model: Model
+): ToastPresentation {
+  return {
+    applyMeasurements: model.applyMeasurements,
+    bounds: model.bounds,
+    buttons: model.buttons,
+    ghost: model.ghost,
+    initialHeight: model.height,
+    key: model.key,
+    message: model.message,
+    motion: model.motion,
+    node: model.node,
+    readDimensions: model.readDimensions,
+    rich: model.rich,
+    title: model.title,
+  };
+};
+
 type ToasterProps = Omit<SonnerProps, "richColors" | "expand"> & {
   richColors?: false;
   expand?: true;
@@ -70,7 +152,7 @@ const ActionGraphic = ({
   scale,
 }: {
   action: ActionModel;
-  model: Model;
+  model: ToastPresentation;
   scale: 1 | 2 | 3;
 }) => {
   const [fontReady, setFontReady] = React.useState(false);
@@ -93,9 +175,11 @@ const ActionGraphic = ({
     };
   }, []);
   React.useLayoutEffect(() => {
+    const dimensions = model.readDimensions();
+
     const available = Math.max(
       20,
-      (model.width - 30 - 6 * (action.count - 1)) / action.count
+      (dimensions.width - 30 - 6 * (action.count - 1)) / action.count
     );
 
     const natural = Math.max(
@@ -122,7 +206,7 @@ const ActionGraphic = ({
       padding: "0",
       position: "absolute",
       right: "auto",
-      top: `${(model.height + 6) * scale}px`,
+      top: `${(dimensions.height + 6) * scale}px`,
       width: `${width * scale}px`,
     });
     // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Font readiness changes glyph advances outside the model; rerun action geometry when that resource becomes ready.
@@ -144,33 +228,21 @@ const ActionGraphic = ({
   );
 };
 
-const ModelGraphic = ({ model, scale }: { model: Model; scale: 1 | 2 | 3 }) => {
-  const [height, setHeight] = React.useState(model.height);
+const ModelGraphic = ({
+  model,
+  scale,
+}: {
+  model: ToastPresentation;
+  scale: 1 | 2 | 3;
+}) => {
+  const { applyMeasurements } = model;
+  const [height, setHeight] = React.useState(model.initialHeight);
 
   const update = React.useCallback(
     (width: number, graphicHeight: number) => {
-      model.width = width;
-      model.height = graphicHeight;
-      setHeight(graphicHeight);
-
-      if (model.node.isConnected) {
-        const actions = model.node.querySelector(
-          "[data-button],[data-close-button]"
-        );
-
-        const total = graphicHeight + (actions ? 26 : 0);
-
-        model.node.style.setProperty("width", `${width * scale}px`);
-        model.node.style.setProperty("height", `${total * scale}px`);
-        model.node.style.setProperty(
-          "--mc-toast-height",
-          String(graphicHeight)
-        );
-        model.bounds = model.node.getBoundingClientRect();
-        model.geometryChanged?.();
-      }
+      applyMeasurements(width, graphicHeight, scale, setHeight);
     },
-    [model, scale]
+    [applyMeasurements, scale]
   );
 
   const ownedStyle1: OwnedSonnerStyle = {
@@ -221,7 +293,7 @@ const Toaster = ({
   }
 
   const [host, setHost] = React.useState<HTMLElement | null>(null);
-  const [models, setModels] = React.useState<Model[]>([]);
+  const [models, setModels] = React.useState<ToastPresentation[]>([]);
   const sequence = React.useRef(0);
   const entriesRef = React.useRef(new Map<HTMLElement, Model>());
 
@@ -279,7 +351,7 @@ const Toaster = ({
 
     const remove = (model: Model) => {
       entries.delete(model.node);
-      setModels([...entries.values()]);
+      setModels([...entries.values()].map(presentToastModel));
     };
 
     const beginExit = (model: Model) => {
@@ -324,7 +396,7 @@ const Toaster = ({
           const toastKey = sequence.current;
           sequence.current = toastKey + 1;
 
-          model = {
+          model = createToastModel({
             bounds: toastBounds,
             buttons: [],
             ghost: false,
@@ -336,7 +408,7 @@ const Toaster = ({
             rich,
             title: title?.textContent ?? "",
             width: 190,
-          };
+          });
           entries.set(node, model);
           playMinecraftToastSound("in");
         }
@@ -390,7 +462,7 @@ const Toaster = ({
       }
 
       relayout();
-      setModels([...entries.values()]);
+      setModels([...entries.values()].map(presentToastModel));
     };
 
     const observer = new MutationObserver((records) => {
