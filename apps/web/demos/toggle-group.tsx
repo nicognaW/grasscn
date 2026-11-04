@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Button } from "../registry/ui/button";
 import { Label } from "../registry/ui/label";
+import { MinecraftProse } from "../registry/ui/minecraft-prose";
 import { ToggleGroup, ToggleGroupItem } from "../registry/ui/toggle-group";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
@@ -50,9 +51,9 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
       </div>
       <div ref={stageRef} className="demo-stage" data-stage="toggle-group">
         <div className="demo-pair">
-          <Label scale={scale} maxWidth={stageWidth}>
+          <MinecraftProse as="span" scale={scale} maxWidth={stageWidth}>
             One crafting station
-          </Label>
+          </MinecraftProse>
           <ToggleGroup
             aria-label="One recipe station"
             scale={scale}
@@ -78,9 +79,9 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
           </ToggleGroup>
         </div>
         <div className="demo-pair">
-          <Label scale={scale} maxWidth={stageWidth}>
+          <MinecraftProse as="span" scale={scale} maxWidth={stageWidth}>
             Several crafting stations
-          </Label>
+          </MinecraftProse>
           <ToggleGroup
             aria-label="Several recipe stations"
             scale={scale}

@@ -4,7 +4,7 @@ import {
   DatePickerRangeDemo,
 } from "../registry/blocks/date-picker";
 import { Button } from "../registry/ui/button";
-import { Label } from "../registry/ui/label";
+import { MinecraftProse } from "../registry/ui/minecraft-prose";
 import type { DemoProps } from "../types";
 
 const DatePickerExamples = ({ scale }: DemoProps) => (
@@ -18,9 +18,13 @@ const DatePickerExamples = ({ scale }: DemoProps) => (
       } satisfies DemoVariables as DemoVariables
     }
   >
-    <Label scale={scale}>Journey begins</Label>
+    <MinecraftProse as="span" scale={scale}>
+      Journey begins
+    </MinecraftProse>
     <DatePickerDemo scale={scale} />
-    <Label scale={scale}>Expedition range</Label>
+    <MinecraftProse as="span" scale={scale}>
+      Expedition range
+    </MinecraftProse>
     <DatePickerRangeDemo scale={scale} />
     <Button scale={scale} disabled>
       Unavailable

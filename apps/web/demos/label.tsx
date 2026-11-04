@@ -55,7 +55,7 @@ const LabelDemo = ({ scale }: DemoProps) => {
         </div>
         <div className="demo-pair">
           <span>WRAPPED / CENTERED</span>
-          <Label scale={scale} maxWidth={100} align="center">
+          <Label render={<span />} scale={scale} maxWidth={100} align="center">
             Create a new world with friends
           </Label>
         </div>
