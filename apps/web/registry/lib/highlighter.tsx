@@ -85,10 +85,15 @@ const nativeTokenColor = function nativeTokenColor(value?: string) {
       0
     );
 
-  return nativePalette.reduce(
-    (best, color) => (distance(color) < distance(best) ? color : best),
-    nativePalette[0]
-  );
+  let best = nativePalette[0];
+
+  for (const color of nativePalette) {
+    if (distance(color) < distance(best)) {
+      best = color;
+    }
+  }
+
+  return best;
 };
 
 let highlighter: Promise<HighlighterCore> | undefined;
