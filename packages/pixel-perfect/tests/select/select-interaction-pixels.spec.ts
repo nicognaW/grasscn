@@ -65,8 +65,8 @@ for (const scale of [1, 2, 3]) {
       await popup.evaluate(
         (node, p) =>
           Object.assign(node.style, {
-            position: "fixed",
             left: `${p.x}px`,
+            position: "fixed",
             top: `${p.y}px`,
           }),
         { x: c.x * scale, y: c.y * scale }
