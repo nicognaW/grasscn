@@ -8,6 +8,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 import {
+  FIREWORK_ROCKET_DRAWN_BOUNDS,
   FIREWORK_ROCKET_SPAWN,
   FireworkRocketSimulation,
 } from "@grasscn/web/ui/minecraft-firework-rocket";
@@ -42,4 +43,22 @@ test("the ported rocket launches, explodes and ends on the native sequence ticks
   simulation.tick();
   assert.equal(simulation.done, true, `done at tick ${lastSpark}`);
   assert.deepEqual(simulation.events, { explosion, launch });
+});
+
+test("the drawn bounds are the union of every native frame's covered bounds", () => {
+  const union = {
+    bottom: -Infinity,
+    left: Infinity,
+    right: -Infinity,
+    top: Infinity,
+  };
+
+  for (const { bounds } of manifest.frames) {
+    union.bottom = Math.max(union.bottom, bounds.y + bounds.height);
+    union.left = Math.min(union.left, bounds.x);
+    union.right = Math.max(union.right, bounds.x + bounds.width);
+    union.top = Math.min(union.top, bounds.y);
+  }
+
+  assert.deepEqual(union, { ...FIREWORK_ROCKET_DRAWN_BOUNDS });
 });

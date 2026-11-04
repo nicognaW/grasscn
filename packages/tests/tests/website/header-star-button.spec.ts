@@ -13,6 +13,35 @@ const STAR_NAME = /^Star grasscn on GitHub(?:, (?<count>\d+k?) stars)?$/u;
 const starButton = (page: Page) =>
   page.getByRole("banner").getByRole("link", { name: STAR_NAME });
 
+interface Box {
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+}
+
+// Scene pixels any frame draws on (FIREWORK_ROCKET_DRAWN_BOUNDS).
+const DRAWN = { bottom: 625, left: 148, right: 325, top: 302 };
+
+// Every pixel the firework draws lies inside the viewport.
+const drawnInView = async (page: Page, box: Box | null) => {
+  if (box === null) {
+    return false;
+  }
+
+  const [width, height] = await page.evaluate(() => [
+    document.documentElement.clientWidth,
+    document.documentElement.clientHeight,
+  ]);
+
+  return (
+    box.x + DRAWN.left >= 0 &&
+    box.y + DRAWN.top >= 0 &&
+    box.x + DRAWN.right <= (width ?? 0) &&
+    box.y + DRAWN.bottom <= (height ?? 0)
+  );
+};
+
 test("Header star button opens the repository in a new tab instead of a GitHub text link", async ({
   page,
 }) => {
@@ -255,8 +284,9 @@ test("Clicking the header star button launches the fireworks from the nether sta
   expect(await playedClips(page)).toEqual(["launch"]);
 
   // One 480x640 canvas, portaled outside the header and drawn once the
-  // textures decode. Its launch point (240, 584) sits on the star's bottom
-  // centre.
+  // textures decode. From the header its launch point (240, 584) would put
+  // the explosion above the viewport, so the canvas moves down and inward
+  // just enough to keep every drawn pixel on screen.
   const canvas = fireworksCanvas(page);
   await expect(canvas).toHaveAttribute("data-rendered", "true");
   expect(await canvas.evaluate((node) => node.closest("header") === null)).toBe(
@@ -269,12 +299,19 @@ test("Clicking the header star button launches the fireworks from the nether sta
   ]);
 
   expect([canvasBox?.width, canvasBox?.height]).toEqual([480, 640]);
-  expect((canvasBox?.x ?? 0) + 240).toBeCloseTo(
-    (starBox?.x ?? 0) + (starBox?.width ?? 0) / 2,
-    0
+  expect(await drawnInView(page, canvasBox)).toBe(true);
+  // Only the top margin binds at the top of the page: the explosion's top
+  // edge sits 8 px below the viewport's.
+  expect((canvasBox?.y ?? 0) + DRAWN.top).toBe(8);
+  // Horizontally it stays on the star unless the viewport edge is closer.
+  const starCentre = (starBox?.x ?? 0) + (starBox?.width ?? 0) / 2;
+
+  const viewportWidth = await page.evaluate(
+    () => document.documentElement.clientWidth
   );
-  expect((canvasBox?.y ?? 0) + 584).toBeCloseTo(
-    (starBox?.y ?? 0) + (starBox?.height ?? 0),
+
+  expect((canvasBox?.x ?? 0) + 240).toBeCloseTo(
+    Math.min(starCentre, viewportWidth - 8 - (DRAWN.right - 240)),
     0
   );
 
@@ -332,22 +369,27 @@ test("The fireworks canvas ignores the pointer", async ({ page }) => {
   await expect(canvas).toHaveAttribute("data-rendered", "true");
   await expect(canvas).toHaveCSS("pointer-events", "none");
 
-  // Hit testing at the star, under the canvas, still finds the star button.
+  // Hit testing under the canvas, where the rocket rises, finds the same page
+  // element as with the canvas hidden.
   const hit = await canvas.evaluate((node) => {
+    if (!(node instanceof HTMLCanvasElement)) {
+      throw new TypeError("The fireworks surface must be a canvas");
+    }
+
     const bounds = node.getBoundingClientRect();
 
-    const target = document.elementFromPoint(
-      bounds.left + 240,
-      bounds.top + 576
-    );
+    const at = (): Element | null =>
+      document.elementFromPoint(bounds.left + 240, bounds.top + 576);
 
-    return {
-      canvas: target === node,
-      starButton: target?.closest(".minecraft-star-button") !== null,
-    };
+    const shown = at();
+    node.style.visibility = "hidden";
+    const hidden = at();
+    node.style.visibility = "";
+
+    return { canvas: shown === node, same: shown === hidden };
   });
 
-  expect(hit).toEqual({ canvas: false, starButton: true });
+  expect(hit).toEqual({ canvas: false, same: true });
 });
 
 test("Rapid header star clicks launch overlapping fireworks on one canvas", async ({
@@ -391,13 +433,6 @@ test("Rapid header star clicks launch overlapping fireworks on one canvas", asyn
   await expect(fireworksCanvas(page)).toHaveCount(0, { timeout: 10_000 });
 });
 
-interface Box {
-  height: number;
-  width: number;
-  x: number;
-  y: number;
-}
-
 // The canvas's launch pixel (240, 584) and an anchor's bottom centre, in
 // whole viewport pixels.
 const launchPoint = (box: Box | null) =>
@@ -416,7 +451,6 @@ test("A launch from another anchor leaves the header launch where it is", async 
   // click scrolls the page.
   await page.setViewportSize({ height: 3200, width: 1280 });
   await page.goto(`${origin}docs/components/fireworks`);
-  const star = starButton(page).locator('[data-slot="nether-star"]');
 
   const launchButton = page
     .locator(".documentation-playground")
@@ -432,17 +466,17 @@ test("A launch from another anchor leaves the header launch where it is", async 
   const playground = fireworksCanvas(page).nth(1);
   await expect(playground).toHaveAttribute("data-rendered", "true");
 
-  const [after, playgroundBox, starBox, buttonBox] = await Promise.all([
+  const [after, playgroundBox, buttonBox] = await Promise.all([
     header.boundingBox(),
     playground.boundingBox(),
-    star.boundingBox(),
     launchButton.boundingBox(),
   ]);
 
-  // The header rocket keeps rising from the star; the second rocket rises
-  // from the launch button on its own canvas.
+  // The header rocket stays where it was, kept on screen below the star; the
+  // second rocket rises from the launch button on its own canvas, which has
+  // room to sit exactly on its anchor.
   expect(after).toEqual(before);
-  expect(launchPoint(after)).toEqual(bottomCentre(starBox));
+  expect(await drawnInView(page, after)).toBe(true);
   expect(launchPoint(playgroundBox)).toEqual(bottomCentre(buttonBox));
   await expect(fireworksCanvas(page)).toHaveCount(0, { timeout: 10_000 });
 });
