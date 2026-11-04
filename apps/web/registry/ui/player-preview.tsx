@@ -441,11 +441,11 @@ const PlayerPreview = ({
   } | null>(null);
 
   const current = rotation ?? pose;
-  const latest = React.useRef(current);
+  const latestFrame = React.useRef({ width, height, scale, pose: current });
 
   React.useLayoutEffect(() => {
-    latest.current = current;
-  }, [current]);
+    latestFrame.current = { width, height, scale, pose: current };
+  }, [width, height, scale, current]);
 
   const update = (next: PlayerRotation) => {
     const value = {
@@ -498,7 +498,8 @@ const PlayerPreview = ({
         instance = buildRenderer(ownedCanvas, actualModel);
         renderer.current = instance;
         instance.load(image);
-        instance.paint(width, height, scale, latest.current);
+        const frame = latestFrame.current;
+        instance.paint(frame.width, frame.height, frame.scale, frame.pose);
         setResolvedModel(actualModel);
         setStatus("loaded");
         loadingCallback.current?.("loaded");
@@ -530,7 +531,10 @@ const PlayerPreview = ({
     };
   }, [url, requestedModel]);
   React.useLayoutEffect(() => {
-    renderer.current?.paint(width, height, scale, current);
+    renderer.current?.paint(width, height, scale, {
+      pitch: current.pitch,
+      yaw: current.yaw,
+    });
   }, [width, height, scale, current.pitch, current.yaw, status]);
 
   return (
