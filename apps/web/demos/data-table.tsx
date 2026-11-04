@@ -167,29 +167,22 @@ const DataTableDemo = ({ scale }: DemoProps) => {
             {table.getHeaderGroups().map((group) => (
               <TableRow key={group.id}>
                 {group.headers.map((header) => {
-                  const _precedingkey = header.id;
+                  const headerId = header.id;
 
                   const _precedingariasort = sortDirection(
                     header.column.getIsSorted()
                   );
 
-                  let _selectedContent: React.ReactNode;
-
-                  if (header.isPlaceholder) {
-                    _selectedContent = null;
-                  } else {
-                    _selectedContent = flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    );
-                  }
+                  const headerContent = header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      );
 
                   return (
-                    <TableHead
-                      key={_precedingkey}
-                      aria-sort={_precedingariasort}
-                    >
-                      {_selectedContent}
+                    <TableHead key={headerId} aria-sort={_precedingariasort}>
+                      {headerContent}
                     </TableHead>
                   );
                 })}

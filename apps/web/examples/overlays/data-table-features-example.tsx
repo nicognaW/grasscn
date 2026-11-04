@@ -174,23 +174,15 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
             {table.getHeaderGroups().map((group) => (
               <TableRow key={group.id}>
                 {group.headers.map((header) => {
-                  const _precedingkey = header.id;
-                  let _selectedContent: React.ReactNode;
+                  const headerId = header.id;
+                  const headerContent = header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      );
 
-                  if (header.isPlaceholder) {
-                    _selectedContent = null;
-                  } else {
-                    _selectedContent = flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    );
-                  }
-
-                  return (
-                    <TableHead key={_precedingkey}>
-                      {_selectedContent}
-                    </TableHead>
-                  );
+                  return <TableHead key={headerId}>{headerContent}</TableHead>;
                 })}
               </TableRow>
             ))}
