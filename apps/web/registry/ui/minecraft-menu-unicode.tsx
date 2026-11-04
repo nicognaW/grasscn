@@ -33,7 +33,18 @@ const loadAlpha = function loadAlpha() {
       const c = document.createElement("canvas");
       c.height = 128;
       c.width = 128;
-      const context = c.getContext("2d")!;
+      const context = c.getContext("2d");
+
+      if (!context) {
+        reject(
+          new Error(
+            "Minecraft menu unicode 2D canvas context could not be created"
+          )
+        );
+
+        return;
+      }
+
       context.drawImage(image, 0, 0);
       resolve(context.getImageData(0, 0, 128, 128).data);
     });
@@ -78,7 +89,13 @@ export const MenuUnicodeLine = ({
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
       ref.current as HTMLCanvasElement;
 
-    const context = canvas.getContext("2d")!;
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error(
+        "Minecraft menu unicode 2D canvas context could not be created"
+      );
+    }
 
     const glyphResources = Promise.all([loadUnihex(), loadAlpha()]);
 

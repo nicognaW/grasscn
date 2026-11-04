@@ -23,7 +23,13 @@ export const MinecraftMenuCheckboxSprite = () => {
       parent.closest<HTMLElement>(".mc-menu-checkbox-item") ??
       parent.parentElement!;
 
-    const context = canvas.getContext("2d")!;
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error(
+        "Minecraft menu checkbox 2D canvas context could not be created"
+      );
+    }
 
     let frame = 0;
     let signature = "";

@@ -26,7 +26,14 @@ const create = function create(): Painter | null {
   }
 
   const shader = (kind: number, source: string) => {
-    const shaderHandle = gl.createShader(kind)!;
+    const shaderHandle = gl.createShader(kind);
+
+    if (!shaderHandle) {
+      throw new Error(
+        "Minecraft menu checkbox gpu WebGL shader could not be created"
+      );
+    }
+
     gl.shaderSource(shaderHandle, source);
     gl.compileShader(shaderHandle);
 

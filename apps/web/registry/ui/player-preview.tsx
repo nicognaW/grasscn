@@ -80,7 +80,14 @@ const buildRenderer = function buildRenderer(
   }
 
   const shader = (type: number, source: string) => {
-    const result = gl.createShader(type)!;
+    const result = gl.createShader(type);
+
+    if (!result) {
+      throw new Error(
+        "Minecraft player preview WebGL shader could not be created"
+      );
+    }
+
     gl.shaderSource(
       result,
       `#version 300 es\n${

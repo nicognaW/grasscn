@@ -47,7 +47,18 @@ const loadAlpha = function loadAlpha() {
       const canvas = document.createElement("canvas");
       canvas.height = 128;
       canvas.width = 128;
-      const context = canvas.getContext("2d")!;
+      const context = canvas.getContext("2d");
+
+      if (!context) {
+        reject(
+          new Error(
+            "Minecraft unicode label 2D canvas context could not be created"
+          )
+        );
+
+        return;
+      }
+
       context.drawImage(image, 0, 0);
       resolve(context.getImageData(0, 0, 128, 128).data);
     });
@@ -91,7 +102,13 @@ export const MinecraftUnicodeLabel = ({
     const context =
       // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned canvas ref.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
-      (canvas.current as HTMLCanvasElement).getContext("2d")!;
+      (canvas.current as HTMLCanvasElement).getContext("2d");
+
+    if (!context) {
+      throw new Error(
+        "Minecraft unicode label 2D canvas context could not be created"
+      );
+    }
 
     setUnihexAtlas(context, atlas);
     setBitmap(false);

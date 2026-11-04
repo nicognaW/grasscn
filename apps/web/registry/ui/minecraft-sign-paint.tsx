@@ -97,7 +97,14 @@ export const MinecraftSignPaint = ({
         return;
       }
 
-      const ctx = canvas.getContext("2d")!;
+      const ctx = canvas.getContext("2d");
+
+      if (!ctx) {
+        throw new Error(
+          "Minecraft sign paint 2D canvas context could not be created"
+        );
+      }
+
       const width = 120 * scale;
       const height = (hanging ? 74 : 110) * scale;
 
@@ -106,7 +113,14 @@ export const MinecraftSignPaint = ({
 
       const output = ctx.createImageData(width, height);
       const scratch = document.createElement("canvas");
-      const sc = scratch.getContext("2d")!;
+      const sc = scratch.getContext("2d");
+
+      if (!sc) {
+        throw new Error(
+          "Minecraft sign paint 2D canvas context could not be created"
+        );
+      }
+
       const f = Math.fround;
 
       const draw = (

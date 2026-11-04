@@ -190,7 +190,15 @@ export const MinecraftTooltipSurface = ({
         return;
       }
 
-      node.getContext("2d")!.putImageData(new ImageData(pixels, w, h), 0, 0);
+      const context = node.getContext("2d");
+
+      if (!context) {
+        throw new Error(
+          "Minecraft tooltip paint 2D canvas context could not be created"
+        );
+      }
+
+      context.putImageData(new ImageData(pixels, w, h), 0, 0);
       node.dataset.mcBackdrop = backdrop.join(",");
       node.dataset.mcLocation = [bounds.x, bounds.y].join(",");
       setPainted(true);

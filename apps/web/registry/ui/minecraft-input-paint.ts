@@ -73,7 +73,14 @@ const loadImages = function loadImages() {
     const canvas = document.createElement("canvas");
     canvas.height = 128;
     canvas.width = 128;
-    const context = canvas.getContext("2d")!;
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error(
+        "Minecraft input paint 2D canvas context could not be created"
+      );
+    }
+
     context.drawImage(atlas, 0, 0);
 
     return {
@@ -278,7 +285,13 @@ export const attachMinecraftInput = function attachMinecraftInput(
   initialScale: number
 ) {
   const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d", { willReadFrequently: true })!;
+  const context = canvas.getContext("2d", { willReadFrequently: true });
+
+  if (!context) {
+    throw new Error(
+      "Minecraft input paint 2D canvas context could not be created"
+    );
+  }
 
   let cancelled = false;
   let frame = 0;

@@ -134,7 +134,12 @@ const MinecraftMap = ({
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
       ref.current as HTMLCanvasElement;
 
-    const ctx = canvas.getContext("2d")!;
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+      throw new Error("Minecraft map 2D canvas context could not be created");
+    }
+
     const image = ctx.createImageData(128, 128);
 
     canvas.width = 128;
@@ -342,7 +347,11 @@ const LocatorDot = ({
         return;
       }
 
-      const ctx = canvas.getContext("2d")!;
+      const ctx = canvas.getContext("2d");
+
+      if (!ctx) {
+        throw new Error("Minecraft map 2D canvas context could not be created");
+      }
 
       canvas.width = 9;
       canvas.height = 9;

@@ -10,7 +10,14 @@ export const inferPlayerSkinModel = function inferPlayerSkinModel(
     throw new Error("Player skins must be 64×64 PNG images");
   }
 
-  const context = canvas.getContext("2d")!;
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    throw new Error(
+      "Minecraft player skin 2D canvas context could not be created"
+    );
+  }
+
   context.drawImage(image, 0, 0);
   const { data } = context.getImageData(0, 0, 64, 64);
 

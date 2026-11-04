@@ -37,7 +37,14 @@ export const paintMinecraftAvatar = function paintMinecraftAvatar(
     }
 
     const shader = (type: number, source: string) => {
-      const s = gl.createShader(type)!;
+      const s = gl.createShader(type);
+
+      if (!s) {
+        throw new Error(
+          "Minecraft avatar paint WebGL shader could not be created"
+        );
+      }
+
       gl.shaderSource(s, source);
       gl.compileShader(s);
 
@@ -189,7 +196,14 @@ export const paintMinecraftAvatar = function paintMinecraftAvatar(
     target.height = h;
   }
 
-  const context = target.getContext("2d")!;
+  const context = target.getContext("2d");
+
+  if (!context) {
+    throw new Error(
+      "Minecraft avatar paint 2D canvas context could not be created"
+    );
+  }
+
   context.clearRect(0, 0, w, h);
   context.imageSmoothingEnabled = false;
   context.drawImage(canvas, Math.round(b.x), Math.round(b.y), w, h, 0, 0, w, h);

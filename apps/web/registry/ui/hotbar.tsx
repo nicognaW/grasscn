@@ -71,7 +71,13 @@ const HotbarPaint = ({
     const ctx =
       // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
-      (ref.current as HTMLCanvasElement).getContext("2d")!;
+      (ref.current as HTMLCanvasElement).getContext("2d");
+
+    if (!ctx) {
+      throw new Error(
+        "Minecraft hotbar 2D canvas context could not be created"
+      );
+    }
 
     ctx.fillStyle = background;
     ctx.fillRect(0, 0, 184, 23);

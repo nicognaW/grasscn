@@ -27,7 +27,18 @@ const alpha = function alpha() {
       const canvas = document.createElement("canvas");
       canvas.height = 128;
       canvas.width = 128;
-      const context = canvas.getContext("2d")!;
+      const context = canvas.getContext("2d");
+
+      if (!context) {
+        reject(
+          new Error(
+            "Minecraft toast layout 2D canvas context could not be created"
+          )
+        );
+
+        return;
+      }
+
       context.drawImage(image, 0, 0);
       resolve(context.getImageData(0, 0, 128, 128).data);
     });

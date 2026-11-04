@@ -38,7 +38,12 @@ export const paintSignGpu = function paintSignGpu(
   }
 
   const shader = (kind: number, text: string) => {
-    const s = gl.createShader(kind)!;
+    const s = gl.createShader(kind);
+
+    if (!s) {
+      throw new Error("Minecraft sign gpu WebGL shader could not be created");
+    }
+
     gl.shaderSource(s, text);
     gl.compileShader(s);
 

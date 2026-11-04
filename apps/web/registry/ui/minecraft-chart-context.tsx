@@ -128,7 +128,13 @@ export const chartColorChannels = function chartColorChannels(
   }
 
   const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d")!;
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    throw new Error(
+      "Minecraft chart context 2D canvas context could not be created"
+    );
+  }
 
   context.fillStyle = resolvedColor;
   context.fillRect(0, 0, 1, 1);
@@ -427,13 +433,27 @@ export const ChartPixelSurface = ({
     scratch.width = node.width;
     scratch.height = node.height;
 
-    const mask = scratch.getContext("2d")!;
+    const mask = scratch.getContext("2d");
+
+    if (!mask) {
+      throw new Error(
+        "Minecraft chart context 2D canvas context could not be created"
+      );
+    }
+
     const colorCanvas = document.createElement("canvas");
 
     colorCanvas.height = 1;
     colorCanvas.width = 1;
 
-    const colorContext = colorCanvas.getContext("2d")!;
+    const colorContext = colorCanvas.getContext("2d");
+
+    if (!colorContext) {
+      throw new Error(
+        "Minecraft chart context 2D canvas context could not be created"
+      );
+    }
+
     const colors = new Map<string, { ink: string; alpha: number }>();
 
     const color = (value: string) => {

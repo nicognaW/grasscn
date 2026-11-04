@@ -146,7 +146,14 @@ const MinecraftDocumentText = ({
       canvas.width = width * scale;
       canvas.height = lines.length * 9 * scale;
       setHeight(lines.length * 9);
-      const ctx = canvas.getContext("2d")!;
+      const ctx = canvas.getContext("2d");
+
+      if (!ctx) {
+        throw new Error(
+          "Minecraft document text 2D canvas context could not be created"
+        );
+      }
+
       ctx.imageSmoothingEnabled = false;
 
       for (const [lineIndex, line] of lines.entries()) {

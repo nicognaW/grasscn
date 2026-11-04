@@ -35,7 +35,12 @@ const create = function create(): Painter | null {
   }
 
   const compile = (type: number, code: string) => {
-    const s = gl.createShader(type)!;
+    const s = gl.createShader(type);
+
+    if (!s) {
+      throw new Error("Minecraft toast gpu WebGL shader could not be created");
+    }
+
     gl.shaderSource(s, code);
     gl.compileShader(s);
 
@@ -419,7 +424,14 @@ export const paintToast = function paintToast(
     canvas.height = height * scale;
   }
 
-  const context = canvas.getContext("2d")!;
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    throw new Error(
+      "Minecraft toast gpu 2D canvas context could not be created"
+    );
+  }
+
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.imageSmoothingEnabled = false;
   context.drawImage(

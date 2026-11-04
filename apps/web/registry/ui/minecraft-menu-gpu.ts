@@ -33,7 +33,12 @@ const create = function create(): Painter | null {
   }
 
   const shader = (kind: number, source: string) => {
-    const value = gl.createShader(kind)!;
+    const value = gl.createShader(kind);
+
+    if (!value) {
+      throw new Error("Minecraft menu gpu WebGL shader could not be created");
+    }
+
     gl.shaderSource(value, source);
     gl.compileShader(value);
 

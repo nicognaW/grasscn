@@ -91,7 +91,14 @@ const create = function create(): Painter | null {
 
   try {
     const compile = (kind: number, source: string) => {
-      const shader = gl.createShader(kind)!;
+      const shader = gl.createShader(kind);
+
+      if (!shader) {
+        throw new Error(
+          "Minecraft color unicode gpu WebGL shader could not be created"
+        );
+      }
+
       gl.shaderSource(shader, source);
       gl.compileShader(shader);
 

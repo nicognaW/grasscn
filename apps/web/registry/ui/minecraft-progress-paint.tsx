@@ -32,7 +32,14 @@ const create = function create(): Painter | null {
   }
 
   const shader = (kind: number, source: string) => {
-    const result = gl.createShader(kind)!;
+    const result = gl.createShader(kind);
+
+    if (!result) {
+      throw new Error(
+        "Minecraft progress paint WebGL shader could not be created"
+      );
+    }
+
     gl.shaderSource(result, source);
     gl.compileShader(result);
 
@@ -158,7 +165,14 @@ const paint = function paint(
     draw(notchForeground);
   }
 
-  const context = canvas.getContext("2d")!;
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    throw new Error(
+      "Minecraft progress paint 2D canvas context could not be created"
+    );
+  }
+
   context.clearRect(0, 0, 182, 5);
   context.imageSmoothingEnabled = false;
   context.drawImage(shared.canvas, 0, 0);

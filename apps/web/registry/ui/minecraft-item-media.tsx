@@ -77,9 +77,15 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
       const canvasSide = 32 * scale;
       node.height = canvasSide;
       node.width = canvasSide;
-      node
-        .getContext("2d")!
-        .putImageData(new ImageData(pixels, 32 * scale, 32 * scale), 0, 0);
+      const context = node.getContext("2d");
+
+      if (!context) {
+        throw new Error(
+          "Minecraft item media 2D canvas context could not be created"
+        );
+      }
+
+      context.putImageData(new ImageData(pixels, 32 * scale, 32 * scale), 0, 0);
       node.dataset.mcItemMediaState = String(state);
       setPainted(true);
     };
