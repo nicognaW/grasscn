@@ -91,7 +91,7 @@ const AvatarDemo = ({ scale }: DemoProps) => {
         </Avatar>
         <div>
           <strong>{player}</strong>
-          <span role="status">{statusLabel}</span>
+          <output>{statusLabel}</output>
         </div>
       </div>
       <p className="grass-note">

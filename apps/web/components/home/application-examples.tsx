@@ -157,6 +157,7 @@ export const Feedback = () => {
 };
 
 export const Plan = () => {
+  const id = React.useId();
   const [plan, setPlan] = React.useState("monthly");
   const [saved, setSaved] = React.useState(false);
 
@@ -175,12 +176,20 @@ export const Plan = () => {
         }}
         aria-label="Billing cycle"
       >
-        <label className="grass-inline">
-          <RadioGroupItem value="monthly" aria-label="Monthly · $12 / month" />
+        <label className="grass-inline" htmlFor={`${id}-monthly`}>
+          <RadioGroupItem
+            id={`${id}-monthly`}
+            value="monthly"
+            aria-label="Monthly · $12 / month"
+          />
           <DocumentText>Monthly · $12 / month</DocumentText>
         </label>
-        <label className="grass-inline">
-          <RadioGroupItem value="annual" aria-label="Annual · $120 / year" />
+        <label className="grass-inline" htmlFor={`${id}-annual`}>
+          <RadioGroupItem
+            id={`${id}-annual`}
+            value="annual"
+            aria-label="Annual · $120 / year"
+          />
           <DocumentText>Annual · $120 / year</DocumentText>
         </label>
       </RadioGroup>

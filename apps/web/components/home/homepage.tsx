@@ -348,9 +348,9 @@ const Team = () => {
         {invited ? "Invitation ready" : "Invite teammate"}
       </Action>
       {invited && (
-        <p role="status" className="grass-note">
+        <output className="grass-note block">
           <DocumentText>Demo invitation prepared. No email sent.</DocumentText>
-        </p>
+        </output>
       )}
     </Panel>
   );
