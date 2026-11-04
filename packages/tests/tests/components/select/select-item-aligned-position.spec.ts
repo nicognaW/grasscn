@@ -28,7 +28,7 @@ for (const scale of [1, 2, 3] as const) {
             top: "300px",
             width: `${Math.min(200 * renderScale, 300)}px`,
           }),
-        { scale, mobile }
+        { mobile, scale }
       );
       await trigger.click();
 
