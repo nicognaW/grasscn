@@ -202,6 +202,8 @@ const AvatarBadge = ({ className, ...props }: MinecraftProps<"span">) => (
 const groupScale = function groupScale(
   children: React.ReactNode
 ): 1 | 2 | 3 | undefined {
+  let selectedScale: 1 | 2 | 3 | undefined;
+
   for (const child of React.Children.toArray(children)) {
     if (
       !React.isValidElement<{
@@ -213,17 +215,21 @@ const groupScale = function groupScale(
     }
 
     if (child.type === Avatar && child.props.scale != null) {
-      return child.props.scale;
+      selectedScale = child.props.scale;
+      break;
     }
 
     if (child.type === React.Fragment) {
       const scale = groupScale(child.props.children);
 
       if (scale !== null && scale !== undefined) {
-        return scale;
+        selectedScale = scale;
+        break;
       }
     }
   }
+
+  return selectedScale;
 };
 
 const AvatarGroup = ({

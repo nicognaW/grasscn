@@ -95,11 +95,11 @@ const CommandDialog = ({
     <Dialog scale={scale} {...props}>
       <DialogContent
         className={cn(className)}
-        finalFocus={() => {
-          if (focusCapture.element?.isConnected === true) {
-            return focusCapture.element;
-          }
-        }}
+        finalFocus={() =>
+          focusCapture.element?.isConnected === true
+            ? focusCapture.element
+            : undefined
+        }
       >
         <DialogHeader className="mc-command-dialog-heading">
           <DialogTitle>{title}</DialogTitle>
