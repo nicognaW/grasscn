@@ -61,6 +61,7 @@
     "./ui/minecraft-firework-assets": "./registry/ui/minecraft-firework-assets.ts",
     "./ui/minecraft-firework-explosion": "./registry/ui/minecraft-firework-explosion.ts",
     "./ui/minecraft-firework-rocket": "./registry/ui/minecraft-firework-rocket.ts",
+    "./ui/minecraft-firework-sound": "./registry/ui/minecraft-firework-sound.ts",
     "./ui/minecraft-firework-sound-assets": "./registry/ui/minecraft-firework-sound-assets.ts",
     "./ui/minecraft-font": "./registry/ui/minecraft-font.ts",
     "./ui/minecraft-input-assets": "./registry/ui/minecraft-input-assets.ts",
