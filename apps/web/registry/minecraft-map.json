@@ -4121,6 +4121,36 @@
         "repeatabilityReport": "tests/reference/player-list/repeatability.json",
         "scope": "Thirty declared cases: player rosters with3/7/22/41/80 entries, no score and integer scores, builtin Alex/Steve/Kai heads, eight latency thresholds, single-line header/footer; scoreboards with0/3/18 input entries and top15, scales1-3, Edge/DPR1. Spectators, teams, hearts, custom skins, multiline headers/footers, arbitrary glyphs and raster environments are outside this exact pixel matrix."
       }
+    },
+    {
+      "name": "redstone-lamp-display",
+      "mapping": {
+        "kind": "native-element",
+        "target": "LevelRenderer section rendering of minecraft:redstone_lamp south faces (ModelBlockRenderer, MipmapGenerator level 1) under a declared orthographic projection",
+        "families": [],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Projected references (ADR 0005), masked geometry pixels only, zero tolerance, DPR 1: each glyph 0-9 and k alone, plus 0, 1234 and 12k, as 8 px lamp cells at block-atlas mip level 1 facing a front-on orthographic camera 9.5 blocks away at noon under a clear sky, captured on llvmpipe under Xvfb. Base: 1234, the playground default (website default path); every other case is Full. Web adaptations: glyph shapes and their composition with a one-column unlit gap; transparent backdrop instead of the sky; fog computed for a wall centred on the camera. Unverified conditions: DPR above 1, CSS scaling, other cameras, times of day, video options and browsers other than Edge."
+      },
+      "referenceCases": {
+        "requiredDimensions": [
+          "Content/value (glyphs 0-9 and k, compositions 0, 1234, 12k)",
+          "Lamp state (lit, unlit)",
+          "Declared projection (8 px per block, front-on, noon, clear)"
+        ]
+      },
+      "nextStep": "Capture further compositions or scenes as projected references before extending the glyph set or claiming other projections.",
+      "implementation": {
+        "status": "implemented-and-install-verified",
+        "evidenceScope": "historical-source-snapshot",
+        "registryItem": "redstone-lamp-display"
+      },
+      "pixelVerification": {
+        "status": "reference-and-tests-available",
+        "manifest": null,
+        "projectedManifest": "tests/reference/redstone-lamp-display/manifest.json",
+        "installationReport": "tests/reference/redstone-lamp-display/installation-verification.json",
+        "scope": "Projected references (ADR 0005), masked geometry pixels only, zero tolerance, DPR 1: each glyph 0-9 and k alone, plus 0, 1234 and 12k, as 8 px lamp cells at block-atlas mip level 1 facing a front-on orthographic camera 9.5 blocks away at noon under a clear sky, captured on llvmpipe under Xvfb. Base: 1234, the playground default (website default path); every other case is Full. Web adaptations: glyph shapes and their composition with a one-column unlit gap; transparent backdrop instead of the sky; fog computed for a wall centred on the camera. Unverified conditions: DPR above 1, CSS scaling, other cameras, times of day, video options and browsers other than Edge."
+      }
     }
   ],
   "nextImplementationOrder": [
@@ -4212,6 +4242,10 @@
     {
       "name": "player-list",
       "reason": "User-selected Minecraft UI beyond the standard shadcn catalog."
+    },
+    {
+      "name": "redstone-lamp-display",
+      "reason": "User-selected Minecraft world rendering beyond the standard shadcn catalog (spec #42 header star count)."
     }
   ]
 }

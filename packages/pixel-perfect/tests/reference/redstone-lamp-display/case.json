@@ -1,7 +1,10 @@
 {
   "component": "redstone-lamp-display",
   "minecraftVersion": "26.2",
-  "window": { "width": 480, "height": 640 },
+  "window": {
+    "width": 480,
+    "height": 640
+  },
   "world": {
     "description": "Fresh isolated singleplayer world from the vanilla world-creation flow: flat preset, fixed seed, spectator, peaceful, no structures. Noon with the clock paused, clear weather with the weather cycle paused, open sky above the wall. options.txt sets no video option, so every video option is the vanilla default.",
     "levelName": "grasscn-projected",
@@ -10,7 +13,11 @@
     "clockTime": 6000,
     "commands": ["time set noon", "weather clear"]
   },
-  "camera": { "eye": [0.5, 72.5, 0.5], "yRot": 180, "xRot": 0 },
+  "camera": {
+    "eye": [0.5, 72.5, 0.5],
+    "yRot": 180,
+    "xRot": 0
+  },
   "projection": {
     "type": "orthographic",
     "facing": "north",
@@ -32,6 +39,90 @@
       "value": "0",
       "origin": [-1, 74, -10],
       "rows": ["###", "#.#", "#.#", "#.#", "###"]
+    },
+    {
+      "name": "glyph-1",
+      "value": "1",
+      "origin": [-1, 74, -10],
+      "rows": [".#.", "##.", ".#.", ".#.", "###"]
+    },
+    {
+      "name": "glyph-2",
+      "value": "2",
+      "origin": [-1, 74, -10],
+      "rows": ["###", "..#", "###", "#..", "###"]
+    },
+    {
+      "name": "glyph-3",
+      "value": "3",
+      "origin": [-1, 74, -10],
+      "rows": ["###", "..#", "###", "..#", "###"]
+    },
+    {
+      "name": "glyph-4",
+      "value": "4",
+      "origin": [-1, 74, -10],
+      "rows": ["#.#", "#.#", "###", "..#", "..#"]
+    },
+    {
+      "name": "glyph-5",
+      "value": "5",
+      "origin": [-1, 74, -10],
+      "rows": ["###", "#..", "###", "..#", "###"]
+    },
+    {
+      "name": "glyph-6",
+      "value": "6",
+      "origin": [-1, 74, -10],
+      "rows": ["###", "#..", "###", "#.#", "###"]
+    },
+    {
+      "name": "glyph-7",
+      "value": "7",
+      "origin": [-1, 74, -10],
+      "rows": ["###", "..#", "..#", "..#", "..#"]
+    },
+    {
+      "name": "glyph-8",
+      "value": "8",
+      "origin": [-1, 74, -10],
+      "rows": ["###", "#.#", "###", "#.#", "###"]
+    },
+    {
+      "name": "glyph-9",
+      "value": "9",
+      "origin": [-1, 74, -10],
+      "rows": ["###", "#.#", "###", "..#", "###"]
+    },
+    {
+      "name": "glyph-k",
+      "value": "k",
+      "origin": [-1, 74, -10],
+      "rows": ["#..", "#.#", "##.", "#.#", "#.#"]
+    },
+    {
+      "name": "value-1234",
+      "value": "1234",
+      "origin": [-7, 74, -10],
+      "rows": [
+        ".#..###.###.#.#",
+        "##....#...#.#.#",
+        ".#..###.###.###",
+        ".#..#.....#...#",
+        "###.###.###...#"
+      ]
+    },
+    {
+      "name": "value-12k",
+      "value": "12k",
+      "origin": [-5, 74, -10],
+      "rows": [
+        ".#..###.#..",
+        "##....#.#.#",
+        ".#..###.##.",
+        ".#..#...#.#",
+        "###.###.#.#"
+      ]
     }
   ]
 }
