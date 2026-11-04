@@ -26,7 +26,7 @@ export const Panel = ({
     aria-label={title}
   >
     <div className="grass-panel-heading">
-      {tag && (
+      {(tag ?? "") !== "" && (
         <span className="grass-kicker">
           <DocumentText>{tag}</DocumentText>
         </span>
@@ -34,7 +34,7 @@ export const Panel = ({
       <h3>
         <DocumentText>{title}</DocumentText>
       </h3>
-      {description && (
+      {(description ?? "") !== "" && (
         <p>
           <DocumentText>{description}</DocumentText>
         </p>

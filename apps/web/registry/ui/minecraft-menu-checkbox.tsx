@@ -12,7 +12,11 @@ export const MinecraftMenuCheckboxSprite = () => {
   const scale = React.useContext(MenuScaleContext);
 
   React.useLayoutEffect(() => {
-    const canvas = ref.current!;
+    const canvas =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement;
+
     const parent = canvas.parentElement!;
 
     const item =
@@ -60,7 +64,9 @@ export const MinecraftMenuCheckboxSprite = () => {
       if (next !== signature) {
         signature = next;
         const pixels = menuCheckboxPixels(name, scale, bounds.x, bounds.y);
-        canvas.width = canvas.height = 17 * scale;
+        const canvasSide = 17 * scale;
+        canvas.height = canvasSide;
+        canvas.width = canvasSide;
 
         if (pixels) {
           context.putImageData(

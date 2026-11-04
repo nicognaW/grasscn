@@ -277,7 +277,10 @@ test.describe("Sidebar original native constituent cases", () => {
                     selection.cursor < selection.anchor ? "backward" : "forward"
                   );
                 },
-                { cursor, anchor }
+                {
+                  anchor,
+                  cursor,
+                }
               );
               await page.clock.runFor(inputCase.caretMs);
               await expect(subject).toHaveAttribute("data-mc-ready", "true");

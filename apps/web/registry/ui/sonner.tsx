@@ -17,12 +17,17 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-sonner.css";
 
-export { toast } from "sonner";
-
-interface ToastCanvasStyle extends React.CSSProperties {
-  "--mc-ink": string;
-  "--mc-shadow": string;
+interface OwnedSonnerStyle extends React.CSSProperties {
+  "--mc-z-sonner-paint-1-height"?: string;
+  "--mc-z-sonner-paint-1-position"?: string;
+  "--mc-z-sonner-paint-1-z-index"?: number;
+  "--mc-z-sonner-paint-2-height"?: string;
+  "--mc-z-sonner-paint-2-left"?: string;
+  "--mc-z-sonner-paint-2-top"?: string;
+  "--mc-z-sonner-paint-2-width"?: string;
 }
+
+export { toast } from "sonner";
 
 interface SonnerScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
@@ -92,7 +97,11 @@ const ActionGraphic = ({
       Array.from(action.label).reduce(
         (n, char) =>
           n +
-          (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
+          (minecraftGlyphs[
+            // SAFETY: String Array.from iteration supplies a nonempty character. Its first code point therefore exists.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+            (char.codePointAt(0) as number) - 32
+          ]?.[2] ??
             getUnihexGlyph(char)?.advance ??
             6),
         0
@@ -113,23 +122,8 @@ const ActionGraphic = ({
     });
   }, [action, model, scale, fontReady]);
 
-  const inherited = Object.fromEntries(
-    Array.from({ length: 9 }, (_, i) => [`--mc-piece-${i}`, "inherit"])
-  );
-
   const actionRender = <span aria-hidden="true" />;
   const actionDisabled = action.node.disabled;
-
-  const canvasStyle: ToastCanvasStyle = {
-    ...inherited,
-    "--mc-ink": "inherit",
-    "--mc-shadow": "inherit",
-    height: "100%",
-    inset: 0,
-    pointerEvents: "none",
-    position: "absolute",
-    width: "100%",
-  };
 
   return (
     <Button
@@ -137,7 +131,7 @@ const ActionGraphic = ({
       scale={scale}
       disabled={actionDisabled}
       data-mc-sonner-button-art=""
-      style={canvasStyle}
+      className="mc-sonner-action-paint"
     >
       {action.label}
     </Button>
@@ -173,19 +167,17 @@ const ModelGraphic = ({ model, scale }: { model: Model; scale: 1 | 2 | 3 }) => {
     [model, scale]
   );
 
+  const ownedStyle1: OwnedSonnerStyle = {
+    "--mc-z-sonner-paint-1-height": model.rich ? "100%" : `${height * scale}px`,
+    "--mc-z-sonner-paint-1-position": model.rich ? "absolute" : "relative",
+    "--mc-z-sonner-paint-1-z-index": -1,
+  };
+
   return (
     <span
       data-mc-sonner-art=""
-      style={{
-        display: "block",
-        height: model.rich ? "100%" : height * scale,
-        left: 0,
-        pointerEvents: "none",
-        position: model.rich ? "absolute" : "relative",
-        top: 0,
-        width: "100%",
-        zIndex: -1,
-      }}
+      className="mc-owned-paint-sonner-1"
+      style={ownedStyle1}
     >
       {model.rich ? (
         <MinecraftToastBackdrop scale={scale} motion={model.motion} />
@@ -480,25 +472,29 @@ const Toaster = ({
         toastOptions={{ ...toastOptions, unstyled: true }}
         {...props}
       />
-      {models.map((model) =>
-        model.ghost ? (
-          <div
-            key={model.key}
-            aria-hidden="true"
-            data-mc-sonner-ghost=""
-            className="pointer-events-none fixed [isolation:isolate] z-999999999"
-            style={{
-              height: model.bounds.height,
+      {models.map((model) => {
+        if (model.ghost) {
+          const ownedStyle2: OwnedSonnerStyle = {
+            "--mc-z-sonner-paint-2-height": `${model.bounds.height}px`,
+            "--mc-z-sonner-paint-2-left": `${model.bounds.x}px`,
+            "--mc-z-sonner-paint-2-top": `${model.bounds.y}px`,
+            "--mc-z-sonner-paint-2-width": `${model.bounds.width}px`,
+          };
 
-              left: model.bounds.x,
+          return (
+            <div
+              key={model.key}
+              aria-hidden="true"
+              data-mc-sonner-ghost=""
+              className="mc-owned-paint-sonner-2 pointer-events-none fixed [isolation:isolate] z-999999999"
+              style={ownedStyle2}
+            >
+              <ModelGraphic model={model} scale={scale} />
+            </div>
+          );
+        }
 
-              top: model.bounds.y,
-              width: model.bounds.width,
-            }}
-          >
-            <ModelGraphic model={model} scale={scale} />
-          </div>
-        ) : (
+        return (
           <React.Fragment key={model.key}>
             {createPortal(
               <ModelGraphic model={model} scale={scale} />,
@@ -515,8 +511,8 @@ const Toaster = ({
                 )
               )}
           </React.Fragment>
-        )
-      )}
+        );
+      })}
     </>
   );
 };

@@ -135,10 +135,18 @@ const transitiveFields = [
 
 const manifests = [manifest];
 
-for (const directory of Object.keys(lock.workspaces ?? {})) {
-  if (directory) {
-    manifests.push(await readManifest(`${directory}/package.json`));
+const workspaceManifests = await Promise.allSettled(
+  Object.keys(lock.workspaces ?? {}).flatMap((directory) =>
+    directory ? [readManifest(`${directory}/package.json`)] : []
+  )
+);
+
+for (const workspace of workspaceManifests) {
+  if (workspace.status === "rejected") {
+    throw workspace.reason;
   }
+
+  manifests.push(workspace.value);
 }
 
 const roots = manifests.flatMap((pkg) =>
@@ -152,13 +160,15 @@ const roots = manifests.flatMap((pkg) =>
 
 const cmdkClosure = new Set<string>();
 
-const pending = roots
-  .filter((dependencyRoot) => cmdk(dependencyRoot.name))
-  .map((dependencyRoot) => dependencyRoot.location)
-  .filter(
-    (location): location is string =>
-      location !== undefined && location.length > 0
-  );
+const pending = roots.flatMap((dependencyRoot) => {
+  if (!cmdk(dependencyRoot.name)) {
+    return [];
+  }
+
+  const { location } = dependencyRoot;
+
+  return location !== undefined && location.length > 0 ? [location] : [];
+});
 
 for (
   let location = pending.pop();
@@ -184,13 +194,15 @@ for (
 
 const outsideCmdk = new Set<string>();
 
-const outsidePending = roots
-  .filter((dependencyRoot) => !cmdk(dependencyRoot.name))
-  .map((dependencyRoot) => dependencyRoot.location)
-  .filter(
-    (location): location is string =>
-      location !== undefined && location.length > 0
-  );
+const outsidePending = roots.flatMap((dependencyRoot) => {
+  if (cmdk(dependencyRoot.name)) {
+    return [];
+  }
+
+  const { location } = dependencyRoot;
+
+  return location !== undefined && location.length > 0 ? [location] : [];
+});
 
 for (
   let location = outsidePending.pop();
@@ -323,15 +335,26 @@ if (process.argv.includes("--built")) {
     }
   }
 
-  for (const item of registry.items) {
+  const payloadFiles = await Promise.allSettled(
+    registry.items.map(
+      async (item) =>
+        await readFile(
+          path.join(sourceRoot, `public/r/${item.name}.json`),
+          "utf-8"
+        )
+    )
+  );
+
+  for (const [index, item] of registry.items.entries()) {
+    const payloadFile = payloadFiles[index];
+
+    if (payloadFile.status === "rejected") {
+      throw payloadFile.reason;
+    }
+
     // SAFETY: shadcn build emits the registry item payload being verified here.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve dependency and source checks on the built registry payload.
-    const payload = JSON.parse(
-      await readFile(
-        path.join(sourceRoot, `public/r/${item.name}.json`),
-        "utf-8"
-      )
-    ) as PrimitiveRegistryItem;
+    const payload = JSON.parse(payloadFile.value) as PrimitiveRegistryItem;
 
     for (const name of payload.dependencies ?? []) {
       if (banned(name) || (cmdk(name) && !includesCommand(item))) {

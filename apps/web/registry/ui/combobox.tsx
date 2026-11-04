@@ -17,6 +17,10 @@ import { Separator } from "./separator";
 import "./minecraft-menu.css";
 import "./minecraft-combobox.css";
 
+interface OwnedComboboxStyle extends React.CSSProperties {
+  "--mc-z-combobox-paint-1-width"?: string;
+}
+
 interface ComboboxLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-combobox-1-width": number;
 }
@@ -79,7 +83,7 @@ const ComboboxValue = ({
   <Primitive.Value {...props} placeholder={menuTextNodes(placeholder)}>
     {typeof children === "function"
       ? (value) => menuTextNodes(children(value))
-      : typeof children === "undefined" || children === null
+      : children === undefined || children === null
         ? undefined
         : menuTextNodes(children)}
   </Primitive.Value>
@@ -177,7 +181,8 @@ const ComboboxInput = ({
         data-slot="combobox-input-group"
         className="mc-combobox-input-group"
         style={
-          /* SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
+          // SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
+          {
             "--mc-scale": scale,
           } as React.CSSProperties
         }
@@ -509,6 +514,10 @@ const ComboboxChipsInput = ({
 }: Primitive.Input.Props) => {
   const scale = React.useContext(MenuScaleContext);
 
+  const ownedStyle1: OwnedComboboxStyle = {
+    "--mc-z-combobox-paint-1-width": `${80 * scale}px`,
+  };
+
   return (
     <Primitive.Input
       data-slot="combobox-chip-input"
@@ -516,8 +525,8 @@ const ComboboxChipsInput = ({
         render ?? (
           <Input
             scale={scale}
-            className="[border:0]"
-            style={{ background: "transparent", width: 80 * scale }}
+            className="mc-owned-paint-combobox-1 [border:0]"
+            style={ownedStyle1}
           />
         )
       }

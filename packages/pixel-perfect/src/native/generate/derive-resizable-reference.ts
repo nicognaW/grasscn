@@ -47,12 +47,47 @@ assert.equal(manifest.captureSourceSha256, again.captureSourceSha256);
 
 assert.equal(manifest.caseDefinitionSha256, again.caseDefinitionSha256);
 
-for (const scale of [1, 2, 3]) {
-  const sourceCase = manifest.cases.find(
-    (c) => c.name === `scroll-area-c54-s${scale}.png`
-  )!;
+// Walk backward so duplicate names retain the same first record as Array.find.
+const sourceCases = new Map<string, (typeof manifest)["cases"][number]>();
 
-  const repeatCase = again.cases.find((c) => c.name === sourceCase.name)!;
+for (let index = manifest.cases.length - 1; index >= 0; index -= 1) {
+  const c = manifest.cases[index];
+
+  sourceCases.set(c.name, c);
+}
+
+const repeatCases = new Map<string, (typeof again)["cases"][number]>();
+
+for (let index = again.cases.length - 1; index >= 0; index -= 1) {
+  const c = again.cases[index];
+
+  repeatCases.set(c.name, c);
+}
+
+const sourceFrames = new Map<string, (typeof manifest)["frames"][number]>();
+
+for (let index = manifest.frames.length - 1; index >= 0; index -= 1) {
+  const f = manifest.frames[index];
+
+  sourceFrames.set(f.name, f);
+}
+
+for (const scale of [1, 2, 3]) {
+  const sourceCase =
+    // SAFETY: The Scroll Area native capture producer emits scroll-area-c54 at all three GUI scales; the independently captured repeat uses those same case names and schema. Keep existing source and repeat hashes.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+    sourceCases.get(
+      `scroll-area-c54-s${scale}.png`
+    ) as (typeof scrollManifest)["cases"][number];
+  /* oxlint-enable typescript/no-unsafe-type-assertion */
+
+  const repeatCase =
+    // SAFETY: The Scroll Area native capture producer emits scroll-area-c54 at all three GUI scales; the independently captured repeat uses those same case names and schema. Keep existing source and repeat hashes.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+    repeatCases.get(
+      sourceCase.name
+    ) as (typeof scrollManifest)["cases"][number];
+  /* oxlint-enable typescript/no-unsafe-type-assertion */
 
   const sourceBytes = fs.readFileSync(
     path.join(primary, "captures", sourceCase.name)
@@ -89,8 +124,8 @@ for (const scale of [1, 2, 3]) {
   fs.writeFileSync(path.join(dest, "repeat-crops", name), second);
   assert.equal(hash(first), hash(second));
 
-  const frame = manifest.frames.find(
-    (f) => f.name === `native-controls-p${sourceCase.page}-s${scale}.png`
+  const frame = sourceFrames.get(
+    `native-controls-p${sourceCase.page}-s${scale}.png`
   );
 
   assert.ok(frame);

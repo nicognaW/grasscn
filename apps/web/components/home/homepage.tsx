@@ -37,17 +37,47 @@ import { TitleScene } from "./title-scene";
 import "./homepage.css";
 
 const traffic = [
-  { name: "Jan", visitors: 186, returning: 80 },
-  { name: "Feb", visitors: 305, returning: 160 },
-  { name: "Mar", visitors: 237, returning: 120 },
-  { name: "Apr", visitors: 273, returning: 190 },
-  { name: "May", visitors: 309, returning: 210 },
-  { name: "Jun", visitors: 354, returning: 240 },
+  {
+    name: "Jan",
+    returning: 80,
+    visitors: 186,
+  },
+  {
+    name: "Feb",
+    returning: 160,
+    visitors: 305,
+  },
+  {
+    name: "Mar",
+    returning: 120,
+    visitors: 237,
+  },
+  {
+    name: "Apr",
+    returning: 190,
+    visitors: 273,
+  },
+  {
+    name: "May",
+    returning: 210,
+    visitors: 309,
+  },
+  {
+    name: "Jun",
+    returning: 240,
+    visitors: 354,
+  },
 ];
 
 const chartConfig = {
-  visitors: { label: "Visitors", color: "#55ff55" },
-  returning: { label: "Returning", color: "#55ffff" },
+  returning: {
+    color: "#55ffff",
+    label: "Returning",
+  },
+  visitors: {
+    color: "#55ff55",
+    label: "Visitors",
+  },
 };
 
 const team = [
@@ -585,7 +615,10 @@ const Performance = () => {
   const container = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState(140);
   React.useLayoutEffect(() => {
-    const el = container.current!;
+    const el =
+      // SAFETY: React attaches this always-rendered <div> before its synchronous layout effect setup reads the owned container ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLDivElement result.
+      container.current as HTMLDivElement;
 
     const measure = () => {
       setWidth(Math.max(40, Math.min(242, Math.floor(el.clientWidth))));
@@ -614,8 +647,14 @@ const Performance = () => {
           domain={[0, 150]}
           formatValue={(v) => `${Math.round(v)} ms`}
           guides={[
-            { value: 150, label: "150 ms" },
-            { value: 75, label: "75 ms" },
+            {
+              label: "150 ms",
+              value: 150,
+            },
+            {
+              label: "75 ms",
+              value: 75,
+            },
           ]}
           width={width}
           scale={1}
@@ -777,10 +816,10 @@ const HomePageShowcase = () => (
         </p>
         <div className="grass-hero-actions">
           <Button nativeButton={false} render={installationLink} scale={2}>
-            {"Get started"}
+            Get started
           </Button>
           <Button nativeButton={false} render={documentationLink} scale={2}>
-            {"Browse components"}
+            Browse components
           </Button>
         </div>
       </section>

@@ -13,8 +13,14 @@ const RadioGroupDemo = ({ scale }: DemoProps) => {
 
   const choices = [
     { value: "survival", label: first || " " },
-    { value: "creative", label: "Creative" },
-    { value: "adventure", label: "Adventure" },
+    {
+      label: "Creative",
+      value: "creative",
+    },
+    {
+      label: "Adventure",
+      value: "adventure",
+    },
   ];
 
   return (

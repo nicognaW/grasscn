@@ -11,7 +11,11 @@ import type {
   CommandCaptureManifest,
   RegisteredEntryContent,
 } from "@ppt/installed/control-capture-protocol";
-import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import type { SuggestionHoverTarget } from "@ppt/installed/reference-case";
+import type {
+  InstalledTextRegistry,
+  InstalledTextItem,
+} from "@ppt/installed/text-verification-protocol";
 import { webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -105,7 +109,14 @@ const verifyCommandReferenceCase = async ({
     await subject.focus();
 
     await (c.state.endsWith("hover")
-      ? subject.getByRole("option").nth(c.targetIndex!).hover()
+      ? subject
+          .getByRole("option")
+          .nth(
+            // SAFETY: all registered suggestion hover captures emit a numeric targetIndex; this original hover-state branch excludes captures that omit it.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact CommandSuggestions hover-target producer projection.
+            (c as SuggestionHoverTarget).targetIndex
+          )
+          .hover()
       : page.mouse.move(0, 0));
 
     await subject.evaluate(
@@ -222,9 +233,11 @@ const registry = JSON.parse(
   await readFile(webFile(path.join("registry.json")), "utf-8")
 ) as InstalledTextRegistry;
 
+// SAFETY: the authored registry uniquely declares command, selected by this existing fixed/validated route; a missing item retains its original later dereference failure.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact authored registry item producer projection; fresh read and original failure timing preserved.
 const item = registry.items.find(
   (registryItem) => registryItem.name === "command"
-);
+) as InstalledTextItem;
 
 // SAFETY: the initialized shadcn consumer configuration owns its optional rsc setting.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
@@ -247,7 +260,7 @@ const canonical = (bytes: Buffer) => {
   return text.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-for (const entry of item!.files) {
+for (const entry of item.files) {
   const name = path.basename(entry.path);
   const source = await readFile(webFile(path.join(entry.path)));
 

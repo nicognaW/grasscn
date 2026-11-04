@@ -6,7 +6,8 @@ interface RegistryServerRequest extends IncomingMessage {
   url: string;
 }
 
-const port = Number(process.env.PORT || 5173);
+const portText = process.env.PORT ?? "";
+const port = Number(portText === "" ? 5173 : portText);
 const root = new URL("../public/r/", import.meta.url);
 
 createServer(async (request, response) => {

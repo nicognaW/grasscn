@@ -28,7 +28,7 @@ const Spinner = ({
 }) => {
   const [time, setTime] = React.useState(0);
   React.useEffect((): (() => void) | undefined => {
-    if (typeof timeMs !== "undefined" && timeMs !== null) {
+    if (timeMs !== undefined && timeMs !== null) {
       return undefined;
     }
 

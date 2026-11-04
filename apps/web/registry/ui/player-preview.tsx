@@ -10,6 +10,11 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-player-preview.css";
 
+interface OwnedPlayerPreviewDimensions1 extends React.CSSProperties {
+  "--mc-z-player-preview-base-1-height"?: string;
+  "--mc-z-player-preview-base-1-width"?: string;
+}
+
 interface PlayerPreviewLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-player-preview-1-visibility": string;
 }
@@ -32,6 +37,8 @@ type PlayerPreviewProps = React.ComponentProps<"div"> & {
   scale?: 1 | 2 | 3;
   onLoadingStatusChange?: (status: "loading" | "loaded" | "error") => void;
 };
+
+const DEFAULT_PLAYER_ROTATION = { pitch: -5, yaw: 30 };
 
 const vs = `attribute vec3 position;attribute vec2 uv;attribute vec3 normal;uniform mat4 projection;uniform mat4 modelView;varying vec2 vUv;varying vec3 vNormal;void main(){gl_Position=projection*modelView*vec4(position,1.);vUv=uv;vNormal=normal;}`;
 const fs = `precision highp float;uniform sampler2D skin;varying vec2 vUv;varying vec3 vNormal;void main(){vec4 color=texture2D(skin,vUv);if(color.a<.1)discard;vec3 n=sign(vNormal)*floor(abs(vNormal)*127.)/127.;if(!gl_FrontFacing)n=-n;vec3 l0=normalize(vec3(.2,-1.,1.));vec3 l1=normalize(vec3(-.2,-1.,0.));float brightness=min(1.,(max(0.,dot(l0,n))+max(0.,dot(l1,n)))*.6+.4);gl_FragColor=vec4(color.rgb*brightness,color.a);}`;
@@ -384,7 +391,7 @@ const PlayerPreview = ({
   username,
   model,
   rotation,
-  defaultRotation = { pitch: -5, yaw: 30 },
+  defaultRotation = DEFAULT_PLAYER_ROTATION,
   onRotationChange,
   width = 80,
   height = 120,
@@ -472,7 +479,8 @@ const PlayerPreview = ({
     loadingCallback.current?.("loading");
     const image = new Image();
     image.crossOrigin = "anonymous";
-    image.onload = () => {
+
+    const handleImageLoad = () => {
       if (!live) {
         return;
       }
@@ -492,19 +500,23 @@ const PlayerPreview = ({
       }
     };
 
-    image.onerror = () => {
+    image.addEventListener("load", handleImageLoad);
+
+    const handleImageError = () => {
       if (live) {
         setStatus("error");
         loadingCallback.current?.("error");
       }
     };
 
+    image.addEventListener("error", handleImageError);
+
     image.src = url;
 
     return () => {
       live = false;
-      image.onload = null;
-      image.onerror = null;
+      image.removeEventListener("load", handleImageLoad);
+      image.removeEventListener("error", handleImageError);
       instance?.dispose();
       renderer.current = null;
     };
@@ -519,18 +531,24 @@ const PlayerPreview = ({
       data-slot="player-preview"
       data-model={resolvedModel}
       data-ready={status === "loaded"}
-      className={cn(`mc-player-preview`, className)}
+      className={cn(
+        "mc-player-preview mc-owned-base-player-preview-1",
+        className
+      )}
       tabIndex={props.tabIndex ?? 0}
       role={props.role ?? "group"}
       aria-label={
         props["aria-label"] ??
         `${username ?? skin.split("/")[1]} player preview`
       }
-      style={minecraftStyle(style, (__style) => ({
-        height: height * scale,
-        width: width * scale,
-        ...__style,
-      }))}
+      style={minecraftStyle(
+        style,
+        (__style): OwnedPlayerPreviewDimensions1 => ({
+          "--mc-z-player-preview-base-1-height": `${height * scale}px`,
+          "--mc-z-player-preview-base-1-width": `${width * scale}px`,
+          ...__style,
+        })
+      )}
       onKeyDown={(event) => {
         onKeyDown?.(event);
 

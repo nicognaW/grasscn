@@ -51,14 +51,17 @@ test("SystemToast uses the UVs and metrics observed in its normalized native con
   ) as typeof CapturedData1;
 
   // SAFETY: This read consumes the same pinned tests/reference/toast/toast-atlas.json producer data described by the type-only import; retain the runtime read and parse phase.
-  const observed = Object.values(
+  const [observed] = Object.values(
+    // SAFETY: This exact retained toast/toast-atlas.json read is represented by the existing CapturedData2 producer type; retain the original read, parse, first-value selection and UV assertions.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
     JSON.parse(
       readFileSync(
         pixelPerfectFile("tests/reference/toast/toast-atlas.json"),
         "utf-8"
       )
     ) as typeof CapturedData2
-  )[0];
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
+  );
 
   expect(toastGlyphAtlas).toEqual(glyphs);
   expect(Object.keys(glyphs)).toHaveLength(112);

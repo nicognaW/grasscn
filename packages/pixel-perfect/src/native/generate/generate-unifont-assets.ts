@@ -198,8 +198,8 @@ for (const [plane, glyphs] of groups) {
     familyName: "Minecraft Unihex Metrics",
     glyphs: [
       new Glyph({
-        name: ".notdef",
         advanceWidth: 768,
+        name: ".notdef",
         path: new Path(),
       }),
       ...glyphs,

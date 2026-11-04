@@ -161,3 +161,24 @@
     left: calc(var(--mc-dynamic-player-list-13-left) * 1px);
   }
 }
+
+@layer components {
+  .mc-player-list,
+  .mc-scoreboard {
+    height: var(--mc-roster-height);
+    width: var(--mc-roster-width);
+  }
+  .mc-roster-avatar {
+    height: var(--mc-roster-avatar-height);
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: var(--mc-roster-avatar-width);
+  }
+  .mc-roster-name {
+    font-style: var(--mc-roster-font-style);
+    left: var(--mc-roster-left);
+    max-width: var(--mc-roster-max-width);
+    opacity: var(--mc-roster-opacity);
+  }
+}

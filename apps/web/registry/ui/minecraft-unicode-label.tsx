@@ -43,21 +43,26 @@ const loadAlpha = function loadAlpha() {
   // oxlint-disable-next-line promise/avoid-new -- Preserve the cached Image load/error bridge and its onload alpha-extraction phase.
   return (alpha ??= new Promise((resolve, reject) => {
     const image = new Image();
-    image.onload = () => {
+    image.addEventListener("load", () => {
       const canvas = document.createElement("canvas");
-      canvas.width = canvas.height = 128;
+      canvas.height = 128;
+      canvas.width = 128;
       const context = canvas.getContext("2d")!;
       context.drawImage(image, 0, 0);
       resolve(context.getImageData(0, 0, 128, 128).data);
-    };
+    });
 
-    image.onerror = reject;
+    image.addEventListener("error", reject);
     image.src = minecraftInputAssets.atlas;
   }));
 };
 
 const advance = (char: string) =>
-  asciiGlyphs[char.codePointAt(0)! - 32]?.[2] ??
+  asciiGlyphs[
+    // SAFETY: Private glyph callers supply nonempty iteration characters or guarded in-bounds code units. Its first code point therefore exists.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+    (char.codePointAt(0) as number) - 32
+  ]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   0;
 
@@ -79,7 +84,11 @@ export const MinecraftUnicodeLabel = ({
     let frame = 0;
     let signature = "";
 
-    const context = canvas.current!.getContext("2d")!;
+    const context =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned canvas ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      (canvas.current as HTMLCanvasElement).getContext("2d")!;
+
     setUnihexAtlas(context, atlas);
     setBitmap(false);
     Promise.all([loadUnihex(), loadAlpha()])
@@ -142,7 +151,12 @@ export const MinecraftUnicodeLabel = ({
               context.fillStyle = `rgb(${color},${color},${color})`;
 
               for (const char of text) {
-                const glyph = asciiGlyphs[char.codePointAt(0)! - 32];
+                const glyph =
+                  asciiGlyphs[
+                    // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+                    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+                    (char.codePointAt(0) as number) - 32
+                  ];
 
                 if (glyph) {
                   if (char !== " ") {

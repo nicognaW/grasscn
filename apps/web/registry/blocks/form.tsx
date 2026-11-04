@@ -49,7 +49,10 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   const host = React.useRef<HTMLFormElement>(null);
   const id = React.useId();
   React.useLayoutEffect(() => {
-    const element = host.current!;
+    const element =
+      // SAFETY: React attaches this always-rendered <form> before its synchronous layout effect setup reads the owned host ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLFormElement result.
+      host.current as HTMLFormElement;
 
     const measure = () => {
       setWidth(Math.floor(element.clientWidth / scale));

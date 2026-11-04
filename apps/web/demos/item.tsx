@@ -57,48 +57,44 @@ const ItemDemo = ({ scale }: DemoProps) => {
         </label>
       </div>
       <div className="demo-stage" data-stage="item">
-        <ItemGroup scale={scale} style={{ maxWidth: "100%" }}>
+        <ItemGroup scale={scale} className="demo-owned-item-1">
           <Item
             render={<a href="#item" />}
             selected={selected === "first"}
-            style={{ maxWidth: "100%" }}
+            className="demo-owned-item-2"
             onClick={() => {
               setSelected("first");
               setOpens((v) => v + 1);
             }}
           >
-            {
-              <>
-                <ItemMedia />
-                <ItemContent>
-                  <ItemTitle>{name}</ItemTitle>
-                  <ItemDescription>{description}</ItemDescription>
-                </ItemContent>
-              </>
-            }
+            <>
+              <ItemMedia />
+              <ItemContent>
+                <ItemTitle>{name}</ItemTitle>
+                <ItemDescription>{description}</ItemDescription>
+              </ItemContent>
+            </>
           </Item>
           <ItemSeparator />
           <Item
             render={<a href="#item" />}
             selected={selected === "second"}
-            style={{ maxWidth: "100%" }}
+            className="demo-owned-item-3"
             onClick={() => {
               setSelected("second");
               setOpens((v) => v + 1);
             }}
           >
-            {
-              <>
-                <ItemMedia />
-                <ItemContent>
-                  <ItemTitle>你好，世界</ItemTitle>
-                  <ItemDescription>{"world-2\nCreative Mode"}</ItemDescription>
-                </ItemContent>
-              </>
-            }
+            <>
+              <ItemMedia />
+              <ItemContent>
+                <ItemTitle>你好，世界</ItemTitle>
+                <ItemDescription>{"world-2\nCreative Mode"}</ItemDescription>
+              </ItemContent>
+            </>
           </Item>
         </ItemGroup>
-        <Item scale={scale} style={{ maxWidth: "100%" }}>
+        <Item scale={scale} className="demo-owned-item-4">
           <ItemHeader>WORLD ACTIONS</ItemHeader>
           <ItemContent>
             <ItemTitle>Manage your worlds</ItemTitle>

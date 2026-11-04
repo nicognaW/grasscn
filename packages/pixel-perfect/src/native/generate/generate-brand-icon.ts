@@ -170,7 +170,15 @@ for (let row = 0, y = 12; row < 3; row += 1) {
 let x = 68;
 
 for (const [index, char] of [..."grass cn"].entries()) {
-  const [gx, gy, advance] = minecraftGlyphs[char.codePointAt(0)! - 32];
+  const [gx, gy, advance] =
+    minecraftGlyphs[
+      // SAFETY: Every character yielded by the existing fixed nonempty branding-string iteration contains at least one code point; String.codePointAt(0) is therefore numeric.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact nonempty String-iterator API contract; no additional runtime guard. */
+      (char.codePointAt(0) as number) -
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
+        32
+    ];
+
   const color = index > 5 ? "#55ff55" : "#ffffff";
   const shadow = index > 5 ? "#153f15" : "#3f3f3f";
 

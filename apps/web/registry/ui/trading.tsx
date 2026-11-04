@@ -111,6 +111,9 @@ interface TradingLayoutStyle17 extends React.CSSProperties {
 
 interface TradingScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
+
+  "--mc-z-trading-base-1-height"?: string;
+  "--mc-z-trading-base-1-width"?: string;
 }
 
 interface TradeItem {
@@ -239,7 +242,10 @@ const Trading = ({
   );
 
   React.useEffect(() => {
-    const node = root.current!;
+    const node =
+      // SAFETY: React attaches this always-rendered <div> before its synchronous effect setup reads the owned root ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLDivElement result.
+      root.current as HTMLDivElement;
 
     const wheel = (event: WheelEvent) => {
       if (cancelledWheel.current === event) {
@@ -309,11 +315,11 @@ const Trading = ({
         data-slot="trading"
         role={props.role ?? "group"}
         aria-label={props["aria-label"] ?? title}
-        className={cn(`mc-trading`, className)}
+        className={cn("mc-trading mc-owned-base-trading-1", className)}
         style={minecraftStyle(style, (__style): TradingScaleStyle => ({
           "--mc-scale": scale,
-          height: 166 * scale,
-          width: 276 * scale,
+          "--mc-z-trading-base-1-height": `${166 * scale}px`,
+          "--mc-z-trading-base-1-width": `${276 * scale}px`,
           ...__style,
         }))}
       >

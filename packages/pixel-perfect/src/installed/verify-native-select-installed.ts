@@ -8,7 +8,10 @@ import path from "node:path";
 import type { Page } from "@playwright/test";
 import type * as Playwright from "@playwright/test";
 import type { NativeSelectCaptureManifest } from "@ppt/installed/control-capture-protocol";
-import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import type {
+  InstalledTextRegistry,
+  InstalledTextItem,
+} from "@ppt/installed/text-verification-protocol";
 import { pixelPerfectTestRoot, webFile, pixelPerfectFile } from "@ppt/paths";
 import type * as PngJs from "pngjs";
 
@@ -167,7 +170,11 @@ const registry = JSON.parse(
   fs.readFileSync(webFile(path.join("registry.json"))).toString()
 ) as InstalledTextRegistry;
 
-const item = registry.items.find((i) => i.name === "native-select");
+// SAFETY: the authored registry uniquely declares native-select, selected by this existing fixed/validated route; a missing item retains its original later dereference failure.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact authored registry item producer projection; fresh read and original failure timing preserved.
+const item = registry.items.find(
+  (i) => i.name === "native-select"
+) as InstalledTextItem;
 
 const canonical = (b: Buffer) => {
   let t = b
@@ -183,7 +190,7 @@ const canonical = (b: Buffer) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item!.files.map((f) => {
+const files = item.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
@@ -239,8 +246,13 @@ try {
         );
       }
 
+      // SAFETY: The existing rotation counter starts at zero, so the first processed case awaits browser.newPage before this use; every later rotation assigns the new Page before use and startup errors leave the loop. Capture that same owner for this iteration.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact completed browser.newPage producer/lifecycle boundary; no runtime guard. */
+      const activePage = page as Page;
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
+
       // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
-      results.push(await verifyNativeSelectCase(c, dir, page!));
+      results.push(await verifyNativeSelectCase(c, dir, activePage));
 
       if (results.length % 128 === 0) {
         console.log(dir, results.length, "exact");

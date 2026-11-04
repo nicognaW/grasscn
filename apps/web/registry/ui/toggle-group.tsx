@@ -57,8 +57,13 @@ const ToggleGroup = ({
     );
   }
 
+  const appearance = React.useMemo(
+    () => ({ disabled, scale, size, variant }),
+    [disabled, scale, size, variant]
+  );
+
   return (
-    <AppearanceContext.Provider value={{ disabled, scale, size, variant }}>
+    <AppearanceContext.Provider value={appearance}>
       <ToggleGroupPrimitive
         data-slot="toggle-group"
         disabled={disabled}

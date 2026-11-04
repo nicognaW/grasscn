@@ -76,7 +76,10 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
   const [inkWidth, setInkWidth] = React.useState(0);
 
   React.useLayoutEffect(() => {
-    const element = label.current!;
+    const element =
+      // SAFETY: React attaches this always-rendered <span> before its synchronous layout effect setup reads the owned label ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLSpanElement result.
+      label.current as HTMLSpanElement;
 
     const measure = () => {
       setInkWidth(Math.ceil(element.getBoundingClientRect().width));

@@ -161,3 +161,142 @@
     gap: 28px;
   }
 }
+
+/* Owned defaults for demo controls; measurements arrive as finite custom properties. */
+@layer components {
+  .demo-owned-aspect-ratio-1 {
+    width: var(--demo-owned-aspect-ratio-1-width);
+  }
+  .demo-owned-aspect-ratio-2 {
+    background: #383838;
+    border: 2px solid #a0a0a0;
+    display: grid;
+    overflow: hidden;
+    place-items: center;
+  }
+  .demo-owned-button-group-1 {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+  .demo-owned-button-group-2 {
+    width: var(--demo-owned-button-group-2-width);
+  }
+  .demo-owned-button-group-3 {
+    width: var(--demo-owned-button-group-3-width);
+  }
+  .demo-owned-button-1 {
+    width: var(--demo-owned-button-1-width);
+  }
+  .demo-owned-button-2 {
+    width: var(--demo-owned-button-2-width);
+  }
+  .demo-owned-carousel-1 {
+    width: var(--demo-owned-carousel-1-width);
+    height: var(--demo-owned-carousel-1-height);
+    max-width: 100%;
+  }
+  .demo-owned-carousel-2 {
+    height: var(--demo-owned-carousel-2-height);
+  }
+  .demo-owned-chart-1 {
+    width: var(--demo-owned-chart-1-width);
+  }
+  .demo-owned-chart-2 {
+    width: var(--demo-owned-chart-2-width);
+  }
+  .demo-owned-chart-3 {
+    width: var(--demo-owned-chart-3-width);
+  }
+  .demo-owned-chart-4 {
+    width: var(--demo-owned-chart-4-width);
+  }
+  .demo-owned-chart-5 {
+    width: var(--demo-owned-chart-5-width);
+  }
+  .demo-owned-code-block-1 {
+    max-width: 620px;
+    width: 100%;
+  }
+  .demo-owned-code-block-2 {
+    width: var(--demo-owned-code-block-2-width);
+  }
+  .demo-owned-hotbar-1 {
+    --demo-stage-padding: 20px;
+  }
+  .demo-owned-input-otp-1 {
+    width: var(--demo-owned-input-otp-1-width);
+  }
+  .demo-owned-input-otp-2 {
+    width: var(--demo-owned-input-otp-2-width);
+  }
+  .demo-owned-input-otp-3 {
+    width: var(--demo-owned-input-otp-3-width);
+  }
+  .demo-owned-item-1 {
+    max-width: 100%;
+  }
+  .demo-owned-item-2 {
+    max-width: 100%;
+  }
+  .demo-owned-item-3 {
+    max-width: 100%;
+  }
+  .demo-owned-item-4 {
+    max-width: 100%;
+  }
+  .demo-owned-pagination-1 {
+    flex-wrap: wrap;
+  }
+  .demo-owned-pagination-2 {
+    width: var(--demo-owned-pagination-2-width);
+  }
+  .demo-owned-questionnaire-1 {
+    max-width: 600px;
+    width: 100%;
+  }
+  .demo-owned-resizable-1 {
+    width: var(--demo-owned-resizable-1-width);
+    max-width: 100%;
+    height: var(--demo-owned-resizable-1-height);
+  }
+  .demo-owned-scroll-area-1 {
+    height: var(--demo-owned-scroll-area-1-height);
+    max-width: 100%;
+    width: var(--demo-owned-scroll-area-1-width);
+  }
+  .mc-separator.demo-owned-separator-1 {
+    width: var(--demo-owned-separator-1-width);
+  }
+  .mc-separator.demo-owned-separator-2 {
+    width: var(--demo-owned-separator-2-width);
+  }
+  .demo-owned-sidebar-1 {
+    position: relative;
+    width: 100%;
+    flex-direction: var(--demo-owned-sidebar-1-flex-direction);
+    min-height: 0;
+  }
+  .demo-owned-sidebar-2 {
+    width: var(--demo-owned-sidebar-2-width);
+    flex-shrink: 0;
+  }
+  .demo-owned-table-1 {
+    width: var(--demo-owned-table-1-width);
+  }
+  .mc-tabs.demo-owned-tabs-1 {
+    flex-shrink: 0;
+    min-width: var(--demo-owned-tabs-1-min-width);
+    width: var(--demo-owned-tabs-1-width);
+  }
+  .demo-owned-trace-1 {
+    width: 100%;
+  }
+  .demo-owned-trace-2 {
+    width: 100%;
+  }
+  .demo-owned-tabs-panel {
+    box-sizing: border-box;
+    height: var(--demo-owned-tabs-panel-height);
+    padding: var(--demo-owned-tabs-panel-padding);
+  }
+}

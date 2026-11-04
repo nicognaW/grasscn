@@ -72,7 +72,7 @@ const nativePalette = [
 ];
 
 const nativeTokenColor = function nativeTokenColor(value?: string) {
-  if (!value || !/^#[0-9a-f]{6}$/iu.test(value)) {
+  if (value === undefined || value === "" || !/^#[0-9a-f]{6}$/iu.test(value)) {
     return "#FFFFFF";
   }
 

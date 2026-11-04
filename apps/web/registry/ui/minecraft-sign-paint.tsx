@@ -21,11 +21,11 @@ const load = function load(src: string) {
     // oxlint-disable-next-line promise/avoid-new -- Keep the per-source Image event Promise, including cached rejection.
     promise = new Promise<HTMLImageElement>((resolve, reject) => {
       const image = new Image();
-      image.onload = () => {
+      image.addEventListener("load", () => {
         resolve(image);
-      };
+      });
 
-      image.onerror = reject;
+      image.addEventListener("error", reject);
       image.src = src;
     });
     images.set(src, promise);
@@ -62,7 +62,11 @@ export const MinecraftSignPaint = ({
       }
     });
 
-    observer.observe(ref.current!);
+    observer.observe(
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement
+    );
     window.addEventListener("resize", repaint);
 
     return () => {
@@ -185,7 +189,12 @@ export const MinecraftSignPaint = ({
           let x = 0;
 
           for (const char of line) {
-            const glyph = asciiGlyphs[char.codePointAt(0)! - 32];
+            const glyph =
+              asciiGlyphs[
+                // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+                // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+                (char.codePointAt(0) as number) - 32
+              ];
 
             if (glyph) {
               if (char !== " ") {

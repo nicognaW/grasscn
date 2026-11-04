@@ -70,7 +70,14 @@ test("Historical scrollbar grip pixels remain exact crops from both original nat
     expect(hash(frameBytes)).toBe(c.parentFullFrameSha256);
     expect(hash(repeatFrameBytes)).toBe(c.parentRepeatFullFrameSha256);
     expect(hash(againBytes)).toBe(
-      repeat.cases.find((r: { name: string }) => r.name === c.name)!
+      // SAFETY: The retained Resizable derivation and repeatability producers share the same complete native crop-name set; preserve the existing lookup and PNG hash assertion.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+      (
+        repeat.cases.find(
+          (r: { name: string }) => r.name === c.name
+        ) as (typeof repeatedReference)["cases"][number]
+      )
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
         .runTwoPngSha256
     );
     expect(again.data.equals(expected.data)).toBe(true);

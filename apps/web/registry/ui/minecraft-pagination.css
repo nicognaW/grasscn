@@ -62,3 +62,9 @@
     cursor: default;
   }
 }
+
+@layer components {
+  .mc-owned-base-pagination-1 {
+    width: var(--mc-z-pagination-base-1-width);
+  }
+}

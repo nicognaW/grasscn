@@ -144,7 +144,12 @@ test("Progress retains every original boss-bar PNG", () => {
     expect([image.width, image.height]).toEqual([182, 5]);
 
     const raw = Buffer.from(
-      minecraftProgressRgba[name as keyof typeof minecraftProgressRgba],
+      minecraftProgressRgba[
+        // SAFETY: The generated Progress PNG and RGBA records share the exact same 22 boss-bar sprite keys; this loop visits those original PNG keys and compares their paired decoded bytes.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+        name as keyof typeof minecraftProgressRgba
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
+      ],
       "base64"
     );
 
@@ -174,9 +179,9 @@ test("Progress notch painter preserves the background through transparent corner
   await progress
     .locator("canvas, .mc-progress-fallback")
     .evaluateAll((nodes: HTMLElement[]) => {
-      nodes.forEach((node) => {
+      for (const node of nodes) {
         node.style.visibility = "hidden";
-      });
+      }
     });
   const backdrop = PNG.sync.read(await progress.screenshot());
 
@@ -211,9 +216,13 @@ for (const scale of [1, 2, 3]) {
   test(`Progress asChild native pixels at scale ${scale}`, async ({
     page,
   }, testInfo) => {
-    const c = manifest.cases.find(
-      (progressCase) => progressCase.name === `progress-c18-s${scale}.png`
-    )!;
+    const c =
+      // SAFETY: The retained Progress producer includes exactly one progress-c18 capture at each of GUI scales 1, 2 and 3; preserve the original lookup and pixel assertions.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+      manifest.cases.find(
+        (progressCase) => progressCase.name === `progress-c18-s${scale}.png`
+      ) as (typeof manifest)["cases"][number];
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
 
     await page.goto(
       `/?component=progress&value=0.5&max=1&overlay=notched_6&asChild=1&scale=${scale}`

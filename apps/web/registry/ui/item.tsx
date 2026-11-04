@@ -71,7 +71,7 @@ const Item = ({
   const child = React.isValidElement(render) ? render : null;
 
   const interactive =
-    (render ?? props.role === "button") || props.role === "link";
+    Boolean(render ?? props.role === "button") || props.role === "link";
 
   const inactive =
     props["aria-disabled"] === true || props["aria-disabled"] === "true";
@@ -293,7 +293,7 @@ const ItemTitle = ({
   };
 
   return inside ||
-    (typeof providedClip !== "undefined" && providedClip !== null) ||
+    (providedClip !== undefined && providedClip !== null) ||
     props.style?.color != null ||
     Boolean(className) ||
     (typeof props.children !== "string" &&

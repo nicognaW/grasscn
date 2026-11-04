@@ -84,16 +84,14 @@ const ContextMenuDemo = ({ scale }: DemoProps) => {
               />
             }
           >
-            {
-              <>
-                <CardHeader>
-                  <CardTitle>{title || " "}</CardTitle>
-                  <CardDescription>
-                    Right click or touch and hold.
-                  </CardDescription>
-                </CardHeader>
-              </>
-            }
+            <>
+              <CardHeader>
+                <CardTitle>{title || " "}</CardTitle>
+                <CardDescription>
+                  Right click or touch and hold.
+                </CardDescription>
+              </CardHeader>
+            </>
           </ContextMenuTrigger>
           <ContextMenuContent collisionPadding={8}>
             <ContextMenuGroup>

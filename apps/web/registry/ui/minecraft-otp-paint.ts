@@ -15,7 +15,13 @@ import {
 
 const requiresCJKFont = function requiresCJKFont(text: string) {
   for (const character of text) {
-    if (isCJKCodepoint(character.codePointAt(0)!)) {
+    if (
+      isCJKCodepoint(
+        // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+        character.codePointAt(0) as number
+      )
+    ) {
       return true;
     }
   }
@@ -57,20 +63,21 @@ const loadImages = function loadImages() {
         // oxlint-disable-next-line promise/avoid-new -- Preserve the cached texture-load event bridge and its existing custom load Error.
         new Promise<HTMLImageElement>((resolve, reject) => {
           const image = new Image();
-          image.onload = () => {
+          image.addEventListener("load", () => {
             resolve(image);
-          };
+          });
 
-          image.onerror = () => {
+          image.addEventListener("error", () => {
             reject(new Error("Embedded Minecraft Input image could not load"));
-          };
+          });
 
           image.src = src;
         })
     )
   ).then(([normal, highlighted, atlas]) => {
     const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = 128;
+    canvas.height = 128;
+    canvas.width = 128;
     const context = canvas.getContext("2d")!;
     context.drawImage(atlas, 0, 0);
 
@@ -83,7 +90,11 @@ const loadImages = function loadImages() {
 };
 
 const glyphAdvance = (char: string) =>
-  asciiGlyphs[char.codePointAt(0)! - 32]?.[2] ??
+  asciiGlyphs[
+    // SAFETY: Private glyph callers supply nonempty iteration characters or guarded in-bounds code units. Its first code point therefore exists.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+    (char.codePointAt(0) as number) - 32
+  ]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   0;
 
@@ -220,7 +231,12 @@ const text = function text(
     context.fillStyle = `rgb(${color},${color},${color})`;
 
     for (const char of value) {
-      const glyph = asciiGlyphs[char.codePointAt(0)! - 32];
+      const glyph =
+        asciiGlyphs[
+          // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+          (char.codePointAt(0) as number) - 32
+        ];
 
       if (!glyph) {
         const unihex = getUnihexGlyph(char);

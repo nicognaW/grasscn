@@ -78,7 +78,10 @@ const MinecraftAvatarFace = ({
   const ref = React.useRef<HTMLCanvasElement>(null);
 
   React.useLayoutEffect(() => {
-    const canvas = ref.current!;
+    const canvas =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement;
 
     let frame = 0;
     let signature = "";
@@ -172,7 +175,7 @@ const AvatarFallback = ({
       className={cn(`mc-avatar-fallback`, className)}
       {...props}
     >
-      {typeof children === "undefined" || children === null ? (
+      {children === undefined || children === null ? (
         <MinecraftAvatarFace skin="wide/steve" hat upsideDown={false} />
       ) : isMinecraftTextContent(children) ? (
         <Label scale={scale} maxWidth={maxWidth} align={align}>
@@ -213,7 +216,7 @@ const groupScale = function groupScale(
     if (child.type === React.Fragment) {
       const scale = groupScale(child.props.children);
 
-      if (scale != null) {
+      if (scale !== null && scale !== undefined) {
         return scale;
       }
     }

@@ -10,6 +10,10 @@ import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-progress.css";
 
+interface OwnedProgressStyle extends React.CSSProperties {
+  "--mc-z-progress-paint-1-width"?: string;
+}
+
 interface ProgressStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -42,6 +46,12 @@ type ProgressProps = Omit<
   overlay?: BossBarOverlay;
   scale?: 1 | 2 | 3;
 };
+
+// Base UI supplies percentage/height defaults; this private artwork part owns native pixel geometry.
+const ProgressIndicatorArtwork = ({
+  style: _primitiveStyle,
+  ...props
+}: React.ComponentProps<"div">) => <div {...props} />;
 
 const ProgressTrack = ({
   className,
@@ -122,6 +132,10 @@ const Progress = ({
     ? { "--mc-progress-image": `url("${notchForeground}")` }
     : undefined;
 
+  const ownedStyle1: OwnedProgressStyle = {
+    "--mc-z-progress-paint-1-width": `calc(${filled} * var(--mc-pixel))`,
+  };
+
   const artwork = (
     <>
       {overlay !== "progress" && (
@@ -133,7 +147,11 @@ const Progress = ({
           filled={filled}
         />
       )}
-      <ProgressTrack className="mc-progress-fallback" aria-hidden="true">
+      <ProgressTrack
+        className="mc-progress-fallback"
+        aria-hidden="true"
+        style={ownedStyle1}
+      >
         <span
           aria-hidden="true"
           className="mc-progress-surface"
@@ -149,8 +167,8 @@ const Progress = ({
         <ProgressPrimitive.Indicator
           data-slot="progress-indicator"
           aria-hidden="true"
-          className="mc-progress-indicator"
-          style={{ height: "100%", width: `calc(${filled} * var(--mc-pixel))` }}
+          className="mc-progress-indicator mc-owned-paint-progress-1"
+          render={<ProgressIndicatorArtwork />}
         >
           <span className="mc-progress-surface" style={foregroundStyle} />
           {notchForeground && (

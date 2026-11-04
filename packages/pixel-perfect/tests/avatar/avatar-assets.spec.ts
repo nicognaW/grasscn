@@ -26,9 +26,16 @@ test("All18 original skins retain their PNG bytes and rawRGBA including hat tran
     const png = PNG.sync.read(bytes);
 
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
-      provenance.assets.find(
-        (a) => a.path === `assets/minecraft/textures/entity/player/${name}.png`
-      )!.sha256
+      // SAFETY: The retained Avatar provenance producer records each of the 18 imported generated skin paths exactly once; preserve this original lookup and hash assertion.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+      (
+        provenance.assets.find(
+          (a) =>
+            a.path === `assets/minecraft/textures/entity/player/${name}.png`
+        ) as (typeof BoundaryReference1)["assets"][number]
+      )
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
+        .sha256
     );
     expect([png.width, png.height]).toEqual([64, 64]);
     expect(Buffer.from(asset.rgba, "base64").equals(png.data)).toBe(true);

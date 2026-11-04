@@ -11,16 +11,32 @@ const source = await readFile(
 );
 
 const zip = Buffer.from(
-  /export const unifontZip = "(?<unifontZip>[^"]+)"/u.exec(source)![1],
+  // SAFETY: generate-unifont-assets writes the exact exported ZIP string and override array matched here; both existing expressions consume that owned generated module unchanged.
+  /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+  (
+    /export const unifontZip = "(?<unifontZip>[^"]+)"/u.exec(
+      source
+    ) as RegExpExecArray
+  )[
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
+    1
+  ],
   "base64"
 );
 
 // SAFETY: generate-unifont-assets emits this exact array of native provider [from, to, left, right] ranges.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const overrides = JSON.parse(
-  /export const unifontOverrides = (?<unifontOverrides>\[.*\]) as const/u.exec(
-    source
-  )![1]
+  // SAFETY: generate-unifont-assets writes the exact exported ZIP string and override array matched here; both existing expressions consume that owned generated module unchanged.
+  /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+  (
+    /export const unifontOverrides = (?<unifontOverrides>\[.*\]) as const/u.exec(
+      source
+    ) as RegExpExecArray
+  )[
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
+    1
+  ]
 ) as [number, number, number, number][];
 
 const cjk = (code: number) =>

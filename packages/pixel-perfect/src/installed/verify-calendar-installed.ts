@@ -20,7 +20,10 @@ import type {
   LegacyCalendarConsumerWindow,
   LoadingCalendarConsumerWindow,
 } from "@ppt/installed/legacy-consumer-protocol";
-import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import type {
+  InstalledTextRegistry,
+  InstalledTextItem,
+} from "@ppt/installed/text-verification-protocol";
 import {
   pixelPerfectTestRoot,
   webFile,
@@ -43,7 +46,11 @@ const registry = JSON.parse(
   fs.readFileSync(webFile(path.join("registry.json"))).toString()
 ) as InstalledTextRegistry;
 
-const item = registry.items.find((i) => i.name === component);
+// SAFETY: the authored registry uniquely declares calendar and date-picker, selected by this existing fixed/validated route; a missing item retains its original later dereference failure.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact authored registry item producer projection; fresh read and original failure timing preserved.
+const item = registry.items.find(
+  (i) => i.name === component
+) as InstalledTextItem;
 
 // SAFETY: the initialized shadcn consumer configuration owns these existing alias/rsc fields.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
@@ -65,7 +72,7 @@ const canonical = (b: Buffer) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item!.files.map((f) => {
+const files = item.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(installedRegistryFile(f, consumer, settings));
@@ -363,6 +370,11 @@ try {
           );
         }
 
+        // SAFETY: The existing rotation counter starts at zero, so the first processed case awaits browser.newPage before this use; every later rotation assigns the new Page before use and startup errors leave the loop. Capture that same owner for this iteration.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact completed browser.newPage producer/lifecycle boundary; no runtime guard. */
+        const activePage = page as Page;
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
+
         // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
         const { actual, actualBytes } = await captureCalendarAlias(
           c,
@@ -370,7 +382,7 @@ try {
           alias,
           manifest,
           dir,
-          page!
+          activePage
         );
 
         record[

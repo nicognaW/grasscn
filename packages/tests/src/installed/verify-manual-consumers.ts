@@ -438,14 +438,25 @@ try {
     );
     const manifests: PublicInputs["manifests"] = [];
 
-    for (const name of new Set(Object.values(exampleItems).flat())) {
-      /** @type {Response} */
-      const response: Response = await fetch(
-        `${origin}/api/installation/${name}`
-      );
+    const inventories = await Promise.allSettled(
+      [...new Set(Object.values(exampleItems).flat())].map(async (name) => {
+        /** @type {Response} */
+        const response: Response = await fetch(
+          `${origin}/api/installation/${name}`
+        );
 
-      assert.ok(response.ok, `Public ${name} inventory available`);
-      manifests.push(parseManualManifest(await response.json()));
+        assert.ok(response.ok, `Public ${name} inventory available`);
+
+        return parseManualManifest(await response.json());
+      })
+    );
+
+    for (const inventory of inventories) {
+      if (inventory.status === "rejected") {
+        throw inventory.reason;
+      }
+
+      manifests.push(inventory.value);
     }
 
     for (const [name, code] of Object.entries(copiedExamples)) {
@@ -511,6 +522,7 @@ try {
       const consumer = path.join(projectRoot, framework);
 
       if (session.phase === "prepare") {
+        // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
         const preparedConsumer = await prepareManualConsumer({
           commonDirectory,
           consumer,
@@ -532,10 +544,12 @@ try {
       );
 
       assert.ok(built, `Prepared ${framework} consumer required`);
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await assertExternalProject(consumer, [
         root,
         path.dirname(commonDirectory),
       ]);
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       const dependencyIdentity = await assertIndependentDependencies(consumer);
       const installedBytes = installedDependencyIdentity(consumer);
       assert.deepEqual(
@@ -549,11 +563,13 @@ try {
         "Prepared installed dependency bytes unchanged"
       );
       assert.deepEqual(
+        // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
         await directoryIdentity(consumer),
         built.inputs,
         "Prepared consumer inputs unchanged"
       );
       assert.deepEqual(
+        // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
         await consumerBuildIdentity(
           path.join(consumer, framework === "vite" ? "dist" : ".next"),
           framework
@@ -569,6 +585,7 @@ try {
 
       const { prebuildInputs } = built;
       const port = framework === "vite" ? 5188 : 5189;
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await assertConsumerPortAvailable(port);
 
       const args =
@@ -622,26 +639,34 @@ try {
 
       const errors: string[] = [];
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       const consumerPage = await session.browser.newPage({
         deviceScaleFactor: 1,
         viewport: { height: 900, width: 1280 },
       });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await consumerPage
         .context()
         .grantPermissions(["clipboard-read", "clipboard-write"], {
           origin: `http://127.0.0.1:${port}`,
         });
       consumerPage.on("pageerror", (error) => errors.push(error.message));
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await consumerPage.goto(`http://127.0.0.1:${port}`);
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await consumerPage.mouse.move(1000, 800);
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledButton({ consumerPage, expect, framework, output });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledForm({ consumerPage, expect });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledCodeBlock({ consumerPage, expect });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       const webgl = await verifyInstalledPlayerPreviews({
         consumerPage,
         expect,
@@ -649,24 +674,34 @@ try {
         output,
       });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledMap({ consumerPage });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledSign({ consumerPage });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledTrading({ consumerPage, expect });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledResizable({ consumerPage, expect });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledSidebar({ consumerPage, expect, framework, output });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledDataTable({ consumerPage, expect });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledDatePicker({ consumerPage, expect });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledMessageScroller({ consumerPage, expect });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledAlertDialog({ consumerPage, expect });
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await verifyInstalledCommandPalette({ consumerPage, expect });
 
       for (const [name, chartName] of [
@@ -695,6 +730,7 @@ try {
         });
       }
 
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await consumerPage.screenshot({
         fullPage: true,
         path: path.join(output, `${framework}-runtime.png`),
@@ -707,6 +743,7 @@ try {
         directory: consumer,
         downloadedFiles: Object.fromEntries(files),
         framework,
+        // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
         inputs: await directoryIdentity(consumer),
         installedBytes,
         items: manifests.map((manifest) => ({
@@ -714,10 +751,13 @@ try {
           files: manifest.files.length,
           name: manifest.name,
         })),
+        // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
         lockSha256: hash(await readFile(path.join(consumer, "bun.lock"))),
         packageSha256: hash(
+          // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
           await readFile(path.join(consumer, "package.json"))
         ),
+        // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
         physicalDirectory: await realpath(consumer),
         prebuildInputs,
         runtime: {
@@ -741,12 +781,15 @@ try {
         typecheck: "passed",
         webgl,
       });
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await writeFile(
         path.join(output, "report.json"),
         JSON.stringify(report, null, 2)
       );
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await consumerPage.close();
       server.kill();
+      // oxlint-disable-next-line no-await-in-loop -- Finish the current framework with its single owned server and ordered consumer report before advancing.
       await server.exited;
       server = undefined;
     }

@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
 import {
   Table,
@@ -43,38 +44,47 @@ const TableDemo = ({ scale }: DemoProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {worlds.map((world) => (
-              <TableRow
-                key={world.name}
-                data-state={selected === world.name ? "selected" : undefined}
-                aria-selected={selected === world.name}
-                tabIndex={0}
-                onClick={() => {
-                  setSelected(world.name);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
+            {worlds.map((world) => {
+              const demoLayout1: DemoVariables = {
+                "--demo-owned-table-1-width": `${Math.min(60, textWidth) * scale}px`,
+              };
+
+              return (
+                <TableRow
+                  key={world.name}
+                  data-state={selected === world.name ? "selected" : undefined}
+                  aria-selected={selected === world.name}
+                  tabIndex={0}
+                  onClick={() => {
                     setSelected(world.name);
-                  }
-                }}
-              >
-                <TableCell maxTextWidth={textWidth}>{world.name}</TableCell>
-                <TableCell maxTextWidth={textWidth}>{world.players}</TableCell>
-                <TableCell>
-                  <Button
-                    scale={scale}
-                    type="button"
-                    style={{ width: Math.min(60, textWidth) * scale }}
-                    onClick={() => {
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
                       setSelected(world.name);
-                    }}
-                  >
-                    Join
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+                    }
+                  }}
+                >
+                  <TableCell maxTextWidth={textWidth}>{world.name}</TableCell>
+                  <TableCell maxTextWidth={textWidth}>
+                    {world.players}
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      scale={scale}
+                      type="button"
+                      className="demo-owned-table-1"
+                      style={demoLayout1}
+                      onClick={() => {
+                        setSelected(world.name);
+                      }}
+                    >
+                      Join
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
           <TableFooter>
             <TableRow>

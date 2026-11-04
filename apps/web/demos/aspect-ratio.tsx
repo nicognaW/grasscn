@@ -12,6 +12,10 @@ const isAssetUrl = (asset: unknown): asset is string =>
 const AspectRatioDemo = ({ scale }: DemoProps) => {
   const [ratio, setRatio] = React.useState(16 / 9);
 
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-aspect-ratio-1-width": `${Math.min(320, 160 * scale)}px`,
+  };
+
   return (
     <>
       <div className="demo-options">
@@ -42,19 +46,10 @@ const AspectRatioDemo = ({ scale }: DemoProps) => {
       </div>
       <div className="demo-stage" data-stage="aspect-ratio">
         <div
-          className="max-w-full"
-          style={{ width: Math.min(320, 160 * scale) }}
+          className="demo-owned-aspect-ratio-1 max-w-full"
+          style={demoLayout1}
         >
-          <AspectRatio
-            ratio={ratio}
-            style={{
-              background: "#383838",
-              border: "2px solid #a0a0a0",
-              display: "grid",
-              overflow: "hidden",
-              placeItems: "center",
-            }}
-          >
+          <AspectRatio ratio={ratio} className="demo-owned-aspect-ratio-2">
             <img
               src={isAssetUrl(grass) ? grass : grass.src}
               alt="Grass block"

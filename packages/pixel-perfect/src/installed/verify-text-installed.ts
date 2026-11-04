@@ -65,9 +65,8 @@ const sha = (bytes: Uint8Array) =>
 const map = await readMap("registry/minecraft-map.json");
 const component = map.components.find((c) => c.name === name);
 
-const item = (await readRegistry("registry.json")).items.find(
-  (i) => i.name === name
-);
+const registry = await readRegistry("registry.json");
+const item = registry.items.find((i) => i.name === name);
 
 assert.ok(
   component?.pixelVerification.manifest && item,
@@ -437,11 +436,11 @@ const worker = async function worker() {
 
     page.on("pageerror", (error) => pageErrors.push(error.message));
 
-    return page;
+    return { browser, page };
   };
 
   try {
-    let page = await open();
+    let active = await open();
 
     while (next < tasks.length) {
       const taskIndex = next;
@@ -450,18 +449,18 @@ const worker = async function worker() {
 
       if (count && count % 128 === 0) {
         // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
-        await browser!.close();
+        await active.browser.close();
         // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
-        page = await open();
+        active = await open();
       } else if (count && count % 50 === 0) {
         // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
-        await page.close();
+        await active.page.close();
         // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
-        page = await browser!.newPage({
+        active.page = await active.browser.newPage({
           deviceScaleFactor: 1,
           viewport: { height: 900, width: 1536 },
         });
-        page.on("pageerror", (error) => pageErrors.push(error.message));
+        active.page.on("pageerror", (error) => pageErrors.push(error.message));
       }
 
       count += 1;
@@ -473,7 +472,7 @@ const worker = async function worker() {
           consumer,
           group,
           name,
-          page,
+          page: active.page,
           part,
           url,
         })

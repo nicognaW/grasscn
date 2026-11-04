@@ -71,7 +71,21 @@ interface PlayerListLayoutStyle13 extends React.CSSProperties {
   "--mc-dynamic-player-list-13-left": number;
 }
 
+interface PlayerListAvatarStyle extends React.CSSProperties {
+  "--mc-roster-avatar-height": string;
+  "--mc-roster-avatar-width": string;
+}
+
+interface PlayerListNameStyle extends React.CSSProperties {
+  "--mc-roster-font-style": React.CSSProperties["fontStyle"];
+  "--mc-roster-left": string;
+  "--mc-roster-max-width": string;
+  "--mc-roster-opacity": number;
+}
+
 interface PlayerListScaleStyle extends React.CSSProperties {
+  "--mc-roster-height": string;
+  "--mc-roster-width": string;
   "--mc-scale": number;
 }
 
@@ -124,18 +138,22 @@ const renderRosterEntry = (
 
   const key = `gui/sprites/icon/ping_${bars}` as keyof typeof playerListAssets;
 
+  const avatarStyle: PlayerListAvatarStyle = {
+    "--mc-roster-avatar-height": `${8 * scale}px`,
+    "--mc-roster-avatar-width": `${8 * scale}px`,
+  };
+
+  const nameStyle: PlayerListNameStyle = {
+    "--mc-roster-font-style":
+      (player.spectator ?? false) ? "italic" : undefined,
+    "--mc-roster-left": `${9 * scale}px`,
+    "--mc-roster-max-width": `${(columnWidth - 9 - scoreWidth - 13) * scale}px`,
+    "--mc-roster-opacity": (player.spectator ?? false) ? 144 / 255 : 1,
+  };
+
   const content = (
     <>
-      <Avatar
-        scale={scale}
-        style={{
-          height: 8 * scale,
-          left: 0,
-          position: "absolute",
-          top: 0,
-          width: 8 * scale,
-        }}
-      >
+      <Avatar scale={scale} className="mc-roster-avatar" style={avatarStyle}>
         <AvatarImage
           skin={
             player.src || player.username
@@ -153,12 +171,7 @@ const renderRosterEntry = (
       </Avatar>
       <span
         className="mc-roster-name mc-layout-player-list-4"
-        style={{
-          fontStyle: (player.spectator ?? false) ? "italic" : undefined,
-          left: 9 * scale,
-          maxWidth: (columnWidth - 9 - scoreWidth - 13) * scale,
-          opacity: (player.spectator ?? false) ? 144 / 255 : 1,
-        }}
+        style={nameStyle}
       >
         <MinecraftMenuText>{player.name}</MinecraftMenuText>
       </span>
@@ -266,11 +279,14 @@ const PlayerList = ({
   const columnWidth = Math.max(22, rowWidth ?? 9 + nameWidth + scoreWidth + 13);
   const bodyWidth = columns * columnWidth + (columns - 1) * 5;
 
+  const hasHeader = Boolean(header);
+  const hasFooter = Boolean(footer);
+
   let _selectedHead: React.ReactNode[];
 
   if (typeof header === "string") {
     _selectedHead = header.split("\n");
-  } else if (header) {
+  } else if (hasHeader) {
     _selectedHead = [header];
   } else {
     _selectedHead = [];
@@ -282,7 +298,7 @@ const PlayerList = ({
 
   if (typeof footer === "string") {
     _selectedFoot = footer.split("\n");
-  } else if (footer) {
+  } else if (hasFooter) {
     _selectedFoot = [footer];
   } else {
     _selectedFoot = [];
@@ -298,8 +314,8 @@ const PlayerList = ({
   );
 
   const width = Math.floor(fullWidth / 2) * 2 + 2;
-  const headHeight = header ? head.length * 9 + 1 : 0;
-  const footHeight = footer ? foot.length * 9 + 1 : 0;
+  const headHeight = hasHeader ? head.length * 9 + 1 : 0;
+  const footHeight = hasFooter ? foot.length * 9 + 1 : 0;
   const bodyLeft = 1 + Math.floor(fullWidth / 2) - Math.floor(bodyWidth / 2);
 
   return (
@@ -311,14 +327,13 @@ const PlayerList = ({
         aria-label={props["aria-label"] ?? "Player list"}
         className={cn(`mc-player-list`, className)}
         style={minecraftStyle(style, (__style): PlayerListScaleStyle => ({
+          "--mc-roster-height": `${(1 + headHeight + rows * 9 + footHeight) * scale}px`,
+          "--mc-roster-width": `${width * scale}px`,
           "--mc-scale": scale,
-          height: (1 + headHeight + rows * 9 + footHeight) * scale,
-          position: "relative",
-          width: width * scale,
           ...__style,
         }))}
       >
-        {header && (
+        {hasHeader ? (
           <div
             className="mc-roster-heading mc-dynamic-layout-player-list-1"
             style={
@@ -359,6 +374,8 @@ const PlayerList = ({
               </div>
             ))}
           </div>
+        ) : (
+          header
         )}
         <div
           role="list"
@@ -387,7 +404,7 @@ const PlayerList = ({
             )
           )}
         </div>
-        {footer && (
+        {hasFooter ? (
           <div
             className="mc-roster-heading mc-dynamic-layout-player-list-7"
             style={
@@ -429,6 +446,8 @@ const PlayerList = ({
               </div>
             ))}
           </div>
+        ) : (
+          footer
         )}
       </div>
     </MenuScaleContext.Provider>
@@ -504,9 +523,9 @@ const Scoreboard = ({
       aria-label={title}
       className={cn(`mc-scoreboard`, className)}
       style={minecraftStyle(style, (__style): PlayerListScaleStyle => ({
+        "--mc-roster-height": `${(visible.length * 9 + 10) * scale}px`,
+        "--mc-roster-width": `${(contentWidth + 4) * scale}px`,
         "--mc-scale": scale,
-        height: (visible.length * 9 + 10) * scale,
-        width: (contentWidth + 4) * scale,
         ...__style,
       }))}
     >

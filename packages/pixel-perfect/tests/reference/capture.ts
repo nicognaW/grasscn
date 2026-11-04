@@ -148,9 +148,9 @@ const javaCommand = async function javaCommand(
   const result = spawnSync(executable(command), [`@${argsFile}`], {
     cwd: gameDir,
     encoding: "utf-8",
+    maxBuffer: 10 * 1024 * 1024,
     timeout: 240_000,
     windowsHide: true,
-    maxBuffer: 10 * 1024 * 1024,
   });
 
   await writeFile(
@@ -169,7 +169,7 @@ const javaCommand = async function javaCommand(
 
 await javaCommand("javac", [
   "-encoding",
-  "UTF-8",
+  "utf-8",
   "-classpath",
   classpath,
   "-d",
@@ -259,7 +259,7 @@ for (const scale of [1, 2, 3]) {
     const end = Math.min(126, start + 31);
 
     const label = Array.from({ length: end - start + 1 }, (_, index) =>
-      String.fromCharCode(start + index)
+      String.fromCodePoint(start + index)
     ).join("");
 
     for (const state of ["normal", "disabled"]) {

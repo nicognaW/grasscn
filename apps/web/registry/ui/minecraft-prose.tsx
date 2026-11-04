@@ -44,7 +44,11 @@ interface MinecraftProseScaleStyle extends React.CSSProperties {
 }
 
 const advance = (char: string) =>
-  minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
+  minecraftGlyphs[
+    // SAFETY: Private glyph callers supply nonempty iteration characters or guarded in-bounds code units. Its first code point therefore exists.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+    (char.codePointAt(0) as number) - 32
+  ]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   6;
 
@@ -232,7 +236,7 @@ const MinecraftProse = ({
       style={minecraftStyle(style, (__style): MinecraftProseScaleStyle => ({
         "--mc-scale": scale,
         width:
-          typeof maxWidth === "undefined" || maxWidth === null
+          maxWidth === undefined || maxWidth === null
             ? undefined
             : maxWidth * scale,
         ...__style,

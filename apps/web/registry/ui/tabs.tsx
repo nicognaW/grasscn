@@ -32,7 +32,11 @@ const tabLabelAdvance = function tabLabelAdvance(glyphText: string) {
 
   for (const advanceCharacter of glyphText) {
     accumulatedGlyphAdvance +=
-      minecraftGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+      minecraftGlyphs[
+        // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+        (advanceCharacter.codePointAt(0) as number) - 32
+      ]?.[2] ??
       getUnihexGlyph(advanceCharacter)?.advance ??
       6;
   }

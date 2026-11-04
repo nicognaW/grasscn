@@ -1,5 +1,7 @@
 @layer components {
   .mc-advancement-tree {
+    height: var(--mc-tree-height);
+    width: var(--mc-tree-width);
     background-image: var(--mc-tree-image);
     background-position: var(--mc-tree-position);
     background-size: var(--mc-tree-size);

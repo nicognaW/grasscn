@@ -402,52 +402,66 @@ const verifyDeclaredInstallation = async (
     }
   }
 
-  for (const reference of manifest.cases) {
-    // SAFETY: the case-name arrays were just asserted equal to the reference matrix.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const installed = installedByName.get(reference.name) as PixelEvidenceCase;
+  const declaredCaseChecks = await Promise.allSettled(
+    manifest.cases.map(async (reference) => {
+      // SAFETY: the case-name arrays were just asserted equal to the reference matrix.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact case-name equality above proves this lookup exists; retain the approved producer projection while ! remains forbidden.
+      const installed = installedByName.get(
+        reference.name
+      ) as PixelEvidenceCase;
 
-    // SAFETY: the repeatability case names were likewise asserted equal above.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const repeated = repeatedByName.get(reference.name) as RepeatedEvidenceCase;
+      // SAFETY: the repeatability case names were likewise asserted equal above.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact case-name equality above proves this lookup exists; retain the approved producer projection while ! remains forbidden.
+      const repeated = repeatedByName.get(
+        reference.name
+      ) as RepeatedEvidenceCase;
 
-    assert.equal(installed.mismatchedPixels, 0);
-    assert.equal(repeated.mismatchedPixels, 0);
-    assert.equal(installed.decodedRgbaSha256, repeated.decodedRgbaSha256);
+      assert.equal(installed.mismatchedPixels, 0);
+      assert.equal(repeated.mismatchedPixels, 0);
+      assert.equal(installed.decodedRgbaSha256, repeated.decodedRgbaSha256);
 
-    for (const reuse of verification.appearanceReuses ?? []) {
-      if (
-        reuse.manifest !== manifestFile ||
-        !Object.entries(reuse.where).every(([field, value]) => {
-          // SAFETY: authored appearance reuse predicates select native case state or element.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-          const fieldName = field as AppearanceField;
+      for (const reuse of verification.appearanceReuses ?? []) {
+        if (
+          reuse.manifest !== manifestFile ||
+          !Object.entries(reuse.where).every(([field, value]) => {
+            // SAFETY: authored appearance reuse predicates select native case state or element.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+            const fieldName = field as AppearanceField;
 
-          return reference[fieldName] === value;
-        })
-      ) {
-        continue;
+            return reference[fieldName] === value;
+          })
+        ) {
+          continue;
+        }
+
+        assert.equal(
+          installed[reuse.reportField],
+          repeated.decodedRgbaSha256,
+          `${component.name}: missing or unequal ${reuse.reportField}: ${reference.name}`
+        );
       }
 
-      assert.equal(
-        installed[reuse.reportField],
-        repeated.decodedRgbaSha256,
-        `${component.name}: missing or unequal ${reuse.reportField}: ${reference.name}`
+      const referenceFile = path.join(
+        path.dirname(manifestFile),
+        "captures",
+        reference.name
       );
-    }
 
-    const referenceFile = path.join(
-      path.dirname(manifestFile),
-      "captures",
-      reference.name
-    );
+      assert.equal(
+        digest(PNG.sync.read(await readFile(evidenceFile(referenceFile))).data),
+        repeated.decodedRgbaSha256
+      );
+      assert.equal(repeated.runOnePngSha256, reference.sha256);
+      assert.equal(repeated.runTwoPngSha256, reference.sha256);
+    })
+  );
 
-    assert.equal(
-      digest(PNG.sync.read(await readFile(evidenceFile(referenceFile))).data),
-      repeated.decodedRgbaSha256
-    );
-    assert.equal(repeated.runOnePngSha256, reference.sha256);
-    assert.equal(repeated.runTwoPngSha256, reference.sha256);
+  const declaredCaseChecksFailure = declaredCaseChecks.find(
+    (result) => result.status === "rejected"
+  );
+
+  if (declaredCaseChecksFailure) {
+    throw declaredCaseChecksFailure.reason;
   }
 };
 
@@ -571,17 +585,27 @@ const verifyGlyphEvidence = async (
       manifest.caseDefinitionSha256
     );
 
-    for (const frame of observation.frames) {
-      const framePath = path.join(
-        path.dirname(observationPath),
-        observation.framesDirectory,
-        frame.name
-      );
+    const glyphFrameChecks = await Promise.allSettled(
+      observation.frames.map(async (frame) => {
+        const framePath = path.join(
+          path.dirname(observationPath),
+          observation.framesDirectory,
+          frame.name
+        );
 
-      assert.equal(
-        digest(await readFile(evidenceFile(framePath))),
-        frame.sha256
-      );
+        assert.equal(
+          digest(await readFile(evidenceFile(framePath))),
+          frame.sha256
+        );
+      })
+    );
+
+    const glyphFrameChecksFailure = glyphFrameChecks.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (glyphFrameChecksFailure) {
+      throw glyphFrameChecksFailure.reason;
     }
 
     const observedByName = new Map<
@@ -595,34 +619,44 @@ const verifyGlyphEvidence = async (
       }
     }
 
-    for (const reference of manifest.cases) {
-      const observed = observedByName.get(reference.name);
+    const glyphCaseChecks = await Promise.allSettled(
+      manifest.cases.map(async (reference) => {
+        const observed = observedByName.get(reference.name);
 
-      assert.ok(
-        observed,
-        `Missing glyph-observation native case: ${reference.name}`
-      );
+        assert.ok(
+          observed,
+          `Missing glyph-observation native case: ${reference.name}`
+        );
 
-      const observedBytes = await readFile(
-        evidenceFile(
-          path.join(path.dirname(observationPath), "captures", observed.name)
-        )
-      );
+        const observedBytes = await readFile(
+          evidenceFile(
+            path.join(path.dirname(observationPath), "captures", observed.name)
+          )
+        );
 
-      assert.equal(digest(observedBytes), observed.sha256);
+        assert.equal(digest(observedBytes), observed.sha256);
 
-      const referenceBytes = await readFile(
-        evidenceFile(
-          path.join(path.dirname(manifestFile), "captures", reference.name)
-        )
-      );
+        const referenceBytes = await readFile(
+          evidenceFile(
+            path.join(path.dirname(manifestFile), "captures", reference.name)
+          )
+        );
 
-      assert.ok(
-        PNG.sync
-          .read(observedBytes)
-          .data.equals(PNG.sync.read(referenceBytes).data),
-        `Glyph probe changed native rendering: ${reference.name}`
-      );
+        assert.ok(
+          PNG.sync
+            .read(observedBytes)
+            .data.equals(PNG.sync.read(referenceBytes).data),
+          `Glyph probe changed native rendering: ${reference.name}`
+        );
+      })
+    );
+
+    const glyphCaseChecksFailure = glyphCaseChecks.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (glyphCaseChecksFailure) {
+      throw glyphCaseChecksFailure.reason;
     }
   }
 
@@ -666,36 +700,55 @@ const verifyNativeManifestEvidence = async (
     );
   }
 
-  for (const reference of manifest.cases) {
-    const file = path.join(
-      path.dirname(manifestFile),
-      "captures",
-      reference.name
-    );
-
-    assert.equal(
-      digest(await readFile(evidenceFile(file))),
-      reference.sha256,
-      `Reference integrity: ${file}`
-    );
-  }
-
-  if (
-    manifest.framesDirectory !== undefined &&
-    manifest.framesDirectory !== ""
-  ) {
-    for (const frame of manifest.frames) {
+  const captureCaseChecks = await Promise.allSettled(
+    manifest.cases.map(async (reference) => {
       const file = path.join(
         path.dirname(manifestFile),
-        manifest.framesDirectory,
-        frame.name
+        "captures",
+        reference.name
       );
 
       assert.equal(
         digest(await readFile(evidenceFile(file))),
-        frame.sha256,
-        `Full-frame integrity: ${file}`
+        reference.sha256,
+        `Reference integrity: ${file}`
       );
+    })
+  );
+
+  const captureCaseChecksFailure = captureCaseChecks.find(
+    (result) => result.status === "rejected"
+  );
+
+  if (captureCaseChecksFailure) {
+    throw captureCaseChecksFailure.reason;
+  }
+
+  const { framesDirectory } = manifest;
+
+  if (framesDirectory !== undefined && framesDirectory !== "") {
+    const captureFrameChecks = await Promise.allSettled(
+      manifest.frames.map(async (frame) => {
+        const file = path.join(
+          path.dirname(manifestFile),
+          framesDirectory,
+          frame.name
+        );
+
+        assert.equal(
+          digest(await readFile(evidenceFile(file))),
+          frame.sha256,
+          `Full-frame integrity: ${file}`
+        );
+      })
+    );
+
+    const captureFrameChecksFailure = captureFrameChecks.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (captureFrameChecksFailure) {
+      throw captureFrameChecksFailure.reason;
     }
   }
 
@@ -754,99 +807,135 @@ const verifyNativeManifestEvidence = async (
   }
 };
 
-for (const component of map.components) {
-  const verification = component.pixelVerification;
-  const registryItemName = component.implementation.registryItem;
-  assert.ok(
-    kinds.has(component.mapping.kind),
-    `${component.name}: unknown mapping kind`
-  );
-  assert.ok(
-    component.mapping.target &&
-      component.mapping.limitation &&
-      component.nextStep
-  );
-  assert.ok(component.referenceCases.requiredDimensions.length);
-
-  for (const family of component.mapping.families) {
+const componentChecks = await Promise.allSettled(
+  map.components.map(async (component) => {
+    const verification = component.pixelVerification;
+    const registryItemName = component.implementation.registryItem;
     assert.ok(
-      map.families[family],
-      `${component.name}: absent family ${family}`
+      kinds.has(component.mapping.kind),
+      `${component.name}: unknown mapping kind`
     );
-  }
-
-  assert.ok(
-    [
-      "unverified",
-      "reference-and-tests-available",
-      "verified-declared-cases",
-      "not-applicable-unskinned-utility",
-    ].includes(verification.status),
-    `${component.name}: unsupported fidelity claim`
-  );
-
-  if (registryItemName !== undefined && registryItemName !== "") {
     assert.ok(
-      registry.items.some((item) => item.name === registryItemName),
-      `${component.name}: missing installable item`
+      component.mapping.target &&
+        component.mapping.limitation &&
+        component.nextStep
     );
-  }
+    assert.ok(component.referenceCases.requiredDimensions.length);
 
-  if (verification.status === "not-applicable-unskinned-utility") {
-    await verifyUtilityEvidence(component, verification, registryItemName);
-  }
+    for (const family of component.mapping.families) {
+      assert.ok(
+        map.families[family],
+        `${component.name}: absent family ${family}`
+      );
+    }
 
-  for (const manifestFile of [
-    verification.manifest,
-    ...(verification.additionalManifests ?? []),
-  ].filter((file): file is string => Boolean(file))) {
-    await verifyNativeManifestEvidence(
-      component,
-      verification,
-      registryItemName,
-      manifestFile
+    assert.ok(
+      [
+        "unverified",
+        "reference-and-tests-available",
+        "verified-declared-cases",
+        "not-applicable-unskinned-utility",
+      ].includes(verification.status),
+      `${component.name}: unsupported fidelity claim`
     );
-  }
+
+    if (registryItemName !== undefined && registryItemName !== "") {
+      assert.ok(
+        registry.items.some((item) => item.name === registryItemName),
+        `${component.name}: missing installable item`
+      );
+    }
+
+    if (verification.status === "not-applicable-unskinned-utility") {
+      await verifyUtilityEvidence(component, verification, registryItemName);
+    }
+
+    const manifestChecks = await Promise.allSettled(
+      [
+        verification.manifest,
+        ...(verification.additionalManifests ?? []),
+      ].flatMap((manifestFile) =>
+        manifestFile !== undefined &&
+        manifestFile !== null &&
+        manifestFile !== ""
+          ? [
+              verifyNativeManifestEvidence(
+                component,
+                verification,
+                registryItemName,
+                manifestFile
+              ),
+            ]
+          : []
+      )
+    );
+
+    const manifestChecksFailure = manifestChecks.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (manifestChecksFailure) {
+      throw manifestChecksFailure.reason;
+    }
+  })
+);
+
+const componentChecksFailure = componentChecks.find(
+  (result) => result.status === "rejected"
+);
+
+if (componentChecksFailure) {
+  throw componentChecksFailure.reason;
 }
 
 if (args.includes("--live")) {
-  for (const source of catalog.sources) {
-    const response = await fetch(source.url);
-    assert.ok(response.ok, `${source.url}: HTTP ${response.status}`);
-    const body = await response.text();
-    let current;
+  const upstreamSourceChecks = await Promise.allSettled(
+    catalog.sources.map(async (source) => {
+      const response = await fetch(source.url);
+      assert.ok(response.ok, `${source.url}: HTTP ${response.status}`);
+      const body = await response.text();
+      let current;
 
-    if (source.url.endsWith("/docs/components")) {
-      const componentNames = [
-        ...new Set(
-          [
-            ...body.matchAll(
-              /href="\/docs\/components\/base\/(?<component>[^"#?]+)"/gu
-            ),
-          ].map((match) => match[1])
-        ),
-      ];
+      if (source.url.endsWith("/docs/components")) {
+        const componentNames = [
+          ...new Set(
+            [
+              ...body.matchAll(
+                /href="\/docs\/components\/base\/(?<component>[^"#?]+)"/gu
+              ),
+            ].map((match) => match[1])
+          ),
+        ];
 
-      componentNames.sort();
-      current = componentNames;
-    } else {
-      // SAFETY: the official registry catalogue endpoint returns items or a bare item array.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      const data = JSON.parse(body) as UpstreamRegistryCatalog;
+        componentNames.sort();
+        current = componentNames;
+      } else {
+        // SAFETY: the official registry catalogue endpoint returns items or a bare item array.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const data = JSON.parse(body) as UpstreamRegistryCatalog;
 
-      const registryNames = (data.items ?? data).flatMap((item) =>
-        item.type === "registry:ui" ? [item.name] : []
+        const registryNames = (data.items ?? data).flatMap((item) =>
+          item.type === "registry:ui" ? [item.name] : []
+        );
+
+        registryNames.sort();
+        current = registryNames;
+      }
+
+      assert.deepEqual(
+        current,
+        source.names,
+        `Upstream catalog changed: ${source.url}`
       );
+    })
+  );
 
-      registryNames.sort();
-      current = registryNames;
-    }
+  const upstreamSourceChecksFailure = upstreamSourceChecks.find(
+    (result) => result.status === "rejected"
+  );
 
-    assert.deepEqual(
-      current,
-      source.names,
-      `Upstream catalog changed: ${source.url}`
-    );
+  if (upstreamSourceChecksFailure) {
+    throw upstreamSourceChecksFailure.reason;
   }
 }
 

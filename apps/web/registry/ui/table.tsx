@@ -80,7 +80,7 @@ const TableText = ({
   const value = literalText(children);
 
   if (
-    typeof children === "undefined" ||
+    children === undefined ||
     children === null ||
     typeof children === "boolean"
   ) {
@@ -94,7 +94,7 @@ const TableText = ({
       scale={scale}
       maxWidth={maxTextWidth}
       align={textAlign}
-      style={{ width: "100%" }}
+      className="mc-owned-paint-table-1"
     >
       {value}
     </MinecraftDisclosureText>
@@ -114,7 +114,8 @@ const Table = ({
       data-slot="table-container"
       className="mc-table-container"
       style={
-        /* SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
+        // SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
+        {
           "--mc-scale": scale,
         } as React.CSSProperties
       }

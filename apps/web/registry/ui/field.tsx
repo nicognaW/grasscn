@@ -115,24 +115,30 @@ const FieldSeparator = ({
   ...props
 }: React.ComponentProps<"div"> & {
   children?: React.ReactNode;
-}) => (
-  <div
-    data-slot="field-separator"
-    data-content={!!children}
-    className={cn("mc-field-separator", className)}
-    {...props}
-  >
-    <Separator className="mc-field-divider" />
-    {children && (
-      <span
-        className="mc-field-divider-content"
-        data-slot="field-separator-content"
-      >
-        <MinecraftProse>{children}</MinecraftProse>
-      </span>
-    )}
-  </div>
-);
+}) => {
+  const hasContent = Boolean(children);
+
+  return (
+    <div
+      data-slot="field-separator"
+      data-content={hasContent}
+      className={cn("mc-field-separator", className)}
+      {...props}
+    >
+      <Separator className="mc-field-divider" />
+      {hasContent ? (
+        <span
+          className="mc-field-divider-content"
+          data-slot="field-separator-content"
+        >
+          <MinecraftProse>{children}</MinecraftProse>
+        </span>
+      ) : (
+        children
+      )}
+    </div>
+  );
+};
 
 const FieldError = ({
   className,
@@ -154,7 +160,7 @@ const FieldError = ({
       return children;
     }
 
-    if (!errors?.length) {
+    if (!errors || errors.length === 0) {
       return null;
     }
 
@@ -168,17 +174,20 @@ const FieldError = ({
 
     return (
       <ul className="mc-field-error-list">
-        {uniqueErrors.map(
-          (error) =>
-            error?.message && (
-              <li key={error.message}>
-                <MinecraftProse scale={scale}>{error.message}</MinecraftProse>
-              </li>
-            )
-        )}
+        {uniqueErrors.map((error) => {
+          const message = error?.message;
+
+          return message === undefined || message === "" ? (
+            message
+          ) : (
+            <li key={message}>
+              <MinecraftProse scale={scale}>{message}</MinecraftProse>
+            </li>
+          );
+        })}
       </ul>
     );
-  }, [children, errors]);
+  }, [children, errors, scale]);
 
   if (!content) {
     return null;

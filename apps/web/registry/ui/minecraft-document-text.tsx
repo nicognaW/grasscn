@@ -22,11 +22,11 @@ const fontImage = function fontImage() {
   // oxlint-disable-next-line promise/avoid-new -- Keep this cached Image event Promise, including its loaded-element result and rejection.
   return (bitmap ??= new Promise((resolve, reject) => {
     const image = new Image();
-    image.onload = () => {
+    image.addEventListener("load", () => {
       resolve(image);
-    };
+    });
 
-    image.onerror = reject;
+    image.addEventListener("error", reject);
     image.src = minecraftInputAssets.atlas;
   }));
 };
@@ -36,7 +36,11 @@ const documentTextWidth = function documentTextWidth(text: string) {
 
   for (const advanceCharacter of text) {
     accumulatedGlyphAdvance +=
-      asciiGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+      asciiGlyphs[
+        // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+        (advanceCharacter.codePointAt(0) as number) - 32
+      ]?.[2] ??
       getUnihexGlyph(advanceCharacter)?.advance ??
       6;
   }
@@ -139,7 +143,12 @@ const MinecraftDocumentText = ({
                 : 0;
 
           for (const char of line) {
-            const glyph = asciiGlyphs[char.codePointAt(0)! - 32];
+            const glyph =
+              asciiGlyphs[
+                // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+                // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+                (char.codePointAt(0) as number) - 32
+              ];
 
             if (glyph) {
               if (char !== " ") {

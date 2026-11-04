@@ -90,7 +90,14 @@ const captureReads = await Promise.allSettled(
 );
 
 const cases = first.cases.map((reference, index) => {
-  const repeated = repeatedByName.get(reference.name)!;
+  const repeated =
+    // SAFETY: The existing sorted case-name equality assertion proves each first-capture case has a second-capture name; this Map preserves the original first matching record.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+    repeatedByName.get(
+      reference.name
+    ) as NativeCaptureManifest["cases"][number];
+  /* oxlint-enable typescript/no-unsafe-type-assertion */
+
   const captureRead = captureReads[index];
 
   if (captureRead.status === "rejected") {

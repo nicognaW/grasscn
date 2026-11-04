@@ -118,7 +118,7 @@ const MarkerContent = ({
           scale={scale}
           maxWidth={maxWidth}
           align={align}
-          style={{ width: "100%" }}
+          className="mc-owned-paint-marker-1"
         >
           {children}
         </Label>

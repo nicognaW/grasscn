@@ -252,10 +252,13 @@ const captureOverlayPart = async (
 
 try {
   const pending = [...names];
+  let nextPending = 0;
+
   await Promise.all(
     Array.from({ length: Math.min(2, names.length) }, async () => {
-      while (pending.length) {
-        const name = pending.shift()!;
+      while (nextPending < pending.length) {
+        const name = pending[nextPending];
+        nextPending += 1;
         const errors: string[] = [];
 
         // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.

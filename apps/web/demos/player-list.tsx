@@ -6,9 +6,27 @@ import { PlayerList, Scoreboard } from "../registry/ui/player-list";
 import type { DemoProps } from "../types";
 
 const initial: PlayerListEntry[] = [
-  { id: "alex", name: "Alex", skin: "slim/alex", latency: 42, score: 180 },
-  { id: "steve", name: "Steve", skin: "wide/steve", latency: 84, score: 156 },
-  { id: "kai", name: "Kai", skin: "wide/kai", latency: 220, score: 128 },
+  {
+    id: "alex",
+    latency: 42,
+    name: "Alex",
+    score: 180,
+    skin: "slim/alex",
+  },
+  {
+    id: "steve",
+    latency: 84,
+    name: "Steve",
+    score: 156,
+    skin: "wide/steve",
+  },
+  {
+    id: "kai",
+    latency: 220,
+    name: "Kai",
+    score: 128,
+    skin: "wide/kai",
+  },
 ];
 
 const largerCrew: PlayerListEntry[] = Array.from({ length: 24 }, (_, i) => ({

@@ -29,15 +29,16 @@ const loadAlpha = function loadAlpha() {
   // oxlint-disable-next-line promise/avoid-new -- Preserve the cached Image load/error bridge and its onload alpha-extraction phase.
   return (alpha ??= new Promise((resolve, reject) => {
     const image = new Image();
-    image.onload = () => {
+    image.addEventListener("load", () => {
       const c = document.createElement("canvas");
-      c.width = c.height = 128;
+      c.height = 128;
+      c.width = 128;
       const context = c.getContext("2d")!;
       context.drawImage(image, 0, 0);
       resolve(context.getImageData(0, 0, 128, 128).data);
-    };
+    });
 
-    image.onerror = reject;
+    image.addEventListener("error", reject);
     image.src = minecraftInputAssets.atlas;
   }));
 };
@@ -72,7 +73,11 @@ export const MenuUnicodeLine = ({
     let frame = 0;
     let signature = "";
 
-    const canvas = ref.current!;
+    const canvas =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement;
+
     const context = canvas.getContext("2d")!;
 
     void Promise.all([loadUnihex(), loadAlpha()]).then(([, source]) => {
@@ -81,7 +86,11 @@ export const MenuUnicodeLine = ({
       }
 
       const glyphs = Array.from(input.text, (char) => {
-        const code = char.codePointAt(0)!;
+        const code =
+          // SAFETY: String Array.from iteration supplies a nonempty character. Its first code point therefore exists.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+          char.codePointAt(0) as number;
+
         const ascii = asciiGlyphs[code - 32];
         const uni = getUnihexGlyph(char);
         const observed = observedMenuGlyphs[code.toString(16)];

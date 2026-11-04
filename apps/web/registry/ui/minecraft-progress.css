@@ -18,6 +18,9 @@
     background-repeat: no-repeat;
     pointer-events: none;
   }
+  .mc-progress-indicator:not([data-indeterminate]) {
+    inset-inline-start: 0;
+  }
   .mc-progress-indicator {
     position: absolute;
     top: 0;
@@ -44,5 +47,12 @@
   }
   .mc-progress-paint[data-mc-progress-painted="true"] ~ .mc-progress-fallback {
     visibility: hidden;
+  }
+}
+
+@layer components {
+  .mc-owned-paint-progress-1 {
+    height: 100%;
+    width: var(--mc-z-progress-paint-1-width);
   }
 }

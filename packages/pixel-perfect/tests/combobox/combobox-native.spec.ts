@@ -163,7 +163,13 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
         await (c.state.endsWith("hover")
           ? subject
               .getByRole("option")
-              .nth((c as ComboboxHoveredSuggestionCase).targetIndex)
+              .nth(
+                // SAFETY: This existing Suggestions hover branch consumes retained hover cases with numeric targetIndex; all other routes retain their optional fields and original checks.
+                /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+                (c as ComboboxHoveredSuggestionCase)
+                  /* oxlint-enable typescript/no-unsafe-type-assertion */
+                  .targetIndex
+              )
               .hover()
           : page.mouse.move(0, 0));
 

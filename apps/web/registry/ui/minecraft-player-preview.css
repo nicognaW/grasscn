@@ -51,3 +51,10 @@
     visibility: var(--mc-dynamic-player-preview-1-visibility);
   }
 }
+
+@layer components {
+  .mc-owned-base-player-preview-1 {
+    height: var(--mc-z-player-preview-base-1-height);
+    width: var(--mc-z-player-preview-base-1-width);
+  }
+}

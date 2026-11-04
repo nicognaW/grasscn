@@ -4,14 +4,13 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import type {
-  InventoryAsset,
+  RetainedNativeInventory,
   NativeNineSlice,
   SpriteMetadata,
   SpriteSource,
   SliderSprite,
 } from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
-import type { NativeInventory } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
 const [input] = process.argv.slice(2);
@@ -27,7 +26,7 @@ const inventory = JSON.parse(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-) as NativeInventory;
+) as RetainedNativeInventory;
 
 const sha = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
@@ -63,8 +62,10 @@ for (const name of [
   "slider_highlighted",
   "slider_handle",
   "slider_handle_highlighted",
-]) {
-  const member = `assets/minecraft/textures/gui/sprites/widget/${name}.png`;
+] as const) {
+  const member =
+    `assets/minecraft/textures/gui/sprites/widget/${name}.png` as const;
+
   const bytesRead = assetInputReads[assetInputNames.indexOf(`${name}.png`)];
 
   if (bytesRead.status === "rejected") {
@@ -82,9 +83,7 @@ for (const name of [
 
   const metadata = metadataRead.value;
 
-  // SAFETY: these original slider members are present in the pinned native inventory.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-  const original = inventory.assets[member] as InventoryAsset;
+  const original = inventory.assets[member];
 
   if (
     sha(bytes) !== original.sha256 ||
@@ -166,7 +165,7 @@ const textAssets = await readFile(
 
 // SAFETY: the shared generated font sheet owns this font-face marker; preserve its original missing-marker failure.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-const fontFace = (/@font-face[^\n]+/u.exec(textAssets) as RegExpExecArray)[0];
+const [fontFace] = /@font-face[^\n]+/u.exec(textAssets) as RegExpExecArray;
 
 const atlasMatch =
   /--mc-ascii-atlas: (?<atlasUrl>url\("[^"]+"\)); --mc-atlas-size: (?<atlasSize>\d+)/u.exec(

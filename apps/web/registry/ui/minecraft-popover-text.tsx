@@ -29,7 +29,12 @@ const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
 export const PopoverTextContext = React.createContext({ scale: 2, width: 214 });
 
 const advance = (char: string, bold: boolean) => {
-  const ascii = asciiGlyphs[char.codePointAt(0)! - 32];
+  const ascii =
+    asciiGlyphs[
+      // SAFETY: Private glyph callers supply nonempty iteration characters or guarded in-bounds code units. Its first code point therefore exists.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+      (char.codePointAt(0) as number) - 32
+    ];
 
   return (
     (ascii?.[2] ?? getUnihexGlyph(char)?.advance ?? 0) +

@@ -8,6 +8,8 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-hotbar.css";
 
+const EMPTY_HOTBAR_ITEMS = [] as const;
+
 interface HotbarLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-hotbar-1-height": number;
   "--mc-dynamic-hotbar-1-width": number;
@@ -31,6 +33,9 @@ interface HotbarLayoutStyle4 extends React.CSSProperties {
 
 interface HotbarScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
+
+  "--mc-z-hotbar-base-1-height"?: string;
+  "--mc-z-hotbar-base-1-width"?: string;
 }
 
 interface HotbarItem {
@@ -63,7 +68,11 @@ const HotbarPaint = ({
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   React.useLayoutEffect(() => {
-    const ctx = ref.current!.getContext("2d")!;
+    const ctx =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      (ref.current as HTMLCanvasElement).getContext("2d")!;
+
     ctx.fillStyle = background;
     ctx.fillRect(0, 0, 184, 23);
     const image = ctx.getImageData(0, 0, 184, 23);
@@ -116,7 +125,7 @@ const HotbarPaint = ({
 };
 
 const Hotbar = ({
-  items = [],
+  items = EMPTY_HOTBAR_ITEMS,
   value,
   defaultValue = 0,
   onValueChange,
@@ -207,11 +216,11 @@ const Hotbar = ({
       role="toolbar"
       aria-label={props["aria-label"] ?? "Hotbar"}
       data-slot="hotbar"
-      className={cn(`mc-hotbar`, className)}
+      className={cn("mc-hotbar mc-owned-base-hotbar-1", className)}
       style={minecraftStyle(style, (__style): HotbarScaleStyle => ({
         "--mc-scale": scale,
-        height: 23 * scale,
-        width: 184 * scale,
+        "--mc-z-hotbar-base-1-height": `${23 * scale}px`,
+        "--mc-z-hotbar-base-1-width": `${184 * scale}px`,
         ...__style,
       }))}
       onKeyDown={(event) => {
@@ -255,7 +264,7 @@ const Hotbar = ({
         }
       }}
     >
-      {background ? (
+      {background !== undefined && background !== "" ? (
         <HotbarPaint value={current} background={background} scale={scale} />
       ) : (
         <>

@@ -40,6 +40,16 @@ import {
 
 import "./minecraft-sidebar.css";
 
+interface OwnedSidebarDimensions1 extends React.CSSProperties {
+  "--mc-z-sidebar-base-1-right"?: string;
+  "--mc-z-sidebar-base-1-top"?: string;
+}
+
+interface OwnedSidebarDimensions2 extends React.CSSProperties {
+  "--mc-z-sidebar-base-2-right"?: string;
+  "--mc-z-sidebar-base-2-top"?: string;
+}
+
 interface SidebarWidthStyle extends React.CSSProperties {
   "--mc-scale": number;
   "--sidebar-width": string;
@@ -732,11 +742,13 @@ const SidebarGroupAction = ({
       data-slot="sidebar-group-action"
       data-sidebar="group-action"
       scale={explicit ?? scale}
-      className={cn(`mc-sidebar-group-action`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        position: "absolute",
-        right: 4 * (explicit ?? scale),
-        top: 0,
+      className={cn(
+        "mc-sidebar-group-action mc-owned-base-sidebar-1 absolute",
+        className
+      )}
+      style={minecraftStyle(style, (__style): OwnedSidebarDimensions1 => ({
+        "--mc-z-sidebar-base-1-right": `${4 * (explicit ?? scale)}px`,
+        "--mc-z-sidebar-base-1-top": `0px`,
         ...__style,
       }))}
       {...props}
@@ -848,6 +860,7 @@ const SidebarMenuButton = ({
     );
   }
 
+  const hasTooltip = Boolean(tooltip);
   const raw = children;
   const label = props["aria-label"] ?? plainText(raw);
   const display = collapsed ? collapsedContent(raw) : raw;
@@ -856,7 +869,7 @@ const SidebarMenuButton = ({
 
   const button = (
     <SidebarControl
-      render={tooltip ? <TooltipTrigger render={render} /> : render}
+      render={hasTooltip ? <TooltipTrigger render={render} /> : render}
       type="button"
       data-slot="sidebar-menu-button"
       data-sidebar="menu-button"
@@ -875,7 +888,7 @@ const SidebarMenuButton = ({
     </SidebarControl>
   );
 
-  if (!tooltip) {
+  if (!hasTooltip) {
     return button;
   }
 
@@ -913,11 +926,13 @@ const SidebarMenuAction = ({
       data-sidebar="menu-action"
       data-show-on-hover={showOnHover || undefined}
       scale={explicit ?? scale}
-      className={cn(`mc-sidebar-menu-action`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        position: "absolute",
-        right: 2 * (explicit ?? scale),
-        top: 0,
+      className={cn(
+        "mc-sidebar-menu-action mc-owned-base-sidebar-2 absolute",
+        className
+      )}
+      style={minecraftStyle(style, (__style): OwnedSidebarDimensions2 => ({
+        "--mc-z-sidebar-base-2-right": `${2 * (explicit ?? scale)}px`,
+        "--mc-z-sidebar-base-2-top": `0px`,
         ...__style,
       }))}
       {...props}

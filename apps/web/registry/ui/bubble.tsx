@@ -127,7 +127,9 @@ const BubbleContent = ({
     const update = () => {
       const ownStyle = getComputedStyle(element);
       const parentStyle = getComputedStyle(parent);
-      const fixed = element.style.width && element.style.width !== "auto";
+
+      const fixed =
+        element.style.width !== "" && element.style.width !== "auto";
 
       let pixels = fixed
         ? element.clientWidth
@@ -142,7 +144,7 @@ const BubbleContent = ({
 
         if (maximum.endsWith("px")) {
           // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-          pixels = Math.min(pixels, parseFloat(maximum));
+          pixels = Math.min(pixels, Number.parseFloat(maximum));
         }
 
         if (bubble.style.width && bubble.style.width !== "auto") {
@@ -178,7 +180,7 @@ const BubbleContent = ({
   const original = children;
 
   const content =
-    author && isMinecraftTextContent(original)
+    (author ?? "") !== "" && isMinecraftTextContent(original)
       ? `<${author}> ${original}`
       : original;
 
@@ -229,7 +231,11 @@ const BubbleContent = ({
 
       for (const advanceCharacter of line) {
         accumulatedGlyphAdvance +=
-          minecraftGlyphs[advanceCharacter.codePointAt(0)! - 32]?.[2] ??
+          minecraftGlyphs[
+            // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+            (advanceCharacter.codePointAt(0) as number) - 32
+          ]?.[2] ??
           getUnihexGlyph(advanceCharacter)?.advance ??
           disclosureAdvance(advanceCharacter) ??
           6;
@@ -245,7 +251,7 @@ const BubbleContent = ({
     <MinecraftChatText
       scale={scale}
       maxWidth={width}
-      style={{ color: "inherit" }}
+      className="mc-owned-paint-bubble-1"
     >
       {content}
     </MinecraftChatText>

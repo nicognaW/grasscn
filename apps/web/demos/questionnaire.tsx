@@ -29,14 +29,14 @@ const QuestionnaireDemo = ({ scale }: DemoProps) => {
 
   const items = [
     {
+      choices: [{ value: "survival" }, { value: "creative" }],
       name: "mode",
       required: true,
-      choices: [{ value: "survival" }, { value: "creative" }],
     },
     {
+      choices: [{ value: "caves" }, { value: "villages" }],
       name: "features",
       required: false,
-      choices: [{ value: "caves" }, { value: "villages" }],
     },
     { name: "name", required: true },
   ] as const;
@@ -82,7 +82,7 @@ const QuestionnaireDemo = ({ scale }: DemoProps) => {
           ref={form}
           key={session}
           scale={scale}
-          style={{ maxWidth: 600, width: "100%" }}
+          className="demo-owned-questionnaire-1"
           items={items}
           shortcuts="numbers"
           onSubmit={(event) => {

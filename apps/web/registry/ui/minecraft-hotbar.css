@@ -63,3 +63,10 @@
     width: calc(var(--mc-dynamic-hotbar-4-width) * 1px);
   }
 }
+
+@layer components {
+  .mc-owned-base-hotbar-1 {
+    height: var(--mc-z-hotbar-base-1-height);
+    width: var(--mc-z-hotbar-base-1-width);
+  }
+}

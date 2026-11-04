@@ -106,6 +106,10 @@ export default defineConfig({
       },
     },
   ],
+  rules: {
+    // Safety rules reject unchecked casts and postfix assertions; this stylistic preference demands the forbidden postfix spelling.
+    "typescript/non-nullable-type-assertion-style": "off",
+  },
   settings: {
     // React delivers the real stylesheet through HomePage; exact owners preserve all other unknown-class checks.
     ...jsPluginSettings,

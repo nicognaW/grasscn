@@ -20,6 +20,12 @@ interface SliderScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
 
+// Track state/events/ref still come from Base UI; native artwork owns its absolute positioning.
+const SliderTrackArtwork = ({
+  style: _primitiveStyle,
+  ...props
+}: React.ComponentProps<"div">) => <div {...props} />;
+
 const Slider = ({
   className,
   defaultValue,
@@ -197,9 +203,9 @@ const Slider = ({
       >
         <SliderPrimitive.Control className="absolute inset-0">
           <SliderPrimitive.Track
-            style={{ inset: 0, position: "absolute" }}
             data-slot="slider-track"
-            className="mc-slider-track"
+            className="mc-slider-track mc-owned-paint-slider-1"
+            render={<SliderTrackArtwork />}
           >
             <MinecraftSurface
               sprite={
@@ -224,7 +230,8 @@ const Slider = ({
                 key={index}
                 className="mc-slider-position"
                 style={
-                  /* SAFETY: --mc-thumb-fraction is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
+                  // SAFETY: --mc-thumb-fraction is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
+                  {
                     "--mc-thumb-fraction": reverse ? 1 - fraction : fraction,
                   } as React.CSSProperties
                 }
@@ -253,7 +260,7 @@ const Slider = ({
               </span>
             );
           })}
-          {typeof label !== "undefined" && label !== null && (
+          {label !== undefined && label !== null && (
             <MinecraftText className="mc-slider-label">{label}</MinecraftText>
           )}
         </SliderPrimitive.Control>

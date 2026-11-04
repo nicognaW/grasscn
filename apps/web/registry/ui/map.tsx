@@ -11,6 +11,13 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-map.css";
 
+const EMPTY_MAP_MARKERS = [] as const;
+
+interface OwnedMapDimensions1 extends React.CSSProperties {
+  "--mc-z-map-base-1-height"?: string;
+  "--mc-z-map-base-1-width"?: string;
+}
+
 interface MapLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-map-1-height": number;
   "--mc-dynamic-map-1-width": number;
@@ -47,6 +54,11 @@ interface MapLayoutStyle6 extends React.CSSProperties {
 
 interface MapScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
+
+  "--mc-z-map-base-2-border-image-source"?: string;
+  "--mc-z-map-base-2-border-image-width"?: string;
+  "--mc-z-map-base-2-height"?: string;
+  "--mc-z-map-base-2-width"?: string;
 }
 
 type MapDecoration = keyof typeof adventureAssets extends infer K
@@ -74,7 +86,7 @@ type MinecraftMapProps = React.ComponentProps<"div"> & {
 
 const MinecraftMap = ({
   pixels,
-  markers = [],
+  markers = EMPTY_MAP_MARKERS,
   scale = 2,
   onMarkerSelect,
   onMapClick,
@@ -102,7 +114,11 @@ const MinecraftMap = ({
       }
     });
 
-    observer.observe(ref.current!);
+    observer.observe(
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement
+    );
     window.addEventListener("resize", repaint);
 
     return () => {
@@ -113,7 +129,11 @@ const MinecraftMap = ({
   React.useLayoutEffect(() => {
     let live = true;
 
-    const canvas = ref.current!;
+    const canvas =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement;
+
     const ctx = canvas.getContext("2d")!;
     const image = ctx.createImageData(128, 128);
 
@@ -156,11 +176,11 @@ const MinecraftMap = ({
             // oxlint-disable-next-line promise/avoid-new -- Preserve this Image event bridge, loaded-element result and raw load-error event.
             await new Promise<HTMLImageElement>((resolve, reject) => {
               const loadedImage = new Image();
-              loadedImage.onload = () => {
+              loadedImage.addEventListener("load", () => {
                 resolve(loadedImage);
-              };
+              });
 
-              loadedImage.onerror = reject;
+              loadedImage.addEventListener("error", reject);
               loadedImage.src = src;
             })
         )
@@ -206,10 +226,10 @@ const MinecraftMap = ({
       data-slot="minecraft-map"
       role={props.role ?? "group"}
       aria-label={props["aria-label"] ?? "Map"}
-      className={cn(`mc-map`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        height: 128 * scale,
-        width: 128 * scale,
+      className={cn("mc-map mc-owned-base-map-1", className)}
+      style={minecraftStyle(style, (__style): OwnedMapDimensions1 => ({
+        "--mc-z-map-base-1-height": `${128 * scale}px`,
+        "--mc-z-map-base-1-width": `${128 * scale}px`,
         ...__style,
       }))}
       onClick={(event) => {
@@ -304,7 +324,8 @@ const LocatorDot = ({
   React.useEffect(() => {
     let live = true;
     const image = new Image();
-    image.onload = () => {
+
+    const handleImageLoad = () => {
       if (!live) {
         return;
       }
@@ -341,10 +362,13 @@ const LocatorDot = ({
       ctx.putImageData(pixels, 0, 0);
     };
 
+    image.addEventListener("load", handleImageLoad);
+
     image.src = adventureAssets[`gui/sprites/hud/locator_bar_dot/${shape}`].src;
 
     return () => {
       live = false;
+      image.removeEventListener("load", handleImageLoad);
     };
   }, [shape, color]);
 
@@ -396,15 +420,13 @@ const LocatorBar = ({
     data-slot="locator-bar"
     role={props.role ?? "group"}
     aria-label={props["aria-label"] ?? "Locator bar"}
-    className={cn(`mc-locator-bar`, className)}
+    className={cn("mc-locator-bar mc-owned-base-map-2", className)}
     style={minecraftStyle(style, (__style): MapScaleStyle => ({
       "--mc-scale": scale,
-      borderImageRepeat: "repeat",
-      borderImageSlice: "1 5 fill",
-      borderImageSource: `url("${adventureAssets["gui/sprites/hud/locator_bar_background"].src}")`,
-      borderImageWidth: `${scale}px ${5 * scale}px`,
-      height: 5 * scale,
-      width: 182 * scale,
+      "--mc-z-map-base-2-border-image-source": `url("${adventureAssets["gui/sprites/hud/locator_bar_background"].src}")`,
+      "--mc-z-map-base-2-border-image-width": `${scale}px ${5 * scale}px`,
+      "--mc-z-map-base-2-height": `${5 * scale}px`,
+      "--mc-z-map-base-2-width": `${182 * scale}px`,
       ...__style,
     }))}
   >

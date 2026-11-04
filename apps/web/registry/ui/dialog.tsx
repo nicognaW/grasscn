@@ -246,13 +246,16 @@ const DialogContent = ({
     </>
   );
 
+  const dialogLayout = React.useMemo(
+    () => ({ contentWidth: Math.max(1, width - 36), scale }),
+    [width, scale]
+  );
+
   return (
     <DialogPortal>
       <DialogOverlay />
       <ScaleContext.Provider value={scale}>
-        <DialogLayoutContext.Provider
-          value={{ contentWidth: Math.max(1, width - 36), scale }}
-        >
+        <DialogLayoutContext.Provider value={dialogLayout}>
           <DialogPrimitive.Popup
             render={render}
             data-slot="dialog-content"

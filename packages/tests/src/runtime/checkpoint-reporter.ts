@@ -22,6 +22,10 @@ import type {
   CheckpointDeclaration,
 } from "@tests/runtime/checkpoint-protocol";
 
+interface RecordedDeclaration extends CheckpointDeclaration {
+  sourceFiles: { file: string; sha256: string }[];
+}
+
 const hasCheckpointDirectory = (
   directory: string | undefined
 ): directory is string => (directory?.length ?? 0) > 0;
@@ -29,10 +33,7 @@ const hasCheckpointDirectory = (
 export default class CheckpointReporter implements Reporter {
   directory: string | undefined;
   sources: Map<string, string>;
-  declarations: Map<
-    string,
-    CheckpointDeclaration & { sourceFiles: { file: string; sha256: string }[] }
-  >;
+  declarations: Map<string, RecordedDeclaration>;
   counts: Record<TestResult["status"], number>;
   changed: Set<string>;
   testRoot = "";
@@ -168,7 +169,9 @@ export default class CheckpointReporter implements Reporter {
       return;
     }
 
-    const declaration = this.declarations.get(test.id)!;
+    // SAFETY: Playwright calls onBegin with every test before onTestEnd; that complete suite populates this map.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Retain the reporter lifecycle's existing required declaration without adding a runtime check.
+    const declaration = this.declarations.get(test.id) as RecordedDeclaration;
     let changed = false;
 
     for (const source of declaration.sourceFiles) {
@@ -190,7 +193,13 @@ export default class CheckpointReporter implements Reporter {
     const verification = attachment
       ? // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- SAFETY: the named attachment is emitted by the general verification fixture.
         (JSON.parse(
-          attachment.body?.toString() ?? readFileSync(attachment.path!, "utf-8")
+          attachment.body?.toString() ??
+            readFileSync(
+              // SAFETY: the owned attachment producer and Playwright transport supply either an inline body or a file path.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- This branch runs only when the protocol attachment has no inline body.
+              attachment.path as string,
+              "utf-8"
+            )
         ) as BrowserVerification)
       : undefined;
 
@@ -214,10 +223,10 @@ export default class CheckpointReporter implements Reporter {
         path.join(this.directory, "summary.json"),
         `${JSON.stringify(
           {
-            status: result.status,
-            finishedAt: new Date().toISOString(),
-            counts: this.counts,
             changedSources: [...this.changed],
+            counts: this.counts,
+            finishedAt: new Date().toISOString(),
+            status: result.status,
           },
           null,
           2

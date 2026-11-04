@@ -106,7 +106,11 @@ test.describe("Select CJK native matrix", () => {
       await (c.state === "focus"
         ? subject.focus()
         : page.evaluate(() => {
-            (document.activeElement as HTMLElement)?.blur();
+            // SAFETY: The controlled Select fixture focus belongs to its HTML body, HTML button, or HTML option; retain the existing optional blur call, including null handling.
+            /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+            (document.activeElement as HTMLElement)
+              /* oxlint-enable typescript/no-unsafe-type-assertion */
+              ?.blur();
           }));
 
       if (c.state.endsWith("hover")) {

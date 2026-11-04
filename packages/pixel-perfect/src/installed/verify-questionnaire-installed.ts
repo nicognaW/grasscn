@@ -5,13 +5,17 @@ import path from "node:path";
 
 import type { Page } from "@playwright/test";
 import { chromium, expect } from "@playwright/test";
+import type { RegisteredEntryContent } from "@ppt/installed/control-capture-protocol";
 import type {
   QuestionnaireCaptureManifest,
   QuestionnaireCaseResult,
   QuestionnairePartProof,
   LabelCaptureManifest,
 } from "@ppt/installed/installed-compositions-protocol";
-import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import type {
+  InstalledTextRegistry,
+  InstalledTextItem,
+} from "@ppt/installed/text-verification-protocol";
 import { pixelPerfectTestRoot, webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -27,7 +31,11 @@ const registry = JSON.parse(
   fs.readFileSync(webFile(path.join("registry.json"))).toString()
 ) as InstalledTextRegistry;
 
-const item = registry.items.find((i) => i.name === "questionnaire");
+// SAFETY: the authored registry uniquely declares questionnaire, selected by this existing fixed/validated route; a missing item retains its original later dereference failure.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact authored registry item producer projection; fresh read and original failure timing preserved.
+const item = registry.items.find(
+  (i) => i.name === "questionnaire"
+) as InstalledTextItem;
 
 // SAFETY: the initialized shadcn consumer components.json owns the optional rsc setting.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
@@ -48,7 +56,7 @@ const canonical = (b: Buffer) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item!.files.map((f) => {
+const files = item.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
@@ -137,7 +145,11 @@ const captureQuestionnaireAction = async (
   }
 
   if (part === "input") {
-    const cursor = c.cursor ?? c.text!.length;
+    // SAFETY: this existing entry-only route selects fixed Input/Textarea definitions, each of which owns text and caretMs; other capture kinds retain optional fields.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered entry-producer projection at the existing part dispatch; no new validation.
+    const entryCase = c as RegisteredEntryContent;
+
+    const cursor = c.cursor ?? entryCase.text.length;
     const anchor = c.anchor ?? cursor;
 
     await subject.evaluate(
@@ -151,7 +163,7 @@ const captureQuestionnaireAction = async (
       },
       { anchor, cursor }
     );
-    await fixturePage.clock.runFor(c.caretMs!);
+    await fixturePage.clock.runFor(entryCase.caretMs);
     await expect(subject).toHaveAttribute("data-mc-ready", "true");
   } else {
     {
@@ -426,7 +438,7 @@ if (
       ) as QuestionnairePartProof
   );
 
-  const base = reports[0];
+  const [base] = reports;
 
   // SAFETY: the combined text proof reads the existing Label captured-reference producer here.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Label captured-reference producer boundary.
@@ -452,13 +464,19 @@ if (
     assert.equal(hash(bytes), sample.sha256);
     const expected = hash(PNG.sync.read(bytes).data);
 
-    const records = reports.map((report) =>
-      report.cases.find((record) => record.name === sample.name)
+    const records = reports.map(
+      (report) =>
+        // SAFETY: Each earlier per-part verifier emits one case result per retained Label manifest name; this final join follows existing equal case-count, file, browser and page-error checks.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+        report.cases.find(
+          (record) => record.name === sample.name
+        ) as QuestionnaireCaseResult
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
     );
 
     for (const record of records) {
-      assert.equal(record!.mismatchedPixels, 0);
-      assert.equal(record!.decodedRgbaSha256, expected);
+      assert.equal(record.mismatchedPixels, 0);
+      assert.equal(record.decodedRgbaSha256, expected);
     }
 
     return {
@@ -468,7 +486,7 @@ if (
           .slice(1)
           .map((part, index) => [
             `${part}DecodedRgbaSha256`,
-            records[index + 1]!.decodedRgbaSha256,
+            records[index + 1].decodedRgbaSha256,
           ])
       ),
     };

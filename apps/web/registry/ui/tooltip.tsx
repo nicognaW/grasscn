@@ -132,7 +132,7 @@ const TooltipContent = ({
 
     return (
       <>
-        {width && height ? (
+        {width !== undefined && height !== undefined ? (
           <MinecraftTooltipSurface
             width={width}
             height={height}
@@ -176,7 +176,9 @@ const TooltipContent = ({
   const plain = selectedPlain;
 
   const lines =
-    plain == null || !/^[\u0020-\u007E\n]*$/u.test(plain)
+    plain === null ||
+    plain === undefined ||
+    !/^[\u0020-\u007E\n]*$/u.test(plain)
       ? undefined
       : wrapMinecraftTooltip(plain, Math.min(maxWidth, available));
 

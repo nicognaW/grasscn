@@ -94,10 +94,10 @@ for (const name of [
   const { border } = metadataDocument.gui.scaling;
 
   assert.deepEqual(border, {
-    left: 2,
-    top: 2,
-    right: 2,
     bottom: 0,
+    left: 2,
+    right: 2,
+    top: 2,
   });
 
   for (const [y, height] of [

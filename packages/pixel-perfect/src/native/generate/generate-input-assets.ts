@@ -4,12 +4,11 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import type {
-  InventoryAsset,
+  RetainedNativeInventory,
   SpriteMetadata,
   EmbeddedAssetSource,
 } from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
-import type { NativeInventory } from "@ppt/runtime/map-evidence";
 
 const [input] = process.argv.slice(2);
 
@@ -26,7 +25,7 @@ const inventory = JSON.parse(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-) as NativeInventory;
+) as RetainedNativeInventory;
 
 const hash = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
@@ -60,7 +59,7 @@ for (const [key, file, member] of [
     "assets/minecraft/textures/gui/sprites/widget/text_field_highlighted.png",
   ],
   ["atlas", "ascii.png", "assets/minecraft/textures/font/ascii.png"],
-]) {
+] as const) {
   const bytesRead = assetInputReads[assetInputNames.indexOf(file)];
 
   if (bytesRead.status === "rejected") {
@@ -69,9 +68,7 @@ for (const [key, file, member] of [
 
   const bytes = bytesRead.value;
 
-  // SAFETY: these literal sprite/font members belong to the complete pinned native inventory.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-  const original = inventory.assets[member] as InventoryAsset;
+  const original = inventory.assets[member];
 
   if (hash(bytes) !== original.sha256) {
     throw new Error(`Original source changed: ${member}`);

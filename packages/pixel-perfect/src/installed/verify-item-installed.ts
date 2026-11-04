@@ -143,11 +143,11 @@ for (const [part, directory] of [
       ? ["link", "button", ...(c.state.endsWith("hover") ? [] : ["plain"])]
       : ["link"]) {
       tasks.push({
-        part,
-        manifestFile,
-        manifest,
         c,
+        manifest,
+        manifestFile,
         mode,
+        part,
         plain: mode === "plain",
       });
     }

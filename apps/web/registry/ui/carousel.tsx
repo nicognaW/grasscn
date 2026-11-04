@@ -102,21 +102,35 @@ const Carousel = ({
     };
   }, [api]);
 
+  const carouselContext = React.useMemo(
+    () => ({
+      api,
+      canScrollNext,
+      canScrollPrev,
+      carouselRef,
+      opts,
+      orientation,
+      plugins,
+      scale,
+      scrollNext,
+      scrollPrev,
+    }),
+    [
+      api,
+      canScrollNext,
+      canScrollPrev,
+      carouselRef,
+      opts,
+      orientation,
+      plugins,
+      scale,
+      scrollNext,
+      scrollPrev,
+    ]
+  );
+
   return (
-    <CarouselContext.Provider
-      value={{
-        api,
-        canScrollNext,
-        canScrollPrev,
-        carouselRef,
-        opts,
-        orientation,
-        plugins,
-        scale,
-        scrollNext,
-        scrollPrev,
-      }}
-    >
+    <CarouselContext.Provider value={carouselContext}>
       <div
         // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn Carousel's div region and div props/ref contract.
         role="region"

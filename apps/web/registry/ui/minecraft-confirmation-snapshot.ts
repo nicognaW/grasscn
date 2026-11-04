@@ -155,11 +155,12 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
                 },
                 key,
                 layoutLeft:
+                  element.offsetLeft -
                   // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-                  element.offsetLeft - (parseFloat(style.marginLeft) || 0),
+                  (Number.parseFloat(style.marginLeft) || 0),
                 layoutTop:
                   // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-                  element.offsetTop - (parseFloat(style.marginTop) || 0),
+                  element.offsetTop - (Number.parseFloat(style.marginTop) || 0),
                 previous,
                 transform: style.transform,
               });

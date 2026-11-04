@@ -20,7 +20,11 @@ import "./minecraft-badge.css";
 
 const requiresUnicodeGlyphs = function requiresUnicodeGlyphs(text: string) {
   for (const character of text) {
-    if (character.codePointAt(0)! > 127) {
+    if (
+      // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+      (character.codePointAt(0) as number) > 127
+    ) {
       return true;
     }
   }
@@ -120,7 +124,9 @@ const Badge = ({
 
     for (const advanceCharacter of text) {
       accumulatedGlyphAdvance +=
-        advanceCharacter.codePointAt(0)! < 128
+        // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+        (advanceCharacter.codePointAt(0) as number) < 128
           ? minecraftTextWidth(advanceCharacter)
           : (getUnihexGlyph(advanceCharacter)?.advance ?? 8);
     }

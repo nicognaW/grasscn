@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
 import { useHighlightedCode } from "../registry/hooks/use-highlighted-code";
 import { Checkbox } from "../registry/ui/checkbox";
 import {
@@ -23,6 +24,10 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
   const [wrap, setWrap] = React.useState(false);
   const [numbers, setNumbers] = React.useState(true);
   const lines = useHighlightedCode(code, "typescript");
+
+  const demoLayout2: DemoVariables = {
+    "--demo-owned-code-block-2-width": `${40 * scale}px`,
+  };
 
   return (
     <>
@@ -61,11 +66,15 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
         </label>
       </div>
       <div className="demo-stage" data-stage="code-block">
-        <CodeBlock scale={scale} style={{ maxWidth: 620, width: "100%" }}>
+        <CodeBlock scale={scale} className="demo-owned-code-block-1">
           <CodeBlockHeader>
             <CodeBlockTitle>greeting.ts</CodeBlockTitle>
             <CodeBlockActions>
-              <CodeBlockCopyButton value={code} style={{ width: 40 * scale }} />
+              <CodeBlockCopyButton
+                value={code}
+                className="demo-owned-code-block-2"
+                style={demoLayout2}
+              />
             </CodeBlockActions>
           </CodeBlockHeader>
           <CodeBlockContent wrap={wrap} lineNumbers={numbers} startLine={1}>

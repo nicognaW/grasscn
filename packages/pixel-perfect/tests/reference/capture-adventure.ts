@@ -267,9 +267,9 @@ const javaCommand = async function javaCommand(
     {
       cwd: gameDir,
       encoding: "utf-8",
+      maxBuffer: 10 * 1024 * 1024,
       timeout,
       windowsHide: true,
-      maxBuffer: 10 * 1024 * 1024,
     }
   );
 
@@ -291,7 +291,7 @@ await javaCommand("javac", [
   "-J-Xmx128m",
   "-J-XX:ActiveProcessorCount=1",
   "-encoding",
-  "UTF-8",
+  "utf-8",
   "-classpath",
   classpath,
   "-d",

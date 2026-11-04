@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
 import {
   Pagination,
   PaginationContent,
@@ -22,7 +23,7 @@ const PaginationDemo = ({ scale }: DemoProps) => {
     <>
       <div className="demo-stage" data-stage="pagination">
         <Pagination aria-label="World list pages">
-          <PaginationContent style={{ flexWrap: "wrap" }}>
+          <PaginationContent className="demo-owned-pagination-1">
             <PaginationItem>
               <PaginationPrevious
                 scale={scale}
@@ -31,19 +32,26 @@ const PaginationDemo = ({ scale }: DemoProps) => {
                 onClick={choose(Math.max(1, page - 1))}
               />
             </PaginationItem>
-            {[1, 2, 3].map((n) => (
-              <PaginationItem key={n}>
-                <PaginationLink
-                  scale={scale}
-                  style={{ width: 28 * scale }}
-                  isActive={page === n}
-                  href="#pagination"
-                  onClick={choose(n)}
-                >
-                  {n}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
+            {[1, 2, 3].map((n) => {
+              const demoLayout2: DemoVariables = {
+                "--demo-owned-pagination-2-width": `${28 * scale}px`,
+              };
+
+              return (
+                <PaginationItem key={n}>
+                  <PaginationLink
+                    scale={scale}
+                    className="demo-owned-pagination-2"
+                    style={demoLayout2}
+                    isActive={page === n}
+                    href="#pagination"
+                    onClick={choose(n)}
+                  >
+                    {n}
+                  </PaginationLink>
+                </PaginationItem>
+              );
+            })}
             <PaginationItem>
               <PaginationNext
                 scale={scale}

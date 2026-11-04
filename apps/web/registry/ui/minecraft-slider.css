@@ -96,3 +96,10 @@
     transform: translate(-50%, -50%) rotate(90deg);
   }
 }
+
+@layer components {
+  .mc-owned-paint-slider-1 {
+    inset: 0;
+    position: absolute;
+  }
+}

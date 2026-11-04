@@ -37,3 +37,9 @@
     display: none;
   }
 }
+
+@layer components {
+  .mc-owned-paint-collapsible-1 {
+    width: 100%;
+  }
+}

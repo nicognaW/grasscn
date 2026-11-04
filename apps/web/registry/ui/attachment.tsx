@@ -89,8 +89,13 @@ const Attachment = ({
     };
   }, [inactive]);
 
+  const attachmentContext = React.useMemo(
+    () => ({ disabled: inactive, scale }),
+    [inactive, scale]
+  );
+
   return (
-    <AttachmentContext value={{ disabled: inactive, scale }}>
+    <AttachmentContext value={attachmentContext}>
       <div
         ref={node}
         data-slot="attachment"

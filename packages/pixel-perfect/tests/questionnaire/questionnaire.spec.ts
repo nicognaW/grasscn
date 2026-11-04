@@ -152,7 +152,12 @@ for (const [part, dir] of parts) {
           if (part === "input") {
             // SAFETY: Only the per-iteration [input, input] route enters this branch; its retained Input cases have required string text, as the type-only artifact import records.
             const cursor =
-              c.cursor ?? (c as QuestionnaireInputCase).text.length;
+              c.cursor ??
+              // SAFETY: Only the input route selects these exact retained Input cases, whose producer supplies required string text; keep the existing cursor fallback and selection-range behavior.
+              /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+              (c as QuestionnaireInputCase)
+                /* oxlint-enable typescript/no-unsafe-type-assertion */
+                .text.length;
 
             const anchor = c.anchor ?? cursor;
 
@@ -164,7 +169,10 @@ for (const [part, dir] of parts) {
                   p.cursor < p.anchor ? "backward" : "forward"
                 );
               },
-              { cursor, anchor }
+              {
+                anchor,
+                cursor,
+              }
             );
             // SAFETY: This same captured Input route supplies the retained case's required numeric caretMs; the existing clock call and property read stay in place.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing closed-route correlation to the exact Input artifact.
