@@ -3321,6 +3321,13 @@
       "currentSemanticEquivalence": "not-asserted",
       "priorIntroducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
       "priorAcceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-combobox.css",
+      "historicalSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49",
+      "currentSha256": "8130d378691441166c7f419928483432937d70dcf44bfa5038eb01dc9d0910e1",
+      "classification": "reviewed-source-transition",
+      "reason": "Reviewed cleanup7149134 moves the owned Combobox positioning defaults into its existing stylesheet under approved Q3. The original source is recovered byte-for-byte from977f538 and bound to the three unchanged historical installation reports. This recognizes current source drift only; it grants no new behavior, native, Full or pixel coverage."
     }
   ]
 }

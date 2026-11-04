@@ -2009,6 +2009,15 @@
       "compressedPath": "blobs/67239d094f0704eede0e9235c6e5fd8dad591b711caba7ea72bdacf790606cb3.gz",
       "compressedSha256": "9a3de5c62cf86c87e16b1beeaa37a595500704e79f16226bf3858c51cb4c09ab",
       "compressedBytes": 579
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-combobox.css",
+      "sourceSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49",
+      "rawSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49",
+      "bytes": 2213,
+      "compressedPath": "blobs/d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49.gz",
+      "compressedSha256": "260bd7cc30779e41afa5c066939d6154f95f9a59ccd56e7e68f09ff8c67dca0e",
+      "compressedBytes": 628
     }
   ],
   "reports": [
@@ -5528,7 +5537,8 @@
         },
         {
           "sourcePath": "registry/ui/minecraft-combobox.css",
-          "sourceSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49"
+          "sourceSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49",
+          "archiveSourceSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
@@ -5697,7 +5707,8 @@
         },
         {
           "sourcePath": "registry/ui/minecraft-combobox.css",
-          "sourceSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49"
+          "sourceSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49",
+          "archiveSourceSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
@@ -5866,7 +5877,8 @@
         },
         {
           "sourcePath": "registry/ui/minecraft-combobox.css",
-          "sourceSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49"
+          "sourceSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49",
+          "archiveSourceSha256": "d73b0b947dd7d61cd04de304da60fb9027dc1c6fd7b3a2c809de7fae36c3fe49"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
