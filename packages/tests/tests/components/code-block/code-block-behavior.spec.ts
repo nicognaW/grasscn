@@ -263,6 +263,11 @@ for (const mode of ["object", "callback"] as const) {
     const subject = page.getByTestId("selectable-ref-subject");
     const tag = page.getByLabel("Selectable ref tag", { exact: true });
     const events = page.getByLabel("Selectable ref callbacks", { exact: true });
+
+    const intrinsic = page.getByLabel("Intrinsic ref callbacks", {
+      exact: true,
+    });
+
     await expect(subject).toHaveAttribute("data-mc-selectable-ready", "true");
     await expect(subject).toHaveAttribute("data-consumer", "ref-test");
     await expect(subject).toHaveAttribute("title", "Consumer selectable text");
@@ -274,6 +279,7 @@ for (const mode of ["object", "callback"] as const) {
 
     if (mode === "callback") {
       await expect(events).toHaveText("attach:SPAN");
+      await expect(intrinsic).toHaveText("attach:SPAN");
     }
 
     await page
@@ -286,6 +292,7 @@ for (const mode of ["object", "callback"] as const) {
 
     if (mode === "callback") {
       await expect(events).toHaveText("attach:SPAN");
+      await expect(intrinsic).toHaveText("attach:SPAN");
     }
 
     await page
@@ -298,7 +305,8 @@ for (const mode of ["object", "callback"] as const) {
     await expect(tag).toHaveText("missing");
 
     if (mode === "callback") {
-      await expect(events).toHaveText("attach:SPAN|cleanup:true");
+      await expect(events).toHaveText("attach:SPAN|cleanup:false");
+      await expect(intrinsic).toHaveText("attach:SPAN|cleanup:false");
     }
 
     await page
@@ -311,7 +319,10 @@ for (const mode of ["object", "callback"] as const) {
     await expect(tag).toHaveText("SPAN");
 
     if (mode === "callback") {
-      await expect(events).toHaveText("attach:SPAN|cleanup:true|attach:SPAN");
+      await expect(events).toHaveText("attach:SPAN|cleanup:false|attach:SPAN");
+      await expect(intrinsic).toHaveText(
+        "attach:SPAN|cleanup:false|attach:SPAN"
+      );
     }
   });
 }

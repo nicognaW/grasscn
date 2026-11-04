@@ -59,6 +59,7 @@ const SelectableRefFixture = ({
     React.RefCallback<HTMLSpanElement>
   >((node) => {
     let cleanup: (() => void) | undefined;
+
     if (node === null) {
       setBaselineEvents((previous) => [...previous, "null"]);
     } else {
@@ -70,6 +71,7 @@ const SelectableRefFixture = ({
         ]);
       };
     }
+
     return cleanup;
   }, []);
 
