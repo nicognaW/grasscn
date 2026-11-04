@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- Preserve upstream synchronous Recharts exports, identity and initialization; a lazy component changes the public boundary.
 import * as RechartsPrimitive from "recharts";
 import type { TooltipValueType } from "recharts";
 
@@ -204,6 +205,24 @@ const ChartText = ({
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
 
+type ChartTooltipItem = Omit<
+  NonNullable<
+    RechartsPrimitive.DefaultTooltipContentProps<
+      TooltipValueType,
+      TooltipNameType
+    >["payload"]
+  >[number],
+  "payload"
+> & { payload?: unknown };
+
+type ChartPayloadItem =
+  | ChartTooltipItem
+  | NonNullable<RechartsPrimitive.DefaultLegendContentProps["payload"]>[number];
+
+const isChartObjectValue = <Value,>(
+  value: Value
+): value is Value & (object | null) => typeof value === "object";
+
 const isChartLabelText = <Value,>(value: Value): value is Value & string =>
   typeof value === "string";
 
@@ -214,39 +233,48 @@ const isChartValuePresent = (
   value: TooltipValueType | null | undefined
 ): value is TooltipValueType => value !== null && value !== undefined;
 
+const hasChartProperty = <Value extends object, Key extends string>(
+  candidate: Value,
+  key: Key
+): candidate is Value &
+  /* oxlint-disable anti-slop/no-unsafe-dictionary-type -- This dynamic-key boundary proves presence only; the existing following value predicate checks the selected unknown property without claiming every key is string. */ Record<
+    Key,
+    unknown
+  > /* oxlint-enable anti-slop/no-unsafe-dictionary-type */ => key in candidate;
+
 // Helper to extract item config from a payload.
 const getPayloadConfigFromPayload = function getPayloadConfigFromPayload(
   config: ChartConfig,
-  payload: unknown,
+  payload: ChartPayloadItem | undefined,
   key: string
 ) {
-  if (typeof payload !== "object" || payload === null) {
-    return;
+  let selectedConfig: ChartConfig[string] | undefined;
+
+  if (isChartObjectValue(payload) && payload !== null) {
+    const payloadPayload =
+      "payload" in payload &&
+      isChartObjectValue(payload.payload) &&
+      payload.payload !== null
+        ? payload.payload
+        : undefined;
+
+    let configLabelKey: string = key;
+
+    if (hasChartProperty(payload, key) && isChartLabelText(payload[key])) {
+      configLabelKey = payload[key];
+    } else if (
+      payloadPayload &&
+      hasChartProperty(payloadPayload, key) &&
+      isChartLabelText(payloadPayload[key])
+    ) {
+      configLabelKey = payloadPayload[key];
+    }
+
+    selectedConfig =
+      configLabelKey in config ? config[configLabelKey] : config[key];
   }
 
-  const payloadPayload =
-    "payload" in payload &&
-    typeof payload.payload === "object" &&
-    payload.payload !== null
-      ? payload.payload
-      : undefined;
-
-  let configLabelKey: string = key;
-
-  if (
-    key in payload &&
-    isChartLabelText(payload[key as keyof typeof payload])
-  ) {
-    configLabelKey = payload[key as keyof typeof payload];
-  } else if (
-    payloadPayload &&
-    key in payloadPayload &&
-    isChartLabelText(payloadPayload[key as keyof typeof payloadPayload])
-  ) {
-    configLabelKey = payloadPayload[key as keyof typeof payloadPayload];
-  }
-
-  return configLabelKey in config ? config[configLabelKey] : config[key];
+  return selectedConfig;
 };
 
 interface ChartTooltipIndicatorProps {
@@ -322,49 +350,50 @@ const ChartTooltipContent = ({
     "--mc-scale": tooltipScale,
   };
 
-  const tooltipLabel = React.useMemo(() => {
-    if (hideLabel || !payload || payload.length === 0) {
-      return null;
-    }
+  const tooltipLabel =
+    /* oxlint-disable react-doctor/rerender-memo-before-early-return -- Preserve upstream unconditional memo and existing labelFormatter calls on inactive payloads; moving it after the return changes callbacks. */ React.useMemo(() => {
+      if (hideLabel || !payload || payload.length === 0) {
+        return null;
+      }
 
-    const [item] = payload;
-    const key = String(labelKey ?? item?.dataKey ?? item?.name ?? "value");
-    const itemConfig = getPayloadConfigFromPayload(config, item, key);
+      const [item] = payload;
+      const key = String(labelKey ?? item?.dataKey ?? item?.name ?? "value");
+      const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
-    const value =
-      !(labelKey ?? "") && isChartLabelText(label)
-        ? (config[label]?.label ?? label)
-        : itemConfig?.label;
+      const value =
+        !(labelKey ?? "") && isChartLabelText(label)
+          ? (config[label]?.label ?? label)
+          : itemConfig?.label;
 
-    if (labelFormatter) {
+      if (labelFormatter) {
+        return (
+          <div className={cn("font-medium", labelClassName)}>
+            {labelFormatter(value, payload)}
+          </div>
+        );
+      }
+
+      const showLabel = Boolean(value);
+
+      if (!showLabel) {
+        return null;
+      }
+
       return (
         <div className={cn("font-medium", labelClassName)}>
-          {labelFormatter(value, payload)}
+          <ChartText scale={tooltipScale}>{value}</ChartText>
         </div>
       );
-    }
-
-    const showLabel = Boolean(value);
-
-    if (!showLabel) {
-      return null;
-    }
-
-    return (
-      <div className={cn("font-medium", labelClassName)}>
-        <ChartText scale={tooltipScale}>{value}</ChartText>
-      </div>
-    );
-  }, [
-    label,
-    labelFormatter,
-    payload,
-    hideLabel,
-    labelClassName,
-    config,
-    labelKey,
-    tooltipScale,
-  ]);
+    }, [
+      label,
+      labelFormatter,
+      payload,
+      hideLabel,
+      labelClassName,
+      config,
+      labelKey,
+      tooltipScale,
+    ]); /* oxlint-enable react-doctor/rerender-memo-before-early-return */
 
   if (!(active ?? false) || !payload || payload.length === 0) {
     return null;
@@ -384,65 +413,80 @@ const ChartTooltipContent = ({
       <MinecraftSurface sprite={sprites.frame} />
       {nestLabel ? null : tooltipLabel}
       <div className="grid gap-1.5">
-        {payload
-          .filter((item) => item.type !== "none")
-          .map((item, index) => {
-            const key = String(nameKey ?? item.name ?? item.dataKey ?? "value");
-            const itemConfig = getPayloadConfigFromPayload(config, item, key);
+        {
+          /* oxlint-disable react-doctor/js-combine-iterations -- Preserve upstream filtering before rendering callbacks and filtered positional indexes, including getter and formatter order. */ payload
+            .filter((item) => item.type !== "none")
+            .map((item, index) => {
+              const key = String(
+                nameKey ?? item.name ?? item.dataKey ?? "value"
+              );
 
-            const indicatorColor: unknown =
-              color ?? item.payload?.fill ?? item.color;
+              const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
-            return (
-              <div
-                key={index}
-                className={cn(
-                  "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
-                  indicator === "dot" && "items-center"
-                )}
-              >
-                {formatter &&
-                item?.value !== undefined &&
-                isChartValuePresent(item.name) ? (
-                  formatter(item.value, item.name, item, index, item.payload)
-                ) : (
-                  <>
-                    {renderChartTooltipIndicator({
-                      hideIndicator,
-                      indicator,
-                      indicatorColor,
-                      itemConfig,
-                      nestLabel,
-                    })}
-                    <div
-                      className={cn(
-                        "flex flex-1 justify-between gap-[calc(4*var(--mc-pixel))] leading-none",
-                        nestLabel ? "items-end" : "items-center"
-                      )}
-                    >
-                      <div className="grid gap-1.5">
-                        {nestLabel ? tooltipLabel : null}
-                        <span className="text-muted-foreground">
-                          <ChartText scale={tooltipScale}>
-                            {itemConfig?.label ?? item.name}
-                          </ChartText>
-                        </span>
+              const indicatorColor: unknown =
+                color ??
+                /* oxlint-disable typescript/no-unsafe-member-access -- Recharts declares the original datum as any; retain its existing optional fill read and raw CSS value without new validation/coercion. */ item
+                  .payload
+                  ?.fill /* oxlint-enable typescript/no-unsafe-member-access */ ??
+                item.color;
+
+              return (
+                /* oxlint-disable react-doctor/no-array-index-as-key -- Preserve upstream filtered positional identity; SDK series names and data keys can repeat, so no unique replacement is guaranteed. */ <div
+                  key={index}
+                  className={cn(
+                    "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
+                    indicator === "dot" && "items-center"
+                  )}
+                >
+                  {formatter &&
+                  item?.value !== undefined &&
+                  isChartValuePresent(item.name) ? (
+                    formatter(
+                      item.value,
+                      item.name,
+                      item,
+                      index,
+                      /* oxlint-disable typescript/no-unsafe-argument -- Preserve upstream formatter fifth-argument datum identity; casting this SDK any to the declared payload-array type would be false. */ item.payload /* oxlint-enable typescript/no-unsafe-argument */
+                    )
+                  ) : (
+                    <>
+                      {renderChartTooltipIndicator({
+                        hideIndicator,
+                        indicator,
+                        indicatorColor,
+                        itemConfig,
+                        nestLabel,
+                      })}
+                      <div
+                        className={cn(
+                          "flex flex-1 justify-between gap-[calc(4*var(--mc-pixel))] leading-none",
+                          nestLabel ? "items-end" : "items-center"
+                        )}
+                      >
+                        <div className="grid gap-1.5">
+                          {nestLabel ? tooltipLabel : null}
+                          <span className="text-muted-foreground">
+                            <ChartText scale={tooltipScale}>
+                              {itemConfig?.label ?? item.name}
+                            </ChartText>
+                          </span>
+                        </div>
+                        {isChartValuePresent(item.value) && (
+                          <span className="text-foreground tabular-nums">
+                            <ChartText scale={tooltipScale}>
+                              {isChartNumber(item.value)
+                                ? item.value.toLocaleString()
+                                : String(item.value)}
+                            </ChartText>
+                          </span>
+                        )}
                       </div>
-                      {isChartValuePresent(item.value) && (
-                        <span className="text-foreground tabular-nums">
-                          <ChartText scale={tooltipScale}>
-                            {isChartNumber(item.value)
-                              ? item.value.toLocaleString()
-                              : String(item.value)}
-                          </ChartText>
-                        </span>
-                      )}
-                    </div>
-                  </>
-                )}
-              </div>
-            );
-          })}
+                    </>
+                  )}
+                </div> /* oxlint-enable react-doctor/no-array-index-as-key */
+              );
+            }) /* oxlint-enable react-doctor/js-combine-iterations */
+        }
       </div>
     </div>
   );
@@ -474,40 +518,42 @@ const ChartLegendContent = ({
         className
       )}
     >
-      {payload
-        .filter((item) => item.type !== "none")
-        .map((item, index) => {
-          const key = String(nameKey ?? item.dataKey ?? "value");
-          const itemConfig = getPayloadConfigFromPayload(config, item, key);
-          let icon: React.ReactNode;
+      {
+        /* oxlint-disable react-doctor/js-combine-iterations -- Preserve upstream filtering before rendering callbacks and filtered positional indexes, including getter and formatter order. */ payload
+          .filter((item) => item.type !== "none")
+          .map((item, index) => {
+            const key = String(nameKey ?? item.dataKey ?? "value");
+            const itemConfig = getPayloadConfigFromPayload(config, item, key);
+            let icon: React.ReactNode;
 
-          if (itemConfig?.icon && !hideIcon) {
-            icon = <itemConfig.icon />;
-          } else {
-            const swatchStyle: React.CSSProperties & {
-              "--mc-chart-legend-color": string | undefined;
-            } = { "--mc-chart-legend-color": item.color };
+            if (itemConfig?.icon && !hideIcon) {
+              icon = <itemConfig.icon />;
+            } else {
+              const swatchStyle: React.CSSProperties & {
+                "--mc-chart-legend-color": string | undefined;
+              } = { "--mc-chart-legend-color": item.color };
 
-            icon = (
-              <div
-                className="mc-chart-legend-swatch h-2 w-2 shrink-0"
-                style={swatchStyle}
-              />
+              icon = (
+                <div
+                  className="mc-chart-legend-swatch h-2 w-2 shrink-0"
+                  style={swatchStyle}
+                />
+              );
+            }
+
+            return (
+              /* oxlint-disable react-doctor/no-array-index-as-key -- Preserve upstream filtered positional identity; SDK series names and data keys can repeat, so no unique replacement is guaranteed. */ <div
+                key={index}
+                className={cn(
+                  "[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3"
+                )}
+              >
+                {icon}
+                <ChartText>{itemConfig?.label}</ChartText>
+              </div> /* oxlint-enable react-doctor/no-array-index-as-key */
             );
-          }
-
-          return (
-            <div
-              key={index}
-              className={cn(
-                "[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3"
-              )}
-            >
-              {icon}
-              <ChartText>{itemConfig?.label}</ChartText>
-            </div>
-          );
-        })}
+          }) /* oxlint-enable react-doctor/js-combine-iterations */
+      }
     </div>
   );
 };
