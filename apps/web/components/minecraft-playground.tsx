@@ -2,6 +2,7 @@
 
 import AdvancementTreeDemo from "../demos/advancement-tree";
 import BookDemo from "../demos/book";
+import FireworksDemo from "../demos/fireworks";
 import HotbarDemo from "../demos/hotbar";
 import HudDemo from "../demos/hud";
 import MapDemo from "../demos/map";
@@ -16,6 +17,7 @@ import "./documentation.css";
 const playgrounds = {
   "advancement-tree": AdvancementTreeDemo,
   book: BookDemo,
+  fireworks: FireworksDemo,
   hotbar: HotbarDemo,
   hud: HudDemo,
   map: MapDemo,

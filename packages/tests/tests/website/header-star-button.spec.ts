@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+import { fireworkSounds } from "@grasscn/web/ui/minecraft-firework-sound-assets";
 import type { Page } from "@playwright/test";
 
 const origin = (
@@ -182,4 +183,197 @@ test("Header star button stays on the brand row at 720 px and below", async ({
       `${width}`
     ).toBe(true);
   }
+});
+
+// Clicking the star button launches the fireworks UI port from the nether
+// star. Sound playback is recorded, not heard: HTMLMediaElement.play is
+// stubbed to log each voice's source.
+interface LaunchVoice {
+  source: string;
+  time: number;
+}
+
+declare global {
+  interface Window {
+    __fireworkVoices: LaunchVoice[];
+  }
+}
+
+const recordVoices = async (page: Page) => {
+  // The link still opens the repository in a new tab; keep that tab offline.
+  await page.context().route("https://github.com/**", async (route) => {
+    await route.fulfill({ body: "" });
+  });
+  await page.addInitScript(() => {
+    const voices: LaunchVoice[] = [];
+    window.__fireworkVoices = voices;
+    // oxlint-disable-next-line require-await -- the stub records the voice and resolves at once.
+    HTMLMediaElement.prototype.play = async function play() {
+      voices.push({ source: this.src, time: performance.now() });
+    };
+  });
+};
+
+// The near-variant clip each recorded voice played, in order.
+const clipNames = new Map<string, string>(
+  Object.entries(fireworkSounds).map(([name, [source]]) => [source, name])
+);
+
+const playedClips = async (page: Page) => {
+  const voices = await page.evaluate(() => window.__fireworkVoices);
+
+  return voices.map((voice) => clipNames.get(voice.source) ?? "other");
+};
+
+const fireworksCanvas = (page: Page) =>
+  page.locator('canvas[data-slot="fireworks"]');
+
+test("Clicking the header star button launches the fireworks from the nether star", async ({
+  page,
+}) => {
+  await recordVoices(page);
+  await page.goto(`${origin}docs`);
+  const button = starButton(page);
+  const star = button.locator('[data-slot="nether-star"]');
+
+  await expect(fireworksCanvas(page)).toHaveCount(0);
+  await button.click();
+
+  // The launch sound plays on the click itself (the first tick).
+  expect(await playedClips(page)).toEqual(["launch"]);
+
+  // One 480x640 canvas, portaled outside the header and drawn once the
+  // textures decode. Its launch point (240, 584) sits on the star's bottom
+  // centre.
+  const canvas = fireworksCanvas(page);
+  await expect(canvas).toHaveAttribute("data-rendered", "true");
+  expect(await canvas.evaluate((node) => node.closest("header") === null)).toBe(
+    true
+  );
+
+  const [canvasBox, starBox] = await Promise.all([
+    canvas.boundingBox(),
+    star.boundingBox(),
+  ]);
+
+  expect([canvasBox?.width, canvasBox?.height]).toEqual([480, 640]);
+  expect((canvasBox?.x ?? 0) + 240).toBeCloseTo(
+    (starBox?.x ?? 0) + (starBox?.width ?? 0) / 2,
+    0
+  );
+  expect((canvasBox?.y ?? 0) + 584).toBeCloseTo(
+    (starBox?.y ?? 0) + (starBox?.height ?? 0),
+    0
+  );
+
+  // The rocket is drawn: some canvas pixels are no longer transparent.
+  const painted = async () =>
+    await canvas.evaluate((node) => {
+      if (!(node instanceof HTMLCanvasElement)) {
+        throw new TypeError("The fireworks surface must be a canvas");
+      }
+
+      const data =
+        node.getContext("2d")?.getImageData(0, 0, 480, 640).data ?? [];
+
+      return data.some((value, index) => index % 4 === 3 && value > 0);
+    });
+
+  await expect.poll(painted).toBe(true);
+
+  // Blast at tick 26, twinkle at tick 42; the canvas goes once the last
+  // spark has gone (tick 86, about 4.3 s).
+  await expect
+    .poll(async () => await playedClips(page), { timeout: 10_000 })
+    .toEqual(["launch", "largeBlast", "twinkle"]);
+  await expect(canvas).toHaveCount(0, { timeout: 10_000 });
+});
+
+test("The fireworks canvas ignores the pointer", async ({ page }) => {
+  await recordVoices(page);
+  await page.goto(`${origin}docs`);
+  await starButton(page).click();
+
+  const canvas = fireworksCanvas(page);
+  await expect(canvas).toHaveAttribute("data-rendered", "true");
+  await expect(canvas).toHaveCSS("pointer-events", "none");
+
+  // Hit testing at the star, under the canvas, still finds the star button.
+  const hit = await canvas.evaluate((node) => {
+    const bounds = node.getBoundingClientRect();
+
+    const target = document.elementFromPoint(
+      bounds.left + 240,
+      bounds.top + 576
+    );
+
+    return {
+      canvas: target === node,
+      starButton: target?.closest(".minecraft-star-button") !== null,
+    };
+  });
+
+  expect(hit).toEqual({ canvas: false, starButton: true });
+});
+
+test("Rapid header star clicks launch overlapping fireworks on one canvas", async ({
+  page,
+}) => {
+  await recordVoices(page);
+  await page.goto(`${origin}docs`);
+  const button = starButton(page);
+
+  // Three clicks in quick succession, well inside one firework's 4.3 s.
+  await button.click({ clickCount: 3 });
+
+  // Three independent launches, each with its own launch sound, share the
+  // one canvas.
+  expect(await playedClips(page)).toEqual(["launch", "launch", "launch"]);
+  await expect(fireworksCanvas(page)).toHaveCount(1);
+
+  // Each launch keeps its own timeline and plays every sound once: all
+  // three blasts come before any twinkle.
+  await expect
+    .poll(
+      async () => {
+        const clips = await playedClips(page);
+
+        return clips.length;
+      },
+      { timeout: 10_000 }
+    )
+    .toBe(9);
+  expect(await playedClips(page)).toEqual([
+    "launch",
+    "launch",
+    "launch",
+    "largeBlast",
+    "largeBlast",
+    "largeBlast",
+    "twinkle",
+    "twinkle",
+    "twinkle",
+  ]);
+  await expect(fireworksCanvas(page)).toHaveCount(0, { timeout: 10_000 });
+});
+
+test("Under reduced motion the header star button plays the firework sounds with no canvas", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await recordVoices(page);
+  await page.goto(`${origin}docs`);
+  await starButton(page).click();
+
+  await expect
+    .poll(async () => await playedClips(page), { timeout: 10_000 })
+    .toEqual(["launch", "largeBlast", "twinkle"]);
+  await expect(fireworksCanvas(page)).toHaveCount(0);
+
+  // The blast keeps its native tick: 25 ticks of 50 ms after the launch.
+  const [launch, blast] = await page.evaluate(() =>
+    window.__fireworkVoices.map((voice) => voice.time)
+  );
+
+  expect((blast ?? 0) - (launch ?? 0)).toBeGreaterThanOrEqual(1200);
 });

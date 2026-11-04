@@ -79,3 +79,13 @@ They stay Full until #52 records each with its `website-default` route. The webs
 ## Nether star GUI item captured references (#50)
 
 `packages/pixel-perfect/tests/nether-star/glint-pixels.spec.ts` compares the header nether star UI port with ordinary captured references of the original 26.2 GUI item render at GUI scale 2 on `#202020`, at the glint times 0, 1250, 4000 and 9000 ms (two launches each, glint clock fixed by `GlintClockAgent`). Only `nether star GUI item at glint time 0 ms matches its captured reference` is Base, mapped to the website default path `/`: every page header draws the star in its star button, and spec #42 names glint time 0 as the Base case. The other glint times, the corpus integrity check and the one-pixel negative control are Full. Verified coverage is the declared glint times only; interpolated glint times between them are unverified, as the corpus manifest's `verifiedCoverage` records. The glint texture matrix unit check (`packages/pixel-perfect/tests/unit/nether-star.test.ts`) is a harness unit check and runs in ordinary verification.
+
+## Fireworks registry item and header launch (#52)
+
+#52 adds the website default path for the fireworks: the `Launch fireworks` button of `/docs/components/fireworks#interactive-playground`, and the header star button on every page, both launch the rocket sequence of the #48 corpus at its fixed seeds. The three Base mappings #51 recorded are now in `packages/pixel-perfect/src/selection/base-cases.json`, one per sound event:
+
+- `firework rocket tick 1 matches its projected reference within the geometry mask` (launch sound)
+- `firework rocket tick 26 matches its projected reference within the geometry mask` (large_blast sound)
+- `firework rocket tick 42 matches its projected reference within the geometry mask` (twinkle sound)
+
+Every other rocket frame, the rocket corpus integrity check and its negative control stay Full. The #47 explosion corpus has no website default path of its own (the website shows the rocket sequence, not a standalone explosion at 15 blocks), so all of its cases stay Full. The website draws interpolated frames between ticks and composites over a transparent backdrop; the Base cases cover the tick-aligned frames over the sky colour only, and interpolated frames remain unverified. #52 adds no PPT. The header launch, pointer transparency, overlapping launches and the reduced-motion path are non-PPT website tests in `packages/tests/tests/website/header-star-button.spec.ts`; the demo's launch is in `native-expansion-preview.spec.ts`.

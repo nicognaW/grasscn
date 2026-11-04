@@ -4151,6 +4151,37 @@
         "installationReport": "tests/reference/redstone-lamp-display/installation-verification.json",
         "scope": "Projected references (ADR 0005), masked geometry pixels only, zero tolerance, DPR 1: each glyph 0-9 and k alone, plus 0, 1234 and 12k, as 8 px lamp cells at block-atlas mip level 1 facing a front-on orthographic camera 9.5 blocks away at noon under a clear sky, captured on llvmpipe under Xvfb. Base: 1234, the playground default (website default path); every other case is Full. Web adaptations: glyph shapes and their composition with a one-column unlit gap; transparent backdrop instead of the sky; fog computed for a wall centred on the camera. Unverified conditions: DPR above 1, CSS scaling, other cameras, times of day, video options and browsers other than Edge."
       }
+    },
+    {
+      "name": "fireworks",
+      "mapping": {
+        "kind": "native-element",
+        "target": "FireworkRocketEntity (server and client), FireworkParticles.Starter/SparkParticle/OverlayParticle and FireworkRocketRenderer under a declared orthographic projection, with the sounds FireworkRocketEntity.tick and FireworkParticles.Starter.tick play",
+        "families": [],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Projected references (ADR 0005), masked geometry pixels only, zero tolerance, DPR 1: every tick-aligned frame (partialTick 0) of one flight-1 rocket with a large star explosion (ticks 1-84; 85 and 86 equal the backdrop) at the fixed seeds (server entity 42, client entity 42, particle 42), side-on 22 blocks from an orthographic camera at 16 px per block at noon under a clear sky, captured twice on llvmpipe under Xvfb. Sounds: launch at tick 1, large_blast at tick 26 and twinkle at tick 42 with the native pitch and volume bits, from the native record for a listener within 10 blocks; embedded sounds and textures are the original bytes. Base: ticks 1, 26 and 42, the sound-event frames the header star launch and the playground launch button show (website default path); every other frame is Full. Web adaptations: placement (one shared 480x640 canvas whose launch pixel (240, 584) sits on the anchor's bottom centre), the same fixed seed for every launch with overlapping launches as independent instances, a transparent backdrop instead of the sky, near sounds without attenuation or distance delay, and sound only under prefers-reduced-motion. Unverified conditions: frames interpolated between ticks, DPR above 1, other seeds, other explosion shapes, colours and flight durations, actual audio output, and browsers other than Edge."
+      },
+      "referenceCases": {
+        "requiredDimensions": [
+          "Tick (1-86 at partialTick 0)",
+          "Seed (fixed: server entity 42, client entity 42, particle 42)",
+          "Declared projection (16 px per block, side-on, noon, clear)",
+          "Sound event (launch, large_blast, twinkle; near listener)"
+        ]
+      },
+      "nextStep": "Capture interpolated frames, other seeds or other explosions as projected references before claiming them.",
+      "implementation": {
+        "status": "implemented-and-install-verified",
+        "evidenceScope": "historical-source-snapshot",
+        "registryItem": "fireworks"
+      },
+      "pixelVerification": {
+        "status": "reference-and-tests-available",
+        "manifest": null,
+        "projectedManifest": "tests/reference/firework-rocket/manifest.json",
+        "installationReport": "tests/reference/fireworks/installation-verification.json",
+        "scope": "Projected references (ADR 0005), masked geometry pixels only, zero tolerance, DPR 1: every tick-aligned frame (partialTick 0) of one flight-1 rocket with a large star explosion (ticks 1-84; 85 and 86 equal the backdrop) at the fixed seeds (server entity 42, client entity 42, particle 42), side-on 22 blocks from an orthographic camera at 16 px per block at noon under a clear sky, captured twice on llvmpipe under Xvfb. Sounds: launch at tick 1, large_blast at tick 26 and twinkle at tick 42 with the native pitch and volume bits, from the native record for a listener within 10 blocks; embedded sounds and textures are the original bytes. Base: ticks 1, 26 and 42, the sound-event frames the header star launch and the playground launch button show (website default path); every other frame is Full. Web adaptations: placement (one shared 480x640 canvas whose launch pixel (240, 584) sits on the anchor's bottom centre), the same fixed seed for every launch with overlapping launches as independent instances, a transparent backdrop instead of the sky, near sounds without attenuation or distance delay, and sound only under prefers-reduced-motion. Unverified conditions: frames interpolated between ticks, DPR above 1, other seeds, other explosion shapes, colours and flight durations, actual audio output, and browsers other than Edge."
+      }
     }
   ],
   "nextImplementationOrder": [
@@ -4246,6 +4277,10 @@
     {
       "name": "redstone-lamp-display",
       "reason": "User-selected Minecraft world rendering beyond the standard shadcn catalog (spec #42 header star count)."
+    },
+    {
+      "name": "fireworks",
+      "reason": "User-selected Minecraft world rendering beyond the standard shadcn catalog (spec #42 header star launch)."
     }
   ]
 }

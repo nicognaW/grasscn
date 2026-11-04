@@ -1,8 +1,39 @@
 import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@grasscn/tests/test";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"
 ).replace(/\/$/u, "");
+
+// The launch button is the fireworks' website default path: the rocket
+// rises from the button's bottom centre, and the canvas goes after the last
+// spark.
+const launchFromPlayground = async (page: Page) => {
+  const button = page
+    .locator(".documentation-playground")
+    .getByRole("button", { exact: true, name: "Launch fireworks" });
+
+  const canvas = page.locator('canvas[data-slot="fireworks"]');
+
+  await expect(canvas).toHaveCount(0);
+  await button.click();
+  await expect(canvas).toHaveAttribute("data-rendered", "true");
+
+  const [canvasBox, buttonBox] = await Promise.all([
+    canvas.boundingBox(),
+    button.boundingBox(),
+  ]);
+
+  expect((canvasBox?.x ?? 0) + 240).toBeCloseTo(
+    (buttonBox?.x ?? 0) + (buttonBox?.width ?? 0) / 2,
+    0
+  );
+  expect((canvasBox?.y ?? 0) + 584).toBeCloseTo(
+    (buttonBox?.y ?? 0) + (buttonBox?.height ?? 0),
+    0
+  );
+  await expect(canvas).toHaveCount(0, { timeout: 10_000 });
+};
 
 for (const [name, title] of [
   ["book", "Book"],
@@ -15,6 +46,7 @@ for (const [name, title] of [
   ["trading", "Trading"],
   ["player-list", "Player List"],
   ["redstone-lamp-display", "Redstone Lamp Display"],
+  ["fireworks", "Fireworks"],
 ]) {
   test(`local ${name} preview`, async ({ page }, info) => {
     const errors: string[] = [];
@@ -241,6 +273,10 @@ for (const [name, title] of [
       ).toBeVisible();
     }
 
+    if (name === "fireworks") {
+      await launchFromPlayground(page);
+    }
+
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth
@@ -251,7 +287,13 @@ for (const [name, title] of [
   });
 }
 
-for (const name of ["map", "trading", "player-list", "redstone-lamp-display"]) {
+for (const name of [
+  "map",
+  "trading",
+  "player-list",
+  "redstone-lamp-display",
+  "fireworks",
+]) {
   test(`mobile ${name} preview fits viewport`, async ({ page }, info) => {
     await page.setViewportSize({ height: 844, width: 390 });
     await page.goto(`${origin}/docs/components/${name}`);

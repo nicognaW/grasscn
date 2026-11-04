@@ -1,6 +1,7 @@
 import type { ExampleDefinition } from "../definition";
 import AdvancementTreeExample from "./advancement-tree-example";
 import BookExample from "./book-example";
+import FireworksExample from "./fireworks-example";
 import HotbarExample from "./hotbar-example";
 import HotbarTools from "./hotbar-tools";
 import HudExample from "./hud-example";
@@ -25,6 +26,11 @@ export const minecraftExamples = {
     Component: BookExample,
     filename: "minecraft/book-example.tsx",
     title: "Book Example",
+  },
+  "fireworks-example": {
+    Component: FireworksExample,
+    filename: "minecraft/fireworks-example.tsx",
+    title: "Fireworks Example",
   },
   "hotbar-example": {
     Component: HotbarExample,

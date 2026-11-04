@@ -11,10 +11,10 @@ declare global {
   }
 }
 
-test("Minecraft documentation delivers maintained examples for all ten installable items", async ({
+test("Minecraft documentation delivers maintained examples for all eleven installable items", async ({
   page,
 }) => {
-  test.setTimeout(150_000);
+  test.setTimeout(170_000);
 
   /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const slug of [
@@ -28,6 +28,7 @@ test("Minecraft documentation delivers maintained examples for all ten installab
     "trading",
     "player-list",
     "redstone-lamp-display",
+    "fireworks",
   ]) {
     await page.goto(`${origin}/docs/components/${slug}`);
     const example = page.locator(".documentation-example").first();

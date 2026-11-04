@@ -5917,6 +5917,55 @@
         }
       ],
       "dependencies": []
+    },
+    {
+      "name": "fireworks",
+      "type": "registry:ui",
+      "title": "Fireworks",
+      "description": "useFireworks() returns launch(anchor): one firework rocket (flight, trail and star explosion at the fixed seeds) on a shared pointer-transparent 480x640 canvas, with the native launch, large_blast and twinkle sounds on their ticks at the master volume, matching projected references at partialTick 0. Web adaptations: placement on the anchor, fixed seed, transparent backdrop, near sounds without distance delay, and sound only under prefers-reduced-motion.",
+      "files": [
+        {
+          "path": "registry/ui/fireworks.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-firework-rocket.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-firework-explosion.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-random-source.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-png.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-firework-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-firework-sound.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-firework-sound-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-sound.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-sound-assets.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": []
     }
   ]
 }
