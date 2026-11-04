@@ -6,10 +6,20 @@ import { nextMipLevel } from "./minecraft-block-atlas";
 import type { RgbaImage } from "./minecraft-block-atlas";
 import { redstoneLampTextures } from "./minecraft-redstone-lamp-assets";
 
-// Glyphs are 3x5 walls of Redstone Lamps; "#" is a lit lamp. Glyph shapes
-// and composition are a declared web adaptation.
+// Glyphs are 3x5 walls of Redstone Lamps; "#" is a lit lamp and "." an unlit
+// one. Glyph shapes and composition are a declared web adaptation.
 const GLYPHS = new Map<string, readonly string[]>([
   ["0", ["###", "#.#", "#.#", "#.#", "###"]],
+  ["1", [".#.", "##.", ".#.", ".#.", "###"]],
+  ["2", ["###", "..#", "###", "#..", "###"]],
+  ["3", ["###", "..#", "###", "..#", "###"]],
+  ["4", ["#.#", "#.#", "###", "..#", "..#"]],
+  ["5", ["###", "#..", "###", "..#", "###"]],
+  ["6", ["###", "#..", "###", "#.#", "###"]],
+  ["7", ["###", "..#", "..#", "..#", "..#"]],
+  ["8", ["###", "#.#", "###", "#.#", "###"]],
+  ["9", ["###", "#.#", "###", "..#", "###"]],
+  ["k", ["#..", "#.#", "##.", "#.#", "#.#"]],
 ]);
 
 // One lamp block is 8 window pixels: the 16 px textures render at half size,
@@ -177,15 +187,18 @@ const renderDataUrl = async (rows: readonly string[]) => {
 
 export interface RedstoneLampDisplayProps extends Omit<
   React.ComponentProps<"img">,
-  "children" | "height" | "src" | "width"
+  "alt" | "children" | "height" | "role" | "src" | "width"
 > {
+  /** Glyphs 0-9 and k; any other character throws. */
   value: string;
 }
 
 export const RedstoneLampDisplay = ({
   value,
+  "aria-label": ariaLabel,
   ...props
 }: RedstoneLampDisplayProps) => {
+  const label = ariaLabel ?? value;
   const rows = glyphRows(value);
   const key = rows.join("/");
 
@@ -216,13 +229,15 @@ export const RedstoneLampDisplay = ({
 
   return (
     <img
-      alt={value}
+      {...props}
+      alt={label}
+      aria-label={label}
+
       data-slot="redstone-lamp-display"
       data-rendered={url === undefined ? undefined : "true"}
       width={(rows[0]?.length ?? 0) * CELL}
       height={rows.length * CELL}
       src={url}
-      {...props}
     />
   );
 };
