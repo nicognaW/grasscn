@@ -322,10 +322,15 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
         const source = await domToCanvas(document.body, {
           backgroundColor,
           features: { restoreScrollPosition: true },
-          filter: (target) =>
-            !belongs(target) &&
-            !sandbox(target) &&
-            !pruned.has(target.parentNode!),
+          filter: (target) => {
+            if (belongs(target) || sandbox(target)) {
+              return false;
+            }
+
+            const parent = target.parentNode;
+
+            return parent === null || !pruned.has(parent);
+          },
           height: innerHeight,
           includeStyleProperties,
           onCloneEachNode: (cloned) => {
