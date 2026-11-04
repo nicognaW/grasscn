@@ -76,7 +76,10 @@ const registeredItems = await readRegistryItems();
 const item = registeredItems.items.find((candidate) => candidate.name === name);
 
 assert.ok(
-  component?.pixelVerification.manifest && item,
+  component?.pixelVerification.manifest !== undefined &&
+    component.pixelVerification.manifest !== null &&
+    component.pixelVerification.manifest !== "" &&
+    item,
   "Need a registered item with an independent native manifest"
 );
 

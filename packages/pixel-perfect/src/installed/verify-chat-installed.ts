@@ -139,9 +139,7 @@ const verifyChatCase = async (
   const q = new URLSearchParams();
 
   for (const [key, value] of Object.entries(c)) {
-    if (typeof value === "string" || typeof value === "number") {
-      q.set(key, String(value));
-    }
+    q.set(key, String(value));
   }
 
   q.set("part", part);

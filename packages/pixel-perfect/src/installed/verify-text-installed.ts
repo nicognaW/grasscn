@@ -69,7 +69,10 @@ const registry = await readRegistry("registry.json");
 const item = registry.items.find((i) => i.name === name);
 
 assert.ok(
-  component?.pixelVerification.manifest && item,
+  component?.pixelVerification.manifest !== undefined &&
+    component.pixelVerification.manifest !== null &&
+    component.pixelVerification.manifest !== "" &&
+    item,
   "Item needs registered native references"
 );
 
