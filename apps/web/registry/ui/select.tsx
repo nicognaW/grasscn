@@ -450,10 +450,9 @@ const SelectContent = ({
   collisionBoundary,
   collisionAvoidance,
   alignItemWithTrigger = true,
-  keepMounted,
   ...props
 }: MinecraftProps<typeof SelectPrimitive.Popup> &
-  (Pick<
+  Pick<
     MinecraftProps<typeof SelectPrimitive.Positioner>,
     | "side"
     | "align"
@@ -463,9 +462,7 @@ const SelectContent = ({
     | "collisionBoundary"
     | "collisionAvoidance"
     | "alignItemWithTrigger"
-  > & {
-    keepMounted?: boolean;
-  })) => {
+  >) => {
   const scale = React.useContext(ScaleContext);
   const anchorId = React.useContext(AnchorContext);
   const [element, forwarded] = useElement(ref);

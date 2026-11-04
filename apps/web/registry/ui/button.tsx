@@ -52,6 +52,7 @@ const bitmapText = function bitmapText(
       }
 
       if (Array.isArray(child)) {
+        // oxlint-disable-next-line unicorn/no-array-for-each -- Preserve this consumer ReactNode array's existing method dispatch and sparse/mutation behavior; indexed traversal would bypass custom forEach overrides.
         child.forEach(visit);
 
         return;

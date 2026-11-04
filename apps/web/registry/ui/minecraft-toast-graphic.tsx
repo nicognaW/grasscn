@@ -34,6 +34,7 @@ export const MinecraftToastGraphic = ({
     let frame = 0;
     let signature = "";
 
+    // oxlint-disable-next-line react/set-state-in-effect -- Reset the preceding paint before loading new content; React readiness publication stays coordinated with the existing onLayout height commit.
     setReady(false);
 
     const canvas =

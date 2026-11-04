@@ -44,6 +44,7 @@ const literalText = function literalText(
     }
 
     if (Array.isArray(node)) {
+      // oxlint-disable-next-line unicorn/no-array-for-each -- Preserve this consumer ReactNode array's existing method dispatch and sparse/mutation behavior; indexed traversal would bypass custom forEach overrides.
       node.forEach(visit);
 
       return;
