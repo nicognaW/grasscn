@@ -26,6 +26,14 @@ const ButtonGroupDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World actions");
   const [action, setAction] = React.useState("Ready");
 
+  const demoLayout2: DemoVariables = {
+    "--demo-owned-button-group-2-width": `${buttonWidth * scale}px`,
+  };
+
+  const demoLayout3: DemoVariables = {
+    "--demo-owned-button-group-3-width": `${buttonWidth * scale}px`,
+  };
+
   return (
     <>
       <div className="demo-options">
@@ -64,7 +72,7 @@ const ButtonGroupDemo = ({ scale }: DemoProps) => {
           scale={scale}
           orientation={orientation}
           aria-label="World actions"
-          style={{ flexWrap: "wrap", maxWidth: "100%" }}
+          className="demo-owned-button-group-1"
         >
           <ButtonGroupText
             scale={scale}
@@ -80,7 +88,8 @@ const ButtonGroupDemo = ({ scale }: DemoProps) => {
           <Button
             scale={scale}
             type="button"
-            style={{ width: buttonWidth * scale }}
+            className="demo-owned-button-group-2"
+            style={demoLayout2}
             onClick={() => {
               setAction("World created");
             }}
@@ -96,7 +105,8 @@ const ButtonGroupDemo = ({ scale }: DemoProps) => {
           <Button
             scale={scale}
             type="button"
-            style={{ width: buttonWidth * scale }}
+            className="demo-owned-button-group-3"
+            style={demoLayout3}
             onClick={() => {
               setAction("World loaded");
             }}

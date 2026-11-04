@@ -1,11 +1,20 @@
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
 import { Separator } from "../registry/ui/separator";
 import type { DemoProps } from "../types";
 
 const SeparatorDemo = ({ scale }: DemoProps) => {
   const [width, setWidth] = React.useState(200);
+
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-separator-1-width": `${width * scale}px`,
+  };
+
+  const demoLayout2: DemoVariables = {
+    "--demo-owned-separator-2-width": `${width * scale}px`,
+  };
 
   return (
     <>
@@ -23,7 +32,8 @@ const SeparatorDemo = ({ scale }: DemoProps) => {
           <span>MENU HEADER</span>
           <Separator
             scale={scale}
-            style={{ width: width * scale }}
+            className="demo-owned-separator-1"
+            style={demoLayout1}
             role="separator"
             aria-label="Menu header separator"
           />
@@ -33,7 +43,8 @@ const SeparatorDemo = ({ scale }: DemoProps) => {
           <Separator
             scale={scale}
             edge="footer"
-            style={{ width: width * scale }}
+            className="demo-owned-separator-2"
+            style={demoLayout2}
             role="separator"
             aria-label="Menu footer separator"
           />

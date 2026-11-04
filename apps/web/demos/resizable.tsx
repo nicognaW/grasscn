@@ -43,6 +43,11 @@ const ResizableDemo = ({ scale }: DemoProps) => {
   const [selected, setSelected] = React.useState("Choose supplies or a recipe");
   const group = React.useRef<GroupImperativeHandle>(null);
 
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-resizable-1-height": `${140 * scale}px`,
+    "--demo-owned-resizable-1-width": `${Math.min(560, 280 * scale)}px`,
+  };
+
   return (
     <>
       <div className="demo-options">
@@ -86,11 +91,8 @@ const ResizableDemo = ({ scale }: DemoProps) => {
           scale={scale}
           orientation={orientation}
           groupRef={group}
-          style={{
-            width: Math.min(560, 280 * scale),
-            maxWidth: "100%",
-            height: 140 * scale,
-          }}
+          className="demo-owned-resizable-1"
+          style={demoLayout1}
           onLayoutChanged={(value) => {
             setLayout(
               `${Math.round(value[left] ?? 50)}% / ${Math.round(value[right] ?? 50)}%`

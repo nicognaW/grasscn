@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
 import { Input } from "../registry/ui/input";
 import { MinecraftText } from "../registry/ui/minecraft-text";
@@ -9,6 +10,14 @@ const ButtonDemo = ({ scale }: DemoProps) => {
   const [label, setLabel] = React.useState("Button");
   const [width, setWidth] = React.useState(200);
   const [count, setCount] = React.useState(0);
+
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-button-1-width": `${width * scale}px`,
+  };
+
+  const demoLayout2: DemoVariables = {
+    "--demo-owned-button-2-width": `${width * scale}px`,
+  };
 
   return (
     <>
@@ -39,7 +48,8 @@ const ButtonDemo = ({ scale }: DemoProps) => {
           </span>
           <Button
             scale={scale}
-            style={{ width: width * scale }}
+            className="demo-owned-button-1"
+            style={demoLayout1}
             onClick={() => {
               setCount((value) => value + 1);
             }}
@@ -51,7 +61,12 @@ const ButtonDemo = ({ scale }: DemoProps) => {
           <span>
             <MinecraftText>DISABLED</MinecraftText>
           </span>
-          <Button scale={scale} style={{ width: width * scale }} disabled>
+          <Button
+            scale={scale}
+            className="demo-owned-button-2"
+            style={demoLayout2}
+            disabled
+          >
             {label || " "}
           </Button>
         </div>

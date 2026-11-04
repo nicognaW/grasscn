@@ -40,6 +40,11 @@ const CarouselDemo = ({ scale }: DemoProps) => {
     };
   }, [api]);
 
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-carousel-1-height": vertical ? `${120 * scale}px` : undefined,
+    "--demo-owned-carousel-1-width": `${Math.min(400, 200 * scale)}px`,
+  };
+
   return (
     <>
       <div className="demo-options">
@@ -75,32 +80,39 @@ const CarouselDemo = ({ scale }: DemoProps) => {
           setApi={setApi}
           orientation={vertical ? "vertical" : "horizontal"}
           aria-label="World gallery"
-          style={{
-            width: Math.min(400, 200 * scale),
-            height: vertical ? 120 * scale : undefined,
-            maxWidth: "100%",
-          }}
+          className="demo-owned-carousel-1"
+          style={demoLayout1}
         >
           <CarouselContent>
-            {["Grasslands", "你好，世界", "Deep Dark"].map((name, index) => (
-              <CarouselItem key={name} style={{ height: 120 * scale }}>
-                <Card
-                  scale={scale}
-                  className="h-full w-full p-(--mc-intrinsic-demos-carousel-1-padding)"
-                  style={
-                    // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
-                    {
-                      "--mc-intrinsic-demos-carousel-1-padding": `${8 * scale}px`,
-                    } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
-                  }
+            {["Grasslands", "你好，世界", "Deep Dark"].map((name, index) => {
+              const demoLayout2: DemoVariables = {
+                "--demo-owned-carousel-2-height": `${120 * scale}px`,
+              };
+
+              return (
+                <CarouselItem
+                  key={name}
+                  className="demo-owned-carousel-2"
+                  style={demoLayout2}
                 >
-                  <CardHeader>
-                    <CardTitle>{name}</CardTitle>
-                  </CardHeader>
-                  <CardContent>World {index + 1}</CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
+                  <Card
+                    scale={scale}
+                    className="h-full w-full p-(--mc-intrinsic-demos-carousel-1-padding)"
+                    style={
+                      // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                      {
+                        "--mc-intrinsic-demos-carousel-1-padding": `${8 * scale}px`,
+                      } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+                    }
+                  >
+                    <CardHeader>
+                      <CardTitle>{name}</CardTitle>
+                    </CardHeader>
+                    <CardContent>World {index + 1}</CardContent>
+                  </Card>
+                </CarouselItem>
+              );
+            })}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />

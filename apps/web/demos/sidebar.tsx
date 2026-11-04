@@ -55,6 +55,17 @@ const SidebarDemo = ({ scale }: DemoProps) => {
     "Hardcore",
   ].filter((name) => name.toLowerCase().includes(search.toLowerCase()));
 
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-sidebar-1-flex-direction":
+      stage.width < 300 ? "column" : "row",
+    "--sidebar-width": `${120 * scale}px`,
+  };
+
+  const demoLayout2: DemoVariables = {
+    "--demo-owned-sidebar-2-width":
+      stage.width < 300 ? "100%" : `${120 * scale}px`,
+  };
+
   return (
     <>
       <div ref={stage.ref} className="demo-stage" data-stage="sidebar">
@@ -68,22 +79,13 @@ const SidebarDemo = ({ scale }: DemoProps) => {
               event.preventDefault();
             }
           }}
-          style={
-            {
-              position: "relative",
-              width: "100%",
-              flexDirection: stage.width < 300 ? "column" : "row",
-              minHeight: 0,
-              "--sidebar-width": `${120 * scale}px`,
-            } as React.CSSProperties
-          }
+          className="demo-owned-sidebar-1"
+          style={demoLayout1}
         >
           <Sidebar
             collapsible="none"
-            style={{
-              width: stage.width < 300 ? "100%" : 120 * scale,
-              flexShrink: 0,
-            }}
+            className="demo-owned-sidebar-2"
+            style={demoLayout2}
           >
             <SidebarHeader>
               <SidebarGroupLabel>Grasscn</SidebarGroupLabel>

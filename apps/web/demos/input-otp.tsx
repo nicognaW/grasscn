@@ -72,15 +72,22 @@ const InputOTPDemo = ({ scale }: DemoProps) => {
             pushPasswordManagerStrategy="none"
           >
             <InputOTPGroup>
-              {Array.from({ length: 6 }, (_, index) => (
-                <React.Fragment key={index}>
-                  {index === 3 ? <InputOTPSeparator /> : null}
-                  <InputOTPSlot
-                    index={index}
-                    style={{ width: slotWidth * scale }}
-                  />
-                </React.Fragment>
-              ))}
+              {Array.from({ length: 6 }, (_, index) => {
+                const demoLayout1: DemoVariables = {
+                  "--demo-owned-input-otp-1-width": `${slotWidth * scale}px`,
+                };
+
+                return (
+                  <React.Fragment key={index}>
+                    {index === 3 ? <InputOTPSeparator /> : null}
+                    <InputOTPSlot
+                      index={index}
+                      className="demo-owned-input-otp-1"
+                      style={demoLayout1}
+                    />
+                  </React.Fragment>
+                );
+              })}
             </InputOTPGroup>
           </InputOTP>
         </div>
@@ -94,13 +101,20 @@ const InputOTPDemo = ({ scale }: DemoProps) => {
             readOnly
           >
             <InputOTPGroup>
-              {Array.from({ length: 6 }, (_, index) => (
-                <InputOTPSlot
-                  key={index}
-                  index={index}
-                  style={{ width: slotWidth * scale }}
-                />
-              ))}
+              {Array.from({ length: 6 }, (_, index) => {
+                const demoLayout2: DemoVariables = {
+                  "--demo-owned-input-otp-2-width": `${slotWidth * scale}px`,
+                };
+
+                return (
+                  <InputOTPSlot
+                    key={index}
+                    index={index}
+                    className="demo-owned-input-otp-2"
+                    style={demoLayout2}
+                  />
+                );
+              })}
             </InputOTPGroup>
           </InputOTP>
         </div>
@@ -114,13 +128,20 @@ const InputOTPDemo = ({ scale }: DemoProps) => {
             disabled
           >
             <InputOTPGroup>
-              {Array.from({ length: 6 }, (_, index) => (
-                <InputOTPSlot
-                  key={index}
-                  index={index}
-                  style={{ width: slotWidth * scale }}
-                />
-              ))}
+              {Array.from({ length: 6 }, (_, index) => {
+                const demoLayout3: DemoVariables = {
+                  "--demo-owned-input-otp-3-width": `${slotWidth * scale}px`,
+                };
+
+                return (
+                  <InputOTPSlot
+                    key={index}
+                    index={index}
+                    className="demo-owned-input-otp-3"
+                    style={demoLayout3}
+                  />
+                );
+              })}
             </InputOTPGroup>
           </InputOTP>
         </div>

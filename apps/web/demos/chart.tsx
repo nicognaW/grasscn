@@ -226,6 +226,26 @@ const ChartDemo = ({ scale }: DemoProps) => {
     0
   );
 
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-chart-1-width": `${Math.min(116, contentWidth) * scale}px`,
+  };
+
+  const demoLayout2: DemoVariables = {
+    "--demo-owned-chart-2-width": `${Math.min(100, contentWidth) * scale}px`,
+  };
+
+  const demoLayout3: DemoVariables = {
+    "--demo-owned-chart-3-width": `${Math.min(120, contentWidth) * scale}px`,
+  };
+
+  const demoLayout4: DemoVariables = {
+    "--demo-owned-chart-4-width": `${Math.min(100, contentWidth) * scale}px`,
+  };
+
+  const demoLayout5: DemoVariables = {
+    "--demo-owned-chart-5-width": `${Math.min(116, contentWidth) * scale}px`,
+  };
+
   return (
     <>
       <div
@@ -275,10 +295,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
             >
               <SelectTrigger
                 aria-label="F3 metric"
-                className="max-w-full"
-                style={{
-                  width: Math.min(116, contentWidth) * scale,
-                }}
+                className="demo-owned-chart-1 max-w-full"
+                style={demoLayout1}
               >
                 <SelectValue />
               </SelectTrigger>
@@ -290,10 +308,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
             <Button
               scale={scale}
               type="button"
-              className="max-w-full"
-              style={{
-                width: Math.min(100, contentWidth) * scale,
-              }}
+              className="demo-owned-chart-2 max-w-full"
+              style={demoLayout2}
               onClick={() => {
                 setWebStep((value) => value + 1);
               }}
@@ -385,10 +401,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
             <Button
               scale={scale}
               type="button"
-              className="max-w-full"
-              style={{
-                width: Math.min(120, contentWidth) * scale,
-              }}
+              className="demo-owned-chart-3 max-w-full"
+              style={demoLayout3}
               onClick={() => {
                 setStep((v) => v + 1);
               }}
@@ -398,10 +412,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
             <Button
               scale={scale}
               type="button"
-              className="max-w-full"
-              style={{
-                width: Math.min(100, contentWidth) * scale,
-              }}
+              className="demo-owned-chart-4 max-w-full"
+              style={demoLayout4}
               onClick={() => {
                 setLimit((v) => (v === 120 ? 260 : 120));
               }}
@@ -460,10 +472,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
           >
             <SelectTrigger
               aria-label="Chart type"
-              className="max-w-full"
-              style={{
-                width: Math.min(116, contentWidth) * scale,
-              }}
+              className="demo-owned-chart-5 max-w-full"
+              style={demoLayout5}
             >
               <SelectValue />
             </SelectTrigger>

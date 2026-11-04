@@ -18,6 +18,11 @@ const ScrollAreaDemo = ({ scale }: DemoProps) => {
     node.scrollTop = (node.scrollHeight - node.clientHeight) * fraction;
   };
 
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-scroll-area-1-height": `${64 * scale}px`,
+    "--demo-owned-scroll-area-1-width": `${200 * scale}px`,
+  };
+
   return (
     <>
       <div className="demo-options">
@@ -67,7 +72,8 @@ const ScrollAreaDemo = ({ scale }: DemoProps) => {
                 setOffset(Math.round(event.currentTarget.scrollTop / scale));
               },
             }}
-            style={{ height: 64 * scale, maxWidth: "100%", width: 200 * scale }}
+            className="demo-owned-scroll-area-1"
+            style={demoLayout1}
           >
             <div
               className="h-(--demo-height) overflow-hidden"

@@ -55,7 +55,7 @@ const TraceDemo = ({ scale }: DemoProps) => {
         </Button>
       </div>
       <div ref={stage.ref} className="demo-stage" data-stage="trace">
-        <Trace scale={scale} style={{ width: "100%" }}>
+        <Trace scale={scale} className="demo-owned-trace-1">
           <TraceLine status={status}>
             <TraceIcon>O</TraceIcon>
             <TraceTitle>
@@ -72,7 +72,7 @@ const TraceDemo = ({ scale }: DemoProps) => {
             <TraceTitle>Waiting for chunks</TraceTitle>
           </TraceLine>
           <TraceCollapsible open={open} onOpenChange={setOpen}>
-            <TraceCollapsibleTrigger style={{ width: "100%" }}>
+            <TraceCollapsibleTrigger className="demo-owned-trace-2">
               Details
             </TraceCollapsibleTrigger>
             <TraceCollapsibleContent>

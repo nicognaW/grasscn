@@ -17,10 +17,14 @@ const TabsDemo = ({ scale }: DemoProps) => {
   const [structures, setStructures] = React.useState(true);
   const [world, setWorld] = React.useState("New World");
 
-  const panelStyle = {
-    height: 64 * scale,
-    padding: 8 * scale,
-    boxSizing: "border-box" as const,
+  const panelStyle: DemoVariables = {
+    "--demo-owned-tabs-panel-height": `${64 * scale}px`,
+    "--demo-owned-tabs-panel-padding": `${8 * scale}px`,
+  };
+
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-tabs-1-min-width": `${152 * scale}px`,
+    "--demo-owned-tabs-1-width": `${303 * scale}px`,
   };
 
   return (
@@ -49,7 +53,8 @@ const TabsDemo = ({ scale }: DemoProps) => {
           scale={scale}
           value={value}
           onValueChange={setValue}
-          style={{ flexShrink: 0, minWidth: 152 * scale, width: 303 * scale }}
+          className="demo-owned-tabs-1"
+          style={demoLayout1}
         >
           <TabsList aria-label="World settings" activateOnFocus>
             <TabsTrigger value="game">{title || " "}</TabsTrigger>
@@ -58,7 +63,11 @@ const TabsDemo = ({ scale }: DemoProps) => {
               More
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="game" style={panelStyle}>
+          <TabsContent
+            value="game"
+            className="demo-owned-tabs-panel"
+            style={panelStyle}
+          >
             <div className="demo-pair">
               <Label htmlFor="tabs-world-name" scale={scale}>
                 World name
@@ -81,7 +90,11 @@ const TabsDemo = ({ scale }: DemoProps) => {
               />
             </div>
           </TabsContent>
-          <TabsContent value="world" style={panelStyle}>
+          <TabsContent
+            value="world"
+            className="demo-owned-tabs-panel"
+            style={panelStyle}
+          >
             <div>
               <Checkbox
                 id="tabs-structures"
@@ -100,7 +113,11 @@ const TabsDemo = ({ scale }: DemoProps) => {
               </Label>
             </div>
           </TabsContent>
-          <TabsContent value="more" style={panelStyle}>
+          <TabsContent
+            value="more"
+            className="demo-owned-tabs-panel"
+            style={panelStyle}
+          >
             <Button
               scale={scale}
               onClick={() => {
