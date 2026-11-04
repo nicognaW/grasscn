@@ -296,8 +296,7 @@ const ItemTitle = ({
     (providedClip !== undefined && providedClip !== null) ||
     props.style?.color != null ||
     Boolean(className) ||
-    (typeof props.children !== "string" &&
-      typeof props.children !== "number") ? (
+    !isMinecraftTextContent(props.children) ? (
     <MinecraftItemText {...common} clipWidth={providedClip ?? clipWidth} />
   ) : (
     <MinecraftProse {...common} />
