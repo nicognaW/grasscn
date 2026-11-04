@@ -92,22 +92,33 @@ for (const scale of [1, 2, 3]) {
 
             const lines = Array.from(
               label.querySelectorAll<HTMLElement>(".mc-label-line")
-            ).map((line) => ({
-              text:
+            ).map((line) => {
+              const lineText =
                 line.querySelector(".mc-text-accessible")?.textContent ??
-                line.textContent,
-              height: line.getBoundingClientRect().height,
-            }));
+                line.textContent;
+
+              return {
+                height: line.getBoundingClientRect().height,
+                text: lineText,
+              };
+            });
+
+            const elapsed = performance.now() - start;
+            const { height } = rect;
+            const { width } = rect;
+            const ready = label.dataset.mcLabelLayoutReady;
+            const { display } = style;
+            const { visibility } = style;
 
             capturedFrames.push({
-              milestone,
-              elapsed: performance.now() - start,
-              height: rect.height,
-              width: rect.width,
-              ready: label.dataset.mcLabelLayoutReady,
-              display: style.display,
-              visibility: style.visibility,
+              display,
+              elapsed,
+              height,
               lines,
+              milestone,
+              ready,
+              visibility,
+              width,
             });
           }
 
@@ -116,7 +127,16 @@ for (const scale of [1, 2, 3]) {
 
         writeFileSync(
           info.outputPath("first-frames.json"),
-          JSON.stringify({ text, scale, warm, frames }, null, 2)
+          JSON.stringify(
+            Object.fromEntries<string | number | boolean | typeof frames>([
+              ["text", text],
+              ["scale", scale],
+              ["warm", warm],
+              ["frames", frames],
+            ]),
+            null,
+            2
+          )
         );
         await expect(
           page.locator("[data-mc-label-layout-ready]")

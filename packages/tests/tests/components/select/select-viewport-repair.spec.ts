@@ -50,10 +50,11 @@ for (const scale of [2] as const) {
         expect(before.height % scale).toBe(0);
         const viewport = popup.locator("[data-slot=select-viewport]");
 
-        const scroll = await viewport.evaluate((n) => ({
-          top: n.scrollTop,
-          maximum: n.scrollHeight - n.clientHeight,
-        }));
+        const scroll = await viewport.evaluate((n) => {
+          const top = n.scrollTop;
+
+          return { maximum: n.scrollHeight - n.clientHeight, top };
+        });
 
         if (short) {
           expect(scroll.maximum).toBeGreaterThan(0);

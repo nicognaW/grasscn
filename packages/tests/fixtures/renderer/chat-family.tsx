@@ -75,13 +75,13 @@ export const ChatFamilyFixture = () => {
   } = readChatReferenceGeometry(q, scale, native);
 
   const common: ChatFamilyReferenceStyle = {
+    "--fixture-width": chatFixtureWidth,
     "--fixture-x": chatFixtureX,
     "--fixture-y": chatFixtureY,
-    "--fixture-width": chatFixtureWidth,
     ...chatNativeDimensions,
-    color: q.get("color") ?? "#ffffff",
-    "--mc-scale": scale,
     "--mc-pixel": `${scale}px`,
+    "--mc-scale": scale,
+    color: q.get("color") ?? "#ffffff",
   };
 
   const background = q.get("background") ?? "#202020";
