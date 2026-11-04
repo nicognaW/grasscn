@@ -615,7 +615,10 @@ const Performance = () => {
   const container = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState(140);
   React.useLayoutEffect(() => {
-    const el = container.current!;
+    const el =
+      // SAFETY: React attaches this always-rendered <div> before its synchronous layout effect setup reads the owned container ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLDivElement result.
+      container.current as HTMLDivElement;
 
     const measure = () => {
       setWidth(Math.max(40, Math.min(242, Math.floor(el.clientWidth))));

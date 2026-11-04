@@ -137,7 +137,11 @@ const ChartDemo = ({ scale }: DemoProps) => {
 
     measure();
     const observer = new ResizeObserver(measure);
-    observer.observe(stage.current!);
+    observer.observe(
+      // SAFETY: React attaches this always-rendered <div> before its synchronous layout effect setup reads the owned stage ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLDivElement result.
+      stage.current as HTMLDivElement
+    );
 
     return () => {
       observer.disconnect();

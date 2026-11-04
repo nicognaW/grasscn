@@ -62,7 +62,11 @@ export const MinecraftSignPaint = ({
       }
     });
 
-    observer.observe(ref.current!);
+    observer.observe(
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement
+    );
     window.addEventListener("resize", repaint);
 
     return () => {

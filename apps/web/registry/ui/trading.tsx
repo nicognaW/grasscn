@@ -242,7 +242,10 @@ const Trading = ({
   );
 
   React.useEffect(() => {
-    const node = root.current!;
+    const node =
+      // SAFETY: React attaches this always-rendered <div> before its synchronous effect setup reads the owned root ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLDivElement result.
+      root.current as HTMLDivElement;
 
     const wheel = (event: WheelEvent) => {
       if (cancelledWheel.current === event) {

@@ -40,7 +40,11 @@ const splashWidth = Array.from(splash).reduce(
 export const TitleScene = () => {
   const ref = React.useRef<HTMLDivElement>(null);
   React.useLayoutEffect(() => {
-    const node = ref.current!;
+    const node =
+      // SAFETY: React attaches this always-rendered <div> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLDivElement result.
+      ref.current as HTMLDivElement;
+
     const splashNode = node.querySelector<HTMLElement>(".grass-title-splash")!;
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;

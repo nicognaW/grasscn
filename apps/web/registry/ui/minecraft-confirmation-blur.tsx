@@ -24,7 +24,10 @@ export const MinecraftConfirmationBlur = ({
 
   const size = 2 * Math.max(0, Math.round(radius)) + 1;
   React.useLayoutEffect(() => {
-    const host = ref.current!.parentElement!;
+    const host =
+      // SAFETY: React attaches this always-rendered <svg> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact SVGSVGElement result.
+      (ref.current as SVGSVGElement).parentElement!;
 
     if (radius > 0 && !ready) {
       host.style.backdropFilter = `url(#${id})`;

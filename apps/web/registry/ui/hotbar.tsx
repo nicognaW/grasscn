@@ -68,7 +68,11 @@ const HotbarPaint = ({
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   React.useLayoutEffect(() => {
-    const ctx = ref.current!.getContext("2d")!;
+    const ctx =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      (ref.current as HTMLCanvasElement).getContext("2d")!;
+
     ctx.fillStyle = background;
     ctx.fillRect(0, 0, 184, 23);
     const image = ctx.getImageData(0, 0, 184, 23);

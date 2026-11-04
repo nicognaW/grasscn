@@ -83,7 +83,11 @@ export const MinecraftUnicodeLabel = ({
     let frame = 0;
     let signature = "";
 
-    const context = canvas.current!.getContext("2d")!;
+    const context =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned canvas ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      (canvas.current as HTMLCanvasElement).getContext("2d")!;
+
     setUnihexAtlas(context, atlas);
     setBitmap(false);
     Promise.all([loadUnihex(), loadAlpha()])

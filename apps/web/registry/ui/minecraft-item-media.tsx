@@ -23,7 +23,11 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
   React.useLayoutEffect(() => {
     retainItemMedia();
 
-    const node = canvas.current!;
+    const node =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned canvas ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      canvas.current as HTMLCanvasElement;
+
     const media = node.parentElement!;
     const root = node.closest<HTMLElement>(".mc-item") ?? media;
 

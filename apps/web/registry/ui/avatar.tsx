@@ -78,7 +78,10 @@ const MinecraftAvatarFace = ({
   const ref = React.useRef<HTMLCanvasElement>(null);
 
   React.useLayoutEffect(() => {
-    const canvas = ref.current!;
+    const canvas =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement;
 
     let frame = 0;
     let signature = "";

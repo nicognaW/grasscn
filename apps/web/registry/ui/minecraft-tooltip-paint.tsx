@@ -137,7 +137,11 @@ export const MinecraftTooltipSurface = ({
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const [painted, setPainted] = React.useState(false);
   React.useLayoutEffect(() => {
-    const node = canvas.current!;
+    const node =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned canvas ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      canvas.current as HTMLCanvasElement;
+
     const parent = node.parentElement!;
 
     let signature = "";
