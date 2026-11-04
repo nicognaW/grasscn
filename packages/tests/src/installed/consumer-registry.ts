@@ -102,21 +102,61 @@ export const assertRegistryInstallation = async (
   /** @type {Map<string,string>} */
   const targets = new Map<string, string>();
 
-  for (const { payload } of payloads.values()) {
-    for (const file of payload.files) {
-      const target = installedRegistryFile(file, consumer, settings);
-      const targetStat = await stat(target);
-      assert.ok(
-        targetStat.isFile(),
-        `Missing CLI-installed file: ${file.path}`
-      );
-      const physicalTarget = await realpath(target);
-      const physicalConsumer = await realpath(consumer);
-      assert.ok(
-        physicalTarget.startsWith(physicalConsumer + path.sep),
-        `CLI-installed file must stay physically inside consumer: ${file.path}`
-      );
-      targets.set(file.path, target);
+  const targetInputs = await Promise.allSettled(
+    [...payloads.values()].map(
+      async ({ payload }) =>
+        await Promise.allSettled(
+          payload.files.map(async (file) => {
+            const target = installedRegistryFile(file, consumer, settings);
+
+            const [statInput, targetInput, consumerInput] =
+              await Promise.allSettled([
+                stat(target),
+                realpath(target),
+                realpath(consumer),
+              ]);
+
+            if (statInput.status === "rejected") {
+              throw statInput.reason;
+            }
+
+            assert.ok(
+              statInput.value.isFile(),
+              `Missing CLI-installed file: ${file.path}`
+            );
+
+            if (targetInput.status === "rejected") {
+              throw targetInput.reason;
+            }
+
+            if (consumerInput.status === "rejected") {
+              throw consumerInput.reason;
+            }
+
+            const physicalTarget = targetInput.value;
+            const physicalConsumer = consumerInput.value;
+            assert.ok(
+              physicalTarget.startsWith(physicalConsumer + path.sep),
+              `CLI-installed file must stay physically inside consumer: ${file.path}`
+            );
+
+            return { original: file.path, target };
+          })
+        )
+    )
+  );
+
+  for (const payloadInput of targetInputs) {
+    if (payloadInput.status === "rejected") {
+      throw payloadInput.reason;
+    }
+
+    for (const fileInput of payloadInput.value) {
+      if (fileInput.status === "rejected") {
+        throw fileInput.reason;
+      }
+
+      targets.set(fileInput.value.original, fileInput.value.target);
     }
   }
 
@@ -124,78 +164,109 @@ export const assertRegistryInstallation = async (
   /** @type {Record<string,string>} */
   const installed: Record<string, string> = {};
 
-  for (const [original, filename] of targets) {
-    const bytes = await readFile(filename);
-    installed[path.relative(consumer, filename).replaceAll(path.sep, "/")] =
-      sha256(bytes);
+  const sourceInputs = await Promise.allSettled(
+    [...targets].map(async ([original, filename]) => {
+      let importCount = 0;
 
-    if (!/\.[cm]?[jt]sx?$/u.test(filename)) {
-      continue;
-    }
+      const bytes = await readFile(filename);
+      const installedPath = path
+        .relative(consumer, filename)
+        .replaceAll(path.sep, "/");
+      const digest = sha256(bytes);
 
-    const parsed = new Bun.Transpiler({
-      loader: filename.endsWith("x") ? "tsx" : "ts",
-    }).scan(bytes.toString("utf-8"));
-
-    for (const entry of parsed.imports) {
-      if (!entry.path.startsWith(".") && !entry.path.startsWith("@/")) {
-        continue;
+      if (!/\.[cm]?[jt]sx?$/u.test(filename)) {
+        return { digest, importCount, installedPath };
       }
 
-      importsChecked += 1;
+      const parsed = new Bun.Transpiler({
+        loader: filename.endsWith("x") ? "tsx" : "ts",
+      }).scan(bytes.toString("utf-8"));
 
-      const target = entry.path.startsWith("@/")
-        ? path.join(consumer, "src", entry.path.slice(2))
-        : path.resolve(path.dirname(filename), entry.path);
-
-      assert.ok(
-        target.startsWith(path.resolve(consumer) + path.sep),
-        `${original} imports must stay inside consumer: ${entry.path}`
-      );
-
-      const candidates = [
-        target,
-        ...[
-          ".ts",
-          ".tsx",
-          ".css",
-          ".json",
-          ".js",
-          ".mjs",
-          "/index.ts",
-          "/index.tsx",
-        ].map((extension) => target + extension),
-      ];
-
-      let found = false;
-
-      for (const candidate of candidates) {
-        let isFile = false;
-
-        try {
-          const candidateStat = await stat(candidate);
-          isFile = candidateStat.isFile();
-        } catch {
-          /* Missing candidates are expected while walking package/import resolution. */
+      for (const entry of parsed.imports) {
+        if (!entry.path.startsWith(".") && !entry.path.startsWith("@/")) {
+          continue;
         }
 
-        if (isFile) {
-          const physicalCandidate = await realpath(candidate);
-          const physicalConsumer = await realpath(consumer);
-          assert.ok(
-            physicalCandidate.startsWith(physicalConsumer + path.sep),
-            `${original} imports must stay physically inside consumer`
-          );
-          found = true;
-          break;
+        importCount += 1;
+
+        const target = entry.path.startsWith("@/")
+          ? path.join(consumer, "src", entry.path.slice(2))
+          : path.resolve(path.dirname(filename), entry.path);
+
+        assert.ok(
+          target.startsWith(path.resolve(consumer) + path.sep),
+          `${original} imports must stay inside consumer: ${entry.path}`
+        );
+
+        const candidates = [
+          target,
+          ...[
+            ".ts",
+            ".tsx",
+            ".css",
+            ".json",
+            ".js",
+            ".mjs",
+            "/index.ts",
+            "/index.tsx",
+          ].map((extension) => target + extension),
+        ];
+
+        let found = false;
+
+        for (const candidate of candidates) {
+          let isFile = false;
+
+          try {
+            const candidateStat = await stat(candidate);
+            isFile = candidateStat.isFile();
+          } catch {
+            /* Missing candidates are expected while walking package/import resolution. */
+          }
+
+          if (isFile) {
+            const [candidateInput, consumerInput] = await Promise.allSettled([
+              realpath(candidate),
+              realpath(consumer),
+            ]);
+
+            if (candidateInput.status === "rejected") {
+              throw candidateInput.reason;
+            }
+
+            if (consumerInput.status === "rejected") {
+              throw consumerInput.reason;
+            }
+
+            const physicalCandidate = candidateInput.value;
+            const physicalConsumer = consumerInput.value;
+            assert.ok(
+              physicalCandidate.startsWith(physicalConsumer + path.sep),
+              `${original} imports must stay physically inside consumer`
+            );
+            found = true;
+            break;
+          }
         }
+
+        assert.ok(
+          found,
+          `${original} has unresolved installed import ${entry.path}`
+        );
       }
 
-      assert.ok(
-        found,
-        `${original} has unresolved installed import ${entry.path}`
-      );
+      return { digest, importCount, installedPath };
+    })
+  );
+
+  for (const sourceInput of sourceInputs) {
+    if (sourceInput.status === "rejected") {
+      throw sourceInput.reason;
     }
+
+    const { digest, importCount, installedPath } = sourceInput.value;
+    installed[installedPath] = digest;
+    importsChecked += importCount;
   }
 
   return { importsChecked, installed, uniqueFiles: targets.size };

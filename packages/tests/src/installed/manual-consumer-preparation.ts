@@ -163,19 +163,43 @@ export const prepareManualConsumer = async (
   /** @type {Map<string, string>} */
   const files = new Map<string, string>();
 
-  for (const manifest of manifests) {
-    for (const file of manifest.files) {
-      assert.ok(
-        !file.destination.includes("..") && !path.isAbsolute(file.destination)
-      );
-      /** @type {Response} */
-      const response: Response = await fetch(`${origin}${file.url}?download=1`);
-      assert.ok(response.ok, `Download complete ${file.destination}`);
-      assert.equal(
-        response.headers.get("x-grasscn-destination"),
-        file.destination
-      );
-      const bytes = Buffer.from(await response.arrayBuffer());
+  const downloadInputs = await Promise.allSettled(
+    manifests.map(
+      async (manifest) =>
+        await Promise.allSettled(
+          manifest.files.map(async (file) => {
+            assert.ok(
+              !file.destination.includes("..") &&
+                !path.isAbsolute(file.destination)
+            );
+            /** @type {Response} */
+            const response: Response = await fetch(
+              `${origin}${file.url}?download=1`
+            );
+            assert.ok(response.ok, `Download complete ${file.destination}`);
+            assert.equal(
+              response.headers.get("x-grasscn-destination"),
+              file.destination
+            );
+            const bytes = Buffer.from(await response.arrayBuffer());
+
+            return { bytes, file };
+          })
+        )
+    )
+  );
+
+  for (const manifestInput of downloadInputs) {
+    if (manifestInput.status === "rejected") {
+      throw manifestInput.reason;
+    }
+
+    for (const fileInput of manifestInput.value) {
+      if (fileInput.status === "rejected") {
+        throw fileInput.reason;
+      }
+
+      const { bytes, file } = fileInput.value;
       const previous = files.get(file.destination);
 
       if (previous !== undefined && previous !== "") {
