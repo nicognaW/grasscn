@@ -5,6 +5,7 @@ import * as React from "react";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
 import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
+import type { UnihexGlyph } from "./minecraft-unifont";
 import {
   positionUnihex,
   disposeUnihex,
@@ -199,7 +200,9 @@ export const MinecraftUnicodeLabel = ({
                   }
                 }
               } else {
-                const unicodeGlyph = getUnihexGlyph(char)!;
+                // SAFETY: completed loadUnihex and hasSupportedLineGlyphs established this character's glyph; the private font map is never cleared or replaced afterward, and this branch excludes every populated ASCII glyph.
+                // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The same immutable text and initialized glyph-map membership prove this exact UnihexGlyph read.
+                const unicodeGlyph = getUnihexGlyph(char) as UnihexGlyph;
                 paintUnihex(
                   context,
                   unicodeGlyph,
