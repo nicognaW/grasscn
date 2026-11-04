@@ -365,15 +365,21 @@ export const attachMinecraftOTPSlot = function attachMinecraftOTPSlot(
       input.dataset.mcBitmap = String(supported);
     }
 
-    const cursor =
-      input.selectionDirection === "backward"
-        ? (input.selectionStart ?? value.length)
-        : (input.selectionEnd ?? value.length);
+    const readInputSelection = () => {
+      const cursor =
+        input.selectionDirection === "backward"
+          ? (input.selectionStart ?? value.length)
+          : (input.selectionEnd ?? value.length);
 
-    const anchor =
-      input.selectionDirection === "backward"
-        ? (input.selectionEnd ?? cursor)
-        : (input.selectionStart ?? cursor);
+      const anchor =
+        input.selectionDirection === "backward"
+          ? (input.selectionEnd ?? cursor)
+          : (input.selectionStart ?? cursor);
+
+      return { anchor, cursor };
+    };
+
+    const { anchor, cursor } = readInputSelection();
 
     if (previousValue !== value) {
       start = 0;
@@ -417,87 +423,103 @@ export const attachMinecraftOTPSlot = function attachMinecraftOTPSlot(
     );
 
     if (supported) {
-      const innerWidth = width / scale - 8;
-      start = scrollTo(value, start, cursor, innerWidth);
-      const visible = trimToWidth(value.slice(start), innerWidth);
+      const paintEditableText = (frameImages: Images) => {
+        const innerWidth = width / scale - 8;
+        start = scrollTo(value, start, cursor, innerWidth);
+        const visible = trimToWidth(value.slice(start), innerWidth);
 
-      const local = cursor - start;
-      const cursorInView = local >= 0 && local <= visible.length;
+        const local = cursor - start;
+        const cursorInView = local >= 0 && local <= visible.length;
 
-      const ink = input.readOnly || input.disabled ? 112 : 224;
-      const y = Math.floor((height / scale - 8) / 2);
+        const ink = input.readOnly || input.disabled ? 112 : 224;
+        const y = Math.floor((height / scale - 8) / 2);
 
-      const insert =
-        cursor < value.length ||
-        (input.maxLength >= 0 && value.length >= input.maxLength);
+        const insert =
+          cursor < value.length ||
+          (input.maxLength >= 0 && value.length >= input.maxLength);
 
-      let cursorX = 4;
+        let cursorX = 4;
 
-      if (visible.length) {
-        const prefix = cursorInView ? visible.slice(0, local) : visible;
-        text(context, loaded.alpha, prefix, 4, y, ink, scale);
-        cursorX += advance(prefix) + 1;
-      }
+        if (visible.length) {
+          const prefix = cursorInView ? visible.slice(0, local) : visible;
+          text(context, frameImages.alpha, prefix, 4, y, ink, scale);
+          cursorX += advance(prefix) + 1;
+        }
 
-      if (cursorInView && insert) {
-        cursorX -= 1;
-      }
+        if (cursorInView && insert) {
+          cursorX -= 1;
+        }
 
-      if (cursorInView && local < visible.length) {
-        text(
-          context,
-          loaded.alpha,
-          visible.slice(local),
-          cursorX,
-          y,
-          ink,
-          scale
-        );
-      }
+        if (cursorInView && local < visible.length) {
+          text(
+            context,
+            frameImages.alpha,
+            visible.slice(local),
+            cursorX,
+            y,
+            ink,
+            scale
+          );
+        }
 
-      if (!visible.length && !focused && input.placeholder) {
-        text(context, loaded.alpha, input.placeholder, 4, y, 85, scale);
-      }
+        if (!visible.length && !focused && input.placeholder) {
+          text(context, frameImages.alpha, input.placeholder, 4, y, 85, scale);
+        }
 
-      const anchorLocal = Math.max(0, Math.min(visible.length, anchor - start));
-
-      if (anchorLocal !== local) {
-        const other = Math.min(
-          width / scale,
-          4 + advance(visible.slice(0, anchorLocal)) - 1
-        );
-
-        const here = Math.min(width / scale, cursorX);
-
-        const left = Math.max(0, Math.min(here, other) * scale);
-        const right = Math.min(width, Math.max(here, other) * scale);
-
-        if (right > left) {
-          const pixels = context.getImageData(
-            left,
-            (y - 1) * scale,
-            right - left,
-            11 * scale
+        const paintSelection = () => {
+          const anchorLocal = Math.max(
+            0,
+            Math.min(visible.length, anchor - start)
           );
 
-          for (let i = 0; i < pixels.data.length; i += 4) {
-            pixels.data[i] = 255 - pixels.data[i];
-            pixels.data[i + 1] = 255 - pixels.data[i + 1];
-            pixels.data[i + 2] = 255;
+          if (anchorLocal !== local) {
+            const other = Math.min(
+              width / scale,
+              4 + advance(visible.slice(0, anchorLocal)) - 1
+            );
+
+            const here = Math.min(width / scale, cursorX);
+
+            const left = Math.max(0, Math.min(here, other) * scale);
+            const right = Math.min(width, Math.max(here, other) * scale);
+
+            if (right > left) {
+              const pixels = context.getImageData(
+                left,
+                (y - 1) * scale,
+                right - left,
+                11 * scale
+              );
+
+              for (let i = 0; i < pixels.data.length; i += 4) {
+                pixels.data[i] = 255 - pixels.data[i];
+                pixels.data[i + 1] = 255 - pixels.data[i + 1];
+                pixels.data[i + 2] = 255;
+              }
+
+              context.putImageData(pixels, left, (y - 1) * scale);
+            }
           }
+        };
 
-          context.putImageData(pixels, left, (y - 1) * scale);
-        }
-      }
+        paintSelection();
 
-      if (focused && blink && cursorInView) {
-        if (insert) {
-          context.fillStyle = `rgb(${ink},${ink},${ink})`;
-          context.fillRect(cursorX * scale, (y - 1) * scale, scale, 11 * scale);
-        } else {
-          text(context, loaded.alpha, "_", cursorX, y, ink, scale);
+        if (focused && blink && cursorInView) {
+          if (insert) {
+            context.fillStyle = `rgb(${ink},${ink},${ink})`;
+            context.fillRect(
+              cursorX * scale,
+              (y - 1) * scale,
+              scale,
+              11 * scale
+            );
+          } else {
+            text(context, frameImages.alpha, "_", cursorX, y, ink, scale);
+          }
         }
-      }
+      };
+
+      paintEditableText(loaded);
     }
 
     input.style.setProperty("--mc-input-image", `url("${canvas.toDataURL()}")`);

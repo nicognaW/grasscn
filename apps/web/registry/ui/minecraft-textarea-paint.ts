@@ -428,125 +428,136 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
     );
 
     if (supported) {
-      context.save();
-      context.beginPath();
-      context.rect(scale, scale, (pane - 2) * scale, height - 2 * scale);
-      context.clip();
+      const paintEditableText = (
+        frameImages: Awaited<ReturnType<typeof loadImages>>
+      ) => {
+        context.save();
+        context.beginPath();
+        context.rect(scale, scale, (pane - 2) * scale, height - 2 * scale);
+        context.clip();
 
-      if (!value && !focused && node.placeholder) {
-        context.globalAlpha = 0.8;
+        if (!value && !focused && node.placeholder) {
+          context.globalAlpha = 0.8;
 
-        for (const [row, line] of wrap(node.placeholder, pane - 8).entries()) {
-          text(
-            context,
-            loaded.alpha,
-            node.placeholder.slice(line.begin, line.end),
-            4,
-            4 + row * 9 - scroll,
-            224,
-            scale
-          );
-        }
-
-        context.globalAlpha = 1;
-      } else {
-        const row = Math.max(
-          0,
-          lines.findIndex((line) => cursor >= line.begin && cursor <= line.end)
-        );
-
-        const line = lines[row];
-
-        const x = 4 + advance(value.slice(line.begin, cursor));
-        const y = 4 + row * 9 - scroll;
-
-        for (const [lineIndex, current] of lines.entries()) {
-          if (blink && cursor < value.length && lineIndex === row) {
+          for (const [row, line] of wrap(
+            node.placeholder,
+            pane - 8
+          ).entries()) {
             text(
               context,
-              loaded.alpha,
-              value.slice(current.begin, cursor),
+              frameImages.alpha,
+              node.placeholder.slice(line.begin, line.end),
               4,
-              y,
-              224,
-              scale
-            );
-            text(
-              context,
-              loaded.alpha,
-              value.slice(cursor, current.end),
-              x,
-              y,
-              224,
-              scale
-            );
-            context.fillStyle = "#d0d0d0";
-            context.fillRect(x * scale, (y - 1) * scale, scale, 11 * scale);
-          } else {
-            text(
-              context,
-              loaded.alpha,
-              value.slice(current.begin, current.end),
-              4,
-              4 + lineIndex * 9 - scroll,
+              4 + row * 9 - scroll,
               224,
               scale
             );
           }
-        }
 
-        if (blink && cursor >= value.length) {
-          text(context, loaded.alpha, "_", x, y, 208, scale);
-        }
+          context.globalAlpha = 1;
+        } else {
+          const row = Math.max(
+            0,
+            lines.findIndex(
+              (line) => cursor >= line.begin && cursor <= line.end
+            )
+          );
 
-        if (cursor !== anchor) {
-          for (const [selectionRowIndex, selectionLine] of lines.entries()) {
-            const begin = Math.max(
-              selectionLine.begin,
-              Math.min(cursor, anchor)
-            );
+          const line = lines[row];
 
-            const end = Math.min(selectionLine.end, Math.max(cursor, anchor));
+          const x = 4 + advance(value.slice(line.begin, cursor));
+          const y = 4 + row * 9 - scroll;
 
-            if (end < begin) {
-              continue;
+          for (const [lineIndex, current] of lines.entries()) {
+            if (blink && cursor < value.length && lineIndex === row) {
+              text(
+                context,
+                frameImages.alpha,
+                value.slice(current.begin, cursor),
+                4,
+                y,
+                224,
+                scale
+              );
+              text(
+                context,
+                frameImages.alpha,
+                value.slice(cursor, current.end),
+                x,
+                y,
+                224,
+                scale
+              );
+              context.fillStyle = "#d0d0d0";
+              context.fillRect(x * scale, (y - 1) * scale, scale, 11 * scale);
+            } else {
+              text(
+                context,
+                frameImages.alpha,
+                value.slice(current.begin, current.end),
+                4,
+                4 + lineIndex * 9 - scroll,
+                224,
+                scale
+              );
             }
+          }
 
-            const left = 4 + advance(value.slice(selectionLine.begin, begin));
+          if (blink && cursor >= value.length) {
+            text(context, frameImages.alpha, "_", x, y, 208, scale);
+          }
 
-            const right =
-              Math.max(cursor, anchor) > selectionLine.end
-                ? pane
-                : 4 + advance(value.slice(selectionLine.begin, end));
-
-            const top = 4 + selectionRowIndex * 9 - scroll;
-
-            const x0 = Math.max(1, left);
-            const x1 = Math.min(pane - 1, right);
-            const y0 = Math.max(1, top);
-            const y1 = Math.min(height / scale - 1, top + 9);
-
-            if (x1 > x0 && y1 > y0) {
-              const pixels = context.getImageData(
-                x0 * scale,
-                y0 * scale,
-                (x1 - x0) * scale,
-                (y1 - y0) * scale
+          if (cursor !== anchor) {
+            for (const [selectionRowIndex, selectionLine] of lines.entries()) {
+              const begin = Math.max(
+                selectionLine.begin,
+                Math.min(cursor, anchor)
               );
 
-              for (let i = 0; i < pixels.data.length; i += 4) {
-                pixels.data[i] = 255 - pixels.data[i];
-                pixels.data[i + 1] = 255 - pixels.data[i + 1];
-                pixels.data[i + 2] = 255;
+              const end = Math.min(selectionLine.end, Math.max(cursor, anchor));
+
+              if (end < begin) {
+                continue;
               }
 
-              context.putImageData(pixels, x0 * scale, y0 * scale);
+              const left = 4 + advance(value.slice(selectionLine.begin, begin));
+
+              const right =
+                Math.max(cursor, anchor) > selectionLine.end
+                  ? pane
+                  : 4 + advance(value.slice(selectionLine.begin, end));
+
+              const top = 4 + selectionRowIndex * 9 - scroll;
+
+              const x0 = Math.max(1, left);
+              const x1 = Math.min(pane - 1, right);
+              const y0 = Math.max(1, top);
+              const y1 = Math.min(height / scale - 1, top + 9);
+
+              if (x1 > x0 && y1 > y0) {
+                const pixels = context.getImageData(
+                  x0 * scale,
+                  y0 * scale,
+                  (x1 - x0) * scale,
+                  (y1 - y0) * scale
+                );
+
+                for (let i = 0; i < pixels.data.length; i += 4) {
+                  pixels.data[i] = 255 - pixels.data[i];
+                  pixels.data[i + 1] = 255 - pixels.data[i + 1];
+                  pixels.data[i + 2] = 255;
+                }
+
+                context.putImageData(pixels, x0 * scale, y0 * scale);
+              }
             }
           }
         }
-      }
 
-      context.restore();
+        context.restore();
+      };
+
+      paintEditableText(loaded);
     }
 
     if (scrollable) {
