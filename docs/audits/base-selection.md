@@ -53,3 +53,7 @@ The catalogue therefore currently contains32 prepared Base PPT identities (the a
 ## Redstone Lamp display projected references (#45)
 
 `packages/pixel-perfect/tests/redstone-lamp-display/pixels.spec.ts` adds three PPTs: the corpus integrity check, the masked comparison of glyph `0` against its projected reference, and the one-pixel negative control in a temporary copy. All three are Full. Spec #42 names the display demo value `1234` as the lamp's Base mapping, and no website default path shows `0` yet; the header star count (#49) has not landed. Revisit glyph `0` when the header renders the repository's current count of `0` by default, and add `1234` as Base when #46 captures it.
+
+## Firework explosion projected references (#47)
+
+`packages/pixel-perfect/tests/fireworks/explosion-pixels.spec.ts` adds the corpus integrity check, one masked comparison per tick-aligned explosion frame (partialTick 0) at the fixed particle seed, and the one-pixel negative control in a temporary copy. All of them are Full. Spec #42 maps Base to firework frames at each sound-event tick (the blast at tick 2 and the twinkle at tick 18 of this corpus), but no website default path shows the fireworks yet: the header launch and the fireworks demo arrive with #52. Add those individual frames as Base, with their mappings, when #52 lands. The random source unit check (`packages/pixel-perfect/tests/unit/minecraft-random-source.test.ts`) is a harness unit check and runs in ordinary verification.
