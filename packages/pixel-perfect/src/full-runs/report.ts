@@ -109,7 +109,9 @@ const evidence = function evidence(root: string, file: string) {
   };
 };
 
-function readCompletedRun(number: string | number | undefined) {
+const readCompletedRun = function readCompletedRun(
+  number: string | number | undefined
+) {
   const run = readRunPlan(number);
   const testedCommit = run.plan.commit;
   const state = readRunState(number);
@@ -142,7 +144,7 @@ function readCompletedRun(number: string | number | undefined) {
   }
 
   return { approvalEvent: state.approval.eventId, run, state, testedCommit };
-}
+};
 
 /** Read historical evidence only. Never calls authorizeFullRun or launches a browser. */
 export const completedRunReport = function completedRunReport(
@@ -184,6 +186,8 @@ export const completedRunReport = function completedRunReport(
     );
   }
 
+  const completedReceipt = last;
+
   const scope = new Map(last.fullCases.map((test) => [caseKey(test), test]));
 
   if (scope.size !== last.fullCases.length) {
@@ -200,7 +204,9 @@ export const completedRunReport = function completedRunReport(
 
   let environment: FullVerificationReceipt["environment"] | undefined;
 
-  function assertApprovedAttempt(receipt: FullVerificationReceipt) {
+  const assertApprovedAttempt = function assertApprovedAttempt(
+    receipt: FullVerificationReceipt
+  ) {
     const binding = receipt.environment?.fullRun;
 
     if (
@@ -241,9 +247,9 @@ export const completedRunReport = function completedRunReport(
         "Receipt workers/dependencies differ from approved environment"
       );
     }
-  }
+  };
 
-  function retainFileEvidence(
+  const retainFileEvidence = function retainFileEvidence(
     attempt: ReturnType<typeof readRunAttempts>[number],
     receipt: FullVerificationReceipt,
     file: string
@@ -302,7 +308,7 @@ export const completedRunReport = function completedRunReport(
 
     const declarations = new Map(expected.tests.map((test) => [test.id, test]));
 
-    function approvedCaseSource() {
+    const approvedCaseSource = function approvedCaseSource() {
       let approvedSourceHashes = sourceHashes.get(file);
 
       if (approvedSourceHashes === undefined) {
@@ -348,11 +354,13 @@ export const completedRunReport = function completedRunReport(
       }
 
       return approvedSourceHashes;
-    }
+    };
 
     const approvedSourceHashes = approvedCaseSource();
 
-    function validateBoundSources(declaration: RetainedDeclaration) {
+    const validateBoundSources = function validateBoundSources(
+      declaration: RetainedDeclaration
+    ) {
       if (
         !hasText(expected.sourceRoot) ||
         !hasText(expected.repositoryRoot) ||
@@ -451,9 +459,11 @@ export const completedRunReport = function completedRunReport(
       if (required.size) {
         throw new Error("Checkpoint omitted a source input");
       }
-    }
+    };
 
-    function validateDeclaration(declaration: RetainedDeclaration) {
+    const validateDeclaration = function validateDeclaration(
+      declaration: RetainedDeclaration
+    ) {
       const key = caseKey({ file, titlePath: declaration.title?.slice(2) });
 
       if (
@@ -479,7 +489,7 @@ export const completedRunReport = function completedRunReport(
       } else {
         validateBoundSources(declaration);
       }
-    }
+    };
 
     for (const declaration of expected.tests) {
       validateDeclaration(declaration);
@@ -488,7 +498,9 @@ export const completedRunReport = function completedRunReport(
     const terminal = new Set();
     const accounted = new Set();
 
-    function retainJournalResult(record: RetainedResult) {
+    const retainJournalResult = function retainJournalResult(
+      record: RetainedResult
+    ) {
       const declaration = declarations.get(record.id);
 
       if (
@@ -585,13 +597,13 @@ export const completedRunReport = function completedRunReport(
       if (record.status !== "interrupted") {
         terminal.add(record.id);
       }
-    }
+    };
 
     for (const record of journal) {
       retainJournalResult(record);
     }
 
-    function retainCompletedFile() {
+    const retainCompletedFile = function retainCompletedFile() {
       const summaryFile = beneath(
         attempt.directory,
         path.join(directory, "summary.json")
@@ -625,13 +637,15 @@ export const completedRunReport = function completedRunReport(
           "Completed receipt has incomplete/corrupt browser collection"
         );
       }
-    }
+    };
 
     if (receipt.completed) {
       retainCompletedFile();
     }
 
-    function retainReusedPass(reused: ReusableBrowserTest) {
+    const retainReusedPass = function retainReusedPass(
+      reused: ReusableBrowserTest
+    ) {
       // Retained identities are checked below through the prior attempt declarations, not titles in a command string.
       const from = attempts.find(
         (item) => path.join(item.directory, "verification.json") === reused.from
@@ -664,7 +678,7 @@ export const completedRunReport = function completedRunReport(
       }
 
       accounted.add(key);
-    }
+    };
 
     for (const reused of check?.reusedTests ?? []) {
       retainReusedPass(reused);
@@ -680,9 +694,11 @@ export const completedRunReport = function completedRunReport(
         "Final file omitted cases without retained-pass provenance"
       );
     }
-  }
+  };
 
-  function retainAttempt(attempt: ReturnType<typeof readRunAttempts>[number]) {
+  const retainAttempt = function retainAttempt(
+    attempt: ReturnType<typeof readRunAttempts>[number]
+  ) {
     beneath(run.paths.attempts, attempt.directory);
     const resourceFile = path.join(attempt.directory, "resource-summary.json");
 
@@ -711,7 +727,7 @@ export const completedRunReport = function completedRunReport(
     if (
       environment &&
       (!same(environment, receipt.environment) ||
-        receipt.source.treeSha256 !== last.source.treeSha256)
+        receipt.source.treeSha256 !== completedReceipt.source.treeSha256)
     ) {
       throw new Error("Attempt environment/tree changed across resumes");
     }
@@ -743,7 +759,7 @@ export const completedRunReport = function completedRunReport(
     for (const file of files) {
       retainFileEvidence(attempt, receipt, file);
     }
-  }
+  };
 
   for (const attempt of attempts) {
     retainAttempt(attempt);
