@@ -36,40 +36,41 @@ export const ResizableFixture = () => {
 
   return (
     <>
-      <ResizablePanelGroup
-        id="group"
-        scale={scale}
-        groupRef={group}
-        elementRef={element}
-        orientation={orientation}
-        disabled={p.has("groupDisabled")}
-        onLayoutChanged={(value) => {
-          setLayout(JSON.stringify(value));
-        }}
-        style={{ height: 256, width: 600 }}
-      >
-        <ResizablePanel
-          id="left"
-          defaultSize="50%"
-          minSize="10%"
-          collapsible
-          collapsedSize="0%"
-          panelRef={panel}
+      <div className="fixture-resizable-frame">
+        <ResizablePanelGroup
+          id="group"
+          scale={scale}
+          groupRef={group}
+          elementRef={element}
+          orientation={orientation}
+          disabled={p.has("groupDisabled")}
+          onLayoutChanged={(value) => {
+            setLayout(JSON.stringify(value));
+          }}
         >
-          <div className="fixture-resizable-first-surface">First panel</div>
-        </ResizablePanel>
-        <ResizableHandle
-          id="subject"
-          aria-label="Resize panels"
-          withHandle={!p.has("noHandle")}
-          disabled={p.has("disabled")}
-          elementRef={handle}
-          data-subject="true"
-        />
-        <ResizablePanel id="right" defaultSize="50%" minSize="10%">
-          <div className="fixture-resizable-second-surface">Second panel</div>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+          <ResizablePanel
+            id="left"
+            defaultSize="50%"
+            minSize="10%"
+            collapsible
+            collapsedSize="0%"
+            panelRef={panel}
+          >
+            <div className="fixture-resizable-first-surface">First panel</div>
+          </ResizablePanel>
+          <ResizableHandle
+            id="subject"
+            aria-label="Resize panels"
+            withHandle={!p.has("noHandle")}
+            disabled={p.has("disabled")}
+            elementRef={handle}
+            data-subject="true"
+          />
+          <ResizablePanel id="right" defaultSize="50%" minSize="10%">
+            <div className="fixture-resizable-second-surface">Second panel</div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
       <button
         type="button"
         id="set-layout"

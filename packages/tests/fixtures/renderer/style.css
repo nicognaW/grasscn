@@ -133,3 +133,9 @@ output {
   inset: 0;
   position: fixed;
 }
+
+/* The fixture owns its frame; the native panel group retains its documented 100% dimensions. */
+.fixture-resizable-frame {
+  height: 256px;
+  width: 600px;
+}
