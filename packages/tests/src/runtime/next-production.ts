@@ -1,7 +1,16 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { readFile, readdir, lstat, writeFile, mkdir } from "node:fs/promises";
+import {
+  readFile,
+  readdir,
+  lstat,
+  readlink,
+  realpath,
+  stat,
+  writeFile,
+  mkdir,
+} from "node:fs/promises";
 import path from "node:path";
 
 import { repoRoot, webRoot } from "@tests/paths";
@@ -36,9 +45,16 @@ interface BuildOptions {
 const digest = (value: string | Uint8Array) =>
   createHash("sha256").update(value).digest("hex");
 
+const comparable = (file: string) =>
+  process.platform === "win32" ? file.toLowerCase() : file;
+
+interface SourceContent {
+  bytes: Buffer;
+  link?: { kind: "file" | "directory" | "missing"; target: string };
+}
+
 /** @param {string} [directory] - Verification input. */
 export const sourceIdentity = async (directory: string = repoRoot) => {
-  /** @param {string[]} args - Verification input. */
   const git = (args: string[]) =>
     execFileSync("git", args, {
       cwd: directory,
@@ -56,10 +72,80 @@ export const sourceIdentity = async (directory: string = repoRoot) => {
 
   files.sort();
 
+  const tracked = new Set(
+    git(["ls-files", "--cached", "-z"]).split("\0").filter(Boolean)
+  );
+
+  const uncovered = [
+    ...files.filter((file) => !tracked.has(file)),
+    ...git([
+      "ls-files",
+      "--others",
+      "--ignored",
+      "--exclude-standard",
+      "--directory",
+      "-z",
+    ])
+      .split("\0")
+      .filter(Boolean),
+  ];
+
+  const physicalRoot = await realpath(directory);
+
   const contents = await Promise.allSettled(
-    files.map(async (file) => {
+    files.map(async (file): Promise<SourceContent> => {
+      const filename = path.join(directory, file);
+      let linkTarget: string | undefined;
+
       try {
-        return await readFile(path.join(directory, file));
+        const entry = await lstat(filename);
+
+        if (!entry.isSymbolicLink()) {
+          return { bytes: await readFile(filename) };
+        }
+
+        linkTarget = await readlink(filename);
+        const target = await stat(filename);
+
+        if (target.isFile()) {
+          return {
+            bytes: await readFile(filename),
+            link: { kind: "file", target: linkTarget },
+          };
+        }
+
+        assert.ok(
+          target.isDirectory(),
+          `Unsupported source symlink target: ${file}`
+        );
+        const relative = path.relative(physicalRoot, await realpath(filename));
+        assert.ok(
+          relative !== ".." &&
+            !relative.startsWith(`..${path.sep}`) &&
+            !path.isAbsolute(relative),
+          `Directory source symlink points outside repository: ${file}`
+        );
+        const prefix = comparable(`${relative.replaceAll(path.sep, "/")}/`);
+
+        const covered = files.filter(
+          (name) => tracked.has(name) && comparable(name).startsWith(prefix)
+        );
+
+        assert.ok(
+          covered.length > 0,
+          `Directory source symlink has no tracked target coverage: ${file}`
+        );
+        assert.ok(
+          !uncovered.some((name) => comparable(name).startsWith(prefix)),
+          `Directory source symlink target contains untracked or ignored paths: ${file}`
+        );
+
+        return {
+          bytes: Buffer.from(
+            JSON.stringify([relative.replaceAll(path.sep, "/"), covered])
+          ),
+          link: { kind: "directory", target: linkTarget },
+        };
       } catch (error) {
         if (
           !(
@@ -71,7 +157,14 @@ export const sourceIdentity = async (directory: string = repoRoot) => {
           throw error;
         }
 
-        return Buffer.from("<deleted>");
+        if (linkTarget !== undefined) {
+          return {
+            bytes: Buffer.from("<deleted>"),
+            link: { kind: "missing", target: linkTarget },
+          };
+        }
+
+        return { bytes: Buffer.from("<deleted>") };
       }
     })
   );
@@ -85,7 +178,19 @@ export const sourceIdentity = async (directory: string = repoRoot) => {
       throw result.reason;
     }
 
-    hash.update(file).update("\0").update(digest(result.value)).update("\0");
+    hash.update(file).update("\0");
+
+    if (result.value.link) {
+      hash
+        .update("<symlink>")
+        .update("\0")
+        .update(result.value.link.kind)
+        .update("\0")
+        .update(result.value.link.target)
+        .update("\0");
+    }
+
+    hash.update(digest(result.value.bytes)).update("\0");
   }
 
   return {

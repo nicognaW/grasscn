@@ -1,11 +1,13 @@
 import { test } from "bun:test";
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
 import {
   productionBuildIdentity,
+  sourceIdentity,
   assertProductionSource,
   stampProductionBuild,
   readPreparedProductionBuild,
@@ -280,5 +282,137 @@ test("production identity rejects another source and detects changed delivered r
   } finally {
     assert.ok(path.basename(directory).startsWith("grasscn-next-identity-"));
     fs.rmSync(directory, { force: true, recursive: true });
+  }
+});
+
+test("source identity binds tracked directory symlink targets without traversing unowned trees", async () => {
+  const sandbox = fs.mkdtempSync(
+    path.join(os.tmpdir(), "grasscn-source-links-")
+  );
+
+  const directory = path.join(sandbox, "repo");
+  fs.mkdirSync(directory);
+
+  const git = (args: string[]) =>
+    execFileSync("git", args, {
+      cwd: directory,
+      encoding: "utf-8",
+      env: {
+        ...process.env,
+        GIT_AUTHOR_EMAIL: "source@example.invalid",
+        GIT_AUTHOR_NAME: "Source identity fixture",
+        GIT_COMMITTER_EMAIL: "source@example.invalid",
+        GIT_COMMITTER_NAME: "Source identity fixture",
+      },
+    });
+
+  const link = path.join(directory, "mirror");
+  const fileLink = path.join(directory, "file-link.ts");
+
+  try {
+    for (const name of ["tracked-a", "tracked-b"]) {
+      fs.mkdirSync(path.join(directory, name));
+      fs.writeFileSync(
+        path.join(directory, name, "source.ts"),
+        "same tracked bytes"
+      );
+    }
+
+    fs.mkdirSync(path.join(sandbox, "outside"));
+    fs.writeFileSync(
+      path.join(sandbox, "outside", "source.ts"),
+      "outside bytes"
+    );
+    fs.writeFileSync(
+      path.join(directory, ".gitignore"),
+      "ignored-*.txt\n**/ignored/\n"
+    );
+    fs.writeFileSync(
+      path.join(directory, "ignored-a.txt"),
+      "same linked bytes"
+    );
+    fs.writeFileSync(
+      path.join(directory, "ignored-b.txt"),
+      "same linked bytes"
+    );
+    fs.writeFileSync(path.join(directory, "ordinary.ts"), "ordinary bytes");
+    fs.symlinkSync("tracked-a", link, "dir");
+    fs.symlinkSync("ignored-a.txt", fileLink, "file");
+    git(["init", "--quiet"]);
+    git(["config", "core.symlinks", "true"]);
+    git(["add", "."]);
+    git([
+      "-c",
+      "commit.gpgsign=false",
+      "commit",
+      "--quiet",
+      "-m",
+      "source fixture",
+    ]);
+    assert.match(git(["ls-files", "--stage", "mirror"]), /^120000 /u);
+
+    const original = await sourceIdentity(directory);
+    fs.unlinkSync(link);
+    fs.symlinkSync("tracked-b", link, "dir");
+    const retargeted = await sourceIdentity(directory);
+    assert.notEqual(retargeted.treeSha256, original.treeSha256);
+    fs.writeFileSync(
+      path.join(directory, "tracked-b/source.ts"),
+      "changed tracked bytes"
+    );
+    const changedTarget = await sourceIdentity(directory);
+    assert.notEqual(changedTarget.treeSha256, retargeted.treeSha256);
+    fs.writeFileSync(
+      path.join(directory, "tracked-b/source.ts"),
+      "same tracked bytes"
+    );
+    const restoredTarget = await sourceIdentity(directory);
+    assert.equal(restoredTarget.treeSha256, retargeted.treeSha256);
+
+    fs.unlinkSync(fileLink);
+    fs.symlinkSync("ignored-b.txt", fileLink, "file");
+    const retargetedFile = await sourceIdentity(directory);
+    assert.notEqual(retargetedFile.treeSha256, retargeted.treeSha256);
+    fs.writeFileSync(
+      path.join(directory, "ignored-b.txt"),
+      "changed linked bytes"
+    );
+    const changedFile = await sourceIdentity(directory);
+    assert.notEqual(changedFile.treeSha256, retargetedFile.treeSha256);
+    fs.unlinkSync(path.join(directory, "ordinary.ts"));
+    const deletedOrdinary = await sourceIdentity(directory);
+    assert.notEqual(deletedOrdinary.treeSha256, changedFile.treeSha256);
+    fs.writeFileSync(path.join(directory, "ordinary.ts"), "ordinary bytes");
+    const restoredOrdinary = await sourceIdentity(directory);
+    assert.equal(restoredOrdinary.treeSha256, changedFile.treeSha256);
+
+    fs.writeFileSync(
+      path.join(directory, "tracked-b/untracked.ts"),
+      "untracked bytes"
+    );
+    await assert.rejects(
+      sourceIdentity(directory),
+      /untracked or ignored paths/u
+    );
+    fs.unlinkSync(path.join(directory, "tracked-b/untracked.ts"));
+    fs.mkdirSync(path.join(directory, "tracked-b/ignored"));
+    fs.writeFileSync(
+      path.join(directory, "tracked-b/ignored/cache.ts"),
+      "ignored bytes"
+    );
+    await assert.rejects(
+      sourceIdentity(directory),
+      /untracked or ignored paths/u
+    );
+    fs.unlinkSync(link);
+    fs.symlinkSync("../outside", link, "dir");
+    await assert.rejects(sourceIdentity(directory), /outside repository/u);
+  } finally {
+    assert.equal(
+      path.dirname(path.resolve(sandbox)),
+      path.resolve(os.tmpdir())
+    );
+    assert.ok(path.basename(sandbox).startsWith("grasscn-source-links-"));
+    fs.rmSync(sandbox, { force: true, recursive: true });
   }
 });
