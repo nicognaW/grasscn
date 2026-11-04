@@ -3,10 +3,13 @@
 import * as React from "react";
 import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
-import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  useCanvasPaintConnection,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
 
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =

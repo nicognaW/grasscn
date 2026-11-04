@@ -2,9 +2,9 @@
 
 import * as React from "react";
 
-import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
+import { useCanvasPaintConnection } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
 import type { UnihexGlyph } from "./minecraft-unifont";
 import {

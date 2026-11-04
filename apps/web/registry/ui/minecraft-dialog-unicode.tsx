@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import { dialogUnihexAtlas } from "./minecraft-dialog-atlas";
 import {
   positionUnihex,
@@ -10,6 +9,7 @@ import {
 } from "./minecraft-dialog-gpu";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
+import { useCanvasPaintConnection } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 interface DialogUnicodeStyle extends React.CSSProperties {

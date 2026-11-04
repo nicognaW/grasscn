@@ -2,7 +2,6 @@
 
 import * as React from "react";
 
-import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import {
   positionColorUnihex,
   disposeColorUnihex,
@@ -12,6 +11,7 @@ import {
 import type { ColorUnihexAtlas } from "./minecraft-color-unicode-gpu";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
+import { useCanvasPaintConnection } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 import type { UnihexGlyph } from "./minecraft-unifont";
 

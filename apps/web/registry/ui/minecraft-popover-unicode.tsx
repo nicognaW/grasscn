@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
 import { popoverGlyphAtlas } from "./minecraft-popover-atlas";
@@ -9,6 +8,7 @@ import {
   paintPopoverGlyph,
   disposePopoverGlyphs,
 } from "./minecraft-popover-gpu";
+import { useCanvasPaintConnection } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-unicode.css";

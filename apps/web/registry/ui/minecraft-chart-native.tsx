@@ -3,13 +3,13 @@
 import * as React from "react";
 import { useChartWidth, useChartHeight, useYAxisScale } from "recharts";
 
-import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import {
   useChartGeometry,
   chartColorChannels,
 } from "./minecraft-chart-context";
 import { MinecraftColorUnicodeLabel } from "./minecraft-color-unicode";
 import { minecraftGlyphs } from "./minecraft-font";
+import { useCanvasPaintConnection } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 
 import "./minecraft-chart.css";
