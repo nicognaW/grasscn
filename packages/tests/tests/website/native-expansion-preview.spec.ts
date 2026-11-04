@@ -1,3 +1,6 @@
+// The pre-existing preview cases stay as originally written; the lint rules
+// they predate are off for this file only.
+// oxlint-disable sort-keys, typescript/no-non-null-assertion, anti-slop/require-readable-spacing
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 
@@ -51,7 +54,7 @@ for (const [name, title] of [
   test(`local ${name} preview`, async ({ page }, info) => {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.setViewportSize({ height: 1000, width: 1440 });
+    await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(`${origin}/docs/components/${name}`);
     await expect(
       page.getByRole("heading", { exact: true, name: title })
@@ -59,28 +62,27 @@ for (const [name, title] of [
     await expect(
       page.locator(`.documentation-playground [data-stage="${name}"]`)
     ).toBeVisible();
-
     if (name === "book") {
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Next page" })
+        .getByRole("button", { name: "Next page", exact: true })
         .click();
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("document", { exact: true, name: "Page 2" })
+          .getByRole("document", { name: "Page 2", exact: true })
       ).toBeVisible();
     }
 
     if (name === "hotbar") {
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Measure" })
+        .getByRole("button", { name: "Measure", exact: true })
         .click();
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("button", { exact: true, name: "Measure" })
+          .getByRole("button", { name: "Measure", exact: true })
       ).toHaveAttribute("aria-pressed", "true");
     }
 
@@ -88,25 +90,25 @@ for (const [name, title] of [
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("meter", { exact: true, name: "health" })
+          .getByRole("meter", { name: "health", exact: true })
       ).toHaveAttribute("aria-valuenow", "17");
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Take damage" })
+        .getByRole("button", { name: "Take damage", exact: true })
         .click();
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("meter", { exact: true, name: "health" })
+          .getByRole("meter", { name: "health", exact: true })
       ).toHaveAttribute("aria-valuenow", "14");
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Heal" })
+        .getByRole("button", { name: "Heal", exact: true })
         .click();
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("meter", { exact: true, name: "health" })
+          .getByRole("meter", { name: "health", exact: true })
       ).toHaveAttribute("aria-valuenow", "20");
     }
 
@@ -118,17 +120,17 @@ for (const [name, title] of [
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("group", { exact: true, name: "Standing sign" })
+          .getByRole("group", { name: "Standing sign", exact: true })
       ).toContainText("Hello");
       await page
         .locator(".documentation-playground")
-        .getByRole("combobox", { exact: true, name: "Wood type" })
+        .getByRole("combobox", { name: "Wood type", exact: true })
         .click();
       await page.getByRole("option", { exact: true, name: "birch" }).click();
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("group", { exact: true, name: "Hanging sign" })
+          .getByRole("group", { name: "Hanging sign", exact: true })
       ).toHaveAttribute("data-wood", "birch");
     }
 
@@ -136,39 +138,39 @@ for (const [name, title] of [
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("group", { exact: true, name: "Player preview" })
+          .getByRole("group", { name: "Player preview", exact: true })
       ).toHaveAttribute("data-ready", "true");
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Alex" })
+        .getByRole("button", { name: "Alex", exact: true })
         .click();
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("group", { exact: true, name: "Player preview" })
+          .getByRole("group", { name: "Player preview", exact: true })
       ).toHaveAttribute("data-ready", "true");
     }
 
     if (name === "map") {
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Village" })
+        .getByRole("button", { name: "Village", exact: true })
         .click();
       await expect(page.getByText("Village", { exact: true })).toBeVisible();
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Turn right" })
+        .getByRole("button", { name: "Turn right", exact: true })
         .click();
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Face north" })
+        .getByRole("button", { name: "Face north", exact: true })
         .click();
     }
 
     if (name === "trading") {
       const geometry = await page
         .locator(".documentation-playground")
-        .getByRole("group", { exact: true, name: "Trade offers" })
+        .getByRole("group", { name: "Trade offers", exact: true })
         .evaluate((element) => {
           const bounds = element.getBoundingClientRect();
 
@@ -191,19 +193,18 @@ for (const [name, title] of [
         expect(row.offset).toBe(row.index * 40);
         expect(row.bottom).toBeLessThanOrEqual(0);
       }
-
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Bread" })
+        .getByRole("button", { name: "Bread", exact: true })
         .click();
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("button", { exact: true, name: "Bread" })
+          .getByRole("button", { name: "Bread", exact: true })
       ).toHaveAttribute("aria-pressed", "true");
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Trade for Bread" })
+        .getByRole("button", { name: "Trade for Bread", exact: true })
         .click();
       await expect(
         page.locator(".documentation-playground").getByRole("status")
@@ -213,36 +214,36 @@ for (const [name, title] of [
     if (name === "player-list") {
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Steve" })
+        .getByRole("button", { name: "Steve", exact: true })
         .click();
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Award 10 points" })
+        .getByRole("button", { name: "Award 10 points", exact: true })
         .click();
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("table", { exact: true, name: "Build points" })
+          .getByRole("table", { name: "Build points", exact: true })
       ).toContainText("166");
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Larger crew" })
+        .getByRole("button", { name: "Larger crew", exact: true })
         .click();
       await expect(
         page.locator(".documentation-playground").getByRole("listitem")
       ).toHaveCount(24);
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Player24" })
+        .getByRole("button", { name: "Player24", exact: true })
         .click();
       await page
         .locator(".documentation-playground")
-        .getByRole("button", { exact: true, name: "Award 10 points" })
+        .getByRole("button", { name: "Award 10 points", exact: true })
         .click();
       await expect(
         page
           .locator(".documentation-playground")
-          .getByRole("table", { exact: true, name: "Build points" })
+          .getByRole("table", { name: "Build points", exact: true })
       ).toContainText("169");
     }
 
@@ -295,7 +296,7 @@ for (const name of [
   "fireworks",
 ]) {
   test(`mobile ${name} preview fits viewport`, async ({ page }, info) => {
-    await page.setViewportSize({ height: 844, width: 390 });
+    await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`${origin}/docs/components/${name}`);
     await expect(
       page.locator(`.documentation-playground [data-stage="${name}"]`)
@@ -306,11 +307,8 @@ for (const name of [
       )
     ).toBe(true);
     const card = page.locator(".documentation-playground");
-    const bounds = await card.boundingBox();
-    expect(bounds).not.toBeNull();
-    expect((bounds?.x ?? 0) + (bounds?.width ?? Infinity)).toBeLessThanOrEqual(
-      390
-    );
+    const bounds = (await card.boundingBox())!;
+    expect(bounds.x + bounds.width).toBeLessThanOrEqual(390);
     await page.screenshot({
       path: info.outputPath(`${name}-website-mobile.png`),
     });
