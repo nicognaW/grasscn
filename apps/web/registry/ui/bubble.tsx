@@ -120,6 +120,14 @@ const BubbleContent = ({
   const scale = React.useContext(MessageScale);
   const author = React.useContext(MessageAuthor);
   const node = React.useRef<HTMLElement>(null);
+
+  const captureNode = React.useCallback(
+    (element: HTMLElement | null) => {
+      node.current = element;
+    },
+    [node]
+  );
+
   const [available, setAvailable] = React.useState<number>();
   const [fontReady, setFontReady] = React.useState(false);
 
@@ -277,7 +285,7 @@ const BubbleContent = ({
     <Comp
       render={render}
       as="div"
-      ref={node as React.Ref<HTMLDivElement>}
+      ref={captureNode}
       data-slot="bubble-content"
       data-mc-chat-ready={
         available !== undefined && (!unicode || fontReady) ? "true" : "false"
