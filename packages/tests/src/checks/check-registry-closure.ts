@@ -15,7 +15,18 @@ const registry = JSON.parse(
 ) as SourceRegistry;
 
 const errors: string[] = [];
-const sources = new Map<string, string>();
+
+const filenames = [
+  ...new Set(
+    registry.items.flatMap((item) =>
+      item.files.map((file) => webFile(path.join(file.path)))
+    )
+  ),
+];
+
+const contents = await Promise.allSettled(
+  filenames.map(async (filename) => await readFile(filename, "utf-8"))
+);
 
 for (const item of registry.items) {
   const included = new Set(
@@ -25,8 +36,13 @@ for (const item of registry.items) {
   for (const file of item.files) {
     const absolute = webFile(path.join(file.path));
 
-    const source = sources.get(absolute) ?? (await readFile(absolute, "utf-8"));
-    sources.set(absolute, source);
+    const result = contents[filenames.indexOf(absolute)];
+
+    if (result.status === "rejected") {
+      throw result.reason;
+    }
+
+    const source = result.value;
 
     for (const match of source.matchAll(
       /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?)(?<quote>["'])(?<specifier>\.[^"']+|@\/components\/ui\/[^"']+)\1/gu

@@ -56,24 +56,36 @@ export const sourceIdentity = async (directory: string = repoRoot) => {
 
   files.sort();
 
+  const contents = await Promise.allSettled(
+    files.map(async (file) => {
+      try {
+        return await readFile(path.join(directory, file));
+      } catch (error) {
+        if (
+          !(
+            error instanceof Error &&
+            "code" in error &&
+            error.code === "ENOENT"
+          )
+        ) {
+          throw error;
+        }
+
+        return Buffer.from("<deleted>");
+      }
+    })
+  );
+
   const hash = createHash("sha256");
 
-  for (const file of files) {
-    let bytes;
+  for (const [index, file] of files.entries()) {
+    const result = contents[index];
 
-    try {
-      bytes = await readFile(path.join(directory, file));
-    } catch (error) {
-      if (
-        !(error instanceof Error && "code" in error && error.code === "ENOENT")
-      ) {
-        throw error;
-      }
-
-      bytes = Buffer.from("<deleted>");
+    if (result.status === "rejected") {
+      throw result.reason;
     }
 
-    hash.update(file).update("\0").update(digest(bytes)).update("\0");
+    hash.update(file).update("\0").update(digest(result.value)).update("\0");
   }
 
   return {
