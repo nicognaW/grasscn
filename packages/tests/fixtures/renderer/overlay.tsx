@@ -76,25 +76,31 @@ export const OverlayFixture = () => {
     ? Drawer.DrawerDescription
     : Sheet.SheetDescription;
 
-  const textProps =
-    native && part !== "surface"
-      ? {
-          id: "subject",
-          scale,
-          style: {
-            height: height * scale,
-            left: x,
-            position: "fixed",
-            top: y,
-            width: width * scale,
-          } satisfies React.CSSProperties,
-          ...(p.has("wrapWidth")
-            ? { maxWidth: Number(p.get("wrapWidth")) }
-            : {}),
-          align: p.get("align") ?? "left",
-          "data-subject": "true",
-        }
-      : {};
+  interface OverlayTextProbeProps {
+    align?: string;
+    "data-subject"?: "true";
+    id?: string;
+    maxWidth?: number;
+    scale?: typeof scale;
+    style?: React.CSSProperties;
+  }
+  const textProps: OverlayTextProbeProps = {};
+  if (native && part !== "surface") {
+    textProps["id"] = "subject";
+    textProps["scale"] = scale;
+    textProps["style"] = {
+      height: height * scale,
+      left: x,
+      position: "fixed",
+      top: y,
+      width: width * scale,
+    } satisfies React.CSSProperties;
+    if (p.has("wrapWidth")) {
+      textProps.maxWidth = Number(p.get("wrapWidth"));
+    }
+    textProps["align"] = p.get("align") ?? "left";
+    textProps["data-subject"] = "true";
+  }
 
   let selectedFixtureBranch1: ReactNode;
 
@@ -171,27 +177,41 @@ export const OverlayFixture = () => {
     );
   }
 
+  const drawerOptions: Pick<
+    React.ComponentProps<typeof Drawer.Drawer>,
+    "swipeDirection" | "snapPoints" | "snapPoint" | "onSnapPointChange"
+  > = {};
+  if (isDrawer) {
+    let swipeDirection: NonNullable<
+      React.ComponentProps<typeof Drawer.Drawer>["swipeDirection"]
+    >;
+    if (side === "bottom") {
+      swipeDirection = "down" as const;
+    } else {
+      swipeDirection = side === "top" ? ("up" as const) : side;
+    }
+    drawerOptions.swipeDirection = swipeDirection;
+    if (p.has("snap")) {
+      drawerOptions.onSnapPointChange = setSnap;
+      drawerOptions.snapPoint = snap;
+      drawerOptions.snapPoints = [0.25, 0.5, 1];
+    }
+  }
+  const contentStyleOptions: Pick<
+    React.ComponentProps<typeof Content>,
+    "style"
+  > = {};
+  if (native) {
+    contentStyleOptions.style = geom;
+  } else if (p.has("snap")) {
+    contentStyleOptions.style = { height: "100dvh" };
+  }
+
   return (
     <>
       <Root
         scale={scale}
-        {...(isDrawer
-          ? {
-              swipeDirection:
-                side === "bottom"
-                  ? ("down" as const)
-                  : side === "top"
-                    ? ("up" as const)
-                    : side,
-              ...(p.has("snap")
-                ? {
-                    onSnapPointChange: setSnap,
-                    snapPoint: snap,
-                    snapPoints: [0.25, 0.5, 1],
-                  }
-                : {}),
-            }
-          : {})}
+        {...drawerOptions}
         {...(p.has("controlled") ? { open } : { defaultOpen: open })}
         onOpenChange={(next, details) => {
           if (details.reason === "swipe") {
@@ -218,11 +238,7 @@ export const OverlayFixture = () => {
           side={isDrawer ? undefined : side}
           showCloseButton={!native}
           initialFocus={native ? false : undefined}
-          {...(native
-            ? { style: geom }
-            : p.has("snap")
-              ? { style: { height: "100dvh" } }
-              : {})}
+          {...contentStyleOptions}
           {...(native && part === "surface"
             ? {
                 "aria-describedby": undefined,

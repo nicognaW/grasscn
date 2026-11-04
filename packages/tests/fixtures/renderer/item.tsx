@@ -164,27 +164,32 @@ const ItemFixture = () => {
   } else if (part === "media") {
     selectedSubject = <ItemMedia id="subject" ref={ref} data-subject="true" />;
   } else {
+    // The document-owned URL query is read-only: repeated plain branches have the same value.
+    let selectedItemRender: React.ComponentProps<typeof Item>["render"];
+
+    if (q.has("plain")) {
+      selectedItemRender = undefined;
+    } else if (q.has("customAction")) {
+      selectedItemRender = <CustomAction />;
+    } else {
+      selectedItemRender = q.has("button") ? (
+        <button type="button" aria-label={accessibleLabel} />
+      ) : (
+        <a
+          href="#world"
+          aria-label={accessibleLabel}
+          onClick={(event) => {
+            if (q.has("childCancel")) {
+              event.preventDefault();
+            }
+          }}
+        />
+      );
+    }
+
     selectedSubject = (
       <Item
-        render={
-          q.has("plain") ? undefined : q.has("plain") ? undefined : q.has(
-              "customAction"
-            ) ? (
-            <CustomAction />
-          ) : q.has("button") ? (
-            <button type="button" aria-label={accessibleLabel} />
-          ) : (
-            <a
-              href="#world"
-              aria-label={accessibleLabel}
-              onClick={(event) => {
-                if (q.has("childCancel")) {
-                  event.preventDefault();
-                }
-              }}
-            />
-          )
-        }
+        render={selectedItemRender}
         id="subject"
         ref={ref}
         scale={scale}
@@ -206,28 +211,7 @@ const ItemFixture = () => {
         aria-disabled={q.has("disabled") ? true : undefined}
         data-subject="true"
       >
-        {q.has("plain") ? (
-          q.has("plain") ? (
-            children
-          ) : q.has("customAction") ? (
-            <CustomAction>{children}</CustomAction>
-          ) : q.has("button") ? (
-            <button type="button">{children}</button>
-          ) : (
-            <a
-              href="#world"
-              onClick={(event) => {
-                if (q.has("childCancel")) {
-                  event.preventDefault();
-                }
-              }}
-            >
-              {children}
-            </a>
-          )
-        ) : (
-          children
-        )}
+        {children}
       </Item>
     );
   }

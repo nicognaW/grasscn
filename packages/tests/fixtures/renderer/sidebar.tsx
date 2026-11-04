@@ -113,10 +113,19 @@ export const SidebarFixture = () => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const contentRef = React.useRef<HTMLDivElement>(null);
 
-  const provider = {
-    scale,
+  const providerVisibility: Pick<
+    React.ComponentProps<typeof SidebarProvider>,
+    "scale" | "defaultOpen" | "open"
+  > = {
     defaultOpen: !p.has("collapsed"),
-    ...(p.has("controlled") ? { open } : {}),
+    scale,
+  };
+  if (p.has("controlled")) {
+    providerVisibility.open = open;
+  }
+
+  const provider = {
+    ...providerVisibility,
     onOpenChange: (value: boolean) => {
       setEvents((v) => v + 1);
 

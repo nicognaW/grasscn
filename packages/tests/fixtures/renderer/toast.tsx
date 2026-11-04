@@ -19,34 +19,36 @@ const SonnerFixture = () => {
 
   const show = () => {
     for (let i = 0; i < count; i += 1) {
-      ids.current.push(
-        notify(
-          p.has("rich") ? (
-            <strong>{p.get("label") ?? "World saved"}</strong>
-          ) : (
-            (p.get("label") ?? "World saved")
-          ),
-          {
-            ...(p.has("text") ? { description: p.get("text") } : {}),
-            ...(p.has("actions")
-              ? {
-                  action: {
-                    label: "Undo",
-                    onClick: (event) => {
-                      setActions((v) => v + 1);
+      const toastIds = ids.current;
+      const appendToastId = toastIds.push;
+      const createToast = notify;
+      const notificationContent = p.has("rich") ? (
+        <strong>{p.get("label") ?? "World saved"}</strong>
+      ) : (
+        (p.get("label") ?? "World saved")
+      );
+      const notificationOptions: NonNullable<Parameters<typeof notify>[1]> = {};
+      if (p.has("text")) {
+        notificationOptions.description = p.get("text");
+      }
+      if (p.has("actions")) {
+        notificationOptions.action = {
+          label: "Undo",
+          onClick: (event) => {
+            setActions((v) => v + 1);
 
-                      if (p.has("cancelAction")) {
-                        event.preventDefault();
-                      }
-                    },
-                  },
-                  closeButton: true,
-                }
-              : {}),
-            dismissible: !p.has("disabled"),
-            duration: Number(p.get("duration") ?? 5000),
-          }
-        )
+            if (p.has("cancelAction")) {
+              event.preventDefault();
+            }
+          },
+        };
+        notificationOptions.closeButton = true;
+      }
+      notificationOptions.dismissible = !p.has("disabled");
+      notificationOptions.duration = Number(p.get("duration") ?? 5000);
+      appendToastId.call(
+        toastIds,
+        createToast(notificationContent, notificationOptions)
       );
     }
 

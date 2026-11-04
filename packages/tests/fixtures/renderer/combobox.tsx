@@ -68,18 +68,25 @@ export const ComboboxFixture = () => {
   const list = React.useRef<HTMLDivElement>(null);
   const anchor = useComboboxAnchor();
 
+  const comboboxFixtureWidth = `${Number(p.get("width") ?? 200) * scale}px`;
+  const comboboxFixtureX = `${Number(p.get("x") ?? 16) * scale}px`;
+  const comboboxFixtureY = `${Number(p.get("y") ?? 16) * scale}px`;
+  const comboboxNativeDimensions: Pick<
+    React.CSSProperties,
+    "height" | "maxHeight"
+  > = {};
+  if (part === "list") {
+    comboboxNativeDimensions.height = Number(p.get("height") ?? 36) * scale;
+    comboboxNativeDimensions.maxHeight = Number(p.get("height") ?? 36) * scale;
+  }
+
   const pos = {
-    "--fixture-width": `${Number(p.get("width") ?? 200) * scale}px`,
+    "--fixture-width": comboboxFixtureWidth,
 
-    "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+    "--fixture-x": comboboxFixtureX,
 
-    "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
-    ...(part === "list"
-      ? {
-          height: Number(p.get("height") ?? 36) * scale,
-          maxHeight: Number(p.get("height") ?? 36) * scale,
-        }
-      : {}),
+    "--fixture-y": comboboxFixtureY,
+    ...comboboxNativeDimensions,
   };
 
   if (native) {

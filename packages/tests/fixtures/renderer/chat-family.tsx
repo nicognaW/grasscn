@@ -42,11 +42,19 @@ export const ChatFamilyFixture = () => {
 
   const scaledWidth = width * scale;
 
+  const chatFixtureX = `${Number(q.get("x") ?? 16) * scale}px`;
+  const chatFixtureY = `${Number(q.get("y") ?? 16) * scale}px`;
+  const chatFixtureWidth = `${scaledWidth}px`;
+  const chatNativeDimensions: Pick<React.CSSProperties, "height"> = {};
+  if (native) {
+    chatNativeDimensions.height = Number(q.get("height") ?? 9) * scale;
+  }
+
   const common: ChatFamilyReferenceStyle = {
-    "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
-    "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
-    "--fixture-width": `${scaledWidth}px`,
-    ...(native ? { height: Number(q.get("height") ?? 9) * scale } : {}),
+    "--fixture-x": chatFixtureX,
+    "--fixture-y": chatFixtureY,
+    "--fixture-width": chatFixtureWidth,
+    ...chatNativeDimensions,
     color: q.get("color") ?? "#ffffff",
     "--mc-scale": scale,
     "--mc-pixel": `${scale}px`,

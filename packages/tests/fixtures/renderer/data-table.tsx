@@ -154,25 +154,33 @@ export const DataTableFixture = () => {
         <TableHeader>
           {table.getHeaderGroups().map((group) => (
             <TableRow key={group.id}>
-              {group.headers.map((header) => (
-                <TableHead
-                  key={header.id}
-                  aria-sort={
-                    header.column.getIsSorted() === "asc"
-                      ? "ascending"
-                      : header.column.getIsSorted() === "desc"
-                        ? "descending"
-                        : "none"
-                  }
-                >
-                  {header.isPlaceholder ? null : typeof header.column.columnDef
-                      .header === "string" ? (
-                    header.column.columnDef.header
-                  ) : (
-                    <table.FlexRender header={header} />
-                  )}
-                </TableHead>
-              ))}
+              {group.headers.map((header) => {
+                let sortOrder: "ascending" | "descending" | "none";
+                if (header.column.getIsSorted() === "asc") {
+                  sortOrder = "ascending";
+                } else {
+                  sortOrder =
+                    header.column.getIsSorted() === "desc"
+                      ? "descending"
+                      : "none";
+                }
+                let headerContent: React.ReactNode;
+                if (header.isPlaceholder) {
+                  headerContent = null;
+                } else {
+                  headerContent =
+                    typeof header.column.columnDef.header === "string" ? (
+                      header.column.columnDef.header
+                    ) : (
+                      <table.FlexRender header={header} />
+                    );
+                }
+                return (
+                  <TableHead key={header.id} aria-sort={sortOrder}>
+                    {headerContent}
+                  </TableHead>
+                );
+              })}
             </TableRow>
           ))}
         </TableHeader>
