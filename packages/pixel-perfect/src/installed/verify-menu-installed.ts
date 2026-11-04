@@ -163,7 +163,8 @@ const verifyMenuRendering = async ({
 
     return await frameCompletion2.promise;
   });
-  const bounds = (await subject.boundingBox())!;
+  const bounds = await subject.boundingBox();
+  assert.ok(bounds, "Missing required Menu content bounding box");
   assert.equal(bounds.x, c.x * c.scale);
   assert.equal(bounds.y, c.y * c.scale);
 
@@ -263,7 +264,8 @@ const verifyMenubarTriggerRendering = async ({
 
     return await frameCompletion3.promise;
   });
-  const bounds = (await trigger.boundingBox())!;
+  const bounds = await trigger.boundingBox();
+  assert.ok(bounds, "Missing required Menubar trigger bounding box");
   assert.deepEqual(
     [bounds.x, bounds.y],
     [(c.x ?? 16) * c.scale, (c.y ?? 16) * c.scale]

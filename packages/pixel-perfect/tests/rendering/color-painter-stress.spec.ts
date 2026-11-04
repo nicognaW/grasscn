@@ -27,6 +27,7 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
     }
   });
   await page.addInitScript(() => {
+    // oxlint-disable-next-line typescript/unbound-method -- Capture the native method for original.call(this, kind, ...args); every wrapped canvas supplies its own native receiver.
     const original = HTMLCanvasElement.prototype.getContext;
     // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
@@ -242,6 +243,7 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
     }
   });
   await page.addInitScript(() => {
+    // oxlint-disable-next-line typescript/unbound-method -- Capture the native method for original.call(this, kind, ...args); every wrapped canvas supplies its own native receiver.
     const original = HTMLCanvasElement.prototype.getContext;
     // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
