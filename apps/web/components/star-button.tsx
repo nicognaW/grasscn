@@ -1,9 +1,9 @@
 import { repositoryUrl } from "../lib/github-stars";
-import { MinecraftText } from "../registry/ui/minecraft-text";
 import { RedstoneLampDisplay } from "../registry/ui/redstone-lamp-display";
+import { NetherStar } from "./nether-star";
 
 /**
- * Header link to the repository: the star, then the formatted star count on
+ * Header link to the repository: the nether star, then the formatted star count on
  * the Redstone Lamp display. Without a count it shows the star alone.
  */
 export const StarButton = ({ count }: { count?: string }) => (
@@ -19,9 +19,9 @@ export const StarButton = ({ count }: { count?: string }) => (
         : `Star grasscn on GitHub, ${count} stars`
     }
   >
-    {/* Star slot: a text placeholder until the nether star UI port replaces it. */}
+    {/* The nether star GUI item UI port, decorative under the anchor label. */}
     <span data-slot="star-button-star">
-      <MinecraftText>GitHub</MinecraftText>
+      <NetherStar />
     </span>
     {/* The anchor's label names the count; the display stays out of the accessibility tree. */}
     {count === undefined ? null : (

@@ -21,6 +21,27 @@ test("Header star button without a count keeps its link and drops the lamp displ
   assert.ok(!html.includes('data-slot="redstone-lamp-display"'));
 });
 
+test("Header star button without a count shows the nether star alone", () => {
+  const html = renderToStaticMarkup(<StarButton />);
+
+  // The anchor's label is the only name: the star is a decorative 32x32
+  // GUI-scale-2 canvas, and no placeholder text remains.
+  assert.match(
+    html,
+    /<span data-slot="star-button-star"><canvas aria-hidden="true" data-slot="nether-star" height="32" width="32"><\/canvas><\/span><\/a>$/u
+  );
+  assert.ok(!html.includes("GitHub</"));
+});
+
+test("Header star button shows the nether star before the lamp display", () => {
+  const html = renderToStaticMarkup(<StarButton count="12k" />);
+  const star = html.indexOf('data-slot="nether-star"');
+  const display = html.indexOf('data-slot="redstone-lamp-display"');
+
+  assert.ok(star !== -1 && display !== -1);
+  assert.ok(star < display);
+});
+
 test("Header star button shows 0 stars as 0 on the lamp display", () => {
   const html = renderToStaticMarkup(<StarButton count="0" />);
 

@@ -56,6 +56,49 @@ test("Header star button names its count, drawn on the Redstone Lamp display", a
   await expect(button.getByRole("img")).toHaveCount(0);
 });
 
+test("Header star button shows the glinting nether star before the lamp display", async ({
+  page,
+}) => {
+  await page.goto(`${origin}docs`);
+  const button = starButton(page);
+  const star = button.locator('[data-slot="nether-star"]');
+
+  await expect(star).toHaveAttribute("data-rendered", "true");
+
+  // GUI scale 2 at its intrinsic size: only DPR 1 without CSS scaling is
+  // verified against the captured references.
+  const box = await star.boundingBox();
+  expect([box?.width, box?.height]).toEqual([32, 32]);
+
+  // The star comes first, then the count display when there is one.
+  const order = await button.evaluate((node): (string | undefined)[] =>
+    [...node.querySelectorAll<HTMLElement>("[data-slot]")].map(
+      (element) => element.dataset.slot
+    )
+  );
+
+  expect(order.filter((slot) => slot !== "star-button-star")).toEqual(
+    order.includes("redstone-lamp-display")
+      ? ["nether-star", "redstone-lamp-display"]
+      : ["nether-star"]
+  );
+
+  // The glint moves with time: two readouts of the canvas differ.
+  const pixels = async () =>
+    await star.evaluate((canvas) => {
+      if (!(canvas instanceof HTMLCanvasElement)) {
+        throw new TypeError("The nether star must be a canvas");
+      }
+
+      return [
+        ...(canvas.getContext("2d")?.getImageData(0, 0, 32, 32).data ?? []),
+      ].join(",");
+    });
+
+  const first = await pixels();
+  await expect.poll(pixels, { timeout: 5000 }).not.toBe(first);
+});
+
 test("Header star button shows the site focus outline for keyboard focus", async ({
   page,
 }) => {
