@@ -176,10 +176,31 @@ assert.equal(
 
 const groups: TextCaptureGroup[] = [];
 
-for (const manifestFile of manifests.filter(
-  (file) => !manifestArgument || file === manifestArgument
-)) {
-  const manifest = await readTextCapture(manifestFile);
+const manifestReads = [];
+
+for (const manifestFile of manifests) {
+  if (!manifestArgument || manifestFile === manifestArgument) {
+    manifestReads.push(
+      (async () => {
+        const manifest = await readTextCapture(manifestFile);
+
+        return {
+          manifest,
+          manifestFile,
+        };
+      })()
+    );
+  }
+}
+
+const manifestInputs = await Promise.allSettled(manifestReads);
+
+for (const manifestInput of manifestInputs) {
+  if (manifestInput.status === "rejected") {
+    throw manifestInput.reason;
+  }
+
+  const { manifest, manifestFile } = manifestInput.value;
 
   const nativeEmpty: boolean =
     name === "empty" && manifestFile === component.pixelVerification.manifest;
