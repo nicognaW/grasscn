@@ -5,7 +5,10 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import type { CommandCaptureManifest } from "@ppt/installed/control-capture-protocol";
+import type {
+  CommandCaptureManifest,
+  RegisteredEntryContent,
+} from "@ppt/installed/control-capture-protocol";
 import { PNG } from "pngjs";
 
 const commandBaseParameters = (
@@ -147,7 +150,11 @@ for (const [folder, part] of [
 
         await (c.state === "hover" ? subject.hover() : page.mouse.move(0, 0));
 
-        const cursor = c.cursor ?? c.text!.length;
+        // SAFETY: this existing entry-only route selects fixed Input/Textarea definitions, each of which owns text and caretMs; other capture kinds retain optional fields.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered entry-producer projection at the existing part dispatch; no new validation.
+        const entryCase = c as RegisteredEntryContent;
+
+        const cursor = c.cursor ?? entryCase.text.length;
         const anchor = c.anchor ?? cursor;
 
         await subject.evaluate(
@@ -164,7 +171,7 @@ for (const [folder, part] of [
           },
           { anchor, cursor }
         );
-        await page.clock.runFor(c.caretMs!);
+        await page.clock.runFor(entryCase.caretMs);
         await expect(subject).toHaveAttribute("data-mc-ready", "true");
       }
 

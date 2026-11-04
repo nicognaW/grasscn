@@ -5,6 +5,7 @@ import path from "node:path";
 
 import type { Page } from "@playwright/test";
 import { chromium, expect } from "@playwright/test";
+import type { RegisteredEntryContent } from "@ppt/installed/control-capture-protocol";
 import type {
   QuestionnaireCaptureManifest,
   QuestionnaireCaseResult,
@@ -137,7 +138,11 @@ const captureQuestionnaireAction = async (
   }
 
   if (part === "input") {
-    const cursor = c.cursor ?? c.text!.length;
+    // SAFETY: this existing entry-only route selects fixed Input/Textarea definitions, each of which owns text and caretMs; other capture kinds retain optional fields.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered entry-producer projection at the existing part dispatch; no new validation.
+    const entryCase = c as RegisteredEntryContent;
+
+    const cursor = c.cursor ?? entryCase.text.length;
     const anchor = c.anchor ?? cursor;
 
     await subject.evaluate(
@@ -151,7 +156,7 @@ const captureQuestionnaireAction = async (
       },
       { anchor, cursor }
     );
-    await fixturePage.clock.runFor(c.caretMs!);
+    await fixturePage.clock.runFor(entryCase.caretMs);
     await expect(subject).toHaveAttribute("data-mc-ready", "true");
   } else {
     {

@@ -291,7 +291,7 @@ await javaCommand("javac", [
   "-J-Xmx128m",
   "-J-XX:ActiveProcessorCount=1",
   "-encoding",
-  "UTF-8",
+  "utf-8",
   "-classpath",
   classpath,
   "-d",

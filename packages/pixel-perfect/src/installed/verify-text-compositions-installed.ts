@@ -254,7 +254,8 @@ const verifyComposedTextCase = async (
 
         try {
           const image = new Image();
-          image.onload = image.onerror = imageCompletion.resolve;
+          image.addEventListener("error", imageCompletion.resolve);
+          image.addEventListener("load", imageCompletion.resolve);
           // The same Boolean predicate excludes absent or empty captured URLs before this native setter.
           image.src = src;
         } catch (error) {

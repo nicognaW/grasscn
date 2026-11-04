@@ -169,7 +169,7 @@ const javaCommand = async function javaCommand(
 
 await javaCommand("javac", [
   "-encoding",
-  "UTF-8",
+  "utf-8",
   "-classpath",
   classpath,
   "-d",

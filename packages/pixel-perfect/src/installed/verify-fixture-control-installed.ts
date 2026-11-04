@@ -220,6 +220,10 @@ const prepareControlAppearance = async (
   }
 
   if ((name === "input" || name === "textarea") && manifest.effectiveAssets) {
+    // SAFETY: indexed-font Input/Textarea captures carry the native x/y position; the generic fixture protocol also permits legacy unpositioned Button captures.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact indexed-font capture-position contract selected by the existing condition.
+    const positionedCase = c as PositionedReferenceCase;
+
     await subject.evaluate(
       (node: HTMLElement, position) => {
         Object.assign(node.style, {
@@ -228,12 +232,16 @@ const prepareControlAppearance = async (
           top: `${position.y}px`,
         });
       },
-      { x: c.x! * c.scale, y: c.y! * c.scale }
+      { x: positionedCase.x * c.scale, y: positionedCase.y * c.scale }
     );
     await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
   }
 
   if (name === "button" && manifest.effectiveAssets) {
+    // SAFETY: indexed-font Button manifests carry native x/y positions; legacy captures without effectiveAssets do not enter this existing branch.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact indexed-font Button capture-position contract; no new validation.
+    const positionedCase = c as PositionedReferenceCase;
+
     await page.addStyleTag({
       content: "#root > :not([data-subject]) { visibility: hidden; }",
     });
@@ -245,7 +253,7 @@ const prepareControlAppearance = async (
           top: `${position.y}px`,
         });
       },
-      { x: c.x! * c.scale, y: c.y! * c.scale }
+      { x: positionedCase.x * c.scale, y: positionedCase.y * c.scale }
     );
     await expect(subject.locator("[data-mc-label-ready]")).toHaveAttribute(
       "data-mc-label-ready",
