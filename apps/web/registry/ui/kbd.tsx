@@ -29,6 +29,7 @@ interface KbdScaleStyle extends React.CSSProperties {
 
 const keyText = function keyText(content: React.ReactNode): React.ReactNode {
   if (Array.isArray(content)) {
+    // oxlint-disable-next-line react/no-react-children -- This recursive renderer adapts opaque ReactNode children; React owns supplied-key composition and nested sibling scopes. Preserve the public children ABI without fabricating IDs or reimplementing key escaping.
     return React.Children.map(content, keyText);
   }
 

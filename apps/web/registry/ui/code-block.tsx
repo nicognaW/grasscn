@@ -176,6 +176,7 @@ const selectable = function selectable(
   }
 
   if (Array.isArray(value)) {
+    // oxlint-disable-next-line react/no-react-children -- This recursive renderer adapts opaque ReactNode children; React owns supplied-key composition and nested sibling scopes. Preserve the public children ABI without fabricating IDs or reimplementing key escaping.
     return React.Children.map(value, selectable);
   }
 
