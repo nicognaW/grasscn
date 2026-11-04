@@ -68,7 +68,10 @@ export const documentText = (children: ReactNode): ReactNode => {
       }
 
       if (
-        isValidElement<{ children?: ReactNode; style?: CSSProperties }>(child)
+        isValidElement<{
+          children?: ReactNode;
+          style?: CSSProperties & { "--mc-token-color"?: string };
+        }>(child)
       ) {
         // Already rendered labels are opaque; recursively transforming them would duplicate accessibility text.
         if (
@@ -78,7 +81,8 @@ export const documentText = (children: ReactNode): ReactNode => {
           return child;
         }
 
-        const color = child.props.style?.color;
+        const color =
+          child.props.style?.color ?? child.props.style?.["--mc-token-color"];
 
         const style:
           | (CSSProperties & {
