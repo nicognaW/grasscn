@@ -49,7 +49,7 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
             scale={scale}
             checked={wrap}
             onCheckedChange={(value) => {
-              setWrap(value === true);
+              setWrap(value);
             }}
           />
           Wrap
@@ -59,7 +59,7 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
             scale={scale}
             checked={numbers}
             onCheckedChange={(value) => {
-              setNumbers(value === true);
+              setNumbers(value);
             }}
           />
           Line numbers

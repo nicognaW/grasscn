@@ -28,7 +28,7 @@ const CheckboxDemo = ({ scale }: DemoProps) => {
             scale={scale}
             checked={checked}
             onCheckedChange={(value) => {
-              setChecked(value === true);
+              setChecked(value);
             }}
           />
           <label htmlFor="preview-checkbox">Enable shadows</label>
