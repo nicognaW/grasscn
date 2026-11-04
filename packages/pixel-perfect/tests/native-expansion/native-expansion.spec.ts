@@ -34,18 +34,18 @@ const corpora =
       ].map((name) => referenceFile(name))
     : [path.resolve(expansionReference)];
 
-const specimens = corpora.flatMap((reference) =>
+const specimens = corpora.flatMap((reference) => {
   // SAFETY: All489cases in the13retained native-expansion manifests emit name, numeric scale and element; an override supplies the same capture-consumer contract at this original read boundary.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact native capture manifest consumer projection; no new validation or generic JSON caster.
-  (
-    JSON.parse(
-      readFileSync(
-        pixelPerfectFile(path.join(reference, "manifest.json")),
-        "utf-8"
-      )
-    ) as NativeExpansionManifest
-  ).cases.map((sample) => ({ reference, sample }))
-);
+  const capturedManifest = JSON.parse(
+    readFileSync(
+      pixelPerfectFile(path.join(reference, "manifest.json")),
+      "utf-8"
+    )
+  ) as NativeExpansionManifest;
+
+  return capturedManifest.cases.map((sample) => ({ reference, sample }));
+});
 
 for (const { reference, sample } of specimens) {
   test(`native expansion pixels ${sample.name}`, async ({ page }, info) => {

@@ -24,6 +24,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 import "./minecraft-button.css";
 import "./minecraft-select.css";
 
+interface SelectSeparatorTextureStyle extends React.CSSProperties {
+  "--mc-separator-image": string;
+}
+
 interface SelectPopupPaintStyle extends React.CSSProperties {
   "--mc-scale": number;
   "--mc-select-background": string;
@@ -625,8 +629,8 @@ const SelectSeparator = ({
   <SelectPrimitive.Separator
     data-slot="select-separator"
     className={cn(`mc-select-separator`, className)}
-    style={minecraftStyle(style, (__style) => ({
-      backgroundImage: assets.footer_separator,
+    style={minecraftStyle(style, (__style): SelectSeparatorTextureStyle => ({
+      "--mc-separator-image": assets.footer_separator,
       ...__style,
     }))}
     {...props}

@@ -88,6 +88,7 @@
     pointer-events: none;
   }
   .mc-tab-surface > i {
+    background-image: var(--mc-tabs-image);
     display: block;
     min-width: 0;
     min-height: 0;
@@ -121,6 +122,7 @@
     display: grid;
   }
   .mc-tab-menu {
+    background-image: var(--mc-tabs-image);
     display: none;
     position: absolute;
     top: calc(2 * var(--mc-pixel));
@@ -173,6 +175,7 @@
     border: 0;
   }
   .mc-tabs-content {
+    background-image: var(--mc-tabs-image);
     min-width: 0;
     outline: none;
     background-size: calc(32 * var(--mc-pixel)) calc(32 * var(--mc-pixel));

@@ -13,6 +13,7 @@
     background: transparent;
   }
   .mc-drawer-content {
+    pointer-events: auto;
     position: fixed;
     z-index: 51;
     outline: 0;

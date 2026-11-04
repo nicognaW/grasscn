@@ -9,6 +9,7 @@ import { chromium, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
 import type {
   InputGroupCaptureManifest,
+  RegisteredEntryContent,
   InputGroupEntryElement,
 } from "@ppt/installed/control-capture-protocol";
 import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
@@ -27,14 +28,22 @@ const consumer = path.resolve(consumerArgument);
 const sha = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 
-interface InstalledInputGroupCase {
-  c: InputGroupCaptureManifest["cases"][number];
+type InstalledInputGroupCase = {
   folder: string;
   page: Page;
-  part: string;
   reference: string;
   url: string;
-}
+} & (
+  | {
+      part: "input" | "textarea";
+      c: Omit<
+        InputGroupCaptureManifest["cases"][number],
+        keyof RegisteredEntryContent
+      > &
+        RegisteredEntryContent;
+    }
+  | { part: "text" | "button"; c: InputGroupCaptureManifest["cases"][number] }
+);
 
 const inputGroupParameters = (
   c: InputGroupCaptureManifest["cases"][number],
@@ -138,7 +147,7 @@ const verifyInputGroupReferenceCase = async ({
   await (c.state === "hover" ? subject.hover() : page.mouse.move(0, 0));
 
   if (entry) {
-    const cursor = c.cursor ?? c.text!.length;
+    const cursor = c.cursor ?? c.text.length;
     const anchor = c.anchor ?? cursor;
 
     await subject.evaluate(
@@ -163,7 +172,7 @@ const verifyInputGroupReferenceCase = async ({
       );
     }
 
-    await page.clock.runFor(c.caretMs!);
+    await page.clock.runFor(c.caretMs);
     await expect(subject).toHaveAttribute("data-mc-ready", "true");
   } else {
     await page.evaluate(async () => {
@@ -341,7 +350,9 @@ try {
 
       try {
         cases.push(
-          // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
+          // Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
+          // SAFETY: The registered entry routes select closed Input/TextArea definitions with text and caretMs in every state; the capture/layout producer preserves both fields.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion, eslint/no-await-in-loop -- Exact registered route/content correlation; broad native capture fields and missing-data runtime failures remain unchanged.
           await verifyInputGroupReferenceCase({
             c,
             folder,
@@ -349,7 +360,7 @@ try {
             part,
             reference,
             url,
-          })
+          } as InstalledInputGroupCase)
         );
         count += 1;
       } finally {
