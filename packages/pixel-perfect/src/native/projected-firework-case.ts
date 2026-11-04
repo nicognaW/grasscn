@@ -3,9 +3,7 @@
 // orthographic scene, captured at every client tick at partialTick 0.
 import { z } from "zod";
 
-import { imageIdentitySchema } from "./projected-case";
-
-const vector3 = z.tuple([z.number(), z.number(), z.number()]);
+import { boundsSchema, imageIdentitySchema, vector3 } from "./projected-case";
 
 const dyeColor = z.enum([
   "white",
@@ -80,13 +78,6 @@ export const projectedFireworkCaseSchema = z.object({
 });
 
 export type ProjectedFireworkCase = z.infer<typeof projectedFireworkCaseSchema>;
-
-const boundsSchema = z.object({
-  height: z.number().int(),
-  width: z.number().int(),
-  x: z.number().int(),
-  y: z.number().int(),
-});
 
 export const projectedFireworkManifestSchema = z.object({
   backdropFrame: imageIdentitySchema,

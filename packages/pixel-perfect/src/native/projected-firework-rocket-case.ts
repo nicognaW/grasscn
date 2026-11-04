@@ -4,10 +4,8 @@
 // partialTick 0 with the integrated server and the client in lockstep.
 import { z } from "zod";
 
-import { imageIdentitySchema } from "./projected-case";
+import { boundsSchema, imageIdentitySchema, vector3 } from "./projected-case";
 import { projectedFireworkCaseSchema } from "./projected-firework-case";
-
-const vector3 = z.tuple([z.number(), z.number(), z.number()]);
 
 const explosionSchema =
   projectedFireworkCaseSchema.shape.firework.shape.explosion;
@@ -47,13 +45,6 @@ export const projectedFireworkRocketCaseSchema = z.object({
 export type ProjectedFireworkRocketCase = z.infer<
   typeof projectedFireworkRocketCaseSchema
 >;
-
-const boundsSchema = z.object({
-  height: z.number().int(),
-  width: z.number().int(),
-  x: z.number().int(),
-  y: z.number().int(),
-});
 
 // One SoundManager.play or playDelayed call the native client made, with the
 // tick it happened in (handling a server tick's packets counts as that

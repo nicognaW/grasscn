@@ -2,7 +2,15 @@
 // Perfect Tests (ADR 0005).
 import { z } from "zod";
 
-const vector3 = z.tuple([z.number(), z.number(), z.number()]);
+export const vector3 = z.tuple([z.number(), z.number(), z.number()]);
+
+// A pixel rectangle in a native frame.
+export const boundsSchema = z.object({
+  height: z.number().int(),
+  width: z.number().int(),
+  x: z.number().int(),
+  y: z.number().int(),
+});
 
 export const projectedCaseSchema = z.object({
   camera: z.object({
@@ -66,12 +74,7 @@ export const projectedManifestSchema = z.object({
   cases: z.array(
     z.object({
       backdropFrame: imageIdentitySchema,
-      bounds: z.object({
-        height: z.number().int(),
-        width: z.number().int(),
-        x: z.number().int(),
-        y: z.number().int(),
-      }),
+      bounds: boundsSchema,
       coveredPixels: z.number().int().positive(),
       mask: imageIdentitySchema,
       name: z.string(),

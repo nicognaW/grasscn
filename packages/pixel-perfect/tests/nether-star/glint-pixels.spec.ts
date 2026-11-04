@@ -2,7 +2,6 @@
 // original GUI item with its enchantment glint at GUI scale 2 on #202020, at
 // each declared glint time. Every decoded RGBA pixel is compared at zero
 // tolerance and DPR 1. Times between the captured ones are unverified.
-import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
@@ -10,6 +9,11 @@ import path from "node:path";
 
 import { test, expect } from "@grasscn/tests/test";
 import type { Page, TestInfo } from "@playwright/test";
+import {
+  MINECRAFT_26_2_JAR_SHA256,
+  compareMasked,
+  sha256,
+} from "@ppt/harness/projected-reference";
 import {
   netherStarCaseSchema,
   netherStarManifestSchema,
@@ -19,12 +23,6 @@ import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const corpus = pixelPerfectFile("tests/reference/nether-star");
-
-const JAR_SHA256 =
-  "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290";
-
-const sha256 = (bytes: Uint8Array) =>
-  createHash("sha256").update(bytes).digest("hex");
 
 const manifest = netherStarManifestSchema.parse(
   JSON.parse(readFileSync(path.join(corpus, "manifest.json"), "utf-8"))
@@ -62,19 +60,15 @@ const compareWithCapturedReference = async (
     expected.height,
   ]);
 
-  let mismatchedPixels = 0;
-  const diff = new PNG({ height: expected.height, width: expected.width });
+  // A captured reference compares every pixel: the mask covers them all.
+  const { diff: difference, mismatchedPixels } = compareMasked(
+    actual.data,
+    expected.data,
+    new Uint8Array(expected.width * expected.height).fill(1)
+  );
 
-  for (let offset = 0; offset < expected.data.length; offset += 4) {
-    if (
-      !actual.data
-        .subarray(offset, offset + 4)
-        .equals(expected.data.subarray(offset, offset + 4))
-    ) {
-      mismatchedPixels += 1;
-      diff.data.set([255, 0, 255, 255], offset);
-    }
-  }
+  const diff = new PNG({ height: expected.height, width: expected.width });
+  diff.data.set(difference);
 
   await writeFile(testInfo.outputPath("actual.png"), actualBytes);
   await writeFile(testInfo.outputPath("diff.png"), PNG.sync.write(diff));
@@ -114,7 +108,7 @@ test("nether star captured references are bound to their native capture", async 
     );
   }
 
-  expect(manifest.sourceJar.sha256).toBe(JAR_SHA256);
+  expect(manifest.sourceJar.sha256).toBe(MINECRAFT_26_2_JAR_SHA256);
   expect(referenceCases.map((entry) => entry.glintMillis)).toEqual(
     definition.cases.map((entry) => entry.glintMillis)
   );
