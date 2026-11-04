@@ -194,7 +194,7 @@ const MinecraftCollapsibleText = ({
         (__style): MinecraftCollapsibleTextScaleStyle => ({
           "--mc-scale": scale,
           width:
-            typeof maxWidth === "undefined" || maxWidth === null
+            maxWidth === undefined || maxWidth === null
               ? undefined
               : maxWidth * scale,
           ...__style,

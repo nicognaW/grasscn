@@ -232,7 +232,7 @@ const MinecraftProse = ({
       style={minecraftStyle(style, (__style): MinecraftProseScaleStyle => ({
         "--mc-scale": scale,
         width:
-          typeof maxWidth === "undefined" || maxWidth === null
+          maxWidth === undefined || maxWidth === null
             ? undefined
             : maxWidth * scale,
         ...__style,

@@ -188,7 +188,7 @@ const MinecraftDisclosureText = ({
         (__style): MinecraftDisclosureTextScaleStyle => ({
           "--mc-scale": scale,
           width:
-            typeof maxWidth === "undefined" || maxWidth === null
+            maxWidth === undefined || maxWidth === null
               ? undefined
               : maxWidth * scale,
           ...__style,

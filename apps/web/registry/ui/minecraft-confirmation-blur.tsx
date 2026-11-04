@@ -62,7 +62,7 @@ export const MinecraftConfirmationBlur = ({
               <feConvolveMatrix
                 key={pass}
                 order={pass % 2 ? `1 ${size}` : `${size} 1`}
-                kernelMatrix={Array(size).fill(1).join(" ")}
+                kernelMatrix={Array.from({ length: size }, () => 1).join(" ")}
                 divisor={size}
                 edgeMode="duplicate"
                 preserveAlpha

@@ -151,7 +151,7 @@ const MinecraftItemText = ({
 
   if (
     text !== null &&
-    typeof clipWidth !== "undefined" &&
+    clipWidth !== undefined &&
     clipWidth !== null &&
     clipWidth > 0
   ) {
@@ -327,7 +327,7 @@ const MinecraftItemText = ({
       style={minecraftStyle(style, (__style): MinecraftItemTextScaleStyle => ({
         "--mc-scale": scale,
         width:
-          typeof maxWidth === "undefined" || maxWidth === null
+          maxWidth === undefined || maxWidth === null
             ? undefined
             : maxWidth * scale,
         ...__style,

@@ -17,9 +17,9 @@ export const useDemoWidth = function useDemoWidth(scale: 1 | 2 | 3) {
       const pixels =
         element.clientWidth -
         // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-        parseFloat(style.paddingLeft) -
+        Number.parseFloat(style.paddingLeft) -
         // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-        parseFloat(style.paddingRight);
+        Number.parseFloat(style.paddingRight);
 
       if (pixels > 0) {
         setWidth(Math.max(1, Math.floor(pixels / scale)));

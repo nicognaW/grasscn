@@ -293,7 +293,7 @@ const ItemTitle = ({
   };
 
   return inside ||
-    (typeof providedClip !== "undefined" && providedClip !== null) ||
+    (providedClip !== undefined && providedClip !== null) ||
     props.style?.color != null ||
     Boolean(className) ||
     (typeof props.children !== "string" &&

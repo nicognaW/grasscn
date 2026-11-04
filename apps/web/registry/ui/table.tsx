@@ -80,7 +80,7 @@ const TableText = ({
   const value = literalText(children);
 
   if (
-    typeof children === "undefined" ||
+    children === undefined ||
     children === null ||
     typeof children === "boolean"
   ) {

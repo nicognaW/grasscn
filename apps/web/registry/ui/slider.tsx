@@ -252,7 +252,7 @@ const Slider = ({
               </span>
             );
           })}
-          {typeof label !== "undefined" && label !== null && (
+          {label !== undefined && label !== null && (
             <MinecraftText className="mc-slider-label">{label}</MinecraftText>
           )}
         </SliderPrimitive.Control>

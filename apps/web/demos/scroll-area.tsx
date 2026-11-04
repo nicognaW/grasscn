@@ -106,7 +106,9 @@ const ScrollAreaDemo = ({ scale }: DemoProps) => {
         <span />
         <output aria-label="Scroll area offset">{offset} px</output>
         <span>
-          {selected == null ? "Select a row" : `Selected Row ${selected}`}
+          {selected === null || selected === undefined
+            ? "Select a row"
+            : `Selected Row ${selected}`}
         </span>
       </div>
     </>

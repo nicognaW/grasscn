@@ -172,7 +172,7 @@ const AvatarFallback = ({
       className={cn(`mc-avatar-fallback`, className)}
       {...props}
     >
-      {typeof children === "undefined" || children === null ? (
+      {children === undefined || children === null ? (
         <MinecraftAvatarFace skin="wide/steve" hat upsideDown={false} />
       ) : isMinecraftTextContent(children) ? (
         <Label scale={scale} maxWidth={maxWidth} align={align}>
@@ -213,7 +213,7 @@ const groupScale = function groupScale(
     if (child.type === React.Fragment) {
       const scale = groupScale(child.props.children);
 
-      if (scale != null) {
+      if (scale !== null && scale !== undefined) {
         return scale;
       }
     }

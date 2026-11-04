@@ -83,7 +83,7 @@ const ComboboxValue = ({
   <Primitive.Value {...props} placeholder={menuTextNodes(placeholder)}>
     {typeof children === "function"
       ? (value) => menuTextNodes(children(value))
-      : typeof children === "undefined" || children === null
+      : children === undefined || children === null
         ? undefined
         : menuTextNodes(children)}
   </Primitive.Value>

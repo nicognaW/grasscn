@@ -4,22 +4,12 @@ import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 import type { TooltipValueType } from "recharts";
 
-import {
-  ChartPixelBar as NativeChartPixelBar,
-  ChartProfilerSector as NativeChartProfilerSector,
-  ChartPixelSurface as NativeChartPixelSurface,
-  ChartAxisTick as NativeChartAxisTick,
-} from "./minecraft-chart-context";
 import { ChartGeometryProvider } from "./minecraft-chart-context";
 
 import "./minecraft-chart.css";
 
-import {
-  ChartFpsFrame as NativeChartFpsFrame,
-  ChartProfilerFrame as NativeChartProfilerFrame,
-  chartFpsColor as nativeChartFpsColor,
-  chartProfilerColor as nativeChartProfilerColor,
-} from "./minecraft-chart-native";
+// Preserve the original native painter initialization before later component imports.
+import "./minecraft-chart-native";
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
 import {
   isMinecraftTextContent,
@@ -30,18 +20,18 @@ import { MinecraftSurface } from "./minecraft-surface";
 import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
 
 export {
-  NativeChartFpsFrame as ChartFpsFrame,
-  NativeChartProfilerFrame as ChartProfilerFrame,
-  nativeChartFpsColor as chartFpsColor,
-  nativeChartProfilerColor as chartProfilerColor,
-};
+  ChartPixelBar,
+  ChartProfilerSector,
+  ChartPixelSurface,
+  ChartAxisTick,
+} from "./minecraft-chart-context";
 
 export {
-  NativeChartPixelBar as ChartPixelBar,
-  NativeChartProfilerSector as ChartProfilerSector,
-  NativeChartPixelSurface as ChartPixelSurface,
-  NativeChartAxisTick as ChartAxisTick,
-};
+  ChartFpsFrame,
+  ChartProfilerFrame,
+  chartFpsColor,
+  chartProfilerColor,
+} from "./minecraft-chart-native";
 
 interface ChartScaleStyle extends React.CSSProperties {
   "--mc-scale": number;

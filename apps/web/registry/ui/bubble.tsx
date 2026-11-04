@@ -142,7 +142,7 @@ const BubbleContent = ({
 
         if (maximum.endsWith("px")) {
           // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-          pixels = Math.min(pixels, parseFloat(maximum));
+          pixels = Math.min(pixels, Number.parseFloat(maximum));
         }
 
         if (bubble.style.width && bubble.style.width !== "auto") {

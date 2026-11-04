@@ -181,12 +181,10 @@ const CalendarDropdown = ({
         }))}
         scale={scale}
         value={
-          typeof value === "undefined" || value === null
-            ? undefined
-            : String(value)
+          value === undefined || value === null ? undefined : String(value)
         }
         defaultValue={
-          typeof defaultValue === "undefined" || defaultValue === null
+          defaultValue === undefined || defaultValue === null
             ? undefined
             : String(defaultValue)
         }
