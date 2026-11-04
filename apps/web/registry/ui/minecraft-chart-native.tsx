@@ -671,7 +671,7 @@ const ChartProfilerFrame = ({
     return null;
   }
 
-  const sector = sectors[0];
+  const [sector] = sectors;
 
   const nativePaint9: NativeChartPaintStyle = {
     "--mc-native-height": `${height}px`,

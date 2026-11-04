@@ -503,11 +503,13 @@ const AdvancementTree = ({
 
                       if (next !== index) {
                         event.preventDefault();
-                        root.current
-                          ?.querySelectorAll<HTMLButtonElement>(
+
+                        const buttons =
+                          root.current?.querySelectorAll<HTMLButtonElement>(
                             '[data-slot="advancement-node"]'
-                          )
-                          [next]?.focus();
+                          );
+
+                        buttons?.[next]?.focus();
                       }
                     }}
                   />

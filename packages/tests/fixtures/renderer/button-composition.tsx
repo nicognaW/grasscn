@@ -24,10 +24,10 @@ export const ButtonCompositionFixture = () => {
     content = (
       <>
         {label.slice(0, 2)}
-        <React.Fragment>
+        <>
           {label.slice(2, 4)}
           <>{label.slice(4)}</>
-        </React.Fragment>
+        </>
       </>
     );
   } else if (mode === "empty") {

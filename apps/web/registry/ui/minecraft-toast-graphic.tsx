@@ -44,7 +44,9 @@ export const MinecraftToastGraphic = ({
 
     const layoutLoading = toastLayout(title, message);
 
-    let cleanup = () => {};
+    let cleanup = () => {
+      // No painter resources exist until asynchronous layout installs their cleanup.
+    };
 
     const startToastRendering = async () => {
       const layout = await layoutLoading;

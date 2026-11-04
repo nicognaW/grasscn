@@ -124,7 +124,9 @@ const InputOTPSlot = ({
         placeholder={slot?.placeholderChar ?? ""}
         disabled={disabled}
         readOnly={readOnly}
-        onChange={() => {}}
+        onChange={() => {
+          // The owning OTP primitive handles editing; this controlled slot proxy only displays it.
+        }}
         spellCheck={false}
         autoCorrect="off"
       />

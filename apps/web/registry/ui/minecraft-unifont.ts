@@ -132,8 +132,7 @@ export const loadUnihex = function loadUnihex() {
       );
 
       if (fixed) {
-        left = fixed[2];
-        right = fixed[3];
+        ({ 2: left, 3: right } = fixed);
       }
 
       const width = right - left + 1;

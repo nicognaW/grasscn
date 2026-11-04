@@ -63,15 +63,13 @@ for (const scale of [2] as const) {
         await viewport.hover();
         await page.mouse.wheel(0, scroll.top > 0 ? -1000 : 1000);
 
-        if (scroll.maximum > 0) {
-          await expect
-            .poll(async () => await viewport.evaluate((n) => n.scrollTop))
-            .not.toBe(scroll.top);
-        } else {
-          await expect
-            .poll(async () => await viewport.evaluate((n) => n.scrollTop))
-            .toBe(0);
-        }
+        await (scroll.maximum > 0
+          ? expect
+              .poll(async () => await viewport.evaluate((n) => n.scrollTop))
+              .not.toBe(scroll.top)
+          : expect
+              .poll(async () => await viewport.evaluate((n) => n.scrollTop))
+              .toBe(0));
 
         await page.evaluate(async () => {
           const frameCompletion: PromiseWithResolvers<void> =

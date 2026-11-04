@@ -156,7 +156,9 @@ const CodeBlockCopyButton = ({
             }
           };
 
-          announceCopy().catch(() => {});
+          announceCopy().catch(() => {
+            // Copy failure intentionally leaves the copied state and announcement unchanged.
+          });
         }}
         {...props}
       >

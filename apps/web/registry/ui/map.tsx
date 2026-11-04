@@ -221,7 +221,9 @@ const MinecraftMap = ({
         }
       };
 
-      startMapRendering().catch(() => {});
+      startMapRendering().catch(() => {
+        // Keep the existing fallback on rendering failure; do not publish GPU readiness.
+      });
     }
 
     return () => {

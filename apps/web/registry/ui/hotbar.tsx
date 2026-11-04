@@ -263,9 +263,10 @@ const Hotbar = ({
           select(next);
 
           if (!(items[next]?.disabled ?? false)) {
-            root.current
-              ?.querySelectorAll<HTMLButtonElement>("button")
-              [next]?.focus();
+            const buttons =
+              root.current?.querySelectorAll<HTMLButtonElement>("button");
+
+            buttons?.[next]?.focus();
           }
         }
       }}
