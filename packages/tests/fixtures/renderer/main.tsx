@@ -3554,7 +3554,13 @@ const Fixture = () => {
   return <FixtureButton />;
 };
 
-createRoot(document.querySelector("#root")!).render(
+const fixtureRoot3 = document.querySelector("#root");
+
+if (fixtureRoot3 === null) {
+  throw new Error("Missing required mandatory fixture html root");
+}
+
+createRoot(fixtureRoot3).render(
   params.get("component") === "custom-api" ? (
     <CustomApiFixture />
   ) : (

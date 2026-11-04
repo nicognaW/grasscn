@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import type { Locator, Page } from "@grasscn/tests/test";
 import { test, expect } from "@grasscn/tests/test";
 
@@ -18,9 +19,13 @@ const labelFits = async function labelFits(button: Locator) {
         await button.evaluate((node) => {
           const box = node.getBoundingClientRect();
 
-          const label = node
-            .querySelector(".mc-button-label")!
-            .getBoundingClientRect();
+          const requiredElement29 = node.querySelector(".mc-button-label");
+
+          if (requiredElement29 === null) {
+            throw new Error("Missing required dom query");
+          }
+
+          const label = requiredElement29.getBoundingClientRect();
 
           return label.left >= box.left - 0.5 && label.right <= box.right + 0.5;
         })
@@ -161,9 +166,11 @@ test("Attachment supports CJK filenames, preview, removal and restoration inside
     const row = card.locator('[data-slot="attachment"]');
 
     await expect(row).toContainText("世界存档.zip");
-    expect((await row.boundingBox())!.width).toBeLessThanOrEqual(
-      (await stage.boundingBox())!.width
-    );
+    const requiredBounds30 = await row.boundingBox();
+    expectNotNull(requiredBounds30, "Missing required bounding box");
+    const requiredBounds31 = await stage.boundingBox();
+    expectNotNull(requiredBounds31, "Missing required bounding box");
+    expect(requiredBounds30.width).toBeLessThanOrEqual(requiredBounds31.width);
   }
 
   await card
@@ -191,18 +198,26 @@ test("MessageScroller footer texture stays bound to its button and never covers 
     const latest = card.getByRole("button", { exact: true, name: "Latest" });
 
     await expect(latest).toBeVisible();
-    expect((await latest.boundingBox())!.y).toBeGreaterThanOrEqual(
-      (await viewport.boundingBox())!.y + (await viewport.boundingBox())!.height
+    const requiredBounds32 = await latest.boundingBox();
+    expectNotNull(requiredBounds32, "Missing required bounding box");
+    const requiredBounds33 = await viewport.boundingBox();
+    expectNotNull(requiredBounds33, "Missing required bounding box");
+    const requiredBounds34 = await viewport.boundingBox();
+    expectNotNull(requiredBounds34, "Missing required bounding box");
+    expect(requiredBounds32.y).toBeGreaterThanOrEqual(
+      requiredBounds33.y + requiredBounds34.height
     );
     const skin = latest.locator(".mc-button-surface");
-    expect((await skin.boundingBox())!.height).toBeCloseTo(
-      (await latest.boundingBox())!.height,
-      0
-    );
-    expect((await skin.boundingBox())!.width).toBeCloseTo(
-      (await latest.boundingBox())!.width,
-      0
-    );
+    const requiredBounds35 = await skin.boundingBox();
+    expectNotNull(requiredBounds35, "Missing required bounding box");
+    const requiredBounds36 = await latest.boundingBox();
+    expectNotNull(requiredBounds36, "Missing required bounding box");
+    expect(requiredBounds35.height).toBeCloseTo(requiredBounds36.height, 0);
+    const requiredBounds37 = await skin.boundingBox();
+    expectNotNull(requiredBounds37, "Missing required bounding box");
+    const requiredBounds38 = await latest.boundingBox();
+    expectNotNull(requiredBounds38, "Missing required bounding box");
+    expect(requiredBounds37.width).toBeCloseTo(requiredBounds38.width, 0);
     await latest.click();
     await expect
       .poll(

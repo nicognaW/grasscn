@@ -94,11 +94,19 @@ for (const scale of [2] as const) {
       const state = await page.evaluate((frame) => {
         const overlay = document.querySelector<HTMLElement>(
           "[data-slot=drawer-overlay]"
-        )!;
+        );
+
+        if (overlay === null) {
+          throw new Error("Missing required dom query: overlay");
+        }
 
         const content = document.querySelector<HTMLElement>(
           "[data-slot=drawer-content]"
-        )!;
+        );
+
+        if (content === null) {
+          throw new Error("Missing required dom query: content");
+        }
 
         for (const n of [overlay, content]) {
           for (const a of n.getAnimations()) {
@@ -197,7 +205,11 @@ test("Drawer stays visible during its closing transition, then restores focus", 
     try {
       const drawerPanel = document.querySelector<HTMLElement>(
         "[data-slot=drawer-content]"
-      )!;
+      );
+
+      if (drawerPanel === null) {
+        throw new Error("Missing required dom query: drawerPanel");
+      }
 
       const observer = new MutationObserver(() => {
         if (!Object.hasOwn(drawerPanel.dataset, "endingStyle")) {
@@ -216,9 +228,16 @@ test("Drawer stays visible during its closing transition, then restores focus", 
       });
 
       observer.observe(drawerPanel, { attributes: true });
-      document
-        .querySelector<HTMLButtonElement>("[data-slot=drawer-close]")!
-        .click();
+
+      const requiredElement22 = document.querySelector<HTMLButtonElement>(
+        "[data-slot=drawer-close]"
+      );
+
+      if (requiredElement22 === null) {
+        throw new Error("Missing required dom query");
+      }
+
+      requiredElement22.click();
     } catch (error) {
       mutationCompletion2.reject(error);
     }

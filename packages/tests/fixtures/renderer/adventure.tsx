@@ -71,14 +71,26 @@ if (
   sample.element === "hanging-sign" ||
   sample.element === "map"
 ) {
-  Object.assign(document.querySelector<HTMLElement>("#root")!.style, {
+  const fixtureRoot1 = document.querySelector<HTMLElement>("#root");
+
+  if (fixtureRoot1 === null) {
+    throw new Error("Missing required mandatory fixture html root");
+  }
+
+  Object.assign(fixtureRoot1.style, {
     left: `${(sample.x ?? 0) * scale}px`,
     position: "absolute",
     top: `${(sample.y ?? 0) * scale}px`,
   });
 }
 
-createRoot(document.querySelector<HTMLElement>("#root")!).render(
+const fixtureRoot2 = document.querySelector<HTMLElement>("#root");
+
+if (fixtureRoot2 === null) {
+  throw new Error("Missing required mandatory fixture html root");
+}
+
+createRoot(fixtureRoot2).render(
   sample.element === "advancement-tree" ? (
     <AdvancementTree
       id="subject"

@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 test("Message preserves all six slots, CJK, alignment, refs and native line dimensions", async ({
@@ -54,8 +55,11 @@ test("Message scalar text has original row dimensions and multiline semantics at
     ).toHaveAttribute("data-mc-label-layout-ready", "true");
     // oxlint-disable-next-line no-await-in-loop -- Each scale reloads the same page, waits actual glyph owners, then measures that scale before next navigation.
     await expect(subject).toContainText("First line\nSecond line");
-    // oxlint-disable-next-line no-await-in-loop -- Each scale reloads the same page, waits actual glyph owners, then measures that scale before next navigation.
-    expect((await subject.boundingBox())!.height).toBe(18 * scale);
+    //  oxlint-disable-next-line no-await-in-loop -- Each scale reloads the same page, waits actual glyph owners, then measures that scale before next navigation.
+    const requiredBounds43 = await subject.boundingBox();
+    expectNotNull(requiredBounds43, "Missing required bounding box");
+
+    expect(requiredBounds43.height).toBe(18 * scale);
   }
 });
 
@@ -145,9 +149,18 @@ test("Chat palette and rich intrinsic children retain native canvas colors", asy
   const canvas = subject.locator("canvas").first();
   expect(
     await canvas.evaluate((node: HTMLCanvasElement) => {
-      const pixels = node
-        .getContext("2d")!
-        .getImageData(0, 0, node.width, node.height).data;
+      const requiredContext44 = node.getContext("2d");
+
+      if (requiredContext44 === null) {
+        throw new Error("Missing required canvas context");
+      }
+
+      const pixels = requiredContext44.getImageData(
+        0,
+        0,
+        node.width,
+        node.height
+      ).data;
 
       for (let i = 0; i < pixels.length; i += 4) {
         if (

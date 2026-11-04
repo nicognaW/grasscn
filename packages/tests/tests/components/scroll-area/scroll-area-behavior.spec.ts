@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 declare global {
@@ -71,12 +72,14 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
   const handle = await page.locator(thumb).boundingBox();
   const track = await page.locator(bar).boundingBox();
 
+  expectNotNull(handle, "Missing required bounding box: handle");
   await page.mouse.move(
-    handle!.x + handle!.width / 2,
-    handle!.y + handle!.height / 2
+    handle.x + handle.width / 2,
+    handle.y + handle.height / 2
   );
   await page.mouse.down();
-  await page.mouse.move(track!.x + track!.width / 2, track!.y + track!.height, {
+  expectNotNull(track, "Missing required bounding box: track");
+  await page.mouse.move(track.x + track.width / 2, track.y + track.height, {
     steps: 12,
   });
   await page.mouse.up();
@@ -86,7 +89,7 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
         await page.locator(viewport).evaluate((node) => node.scrollTop)
     )
     .toBe(800);
-  await page.mouse.click(track!.x + track!.width / 2, track!.y + 1);
+  await page.mouse.click(track.x + track.width / 2, track.y + 1);
   await expect
     .poll(
       async () =>

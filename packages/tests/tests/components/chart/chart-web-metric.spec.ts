@@ -85,15 +85,21 @@ for (const scale of [2] as const) {
     await expect(profiler).toContainText("Safari");
     await expect(profiler).not.toContainText("render");
     expect(
-      await section.evaluate(
-        (n) =>
-          !!(
-            // oxlint-disable-next-line no-bitwise -- compareDocumentPosition returns combined DOM position flags; test the FOLLOWING bit while retaining other flags.
-            n.compareDocumentPosition(
-              document.querySelector("[data-slot=chart-example]")!
-            ) & Node.DOCUMENT_POSITION_FOLLOWING
-          )
-      )
+      await section.evaluate((n) => {
+        const requiredElement39 = document.querySelector(
+          "[data-slot=chart-example]"
+        );
+
+        if (requiredElement39 === null) {
+          throw new Error("Missing required dom query");
+        }
+
+        return !!(
+          // oxlint-disable-next-line no-bitwise -- compareDocumentPosition returns combined DOM position flags; test the FOLLOWING bit while retaining other flags.
+          n.compareDocumentPosition(requiredElement39) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+        );
+      })
     ).toBe(true);
 
     const beforeBars = await metric.screenshot();

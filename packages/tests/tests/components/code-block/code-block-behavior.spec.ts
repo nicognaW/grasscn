@@ -72,8 +72,19 @@ test("CodeBlock all eight exports retain semantics, ref, keyboard focus and real
 
   const selection = await subject.evaluate((el) => {
     const range = document.createRange();
-    range.selectNodeContents(el.querySelector("code")!);
-    const browserSelection = getSelection()!;
+    const requiredElement15 = el.querySelector("code");
+
+    if (requiredElement15 === null) {
+      throw new Error("Missing required dom query");
+    }
+
+    range.selectNodeContents(requiredElement15);
+    const browserSelection = getSelection();
+
+    if (browserSelection === null) {
+      throw new Error("Missing required browser selection: browserSelection");
+    }
+
     browserSelection.removeAllRanges();
     browserSelection.addRange(range);
 
@@ -97,8 +108,19 @@ test("CodeBlock scalar CJK selection preserves original newlines without duplica
 
   const selected = await page.locator("[data-subject]").evaluate((el) => {
     const range = document.createRange();
-    range.selectNodeContents(el.querySelector("code")!);
-    const selection = getSelection()!;
+    const requiredElement17 = el.querySelector("code");
+
+    if (requiredElement17 === null) {
+      throw new Error("Missing required dom query");
+    }
+
+    range.selectNodeContents(requiredElement17);
+    const selection = getSelection();
+
+    if (selection === null) {
+      throw new Error("Missing required browser selection: selection");
+    }
+
     selection.removeAllRanges();
     selection.addRange(range);
 

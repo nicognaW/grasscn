@@ -172,7 +172,9 @@ test("Sidebar mobile backdrop closes and a desktop containment style cannot move
   await expect(page.locator("#mobile")).toHaveText("true");
   await page.locator("#toggle").click();
   const dialog = page.getByRole("dialog", { exact: true, name: "Sidebar" });
-  expect((await dialog.boundingBox())!.y).toBe(0);
+  const requiredBounds27 = await dialog.boundingBox();
+  expectNotNull(requiredBounds27, "Missing required bounding box");
+  expect(requiredBounds27.y).toBe(0);
   await page.mouse.click(365, 10);
   await expect(dialog).toHaveCount(0);
   await expect(page.locator("#open-mobile")).toHaveText("false");

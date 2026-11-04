@@ -81,9 +81,18 @@ const verifyItemTitleColor = async (page: Page, label: string) => {
           .locator("canvas")
           .first()
           .evaluate((canvas: HTMLCanvasElement) => {
-            const { data } = canvas
-              .getContext("2d")!
-              .getImageData(0, 0, canvas.width, canvas.height);
+            const requiredContext47 = canvas.getContext("2d");
+
+            if (requiredContext47 === null) {
+              throw new Error("Missing required canvas context");
+            }
+
+            const { data } = requiredContext47.getImageData(
+              0,
+              0,
+              canvas.width,
+              canvas.height
+            );
 
             for (let i = 0; i < data.length; i += 4) {
               if (
