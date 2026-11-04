@@ -21,8 +21,7 @@ const manifest = {
           "utf-8"
         )
       ) as typeof BoundaryReference1 | typeof BoundaryReference2
-    )/* oxlint-enable typescript/no-unsafe-type-assertion */
-    .cases
+    ) /* oxlint-enable typescript/no-unsafe-type-assertion */.cases
       .map((c) => ({ ...c, referenceDirectory: directory }))
   ),
 };

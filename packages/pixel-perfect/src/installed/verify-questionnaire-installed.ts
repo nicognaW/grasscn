@@ -471,7 +471,7 @@ if (
         report.cases.find(
           (record) => record.name === sample.name
         ) as QuestionnaireCaseResult
-        /* oxlint-enable typescript/no-unsafe-type-assertion */
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
     );
 
     for (const record of records) {
