@@ -61,6 +61,27 @@ const colors = [
   "#ff55ff",
 ];
 
+const AnalyticsScale = React.createContext(2);
+
+const abbreviateAnalyticsTick = function abbreviateAnalyticsTick(
+  value: string | number
+) {
+  return String(value).slice(0, 3);
+};
+
+const AnalyticsAxisTick = function AnalyticsAxisTick(
+  tickProps: React.ComponentProps<typeof ChartAxisTick>
+) {
+  const scale = React.useContext(AnalyticsScale);
+  return (
+    <ChartAxisTick
+      {...tickProps}
+      tickFormatter={abbreviateAnalyticsTick}
+      dy={4 * scale}
+    />
+  );
+};
+
 /** Example gallery recipe. Consumers compose Recharts directly in ChartContainer. */
 export const AnalyticsChartExample = ({
   data,
@@ -98,13 +119,7 @@ export const AnalyticsChartExample = ({
         dataKey="name"
         tickLine={false}
         axisLine={false}
-        tick={(tickProps) => (
-          <ChartAxisTick
-            {...tickProps}
-            tickFormatter={(value) => String(value).slice(0, 3)}
-            dy={4 * scale}
-          />
-        )}
+        tick={<AnalyticsAxisTick />}
       />
       <YAxis
         width={26 * scale}
@@ -277,52 +292,54 @@ export const AnalyticsChartExample = ({
   };
 
   return (
-    <div data-slot="chart-example" data-chart-type={type}>
-      <ChartContainer
-        {...props}
-        config={config}
-        scale={scale}
-        className={cn(
-          "aspect-auto h-(--mc-analytics-chart-height) w-full",
-          className
-        )}
-        style={containerStyle}
-      >
-        {chart}
-      </ChartContainer>
-      <details
-        className="mc-chart-data"
-        style={
-          // SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
-          {
-            "--mc-scale": scale,
-          } satisfies AnalyticsScalePaint as AnalyticsScalePaint
-        }
-      >
-        <summary>View chart data</summary>
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                {series.map((key) => (
-                  <th key={key}>{config[key]?.label ?? key}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row) => (
-                <tr key={row.name}>
-                  <td>{row.name}</td>
+    <AnalyticsScale.Provider value={scale}>
+      <div data-slot="chart-example" data-chart-type={type}>
+        <ChartContainer
+          {...props}
+          config={config}
+          scale={scale}
+          className={cn(
+            "aspect-auto h-(--mc-analytics-chart-height) w-full",
+            className
+          )}
+          style={containerStyle}
+        >
+          {chart}
+        </ChartContainer>
+        <details
+          className="mc-chart-data"
+          style={
+            // SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
+            {
+              "--mc-scale": scale,
+            } satisfies AnalyticsScalePaint as AnalyticsScalePaint
+          }
+        >
+          <summary>View chart data</summary>
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
                   {series.map((key) => (
-                    <td key={key}>{row[key]}</td>
+                    <th key={key}>{config[key]?.label ?? key}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </details>
-    </div>
+              </thead>
+              <tbody>
+                {data.map((row) => (
+                  <tr key={row.name}>
+                    <td>{row.name}</td>
+                    {series.map((key) => (
+                      <td key={key}>{row[key]}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+    </AnalyticsScale.Provider>
   );
 };
