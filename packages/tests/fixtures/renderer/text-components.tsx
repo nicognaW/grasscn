@@ -44,6 +44,22 @@ interface TextReferenceStyle extends React.CSSProperties {
   "--reference-y": string;
 }
 
+interface TypographyScenarioRenderers {
+  readonly [part: string]: typeof Typography | undefined;
+  readonly blockquote: typeof TypographyBlockquote;
+  readonly code: typeof TypographyInlineCode;
+  readonly default: typeof Typography;
+  readonly h1: typeof TypographyH1;
+  readonly h2: typeof TypographyH2;
+  readonly h3: typeof TypographyH3;
+  readonly h4: typeof TypographyH4;
+  readonly large: typeof TypographyLarge;
+  readonly lead: typeof TypographyLead;
+  readonly muted: typeof TypographyMuted;
+  readonly p: typeof TypographyP;
+  readonly small: typeof TypographySmall;
+}
+
 const q = new URLSearchParams(location.search);
 
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
@@ -212,7 +228,7 @@ const TextComponentsFixture = () => {
   );
 
   const renderTextTypographyScenario = () => {
-    const parts: Readonly<Partial<Record<string, typeof Typography>>> = {
+    const parts: TypographyScenarioRenderers = {
       blockquote: TypographyBlockquote,
       code: TypographyInlineCode,
       default: Typography,
