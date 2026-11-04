@@ -3622,32 +3622,32 @@ const fixtureRoutes: readonly FixtureRoute[] = [
   },
 ];
 
-const Fixture = () => {
-  const ActiveFixture = resolveFixtureRoute(
-    params,
-    fixtureRoutes,
-    FixtureButton
-  );
-
-  return <ActiveFixture />;
-};
-
 const fixtureRoot3 = document.querySelector("#root");
 
 if (fixtureRoot3 === null) {
   throw new Error("Missing required mandatory fixture html root");
 }
 
-createRoot(fixtureRoot3).render(
-  params.get("component") === "custom-api" ? (
-    <CustomApiFixture />
-  ) : (
-    <BaseDirectionProvider
-      direction={
-        params.has("rtl") || params.get("dir") === "rtl" ? "rtl" : "ltr"
-      }
-    >
+const fixtureRenderer = createRoot(fixtureRoot3);
+
+if (params.get("component") === "custom-api") {
+  fixtureRenderer.render(<CustomApiFixture />);
+} else {
+  const direction =
+    params.has("rtl") || params.get("dir") === "rtl" ? "rtl" : "ltr";
+
+  // Navigation owns this immutable query; React state updates retain this fixture type.
+  const ActiveFixture = resolveFixtureRoute(
+    params,
+    fixtureRoutes,
+    FixtureButton
+  );
+
+  const Fixture = () => <ActiveFixture />;
+
+  fixtureRenderer.render(
+    <BaseDirectionProvider direction={direction}>
       <Fixture />
     </BaseDirectionProvider>
-  )
-);
+  );
+}
