@@ -3622,6 +3622,10 @@ const fixtureRoutes: readonly FixtureRoute[] = [
   },
 ];
 
+const Fixture = ({ view: ActiveFixture }: { view: React.ComponentType }) => (
+  <ActiveFixture />
+);
+
 const fixtureRoot3 = document.querySelector("#root");
 
 if (fixtureRoot3 === null) {
@@ -3643,11 +3647,9 @@ if (params.get("component") === "custom-api") {
     FixtureButton
   );
 
-  const Fixture = () => <ActiveFixture />;
-
   fixtureRenderer.render(
     <BaseDirectionProvider direction={direction}>
-      <Fixture />
+      <Fixture view={ActiveFixture} />
     </BaseDirectionProvider>
   );
 }
