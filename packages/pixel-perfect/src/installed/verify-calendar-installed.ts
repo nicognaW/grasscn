@@ -187,18 +187,44 @@ const captureCalendarAlias = async (
       "true"
     );
 
-    for (const canvas of await fixturePage
-      .locator("#subject [data-mc-label-ready]")
-      .all()) {
-      await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+    {
+      const pendingReadyElements = await fixturePage
+        .locator("#subject [data-mc-label-ready]")
+        .all();
+
+      const pendingReadinessResults = await Promise.allSettled(
+        pendingReadyElements.map(async (canvas) => {
+          await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+        })
+      );
+
+      const rejectedReadiness = pendingReadinessResults.find(
+        (result) => result.status === "rejected"
+      );
+
+      if (rejectedReadiness) {
+        throw rejectedReadiness.reason;
+      }
     }
   }
 
   if (part === "trigger-cjk") {
-    for (const canvas of await fixturePage
+    const pendingReadyElements = await fixturePage
       .locator("#subject [data-mc-label-ready]")
-      .all()) {
-      await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+      .all();
+
+    const pendingReadinessResults = await Promise.allSettled(
+      pendingReadyElements.map(async (canvas) => {
+        await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = pendingReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
     }
   }
 

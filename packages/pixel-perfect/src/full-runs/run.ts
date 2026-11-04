@@ -877,6 +877,8 @@ export const main = async function main(args = process.argv.slice(2)) {
 };
 
 if (process.argv[1] && path.resolve(process.argv[1]) === import.meta.filename) {
+  // Keep the CLI rejection handler without changing synchronous module imports.
+  // oxlint-disable-next-line promise/prefer-await-to-callbacks, anti-slop/no-unknown-parameters -- Promise.catch reasons remain unknown; preserve exported main rejection behavior and this existing CLI-only handler.
   main().catch((error: unknown) => {
     // SAFETY: owned CLI checks and Node APIs reject with Error instances.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion

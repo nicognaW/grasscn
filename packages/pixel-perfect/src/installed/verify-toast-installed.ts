@@ -153,10 +153,24 @@ const advanceToastPhase = async (
       c.selectedIndex ?? 1
     );
 
-    for (const canvas of await fixturePage
-      .locator("[data-mc-toast-ready]")
-      .all()) {
-      await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
+    {
+      const pendingReadyElements = await fixturePage
+        .locator("[data-mc-toast-ready]")
+        .all();
+
+      const pendingReadinessResults = await Promise.allSettled(
+        pendingReadyElements.map(async (canvas) => {
+          await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
+        })
+      );
+
+      const rejectedReadiness = pendingReadinessResults.find(
+        (result) => result.status === "rejected"
+      );
+
+      if (rejectedReadiness) {
+        throw rejectedReadiness.reason;
+      }
     }
   }
 };
@@ -217,10 +231,24 @@ try {
       c.selectedIndex ?? 1
     );
 
-    for (const canvas of await fixturePage
-      .locator("[data-mc-toast-ready]")
-      .all()) {
-      await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
+    {
+      const pendingReadyElements = await fixturePage
+        .locator("[data-mc-toast-ready]")
+        .all();
+
+      const pendingReadinessResults = await Promise.allSettled(
+        pendingReadyElements.map(async (canvas) => {
+          await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
+        })
+      );
+
+      const rejectedReadiness = pendingReadinessResults.find(
+        (result) => result.status === "rejected"
+      );
+
+      if (rejectedReadiness) {
+        throw rejectedReadiness.reason;
+      }
     }
 
     await advanceToastPhase(c, component, fixturePage);

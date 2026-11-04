@@ -354,8 +354,24 @@ const prepareTabsControlState = async (
       }
     }
 
-    for (const label of await subject.locator("[data-mc-label-ready]").all()) {
-      await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+    {
+      const pendingReadyElements = await subject
+        .locator("[data-mc-label-ready]")
+        .all();
+
+      const pendingReadinessResults = await Promise.allSettled(
+        pendingReadyElements.map(async (label) => {
+          await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+        })
+      );
+
+      const rejectedReadiness = pendingReadinessResults.find(
+        (result) => result.status === "rejected"
+      );
+
+      if (rejectedReadiness) {
+        throw rejectedReadiness.reason;
+      }
     }
   }
 };
@@ -447,8 +463,24 @@ const prepareSelectControlState = async (
       return await frameCompletion6.promise;
     });
 
-    for (const label of await subject.locator("[data-mc-label-ready]").all()) {
-      await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+    {
+      const pendingReadyElements = await subject
+        .locator("[data-mc-label-ready]")
+        .all();
+
+      const pendingReadinessResults = await Promise.allSettled(
+        pendingReadyElements.map(async (label) => {
+          await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+        })
+      );
+
+      const rejectedReadiness = pendingReadinessResults.find(
+        (result) => result.status === "rejected"
+      );
+
+      if (rejectedReadiness) {
+        throw rejectedReadiness.reason;
+      }
     }
   }
 };

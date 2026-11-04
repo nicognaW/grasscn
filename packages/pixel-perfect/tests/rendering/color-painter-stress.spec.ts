@@ -64,8 +64,24 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
   await page.goto("/?component=color-painter-stress");
   await expect(page.locator("[data-stress-label]")).toHaveCount(64);
 
-  for (const label of await page.locator("[data-mc-label-ready]").all()) {
-    await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const pendingReadyElements = await page
+      .locator("[data-mc-label-ready]")
+      .all();
+
+    const pendingReadinessResults = await Promise.allSettled(
+      pendingReadyElements.map(async (label) => {
+        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = pendingReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   const checks: { mismatchedPixels: number; scale: number }[] = [];
@@ -147,8 +163,24 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
   ).toBe(0);
   await page.getByRole("button", { name: "Toggle all" }).click();
 
-  for (const label of await page.locator("[data-mc-label-ready]").all()) {
-    await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const pendingReadyElements = await page
+      .locator("[data-mc-label-ready]")
+      .all();
+
+    const pendingReadinessResults = await Promise.allSettled(
+      pendingReadyElements.map(async (label) => {
+        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = pendingReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   await verify(3);
@@ -250,8 +282,24 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
   await page.goto("/?component=color-painter-stress");
   await expect(page.locator("[data-stress-label]")).toHaveCount(64);
 
-  for (const label of await page.locator("[data-mc-label-ready]").all()) {
-    await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const pendingReadyElements = await page
+      .locator("[data-mc-label-ready]")
+      .all();
+
+    const pendingReadinessResults = await Promise.allSettled(
+      pendingReadyElements.map(async (label) => {
+        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = pendingReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   expect(

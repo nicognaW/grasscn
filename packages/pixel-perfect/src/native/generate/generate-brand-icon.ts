@@ -112,15 +112,17 @@ for (const [scaleIndex, scale] of one.scales.entries()) {
     assert.deepEqual([p.width, p.height], [16 * scale, 16 * scale]);
     assert.ok(p.data.equals(q.data), `Non-repeatable native item: ${filename}`);
     images.push(p);
-    cases.push({
-      filename,
-      scale,
-      background,
-      firstPngSha256: hash(a),
-      secondPngSha256: hash(b),
-      decodedRgbaSha256: hash(p.data),
-      mismatchedPixels: 0,
-    });
+    cases.push(
+      Object.fromEntries([
+        ["filename", filename],
+        ["scale", scale],
+        ["background", background],
+        ["firstPngSha256", hash(a)],
+        ["secondPngSha256", hash(b)],
+        ["decodedRgbaSha256", hash(p.data)],
+        ["mismatchedPixels", 0],
+      ])
+    );
   }
 
   const [black, white] = images;

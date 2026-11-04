@@ -244,15 +244,15 @@ for (const scale of [1, 2, 3]) {
             throw new Error(`Missing reference ${name}`);
           }
 
-          return {
-            name,
-            state,
-            width,
-            height: 20,
-            scale,
-            label: ["Button", "Done", "iIl! MW@09", "Wider button"][column],
-            sha256: sha256(await readFile(path.join(captures, name))),
-          };
+          return Object.fromEntries<string | number>([
+            ["name", name],
+            ["state", state],
+            ["width", width],
+            ["height", 20],
+            ["scale", scale],
+            ["label", ["Button", "Done", "iIl! MW@09", "Wider button"][column]],
+            ["sha256", sha256(await readFile(path.join(captures, name)))],
+          ]);
         })()
       );
     }
@@ -275,15 +275,15 @@ for (const scale of [1, 2, 3]) {
             throw new Error(`Missing reference ${name}`);
           }
 
-          return {
-            name,
-            state,
-            width: 300,
-            height: 20,
-            scale,
-            label,
-            sha256: sha256(await readFile(path.join(captures, name))),
-          };
+          return Object.fromEntries<string | number>([
+            ["name", name],
+            ["state", state],
+            ["width", 300],
+            ["height", 20],
+            ["scale", scale],
+            ["label", label],
+            ["sha256", sha256(await readFile(path.join(captures, name)))],
+          ]);
         })()
       );
     }
