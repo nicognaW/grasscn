@@ -589,6 +589,8 @@ const paintProfiler = function paintProfiler(
 };
 
 /** Header, legend and batched pixel surface for Recharts Pie shapes. */
+const percent = (v: number) => `${v.toFixed(2)}%`;
+
 const ChartProfilerFrame = ({
   rootName = "root",
   globalPercentage = 100,
@@ -655,8 +657,6 @@ const ChartProfilerFrame = ({
   if (data.some((d) => !Number.isFinite(d.percentage) || d.percentage < 0)) {
     throw new Error("Profiler percentages must be finite and nonnegative");
   }
-
-  const percent = (v: number) => `${v.toFixed(2)}%`;
 
   if (!sectors.length) {
     return null;

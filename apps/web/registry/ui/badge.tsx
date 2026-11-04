@@ -53,6 +53,21 @@ type BadgeProps = MinecraftPolymorphicProps<"span"> &
     icon?: React.ReactNode;
   };
 
+const widthOf = (text: string) => {
+  let accumulatedGlyphAdvance = 0;
+
+  for (const advanceCharacter of text) {
+    accumulatedGlyphAdvance +=
+      // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+      (advanceCharacter.codePointAt(0) as number) < 128
+        ? minecraftTextWidth(advanceCharacter)
+        : (getUnihexGlyph(advanceCharacter)?.advance ?? 8);
+  }
+
+  return accumulatedGlyphAdvance;
+};
+
 const Badge = ({
   children,
   className,
@@ -124,21 +139,6 @@ const Badge = ({
       live = false;
     };
   }, [plain]);
-
-  const widthOf = (text: string) => {
-    let accumulatedGlyphAdvance = 0;
-
-    for (const advanceCharacter of text) {
-      accumulatedGlyphAdvance +=
-        // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
-        (advanceCharacter.codePointAt(0) as number) < 128
-          ? minecraftTextWidth(advanceCharacter)
-          : (getUnihexGlyph(advanceCharacter)?.advance ?? 8);
-    }
-
-    return accumulatedGlyphAdvance;
-  };
 
   const natural =
     plain === undefined

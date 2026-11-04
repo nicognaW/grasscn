@@ -144,6 +144,17 @@ const buttonVariants = cva(
   }
 );
 
+const skin = (content: React.ReactNode) => (
+  <>
+    <span className="mc-button-surface" aria-hidden="true">
+      {Array.from({ length: 9 }, (_, index) => (
+        <span key={index} />
+      ))}
+    </span>
+    <span className="mc-button-label">{bitmapText(content)}</span>
+  </>
+);
+
 const Button = ({
   className,
   variant = "default",
@@ -159,17 +170,6 @@ const Button = ({
     scale?: 1 | 2 | 3;
   }) => {
   const Comp = ButtonPrimitive;
-
-  const skin = (content: React.ReactNode) => (
-    <>
-      <span className="mc-button-surface" aria-hidden="true">
-        {Array.from({ length: 9 }, (_, index) => (
-          <span key={index} />
-        ))}
-      </span>
-      <span className="mc-button-label">{bitmapText(content)}</span>
-    </>
-  );
 
   const content = skin(children);
 
