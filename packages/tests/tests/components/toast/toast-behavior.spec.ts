@@ -97,15 +97,25 @@ test("Toast sounds use byte-identical original assets and decode in the browser"
     const context = new AudioContext();
     const out = [];
 
-    for (const src of Object.values(sounds)) {
-      const data = Uint8Array.from(
-        atob(src.split(",")[1]),
-        (c) => c.codePointAt(0) ?? Number.NaN
-      );
+    const decodedResults = await Promise.allSettled(
+      Object.values(sounds).map(async (src) => {
+        const data = Uint8Array.from(
+          atob(src.split(",")[1]),
+          (c) => c.codePointAt(0) ?? Number.NaN
+        );
 
-      const audio = await context.decodeAudioData(data.buffer);
+        const audio = await context.decodeAudioData(data.buffer);
 
-      out.push({ channels: audio.numberOfChannels, duration: audio.duration });
+        return { channels: audio.numberOfChannels, duration: audio.duration };
+      })
+    );
+
+    for (const decodedResult of decodedResults) {
+      if (decodedResult.status === "rejected") {
+        throw decodedResult.reason;
+      }
+
+      out.push(decodedResult.value);
     }
 
     await context.close();
