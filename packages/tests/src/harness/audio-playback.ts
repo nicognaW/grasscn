@@ -18,10 +18,6 @@ export interface RecordedPitchedPlayback {
   volume: number;
 }
 
-interface AudioPlaybackFixture {
-  __soundVoices: RecordedAudioPlayback[];
-}
-
 interface OriginalClickFixture {
   voices: RecordedOriginalClick[];
 }
@@ -54,11 +50,11 @@ export const recordAudioPlayback = async (page: Page) => {
 };
 
 /** Read after navigating a page initialized by recordAudioPlayback. */
-export const recordedAudioPlayback = async (page: Page) =>
+export const recordedAudioPlayback = async (
+  page: Page
+): Promise<RecordedAudioPlayback[]> =>
   await page.evaluate(() => {
-    // SAFETY: recordAudioPlayback installs this one fixture state on each document before its controls can play.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- This is the paired reader of the fixture-owned initialization above.
-    const fixture = window as typeof window & AudioPlaybackFixture;
+    const fixture = window;
 
     return fixture.__soundVoices;
   });
