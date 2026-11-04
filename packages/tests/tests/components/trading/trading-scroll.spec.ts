@@ -63,8 +63,8 @@ for (const [count, events] of Object.entries(probes)) {
       if (event.kind === "wheel") {
         // oxlint-disable-next-line no-await-in-loop -- Recorded event trace has mouse-up/start-offset/wheel-or-drag/result ordering; burst sequence expects previous wheel result as next starting state.
         await root.dispatchEvent("wheel", {
-          deltaY: -event.amount * 100,
           deltaMode: 0,
+          deltaY: -event.amount * 100,
         });
       }
 

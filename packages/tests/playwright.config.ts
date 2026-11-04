@@ -38,13 +38,13 @@ export default defineConfig({
       : [
           {
             command: "bun run dev",
-            url: "http://127.0.0.1:5174",
             reuseExistingServer: !(process.env.CI ?? ""),
+            url: "http://127.0.0.1:5174",
           },
           {
             command: "bun run --cwd ../../apps/web dev",
-            url: "http://127.0.0.1:5176",
             reuseExistingServer: !(process.env.CI ?? ""),
+            url: "http://127.0.0.1:5176",
           },
         ],
   workers: 1,
