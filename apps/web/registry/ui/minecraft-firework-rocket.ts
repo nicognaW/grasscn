@@ -541,6 +541,17 @@ export const FIREWORK_ROCKET_SPAWN = [0.5, 72, -21.5] as const;
 export const FIREWORK_ROCKET_LAUNCH_PIXEL = [240, 584] as const;
 
 /**
+ * The scene pixels any frame draws on, launch to last spark: the union of the
+ * native frames' covered bounds in the firework-rocket projected references.
+ */
+export const FIREWORK_ROCKET_DRAWN_BOUNDS = {
+  bottom: 625,
+  left: 148,
+  right: 325,
+  top: 302,
+} as const;
+
+/**
  * Draws one frame of the simulation: the rocket item, then the particles,
  * as the level renderer orders them.
  */

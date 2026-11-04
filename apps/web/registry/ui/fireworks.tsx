@@ -10,6 +10,7 @@ import {
   loadFireworkSprites,
 } from "./minecraft-firework-explosion";
 import {
+  FIREWORK_ROCKET_DRAWN_BOUNDS,
   FIREWORK_ROCKET_LAUNCH_PIXEL,
   FIREWORK_ROCKET_SCENE,
   FIREWORK_ROCKET_SPAWN,
@@ -22,6 +23,10 @@ import { decodePng } from "./minecraft-png";
 const TICK_MILLISECONDS = 50;
 const { height: HEIGHT, width: WIDTH } = FIREWORK_ROCKET_SCENE;
 const [LAUNCH_X, LAUNCH_Y] = FIREWORK_ROCKET_LAUNCH_PIXEL;
+const DRAWN = FIREWORK_ROCKET_DRAWN_BOUNDS;
+
+// Space kept between the drawn firework and the viewport edge.
+const VIEWPORT_MARGIN = 8;
 
 interface Launch {
   anchor: Element;
@@ -81,17 +86,52 @@ const canvasFor = (anchor: Element) => {
   return element;
 };
 
-// The scene's launch pixel sits on the anchor's bottom centre. A detached
-// anchor (the page navigated away) leaves its canvas where it was.
+// Moves `offset` (where the scene's origin would sit) only as far as needed to
+// keep the drawn span [start, end] inside [0, size] with the margin; a span
+// wider than the viewport is centred.
+const keepInView = (
+  offset: number,
+  start: number,
+  end: number,
+  size: number
+) => {
+  const lowest = VIEWPORT_MARGIN - start;
+  const highest = size - VIEWPORT_MARGIN - end;
+
+  if (lowest > highest) {
+    return (size - start - end) / 2;
+  }
+
+  return Math.min(Math.max(offset, lowest), highest);
+};
+
+// The scene's launch pixel sits on the anchor's bottom centre, moved only as
+// far as needed to keep every drawn pixel inside the viewport: from an anchor
+// near the top of the page, the explosion would otherwise burst above it. A
+// detached anchor (the page navigated away) leaves its canvas where it was.
 const place = (element: HTMLCanvasElement, anchor: Element) => {
   if (!anchor.isConnected) {
     return;
   }
 
   const bounds = anchor.getBoundingClientRect();
-  const left = Math.round(bounds.left + bounds.width / 2 - LAUNCH_X);
-  const top = Math.round(bounds.bottom - LAUNCH_Y);
-  element.style.transform = `translate(${left}px, ${top}px)`;
+  const viewport = anchor.ownerDocument.documentElement;
+
+  const left = keepInView(
+    bounds.left + bounds.width / 2 - LAUNCH_X,
+    DRAWN.left,
+    DRAWN.right,
+    viewport.clientWidth
+  );
+
+  const top = keepInView(
+    bounds.bottom - LAUNCH_Y,
+    DRAWN.top,
+    DRAWN.bottom,
+    viewport.clientHeight
+  );
+
+  element.style.transform = `translate(${Math.round(left)}px, ${Math.round(top)}px)`;
 };
 
 const drawAnchor = (
