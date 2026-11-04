@@ -582,6 +582,15 @@ const unorm8 = (value: number) => {
   return Math.round((biased - UNORM8_BIAS) * 256);
 };
 
+// Unorm8 to float as llvmpipe converts vertex attributes and texels: the
+// integer becomes a float and is multiplied by the float constant 1/255.
+// That is not the correctly rounded byte / 255: it differs by one ulp for
+// about half of the bytes (240 among them), which decides fogged colours that
+// fall on a rounding tie.
+const UNORM8_TO_FLOAT = f(1 / 255);
+
+const unorm8ToFloat = (byte: number) => f(byte * UNORM8_TO_FLOAT);
+
 // Normalised 8-bit multiply a * b / 255 with rounding.
 const mulNorm = (a: number, b: number) => {
   const product = a * b + 128;
@@ -738,7 +747,7 @@ export const renderFireworkQuads = (
     const u = plane(a, b, c, "u");
     const v = plane(a, b, c, "v");
     const distance = plane(a, b, c, "distance");
-    const vertexAlpha = f(quad.alpha / 255);
+    const vertexAlpha = unorm8ToFloat(quad.alpha);
     const fragmentDepth = -quad.z;
 
     for (let row = minY; row <= maxY; row += 1) {
@@ -770,7 +779,10 @@ export const renderFireworkQuads = (
         );
 
         const texel = (texelY * sprite.width + texelX) * 4;
-        const alpha = f(f((sprite.data[texel + 3] ?? 0) / 255) * vertexAlpha);
+
+        const alpha = f(
+          unorm8ToFloat(sprite.data[texel + 3] ?? 0) * vertexAlpha
+        );
 
         if (alpha < ALPHA_CUTOFF) {
           continue;
@@ -794,8 +806,8 @@ export const renderFireworkQuads = (
         // alpha are converted to bytes, then multiplied with rounding.
         for (let component = 0; component < 3; component += 1) {
           const source = f(
-            f((sprite.data[texel + component] ?? 0) / 255) *
-              f(([quad.red, quad.green, quad.blue][component] ?? 0) / 255)
+            unorm8ToFloat(sprite.data[texel + component] ?? 0) *
+              unorm8ToFloat([quad.red, quad.green, quad.blue][component] ?? 0)
           );
 
           const fogged = f(
