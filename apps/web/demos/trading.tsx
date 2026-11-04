@@ -22,15 +22,15 @@ const TradingDemo = ({ scale }: DemoProps) => {
   ] as const;
 
   const offers: TradeOffer[] = goods.map(([name, label, count], i) => ({
-    id: String(i),
-    label,
     cost: {
-      label: "Emeralds",
       count,
       icon: <img src={tradingIcons.emerald} alt="" />,
+      label: "Emeralds",
     },
-    result: { label, count: 1, icon: <img src={tradingIcons[name]} alt="" /> },
+    id: String(i),
     inStock: i !== 8,
+    label,
+    result: { count: 1, icon: <img src={tradingIcons[name]} alt="" />, label },
   }));
 
   return (

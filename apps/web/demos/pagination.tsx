@@ -8,14 +8,13 @@ import {
   PaginationLink,
   PaginationPrevious,
   PaginationNext,
-  PaginationEllipsis,
 } from "../registry/ui/pagination";
 import type { DemoProps } from "../types";
 
 const PaginationDemo = ({ scale }: DemoProps) => {
   const [page, setPage] = React.useState(1);
 
-  const choose = (next: number) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const choose = (next: number) => () => {
     setPage(next);
   };
 

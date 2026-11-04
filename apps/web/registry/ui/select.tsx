@@ -378,9 +378,6 @@ const SelectContent = ({
     }
 
     let frame = 0;
-    let placed = "";
-    let placedHeight = "";
-    let placedTop = "";
 
     const measure = () => {
       const width = Math.floor(viewport.clientWidth / scale);

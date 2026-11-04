@@ -119,7 +119,7 @@ export const AnalyticsChartExample = ({
       <PieChart
         accessibilityLayer
         aria-label={ariaLabel}
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
       >
         {" "}
         {tooltip}
@@ -144,7 +144,7 @@ export const AnalyticsChartExample = ({
       <RadialBarChart
         accessibilityLayer
         aria-label={ariaLabel}
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
         data={data}
         innerRadius="15%"
         outerRadius="90%"
@@ -168,7 +168,7 @@ export const AnalyticsChartExample = ({
         accessibilityLayer
         aria-label={ariaLabel}
         data={data}
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
       >
         {" "}
         <PolarGrid stroke="#555555" />

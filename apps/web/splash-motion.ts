@@ -18,14 +18,14 @@ export const splashMotion = function splashMotion(
   const scale = f(f(pulse * f(100)) / f(textWidth + 32));
 
   return {
-    pulse,
-    scale,
     a: f(rotationCos * scale),
     b: f(rotationSin * scale),
     c: f(-rotationSin * scale),
     d: f(rotationCos * scale),
     originX: -Math.trunc(textWidth / 2),
     originY: -8,
+    pulse,
+    scale,
   };
 };
 

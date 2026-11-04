@@ -12,7 +12,7 @@ const RadioGroupDemo = ({ scale }: DemoProps) => {
   const [disabled, setDisabled] = React.useState(false);
 
   const choices = [
-    { value: "survival", label: first || " " },
+    { label: first || " ", value: "survival" },
     {
       label: "Creative",
       value: "creative",
