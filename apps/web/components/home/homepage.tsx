@@ -108,7 +108,7 @@ const Controls = () => {
         scale={2}
         aria-label="Example message"
         placeholder="Leave a little inspiration..."
-        style={{ height: 72 }}
+        className="h-[72px]"
       />
       <div className="grass-control-row">
         <div className="grass-inline">
@@ -129,7 +129,7 @@ const Controls = () => {
           scale={2}
           checked={enabled}
           onCheckedChange={setEnabled}
-          style={{ width: 64 }}
+          className="w-[64px]"
         />
       </div>
       <div className="grass-panel-foot">
@@ -295,7 +295,7 @@ const Project = () => {
             aria-label="Project brief"
             scale={2}
             placeholder="What are we building?"
-            style={{ height: 80 }}
+            className="h-[80px]"
           />
         </label>
         <Action type="submit">Create project</Action>
@@ -482,7 +482,7 @@ const Preferences = () => {
             setEmail(v);
             setSaved(false);
           }}
-          style={{ width: 64 }}
+          className="w-[64px]"
         />
       </div>
       <div className="grass-preference">
@@ -503,7 +503,7 @@ const Preferences = () => {
             setRelease(v);
             setSaved(false);
           }}
-          style={{ width: 64 }}
+          className="w-[64px]"
         />
       </div>
       <Action

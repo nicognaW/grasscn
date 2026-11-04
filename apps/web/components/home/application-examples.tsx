@@ -134,7 +134,7 @@ export const Feedback = () => {
             setText(e.target.value);
             setSent(false);
           }}
-          style={{ height: 100 }}
+          className="h-[100px]"
         />
         <span className="grass-note">
           <DocumentText>{text.length}/240 characters</DocumentText>

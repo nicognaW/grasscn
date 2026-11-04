@@ -92,10 +92,13 @@ const Bubble = ({
           data-align={align}
           data-from={from}
           data-author={author}
-          className={cn(`mc-bubble`, className)}
+          className={cn(
+            "mc-bubble",
+            from === "system" && "mc-bubble-system",
+            className
+          )}
           style={minecraftStyle(style, (__style): BubbleScaleStyle => ({
             "--mc-scale": scale,
-            ...(from === "system" ? { color: "#ffff55" } : {}),
             ...__style,
           }))}
           {...props}

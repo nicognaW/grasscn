@@ -267,11 +267,18 @@ const CodeBlockContent = ({
     data-numbered={lineNumbers || undefined}
     dir="ltr"
     tabIndex={0}
-    style={minecraftStyle(style, (__style) => ({
-      counterReset: `line ${startLine - 1}`,
-      ...__style,
-    }))}
-    className={cn(`mc-code-block-content`, className)}
+    style={minecraftStyle(
+      style,
+      (__style): React.CSSProperties & { "--mc-code-line-reset": string } => ({
+        "--mc-code-line-reset": `line ${startLine - 1}`,
+        ...__style,
+      })
+    )}
+    className={cn(
+      "mc-code-block-content",
+      "[counter-reset:var(--mc-code-line-reset)]",
+      className
+    )}
     {...props}
   >
     <code data-slot="code-block-code">

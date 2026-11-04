@@ -135,7 +135,7 @@ const QuestionnaireDemo = ({ scale }: DemoProps) => {
             />
             <QuestionnaireError maxWidth={width} />
           </QuestionnaireItem>
-          <QuestionnaireActions style={{ justifyContent: "center" }}>
+          <QuestionnaireActions className="justify-center">
             <QuestionnairePrevious />
             <QuestionnaireSkip />
             <QuestionnaireNext />

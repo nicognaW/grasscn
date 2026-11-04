@@ -57,7 +57,7 @@ const AttachmentDemo = ({ scale }: DemoProps) => {
           <Attachment
             scale={scale}
             selected={opened > 0}
-            style={{ maxWidth: "100%", width: 270 * scale }}
+            className="max-w-full"
           >
             <AttachmentMedia />
             <AttachmentContent>

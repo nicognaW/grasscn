@@ -6,6 +6,7 @@
 @import "./native-fixture-geometry.css";
 @source "../../../../apps/web/registry/ui";
 @source "../../../../apps/web/registry/blocks";
+@source "../../../../apps/web/registry/lib";
 html,
 body {
   margin: 0;

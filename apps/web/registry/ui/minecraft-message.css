@@ -1,6 +1,9 @@
 @layer theme, base, components, utilities;
 @import "./minecraft-text-assets.css";
 @layer components {
+  .mc-message.mc-message-system {
+    color: #ffff55;
+  }
   .mc-message-group,
   .mc-message-content {
     --mc-pixel: calc(1px * var(--mc-scale, 2));

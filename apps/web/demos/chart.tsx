@@ -499,10 +499,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
               >
                 <SelectTrigger
                   aria-label="Chart period"
-                  className="max-w-full"
-                  style={{
-                    width: Math.min(116, contentWidth) * scale,
-                  }}
+                  className="demo-owned-chart-5 max-w-full"
+                  style={demoLayout5}
                 >
                   <SelectValue />
                 </SelectTrigger>
@@ -525,10 +523,8 @@ const ChartDemo = ({ scale }: DemoProps) => {
               >
                 <SelectTrigger
                   aria-label="Chart devices"
-                  className="max-w-full"
-                  style={{
-                    width: Math.min(116, contentWidth) * scale,
-                  }}
+                  className="demo-owned-chart-5 max-w-full"
+                  style={demoLayout5}
                 >
                   <SelectValue />
                 </SelectTrigger>

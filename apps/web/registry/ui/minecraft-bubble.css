@@ -1,5 +1,8 @@
 @layer theme, base, components, utilities;
 @layer components {
+  .mc-bubble.mc-bubble-system {
+    color: #ffff55;
+  }
   .mc-bubble-group {
     display: flex;
     min-width: 0;

@@ -67,6 +67,10 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
     };
   }, [scale]);
 
+  const actionSpacing: React.CSSProperties & {
+    "--mc-form-actions-gap": string;
+  } = { "--mc-form-actions-gap": `${8 * scale}px` };
+
   return (
     <>
       <Button
@@ -114,7 +118,7 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
                       placeholder="Steve"
                       aria-invalid={fieldState.invalid}
                       aria-describedby={`${id}-name-hint${fieldState.invalid ? ` ${id}-name-error` : ""}`}
-                      style={{ width: "100%" }}
+                      className="w-full"
                     />
                     <FieldDescription
                       scale={scale}
@@ -152,7 +156,7 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
                       aria-describedby={
                         fieldState.invalid ? `${id}-world-error` : undefined
                       }
-                      style={{ width: "100%" }}
+                      className="w-full"
                     />
                     {fieldState.invalid && (
                       <FieldError
@@ -181,7 +185,7 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
                       disabled={disabled}
                       aria-describedby={`${id}-notes-hint`}
                       placeholder="What will you build?"
-                      style={{ height: 48 * scale, width: "100%" }}
+                      className="h-[calc(48px*var(--mc-scale))] w-full"
                     />
                     <FieldDescription
                       scale={scale}
@@ -196,7 +200,10 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
             />
           </FieldGroup>
         </FieldSet>
-        <div className="flex flex-wrap" style={{ gap: 8 * scale }}>
+        <div
+          className="flex flex-wrap gap-(--mc-form-actions-gap)"
+          style={actionSpacing}
+        >
           <Button scale={scale} type="submit" disabled={disabled}>
             Save player
           </Button>

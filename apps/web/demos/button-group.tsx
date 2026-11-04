@@ -77,9 +77,9 @@ const ButtonGroupDemo = ({ scale }: DemoProps) => {
           <ButtonGroupText
             scale={scale}
             maxWidth={stageWidth}
-            style={
+            className={
               orientation === "horizontal" && stageWidth < 300
-                ? { flexBasis: "100%" }
+                ? "basis-full"
                 : undefined
             }
           >

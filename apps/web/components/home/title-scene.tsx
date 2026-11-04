@@ -37,6 +37,10 @@ const splashWidth = Array.from(splash).reduce(
   0
 );
 
+const splashPosition: React.CSSProperties & {
+  "--grass-splash-left": string;
+} = { "--grass-splash-left": `${-Math.trunc(splashWidth / 2)}px` };
+
 export const TitleScene = () => {
   const ref = React.useRef<HTMLDivElement>(null);
   React.useLayoutEffect(() => {
@@ -115,8 +119,8 @@ export const TitleScene = () => {
       </h1>
       <span className="grass-title-splash">
         <span
-          className="grass-title-splash-origin"
-          style={{ left: -Math.trunc(splashWidth / 2), top: -8 }}
+          className="grass-title-splash-origin -top-[8px] left-(--grass-splash-left)"
+          style={splashPosition}
         >
           <MinecraftText>{splash}</MinecraftText>
         </span>

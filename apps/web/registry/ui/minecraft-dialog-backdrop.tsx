@@ -176,19 +176,26 @@ export const MinecraftDialogBackdrop = () => {
           )}
         </defs>
       </svg>
-      {bands.map((band, index) => (
-        <span
-          aria-hidden="true"
-          key={index}
-          className="pointer-events-none absolute right-0 left-0"
-          style={{
-            backdropFilter: `url(#${id}-${band.alpha})`,
-            height: band.height,
+      {bands.map((band, index) => {
+        const bandStyle: React.CSSProperties & {
+          "--mc-backdrop-filter": string;
+          "--mc-backdrop-height": string;
+          "--mc-backdrop-top": string;
+        } = {
+          "--mc-backdrop-filter": `url(#${id}-${band.alpha})`,
+          "--mc-backdrop-height": `${band.height}px`,
+          "--mc-backdrop-top": `${band.start}px`,
+        };
 
-            top: band.start,
-          }}
-        />
-      ))}
+        return (
+          <span
+            aria-hidden="true"
+            key={index}
+            className="pointer-events-none absolute top-(--mc-backdrop-top) right-0 left-0 h-(--mc-backdrop-height) [backdrop-filter:var(--mc-backdrop-filter)]"
+            style={bandStyle}
+          />
+        );
+      })}
     </>
   );
 };

@@ -350,35 +350,46 @@ const PlayerList = ({
               } satisfies PlayerListLayoutStyle1 as PlayerListLayoutStyle1
             }
           >
-            {head.map((line, i) => (
-              <div
-                key={i}
-                className="mc-layout-player-list-2 mc-dynamic-layout-player-list-2"
-                style={
-                  /* SAFETY: The owned mc-dynamic-layout-player-list-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                  {
-                    "--mc-dynamic-player-list-2-height": 9 * scale,
-                  } satisfies PlayerListLayoutStyle2 as PlayerListLayoutStyle2
-                }
-              >
-                <span
+            {head.map((line, i) => {
+              const isHeadingText = typeof line === "string";
+
+              const headingPosition:
+                | (React.CSSProperties & { "--mc-roster-line-left": string })
+                | undefined = isHeadingText
+                ? {
+                    "--mc-roster-line-left": `${
+                      (1 +
+                        Math.floor(fullWidth / 2) -
+                        Math.floor(documentTextWidth(line) / 2)) *
+                      scale
+                    }px`,
+                  }
+                : undefined;
+
+              return (
+                <div
+                  key={i}
+                  className="mc-layout-player-list-2 mc-dynamic-layout-player-list-2"
                   style={
-                    typeof line === "string"
-                      ? {
-                          left:
-                            (1 +
-                              Math.floor(fullWidth / 2) -
-                              Math.floor(documentTextWidth(line) / 2)) *
-                            scale,
-                          position: "absolute",
-                        }
-                      : undefined
+                    /* SAFETY: The owned mc-dynamic-layout-player-list-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                    {
+                      "--mc-dynamic-player-list-2-height": 9 * scale,
+                    } satisfies PlayerListLayoutStyle2 as PlayerListLayoutStyle2
                   }
                 >
-                  <MinecraftMenuText>{line}</MinecraftMenuText>
-                </span>
-              </div>
-            ))}
+                  <span
+                    style={headingPosition}
+                    className={
+                      isHeadingText
+                        ? "absolute left-(--mc-roster-line-left)"
+                        : undefined
+                    }
+                  >
+                    <MinecraftMenuText>{line}</MinecraftMenuText>
+                  </span>
+                </div>
+              );
+            })}
           </div>
         ) : (
           header
@@ -422,35 +433,46 @@ const PlayerList = ({
               } satisfies PlayerListLayoutStyle7 as PlayerListLayoutStyle7
             }
           >
-            {foot.map((line, i) => (
-              <div
-                key={i}
-                className="mc-layout-player-list-8 mc-dynamic-layout-player-list-8"
-                style={
-                  /* SAFETY: The owned mc-dynamic-layout-player-list-8 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                  {
-                    "--mc-dynamic-player-list-8-height": 9 * scale,
-                  } satisfies PlayerListLayoutStyle8 as PlayerListLayoutStyle8
-                }
-              >
-                <span
+            {foot.map((line, i) => {
+              const isHeadingText = typeof line === "string";
+
+              const headingPosition:
+                | (React.CSSProperties & { "--mc-roster-line-left": string })
+                | undefined = isHeadingText
+                ? {
+                    "--mc-roster-line-left": `${
+                      (1 +
+                        Math.floor(fullWidth / 2) -
+                        Math.floor(documentTextWidth(line) / 2)) *
+                      scale
+                    }px`,
+                  }
+                : undefined;
+
+              return (
+                <div
+                  key={i}
+                  className="mc-layout-player-list-8 mc-dynamic-layout-player-list-8"
                   style={
-                    typeof line === "string"
-                      ? {
-                          left:
-                            (1 +
-                              Math.floor(fullWidth / 2) -
-                              Math.floor(documentTextWidth(line) / 2)) *
-                            scale,
-                          position: "absolute",
-                        }
-                      : undefined
+                    /* SAFETY: The owned mc-dynamic-layout-player-list-8 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                    {
+                      "--mc-dynamic-player-list-8-height": 9 * scale,
+                    } satisfies PlayerListLayoutStyle8 as PlayerListLayoutStyle8
                   }
                 >
-                  <MinecraftMenuText>{line}</MinecraftMenuText>
-                </span>
-              </div>
-            ))}
+                  <span
+                    style={headingPosition}
+                    className={
+                      isHeadingText
+                        ? "absolute left-(--mc-roster-line-left)"
+                        : undefined
+                    }
+                  >
+                    <MinecraftMenuText>{line}</MinecraftMenuText>
+                  </span>
+                </div>
+              );
+            })}
           </div>
         ) : (
           footer

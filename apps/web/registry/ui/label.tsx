@@ -40,6 +40,7 @@ interface LabelLayoutStyle1 extends React.CSSProperties {
 }
 
 interface LabelStyle extends React.CSSProperties {
+  "--mc-text-width"?: string;
   "--mc-scale": number;
 }
 
@@ -187,19 +188,21 @@ const Label = ({
   const widest = Math.max(0, ...lines.map(textWidth));
   const width = containerWidth ?? maxWidth ?? widest;
 
+  const widthLayout =
+    maxWidth === undefined || maxWidth === null
+      ? { className: undefined, value: undefined }
+      : { className: "w-(--mc-text-width)", value: `${maxWidth * scale}px` };
+
   return (
     <MinecraftRender
       as="label"
       ref={node}
       data-slot="label"
       data-mc-label-layout-ready={!unicode || fontReady}
-      className={cn(`mc-label`, className)}
+      className={cn("mc-label", widthLayout.className, className)}
       style={minecraftStyle(style, (__style): LabelStyle => ({
         "--mc-scale": scale,
-        width:
-          maxWidth === undefined || maxWidth === null
-            ? undefined
-            : maxWidth * scale,
+        "--mc-text-width": widthLayout.value,
         ...__style,
       }))}
       {...props}

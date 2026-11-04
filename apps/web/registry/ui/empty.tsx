@@ -71,6 +71,14 @@ const Empty = ({
     };
   }, [plain, children, scale]);
 
+  const textPosition: React.CSSProperties & {
+    "--mc-empty-left": string;
+    "--mc-empty-top": string;
+  } = {
+    "--mc-empty-left": `${position.x}px`,
+    "--mc-empty-top": `${position.y}px`,
+  };
+
   return (
     <EmptyScale value={scale}>
       <div
@@ -89,8 +97,8 @@ const Empty = ({
             ref={textNode}
             scale={scale}
             as="div"
-            className="mc-empty-native-text"
-            style={{ left: position.x, top: position.y }}
+            className="mc-empty-native-text top-(--mc-empty-top) left-(--mc-empty-left)"
+            style={textPosition}
           >
             {children}
           </MinecraftProse>

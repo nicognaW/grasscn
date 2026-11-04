@@ -30,11 +30,7 @@ const TableDemo = ({ scale }: DemoProps) => {
   return (
     <>
       <div ref={stageRef} className="demo-stage" data-stage="table">
-        <Table
-          scale={scale}
-          aria-label="Saved worlds"
-          style={{ tableLayout: "fixed" }}
-        >
+        <Table scale={scale} aria-label="Saved worlds" className="table-fixed">
           <TableCaption>Select a world to explore.</TableCaption>
           <TableHeader>
             <TableRow>

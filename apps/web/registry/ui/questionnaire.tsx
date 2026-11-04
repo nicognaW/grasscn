@@ -180,7 +180,7 @@ const QuestionnaireChoice = ({
             <input
               {...input}
               data-checked={state.checked ? "" : undefined}
-              className={`mc-checkbox ${input.className ?? ""}`}
+              className={`mc-checkbox appearance-none ${input.className ?? ""}`}
               style={minecraftStyle(
                 input.style,
                 (__style): QuestionnaireCheckboxStyle => ({
@@ -189,7 +189,6 @@ const QuestionnaireChoice = ({
                   "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
                   "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
                   "--mc-scale": scale,
-                  appearance: "none",
                   ...__style,
                 })
               )}

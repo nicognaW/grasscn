@@ -155,15 +155,21 @@ export const loadHighlighter = async function loadHighlighter(
 
       return {
         lines: tokens.map((line) =>
-          line.map((token, index) => (
-            <span
-              key={index}
-              style={{ color: nativeTokenColor(token.color) }}
-              className="mc-code-token"
-            >
-              {token.content}
-            </span>
-          ))
+          line.map((token, index) => {
+            const tokenStyle: React.CSSProperties & {
+              "--mc-token-color": string;
+            } = { "--mc-token-color": nativeTokenColor(token.color) };
+
+            return (
+              <span
+                key={index}
+                style={tokenStyle}
+                className="mc-code-token text-(--mc-token-color)"
+              >
+                {token.content}
+              </span>
+            );
+          })
         ),
         state: shiki.getLastGrammarState(tokens),
       };
