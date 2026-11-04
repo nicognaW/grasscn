@@ -39,7 +39,7 @@ export const api = (
           <ChartTooltipContent
             hideIndicator
             indicator="dashed"
-            formatter={(value, name) => <b>{`${name}:${value}`}</b>}
+            formatter={(value, name) => <b>{`${name}:${String(value)}`}</b>}
           />
         }
       />

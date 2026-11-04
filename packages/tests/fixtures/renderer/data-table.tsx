@@ -11,7 +11,11 @@ import {
   TableHead,
   TableCell,
 } from "@grasscn/web/ui/table";
-import { createColumnHelper, useTable } from "@tanstack/react-table";
+import {
+  createColumnHelper,
+  flexRender,
+  useTable,
+} from "@tanstack/react-table";
 import type { CellContext } from "@tanstack/react-table";
 import * as React from "react";
 
@@ -171,18 +175,12 @@ export const DataTableFixture = () => {
                       : "none";
                 }
 
-                let headerContent: React.ReactNode;
-
-                if (header.isPlaceholder) {
-                  headerContent = null;
-                } else {
-                  headerContent =
-                    typeof header.column.columnDef.header === "string" ? (
-                      header.column.columnDef.header
-                    ) : (
-                      <table.FlexRender header={header} />
+                const headerContent: React.ReactNode = header.isPlaceholder
+                  ? null
+                  : flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
                     );
-                }
 
                 return (
                   <TableHead key={header.id} aria-sort={sortOrder}>

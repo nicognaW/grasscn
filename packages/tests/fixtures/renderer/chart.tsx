@@ -34,7 +34,9 @@ const DesktopFixtureIcon = () => (
 
 const formatFixtureTooltip: NonNullable<
   React.ComponentProps<typeof ChartTooltipContent>["formatter"]
-> = (value, name) => <span data-testid="formatted">{`${name}:${value}`}</span>;
+> = (value, name) => (
+  <span data-testid="formatted">{`${name}:${String(value)}`}</span>
+);
 
 const formatFixtureTooltipLabel: NonNullable<
   React.ComponentProps<typeof ChartTooltipContent>["labelFormatter"]
