@@ -24,20 +24,20 @@ const MapDemo = ({ scale }: DemoProps) => {
           aria-label="Regional map"
           markers={[
             {
+              decoration: "frame",
               id: "Home",
               label: "Home",
+              rotation: 0,
               x: -24,
               y: 34,
-              decoration: "frame",
-              rotation: 0,
             },
             {
+              decoration: "plains_village",
               id: "Village",
               label: "Village",
+              rotation: 0,
               x: 68,
               y: -38,
-              decoration: "plains_village",
-              rotation: 0,
             },
           ]}
           onMarkerSelect={setSelected}
@@ -58,17 +58,17 @@ const MapDemo = ({ scale }: DemoProps) => {
           heading={heading}
           markers={[
             {
-              id: "Home",
-              label: "Home waypoint",
               bearing: 0,
               color: "#55ff55",
+              id: "Home",
+              label: "Home waypoint",
               shape: "default_3",
             },
             {
-              id: "Village",
-              label: "Village waypoint",
               bearing: 38,
               color: "#ffffff",
+              id: "Village",
+              label: "Village waypoint",
               shape: "default_3",
             },
           ]}

@@ -15,9 +15,18 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
   const [disabled, setDisabled] = React.useState(false);
 
   const filters = [
-    { value: "crafting", label: "Crafting recipes" },
-    { value: "furnace", label: "Furnace recipes" },
-    { value: "stonecutter", label: "Stonecutter recipes" },
+    {
+      label: "Crafting recipes",
+      value: "crafting",
+    },
+    {
+      label: "Furnace recipes",
+      value: "furnace",
+    },
+    {
+      label: "Stonecutter recipes",
+      value: "stonecutter",
+    },
   ];
 
   return (

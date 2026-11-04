@@ -37,17 +37,47 @@ import { TitleScene } from "./title-scene";
 import "./homepage.css";
 
 const traffic = [
-  { name: "Jan", visitors: 186, returning: 80 },
-  { name: "Feb", visitors: 305, returning: 160 },
-  { name: "Mar", visitors: 237, returning: 120 },
-  { name: "Apr", visitors: 273, returning: 190 },
-  { name: "May", visitors: 309, returning: 210 },
-  { name: "Jun", visitors: 354, returning: 240 },
+  {
+    name: "Jan",
+    returning: 80,
+    visitors: 186,
+  },
+  {
+    name: "Feb",
+    returning: 160,
+    visitors: 305,
+  },
+  {
+    name: "Mar",
+    returning: 120,
+    visitors: 237,
+  },
+  {
+    name: "Apr",
+    returning: 190,
+    visitors: 273,
+  },
+  {
+    name: "May",
+    returning: 210,
+    visitors: 309,
+  },
+  {
+    name: "Jun",
+    returning: 240,
+    visitors: 354,
+  },
 ];
 
 const chartConfig = {
-  visitors: { label: "Visitors", color: "#55ff55" },
-  returning: { label: "Returning", color: "#55ffff" },
+  returning: {
+    color: "#55ffff",
+    label: "Returning",
+  },
+  visitors: {
+    color: "#55ff55",
+    label: "Visitors",
+  },
 };
 
 const team = [
@@ -614,8 +644,14 @@ const Performance = () => {
           domain={[0, 150]}
           formatValue={(v) => `${Math.round(v)} ms`}
           guides={[
-            { value: 150, label: "150 ms" },
-            { value: 75, label: "75 ms" },
+            {
+              label: "150 ms",
+              value: 150,
+            },
+            {
+              label: "75 ms",
+              value: 75,
+            },
           ]}
           width={width}
           scale={1}

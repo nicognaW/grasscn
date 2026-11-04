@@ -19,12 +19,36 @@ import type { DemoProps } from "../types";
 
 // Official shadcn chart-bar-multiple and chart-pie-donut example datasets.
 const visitors = [
-  { name: "January", desktop: 186, mobile: 80 },
-  { name: "February", desktop: 305, mobile: 200 },
-  { name: "March", desktop: 237, mobile: 120 },
-  { name: "April", desktop: 73, mobile: 190 },
-  { name: "May", desktop: 209, mobile: 130 },
-  { name: "June", desktop: 214, mobile: 140 },
+  {
+    desktop: 186,
+    mobile: 80,
+    name: "January",
+  },
+  {
+    desktop: 305,
+    mobile: 200,
+    name: "February",
+  },
+  {
+    desktop: 237,
+    mobile: 120,
+    name: "March",
+  },
+  {
+    desktop: 73,
+    mobile: 190,
+    name: "April",
+  },
+  {
+    desktop: 209,
+    mobile: 130,
+    name: "May",
+  },
+  {
+    desktop: 214,
+    mobile: 140,
+    name: "June",
+  },
 ];
 
 const browsers = [
@@ -36,23 +60,56 @@ const browsers = [
 ];
 
 const config: ChartConfig = {
-  desktop: { label: "Desktop", color: "#55ff55" },
-  mobile: { label: "Mobile", color: "#5555ff" },
-  visitors: { label: "Visitors", color: "#55ff55" },
+  desktop: {
+    color: "#55ff55",
+    label: "Desktop",
+  },
+  mobile: {
+    color: "#5555ff",
+    label: "Mobile",
+  },
+  visitors: {
+    color: "#55ff55",
+    label: "Visitors",
+  },
 };
 
 const types: {
   value: AnalyticsChartType;
   label: string;
 }[] = [
-  { value: "bar", label: "Bar" },
-  { value: "stacked-bar", label: "Stacked bar" },
-  { value: "line", label: "Line" },
-  { value: "area", label: "Area" },
-  { value: "pie", label: "Pie" },
-  { value: "donut", label: "Donut" },
-  { value: "radar", label: "Radar" },
-  { value: "radial", label: "Radial" },
+  {
+    label: "Bar",
+    value: "bar",
+  },
+  {
+    label: "Stacked bar",
+    value: "stacked-bar",
+  },
+  {
+    label: "Line",
+    value: "line",
+  },
+  {
+    label: "Area",
+    value: "area",
+  },
+  {
+    label: "Pie",
+    value: "pie",
+  },
+  {
+    label: "Donut",
+    value: "donut",
+  },
+  {
+    label: "Radar",
+    value: "radar",
+  },
+  {
+    label: "Radial",
+    value: "radial",
+  },
 ];
 
 const ChartDemo = ({ scale }: DemoProps) => {
@@ -270,12 +327,24 @@ const ChartDemo = ({ scale }: DemoProps) => {
               guides={
                 metric === "latency"
                   ? [
-                      { value: 300, label: "300 ms" },
-                      { value: 150, label: "150 ms" },
+                      {
+                        label: "300 ms",
+                        value: 300,
+                      },
+                      {
+                        label: "150 ms",
+                        value: 150,
+                      },
                     ]
                   : [
-                      { value: 80, label: "80 req" },
-                      { value: 40, label: "40 req" },
+                      {
+                        label: "80 req",
+                        value: 80,
+                      },
+                      {
+                        label: "40 req",
+                        value: 40,
+                      },
                     ]
               }
               scale={scale}

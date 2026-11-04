@@ -29,14 +29,14 @@ const QuestionnaireDemo = ({ scale }: DemoProps) => {
 
   const items = [
     {
+      choices: [{ value: "survival" }, { value: "creative" }],
       name: "mode",
       required: true,
-      choices: [{ value: "survival" }, { value: "creative" }],
     },
     {
+      choices: [{ value: "caves" }, { value: "villages" }],
       name: "features",
       required: false,
-      choices: [{ value: "caves" }, { value: "villages" }],
     },
     { name: "name", required: true },
   ] as const;
