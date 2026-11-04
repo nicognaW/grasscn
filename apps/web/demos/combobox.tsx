@@ -21,6 +21,13 @@ import {
 } from "../registry/ui/minecraft-menu-text";
 import type { DemoProps } from "../types";
 
+interface ComboboxResultPaint extends React.CSSProperties {
+  "--mc-ink": string;
+  "--mc-pixel": string;
+  "--mc-scale": number;
+  "--mc-shadow": string;
+}
+
 const biomes = ["Grasslands", "Birch Forest", "你好，世界", "Deep Dark"];
 const blocks = ["Oak Planks", "Stone", "你好，世界", "Bedrock"];
 
@@ -129,7 +136,7 @@ const ComboboxDemo = ({ scale }: DemoProps) => {
             "--mc-pixel": "1px",
             "--mc-scale": 1,
             "--mc-shadow": "#2a2a2a",
-          } as React.CSSProperties
+          } satisfies ComboboxResultPaint as ComboboxResultPaint
         }
       >
         <span />

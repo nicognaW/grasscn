@@ -174,7 +174,7 @@ const ComboboxInput = ({
           // SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
           {
             "--mc-scale": scale,
-          } as React.CSSProperties
+          } satisfies ComboboxScaleStyle as ComboboxScaleStyle
         }
       >
         <Primitive.Input

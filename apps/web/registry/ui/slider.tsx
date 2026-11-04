@@ -16,6 +16,10 @@ import { MinecraftSurface } from "./minecraft-surface";
 import "./minecraft-slider.css";
 import { MinecraftText } from "./minecraft-text";
 
+interface SliderThumbPaint extends React.CSSProperties {
+  "--mc-thumb-fraction": number;
+}
+
 interface SliderScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -233,7 +237,7 @@ const Slider = ({
                   // SAFETY: --mc-thumb-fraction is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
                   {
                     "--mc-thumb-fraction": reverse ? 1 - fraction : fraction,
-                  } as React.CSSProperties
+                  } satisfies SliderThumbPaint as SliderThumbPaint
                 }
               >
                 <SliderPrimitive.Thumb

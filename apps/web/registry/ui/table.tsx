@@ -13,6 +13,10 @@ import { minecraftSelectAssets } from "./minecraft-select-assets";
 
 import "./minecraft-table.css";
 
+interface TableScalePaint extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 interface TablePaintStyle extends React.CSSProperties {
   "--mc-scale": number;
   "--mc-table-background": string;
@@ -117,7 +121,7 @@ const Table = ({
         // SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
         {
           "--mc-scale": scale,
-        } as React.CSSProperties
+        } satisfies TableScalePaint as TableScalePaint
       }
     >
       <table

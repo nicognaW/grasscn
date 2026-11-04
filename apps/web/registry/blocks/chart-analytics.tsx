@@ -34,6 +34,10 @@ import {
 import type { ChartConfig } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
 
+interface AnalyticsScalePaint extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 interface AnalyticsRecipeStyle extends React.CSSProperties {
   "--mc-analytics-chart-height": string;
 }
@@ -292,7 +296,7 @@ export const AnalyticsChartExample = ({
           // SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
           {
             "--mc-scale": scale,
-          } as React.CSSProperties
+          } satisfies AnalyticsScalePaint as AnalyticsScalePaint
         }
       >
         <summary>View chart data</summary>

@@ -3,6 +3,10 @@ import * as React from "react";
 import { Checkbox } from "../registry/ui/checkbox";
 import type { DemoProps } from "../types";
 
+interface CheckboxPreviewPaint extends React.CSSProperties {
+  "--preview-scale": number;
+}
+
 const CheckboxDemo = ({ scale }: DemoProps) => {
   const [checked, setChecked] = React.useState(false);
 
@@ -15,7 +19,7 @@ const CheckboxDemo = ({ scale }: DemoProps) => {
           // SAFETY: --preview-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
           {
             "--preview-scale": scale,
-          } as React.CSSProperties
+          } satisfies CheckboxPreviewPaint as CheckboxPreviewPaint
         }
       >
         <div>
