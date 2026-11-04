@@ -48,11 +48,21 @@ assert.equal(manifest.captureSourceSha256, again.captureSourceSha256);
 assert.equal(manifest.caseDefinitionSha256, again.caseDefinitionSha256);
 
 for (const scale of [1, 2, 3]) {
-  const sourceCase = manifest.cases.find(
-    (c) => c.name === `scroll-area-c54-s${scale}.png`
-  )!;
+  const sourceCase =
+    // SAFETY: The Scroll Area native capture producer emits scroll-area-c54 at all three GUI scales; the independently captured repeat uses those same case names and schema. Keep existing source and repeat hashes.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+    manifest.cases.find(
+      (c) => c.name === `scroll-area-c54-s${scale}.png`
+    ) as (typeof scrollManifest)["cases"][number];
+  /* oxlint-enable typescript/no-unsafe-type-assertion */
 
-  const repeatCase = again.cases.find((c) => c.name === sourceCase.name)!;
+  const repeatCase =
+    // SAFETY: The Scroll Area native capture producer emits scroll-area-c54 at all three GUI scales; the independently captured repeat uses those same case names and schema. Keep existing source and repeat hashes.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+    again.cases.find(
+      (c) => c.name === sourceCase.name
+    ) as (typeof scrollManifest)["cases"][number];
+  /* oxlint-enable typescript/no-unsafe-type-assertion */
 
   const sourceBytes = fs.readFileSync(
     path.join(primary, "captures", sourceCase.name)

@@ -28,7 +28,12 @@ test("Select retains original list texture bytes", () => {
 
   for (const [name, uri] of Object.entries(minecraftSelectAssets)) {
     const bytes = Buffer.from(
-      /base64,(?<pngBase64>[A-Za-z0-9+/=]+)/u.exec(uri)![1],
+      // SAFETY: The imported generated Select texture producer writes every URI as data:image/png;base64 followed by nonempty PNG bytes; this regex consumes exactly that fixed producer format.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+      (/base64,(?<pngBase64>[A-Za-z0-9+/=]+)/u.exec(uri) as RegExpExecArray)[
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
+        1
+      ],
       "base64"
     );
 

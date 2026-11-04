@@ -12,7 +12,15 @@ import type BoundaryReference3 from "../reference/tabs-extra/repeatability.json"
 import type BoundaryReference1 from "../reference/tabs/asset-provenance.json";
 
 const decode = (uri: string) =>
-  Buffer.from(/base64,(?<pngBase64>[A-Za-z0-9+/=]+)/u.exec(uri)![1], "base64");
+  Buffer.from(
+    // SAFETY: Every call consumes original texture or piece URIs emitted as data:image/png;base64 by the imported Tabs asset producer; retain the same regex and dereference failure behavior.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+    (/base64,(?<pngBase64>[A-Za-z0-9+/=]+)/u.exec(uri) as RegExpExecArray)[
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
+      1
+    ],
+    "base64"
+  );
 
 test("Tabs preserve original texture bytes and exact nine-slice pixels", () => {
   const provenance =
