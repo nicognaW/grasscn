@@ -38,7 +38,7 @@
         "item"
       ],
       "member": "assets/minecraft/textures/item/nether_star.png",
-      "module": "registry/ui/minecraft-nether-star-assets.ts",
+      "module": "lib/minecraft-nether-star-assets.ts",
       "sha256": "1378e77a3ff64e219a3fa7d5812340a4b4c96c7b2066b728df1940a4f61b89f1",
       "size": 186,
       "width": 16
@@ -50,7 +50,7 @@
         "glint"
       ],
       "member": "assets/minecraft/textures/misc/enchanted_glint_item.png",
-      "module": "registry/ui/minecraft-nether-star-assets.ts",
+      "module": "lib/minecraft-nether-star-assets.ts",
       "sha256": "23831803126a3b75e74deeb5a5e39df9a26c94872d20533f444eb5072b417fb5",
       "size": 12310,
       "width": 128,

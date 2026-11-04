@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import { netherStarTextures } from "../lib/minecraft-nether-star-assets";
 import { NETHER_STAR_SIZE, renderNetherStar } from "../lib/nether-star";
-import { netherStarTextures } from "../registry/ui/minecraft-nether-star-assets";
 import { decodePng } from "../registry/ui/minecraft-png";
 
 const loadTextures = async () => {

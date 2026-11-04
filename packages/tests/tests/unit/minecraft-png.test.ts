@@ -2,7 +2,7 @@ import { test } from "bun:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 
-import { netherStarTextures } from "@grasscn/web/ui/minecraft-nether-star-assets";
+import { netherStarTextures } from "@grasscn/web/lib/minecraft-nether-star-assets";
 
 import { decodePng } from "../../../../apps/web/registry/ui/minecraft-png";
 

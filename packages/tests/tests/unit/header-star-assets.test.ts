@@ -3,9 +3,9 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import { referenceFile } from "@grasscn/tests/paths";
+import { netherStarTextures } from "@grasscn/web/lib/minecraft-nether-star-assets";
 import { fireworkTextures } from "@grasscn/web/ui/minecraft-firework-assets";
 import { fireworkSounds } from "@grasscn/web/ui/minecraft-firework-sound-assets";
-import { netherStarTextures } from "@grasscn/web/ui/minecraft-nether-star-assets";
 import { redstoneLampTextures } from "@grasscn/web/ui/minecraft-redstone-lamp-assets";
 import { z } from "zod";
 

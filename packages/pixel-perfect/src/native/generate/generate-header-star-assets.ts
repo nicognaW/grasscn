@@ -191,7 +191,7 @@ const textureModules: readonly TextureModule[] = [
   },
   {
     exportName: "netherStarTextures",
-    module: "registry/ui/minecraft-nether-star-assets.ts",
+    module: "lib/minecraft-nether-star-assets.ts",
     textures: [
       [["item"], "item/nether_star"],
       [["glint"], "misc/enchanted_glint_item"],

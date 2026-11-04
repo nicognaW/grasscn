@@ -1,6 +1,7 @@
 // Exact outputs backed by checked-in producers or retained machine-output derivations.
 // Provenance and scope: https://github.com/nicognaW/grasscn/issues/31.
 export const generatedCode = [
+  "apps/web/lib/minecraft-nether-star-assets.ts",
   "apps/web/registry/ui/minecraft-advancement-assets.ts",
   "apps/web/registry/ui/minecraft-adventure-assets.ts",
   "apps/web/registry/ui/minecraft-assets.css",
@@ -21,7 +22,6 @@ export const generatedCode = [
   "apps/web/registry/ui/minecraft-map-atlas.ts",
   "apps/web/registry/ui/minecraft-menu-atlas.ts",
   "apps/web/registry/ui/minecraft-menu-checkbox-assets.ts",
-  "apps/web/registry/ui/minecraft-nether-star-assets.ts",
   "apps/web/registry/ui/minecraft-otp-atlas.ts",
   "apps/web/registry/ui/minecraft-pagination-assets.css",
   "apps/web/registry/ui/minecraft-player-list-assets.ts",
