@@ -157,7 +157,9 @@ const FieldError = ({
   )[];
 }) => {
   const content = useMemo((): React.ReactNode => {
-    if (children) {
+    const hasChildren = Boolean(children);
+
+    if (hasChildren) {
       return children;
     }
 
@@ -190,7 +192,9 @@ const FieldError = ({
     );
   }, [children, errors, scale]);
 
-  if (!content) {
+  const hasContent = Boolean(content);
+
+  if (!hasContent) {
     return null;
   }
 

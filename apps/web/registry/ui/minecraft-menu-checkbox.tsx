@@ -38,7 +38,7 @@ export const MinecraftMenuCheckboxSprite = () => {
 
     const tick = () => {
       const bounds = parent.getBoundingClientRect();
-      const checked = item.hasAttribute("data-checked");
+      const checked = Object.hasOwn(item.dataset, "checked");
       const highlighted = Object.hasOwn(item.dataset, "highlighted");
 
       let _selectedName:

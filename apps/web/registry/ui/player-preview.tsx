@@ -434,7 +434,7 @@ const PlayerPreview = ({
 
   const url =
     src ??
-    (username
+    (username !== undefined && username !== ""
       ? `https://mc-heads.net/skin/${encodeURIComponent(username)}`
       : minecraftAvatarSkins[skin].png);
 

@@ -134,7 +134,9 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
               "--mc-forwarded-examples-overlays-message-scroller-example-3-width": `${75 * scale}px`,
             } satisfies ForwardedLayoutStyle3 as ForwardedLayoutStyle3
           }
-          onClick={() => api.scrollToStart({ behavior: "instant" })}
+          onClick={() => {
+            api.scrollToStart({ behavior: "instant" });
+          }}
         >
           First
         </Button>

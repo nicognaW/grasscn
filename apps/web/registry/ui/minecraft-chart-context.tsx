@@ -545,7 +545,7 @@ export const ChartPixelSurface = ({
       if (tag === "path") {
         const d = element.getAttribute("d");
 
-        if (!d) {
+        if (d === null || d === "") {
           return;
         }
 

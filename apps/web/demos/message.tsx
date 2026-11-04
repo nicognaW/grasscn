@@ -118,7 +118,9 @@ const History = ({ scale }: DemoProps) => {
               "--demo-width": `${75 * scale}px`,
             } satisfies DemoVariables as DemoVariables
           }
-          onClick={() => api.scrollToStart({ behavior: "instant" })}
+          onClick={() => {
+            api.scrollToStart({ behavior: "instant" });
+          }}
         >
           First
         </Button>
