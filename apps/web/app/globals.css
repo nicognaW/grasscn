@@ -171,3 +171,13 @@ a {
     overflow-wrap: anywhere;
   }
 }
+/* Below 360 px the brand row leaves 96 px for the star button: the GitHub label
+   drops to GUI scale 1 and the gaps narrow so star, label and count still fit. */
+@media (max-width: 359px) {
+  .minecraft-star-button {
+    gap: 4px;
+  }
+  .minecraft-star-button [data-slot="star-button-label"] {
+    --mc-scale: 1;
+  }
+}

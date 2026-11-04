@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
@@ -116,6 +118,8 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
           {children}
         </SiteFrame>
         <LegacyDocumentationLinks pages={pages} groups={groups} />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
