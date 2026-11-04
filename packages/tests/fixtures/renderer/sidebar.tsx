@@ -157,7 +157,16 @@ export const SidebarFixture = () => {
   const nativeSidebarButtonProps = {
     ...buttonProps,
     className: "fixture-sidebar-native-geometry",
-    style: nativeSidebarLayout,
+    style: {
+      "--fixture-sidebar-native-height":
+        nativeSidebarLayout["--fixture-sidebar-native-height"],
+      "--fixture-sidebar-native-left":
+        nativeSidebarLayout["--fixture-sidebar-native-left"],
+      "--fixture-sidebar-native-top":
+        nativeSidebarLayout["--fixture-sidebar-native-top"],
+      "--fixture-sidebar-native-width":
+        nativeSidebarLayout["--fixture-sidebar-native-width"],
+    },
   };
 
   if (native) {
@@ -178,7 +187,16 @@ export const SidebarFixture = () => {
           id="subject"
           href="#destination"
           className="fixture-sidebar-native-geometry"
-          style={nativeSidebarLayout}
+          style={{
+            "--fixture-sidebar-native-height":
+              nativeSidebarLayout["--fixture-sidebar-native-height"],
+            "--fixture-sidebar-native-left":
+              nativeSidebarLayout["--fixture-sidebar-native-left"],
+            "--fixture-sidebar-native-top":
+              nativeSidebarLayout["--fixture-sidebar-native-top"],
+            "--fixture-sidebar-native-width":
+              nativeSidebarLayout["--fixture-sidebar-native-width"],
+          }}
           aria-disabled={state === "disabled" || undefined}
           isActive={p.has("active")}
           onClick={click}
@@ -215,7 +233,16 @@ export const SidebarFixture = () => {
             p.has("maxLength") ? Number(p.get("maxLength")) : undefined
           }
           className="fixture-sidebar-native-geometry"
-          style={nativeSidebarLayout}
+          style={{
+            "--fixture-sidebar-native-height":
+              nativeSidebarLayout["--fixture-sidebar-native-height"],
+            "--fixture-sidebar-native-left":
+              nativeSidebarLayout["--fixture-sidebar-native-left"],
+            "--fixture-sidebar-native-top":
+              nativeSidebarLayout["--fixture-sidebar-native-top"],
+            "--fixture-sidebar-native-width":
+              nativeSidebarLayout["--fixture-sidebar-native-width"],
+          }}
           data-subject="true"
         />
       );
@@ -320,7 +347,16 @@ export const SidebarFixture = () => {
         <SidebarContent
           id="subject"
           className="fixture-sidebar-native-geometry"
-          style={nativeSidebarLayout}
+          style={{
+            "--fixture-sidebar-native-height":
+              nativeSidebarLayout["--fixture-sidebar-native-height"],
+            "--fixture-sidebar-native-left":
+              nativeSidebarLayout["--fixture-sidebar-native-left"],
+            "--fixture-sidebar-native-top":
+              nativeSidebarLayout["--fixture-sidebar-native-top"],
+            "--fixture-sidebar-native-width":
+              nativeSidebarLayout["--fixture-sidebar-native-width"],
+          }}
           data-subject="true"
         >
           <div
