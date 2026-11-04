@@ -70,46 +70,44 @@ const splitLines = function splitLines(text: string, width?: number) {
   const lines: string[] = [];
 
   for (let remaining of text.split("\n")) {
-    while (
-      width !== null &&
-      width !== undefined &&
-      textWidth(remaining) > width
-    ) {
-      let count = 0;
-      let used = 0;
-      let space = -1;
-      let consumedOffset = 0;
-      let firstCharacterEnd = 0;
-      let lastSpaceOffset = -1;
-      let nextAfterSpace = -1;
+    if (width !== null && width !== undefined) {
+      while (textWidth(remaining) > width) {
+        let count = 0;
+        let used = 0;
+        let space = -1;
+        let consumedOffset = 0;
+        let firstCharacterEnd = 0;
+        let lastSpaceOffset = -1;
+        let nextAfterSpace = -1;
 
-      for (const currentCharacter of remaining) {
-        if (count === 0) {
-          firstCharacterEnd = currentCharacter.length;
+        for (const currentCharacter of remaining) {
+          if (count === 0) {
+            firstCharacterEnd = currentCharacter.length;
+          }
+
+          if (currentCharacter === " ") {
+            space = count;
+            lastSpaceOffset = consumedOffset;
+            nextAfterSpace = consumedOffset + currentCharacter.length;
+          }
+
+          if (used + advance(currentCharacter) > width && count > 0) {
+            break;
+          }
+
+          count += 1;
+          used += advance(currentCharacter);
+          consumedOffset += currentCharacter.length;
         }
 
-        if (currentCharacter === " ") {
-          space = count;
-          lastSpaceOffset = consumedOffset;
-          nextAfterSpace = consumedOffset + currentCharacter.length;
-        }
+        const end =
+          space < 0
+            ? Math.max(firstCharacterEnd, consumedOffset)
+            : lastSpaceOffset;
 
-        if (used + advance(currentCharacter) > width && count > 0) {
-          break;
-        }
-
-        count += 1;
-        used += advance(currentCharacter);
-        consumedOffset += currentCharacter.length;
+        lines.push(remaining.slice(0, end));
+        remaining = remaining.slice(space >= 0 ? nextAfterSpace : end);
       }
-
-      const end =
-        space < 0
-          ? Math.max(firstCharacterEnd, consumedOffset)
-          : lastSpaceOffset;
-
-      lines.push(remaining.slice(0, end));
-      remaining = remaining.slice(space >= 0 ? nextAfterSpace : end);
     }
 
     lines.push(remaining);
