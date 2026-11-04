@@ -1,5 +1,5 @@
 diff --git a/dist/index.js b/dist/index.js
-index 44bc4da28c5f8c0523fbd97dffd585c0561f863c..7c3f3f4dd2333145dbb33c95701e8e482ea11f45 100644
+index 44bc4da28c5f8c0523fbd97dffd585c0561f863c..4211d43a5feef3cdebdf51c6dfe4dccb043c35fa 100644
 --- a/dist/index.js
 +++ b/dist/index.js
 @@ -1,4 +1,4 @@
@@ -173,7 +173,21 @@ index 44bc4da28c5f8c0523fbd97dffd585c0561f863c..7c3f3f4dd2333145dbb33c95701e8e48
  						continue;
  					}
  					if (prop.type === "SpreadElement" && isAllowedDynamic(unwrap(prop.argument))) continue;
-@@ -5194,6 +5272,44 @@ const MESSAGES$1 = {
+@@ -4443,7 +4521,12 @@ const noInlineStyles = {
+ 		for (const type of reader.attributes) addVisitor(visitors, type, (node) => {
+ 			if (reader.attributeName(node) !== "style") return;
+ 			const value = reader.attributeValue(node);
+-			if (isContainer(value)) check(value.expression, value.expression, /* @__PURE__ */ new Set(), elementName(node));
++			if (isContainer(value)) {
++				const callback = node.type === "JSXAttribute" && elementName(node) ? unwrap(value.expression) : null;
++				const body = callback?.type === "ArrowFunctionExpression" && !callback.async && callback.params.length <= 1 && callback.params.every((parameter) => parameter.type === "Identifier") ? unwrap(callback.body) : null;
++				const readable = body?.type === "ObjectExpression" && body.properties.every((property) => property.type === "Property" && !property.computed && !property.method && property.kind === "init");
++				check(readable ? body : value.expression, value.expression, /* @__PURE__ */ new Set(), elementName(node));
++			}
+ 			else if (reader.staticStyles && value) check(value, value, /* @__PURE__ */ new Set(), elementName(node));
+ 		});
+ 		for (const [type, read] of Object.entries(reader.styleProperties ?? {})) addVisitor(visitors, type, (node) => {
+@@ -5194,6 +5277,44 @@ const MESSAGES$1 = {
  	unknownVariant: "\"{{className}}\" uses a variant this project's Tailwind does not know, so no CSS is generated for it. Use an existing variant, or declare it with @custom-variant in {{file}}.",
  	useSuggestion: "Replace with \"{{suggestion}}\"."
  };
@@ -218,7 +232,7 @@ index 44bc4da28c5f8c0523fbd97dffd585c0561f863c..7c3f3f4dd2333145dbb33c95701e8e48
  const noUnknownClasses = {
  	meta: {
  		type: "problem",
-@@ -5230,6 +5346,9 @@ const noUnknownClasses = {
+@@ -5230,6 +5351,9 @@ const noUnknownClasses = {
  			return configErrorVisitors(context, error);
  		}
  		const { groupOf } = projectClassifierFor(filename);
@@ -228,7 +242,7 @@ index 44bc4da28c5f8c0523fbd97dffd585c0561f863c..7c3f3f4dd2333145dbb33c95701e8e48
  		const known = knownClassesFor(filename);
  		const ownClasses = isSfc(filename) ? styleClassesOf(context.sourceCode?.text ?? "") : /* @__PURE__ */ new Set();
  		const themeFile = themeFileFor(filename);
-@@ -5244,7 +5363,7 @@ const noUnknownClasses = {
+@@ -5244,7 +5368,7 @@ const noUnknownClasses = {
  			if (base.startsWith("[")) return true;
  			if (isMarkerClass(token)) return true;
  			const bare = base.replace(/\/[\w.%]+$/, "");
