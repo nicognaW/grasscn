@@ -16,6 +16,8 @@ import {
 } from "@grasscn/web/ui/minecraft-sound";
 import * as React from "react";
 
+import { fixtureFallbackLabel } from "./utils";
+
 const q = new URLSearchParams(location.search);
 
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
@@ -66,14 +68,22 @@ const ItemFixture = () => {
   const ref = React.useRef<React.ComponentRef<typeof Item>>(null);
   const part = q.get("part");
   const rich = q.has("rich");
+  const customMedia = q.has("customMedia");
+
+  const accessibleLabel = fixtureFallbackLabel(
+    "World item",
+    title,
+    id,
+    description,
+    rich,
+    customMedia
+  );
 
   const children = (
     <>
       {rich ? <ItemHeader>Available worlds</ItemHeader> : null}
       <ItemMedia>
-        {q.has("customMedia") ? (
-          <span data-testid="custom-media">Icon</span>
-        ) : undefined}
+        {customMedia ? <span data-testid="custom-media">Icon</span> : undefined}
       </ItemMedia>
       <ItemContent>
         <ItemTitle>
@@ -164,10 +174,11 @@ const ItemFixture = () => {
             ) ? (
             <CustomAction />
           ) : q.has("button") ? (
-            <button type="button" />
+            <button type="button" aria-label={accessibleLabel} />
           ) : (
             <a
               href="#world"
+              aria-label={accessibleLabel}
               onClick={(event) => {
                 if (q.has("childCancel")) {
                   event.preventDefault();

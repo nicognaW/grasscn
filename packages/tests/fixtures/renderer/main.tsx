@@ -169,7 +169,7 @@ import { TextWidgetsFixture } from "./text-widgets";
 import { ToastFixture } from "./toast";
 import { ToggleFixture } from "./toggle";
 import { ToggleGroupFixture } from "./toggle-group";
-import { cn } from "./utils";
+import { cn, fixtureFallbackLabel } from "./utils";
 
 import "./style.css";
 
@@ -1097,6 +1097,11 @@ const CollapsibleFixture = () => {
 const MenubarFixture = () => {
   const native = params.has("native");
   const triggerPixels = params.has("triggerPixels");
+
+  const triggerLabel = triggerPixels
+    ? (params.get("label") ?? "Button")
+    : "Game menu";
+
   const [open, setOpen] = React.useState(params.has("open"));
 
   const [menuValue, setMenuValue] = React.useState(
@@ -1324,6 +1329,7 @@ const MenubarFixture = () => {
       native || params.has("triggerAsChild") ? (
         <button
           type="button"
+          aria-label={fixtureFallbackLabel("Game menu", triggerLabel)}
           className={native ? "fixture-native-anchor" : undefined}
           style={
             native
@@ -1365,7 +1371,7 @@ const MenubarFixture = () => {
                 : undefined
             }
           >
-            {triggerPixels ? (params.get("label") ?? "Button") : "Game menu"}
+            {triggerLabel}
           </MenubarTrigger>
 
           {popup}
@@ -1415,6 +1421,11 @@ const MenubarFixture = () => {
 const DropdownFixture = () => {
   const native = params.has("native");
   const triggerPixels = params.has("triggerPixels");
+
+  const triggerLabel = triggerPixels
+    ? (params.get("label") ?? "Button")
+    : "Game menu";
+
   const [open, setOpen] = React.useState(params.has("open"));
 
   const [menuValue, setMenuValue] = React.useState(
@@ -1645,6 +1656,7 @@ const DropdownFixture = () => {
       native || params.has("triggerAsChild") ? (
         <button
           type="button"
+          aria-label={fixtureFallbackLabel("Game menu", triggerLabel)}
           className={native ? "fixture-native-anchor" : undefined}
           style={
             native
@@ -1687,7 +1699,7 @@ const DropdownFixture = () => {
               : undefined
           }
         >
-          {triggerPixels ? (params.get("label") ?? "Button") : "Game menu"}
+          {triggerLabel}
         </DropdownMenuTrigger>
 
         {popup}
@@ -2388,7 +2400,10 @@ const FixtureTabs = () => {
     <TabsTrigger
       render={
         params.has("triggerAsChild") && index === 0 ? (
-          <a href="#composed-tab" />
+          <a
+            href="#composed-tab"
+            aria-label={fixtureFallbackLabel("First tab", title)}
+          />
         ) : undefined
       }
       key={index}

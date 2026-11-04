@@ -2,6 +2,8 @@ import { Toggle, toggleVariants } from "@grasscn/web/ui/toggle";
 import type { ReactNode } from "react";
 import * as React from "react";
 
+import { fixtureFallbackLabel } from "./utils";
+
 const p = new URLSearchParams(location.search);
 
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
@@ -27,14 +29,20 @@ export const ToggleFixture = () => {
   const asChild = p.has("asChild");
   const anchor = p.has("anchor");
   const label = p.get("label") ?? "Recipe filter";
+  const text = p.get("text");
+
+  const accessibleLabel =
+    label.trim().length > 0
+      ? label
+      : fixtureFallbackLabel("Recipe filter", text);
 
   let selectedFixtureBranch1: ReactNode;
 
   if (asChild) {
     selectedFixtureBranch1 = anchor ? (
-      <a href="#target" />
+      <a href="#target" aria-label={accessibleLabel} />
     ) : (
-      <button type="button" />
+      <button type="button" aria-label={accessibleLabel} />
     );
   } else {
     selectedFixtureBranch1 = undefined;
@@ -80,7 +88,7 @@ export const ToggleFixture = () => {
         }}
         data-subject="true"
       >
-        {p.get("text")}
+        {text}
       </Toggle>
       <button
         type="button"
