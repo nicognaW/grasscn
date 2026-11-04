@@ -324,7 +324,7 @@
   font-size: 16px;
   font-weight: 400;
 }
-.grass-team-member > div > span {
+.grass-team-member > div > :is(span, output) {
   font-size: 8px;
   line-height: 16px;
   color: #aaa;
@@ -711,7 +711,7 @@
     .grass-panel-foot,
     .grass-two-stats > div > span,
     .grass-note,
-    .grass-team-member > div > span,
+    .grass-team-member > div > :is(span, output),
     .grass-examples-heading,
     .grass-preference p,
     .grass-form-result
@@ -741,7 +741,7 @@
     .grass-kicker,
     .grass-note,
     .grass-panel-foot,
-    .grass-team-member > div > span,
+    .grass-team-member > div > :is(span, output),
     .grass-panel-heading > p,
     .grass-two-stats > div > span,
     .grass-preference p
