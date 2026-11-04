@@ -26,8 +26,16 @@ const fixture = async function fixture(
   };
 
   try {
-    for (const folder of ["scripts", "registry/ui", "preview", "public/r"]) {
-      await mkdir(path.join(directory, folder), { recursive: true });
+    const setupResults = await Promise.allSettled(
+      ["scripts", "registry/ui", "preview", "public/r"].map(async (folder) => {
+        await mkdir(path.join(directory, folder), { recursive: true });
+      })
+    );
+
+    for (const setupResult of setupResults) {
+      if (setupResult.status === "rejected") {
+        throw setupResult.reason;
+      }
     }
 
     await json("package.json", {
