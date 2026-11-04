@@ -7,7 +7,11 @@ import { Button } from "./button";
 import { Input } from "./input";
 import { minecraftCardSprite } from "./minecraft-card-sprite";
 import { MenuScaleContext, menuTextNodes } from "./minecraft-menu-text";
-import { isMinecraftClassResolver, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftClassResolver,
+  isMinecraftRenderCallback,
+  minecraftStyle,
+} from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { Separator } from "./separator";
 
@@ -66,7 +70,7 @@ const ComboboxValue = ({
   const renderedPlaceholder = menuTextNodes(placeholder);
   let content: Primitive.Value.Props["children"];
 
-  if (typeof children === "function") {
+  if (isMinecraftRenderCallback(children)) {
     content = (value) => menuTextNodes(children(value));
   } else if (children !== undefined && children !== null) {
     content = menuTextNodes(children);
@@ -340,7 +344,7 @@ const ComboboxList = ({
         </span>
       )}
       <div className="mc-menu-items">
-        {typeof children === "function" ? (
+        {isMinecraftRenderCallback(children) ? (
           <Primitive.Collection>{children}</Primitive.Collection>
         ) : (
           children

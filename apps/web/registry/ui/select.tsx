@@ -7,6 +7,7 @@ import { minecraftGlyphs } from "./minecraft-font";
 import {
   isMinecraftRefCallback,
   isMinecraftRefCleanup,
+  isMinecraftRenderCallback,
   isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
@@ -165,7 +166,7 @@ const SelectValue = ({
       children: textSkin(elementProps.children),
     };
 
-    if (typeof render === "function") {
+    if (isMinecraftRenderCallback(render)) {
       return render(painted, state);
     }
 
@@ -180,7 +181,7 @@ const SelectValue = ({
 
   if (children === undefined) {
     content = undefined;
-  } else if (typeof children === "function") {
+  } else if (isMinecraftRenderCallback(children)) {
     content = (value): React.ReactNode => textSkin(children(value));
   } else {
     content = textSkin(children);

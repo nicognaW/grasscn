@@ -127,6 +127,13 @@ export const isMinecraftTooltipTextElement = (
 
 export type MinecraftRenderProp = useRender.RenderProp<object>;
 
+/** Preserve each SDK callback signature while separating renderers from opaque React content. */
+export const isMinecraftRenderCallback = <
+  Renderer extends (...args: never[]) => React.ReactNode,
+>(
+  content: React.ReactNode | Renderer
+): content is Renderer => typeof content === "function";
+
 export type MinecraftProps<T extends React.ElementType> =
   React.ComponentPropsWithRef<T>;
 
