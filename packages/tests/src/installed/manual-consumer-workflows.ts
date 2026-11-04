@@ -134,8 +134,20 @@ export const verifyInstalledCodeBlock = async (
     .poll(async () => await renderedLabels.count())
     .toBeGreaterThan(0);
 
-  for (const label of await renderedLabels.all()) {
-    await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const readyElements = await renderedLabels.all();
+
+    const readiness = await Promise.allSettled(
+      readyElements.map(async (label) => {
+        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejected = readiness.find((result) => result.status === "rejected");
+
+    if (rejected) {
+      throw rejected.reason;
+    }
   }
 
   await codeBlock.getByRole("button", { exact: true, name: "Copy" }).click();
