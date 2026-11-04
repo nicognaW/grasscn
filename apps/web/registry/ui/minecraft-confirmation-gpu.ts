@@ -109,7 +109,7 @@ export const createConfirmationPainter = function createConfirmationPainter(
 
       gl.deleteFramebuffer(framebuffer);
       gl.deleteBuffer(buffer);
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      // The caller owns the canvas context and may recreate its painter after cleanup.
     },
     paint(source: HTMLCanvasElement, radius: number) {
       canvas.width = source.width;
