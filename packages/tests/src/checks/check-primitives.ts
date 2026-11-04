@@ -152,13 +152,15 @@ const roots = manifests.flatMap((pkg) =>
 
 const cmdkClosure = new Set<string>();
 
-const pending = roots
-  .filter((dependencyRoot) => cmdk(dependencyRoot.name))
-  .map((dependencyRoot) => dependencyRoot.location)
-  .filter(
-    (location): location is string =>
-      location !== undefined && location.length > 0
-  );
+const pending = roots.flatMap((dependencyRoot) => {
+  if (!cmdk(dependencyRoot.name)) {
+    return [];
+  }
+
+  const { location } = dependencyRoot;
+
+  return location !== undefined && location.length > 0 ? [location] : [];
+});
 
 for (
   let location = pending.pop();
@@ -184,13 +186,15 @@ for (
 
 const outsideCmdk = new Set<string>();
 
-const outsidePending = roots
-  .filter((dependencyRoot) => !cmdk(dependencyRoot.name))
-  .map((dependencyRoot) => dependencyRoot.location)
-  .filter(
-    (location): location is string =>
-      location !== undefined && location.length > 0
-  );
+const outsidePending = roots.flatMap((dependencyRoot) => {
+  if (cmdk(dependencyRoot.name)) {
+    return [];
+  }
+
+  const { location } = dependencyRoot;
+
+  return location !== undefined && location.length > 0 ? [location] : [];
+});
 
 for (
   let location = outsidePending.pop();

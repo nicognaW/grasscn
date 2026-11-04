@@ -24,35 +24,43 @@ export const test = base.extend<{ grasscnVerificationArtifacts: void }>({
         ? readdirSync(info.outputDir)
         : [];
 
-      const artifacts = files
-        .filter((file) => /actual.*\.png$/i.test(file))
-        .map((file) => {
-          const bytes = readFileSync(path.join(info.outputDir, file));
-          const png = PNG.sync.read(bytes);
+      const artifacts = files.flatMap((file) => {
+        if (!/actual.*\.png$/i.test(file)) {
+          return [];
+        }
 
-          return {
+        const bytes = readFileSync(path.join(info.outputDir, file));
+        const png = PNG.sync.read(bytes);
+
+        return [
+          {
             decodedRgbaSha256: digest(png.data),
             file,
             height: png.height,
             pngSha256: digest(bytes),
             width: png.width,
-          };
-        });
+          },
+        ];
+      });
 
-      const metrics = files
-        .filter((file) => /\.[jJ][sS][oO][nN]$/u.test(file))
-        .map((file): CollectedMetric => {
-          try {
-            return {
+      const metrics = files.flatMap((file): CollectedMetric[] => {
+        if (!/\.[jJ][sS][oO][nN]$/u.test(file)) {
+          return [];
+        }
+
+        try {
+          return [
+            {
               data: JSON.parse(
                 readFileSync(path.join(info.outputDir, file), "utf-8")
               ),
               file,
-            };
-          } catch {
-            return { file, unreadable: true };
-          }
-        });
+            },
+          ];
+        } catch {
+          return [{ file, unreadable: true }];
+        }
+      });
 
       let renderedUrl: string | undefined;
       let subjectElement: string | undefined;
