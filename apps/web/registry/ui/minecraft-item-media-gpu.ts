@@ -61,6 +61,7 @@ const create = function create(): Painter | null {
 
   gl.deleteShader(vertex);
   gl.deleteShader(fragment);
+
   const uploadTexture = (asset: (typeof assets)[keyof typeof assets]) => {
     const texture = gl.createTexture();
 
