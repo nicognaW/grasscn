@@ -833,11 +833,14 @@ export const rasterizeTriangle = (
 
   const sign = area > 0 ? 1 : -1;
 
-  const edges = [
-    [pa, pb],
-    [pb, pc],
-    [pc, pa],
-  ].map(([from, to]) => {
+  // A tuple of edges keeps both ends defined under noUncheckedIndexedAccess.
+  const edges = (
+    [
+      [pa, pb],
+      [pb, pc],
+      [pc, pa],
+    ] as const
+  ).map(([from, to]) => {
     const [fromX, fromY] = from;
     const [toX, toY] = to;
     const dx = (toX - fromX) * sign;
