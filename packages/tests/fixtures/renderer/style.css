@@ -144,3 +144,20 @@ output {
 #root .fixture-sidebar-mode-position {
   position: var(--fixture-sidebar-position);
 }
+
+/* Exact painter stress inks; the existing inline width remains a separate caller-API probe. */
+.fixture-painter-ink-red {
+  color: #ff5555;
+}
+.fixture-painter-ink-lime {
+  color: #55ff55;
+}
+.fixture-painter-ink-magenta {
+  color: #ff55ff;
+}
+.fixture-painter-ink-gold {
+  color: #ffaa00;
+}
+.fixture-painter-ink-cyan {
+  color: #55ffff;
+}

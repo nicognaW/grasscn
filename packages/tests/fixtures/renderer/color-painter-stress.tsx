@@ -10,6 +10,13 @@ interface ColorPainterReferenceStyle extends React.CSSProperties {
   "--mc-scale": 1 | 2 | 3;
 }
 
+const painterInkClasses = [
+  "fixture-painter-ink-lime",
+  "fixture-painter-ink-magenta",
+  "fixture-painter-ink-gold",
+  "fixture-painter-ink-cyan",
+] as const;
+
 export const ColorPainterStressFixture = () => {
   const [scale, setScale] = React.useState<1 | 2 | 3>(3);
   const [noise, setNoise] = React.useState(true);
@@ -67,12 +74,11 @@ export const ColorPainterStressFixture = () => {
           >
             <BubbleContent
               id="subject"
-              className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
+              className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-painter-ink-red"
               style={{
                 "--fixture-height": `${9 * scale}px`,
                 "--fixture-x": `${16 * scale}px`,
                 "--fixture-y": `${16 * scale}px`,
-                color: "#ff5555",
                 // oxlint-disable-next-line shadcn/no-inline-styles -- Approved painter stress input: BubbleContent reads inline width before the existing scale-transition pixel assertions.
                 width: 252 * scale,
               }}
@@ -85,13 +91,10 @@ export const ColorPainterStressFixture = () => {
                   <span
                     data-stress-label
                     key={index}
-                    className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-owner-layout-43"
+                    className={`fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-owner-layout-43 ${painterInkClasses[index % 4]}`}
                     style={{
                       "--fixture-x": `${700 + index}px`,
                       "--fixture-y": `${300 + index}px`,
-                      color: ["#55ff55", "#ff55ff", "#ffaa00", "#55ffff"][
-                        index % 4
-                      ],
                     }}
                   >
                     <MinecraftColorUnicodeLabel
