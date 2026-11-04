@@ -230,33 +230,39 @@ const MinecraftCollapsibleText = ({
         children
       ) : (
         <>
-          {lines.map((line, index) => (
-            <span
-              aria-hidden="true"
-              className="mc-label-line mc-dynamic-layout-minecraft-collapsible-text-1"
-              key={index}
-              style={
-                /* SAFETY: The owned mc-dynamic-layout-minecraft-collapsible-text-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                {
-                  "--mc-dynamic-minecraft-collapsible-text-1-padding-left":
-                    align === "center"
-                      ? (Math.floor((width - widest) / 2) +
-                          Math.floor(widest / 2) -
-                          Math.floor(textWidth(line) / 2)) *
-                        scale
-                      : 0,
-                } satisfies MinecraftCollapsibleTextLayoutStyle1 as MinecraftCollapsibleTextLayoutStyle1
-              }
-            >
-              {/^[\u0020-\u007e]*$/u.test(line) ? (
-                <MinecraftText>{line}</MinecraftText>
-              ) : supported ? (
+          {lines.map((line, index) => {
+            let content: React.ReactNode = line;
+
+            if (/^[\u0020-\u007e]*$/u.test(line)) {
+              content = <MinecraftText>{line}</MinecraftText>;
+            } else if (supported) {
+              content = (
                 <MinecraftUnicodeLabel text={line} atlas={labelUnihexAtlas} />
-              ) : (
-                line
-              )}
-            </span>
-          ))}
+              );
+            }
+
+            return (
+              <span
+                aria-hidden="true"
+                className="mc-label-line mc-dynamic-layout-minecraft-collapsible-text-1"
+                key={index}
+                style={
+                  /* SAFETY: The owned mc-dynamic-layout-minecraft-collapsible-text-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                  {
+                    "--mc-dynamic-minecraft-collapsible-text-1-padding-left":
+                      align === "center"
+                        ? (Math.floor((width - widest) / 2) +
+                            Math.floor(widest / 2) -
+                            Math.floor(textWidth(line) / 2)) *
+                          scale
+                        : 0,
+                  } satisfies MinecraftCollapsibleTextLayoutStyle1 as MinecraftCollapsibleTextLayoutStyle1
+                }
+              >
+                {content}
+              </span>
+            );
+          })}
           <span className="mc-text-accessible">{text}</span>
         </>
       )}

@@ -528,15 +528,23 @@ const Scoreboard = ({
   }, [text]);
 
   const visible = [...entries.filter((e) => !e.name.startsWith("#"))]
-    .sort(
-      (a, b) =>
-        b.score - a.score ||
-        (a.name.toLowerCase() < b.name.toLowerCase()
-          ? -1
-          : a.name.toLowerCase() > b.name.toLowerCase()
-            ? 1
-            : 0)
-    )
+    .sort((a, b) => {
+      const scoreDifference = b.score - a.score;
+
+      if (scoreDifference) {
+        return scoreDifference;
+      }
+
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1;
+      }
+
+      if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        return 1;
+      }
+
+      return 0;
+    })
     .slice(0, 15);
 
   const contentWidth = Math.max(

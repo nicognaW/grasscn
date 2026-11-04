@@ -150,12 +150,13 @@ const MinecraftDocumentText = ({
       ctx.imageSmoothingEnabled = false;
 
       for (const [lineIndex, line] of lines.entries()) {
-        let x =
-          align === "right"
-            ? width - documentTextWidth(line)
-            : align === "center"
-              ? Math.floor(width / 2) - Math.floor(documentTextWidth(line) / 2)
-              : 0;
+        let x = 0;
+
+        if (align === "right") {
+          x = width - documentTextWidth(line);
+        } else if (align === "center") {
+          x = Math.floor(width / 2) - Math.floor(documentTextWidth(line) / 2);
+        }
 
         for (const char of line) {
           const glyph =

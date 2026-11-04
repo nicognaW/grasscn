@@ -285,22 +285,28 @@ const ChartFpsFrame = ({
           className="mc-chart-rect mc-layout-minecraft-chart-native-9 mc-chart-native-paint-8"
           style={nativePaint8}
         />
-        {labels.map((text, i) => (
-          <NativeChartText
-            key={i}
-            text={text}
-            x={
-              i === 0
-                ? 2
-                : i === 1
-                  ? Math.floor(width / 2) - Math.floor(widthOf(text) / 2)
-                  : width - widthOf(text) - 2
-            }
-            y={0}
-            color={0xe0_e0_e0}
-            scale={scale}
-          />
-        ))}
+        {labels.map((text, i) => {
+          let x: number;
+
+          if (i === 0) {
+            x = 2;
+          } else if (i === 1) {
+            x = Math.floor(width / 2) - Math.floor(widthOf(text) / 2);
+          } else {
+            x = width - widthOf(text) - 2;
+          }
+
+          return (
+            <NativeChartText
+              key={i}
+              text={text}
+              x={x}
+              y={0}
+              color={0xe0_e0_e0}
+              scale={scale}
+            />
+          );
+        })}
         {presentation ? (
           presentation.guides.map((guide, index) => {
             const y = Math.max(

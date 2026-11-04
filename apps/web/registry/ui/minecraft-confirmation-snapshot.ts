@@ -291,12 +291,16 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
           }
         }
 
+        let backgroundColor = "#fff";
+
+        if (opaque(rootColor)) {
+          backgroundColor = rootColor;
+        } else if (opaque(bodyColor)) {
+          backgroundColor = bodyColor;
+        }
+
         const source = await domToCanvas(document.body, {
-          backgroundColor: opaque(rootColor)
-            ? rootColor
-            : opaque(bodyColor)
-              ? bodyColor
-              : "#fff",
+          backgroundColor,
           features: { restoreScrollPosition: true },
           filter: (target) =>
             !belongs(target) &&

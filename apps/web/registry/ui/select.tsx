@@ -176,6 +176,16 @@ const SelectValue = ({
     );
   };
 
+  let content: typeof children;
+
+  if (children === undefined) {
+    content = undefined;
+  } else if (typeof children === "function") {
+    content = (value): React.ReactNode => textSkin(children(value));
+  } else {
+    content = textSkin(children);
+  }
+
   return (
     <SelectPrimitive.Value
       data-slot="select-value"
@@ -183,11 +193,7 @@ const SelectValue = ({
       placeholder={textSkin(placeholder)}
       {...props}
     >
-      {children === undefined
-        ? undefined
-        : typeof children === "function"
-          ? (value): React.ReactNode => textSkin(children(value))
-          : textSkin(children)}
+      {content}
     </SelectPrimitive.Value>
   );
 };

@@ -168,6 +168,17 @@ const AvatarFallback = ({
   align?: "left" | "center";
 }) => {
   const scale = React.useContext(AvatarContext);
+  let fallback = children;
+
+  if (children === undefined || children === null) {
+    fallback = <MinecraftAvatarFace skin="wide/steve" hat upsideDown={false} />;
+  } else if (isMinecraftTextContent(children)) {
+    fallback = (
+      <Label scale={scale} maxWidth={maxWidth} align={align}>
+        {children}
+      </Label>
+    );
+  }
 
   return (
     <AvatarPrimitive.Fallback
@@ -175,15 +186,7 @@ const AvatarFallback = ({
       className={cn(`mc-avatar-fallback`, className)}
       {...props}
     >
-      {children === undefined || children === null ? (
-        <MinecraftAvatarFace skin="wide/steve" hat upsideDown={false} />
-      ) : isMinecraftTextContent(children) ? (
-        <Label scale={scale} maxWidth={maxWidth} align={align}>
-          {children}
-        </Label>
-      ) : (
-        children
-      )}
+      {fallback}
     </AvatarPrimitive.Fallback>
   );
 };

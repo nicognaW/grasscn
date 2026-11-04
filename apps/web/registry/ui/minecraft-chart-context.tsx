@@ -250,13 +250,16 @@ export const ChartAxisTick = ({
 
   const width = accumulatedGlyphAdvance;
 
-  const left =
-    Math.round(Number(x) / scale) -
-    (textAnchor === "end"
-      ? width
-      : textAnchor === "middle"
-        ? Math.floor(width / 2)
-        : 0);
+  const position = Math.round(Number(x) / scale);
+  let anchorOffset = 0;
+
+  if (textAnchor === "end") {
+    anchorOffset = width;
+  } else if (textAnchor === "middle") {
+    anchorOffset = Math.floor(width / 2);
+  }
+
+  const left = position - anchorOffset;
 
   return (
     <foreignObject

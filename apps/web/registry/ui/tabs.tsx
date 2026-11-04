@@ -372,6 +372,16 @@ const TabsTrigger = ({
     };
   }, [text, scale, element]);
 
+  let label: React.ReactNode;
+
+  if (text === null) {
+    label = <span data-mc-tabs-rich="">{content}</span>;
+  } else if (/^[\u0020-\u007E]*$/u.test(text)) {
+    label = <MinecraftText>{text}</MinecraftText>;
+  } else {
+    label = <MinecraftUnicodeLabel text={text} atlas={tabsUnihexAtlas} />;
+  }
+
   const artwork = (
     <>
       <TabSurface name="tab" />
@@ -390,15 +400,7 @@ const TabsTrigger = ({
       />
       <span className="mc-tab-underline" aria-hidden="true" />
       <span className="mc-tab-label-window">
-        <span className="mc-tab-label">
-          {text === null ? (
-            <span data-mc-tabs-rich="">{content}</span>
-          ) : /^[\u0020-\u007E]*$/u.test(text) ? (
-            <MinecraftText>{text}</MinecraftText>
-          ) : (
-            <MinecraftUnicodeLabel text={text} atlas={tabsUnihexAtlas} />
-          )}
-        </span>
+        <span className="mc-tab-label">{label}</span>
       </span>
     </>
   );
