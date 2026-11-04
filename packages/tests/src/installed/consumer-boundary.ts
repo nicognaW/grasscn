@@ -209,6 +209,8 @@ export const assertIndependentDependencies = async (project: string) => {
           } catch {
             /* Missing candidates are expected while walking package/import resolution. */
           }
+
+          return undefined;
         })
       );
 

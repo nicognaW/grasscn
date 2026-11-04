@@ -222,6 +222,8 @@ export const assertRegistryInstallation = async (
               } catch {
                 /* Missing candidates are expected while walking package/import resolution. */
               }
+
+              return undefined;
             })
           );
 
