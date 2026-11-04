@@ -254,10 +254,13 @@ export const ChartAxisTick = ({
   let accumulatedGlyphAdvance = 0;
 
   for (const advanceCharacter of text) {
+    // SAFETY: for-of yields a nonempty code-point string; the owned bitmap has only ASCII 32..126 entries, so supplementary characters miss it under both index forms and retain the same Unihex fallback.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this exact codePointAt(0) result. */
     accumulatedGlyphAdvance +=
-      minecraftGlyphs[advanceCharacter.charCodeAt(0) - 32]?.[2] ??
+      minecraftGlyphs[(advanceCharacter.codePointAt(0) as number) - 32]?.[2] ??
       getUnihexGlyph(advanceCharacter)?.advance ??
       10;
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
   }
 
   const width = accumulatedGlyphAdvance;

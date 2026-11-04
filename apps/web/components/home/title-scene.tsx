@@ -32,10 +32,13 @@ const titleSource = (() => {
 
 const splash = "Now with components!";
 
+// SAFETY: The private splash is the fixed ASCII literal above; every Array.from character has exactly one nonempty code unit with the same code point.
+/* oxlint-disable typescript/no-unsafe-type-assertion -- The fixed ASCII splash producer proves this exact codePointAt(0) result. */
 const splashWidth = Array.from(
   splash,
-  (char) => minecraftGlyphs[char.charCodeAt(0) - 32][2]
+  (char) => minecraftGlyphs[(char.codePointAt(0) as number) - 32][2]
 ).reduce((width, advance) => width + advance, 0);
+/* oxlint-enable typescript/no-unsafe-type-assertion */
 
 const splashPosition: React.CSSProperties & {
   "--grass-splash-left": string;
