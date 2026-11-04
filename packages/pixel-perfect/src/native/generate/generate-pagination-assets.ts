@@ -1,4 +1,3 @@
-// Ordered entries preserve generated source and provenance byte order.
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
@@ -29,11 +28,6 @@ const hash = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 
 let css = "@layer components {\n";
-
-const sources: Record<
-  string,
-  { sha256: string; width: number; height: number; alphaValues: number[] }
-> = {};
 
 const assetInputNames = [
   "page_backward.png",
@@ -71,12 +65,6 @@ for (const direction of ["backward", "forward"]) {
         .every((alpha) => alpha === 0 || alpha === 255)
     );
     css += ` --mc-pagination-arrow${highlighted ? "-highlighted" : ""}:url("data:image/png;base64,${bytes.toString("base64")}");\n`;
-    sources[member] = {
-      sha256: hash(bytes),
-      width: image.width,
-      height: image.height,
-      alphaValues: [0, 255],
-    };
   }
 
   css += "}\n";
