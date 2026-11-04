@@ -38,7 +38,9 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
 ) {
   const [ready, setReady] = React.useState(false);
   React.useLayoutEffect((): ReturnType<React.EffectCallback> => {
-    const node = canvas.current!;
+    // SAFETY: This internal hook has one caller, MinecraftConfirmationBlur, which always renders its private canvas; layout setup follows commit and existing disposal guards deferred work.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The sole owned intrinsic canvas producer and existing effect lifetime prove this exact HTMLCanvasElement capture.
+    const node = canvas.current as HTMLCanvasElement;
     const host = node.parentElement!;
 
     let busy = false;

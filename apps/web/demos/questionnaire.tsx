@@ -42,7 +42,9 @@ const QuestionnaireDemo = ({ scale }: DemoProps) => {
   ] as const;
 
   React.useLayoutEffect(() => {
-    const node = form.current!;
+    // SAFETY: The private demo always renders the SDK default form with this ref; keyed form commit precedes layout setup and cleanup disconnects its observer.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The closed SDK form producer and React commit lifetime prove this exact HTMLFormElement capture.
+    const node = form.current as HTMLFormElement;
 
     const measure = () => {
       setWidth(Math.max(1, Math.floor(node.clientWidth / scale)));

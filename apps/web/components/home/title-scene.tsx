@@ -43,13 +43,16 @@ const splashPosition: React.CSSProperties & {
 
 export const TitleScene = () => {
   const ref = React.useRef<HTMLDivElement>(null);
+  const splashRef = React.useRef<HTMLSpanElement>(null);
   React.useLayoutEffect(() => {
     const node =
       // SAFETY: React attaches this always-rendered <div> before its synchronous layout effect setup reads the owned ref.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLDivElement result.
       ref.current as HTMLDivElement;
 
-    const splashNode = node.querySelector<HTMLElement>(".grass-title-splash")!;
+    // SAFETY: The splash is one private, unkeyed, always-rendered span; React attaches it before layout setup, and existing cleanup cancels every deferred painter.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic span commit and cancellation lifetime prove this exact HTMLSpanElement capture.
+    const splashNode = splashRef.current as HTMLSpanElement;
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
     let visible = true;
@@ -117,7 +120,7 @@ export const TitleScene = () => {
           unoptimized
         />
       </h1>
-      <span className="grass-title-splash">
+      <span ref={splashRef} className="grass-title-splash">
         <span
           className="grass-title-splash-origin -top-[8px] left-(--grass-splash-left)"
           style={splashPosition}
