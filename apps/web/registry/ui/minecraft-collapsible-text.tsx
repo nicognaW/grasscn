@@ -151,11 +151,17 @@ const MinecraftCollapsibleText = ({
   React.useLayoutEffect((): (() => void) | undefined => {
     if (unicode) {
       let live = true;
-      void loadUnihex().then(() => {
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
         if (live) {
           setFontReady(true);
         }
-      });
+      };
+
+      void commitFontReadiness();
 
       return () => {
         live = false;

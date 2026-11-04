@@ -250,11 +250,17 @@ const PlayerList = ({
     let live = true;
 
     if (/[^\u0020-\u007E\n]/u.test(text)) {
-      void loadUnihex().then(() => {
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
         if (live) {
           refresh();
         }
-      });
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {
@@ -481,11 +487,17 @@ const Scoreboard = ({
     let live = true;
 
     if (/[^\u0020-\u007E\n]/u.test(text)) {
-      void loadUnihex().then(() => {
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
         if (live) {
           refresh();
         }
-      });
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {

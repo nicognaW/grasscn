@@ -322,14 +322,18 @@ export const attachMinecraftInput = function attachMinecraftInput(
 
     if (!loadingUnihex && requiresCJKFont(inputGlyphText)) {
       loadingUnihex = true;
-      loadUnihex()
-        .then(() => {
-          signature = "";
-          paint();
-        })
-        .catch((error: unknown) => {
-          console.error(error);
-        });
+      const fontLoading = loadUnihex();
+
+      const repaintAfterFontLoading = async () => {
+        await fontLoading;
+
+        signature = "";
+        paint();
+      };
+
+      repaintAfterFontLoading().catch((error: unknown) => {
+        console.error(error);
+      });
     }
 
     const supported =
@@ -503,19 +507,23 @@ export const attachMinecraftInput = function attachMinecraftInput(
 
   input.addEventListener("focus", focus);
   input.addEventListener("blur", blur);
-  loadImages()
-    .then((result) => {
-      if (!cancelled) {
-        loaded = result;
-        tick();
-      }
-    })
-    .catch((error: unknown) => {
-      if (!cancelled) {
-        input.dataset.mcBitmap = "false";
-        console.error(error);
-      }
-    });
+  const imagesLoading = loadImages();
+
+  const startPaintingAfterImages = async () => {
+    const result = await imagesLoading;
+
+    if (!cancelled) {
+      loaded = result;
+      tick();
+    }
+  };
+
+  startPaintingAfterImages().catch((error: unknown) => {
+    if (!cancelled) {
+      input.dataset.mcBitmap = "false";
+      console.error(error);
+    }
+  });
 
   return () => {
     cancelled = true;

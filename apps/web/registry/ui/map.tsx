@@ -162,7 +162,7 @@ const MinecraftMap = ({
     ctx.putImageData(image, 0, 0);
 
     if (markers.length) {
-      Promise.all(
+      const imagesLoading = Promise.all(
         [
           ...markers.map(
             (marker) =>
@@ -184,35 +184,39 @@ const MinecraftMap = ({
               loadedImage.src = src;
             })
         )
-      )
-        .then((images) => {
-          if (!live) {
-            return;
-          }
+      );
 
-          const bounds = canvas.getBoundingClientRect();
+      const startMapRendering = async () => {
+        const images = await imagesLoading;
 
-          const output = mapGpuPixels(
-            image,
-            images,
-            markers,
-            scale,
-            bounds.x,
-            bounds.y
+        if (!live) {
+          return;
+        }
+
+        const bounds = canvas.getBoundingClientRect();
+
+        const output = mapGpuPixels(
+          image,
+          images,
+          markers,
+          scale,
+          bounds.x,
+          bounds.y
+        );
+
+        if (output) {
+          canvas.width = 128 * scale;
+          canvas.height = 128 * scale;
+          ctx.putImageData(
+            new ImageData(output, canvas.width, canvas.height),
+            0,
+            0
           );
+          setGpuReady(true);
+        }
+      };
 
-          if (output) {
-            canvas.width = 128 * scale;
-            canvas.height = 128 * scale;
-            ctx.putImageData(
-              new ImageData(output, canvas.width, canvas.height),
-              0,
-              0
-            );
-            setGpuReady(true);
-          }
-        })
-        .catch(() => {});
+      startMapRendering().catch(() => {});
     }
 
     return () => {

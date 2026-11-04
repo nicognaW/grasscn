@@ -96,13 +96,19 @@ const MinecraftSelectableText = ({
       setReady(true);
     };
 
-    void Promise.all([document.fonts.ready, loadUnihex()]).then(() => {
+    const glyphResources = Promise.all([document.fonts.ready, loadUnihex()]);
+
+    const paintAfterGlyphResources = async () => {
+      await glyphResources;
+
       if (alive) {
         fontReady = true;
         measure();
         frame = requestAnimationFrame(measure);
       }
-    });
+    };
+
+    void paintAfterGlyphResources();
 
     const observer = new ResizeObserver(() => {
       if (alive) {

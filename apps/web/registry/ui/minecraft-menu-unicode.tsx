@@ -80,7 +80,11 @@ export const MenuUnicodeLine = ({
 
     const context = canvas.getContext("2d")!;
 
-    void Promise.all([loadUnihex(), loadAlpha()]).then(([, source]) => {
+    const glyphResources = Promise.all([loadUnihex(), loadAlpha()]);
+
+    const paintAfterGlyphResources = async () => {
+      const [, source] = await glyphResources;
+
       if (disposed) {
         return;
       }
@@ -212,7 +216,9 @@ export const MenuUnicodeLine = ({
       };
 
       tick();
-    });
+    };
+
+    void paintAfterGlyphResources();
 
     return () => {
       disposed = true;

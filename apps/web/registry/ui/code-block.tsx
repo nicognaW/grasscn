@@ -143,13 +143,19 @@ const CodeBlockCopyButton = ({
             return;
           }
 
-          Promise.resolve(navigator.clipboard?.writeText(value))
-            .then(() => {
-              if (live.current && navigator.clipboard) {
-                setCopied(true);
-              }
-            })
-            .catch(() => {});
+          const clipboardWrite = Promise.resolve(
+            navigator.clipboard?.writeText(value)
+          );
+
+          const announceCopy = async () => {
+            await clipboardWrite;
+
+            if (live.current && navigator.clipboard) {
+              setCopied(true);
+            }
+          };
+
+          announceCopy().catch(() => {});
         }}
         {...props}
       >

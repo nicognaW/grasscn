@@ -124,79 +124,83 @@ const MinecraftDocumentText = ({
   React.useEffect(() => {
     let live = true;
     setReady(false);
-    Promise.all([
+
+    const glyphResources = Promise.all([
       fontImage(),
       /[^\u0020-\u007E\n]/u.test(text) ? loadUnihex() : Promise.resolve(),
-    ])
-      .then(([image]) => {
-        if (!live) {
-          return;
-        }
+    ]);
 
-        const canvas = ref.current!;
-        const lines = wrap ? documentLines(text, width) : [text];
+    const paintAfterGlyphResources = async () => {
+      const [image] = await glyphResources;
 
-        canvas.width = width * scale;
-        canvas.height = lines.length * 9 * scale;
-        setHeight(lines.length * 9);
-        const ctx = canvas.getContext("2d")!;
-        ctx.imageSmoothingEnabled = false;
+      if (!live) {
+        return;
+      }
 
-        for (const [lineIndex, line] of lines.entries()) {
-          let x =
-            align === "right"
-              ? width - documentTextWidth(line)
-              : align === "center"
-                ? Math.floor(width / 2) -
-                  Math.floor(documentTextWidth(line) / 2)
-                : 0;
+      const canvas = ref.current!;
+      const lines = wrap ? documentLines(text, width) : [text];
 
-          for (const char of line) {
-            const glyph =
-              asciiGlyphs[
-                // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
-                // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
-                (char.codePointAt(0) as number) - 32
-              ];
+      canvas.width = width * scale;
+      canvas.height = lines.length * 9 * scale;
+      setHeight(lines.length * 9);
+      const ctx = canvas.getContext("2d")!;
+      ctx.imageSmoothingEnabled = false;
 
-            if (glyph) {
-              if (char !== " ") {
-                ctx.drawImage(
-                  image,
-                  glyph[0],
-                  glyph[1],
-                  glyph[2],
-                  8,
-                  x * scale,
-                  lineIndex * 9 * scale,
-                  glyph[2] * scale,
-                  8 * scale
-                );
-              }
+      for (const [lineIndex, line] of lines.entries()) {
+        let x =
+          align === "right"
+            ? width - documentTextWidth(line)
+            : align === "center"
+              ? Math.floor(width / 2) - Math.floor(documentTextWidth(line) / 2)
+              : 0;
 
-              x += glyph[2];
-            } else {
-              const unicodeGlyph = getUnihexGlyph(char);
+        for (const char of line) {
+          const glyph =
+            asciiGlyphs[
+              // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+              (char.codePointAt(0) as number) - 32
+            ];
 
-              if (unicodeGlyph) {
-                ctx.fillStyle = color;
-                paintUnihex(ctx, unicodeGlyph, x, lineIndex * 9, scale);
-                x += unicodeGlyph.advance;
-              }
+          if (glyph) {
+            if (char !== " ") {
+              ctx.drawImage(
+                image,
+                glyph[0],
+                glyph[1],
+                glyph[2],
+                8,
+                x * scale,
+                lineIndex * 9 * scale,
+                glyph[2] * scale,
+                8 * scale
+              );
+            }
+
+            x += glyph[2];
+          } else {
+            const unicodeGlyph = getUnihexGlyph(char);
+
+            if (unicodeGlyph) {
+              ctx.fillStyle = color;
+              paintUnihex(ctx, unicodeGlyph, x, lineIndex * 9, scale);
+              x += unicodeGlyph.advance;
             }
           }
         }
+      }
 
-        ctx.globalCompositeOperation = "source-in";
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        setReady(true);
-      })
-      .catch(() => {
-        if (live) {
-          setReady(false);
-        }
-      });
+      ctx.globalCompositeOperation = "source-in";
+      ctx.fillStyle = color;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      setReady(true);
+    };
+
+    paintAfterGlyphResources().catch(() => {
+      if (live) {
+        setReady(false);
+      }
+    });
 
     return () => {
       live = false;
