@@ -13,7 +13,7 @@ for (const scale of [1, 2, 3] as const) {
 
       const labels = Array.from(
         { length: 12 },
-        (_, i) => `\u6708\u4efd ${i + 1}`
+        (_, i) => `\u6708\u4EFD ${i + 1}`
       );
 
       await page.goto(

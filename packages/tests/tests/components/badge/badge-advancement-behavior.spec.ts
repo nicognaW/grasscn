@@ -10,7 +10,7 @@ for (const scale of [2]) {
       page,
     }) => {
       await page.setViewportSize({ height: 1000, width });
-      await page.goto(origin + "docs/components/badge");
+      await page.goto(`${origin}docs/components/badge`);
 
       const stage = page.locator('[data-stage="badge"]');
       const badge = stage.locator('[data-slot="badge"]').first();

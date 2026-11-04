@@ -16,7 +16,7 @@ for (const selection of ["alert-dialog"]) {
         }
       });
       await page.setViewportSize({ height: 844, width: 390 });
-      await page.goto(origin + "docs/components/" + selection);
+      await page.goto(`${origin}docs/components/${selection}`);
 
       const stage = page.locator('[data-stage="alert-dialog"]');
       await stage.scrollIntoViewIfNeeded();
@@ -80,7 +80,7 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
     page,
   }) => {
     await page.setViewportSize({ height: 844, width: 390 });
-    await page.goto(origin + "docs/components/alert-dialog");
+    await page.goto(`${origin}docs/components/alert-dialog`);
     await page.evaluate((viewportScene) => {
       const owner = document.createElement("div");
       owner.id = "snapshot-viewport-proof";
