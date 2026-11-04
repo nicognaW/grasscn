@@ -156,6 +156,7 @@ import { FormsFixture } from "./forms";
 import { InputGroupFixture } from "./input-group";
 import { InputOTPFixture } from "./input-otp";
 import { ItemFixture } from "./item";
+import { KeyedRichChildrenFixture } from "./keyed-rich-children";
 import { MarkerFixture } from "./marker";
 import { NativeSelectFixture } from "./native-select";
 import { NativeTextCompositionsFixture } from "./native-text-compositions";
@@ -3313,6 +3314,11 @@ const FixtureButton = () => {
 
 const fixtureRoutes: readonly FixtureRoute[] = [
   {
+    fixture: KeyedRichChildrenFixture,
+    kind: "name",
+    name: "keyed-rich-children",
+  },
+  {
     fixture: TabsFallbackFixture,
     kind: "name",
     name: "tabs-fallback",
@@ -3375,7 +3381,7 @@ const fixtureRoutes: readonly FixtureRoute[] = [
   {
     fixture: TextWidgetsFixture,
     kind: "aliases",
-    names: ["trace","message-scroller","spinner"],
+    names: ["trace", "message-scroller", "spinner"],
     nativeFixture: NativeTextCompositionsFixture,
   },
   {
@@ -3402,7 +3408,7 @@ const fixtureRoutes: readonly FixtureRoute[] = [
   {
     fixture: FormsFixture,
     kind: "aliases",
-    names: ["form","field"],
+    names: ["form", "field"],
   },
   {
     fixture: DataTableFixture,
@@ -3422,12 +3428,12 @@ const fixtureRoutes: readonly FixtureRoute[] = [
   {
     fixture: CalendarFixture,
     kind: "aliases",
-    names: ["calendar","date-picker"],
+    names: ["calendar", "date-picker"],
   },
   {
     fixture: ChatFamilyFixture,
     kind: "aliases",
-    names: ["message","bubble"],
+    names: ["message", "bubble"],
   },
   {
     fixture: ResizableFixture,
@@ -3457,7 +3463,7 @@ const fixtureRoutes: readonly FixtureRoute[] = [
   {
     fixture: ToastFixture,
     kind: "aliases",
-    names: ["sonner","sonner-strict"],
+    names: ["sonner", "sonner-strict"],
   },
   {
     fixture: ButtonCompositionFixture,
@@ -3467,17 +3473,17 @@ const fixtureRoutes: readonly FixtureRoute[] = [
   {
     fixture: TextComponentsFixture,
     kind: "aliases",
-    names: ["badge","typography","breadcrumb","kbd","empty"],
+    names: ["badge", "typography", "breadcrumb", "kbd", "empty"],
   },
   {
     fixture: OverlayFixture,
     kind: "aliases",
-    names: ["sheet","drawer"],
+    names: ["sheet", "drawer"],
   },
   {
     fixture: StructuralFixture,
     kind: "aliases",
-    names: ["aspect-ratio","button-group","pagination"],
+    names: ["aspect-ratio", "button-group", "pagination"],
   },
   {
     fixture: ToggleGroupFixture,
@@ -3617,7 +3623,11 @@ const fixtureRoutes: readonly FixtureRoute[] = [
 ];
 
 const Fixture = () => {
-  const ActiveFixture = resolveFixtureRoute(params, fixtureRoutes, FixtureButton);
+  const ActiveFixture = resolveFixtureRoute(
+    params,
+    fixtureRoutes,
+    FixtureButton
+  );
 
   return <ActiveFixture />;
 };
