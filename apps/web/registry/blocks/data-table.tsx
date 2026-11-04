@@ -1,6 +1,6 @@
 "use client";
 
-import { useTable } from "@tanstack/react-table";
+import { flexRender, useTable } from "@tanstack/react-table";
 import type { CellContext, ColumnDef, RowData } from "@tanstack/react-table";
 import * as React from "react";
 
@@ -64,12 +64,11 @@ export const DataTable = <TData extends RowData>({
 
                   if (header.isPlaceholder) {
                     _selectedContent = null;
-                  } else if (
-                    typeof header.column.columnDef.header === "string"
-                  ) {
-                    _selectedContent = header.column.columnDef.header;
                   } else {
-                    _selectedContent = <table.FlexRender header={header} />;
+                    _selectedContent = flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    );
                   }
 
                   return (

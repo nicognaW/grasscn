@@ -1,4 +1,8 @@
-import { createColumnHelper, useTable } from "@tanstack/react-table";
+import {
+  createColumnHelper,
+  flexRender,
+  useTable,
+} from "@tanstack/react-table";
 import type { CellContext, HeaderContext } from "@tanstack/react-table";
 import * as React from "react";
 
@@ -173,12 +177,11 @@ const DataTableDemo = ({ scale }: DemoProps) => {
 
                   if (header.isPlaceholder) {
                     _selectedContent = null;
-                  } else if (
-                    typeof header.column.columnDef.header === "string"
-                  ) {
-                    _selectedContent = header.column.columnDef.header;
                   } else {
-                    _selectedContent = <table.FlexRender header={header} />;
+                    _selectedContent = flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    );
                   }
 
                   return (
