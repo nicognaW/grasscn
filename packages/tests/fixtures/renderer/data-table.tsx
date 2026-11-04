@@ -12,6 +12,7 @@ import {
   TableCell,
 } from "@grasscn/web/ui/table";
 import { createColumnHelper, useTable } from "@tanstack/react-table";
+import type { CellContext } from "@tanstack/react-table";
 import * as React from "react";
 
 interface World {
@@ -42,6 +43,16 @@ const width = Number(p.get("width") ?? 200);
 const height = Number(p.get("height") ?? 9);
 const label = p.get("label") ?? "Minecraft";
 
+const WorldPlayersCell = (
+  info: CellContext<DataTableFeatures, World, number>
+) => <strong data-testid="rich-cell">{info.getValue()}</strong>;
+
+const WorldValueCell = (info: CellContext<DataTableFeatures, World>) => (
+  <MinecraftDisclosureText scale={scale}>
+    {String(info.getValue<World[keyof World] | null | undefined>() ?? "")}
+  </MinecraftDisclosureText>
+);
+
 export const DataTableFixture = () => {
   React.useLayoutEffect(() => {
     const bg = p.get("background") ?? "#202020";
@@ -62,9 +73,7 @@ export const DataTableFixture = () => {
           sortFn: "text",
         }),
         helper.accessor("players", {
-          cell: (info) => (
-            <strong data-testid="rich-cell">{info.getValue()}</strong>
-          ),
+          cell: WorldPlayersCell,
           header: "Players",
           sortFn: "alphanumeric",
         }),
@@ -76,11 +85,7 @@ export const DataTableFixture = () => {
     columns,
     data: worlds,
     defaultColumn: {
-      cell: (info) => (
-        <MinecraftDisclosureText scale={scale}>
-          {String(info.getValue<World[keyof World] | null | undefined>() ?? "")}
-        </MinecraftDisclosureText>
-      ),
+      cell: WorldValueCell,
     },
     features,
     getRowId: (row) => row.id,
