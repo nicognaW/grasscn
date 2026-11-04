@@ -1,0 +1,43 @@
+{
+  "component": "fireworks",
+  "minecraftVersion": "26.2",
+  "window": { "width": 480, "height": 640 },
+  "world": {
+    "description": "Fresh isolated singleplayer world from the vanilla world-creation flow: flat preset, fixed seed, spectator, peaceful, no structures. Noon with the clock paused, clear weather with the weather cycle paused, open sky around the rocket. options.txt sets no video option, so every video option is the vanilla default.",
+    "levelName": "grasscn-projected-firework-rocket",
+    "preset": "minecraft:flat",
+    "seed": 0,
+    "clockTime": 6000,
+    "commands": ["time set noon", "weather clear"]
+  },
+  "camera": { "eye": [0.5, 80.5, 0.5], "yRot": 180, "xRot": 0 },
+  "projection": {
+    "type": "orthographic",
+    "facing": "north",
+    "pixelsPerBlock": 16,
+    "eyeAt": [240, 448],
+    "zNear": 0.05,
+    "zFar": 256
+  },
+  "ticksPerSecond": 20,
+  "rocket": {
+    "name": "flight",
+    "at": [0.5, 72.0, -21.5],
+    "flightDuration": 1,
+    "serverEntitySeed": 42,
+    "clientEntitySeed": 42,
+    "particleSeed": 42,
+    "maxTicks": 160,
+    "explosion": {
+      "shape": "large_ball",
+      "colors": ["lime", "white"],
+      "fadeColors": ["green"],
+      "trail": false,
+      "twinkle": true
+    }
+  },
+  "sentinel": {
+    "at": [8, 8],
+    "description": "Open sky in the window's top-left corner, outside every frame's rocket and particles; it must not be the dark loading or menu background."
+  }
+}
