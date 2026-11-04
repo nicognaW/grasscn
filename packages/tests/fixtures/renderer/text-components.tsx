@@ -33,6 +33,8 @@ import {
 } from "@grasscn/web/ui/typography";
 import * as React from "react";
 
+import { fixtureFallbackLabel } from "./utils";
+
 import "./native-reference.css";
 
 interface TextReferenceStyle extends React.CSSProperties {
@@ -155,7 +157,14 @@ const TextComponentsFixture = () => {
     // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
     subject = (
       <Badge
-        render={q.has("asChild") ? <a href="#destination" /> : undefined}
+        render={
+          q.has("asChild") ? (
+            <a
+              href="#destination"
+              aria-label={fixtureFallbackLabel("Text example", text)}
+            />
+          ) : undefined
+        }
         scale={scale}
         maxWidth={width}
         {...common}
@@ -217,7 +226,14 @@ const TextComponentsFixture = () => {
 
     subject = (
       <Component
-        render={q.has("asChild") ? <a href="#destination" /> : undefined}
+        render={
+          q.has("asChild") ? (
+            <a
+              href="#destination"
+              aria-label={fixtureFallbackLabel("Text example", text)}
+            />
+          ) : undefined
+        }
         {...common}
         scale={scale}
         maxWidth={width}
