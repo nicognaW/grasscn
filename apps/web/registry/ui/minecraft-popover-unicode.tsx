@@ -72,7 +72,11 @@ export const PopoverUnicodeLine = ({
       }
 
       const glyphs = Array.from(text, (char) => {
-        const code = char.codePointAt(0)!;
+        const code =
+          // SAFETY: String Array.from iteration supplies a nonempty character. Its first code point therefore exists.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+          char.codePointAt(0) as number;
+
         const ascii = asciiGlyphs[code - 32];
         const uni = getUnihexGlyph(char);
         const observed = observedPopoverGlyphs[code.toString(16)];

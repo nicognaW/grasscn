@@ -168,7 +168,12 @@ export const paintSignGpu = function paintSignGpu(
   for (const [index, line] of lines.entries()) {
     const glyphs = Array.from(
       line,
-      (char) => minecraftGlyphs[char.codePointAt(0)! - 32]
+      (char) =>
+        minecraftGlyphs[
+          // SAFETY: String Array.from iteration supplies a nonempty character. Its first code point therefore exists.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+          (char.codePointAt(0) as number) - 32
+        ]
     );
 
     if (glyphs.some((g) => !g)) {

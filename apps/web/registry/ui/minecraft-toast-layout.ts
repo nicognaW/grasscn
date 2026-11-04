@@ -52,7 +52,11 @@ export const toastLayout = async function toastLayout(
       return result;
     }
 
-    const code = char.codePointAt(0)!;
+    const code =
+      // SAFETY: Private glyph callers supply nonempty iteration characters or guarded in-bounds code units. Its first code point therefore exists.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+      char.codePointAt(0) as number;
+
     const ascii = asciiGlyphs[code - 32];
     const uni = getUnihexGlyph(char);
     const observed = observedToastGlyphs[code.toString(16)];

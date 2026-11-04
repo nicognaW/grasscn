@@ -41,7 +41,12 @@ const widthOf = function widthOf(text: string, bold: boolean) {
   let accumulatedGlyphAdvance = 0;
 
   for (const advanceCharacter of text) {
-    const ascii = asciiGlyphs[advanceCharacter.codePointAt(0)! - 32];
+    const ascii =
+      asciiGlyphs[
+        // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+        (advanceCharacter.codePointAt(0) as number) - 32
+      ];
 
     accumulatedGlyphAdvance =
       accumulatedGlyphAdvance +

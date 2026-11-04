@@ -89,7 +89,13 @@ export const DialogUnicodeLine = ({
             let x = 0;
 
             for (const char of text) {
-              const ascii = asciiGlyphs[char.codePointAt(0)! - 32];
+              const ascii =
+                asciiGlyphs[
+                  // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+                  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+                  (char.codePointAt(0) as number) - 32
+                ];
+
               const uni = getUnihexGlyph(char);
               const offset = ascii ? 1 : 0.5;
 
