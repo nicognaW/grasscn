@@ -94,14 +94,14 @@ const TextComponentsFixture = () => {
     },
     ref: subjectRef,
     style: {
-      "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
-      "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
-      "--reference-width": q.has("width")
-        ? `${Number(q.get("width")) * scale}px`
-        : undefined,
       "--reference-height": q.has("height")
         ? `${Number(q.get("height")) * scale}px`
         : undefined,
+      "--reference-width": q.has("width")
+        ? `${Number(q.get("width")) * scale}px`
+        : undefined,
+      "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
+      "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
     } satisfies TextReferenceStyle as TextReferenceStyle,
   };
 
@@ -176,24 +176,24 @@ const TextComponentsFixture = () => {
         style={
           native
             ? ({
-                "--reference-x": `${(Number(q.get("x") ?? 16) + 8) * scale}px`,
-                "--reference-y": `${(Number(q.get("y") ?? 16) + 8) * scale}px`,
-                "--reference-width": q.has("width")
-                  ? `${(Number(q.get("width")) - 16) * scale}px`
-                  : undefined,
                 "--reference-height": q.has("height")
                   ? `${(Number(q.get("height")) - 16) * scale}px`
                   : undefined,
+                "--reference-width": q.has("width")
+                  ? `${(Number(q.get("width")) - 16) * scale}px`
+                  : undefined,
+                "--reference-x": `${(Number(q.get("x") ?? 16) + 8) * scale}px`,
+                "--reference-y": `${(Number(q.get("y") ?? 16) + 8) * scale}px`,
               } satisfies TextReferenceStyle as TextReferenceStyle)
             : ({
-                "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
-                "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
-                "--reference-width": q.has("width")
-                  ? `${Number(q.get("width")) * scale}px`
-                  : undefined,
                 "--reference-height": q.has("height")
                   ? `${Number(q.get("height")) * scale}px`
                   : undefined,
+                "--reference-width": q.has("width")
+                  ? `${Number(q.get("width")) * scale}px`
+                  : undefined,
+                "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
+                "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
               } satisfies TextReferenceStyle as TextReferenceStyle)
         }
       >

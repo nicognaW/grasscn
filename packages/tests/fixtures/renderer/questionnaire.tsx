@@ -96,10 +96,13 @@ export const QuestionnaireFixture = () => {
           scale={scale}
           items={[
             {
-              name: "check",
               choices: [
-                { value: "yes", disabled: q.get("state") === "disabled" },
+                {
+                  disabled: q.get("state") === "disabled",
+                  value: "yes",
+                },
               ],
+              name: "check",
             },
           ]}
         >

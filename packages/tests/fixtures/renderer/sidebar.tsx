@@ -279,16 +279,16 @@ export const SidebarFixture = () => {
           collapsible="none"
           className="fixture-sidebar-native-geometry fixture-sidebar-padding fixture-sidebar-gap"
           style={{
+            "--fixture-sidebar-native-gap": `${12 * scale}px`,
             "--fixture-sidebar-native-height":
               nativeSidebarLayout["--fixture-sidebar-native-height"],
             "--fixture-sidebar-native-left":
               nativeSidebarLayout["--fixture-sidebar-native-left"],
+            "--fixture-sidebar-native-padding": `${p.has("text") ? 18 * scale : 0}px`,
             "--fixture-sidebar-native-top":
               nativeSidebarLayout["--fixture-sidebar-native-top"],
             "--fixture-sidebar-native-width":
               nativeSidebarLayout["--fixture-sidebar-native-width"],
-            "--fixture-sidebar-native-padding": `${p.has("text") ? 18 * scale : 0}px`,
-            "--fixture-sidebar-native-gap": `${12 * scale}px`,
           }}
           data-subject="true"
         >

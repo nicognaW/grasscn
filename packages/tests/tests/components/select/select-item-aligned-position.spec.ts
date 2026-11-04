@@ -23,8 +23,8 @@ for (const scale of [1, 2, 3] as const) {
       await trigger.evaluate(
         (n, { scale: renderScale, mobile: isMobile }) =>
           Object.assign(n.style, {
-            position: "fixed",
             left: isMobile ? "40px" : "500px",
+            position: "fixed",
             top: "300px",
             width: `${Math.min(200 * renderScale, 300)}px`,
           }),

@@ -112,10 +112,10 @@ export const CalendarFixture = () => {
               className="native-reference-geometry native-reference-size"
               style={
                 {
+                  "--reference-height": `${height * scale}px`,
+                  "--reference-width": `${width * scale}px`,
                   "--reference-x": `${x}px`,
                   "--reference-y": `${y}px`,
-                  "--reference-width": `${width * scale}px`,
-                  "--reference-height": `${height * scale}px`,
                 } satisfies CalendarReferenceStyle as CalendarReferenceStyle
               }
             />
@@ -155,10 +155,10 @@ export const CalendarFixture = () => {
                 ? Number(q.get("wrapWidth"))
                 : undefined,
               style: {
+                "--reference-height": `${height * scale}px`,
+                "--reference-width": `${width * scale}px`,
                 "--reference-x": `${x}px`,
                 "--reference-y": `${y}px`,
-                "--reference-width": `${width * scale}px`,
-                "--reference-height": `${height * scale}px`,
               } satisfies CalendarReferenceStyle as CalendarReferenceStyle,
               ...{ "data-subject": "true" },
             },
