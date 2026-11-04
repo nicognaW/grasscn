@@ -1,5 +1,11 @@
 import { Progress } from "@grasscn/web/ui/progress";
 
+// @ts-expect-error Only original Minecraft boss-bar colors are available.
+const inventedColor = <Progress color="destructive" />;
+
+// @ts-expect-error Only original Minecraft notch styles are available.
+const inventedOverlay = <Progress overlay="striped" />;
+
 export const ProgressApiContract = function ProgressApiContract() {
   const supported = (
     <Progress
@@ -16,11 +22,6 @@ export const ProgressApiContract = function ProgressApiContract() {
       {undefined}
     </Progress>
   );
-
-  // @ts-expect-error Only original Minecraft boss-bar colors are available.
-  const inventedColor = <Progress color="destructive" />;
-  // @ts-expect-error Only original Minecraft notch styles are available.
-  const inventedOverlay = <Progress overlay="striped" />;
 
   return [supported, composed, inventedColor, inventedOverlay];
 };

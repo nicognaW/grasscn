@@ -117,7 +117,12 @@ export const DataTableFixture = () => {
     <>
       <Input
         aria-label="Filter worlds"
-        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+        value={
+          // SAFETY: this owned name-column filter starts absent and its sole UI writer below passes e.target.value; TanStack may remove the empty filter, so preserve both string and undefined plus the existing empty default.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned filter-state producer boundary; retain the SDK read, optional column and existing fallback without adding runtime validation.
+          (table.getColumn("name")?.getFilterValue() as string | undefined) ??
+          ""
+        }
         onChange={(e) =>
           table.getColumn("name")?.setFilterValue(e.target.value)
         }

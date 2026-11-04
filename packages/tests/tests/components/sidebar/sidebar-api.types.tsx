@@ -52,12 +52,18 @@ const SidebarHook = () => {
   return null;
 };
 
+interface SidebarFixtureStyle extends React.CSSProperties {
+  "--sidebar-width": string;
+}
+
+const sidebarStyle: SidebarFixtureStyle = { "--sidebar-width": "300px" };
+
 const SidebarTypes = () => {
-  const div = React.createRef<HTMLDivElement>();
-  const button = React.createRef<HTMLButtonElement>();
-  const anchor = React.createRef<HTMLAnchorElement>();
-  const input = React.createRef<HTMLInputElement>();
-  const main = React.createRef<HTMLElement>();
+  const div = React.useRef<HTMLDivElement>(null);
+  const button = React.useRef<HTMLButtonElement>(null);
+  const anchor = React.useRef<HTMLAnchorElement>(null);
+  const input = React.useRef<HTMLInputElement>(null);
+  const main = React.useRef<HTMLElement>(null);
 
   return (
     <SidebarProvider
@@ -66,7 +72,7 @@ const SidebarTypes = () => {
       defaultOpen
       open
       onOpenChange={(next) => void next}
-      style={{ "--sidebar-width": "300px" } as React.CSSProperties}
+      style={sidebarStyle}
     >
       <Sidebar ref={div} variant="sidebar" side="right" collapsible="icon">
         <SidebarHeader ref={div}>

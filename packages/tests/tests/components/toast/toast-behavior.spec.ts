@@ -75,18 +75,13 @@ test("Sonner retains its promise notification API", async ({ page }) => {
 test("Toast sounds use byte-identical original assets and decode in the browser", async ({
   page,
 }) => {
-  for (const [kind, pin] of Object.entries({
-    in: "71fcf933a29e83940c2b896585b1c9de846d4b5fb3e934b7ef642bd11733b884",
-    out: "78f870f75914fd6784b9cf6862887369a7e8604bd04eb4944562196bc3cdcaa1",
-  })) {
+  for (const [kind, pin] of [
+    ["in", "71fcf933a29e83940c2b896585b1c9de846d4b5fb3e934b7ef642bd11733b884"],
+    ["out", "78f870f75914fd6784b9cf6862887369a7e8604bd04eb4944562196bc3cdcaa1"],
+  ] as const) {
     expect(
       createHash("sha256")
-        .update(
-          Buffer.from(
-            minecraftToastSounds[kind as "in" | "out"].split(",")[1],
-            "base64"
-          )
-        )
+        .update(Buffer.from(minecraftToastSounds[kind].split(",")[1], "base64"))
         .digest("hex")
     ).toBe(pin);
   }

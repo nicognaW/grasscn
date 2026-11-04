@@ -653,12 +653,10 @@ const SwitchFixture = () => {
 
 const ContextFixture = () => {
   const native = params.has("native");
-  const triggerPixels = params.has("triggerPixels");
+
   const [open, setOpen] = React.useState(params.has("open"));
 
-  const [menuValue, setMenuValue] = React.useState(
-    params.has("open") ? "game" : ""
-  );
+  const [, setMenuValue] = React.useState(params.has("open") ? "game" : "");
 
   const [actions, setActions] = React.useState(0);
   const [checked, setChecked] = React.useState(false);
@@ -667,7 +665,6 @@ const ContextFixture = () => {
 
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLDivElement>(null);
-  const rootRef = React.useRef<HTMLDivElement>(null);
 
   // SAFETY: owned ContextMenu items callers serialize string label arrays; preserve this branch's existing parameter/default read.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact ContextMenu items query-label producer boundary.
@@ -1105,7 +1102,7 @@ const MenubarFixture = () => {
     ? (params.get("label") ?? "Button")
     : "Game menu";
 
-  const [open, setOpen] = React.useState(params.has("open"));
+  const [, setOpen] = React.useState(params.has("open"));
 
   const [menuValue, setMenuValue] = React.useState(
     params.has("open") ? "game" : ""
@@ -1431,9 +1428,7 @@ const DropdownFixture = () => {
 
   const [open, setOpen] = React.useState(params.has("open"));
 
-  const [menuValue, setMenuValue] = React.useState(
-    params.has("open") ? "game" : ""
-  );
+  const [, setMenuValue] = React.useState(params.has("open") ? "game" : "");
 
   const [actions, setActions] = React.useState(0);
   const [checked, setChecked] = React.useState(false);
@@ -1442,7 +1437,6 @@ const DropdownFixture = () => {
 
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLButtonElement>(null);
-  const rootRef = React.useRef<HTMLDivElement>(null);
 
   // SAFETY: owned DropdownMenu items callers serialize string label arrays; preserve this branch's existing parameter/default read.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact DropdownMenu items query-label producer boundary.
@@ -3487,11 +3481,11 @@ const Fixture = () => {
     return <SwitchFixture />;
   }
 
-  if (params.get("component")?.startsWith("radio-group")) {
+  if (params.get("component")?.startsWith("radio-group") === true) {
     return <RadioFixture />;
   }
 
-  if (params.get("component")?.startsWith("select")) {
+  if (params.get("component")?.startsWith("select") === true) {
     return <SelectFixture />;
   }
 
