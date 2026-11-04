@@ -71,7 +71,7 @@ for (const scale of [2]) {
     await table.getByRole("button", { exact: true, name: "Next" }).click();
     await table
       .getByRole("textbox", { name: "Filter worlds" })
-      .fill("\u4f60\u597d");
+      .fill("\u4F60\u597D");
 
     const cell = table.getByRole("cell", {
       exact: true,

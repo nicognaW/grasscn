@@ -177,7 +177,7 @@ for (const scale of [2] as const) {
       await expect(select).toHaveValue("world");
       await expect(
         page.locator("[data-stage=native-select] .mc-native-select-art").first()
-      ).toContainText("\u4e16\u754c");
+      ).toContainText("\u4E16\u754C");
       // OS-native popup placement is platform-controlled, not a DOM/native-Minecraft popup claim.
       await expect(page.locator("[data-slot=select-content]")).toHaveCount(0);
     });

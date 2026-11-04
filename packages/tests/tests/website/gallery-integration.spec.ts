@@ -28,7 +28,7 @@ for (const viewport of [
 
     for (const name of names) {
       // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
-      await page.goto(origin + "docs/components/" + name);
+      await page.goto(`${origin}docs/components/${name}`);
       const card = page.locator(".documentation-playground");
 
       // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.

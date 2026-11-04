@@ -25,14 +25,13 @@ for (const scale of [1, 2, 3]) {
         const text = selectedText;
 
         await page.goto(
-          "/?" +
-            new URLSearchParams({
-              component: "collapsible-first-frame",
-              scale: String(scale),
-              text,
-              width: variant === "wrapped" ? "80" : "200",
-              ...(warm ? { warm: "1" } : {}),
-            })
+          `/?${new URLSearchParams({
+            component: "collapsible-first-frame",
+            scale: String(scale),
+            text,
+            width: variant === "wrapped" ? "80" : "200",
+            ...(warm ? { warm: "1" } : {}),
+          })}`
         );
         await expect(page.locator("[data-warm-ready]")).toHaveAttribute(
           "data-warm-ready",

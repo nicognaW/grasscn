@@ -280,7 +280,7 @@ const TextComponentsFixture = () => {
                 <a href="#world" />
               }
             >
-              {"World"}
+              World
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />

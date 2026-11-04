@@ -159,7 +159,7 @@ export const StructuralFixture = () => {
               <ButtonGroupSeparator scale={scale} role="separator" />
               <ButtonGroupText scale={scale}>Game</ButtonGroupText>
               <ButtonGroupText render={<span id="slotted" />}>
-                {"Slotted text"}
+                Slotted text
               </ButtonGroupText>
               <Button
                 scale={scale}

@@ -2087,11 +2087,9 @@ const AlertDialogCompositionFixture = () => {
       <AlertDialogContent render={<section />} ref={content}>
         <>
           <AlertDialogHeader>
-            <AlertDialogTitle render={<h3 />}>
-              {"Composed title"}
-            </AlertDialogTitle>
+            <AlertDialogTitle render={<h3 />}>Composed title</AlertDialogTitle>
             <AlertDialogDescription render={<div />}>
-              {"Composed description"}
+              Composed description
             </AlertDialogDescription>
           </AlertDialogHeader>
           <form
@@ -2128,10 +2126,10 @@ const AlertDialogCompositionFixture = () => {
                 <a href="#confirmed" />
               }
             >
-              {"Confirm link"}
+              Confirm link
             </AlertDialogAction>
             <AlertDialogCancel ref={cancel} render={<Button />}>
-              {"Cancel composed"}
+              Cancel composed
             </AlertDialogCancel>
           </AlertDialogFooter>
         </>
@@ -2167,9 +2165,9 @@ const DialogCompositionFixture = () => {
       >
         <>
           <DialogHeader>
-            <DialogTitle render={<h3 />}>{"Composed title"}</DialogTitle>
+            <DialogTitle render={<h3 />}>Composed title</DialogTitle>
             <DialogDescription render={<div />}>
-              {"Composed description"}
+              Composed description
             </DialogDescription>
           </DialogHeader>
           <form
@@ -2197,7 +2195,7 @@ const DialogCompositionFixture = () => {
           <output aria-label="Dialog composed refs">{result}</output>
           <output aria-label="Dialog submissions">{submissions}</output>
           <DialogFooter>
-            <DialogClose render={<Button />}>{"Composed close"}</DialogClose>
+            <DialogClose render={<Button />}>Composed close</DialogClose>
           </DialogFooter>
         </>
       </DialogContent>
@@ -3000,7 +2998,7 @@ const FixtureTooltip = () => {
             />
           }
         >
-          {"Inspect"}
+          Inspect
         </TooltipTrigger>
         <TooltipContent
           render={params.has("asChild") ? <div /> : undefined}

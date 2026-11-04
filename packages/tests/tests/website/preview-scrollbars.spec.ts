@@ -21,7 +21,7 @@ for (const scale of [2]) {
     page,
   }) => {
     await page.setViewportSize({ height: 844, width: 390 });
-    await page.goto(origin + "docs/components/textarea");
+    await page.goto(`${origin}docs/components/textarea`);
 
     await expect
       .poll(

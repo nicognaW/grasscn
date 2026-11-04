@@ -75,7 +75,7 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
 test("small pointer movement still selects an advancement", async ({
   page,
 }) => {
-  await page.goto(fixture + "?scale=2&mask=1");
+  await page.goto(`${fixture}?scale=2&mask=1`);
 
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
   const plane = page.locator(".mc-advancement-plane");
@@ -99,7 +99,7 @@ test("dragging from a node pans without selecting and does not block keyboard se
       warnings.push(message.text());
     }
   });
-  await page.goto(fixture + "?scale=2&mask=1");
+  await page.goto(`${fixture}?scale=2&mask=1`);
 
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
   const plane = page.locator(".mc-advancement-plane");
@@ -133,7 +133,7 @@ test("dragging from a node pans without selecting and does not block keyboard se
 test("cancelled drag permits the next click and keyboard selection", async ({
   page,
 }) => {
-  await page.goto(fixture + "?scale=2&mask=1");
+  await page.goto(`${fixture}?scale=2&mask=1`);
   const tree = page.getByRole("group", { name: "Advancement tree" });
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
   const box = await node.boundingBox();
