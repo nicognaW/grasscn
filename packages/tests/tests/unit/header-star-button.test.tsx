@@ -21,16 +21,25 @@ test("Header star button without a count keeps its link and drops the lamp displ
   assert.ok(!html.includes('data-slot="redstone-lamp-display"'));
 });
 
-test("Header star button without a count shows the nether star alone", () => {
+test("Header star button without a count shows the nether star and the GitHub label", () => {
   const html = renderToStaticMarkup(<StarButton />);
 
-  // The anchor's label is the only name: the star is a decorative 32x32
-  // GUI-scale-2 canvas, and no placeholder text remains.
+  // The star is a decorative 32x32 GUI-scale-2 canvas; the visible GitHub
+  // label follows it so visitors can tell where the button leads.
   assert.match(
     html,
-    /<span data-slot="star-button-star"><canvas aria-hidden="true" data-slot="nether-star" height="32" width="32"><\/canvas><\/span><\/a>$/u
+    /<span data-slot="star-button-star"><canvas aria-hidden="true" data-slot="nether-star" height="32" width="32"><\/canvas><\/span><span data-slot="star-button-label">.*GitHub.*<\/span><\/a>$/u
   );
-  assert.ok(!html.includes("GitHub</"));
+});
+
+test("Header star button shows the GitHub label between the star and the lamp display", () => {
+  const html = renderToStaticMarkup(<StarButton count="12k" />);
+  const star = html.indexOf('data-slot="nether-star"');
+  const label = html.indexOf('data-slot="star-button-label"');
+  const display = html.indexOf('data-slot="redstone-lamp-display"');
+
+  assert.ok(star < label && label < display);
+  assert.ok(html.slice(label, display).includes("GitHub"));
 });
 
 test("Header star button shows the nether star before the lamp display", () => {

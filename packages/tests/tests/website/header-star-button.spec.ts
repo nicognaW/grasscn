@@ -194,9 +194,15 @@ interface LaunchVoice {
   volume: number;
 }
 
+interface StarOpen {
+  time: number;
+  url: string;
+}
+
 declare global {
   interface Window {
     __fireworkVoices: LaunchVoice[];
+    __starOpens: StarOpen[];
   }
 }
 
@@ -459,4 +465,69 @@ test("Under reduced motion the header star button plays the firework sounds with
   );
 
   expect((blast ?? 0) - (launch ?? 0)).toBeGreaterThanOrEqual(1200);
+});
+
+// Records repository opens instead of opening real tabs. The stub hands back
+// this page as the opened window, so cutting its opener changes nothing.
+const recordOpens = async (page: Page) => {
+  await page.addInitScript(() => {
+    const opens: StarOpen[] = [];
+
+    window.__starOpens = opens;
+    window.open = (url) => {
+      opens.push({ time: performance.now(), url: String(url) });
+
+      return window;
+    };
+  });
+};
+
+const starOpens = async (page: Page) =>
+  await page.evaluate(() => window.__starOpens);
+
+test("The header star button shows a visible GitHub label", async ({
+  page,
+}) => {
+  await page.goto(`${origin}docs`);
+  const label = starButton(page).locator('[data-slot="star-button-label"]');
+
+  await expect(label).toBeVisible();
+  await expect(label).toHaveText("GitHub");
+});
+
+test("The header star button opens the repository after the firework has played", async ({
+  page,
+}) => {
+  await recordOpens(page);
+  await page.goto(`${origin}docs`);
+  const clicked = await page.evaluate(() => performance.now());
+  // Three quick clicks launch three fireworks but open the repository once.
+  await starButton(page).click({ clickCount: 3 });
+
+  // Nothing opens, and the page stays, while the firework plays.
+  await page.waitForTimeout(1500);
+  expect(await starOpens(page)).toEqual([]);
+  expect(page.url()).toBe(`${origin}docs`);
+
+  await expect
+    .poll(async () => {
+      const opens = await starOpens(page);
+
+      return opens.length;
+    })
+    .toBe(1);
+  const [open] = await starOpens(page);
+  expect(open?.url).toBe("https://github.com/nicognaW/grasscn");
+  expect((open?.time ?? 0) - clicked).toBeGreaterThanOrEqual(2400);
+});
+
+test("Under reduced motion the header star button opens the repository at once", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await recordOpens(page);
+  await page.goto(`${origin}docs`);
+  await starButton(page).click();
+
+  expect(await starOpens(page)).toHaveLength(1);
 });
