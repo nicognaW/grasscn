@@ -105,18 +105,16 @@ const TextComponentsFixture = () => {
     } satisfies TextReferenceStyle as TextReferenceStyle,
   };
 
-  let subject: React.ReactNode;
-
-  if (component === "empty") {
+  const renderTextEmptyScenario = () => {
     if (native) {
       if (part === "title") {
-        subject = (
+        return (
           <EmptyTitle {...common} scale={scale} maxWidth={width} align={align}>
             {text}
           </EmptyTitle>
         );
       } else if (part === "description") {
-        subject = (
+        return (
           <EmptyDescription
             {...common}
             scale={scale}
@@ -126,92 +124,94 @@ const TextComponentsFixture = () => {
             {text}
           </EmptyDescription>
         );
-      } else {
-        subject = (
-          <Empty {...common} scale={scale}>
-            {text}
-          </Empty>
-        );
       }
-    } else {
-      subject = (
-        <Empty scale={scale} ref={subjectRef}>
-          <EmptyHeader>
-            <EmptyMedia>
-              <span data-testid="media">*</span>
-            </EmptyMedia>
-            <EmptyTitle>No worlds found</EmptyTitle>
-            <EmptyDescription maxWidth={160}>
-              Create a world to begin your adventure.
-            </EmptyDescription>
-          </EmptyHeader>
-          <EmptyContent>
-            <button
-              type="button"
-              onClick={() => {
-                setEvents((n) => n + 1);
-              }}
-            >
-              Create world
-            </button>
-          </EmptyContent>
+
+      return (
+        <Empty {...common} scale={scale}>
+          {text}
         </Empty>
       );
     }
-  } else if (component === "badge") {
+
+    return (
+      <Empty scale={scale} ref={subjectRef}>
+        <EmptyHeader>
+          <EmptyMedia>
+            <span data-testid="media">*</span>
+          </EmptyMedia>
+          <EmptyTitle>No worlds found</EmptyTitle>
+          <EmptyDescription maxWidth={160}>
+            Create a world to begin your adventure.
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <button
+            type="button"
+            onClick={() => {
+              setEvents((n) => n + 1);
+            }}
+          >
+            Create world
+          </button>
+        </EmptyContent>
+      </Empty>
+    );
+  };
+
+  const renderTextBadgeScenario = () => (
     // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
-    subject = (
-      <Badge
-        render={
-          q.has("asChild") ? (
-            <a
-              href="#destination"
-              aria-label={fixtureFallbackLabel("Text example", text)}
-            />
-          ) : undefined
-        }
-        scale={scale}
-        maxWidth={width}
-        {...common}
-        style={
-          native
-            ? ({
-                "--reference-height": q.has("height")
-                  ? `${(Number(q.get("height")) - 16) * scale}px`
-                  : undefined,
-                "--reference-width": q.has("width")
-                  ? `${(Number(q.get("width")) - 16) * scale}px`
-                  : undefined,
-                "--reference-x": `${(Number(q.get("x") ?? 16) + 8) * scale}px`,
-                "--reference-y": `${(Number(q.get("y") ?? 16) + 8) * scale}px`,
-              } satisfies TextReferenceStyle as TextReferenceStyle)
-            : ({
-                "--reference-height": q.has("height")
-                  ? `${Number(q.get("height")) * scale}px`
-                  : undefined,
-                "--reference-width": q.has("width")
-                  ? `${Number(q.get("width")) * scale}px`
-                  : undefined,
-                "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
-                "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
-              } satisfies TextReferenceStyle as TextReferenceStyle)
-        }
-      >
-        {rich}
-      </Badge>
-    );
-  } else if (component === "kbd") {
-    subject = (
-      <Kbd
-        scale={scale}
-        {...common}
-        tabIndex={q.has("tabIndex") || state === "focus" ? 0 : undefined}
-        aria-disabled={state.startsWith("disabled") ? true : undefined}
-      >
-        {rich}
-      </Kbd>
-    );
-  } else if (component === "typography") {
+    <Badge
+      render={
+        q.has("asChild") ? (
+          <a
+            href="#destination"
+            aria-label={fixtureFallbackLabel("Text example", text)}
+          />
+        ) : undefined
+      }
+      scale={scale}
+      maxWidth={width}
+      {...common}
+      style={
+        native
+          ? ({
+              "--reference-height": q.has("height")
+                ? `${(Number(q.get("height")) - 16) * scale}px`
+                : undefined,
+              "--reference-width": q.has("width")
+                ? `${(Number(q.get("width")) - 16) * scale}px`
+                : undefined,
+              "--reference-x": `${(Number(q.get("x") ?? 16) + 8) * scale}px`,
+              "--reference-y": `${(Number(q.get("y") ?? 16) + 8) * scale}px`,
+            } satisfies TextReferenceStyle as TextReferenceStyle)
+          : ({
+              "--reference-height": q.has("height")
+                ? `${Number(q.get("height")) * scale}px`
+                : undefined,
+              "--reference-width": q.has("width")
+                ? `${Number(q.get("width")) * scale}px`
+                : undefined,
+              "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
+              "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
+            } satisfies TextReferenceStyle as TextReferenceStyle)
+      }
+    >
+      {rich}
+    </Badge>
+  );
+
+  const renderTextKbdScenario = () => (
+    <Kbd
+      scale={scale}
+      {...common}
+      tabIndex={q.has("tabIndex") || state === "focus" ? 0 : undefined}
+      aria-disabled={state.startsWith("disabled") ? true : undefined}
+    >
+      {rich}
+    </Kbd>
+  );
+
+  const renderTextTypographyScenario = () => {
     const parts: Readonly<Partial<Record<string, typeof Typography>>> = {
       blockquote: TypographyBlockquote,
       code: TypographyInlineCode,
@@ -229,7 +229,7 @@ const TextComponentsFixture = () => {
 
     const Component = parts[part] ?? Typography;
 
-    subject = (
+    return (
       <Component
         render={
           q.has("asChild") ? (
@@ -247,58 +247,69 @@ const TextComponentsFixture = () => {
         {rich}
       </Component>
     );
-  } else if (component === "breadcrumb" && native) {
-    subject =
-      part === "page" ? (
-        <BreadcrumbPage
-          {...common}
-          scale={scale}
-          maxWidth={width}
-          align={align}
-        >
-          {text}
-        </BreadcrumbPage>
-      ) : (
-        <BreadcrumbLink
-          render={q.has("asChild") ? <a /> : undefined}
-          {...common}
-          scale={scale}
-          maxWidth={width}
-          align={align}
-          href="#destination"
-        >
-          {text}
-        </BreadcrumbLink>
-      );
-  } else {
-    subject = (
-      <Breadcrumb scale={scale}>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="#home">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink
-              render={
-                // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- BreadcrumbLink supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
-                <a href="#world" />
-              }
-            >
-              World
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbEllipsis />
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage ref={subjectRef}>Current page</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+  };
+
+  const renderTextNativeBreadcrumbScenario = () =>
+    part === "page" ? (
+      <BreadcrumbPage {...common} scale={scale} maxWidth={width} align={align}>
+        {text}
+      </BreadcrumbPage>
+    ) : (
+      <BreadcrumbLink
+        render={q.has("asChild") ? <a /> : undefined}
+        {...common}
+        scale={scale}
+        maxWidth={width}
+        align={align}
+        href="#destination"
+      >
+        {text}
+      </BreadcrumbLink>
     );
+
+  const renderTextBreadcrumbScenario = () => (
+    <Breadcrumb scale={scale}>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#home">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink
+            render={
+              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- BreadcrumbLink supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+              <a href="#world" />
+            }
+          >
+            World
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbEllipsis />
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage ref={subjectRef}>Current page</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+
+  let subject: React.ReactNode;
+
+  if (component === "empty") {
+    subject = renderTextEmptyScenario();
+  } else if (component === "badge") {
+    subject = renderTextBadgeScenario();
+  } else if (component === "kbd") {
+    subject = renderTextKbdScenario();
+  } else if (component === "typography") {
+    subject = renderTextTypographyScenario();
+  } else if (component === "breadcrumb" && native) {
+    subject = renderTextNativeBreadcrumbScenario();
+  } else {
+    subject = renderTextBreadcrumbScenario();
   }
 
   return (
