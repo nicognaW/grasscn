@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import type { SearchPage } from "../lib/search-results";
-import { Button } from "../registry/ui/button";
 import { MinecraftText } from "../registry/ui/minecraft-text";
 import { DocumentSearch } from "./document-search";
 import { DocumentSelection } from "./document-selection";
@@ -45,23 +44,13 @@ export const SiteFrame = ({
           >
             <MinecraftText>Home</MinecraftText>
           </Link>
-          <Button
-            nativeButton={false}
-            render={
-              <Link
-                href="/docs"
-
-                /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
-                role="link"
-                /* eslint-enable jsx-a11y/prefer-tag-over-role */
-
-                aria-current={pathname.startsWith("/docs") ? "page" : undefined}
-              />
-            }
-            scale={2}
+          <Link
+            href="/docs"
+            className="minecraft-header-text-link"
+            aria-current={pathname.startsWith("/docs") ? "page" : undefined}
           >
-            Components
-          </Button>
+            <MinecraftText>Components</MinecraftText>
+          </Link>
           <Link href="/#examples" className="minecraft-header-text-link">
             <MinecraftText>Examples</MinecraftText>
           </Link>
