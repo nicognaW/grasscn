@@ -15,7 +15,6 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from "@grasscn/web/ui/pagination";
-import type { ReactNode } from "react";
 import * as React from "react";
 
 import { cn } from "./utils";
@@ -41,8 +40,10 @@ const position: React.CSSProperties = {
   "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
 };
 
-const renderButtonGroupSubject = (subject: ReactNode) => {
-  let selectedFixtureBranch1: ReactNode;
+const renderButtonGroupSubject = (
+  subject: React.JSX.Element
+): React.JSX.Element => {
+  let selectedFixtureBranch1: React.JSX.Element;
 
   if (p.get("part") === "text") {
     selectedFixtureBranch1 = (
@@ -77,6 +78,7 @@ const renderButtonGroupSubject = (subject: ReactNode) => {
         subject
       );
   }
+
   return selectedFixtureBranch1;
 };
 

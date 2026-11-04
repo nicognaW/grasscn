@@ -52,20 +52,12 @@ const CustomAction = ({
   />
 );
 
-const readItemReferenceLayout = (width: number) => {
+const readItemReferenceGeometry = () => {
   const height = Number(q.get("height") ?? 36) * scale;
   const x = Number(q.get("x") ?? 16) * scale;
   const y = Number(q.get("y") ?? 16) * scale;
 
-  const commonStyle = {
-    "--fixture-height": `${height}px`,
-    "--fixture-x": `${x}px`,
-
-    "--fixture-y": `${y}px`,
-    width: width * scale,
-  } satisfies React.CSSProperties;
-
-  return { commonStyle, height, x, y };
+  return { height, x, y };
 };
 
 const ItemFixture = () => {
@@ -127,7 +119,15 @@ const ItemFixture = () => {
     </>
   );
 
-  const { commonStyle, height, x, y } = readItemReferenceLayout(width);
+  const { height, x, y } = readItemReferenceGeometry();
+
+  const commonStyle = {
+    "--fixture-height": `${height}px`,
+    "--fixture-x": `${x}px`,
+
+    "--fixture-y": `${y}px`,
+    width: width * scale,
+  } satisfies React.CSSProperties;
 
   let selectedSubject: React.JSX.Element;
 

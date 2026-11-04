@@ -64,6 +64,7 @@ export const OverlayFixture = () => {
   } satisfies React.CSSProperties;
 
   const isDrawer = component === "drawer";
+
   const resolveOverlayParts = () => {
     const engineRoot = isDrawer ? Drawer.Drawer : Sheet.Sheet;
     const engineTrigger = isDrawer ? Drawer.DrawerTrigger : Sheet.SheetTrigger;
