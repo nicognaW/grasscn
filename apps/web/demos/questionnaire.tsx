@@ -91,7 +91,10 @@ const QuestionnaireDemo = ({ scale }: DemoProps) => {
           onSubmit={(event) => {
             event.preventDefault();
             const data = new FormData(event.currentTarget);
-            setResult(`World created: ${data.get("name")}`);
+            // SAFETY: this private questionnaire's name input uses the SDK's default text type, with no file input; FormData returns its string value or null when absent.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned form controls establish the exact text-or-absent FormData field contract.
+            const worldName = data.get("name") as string | null;
+            setResult(`World created: ${String(worldName)}`);
           }}
         >
           <QuestionnaireProgress maxWidth={width} align="center" />
