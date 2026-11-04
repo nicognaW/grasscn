@@ -208,7 +208,7 @@ const renderRosterEntry = (
   );
 
   return (
-    <div role="listitem" key={player.id} className="mc-roster-row">
+    <li key={player.id} className="mc-roster-row">
       {onPlayerSelect ? (
         <button
           type="button"
@@ -224,7 +224,7 @@ const renderRosterEntry = (
       ) : (
         content
       )}
-    </div>
+    </li>
   );
 };
 
@@ -418,8 +418,7 @@ const PlayerList = ({
         ) : (
           header
         )}
-        <div
-          role="list"
+        <ul
           aria-label="Players"
           className="mc-roster-grid mc-dynamic-layout-player-list-3"
           style={
@@ -444,7 +443,7 @@ const PlayerList = ({
               onPlayerSelect
             )
           )}
-        </div>
+        </ul>
         {hasFooter ? (
           <div
             className="mc-roster-heading mc-dynamic-layout-player-list-7"

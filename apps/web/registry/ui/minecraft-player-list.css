@@ -13,6 +13,9 @@
     background: #00000080;
   }
   .mc-roster-grid {
+    margin: 0;
+    padding: 0;
+    list-style: none;
     position: absolute;
     display: grid;
     grid-auto-flow: column;

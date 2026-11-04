@@ -668,6 +668,7 @@ const Performance = () => {
           <DocumentText>All systems operational</DocumentText>
         </span>
         <button
+          type="button"
           className="grass-text-link"
           onClick={() => {
             setSample((v) => v + 1);
