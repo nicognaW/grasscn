@@ -61,8 +61,12 @@ export const ChatFamilyFixture = () => {
     "--mc-pixel": `${scale}px`,
   };
 
-  document.documentElement.style.background = q.get("background") ?? "#202020";
-  document.body.style.background = q.get("background") ?? "#202020";
+  const background = q.get("background") ?? "#202020";
+
+  React.useLayoutEffect(() => {
+    document.documentElement.style.background = background;
+    document.body.style.background = background;
+  }, [background]);
 
   const rich = q.has("rich");
   const content = rich ? <strong data-testid="rich-text">{text}</strong> : text;

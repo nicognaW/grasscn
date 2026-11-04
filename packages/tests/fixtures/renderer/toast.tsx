@@ -163,8 +163,12 @@ const StrictFixture = () => {
 };
 
 export const ToastFixture = () => {
-  document.documentElement.style.background = p.get("background") ?? "#202020";
-  document.body.style.background = p.get("background") ?? "#202020";
+  const background = p.get("background") ?? "#202020";
+
+  React.useLayoutEffect(() => {
+    document.documentElement.style.background = background;
+    document.body.style.background = background;
+  }, [background]);
 
   if (p.has("native")) {
     setMinecraftSoundVolume(0);
