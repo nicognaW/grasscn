@@ -7,6 +7,7 @@ import { Button } from "./button";
 import { ChatChildren, MessageScale } from "./message";
 import { minecraftLoadingGlyphs } from "./minecraft-loading-glyphs";
 import {
+  isMinecraftSelectableTextElement,
   isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
@@ -180,14 +181,7 @@ const selectable = function selectable(
     return React.Children.map(value, selectable);
   }
 
-  if (
-    React.isValidElement<{
-      children?: React.ReactNode;
-    }>(value) &&
-    (value.type === React.Fragment ||
-      (typeof value.type === "string" &&
-        ["span", "a", "strong", "em", "code", "b", "i"].includes(value.type)))
-  ) {
+  if (isMinecraftSelectableTextElement(value)) {
     return React.cloneElement(
       value,
       undefined,

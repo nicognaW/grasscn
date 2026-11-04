@@ -37,6 +37,59 @@ export const isMinecraftEmptyChild = (
 ): child is null | undefined | boolean =>
   child === null || child === undefined || typeof child === "boolean";
 
+/** Transparent inline containers whose children the bitmap labels may adapt. */
+export const isMinecraftInlineTextElement = (
+  value: React.ReactNode
+): value is React.ReactElement<
+  { children?: React.ReactNode },
+  | "span"
+  | "a"
+  | "strong"
+  | "em"
+  | "b"
+  | "i"
+  | "u"
+  | "s"
+  | "small"
+  | "code"
+  | "mark"
+  | "abbr"
+  | "sub"
+  | "sup"
+  | typeof React.Fragment
+> =>
+  React.isValidElement<{ children?: React.ReactNode }>(value) &&
+  (value.type === React.Fragment ||
+    (typeof value.type === "string" &&
+      [
+        "span",
+        "a",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "u",
+        "s",
+        "small",
+        "code",
+        "mark",
+        "abbr",
+        "sub",
+        "sup",
+      ].includes(value.type)));
+
+/** Selectable code text preserves the narrower supported formatting vocabulary. */
+export const isMinecraftSelectableTextElement = (
+  value: React.ReactNode
+): value is React.ReactElement<
+  { children?: React.ReactNode },
+  "span" | "a" | "strong" | "em" | "code" | "b" | "i" | typeof React.Fragment
+> =>
+  React.isValidElement<{ children?: React.ReactNode }>(value) &&
+  (value.type === React.Fragment ||
+    (typeof value.type === "string" &&
+      ["span", "a", "strong", "em", "code", "b", "i"].includes(value.type)));
+
 export type MinecraftRenderProp = useRender.RenderProp<object>;
 
 export type MinecraftProps<T extends React.ElementType> =

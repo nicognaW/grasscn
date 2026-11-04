@@ -7,6 +7,7 @@ import { MinecraftColorUnicodeLabel } from "./minecraft-color-unicode";
 import { disclosureAdvance } from "./minecraft-disclosure-metrics";
 import { minecraftGlyphs } from "./minecraft-font";
 import {
+  isMinecraftInlineTextElement,
   isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
@@ -256,29 +257,7 @@ const MinecraftChatText = ({
       return React.Children.map(value, richText);
     }
 
-    if (
-      React.isValidElement<{
-        children?: React.ReactNode;
-      }>(value) &&
-      (value.type === React.Fragment ||
-        (typeof value.type === "string" &&
-          [
-            "span",
-            "a",
-            "strong",
-            "em",
-            "b",
-            "i",
-            "u",
-            "s",
-            "small",
-            "code",
-            "mark",
-            "abbr",
-            "sub",
-            "sup",
-          ].includes(value.type)))
-    ) {
+    if (isMinecraftInlineTextElement(value)) {
       return React.cloneElement(
         value,
         undefined,
