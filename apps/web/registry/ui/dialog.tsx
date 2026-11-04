@@ -180,19 +180,19 @@ const DialogContent = ({
       const bounds = element.getBoundingClientRect();
       element.style.setProperty(
         "--mc-dialog-background-left",
-        `${bounds.left + element.clientLeft}px`
+        `${bounds.left}px`
       );
       element.style.setProperty(
         "--mc-dialog-background-top",
-        `${bounds.top + element.clientTop}px`
+        `${bounds.top}px`
       );
       element.style.setProperty(
         "--mc-dialog-background-width",
-        `${element.clientWidth}px`
+        `${bounds.width}px`
       );
       element.style.setProperty(
         "--mc-dialog-background-height",
-        `${element.clientHeight}px`
+        `${bounds.height}px`
       );
       const inside = logicalWidth - 36;
 

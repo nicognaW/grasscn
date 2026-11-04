@@ -30,8 +30,8 @@
       calc(100vw - 12 * var(--mc-pixel))
     );
     max-height: calc(100vh - 12 * var(--mc-pixel));
-    padding: calc(18 * var(--mc-pixel));
-    border: 0;
+    padding: calc(12 * var(--mc-pixel));
+    border: calc(6 * var(--mc-pixel)) solid transparent;
     border-radius: 0;
     outline: none;
     color: #fff;
