@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import grassBlockIcon from "../assets/grass-block-16.png";
 import { LegacyDocumentationLinks } from "../components/legacy-documentation-links";
 import { SiteFrame } from "../components/site-frame";
@@ -66,6 +68,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
           {children}
         </SiteFrame>
         <LegacyDocumentationLinks pages={pages} groups={groups} />
+        <SpeedInsights />
       </body>
     </html>
   );
