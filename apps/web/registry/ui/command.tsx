@@ -140,14 +140,17 @@ const CommandInput = ({
     [scale]
   );
 
+  const inputClassName = cn("mc-input mc-command-input", className);
+  const inputStyle: CommandScaleStyle = { "--mc-scale": scale, ...style };
+
   return (
     <CommandPrimitive.Input
       ref={node}
       data-slot="command-input"
       spellCheck={false}
       autoCorrect="off"
-      className={cn("mc-input mc-command-input", className)}
-      style={{ "--mc-scale": scale, ...style } as React.CSSProperties}
+      className={inputClassName}
+      style={inputStyle}
       {...props}
     />
   );
@@ -261,13 +264,16 @@ const CommandList = ({
     </>
   );
 
+  const listClassName = cn(`mc-menu-content mc-command-list`, className);
+  const listStyle: CommandScaleStyle = { "--mc-scale": scale, ...style };
+
   return (
     <CommandPrimitive.List
       data-slot="command-list"
       data-surface={surface}
       ref={node}
-      className={cn(`mc-menu-content mc-command-list`, className)}
-      style={{ "--mc-scale": scale, ...style } as React.CSSProperties}
+      className={listClassName}
+      style={listStyle}
       {...props}
     >
       {contents}
