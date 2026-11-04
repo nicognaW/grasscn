@@ -96,6 +96,45 @@ const Inspector = () => {
   );
 };
 
+const renderNativeScrollContent = () => (
+  <SidebarContent
+    id="subject"
+    className="fixture-sidebar-native-geometry"
+    style={{
+      "--fixture-sidebar-native-height":
+        nativeSidebarLayout["--fixture-sidebar-native-height"],
+      "--fixture-sidebar-native-left":
+        nativeSidebarLayout["--fixture-sidebar-native-left"],
+      "--fixture-sidebar-native-top":
+        nativeSidebarLayout["--fixture-sidebar-native-top"],
+      "--fixture-sidebar-native-width":
+        nativeSidebarLayout["--fixture-sidebar-native-width"],
+    }}
+    data-subject="true"
+  >
+    <div
+      style={{
+        "--fixture-layout-22": `${Number(p.get("contentHeight") ?? 0) * scale}px`,
+      }}
+      className="fixture-owner-layout-38 fixture-owner-layout-39 fixture-owner-layout-47"
+    >
+      {Array.from(
+        { length: Math.ceil(Number(p.get("contentHeight") ?? 0) / 24) },
+        (_, index) => (
+          <Button
+            key={index}
+            scale={scale}
+            className="fixture-sidebar-native-row"
+            style={{
+              "--fixture-sidebar-row-top": `${24 * index * scale}px`,
+            }}
+          >{`Row ${index + 1}`}</Button>
+        )
+      )}
+    </div>
+  </SidebarContent>
+);
+
 export const SidebarFixture = () => {
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
@@ -169,232 +208,203 @@ export const SidebarFixture = () => {
     },
   };
 
+  const renderNativeInput = () => (
+    <SidebarInput
+      id="subject"
+      aria-label="Test input"
+      value={text}
+      onChange={(event) => {
+        setText(event.target.value);
+      }}
+      placeholder={p.get("placeholder") ?? ""}
+      disabled={state === "disabled"}
+      readOnly={state.includes("readonly")}
+      maxLength={p.has("maxLength") ? Number(p.get("maxLength")) : undefined}
+      className="fixture-sidebar-native-geometry"
+      style={{
+        "--fixture-sidebar-native-height":
+          nativeSidebarLayout["--fixture-sidebar-native-height"],
+        "--fixture-sidebar-native-left":
+          nativeSidebarLayout["--fixture-sidebar-native-left"],
+        "--fixture-sidebar-native-top":
+          nativeSidebarLayout["--fixture-sidebar-native-top"],
+        "--fixture-sidebar-native-width":
+          nativeSidebarLayout["--fixture-sidebar-native-width"],
+      }}
+      data-subject="true"
+    />
+  );
+
   if (native) {
-    let selectedNativeSidebarSubject: React.JSX.Element | null;
+    const renderNativeSidebar = () => {
+      let selectedNativeSidebarSubject: React.JSX.Element | null;
 
-    if (part === "menu-button") {
-      selectedNativeSidebarSubject = (
-        <SidebarMenuButton
-          {...nativeSidebarButtonProps}
-          isActive={p.has("active")}
-        >
-          {label}
-        </SidebarMenuButton>
-      );
-    } else if (part === "sub-button") {
-      selectedNativeSidebarSubject = (
-        <SidebarMenuSubButton
-          id="subject"
-          href="#destination"
-          className="fixture-sidebar-native-geometry"
-          style={{
-            "--fixture-sidebar-native-height":
-              nativeSidebarLayout["--fixture-sidebar-native-height"],
-            "--fixture-sidebar-native-left":
-              nativeSidebarLayout["--fixture-sidebar-native-left"],
-            "--fixture-sidebar-native-top":
-              nativeSidebarLayout["--fixture-sidebar-native-top"],
-            "--fixture-sidebar-native-width":
-              nativeSidebarLayout["--fixture-sidebar-native-width"],
-          }}
-          aria-disabled={state === "disabled" || undefined}
-          isActive={p.has("active")}
-          onClick={click}
-          data-subject="true"
-        >
-          {label}
-        </SidebarMenuSubButton>
-      );
-    } else if (part === "trigger") {
-      selectedNativeSidebarSubject = (
-        <SidebarTrigger {...nativeSidebarButtonProps}>{label}</SidebarTrigger>
-      );
-    } else if (part === "group-action") {
-      selectedNativeSidebarSubject = (
-        <SidebarGroupAction {...buttonProps}>{label}</SidebarGroupAction>
-      );
-    } else if (part === "menu-action") {
-      selectedNativeSidebarSubject = (
-        <SidebarMenuAction {...buttonProps}>{label}</SidebarMenuAction>
-      );
-    } else if (part === "input") {
-      selectedNativeSidebarSubject = (
-        <SidebarInput
-          id="subject"
-          aria-label="Test input"
-          value={text}
-          onChange={(event) => {
-            setText(event.target.value);
-          }}
-          placeholder={p.get("placeholder") ?? ""}
-          disabled={state === "disabled"}
-          readOnly={state.includes("readonly")}
-          maxLength={
-            p.has("maxLength") ? Number(p.get("maxLength")) : undefined
-          }
-          className="fixture-sidebar-native-geometry"
-          style={{
-            "--fixture-sidebar-native-height":
-              nativeSidebarLayout["--fixture-sidebar-native-height"],
-            "--fixture-sidebar-native-left":
-              nativeSidebarLayout["--fixture-sidebar-native-left"],
-            "--fixture-sidebar-native-top":
-              nativeSidebarLayout["--fixture-sidebar-native-top"],
-            "--fixture-sidebar-native-width":
-              nativeSidebarLayout["--fixture-sidebar-native-width"],
-          }}
-          data-subject="true"
-        />
-      );
-    } else if (part === "label") {
-      selectedNativeSidebarSubject = (
-        <SidebarGroupLabel
-          id="subject"
-          maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
-          align={p.get("alignment") === "center" ? "center" : "left"}
-          className="fixture-sidebar-native-geometry fixture-sidebar-margin-zero fixture-sidebar-min-height-zero"
-          style={{
-            "--fixture-sidebar-native-height":
-              nativeSidebarLayout["--fixture-sidebar-native-height"],
-            "--fixture-sidebar-native-left":
-              nativeSidebarLayout["--fixture-sidebar-native-left"],
-            "--fixture-sidebar-native-top":
-              nativeSidebarLayout["--fixture-sidebar-native-top"],
-            "--fixture-sidebar-native-width":
-              nativeSidebarLayout["--fixture-sidebar-native-width"],
-          }}
-          data-subject="true"
-        >
-          {label}
-        </SidebarGroupLabel>
-      );
-    } else if (part === "badge") {
-      selectedNativeSidebarSubject = (
-        <SidebarMenuBadge
-          id="subject"
-          maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
-          align={p.get("alignment") === "center" ? "center" : "left"}
-          className="fixture-sidebar-native-geometry fixture-sidebar-margin-zero"
-          style={{
-            "--fixture-sidebar-native-height":
-              nativeSidebarLayout["--fixture-sidebar-native-height"],
-            "--fixture-sidebar-native-left":
-              nativeSidebarLayout["--fixture-sidebar-native-left"],
-            "--fixture-sidebar-native-top":
-              nativeSidebarLayout["--fixture-sidebar-native-top"],
-            "--fixture-sidebar-native-width":
-              nativeSidebarLayout["--fixture-sidebar-native-width"],
-          }}
-          data-subject="true"
-        >
-          {label}
-        </SidebarMenuBadge>
-      );
-    } else if (part === "separator") {
-      selectedNativeSidebarSubject = (
-        <SidebarSeparator
-          id="subject"
-          edge={state === "footer" ? "footer" : "header"}
-          className="fixture-sidebar-native-geometry fixture-sidebar-margin-zero"
-          style={{
-            "--fixture-sidebar-native-height":
-              nativeSidebarLayout["--fixture-sidebar-native-height"],
-            "--fixture-sidebar-native-left":
-              nativeSidebarLayout["--fixture-sidebar-native-left"],
-            "--fixture-sidebar-native-top":
-              nativeSidebarLayout["--fixture-sidebar-native-top"],
-            "--fixture-sidebar-native-width":
-              nativeSidebarLayout["--fixture-sidebar-native-width"],
-          }}
-          data-subject="true"
-        />
-      );
-    } else if (part === "panel") {
-      selectedNativeSidebarSubject = (
-        <Sidebar
-          id="subject"
-          collapsible="none"
-          className="fixture-sidebar-native-geometry fixture-sidebar-padding fixture-sidebar-gap"
-          style={{
-            "--fixture-sidebar-native-gap": `${12 * scale}px`,
-            "--fixture-sidebar-native-height":
-              nativeSidebarLayout["--fixture-sidebar-native-height"],
-            "--fixture-sidebar-native-left":
-              nativeSidebarLayout["--fixture-sidebar-native-left"],
-            "--fixture-sidebar-native-padding": `${p.has("text") ? 18 * scale : 0}px`,
-            "--fixture-sidebar-native-top":
-              nativeSidebarLayout["--fixture-sidebar-native-top"],
-            "--fixture-sidebar-native-width":
-              nativeSidebarLayout["--fixture-sidebar-native-width"],
-          }}
-          data-subject="true"
-        >
-          {p.has("text") ? (
-            <>
-              <CardHeader>
-                <CardTitle>{label}</CardTitle>
-                <CardDescription>{p.get("text")}</CardDescription>
-              </CardHeader>
-              <CardFooter>
-                <Button scale={scale}>Done</Button>
-              </CardFooter>
-            </>
-          ) : null}
-        </Sidebar>
-      );
-    } else if (part === "scroll") {
-      selectedNativeSidebarSubject = (
-        <SidebarContent
-          id="subject"
-          className="fixture-sidebar-native-geometry"
-          style={{
-            "--fixture-sidebar-native-height":
-              nativeSidebarLayout["--fixture-sidebar-native-height"],
-            "--fixture-sidebar-native-left":
-              nativeSidebarLayout["--fixture-sidebar-native-left"],
-            "--fixture-sidebar-native-top":
-              nativeSidebarLayout["--fixture-sidebar-native-top"],
-            "--fixture-sidebar-native-width":
-              nativeSidebarLayout["--fixture-sidebar-native-width"],
-          }}
-          data-subject="true"
-        >
-          <div
-            style={{
-              "--fixture-layout-22": `${Number(p.get("contentHeight") ?? 0) * scale}px`,
-            }}
-            className="fixture-owner-layout-38 fixture-owner-layout-39 fixture-owner-layout-47"
+      if (part === "menu-button") {
+        selectedNativeSidebarSubject = (
+          <SidebarMenuButton
+            {...nativeSidebarButtonProps}
+            isActive={p.has("active")}
           >
-            {Array.from(
-              { length: Math.ceil(Number(p.get("contentHeight") ?? 0) / 24) },
-              (_, index) => (
-                <Button
-                  key={index}
-                  scale={scale}
-                  className="fixture-sidebar-native-row"
-                  style={{
-                    "--fixture-sidebar-row-top": `${24 * index * scale}px`,
-                  }}
-                >{`Row ${index + 1}`}</Button>
-              )
-            )}
-          </div>
-        </SidebarContent>
+            {label}
+          </SidebarMenuButton>
+        );
+      } else if (part === "sub-button") {
+        selectedNativeSidebarSubject = (
+          <SidebarMenuSubButton
+            id="subject"
+            href="#destination"
+            className="fixture-sidebar-native-geometry"
+            style={{
+              "--fixture-sidebar-native-height":
+                nativeSidebarLayout["--fixture-sidebar-native-height"],
+              "--fixture-sidebar-native-left":
+                nativeSidebarLayout["--fixture-sidebar-native-left"],
+              "--fixture-sidebar-native-top":
+                nativeSidebarLayout["--fixture-sidebar-native-top"],
+              "--fixture-sidebar-native-width":
+                nativeSidebarLayout["--fixture-sidebar-native-width"],
+            }}
+            aria-disabled={state === "disabled" || undefined}
+            isActive={p.has("active")}
+            onClick={click}
+            data-subject="true"
+          >
+            {label}
+          </SidebarMenuSubButton>
+        );
+      } else if (part === "trigger") {
+        selectedNativeSidebarSubject = (
+          <SidebarTrigger {...nativeSidebarButtonProps}>{label}</SidebarTrigger>
+        );
+      } else if (part === "group-action") {
+        selectedNativeSidebarSubject = (
+          <SidebarGroupAction {...buttonProps}>{label}</SidebarGroupAction>
+        );
+      } else if (part === "menu-action") {
+        selectedNativeSidebarSubject = (
+          <SidebarMenuAction {...buttonProps}>{label}</SidebarMenuAction>
+        );
+      } else if (part === "input") {
+        selectedNativeSidebarSubject = renderNativeInput();
+      } else if (part === "label") {
+        selectedNativeSidebarSubject = (
+          <SidebarGroupLabel
+            id="subject"
+            maxWidth={
+              p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
+            }
+            align={p.get("alignment") === "center" ? "center" : "left"}
+            className="fixture-sidebar-native-geometry fixture-sidebar-margin-zero fixture-sidebar-min-height-zero"
+            style={{
+              "--fixture-sidebar-native-height":
+                nativeSidebarLayout["--fixture-sidebar-native-height"],
+              "--fixture-sidebar-native-left":
+                nativeSidebarLayout["--fixture-sidebar-native-left"],
+              "--fixture-sidebar-native-top":
+                nativeSidebarLayout["--fixture-sidebar-native-top"],
+              "--fixture-sidebar-native-width":
+                nativeSidebarLayout["--fixture-sidebar-native-width"],
+            }}
+            data-subject="true"
+          >
+            {label}
+          </SidebarGroupLabel>
+        );
+      } else if (part === "badge") {
+        selectedNativeSidebarSubject = (
+          <SidebarMenuBadge
+            id="subject"
+            maxWidth={
+              p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
+            }
+            align={p.get("alignment") === "center" ? "center" : "left"}
+            className="fixture-sidebar-native-geometry fixture-sidebar-margin-zero"
+            style={{
+              "--fixture-sidebar-native-height":
+                nativeSidebarLayout["--fixture-sidebar-native-height"],
+              "--fixture-sidebar-native-left":
+                nativeSidebarLayout["--fixture-sidebar-native-left"],
+              "--fixture-sidebar-native-top":
+                nativeSidebarLayout["--fixture-sidebar-native-top"],
+              "--fixture-sidebar-native-width":
+                nativeSidebarLayout["--fixture-sidebar-native-width"],
+            }}
+            data-subject="true"
+          >
+            {label}
+          </SidebarMenuBadge>
+        );
+      } else if (part === "separator") {
+        selectedNativeSidebarSubject = (
+          <SidebarSeparator
+            id="subject"
+            edge={state === "footer" ? "footer" : "header"}
+            className="fixture-sidebar-native-geometry fixture-sidebar-margin-zero"
+            style={{
+              "--fixture-sidebar-native-height":
+                nativeSidebarLayout["--fixture-sidebar-native-height"],
+              "--fixture-sidebar-native-left":
+                nativeSidebarLayout["--fixture-sidebar-native-left"],
+              "--fixture-sidebar-native-top":
+                nativeSidebarLayout["--fixture-sidebar-native-top"],
+              "--fixture-sidebar-native-width":
+                nativeSidebarLayout["--fixture-sidebar-native-width"],
+            }}
+            data-subject="true"
+          />
+        );
+      } else if (part === "panel") {
+        selectedNativeSidebarSubject = (
+          <Sidebar
+            id="subject"
+            collapsible="none"
+            className="fixture-sidebar-native-geometry fixture-sidebar-padding fixture-sidebar-gap"
+            style={{
+              "--fixture-sidebar-native-gap": `${12 * scale}px`,
+              "--fixture-sidebar-native-height":
+                nativeSidebarLayout["--fixture-sidebar-native-height"],
+              "--fixture-sidebar-native-left":
+                nativeSidebarLayout["--fixture-sidebar-native-left"],
+              "--fixture-sidebar-native-padding": `${p.has("text") ? 18 * scale : 0}px`,
+              "--fixture-sidebar-native-top":
+                nativeSidebarLayout["--fixture-sidebar-native-top"],
+              "--fixture-sidebar-native-width":
+                nativeSidebarLayout["--fixture-sidebar-native-width"],
+            }}
+            data-subject="true"
+          >
+            {p.has("text") ? (
+              <>
+                <CardHeader>
+                  <CardTitle>{label}</CardTitle>
+                  <CardDescription>{p.get("text")}</CardDescription>
+                </CardHeader>
+                <CardFooter>
+                  <Button scale={scale}>Done</Button>
+                </CardFooter>
+              </>
+            ) : null}
+          </Sidebar>
+        );
+      } else if (part === "scroll") {
+        selectedNativeSidebarSubject = renderNativeScrollContent();
+      } else {
+        selectedNativeSidebarSubject = null;
+      }
+
+      const nativeSidebarSubject = selectedNativeSidebarSubject;
+
+      return (
+        <SidebarProvider
+          {...provider}
+          className="fixture-sidebar-native-provider"
+        >
+          {nativeSidebarSubject}
+        </SidebarProvider>
       );
-    } else {
-      selectedNativeSidebarSubject = null;
-    }
+    };
 
-    const nativeSidebarSubject = selectedNativeSidebarSubject;
-
-    return (
-      <SidebarProvider
-        {...provider}
-        className="fixture-sidebar-native-provider"
-      >
-        {nativeSidebarSubject}
-      </SidebarProvider>
-    );
+    return renderNativeSidebar();
   }
 
   let selectedFixtureBranch1: "none" | "offcanvas" | "icon";
