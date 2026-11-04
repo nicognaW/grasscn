@@ -131,92 +131,101 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
         const ratio = devicePixelRatio;
         const bodyStyle = getComputedStyle(document.body);
 
-        if (offsetX || offsetY) {
-          for (const element of document.body.querySelectorAll<HTMLElement>(
-            "*"
-          )) {
-            if (
-              !(element instanceof HTMLElement) ||
-              belongs(element) ||
-              getComputedStyle(element).position !== "fixed"
-            ) {
-              continue;
-            }
-
-            if (viewportAnchored(element.parentElement)) {
-              const previous = element.getAttribute("data-mc-snapshot-fixed");
-              const key = `${identity}-${fixed.length}`;
-              const style = getComputedStyle(element);
-
-              fixed.push({
-                element,
-                insets: {
-                  bottom: style.bottom,
-                  left: style.left,
-                  right: style.right,
-                  top: style.top,
-                },
-                key,
-                layoutLeft:
-                  element.offsetLeft -
-                  // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-                  (Number.parseFloat(style.marginLeft) || 0),
-                layoutTop:
-                  // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-                  element.offsetTop - (Number.parseFloat(style.marginTop) || 0),
-                previous,
-                transform: style.transform,
-              });
-              element.dataset.mcSnapshotFixed = key;
-            }
-          }
-        }
-
-        if (offsetX || offsetY) {
-          for (const element of document.body.querySelectorAll<HTMLElement>(
-            "*"
-          )) {
-            if (!(element instanceof HTMLElement) || belongs(element)) {
-              continue;
-            }
-
-            for (const pseudo of ["::before", "::after"] as const) {
-              const style = getComputedStyle(element, pseudo);
-
+        const markViewportFixedElements = () => {
+          if (offsetX || offsetY) {
+            for (const element of document.body.querySelectorAll<HTMLElement>(
+              "*"
+            )) {
               if (
-                style.position !== "fixed" ||
-                style.display === "none" ||
-                style.content === "none" ||
-                style.content === "normal" ||
-                !viewportAnchored(element)
+                !(element instanceof HTMLElement) ||
+                belongs(element) ||
+                getComputedStyle(element).position !== "fixed"
               ) {
                 continue;
               }
 
-              const attribute =
-                pseudo === "::before"
-                  ? "data-mc-snapshot-before"
-                  : "data-mc-snapshot-after";
+              if (viewportAnchored(element.parentElement)) {
+                const previous = element.getAttribute("data-mc-snapshot-fixed");
+                const key = `${identity}-${fixed.length}`;
+                const style = getComputedStyle(element);
 
-              const key = `${identity}-pseudo-${pseudos.length}`;
-              pseudos.push({
-                attribute,
-                element,
-                insets: {
-                  bottom: style.bottom,
-                  left: style.left,
-                  right: style.right,
-                  top: style.top,
-                },
-                key,
-                previous: element.getAttribute(attribute),
-                pseudo,
-                transform: style.transform,
-              });
-              element.setAttribute(attribute, key);
+                fixed.push({
+                  element,
+                  insets: {
+                    bottom: style.bottom,
+                    left: style.left,
+                    right: style.right,
+                    top: style.top,
+                  },
+                  key,
+                  layoutLeft:
+                    element.offsetLeft -
+                    // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+                    (Number.parseFloat(style.marginLeft) || 0),
+                  layoutTop:
+                    element.offsetTop -
+                    // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+                    (Number.parseFloat(style.marginTop) || 0),
+                  previous,
+                  transform: style.transform,
+                });
+                element.dataset.mcSnapshotFixed = key;
+              }
             }
           }
-        }
+        };
+
+        markViewportFixedElements();
+
+        const markViewportFixedPseudos = () => {
+          if (offsetX || offsetY) {
+            for (const element of document.body.querySelectorAll<HTMLElement>(
+              "*"
+            )) {
+              if (!(element instanceof HTMLElement) || belongs(element)) {
+                continue;
+              }
+
+              for (const pseudo of ["::before", "::after"] as const) {
+                const style = getComputedStyle(element, pseudo);
+
+                if (
+                  style.position !== "fixed" ||
+                  style.display === "none" ||
+                  style.content === "none" ||
+                  style.content === "normal" ||
+                  !viewportAnchored(element)
+                ) {
+                  continue;
+                }
+
+                const attribute =
+                  pseudo === "::before"
+                    ? "data-mc-snapshot-before"
+                    : "data-mc-snapshot-after";
+
+                const key = `${identity}-pseudo-${pseudos.length}`;
+                pseudos.push({
+                  attribute,
+                  element,
+                  insets: {
+                    bottom: style.bottom,
+                    left: style.left,
+                    right: style.right,
+                    top: style.top,
+                  },
+                  key,
+                  previous: element.getAttribute(attribute),
+                  pseudo,
+                  transform: style.transform,
+                });
+                element.setAttribute(attribute, key);
+              }
+            }
+          }
+        };
+
+        markViewportFixedPseudos();
 
         const fixedRecords = new Map(fixed.map((item) => [item.key, item]));
 
@@ -236,63 +245,71 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
 
         const elements = [...document.body.querySelectorAll<HTMLElement>("*")];
 
-        for (const element of elements) {
-          if (belongs(element)) {
-            continue;
-          }
+        const collectVisibleAncestors = () => {
+          for (const element of elements) {
+            if (belongs(element)) {
+              continue;
+            }
 
-          const bounds = element.getBoundingClientRect();
+            const bounds = element.getBoundingClientRect();
 
-          const generated = ["::before", "::after"].some((pseudo) => {
-            const style = getComputedStyle(element, pseudo);
+            const generated = ["::before", "::after"].some((pseudo) => {
+              const style = getComputedStyle(element, pseudo);
 
-            return (
-              style.content !== "none" &&
-              style.content !== "normal" &&
-              style.display !== "none"
-            );
-          });
+              return (
+                style.content !== "none" &&
+                style.content !== "normal" &&
+                style.display !== "none"
+              );
+            });
 
-          if (
-            generated ||
-            (bounds.width > 0 &&
-              bounds.height > 0 &&
-              bounds.right >= -guard &&
-              bounds.left <= innerWidth + guard &&
-              bounds.bottom >= -guard &&
-              bounds.top <= innerHeight + guard)
-          ) {
-            for (
-              let ancestor: Node | null = element;
-              ancestor && !visibleAncestors.has(ancestor);
-              ancestor = ancestor.parentNode
+            if (
+              generated ||
+              (bounds.width > 0 &&
+                bounds.height > 0 &&
+                bounds.right >= -guard &&
+                bounds.left <= innerWidth + guard &&
+                bounds.bottom >= -guard &&
+                bounds.top <= innerHeight + guard)
             ) {
-              visibleAncestors.add(ancestor);
+              for (
+                let ancestor: Node | null = element;
+                ancestor && !visibleAncestors.has(ancestor);
+                ancestor = ancestor.parentNode
+              ) {
+                visibleAncestors.add(ancestor);
+              }
             }
           }
-        }
+        };
 
-        for (const element of elements) {
-          if (
-            visibleAncestors.has(element) ||
-            belongs(element) ||
-            !(element instanceof HTMLElement)
-          ) {
-            continue;
+        collectVisibleAncestors();
+
+        const collectPrunedElements = () => {
+          for (const element of elements) {
+            if (
+              visibleAncestors.has(element) ||
+              belongs(element) ||
+              !(element instanceof HTMLElement)
+            ) {
+              continue;
+            }
+
+            const bounds = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+
+            if (
+              bounds.width > 0 &&
+              bounds.height > 0 &&
+              style.width.endsWith("px") &&
+              style.height.endsWith("px")
+            ) {
+              pruned.add(element);
+            }
           }
+        };
 
-          const bounds = element.getBoundingClientRect();
-          const style = getComputedStyle(element);
-
-          if (
-            bounds.width > 0 &&
-            bounds.height > 0 &&
-            style.width.endsWith("px") &&
-            style.height.endsWith("px")
-          ) {
-            pruned.add(element);
-          }
-        }
+        collectPrunedElements();
 
         let backgroundColor = "#fff";
 
@@ -457,29 +474,33 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
             error instanceof Error ? error.message : String(error);
         }
       } finally {
-        for (const item of pseudos) {
-          if (item.element.getAttribute(item.attribute) !== item.key) {
-            continue;
+        const restoreViewportMarkers = () => {
+          for (const item of pseudos) {
+            if (item.element.getAttribute(item.attribute) !== item.key) {
+              continue;
+            }
+
+            if (item.previous === null) {
+              item.element.removeAttribute(item.attribute);
+            } else {
+              item.element.setAttribute(item.attribute, item.previous);
+            }
           }
 
-          if (item.previous === null) {
-            item.element.removeAttribute(item.attribute);
-          } else {
-            item.element.setAttribute(item.attribute, item.previous);
-          }
-        }
+          for (const item of fixed) {
+            if (item.element.dataset.mcSnapshotFixed !== item.key) {
+              continue;
+            }
 
-        for (const item of fixed) {
-          if (item.element.dataset.mcSnapshotFixed !== item.key) {
-            continue;
+            if (item.previous === null) {
+              delete item.element.dataset.mcSnapshotFixed;
+            } else {
+              item.element.dataset.mcSnapshotFixed = item.previous;
+            }
           }
+        };
 
-          if (item.previous === null) {
-            delete item.element.dataset.mcSnapshotFixed;
-          } else {
-            item.element.dataset.mcSnapshotFixed = item.previous;
-          }
-        }
+        restoreViewportMarkers();
 
         busy = false;
 
