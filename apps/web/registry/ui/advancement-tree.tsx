@@ -91,6 +91,216 @@ const validateAdvancementParents = function validateAdvancementParents(
   }
 };
 
+interface PositionedAdvancement extends AdvancementNode {
+  px: number;
+  py: number;
+}
+
+const layoutAdvancementNodes = function layoutAdvancementNodes(
+  nodes: readonly AdvancementNode[]
+) {
+  const ids = new Set<string>();
+
+  for (const node of nodes) {
+    if (ids.has(node.id)) {
+      throw new Error(`Duplicate advancement id: ${node.id}`);
+    }
+
+    ids.add(node.id);
+
+    if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) {
+      throw Error("Advancement positions must be finite");
+    }
+  }
+
+  const points = nodes.map((node) => ({
+    ...node,
+    px: Math.floor(Math.fround(node.x * 28)),
+    py: Math.floor(Math.fround(node.y * 27)),
+  }));
+
+  const positions = new Map(points.map((node) => [node.id, node]));
+
+  validateAdvancementParents(nodes, ids, positions);
+
+  return { points, positions };
+};
+
+const advancementLinkRects = function advancementLinkRects(
+  visible: readonly PositionedAdvancement[],
+  positions: ReadonlyMap<string, PositionedAdvancement>,
+  outline: boolean
+) {
+  return visible.flatMap((node) => {
+    const parentId = node.parentId ?? "";
+    const parent = parentId ? positions.get(parentId) : undefined;
+
+    if (!parent) {
+      return [];
+    }
+
+    const ax = parent.px + 13;
+    const bx = parent.px + 30;
+    const ay = parent.py + 13;
+    const cx = node.px + 13;
+    const cy = node.py + 13;
+
+    return outline
+      ? [
+          {
+            h: 1,
+            w: Math.abs(bx + 1 - ax) + 1,
+            x: Math.min(bx + 1, ax),
+            y: ay,
+          },
+          {
+            h: 3,
+            w: Math.abs(bx - ax) + 1,
+            x: Math.min(bx, ax),
+            y: ay - 1,
+          },
+          {
+            h: 3,
+            w: Math.abs(cx - (bx - 1)) + 1,
+            x: Math.min(cx, bx - 1),
+            y: cy - 1,
+          },
+          {
+            h: Math.max(0, Math.abs(cy - ay) - 1),
+            w: 3,
+            x: bx - 1,
+            y: Math.min(cy, ay) + 1,
+          },
+        ]
+      : [
+          { h: 1, w: Math.abs(bx - ax) + 1, x: Math.min(bx, ax), y: ay },
+          { h: 1, w: Math.abs(cx - bx) + 1, x: Math.min(cx, bx), y: cy },
+          {
+            h: Math.max(0, Math.abs(cy - ay) - 1),
+            w: 1,
+            x: bx,
+            y: Math.min(cy, ay) + 1,
+          },
+        ];
+  });
+};
+
+const renderAdvancementNodes = function renderAdvancementNodes(
+  visible: readonly PositionedAdvancement[],
+  {
+    choose,
+    current,
+    isDragging,
+    root,
+    scale,
+    setTooltipId,
+    tooltipId,
+  }: {
+    choose: (id: string) => void;
+    current: string | undefined;
+    isDragging: boolean;
+    root: React.RefObject<HTMLDivElement | null>;
+    scale: 1 | 2 | 3;
+    setTooltipId: React.Dispatch<React.SetStateAction<string | null>>;
+    tooltipId: string | null;
+  }
+) {
+  return visible.map((node) => (
+    <Tooltip
+      key={node.id}
+      open={!isDragging && tooltipId === node.id}
+      onOpenChange={(open) => {
+        setTooltipId((previousTooltipId) => {
+          if (open) {
+            return node.id;
+          }
+
+          if (previousTooltipId === node.id) {
+            return null;
+          }
+
+          return previousTooltipId;
+        });
+      }}
+    >
+      <TooltipTrigger
+        render={
+          <button
+            type="button"
+            data-slot="advancement-node"
+            data-completed={String(!!(node.completed ?? false))}
+            aria-label={`${node.title}${(node.completed ?? false) ? ", completed" : ""}`}
+            aria-pressed={current === node.id}
+            className="mc-advancement-node mc-dynamic-layout-advancement-tree-2"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-advancement-tree-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-advancement-tree-2-left": node.px * scale,
+                "--mc-dynamic-advancement-tree-2-top": node.py * scale,
+              } satisfies AdvancementTreeLayoutStyle2 as AdvancementTreeLayoutStyle2
+            }
+            onClick={(event) => {
+              if (!event.defaultPrevented) {
+                choose(node.id);
+              }
+            }}
+            onKeyDown={(event) => {
+              const index = visible.findIndex((n) => n.id === node.id);
+              let next = index;
+
+              if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+                next = (index + 1) % visible.length;
+              }
+
+              if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+                next = (index - 1 + visible.length) % visible.length;
+              }
+
+              if (next !== index) {
+                event.preventDefault();
+
+                const buttons =
+                  root.current?.querySelectorAll<HTMLButtonElement>(
+                    '[data-slot="advancement-node"]'
+                  );
+
+                buttons?.[next]?.focus();
+              }
+            }}
+          />
+        }
+      >
+        <img
+          className="mc-advancement-frame"
+          alt=""
+          draggable={false}
+          src={
+            minecraftBadgeAssets[
+              `${node.kind ?? "task"}_${(node.completed ?? false) ? "obtained" : "unobtained"}`
+            ]
+          }
+        />
+        <span className="mc-advancement-icon">
+          {node.icon ?? (
+            <img src={minecraftBadgeAssets.diamond} alt="" draggable={false} />
+          )}
+        </span>
+      </TooltipTrigger>
+      <TooltipContent scale={scale}>
+        <Badge
+          scale={scale}
+          achievement={node.kind}
+          earned={node.completed}
+          icon={node.icon}
+        >
+          {node.title}
+        </Badge>
+        {(node.description ?? "") && <div>{node.description}</div>}
+      </TooltipContent>
+    </Tooltip>
+  ));
+};
+
 const AdvancementTree = ({
   nodes,
   scale = 2,
@@ -116,29 +326,7 @@ const AdvancementTree = ({
   onDragStart,
   ...props
 }: AdvancementTreeProps) => {
-  const ids = new Set<string>();
-
-  for (const node of nodes) {
-    if (ids.has(node.id)) {
-      throw new Error(`Duplicate advancement id: ${node.id}`);
-    }
-
-    ids.add(node.id);
-
-    if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) {
-      throw Error("Advancement positions must be finite");
-    }
-  }
-
-  const points = nodes.map((node) => ({
-    ...node,
-    px: Math.floor(Math.fround(node.x * 28)),
-    py: Math.floor(Math.fround(node.y * 27)),
-  }));
-
-  const positions = new Map(points.map((node) => [node.id, node]));
-
-  validateAdvancementParents(nodes, ids, positions);
+  const { points, positions } = layoutAdvancementNodes(nodes);
 
   const initial = () => {
     if (defaultPan) {
@@ -212,60 +400,6 @@ const AdvancementTree = ({
   const visible = points.filter(
     (node) => node.hidden !== true || node.completed === true
   );
-
-  const paths = (outline: boolean) =>
-    visible.flatMap((node) => {
-      const parentId = node.parentId ?? "";
-      const parent = parentId ? positions.get(parentId) : undefined;
-
-      if (!parent) {
-        return [];
-      }
-
-      const ax = parent.px + 13;
-      const bx = parent.px + 30;
-      const ay = parent.py + 13;
-      const cx = node.px + 13;
-      const cy = node.py + 13;
-
-      return outline
-        ? [
-            {
-              h: 1,
-              w: Math.abs(bx + 1 - ax) + 1,
-              x: Math.min(bx + 1, ax),
-              y: ay,
-            },
-            {
-              h: 3,
-              w: Math.abs(bx - ax) + 1,
-              x: Math.min(bx, ax),
-              y: ay - 1,
-            },
-            {
-              h: 3,
-              w: Math.abs(cx - (bx - 1)) + 1,
-              x: Math.min(cx, bx - 1),
-              y: cy - 1,
-            },
-            {
-              h: Math.max(0, Math.abs(cy - ay) - 1),
-              w: 3,
-              x: bx - 1,
-              y: Math.min(cy, ay) + 1,
-            },
-          ]
-        : [
-            { h: 1, w: Math.abs(bx - ax) + 1, x: Math.min(bx, ax), y: ay },
-            { h: 1, w: Math.abs(cx - bx) + 1, x: Math.min(cx, bx), y: cy },
-            {
-              h: Math.max(0, Math.abs(cy - ay) - 1),
-              w: 1,
-              x: bx,
-              y: Math.min(cy, ay) + 1,
-            },
-          ];
-    });
 
   return (
     <TooltipProvider>
@@ -432,122 +566,29 @@ const AdvancementTree = ({
           >
             {[true, false].map((outline) => (
               <g key={String(outline)} fill={outline ? "#000" : "#fff"}>
-                {paths(outline).map((line, index) => (
-                  <rect
-                    key={index}
-                    x={line.x * scale}
-                    y={line.y * scale}
-                    width={line.w * scale}
-                    height={line.h * scale}
-                  />
-                ))}
+                {advancementLinkRects(visible, positions, outline).map(
+                  (line, index) => (
+                    <rect
+                      key={index}
+                      x={line.x * scale}
+                      y={line.y * scale}
+                      width={line.w * scale}
+                      height={line.h * scale}
+                    />
+                  )
+                )}
               </g>
             ))}
           </svg>
-          {visible.map((node) => (
-            <Tooltip
-              key={node.id}
-              open={!isDragging && tooltipId === node.id}
-              onOpenChange={(open) => {
-                setTooltipId((previousTooltipId) => {
-                  if (open) {
-                    return node.id;
-                  }
-
-                  if (previousTooltipId === node.id) {
-                    return null;
-                  }
-
-                  return previousTooltipId;
-                });
-              }}
-            >
-              <TooltipTrigger
-                render={
-                  <button
-                    type="button"
-                    data-slot="advancement-node"
-                    data-completed={String(!!(node.completed ?? false))}
-                    aria-label={`${node.title}${(node.completed ?? false) ? ", completed" : ""}`}
-                    aria-pressed={current === node.id}
-                    className="mc-advancement-node mc-dynamic-layout-advancement-tree-2"
-                    style={
-                      /* SAFETY: The owned mc-dynamic-layout-advancement-tree-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                      {
-                        "--mc-dynamic-advancement-tree-2-left": node.px * scale,
-                        "--mc-dynamic-advancement-tree-2-top": node.py * scale,
-                      } satisfies AdvancementTreeLayoutStyle2 as AdvancementTreeLayoutStyle2
-                    }
-                    onClick={(event) => {
-                      if (!event.defaultPrevented) {
-                        choose(node.id);
-                      }
-                    }}
-                    onKeyDown={(event) => {
-                      const index = visible.findIndex((n) => n.id === node.id);
-                      let next = index;
-
-                      if (
-                        event.key === "ArrowRight" ||
-                        event.key === "ArrowDown"
-                      ) {
-                        next = (index + 1) % visible.length;
-                      }
-
-                      if (
-                        event.key === "ArrowLeft" ||
-                        event.key === "ArrowUp"
-                      ) {
-                        next = (index - 1 + visible.length) % visible.length;
-                      }
-
-                      if (next !== index) {
-                        event.preventDefault();
-
-                        const buttons =
-                          root.current?.querySelectorAll<HTMLButtonElement>(
-                            '[data-slot="advancement-node"]'
-                          );
-
-                        buttons?.[next]?.focus();
-                      }
-                    }}
-                  />
-                }
-              >
-                <img
-                  className="mc-advancement-frame"
-                  alt=""
-                  draggable={false}
-                  src={
-                    minecraftBadgeAssets[
-                      `${node.kind ?? "task"}_${(node.completed ?? false) ? "obtained" : "unobtained"}`
-                    ]
-                  }
-                />
-                <span className="mc-advancement-icon">
-                  {node.icon ?? (
-                    <img
-                      src={minecraftBadgeAssets.diamond}
-                      alt=""
-                      draggable={false}
-                    />
-                  )}
-                </span>
-              </TooltipTrigger>
-              <TooltipContent scale={scale}>
-                <Badge
-                  scale={scale}
-                  achievement={node.kind}
-                  earned={node.completed}
-                  icon={node.icon}
-                >
-                  {node.title}
-                </Badge>
-                {(node.description ?? "") && <div>{node.description}</div>}
-              </TooltipContent>
-            </Tooltip>
-          ))}
+          {renderAdvancementNodes(visible, {
+            choose,
+            current,
+            isDragging,
+            root,
+            scale,
+            setTooltipId,
+            tooltipId,
+          })}
         </div>
       </div>
     </TooltipProvider>

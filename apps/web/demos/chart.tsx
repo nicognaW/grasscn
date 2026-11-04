@@ -112,6 +112,252 @@ const types: {
   },
 ];
 
+const renderWebF3Charts = function renderWebF3Charts({
+  browserData,
+  contentWidth,
+  copy,
+  metric,
+  scale,
+  setMetric,
+  setWebStep,
+  webSamples,
+}: {
+  browserData: { name: string; visitors: number }[];
+  contentWidth: number;
+  copy: (text: string) => React.JSX.Element;
+  metric: string;
+  scale: DemoProps["scale"];
+  setMetric: React.Dispatch<React.SetStateAction<string>>;
+  setWebStep: React.Dispatch<React.SetStateAction<number>>;
+  webSamples: number[];
+}) {
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-chart-1-width": `${Math.min(116, contentWidth) * scale}px`,
+  };
+
+  const demoLayout2: DemoVariables = {
+    "--demo-owned-chart-2-width": `${Math.min(100, contentWidth) * scale}px`,
+  };
+
+  return (
+    <section
+      data-f3-web-data="true"
+      className="flex w-full max-w-full min-w-0 flex-col gap-(--demo-gap)"
+      style={
+        /* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+        {
+          "--demo-gap": `${8 * scale}px`,
+        } satisfies DemoVariables as DemoVariables
+      }
+    >
+      {copy("Vanilla F3 charts with web data")}
+      {copy(
+        metric === "latency"
+          ? "API response time - milliseconds"
+          : "Website requests per minute"
+      )}
+      <div
+        className="flex flex-wrap gap-(--demo-gap)"
+        style={
+          /* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+          {
+            "--demo-gap": `${6 * scale}px`,
+          } satisfies DemoVariables as DemoVariables
+        }
+      >
+        <Select
+          items={{ latency: "Response time", requests: "Request volume" }}
+          scale={scale}
+          value={metric}
+          onValueChange={(value) => {
+            setMetric(value ?? "");
+          }}
+        >
+          <SelectTrigger
+            aria-label="F3 metric"
+            className="demo-owned-chart-1 max-w-full"
+            style={demoLayout1}
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="latency">Response time</SelectItem>
+            <SelectItem value="requests">Request volume</SelectItem>
+          </SelectContent>
+        </Select>
+        <Button
+          scale={scale}
+          type="button"
+          className="demo-owned-chart-2 max-w-full"
+          style={demoLayout2}
+          onClick={() => {
+            setWebStep((value) => value + 1);
+          }}
+        >
+          Next hour
+        </Button>
+      </div>
+      <div
+        className="flex w-full max-w-full min-w-0 flex-col items-start gap-(--demo-gap) overflow-x-auto p-(--demo-padding)"
+        style={
+          /* SAFETY: satisfies checks --demo-gap, --demo-padding against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+          {
+            "--demo-gap": `${8 * scale}px`,
+            "--demo-padding": `${scale}px`,
+          } satisfies DemoVariables as DemoVariables
+        }
+      >
+        <FpsChartExample
+          data-web-chart="metric"
+          aria-label={
+            metric === "latency" ? "API response time" : "Requests per minute"
+          }
+          data={webSamples.map((value) => ({ value }))}
+          dataKey="value"
+          domain={metric === "latency" ? [0, 300] : [0, 80]}
+          formatValue={(v) =>
+            `${Math.round(v)} ${metric === "latency" ? "ms" : "req"}`
+          }
+          guides={
+            metric === "latency"
+              ? [
+                  {
+                    label: "300 ms",
+                    value: 300,
+                  },
+                  {
+                    label: "150 ms",
+                    value: 150,
+                  },
+                ]
+              : [
+                  {
+                    label: "80 req",
+                    value: 80,
+                  },
+                  {
+                    label: "40 req",
+                    value: 40,
+                  },
+                ]
+          }
+          scale={scale}
+        />
+        <ProfilerChartExample
+          dataKey="visitors"
+          data-web-chart="profiler"
+          aria-label="Browser visitor share"
+          data={browserData}
+          rootName="Browser visitors"
+          scale={scale}
+        />
+      </div>
+      {copy(
+        "Illustrative web data. The F3 bar scale and captions adapt to the selected metric."
+      )}
+    </section>
+  );
+};
+
+const renderNativeF3Charts = function renderNativeF3Charts({
+  contentWidth,
+  copy,
+  limit,
+  nativeData,
+  samples,
+  scale,
+  setLimit,
+  setStep,
+}: {
+  contentWidth: number;
+  copy: (text: string) => React.JSX.Element;
+  limit: number;
+  nativeData: { name: string; percentage: number }[];
+  samples: number[];
+  scale: DemoProps["scale"];
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+}) {
+  const demoLayout3: DemoVariables = {
+    "--demo-owned-chart-3-width": `${Math.min(120, contentWidth) * scale}px`,
+  };
+
+  const demoLayout4: DemoVariables = {
+    "--demo-owned-chart-4-width": `${Math.min(100, contentWidth) * scale}px`,
+  };
+
+  return (
+    <section
+      className="mc-chart-native-examples flex w-full max-w-full min-w-0 flex-col gap-(--demo-gap)"
+      data-chart-native-examples="true"
+      style={
+        /* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+        {
+          "--demo-gap": `${8 * scale}px`,
+        } satisfies DemoVariables as DemoVariables
+      }
+    >
+      {copy("F3 charts")}
+      <div
+        className="flex flex-wrap gap-(--demo-gap)"
+        style={
+          /* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+          {
+            "--demo-gap": `${6 * scale}px`,
+          } satisfies DemoVariables as DemoVariables
+        }
+      >
+        <Button
+          scale={scale}
+          type="button"
+          className="demo-owned-chart-3 max-w-full"
+          style={demoLayout3}
+          onClick={() => {
+            setStep((v) => v + 1);
+          }}
+        >
+          Next sample
+        </Button>
+        <Button
+          scale={scale}
+          type="button"
+          className="demo-owned-chart-4 max-w-full"
+          style={demoLayout4}
+          onClick={() => {
+            setLimit((v) => (v === 120 ? 260 : 120));
+          }}
+        >
+          {limit === 120 ? "120 FPS cap" : "Unlimited"}
+        </Button>
+      </div>
+      <div
+        className="flex w-full max-w-full min-w-0 flex-col items-start gap-(--demo-gap) overflow-x-auto p-(--demo-padding)"
+        style={
+          /* SAFETY: satisfies checks --demo-gap, --demo-padding against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+          {
+            "--demo-gap": `${8 * scale}px`,
+            "--demo-padding": `${scale}px`,
+          } satisfies DemoVariables as DemoVariables
+        }
+      >
+        <FpsChartExample
+          data-native-chart="fps"
+          data={samples.map((value) => ({ value: value / 1e6 }))}
+          dataKey="value"
+          framerateLimit={limit}
+          scale={scale}
+        />
+        <ProfilerChartExample
+          dataKey="percentage"
+          data-native-chart="profiler"
+          data={nativeData}
+          scale={scale}
+        />
+      </div>
+    </section>
+  );
+};
+
 const ChartDemo = ({ scale }: DemoProps) => {
   const stage = React.useRef<HTMLDivElement>(null);
   const [contentWidth, setContentWidth] = React.useState(80);
@@ -231,22 +477,6 @@ const ChartDemo = ({ scale }: DemoProps) => {
     0
   );
 
-  const demoLayout1: DemoVariables = {
-    "--demo-owned-chart-1-width": `${Math.min(116, contentWidth) * scale}px`,
-  };
-
-  const demoLayout2: DemoVariables = {
-    "--demo-owned-chart-2-width": `${Math.min(100, contentWidth) * scale}px`,
-  };
-
-  const demoLayout3: DemoVariables = {
-    "--demo-owned-chart-3-width": `${Math.min(120, contentWidth) * scale}px`,
-  };
-
-  const demoLayout4: DemoVariables = {
-    "--demo-owned-chart-4-width": `${Math.min(100, contentWidth) * scale}px`,
-  };
-
   const demoLayout5: DemoVariables = {
     "--demo-owned-chart-5-width": `${Math.min(116, contentWidth) * scale}px`,
   };
@@ -265,192 +495,26 @@ const ChartDemo = ({ scale }: DemoProps) => {
           } satisfies DemoVariables as DemoVariables
         }
       >
-        <section
-          data-f3-web-data="true"
-          className="flex w-full max-w-full min-w-0 flex-col gap-(--demo-gap)"
-          style={
-            /* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-            {
-              "--demo-gap": `${8 * scale}px`,
-            } satisfies DemoVariables as DemoVariables
-          }
-        >
-          {copy("Vanilla F3 charts with web data")}
-          {copy(
-            metric === "latency"
-              ? "API response time - milliseconds"
-              : "Website requests per minute"
-          )}
-          <div
-            className="flex flex-wrap gap-(--demo-gap)"
-            style={
-              /* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-              {
-                "--demo-gap": `${6 * scale}px`,
-              } satisfies DemoVariables as DemoVariables
-            }
-          >
-            <Select
-              items={{ latency: "Response time", requests: "Request volume" }}
-              scale={scale}
-              value={metric}
-              onValueChange={(value) => {
-                setMetric(value ?? "");
-              }}
-            >
-              <SelectTrigger
-                aria-label="F3 metric"
-                className="demo-owned-chart-1 max-w-full"
-                style={demoLayout1}
-              >
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="latency">Response time</SelectItem>
-                <SelectItem value="requests">Request volume</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button
-              scale={scale}
-              type="button"
-              className="demo-owned-chart-2 max-w-full"
-              style={demoLayout2}
-              onClick={() => {
-                setWebStep((value) => value + 1);
-              }}
-            >
-              Next hour
-            </Button>
-          </div>
-          <div
-            className="flex w-full max-w-full min-w-0 flex-col items-start gap-(--demo-gap) overflow-x-auto p-(--demo-padding)"
-            style={
-              /* SAFETY: satisfies checks --demo-gap, --demo-padding against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-              {
-                "--demo-gap": `${8 * scale}px`,
-                "--demo-padding": `${scale}px`,
-              } satisfies DemoVariables as DemoVariables
-            }
-          >
-            <FpsChartExample
-              data-web-chart="metric"
-              aria-label={
-                metric === "latency"
-                  ? "API response time"
-                  : "Requests per minute"
-              }
-              data={webSamples.map((value) => ({ value }))}
-              dataKey="value"
-              domain={metric === "latency" ? [0, 300] : [0, 80]}
-              formatValue={(v) =>
-                `${Math.round(v)} ${metric === "latency" ? "ms" : "req"}`
-              }
-              guides={
-                metric === "latency"
-                  ? [
-                      {
-                        label: "300 ms",
-                        value: 300,
-                      },
-                      {
-                        label: "150 ms",
-                        value: 150,
-                      },
-                    ]
-                  : [
-                      {
-                        label: "80 req",
-                        value: 80,
-                      },
-                      {
-                        label: "40 req",
-                        value: 40,
-                      },
-                    ]
-              }
-              scale={scale}
-            />
-            <ProfilerChartExample
-              dataKey="visitors"
-              data-web-chart="profiler"
-              aria-label="Browser visitor share"
-              data={browserData}
-              rootName="Browser visitors"
-              scale={scale}
-            />
-          </div>
-          {copy(
-            "Illustrative web data. The F3 bar scale and captions adapt to the selected metric."
-          )}
-        </section>
-        <section
-          className="mc-chart-native-examples flex w-full max-w-full min-w-0 flex-col gap-(--demo-gap)"
-          data-chart-native-examples="true"
-          style={
-            /* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-            {
-              "--demo-gap": `${8 * scale}px`,
-            } satisfies DemoVariables as DemoVariables
-          }
-        >
-          {copy("F3 charts")}
-          <div
-            className="flex flex-wrap gap-(--demo-gap)"
-            style={
-              /* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-              {
-                "--demo-gap": `${6 * scale}px`,
-              } satisfies DemoVariables as DemoVariables
-            }
-          >
-            <Button
-              scale={scale}
-              type="button"
-              className="demo-owned-chart-3 max-w-full"
-              style={demoLayout3}
-              onClick={() => {
-                setStep((v) => v + 1);
-              }}
-            >
-              Next sample
-            </Button>
-            <Button
-              scale={scale}
-              type="button"
-              className="demo-owned-chart-4 max-w-full"
-              style={demoLayout4}
-              onClick={() => {
-                setLimit((v) => (v === 120 ? 260 : 120));
-              }}
-            >
-              {limit === 120 ? "120 FPS cap" : "Unlimited"}
-            </Button>
-          </div>
-          <div
-            className="flex w-full max-w-full min-w-0 flex-col items-start gap-(--demo-gap) overflow-x-auto p-(--demo-padding)"
-            style={
-              /* SAFETY: satisfies checks --demo-gap, --demo-padding against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-              {
-                "--demo-gap": `${8 * scale}px`,
-                "--demo-padding": `${scale}px`,
-              } satisfies DemoVariables as DemoVariables
-            }
-          >
-            <FpsChartExample
-              data-native-chart="fps"
-              data={samples.map((value) => ({ value: value / 1e6 }))}
-              dataKey="value"
-              framerateLimit={limit}
-              scale={scale}
-            />
-            <ProfilerChartExample
-              dataKey="percentage"
-              data-native-chart="profiler"
-              data={nativeData}
-              scale={scale}
-            />
-          </div>
-        </section>
+        {renderWebF3Charts({
+          browserData,
+          contentWidth,
+          copy,
+          metric,
+          scale,
+          setMetric,
+          setWebStep,
+          webSamples,
+        })}
+        {renderNativeF3Charts({
+          contentWidth,
+          copy,
+          limit,
+          nativeData,
+          samples,
+          scale,
+          setLimit,
+          setStep,
+        })}
         {copy("More pixel-styled chart types")}
         {copy(circular ? "Browser visitors" : "Website visitors")}
         {copy(
