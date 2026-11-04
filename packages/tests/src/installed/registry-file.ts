@@ -76,7 +76,14 @@ export const installedRegistryFile = function installedRegistryFile(
             settings.aliases[kind].replace(/^[@~]\//u, "")
           );
 
-    target = path.join(directory, path.basename(entry.path!));
+    target = path.join(
+      directory,
+      path.basename(
+        // SAFETY: registry file producers provide the source path; valid target-only entries are resolved by the branches above.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The fallback requires its producer's path, preserving existing invalid-input failure behavior.
+        entry.path as string
+      )
+    );
   }
 
   assert.ok(
