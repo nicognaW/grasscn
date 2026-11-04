@@ -32,10 +32,10 @@ const titleSource = (() => {
 
 const splash = "Now with components!";
 
-const splashWidth = [...splash].reduce(
-  (width, char) => width + minecraftGlyphs[char.charCodeAt(0) - 32][2],
-  0
-);
+const splashWidth = Array.from(
+  splash,
+  (char) => minecraftGlyphs[char.charCodeAt(0) - 32][2]
+).reduce((width, advance) => width + advance, 0);
 
 const splashPosition: React.CSSProperties & {
   "--grass-splash-left": string;

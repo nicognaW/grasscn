@@ -169,7 +169,7 @@ const MinecraftItemText = ({
         let value = "";
         let used = 0;
 
-        for (const char of [...line]) {
+        for (const char of line) {
           const next = advance(char);
 
           if (used + next > clipWidth - textWidth("...")) {

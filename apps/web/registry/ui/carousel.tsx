@@ -286,6 +286,7 @@ const CarouselArrow = ({
           } else {
             context.scrollPrev();
           }
+
           playMinecraftClick();
         }
       }}
