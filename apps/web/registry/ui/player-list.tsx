@@ -156,14 +156,14 @@ const renderRosterEntry = (
       <Avatar scale={scale} className="mc-roster-avatar" style={avatarStyle}>
         <AvatarImage
           skin={
-            player.src || player.username
+            (player.src ?? "") || (player.username ?? "")
               ? undefined
               : (player.skin ?? "wide/steve")
           }
           src={
             player.src ??
-            (player.username
-              ? `https://mc-heads.net/avatar/${encodeURIComponent(player.username)}/8`
+            ((player.username ?? "")
+              ? `https://mc-heads.net/avatar/${encodeURIComponent(player.username ?? "")}/8`
               : undefined)
           }
           alt=""

@@ -113,12 +113,14 @@ const AdvancementTree = ({
   const positions = new Map(points.map((node) => [node.id, node]));
 
   for (const node of nodes) {
-    if (node.parentId && !ids.has(node.parentId)) {
+    const parentId = node.parentId ?? "";
+
+    if (parentId && !ids.has(parentId)) {
       throw new Error(`Missing advancement parent: ${node.parentId}`);
     }
 
     const visited = new Set([node.id]);
-    let parent = node.parentId;
+    let parent = parentId;
 
     while (parent) {
       if (visited.has(parent)) {
@@ -126,7 +128,7 @@ const AdvancementTree = ({
       }
 
       visited.add(parent);
-      parent = positions.get(parent)?.parentId;
+      parent = positions.get(parent)?.parentId ?? "";
     }
   }
 
@@ -205,7 +207,8 @@ const AdvancementTree = ({
 
   const paths = (outline: boolean) =>
     visible.flatMap((node) => {
-      const parent = node.parentId && positions.get(node.parentId);
+      const parentId = node.parentId ?? "";
+      const parent = parentId ? positions.get(parentId) : undefined;
 
       if (!parent) {
         return [];
@@ -531,7 +534,7 @@ const AdvancementTree = ({
                 >
                   {node.title}
                 </Badge>
-                {node.description && <div>{node.description}</div>}
+                {(node.description ?? "") && <div>{node.description}</div>}
               </TooltipContent>
             </Tooltip>
           ))}
