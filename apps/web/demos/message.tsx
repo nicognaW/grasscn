@@ -25,21 +25,30 @@ interface ForwardedLayoutStyle4 extends IntrinsicLayoutCSSProperties {
   "--mc-forwarded-demos-message-4-width": `${number}px`;
 }
 
-type Line = { author?: string; text: string; system?: boolean };
+type Line = {
+  author?: string;
+  messageId: string;
+  text: string;
+  system?: boolean;
+};
 
 const history: Line[] = [
-  { author: "Steve", text: "The dashboard is ready for review." },
-  { author: "Alex", text: "带上你的镐子。" },
-  { author: "Steve", text: "I added the revenue breakdown." },
-  { author: "Alex", text: "找到钻石了！" },
-  { author: "You", text: "I will check the mobile layout." },
-  { system: true, text: "Changes saved." },
-  { author: "Steve", text: "The sun is setting." },
-  { author: "Alex", text: "回家吧。" },
-  { author: "You", text: "The bridge is finished." },
-  { author: "Steve", text: "Looks great!" },
-  { author: "Alex", text: "明天继续。" },
-  { system: true, text: "Changes saved." },
+  {
+    author: "Steve",
+    messageId: "1",
+    text: "The dashboard is ready for review.",
+  },
+  { author: "Alex", messageId: "2", text: "带上你的镐子。" },
+  { author: "Steve", messageId: "3", text: "I added the revenue breakdown." },
+  { author: "Alex", messageId: "4", text: "找到钻石了！" },
+  { author: "You", messageId: "5", text: "I will check the mobile layout." },
+  { messageId: "6", system: true, text: "Changes saved." },
+  { author: "Steve", messageId: "7", text: "The sun is setting." },
+  { author: "Alex", messageId: "8", text: "回家吧。" },
+  { author: "You", messageId: "9", text: "The bridge is finished." },
+  { author: "Steve", messageId: "10", text: "Looks great!" },
+  { author: "Alex", messageId: "11", text: "明天继续。" },
+  { messageId: "12", system: true, text: "Changes saved." },
 ];
 
 const History = ({ scale }: DemoProps) => {
@@ -52,7 +61,10 @@ const History = ({ scale }: DemoProps) => {
       return;
     }
 
-    setMessages((values) => [...values, { author: "You", text }]);
+    setMessages((values) => [
+      ...values,
+      { author: "You", messageId: String(values.length + 1), text },
+    ]);
     setText("");
   };
 
@@ -132,8 +144,11 @@ const History = ({ scale }: DemoProps) => {
               aria-live="polite"
               className="justify-end overflow-clip"
             >
-              {messages.map((message, index) => (
-                <MessageScrollerItem key={index} messageId={String(index + 1)}>
+              {messages.map((message) => (
+                <MessageScrollerItem
+                  key={message.messageId}
+                  messageId={message.messageId}
+                >
                   <Message
                     author={message.author}
                     kind={message.system === true ? "system" : "chat"}
