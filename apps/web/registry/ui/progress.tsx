@@ -47,6 +47,16 @@ type ProgressProps = Omit<
   scale?: 1 | 2 | 3;
 };
 
+/** Native determinate progress accepts only numeric values within its maximum. */
+const isDeterminateProgressValue = (
+  value: ProgressProps["value"],
+  maximum: number
+): value is number =>
+  typeof value === "number" &&
+  !Number.isNaN(value) &&
+  value >= 0 &&
+  value <= maximum;
+
 // Base UI supplies percentage/height defaults; this private artwork part owns native pixel geometry.
 const ProgressIndicatorArtwork = ({
   style: _primitiveStyle,
@@ -79,12 +89,7 @@ const Progress = ({
 }: ProgressProps) => {
   const maximum = !Number.isNaN(max) && max > 0 ? max : 100;
 
-  const valid =
-    value !== undefined &&
-    value !== null &&
-    !Number.isNaN(value) &&
-    value >= 0 &&
-    value <= maximum;
+  const valid = isDeterminateProgressValue(value, maximum);
 
   const ratio = valid ? value / maximum : 0;
   const fraction = Number.isFinite(ratio) ? Math.fround(ratio) : 0;
