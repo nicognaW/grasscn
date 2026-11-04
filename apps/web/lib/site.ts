@@ -42,8 +42,10 @@ export const pageMetadata = ({
     title,
     twitter: {
       card: "summary_large_image",
+      creator: "@nicongdev",
       description,
       images: [siteImage],
+      site: "@nicongdev",
       title: fullTitle,
     },
   };

@@ -50,8 +50,10 @@ export const metadata: Metadata = {
   title: { default: siteTitle, template: `%s · ${siteName}` },
   twitter: {
     card: "summary_large_image",
+    creator: "@nicongdev",
     description: siteDescription,
     images: [siteImage],
+    site: "@nicongdev",
     title: siteTitle,
   },
 };
