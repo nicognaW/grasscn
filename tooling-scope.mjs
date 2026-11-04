@@ -45,10 +45,10 @@ export const generatedCode = [
   "apps/web/registry/ui/minecraft-unifont-data.ts",
   "apps/web/registry/ui/minecraft-unifont-metrics.css",
   "packages/pixel-perfect/tests/reference/firework-rocket/manifest.json",
-  "packages/pixel-perfect/tests/reference/firework-sounds/manifest.json",
   "packages/pixel-perfect/tests/reference/fireworks/manifest.json",
   "packages/pixel-perfect/tests/reference/fireworks/random-sequences.json",
   "packages/pixel-perfect/tests/reference/redstone-lamp-display/manifest.json",
   "packages/pixel-perfect/tests/reference/nether-star/manifest.json",
+  "packages/tests/fixtures/reference/firework-sounds/manifest.json",
   "packages/tests/fixtures/reference/header-star/asset-provenance.json",
 ];

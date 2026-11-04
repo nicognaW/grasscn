@@ -68,7 +68,7 @@ The projected-reference corpus now holds 13 cases: each glyph `0`-`9` and `k` al
 
 ## Firework sounds (#51)
 
-#51 adds no PPT. The native sound record (`packages/pixel-perfect/tests/reference/firework-sounds/manifest.json`) confirms the sound-event ticks for the declared listener within 10 blocks of the explosion, where no distance delay applies: launch at tick 1, large_blast at tick 26, twinkle at tick 42 of the rocket sequence. The Base mappings to record when #52 adds the website default path (the header launch from the star button and the fireworks demo) are therefore these three individual cases of `packages/pixel-perfect/tests/fireworks/rocket-pixels.spec.ts`:
+#51 adds no PPT. The native sound record (`packages/tests/fixtures/reference/firework-sounds/manifest.json`) confirms the sound-event ticks for the declared listener within 10 blocks of the explosion, where no distance delay applies: launch at tick 1, large_blast at tick 26, twinkle at tick 42 of the rocket sequence. The Base mappings to record when #52 adds the website default path (the header launch from the star button and the fireworks demo) are therefore these three individual cases of `packages/pixel-perfect/tests/fireworks/rocket-pixels.spec.ts`:
 
 - `firework rocket tick 1 matches its projected reference within the geometry mask` (launch sound)
 - `firework rocket tick 26 matches its projected reference within the geometry mask` (large_blast sound)

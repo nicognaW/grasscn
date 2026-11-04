@@ -2,16 +2,15 @@
 // decode in the browser, and one launch plays each native sound once, on
 // its native tick, with the native pitch, through the shared master volume.
 // Expected calls come from the native record (the read-only SoundManager
-// hook in packages/pixel-perfect/tests/reference/firework-sounds), heard by
+// hook, fixtures/reference/firework-sounds), heard by
 // the declared listener within 10 blocks of the explosion.
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
-import path from "node:path";
 
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 import { fireworkSounds } from "@grasscn/web/ui/minecraft-firework-sound-assets";
-import { referenceFile, repoRoot } from "@tests/paths";
+import { referenceFile } from "@tests/paths";
 import { z } from "zod";
 
 const provenance = z
@@ -53,13 +52,7 @@ const nativeNear = z
   })
   .parse(
     JSON.parse(
-      readFileSync(
-        path.join(
-          repoRoot,
-          "packages/pixel-perfect/tests/reference/firework-sounds/manifest.json"
-        ),
-        "utf-8"
-      )
+      readFileSync(referenceFile("firework-sounds/manifest.json"), "utf-8")
     )
   )
   .listeners.find((listener) => listener.name === "near");

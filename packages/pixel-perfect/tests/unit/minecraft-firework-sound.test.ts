@@ -3,13 +3,15 @@
 // blocks of the explosion: the near variants, in the native order, on the
 // native ticks, with the native pitch and volume floats. The expected calls
 // were recorded inside native launches (the read-only SoundManager hook,
-// manifest.json of the firework-sounds record), not computed here.
+// manifest.json of the firework-sounds record, shared with the non-PPT
+// sound tests through @grasscn/tests/paths), not computed here.
 import { test } from "bun:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
+import { referenceFile } from "@grasscn/tests/paths";
 import {
   FIREWORK_ROCKET_SPAWN,
   FireworkRocketSimulation,
@@ -24,10 +26,7 @@ import { pixelPerfectFile, repoRoot } from "../../src/paths";
 
 const record = fireworkSoundManifestSchema.parse(
   JSON.parse(
-    readFileSync(
-      pixelPerfectFile("tests/reference/firework-sounds/manifest.json"),
-      "utf-8"
-    )
+    readFileSync(referenceFile("firework-sounds/manifest.json"), "utf-8")
   )
 );
 
@@ -60,7 +59,7 @@ const sha256 = (file: string) =>
 test("the native sound record is bound to its case, rocket case and harness", () => {
   assert.equal(
     record.caseDefinitionSha256,
-    sha256(pixelPerfectFile("tests/reference/firework-sounds/case.json"))
+    sha256(referenceFile("firework-sounds/case.json"))
   );
   assert.equal(
     record.rocketCaseSha256,
