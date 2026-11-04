@@ -4,6 +4,8 @@ import { test, expect } from "@grasscn/tests/test";
 import { fixtureFile } from "@tests/paths";
 import { PNG } from "pngjs";
 
+import type { AdventureFixtureSample } from "../../../fixtures/renderer/fixture-query-protocol";
+
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 
@@ -27,7 +29,7 @@ for (const sample of [
     await page.setViewportSize({ height: 900, width: 1536 });
 
     const capture = async (explicit: boolean) => {
-      const c = {
+      const c: AdventureFixtureSample = {
         anchor: 0,
         element: "player-preview",
         height: 120,
@@ -35,8 +37,11 @@ for (const sample of [
         state: sample.state,
         value: 180,
         width: 80,
-        ...(explicit ? { model: sample.model } : {}),
       };
+
+      if (explicit) {
+        c.model = sample.model;
+      }
 
       await page.goto(
         `${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify(c))}`
