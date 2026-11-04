@@ -108,3 +108,13 @@
     --mc-piece-8: var(--mc-highlighted-8);
   }
 }
+
+@layer components {
+  .mc-calendar-day {
+    height: var(--mc-calendar-day-height);
+    width: var(--mc-calendar-day-width);
+  }
+  .mc-calendar-dropdown-trigger {
+    min-width: var(--mc-calendar-dropdown-min-width);
+  }
+}

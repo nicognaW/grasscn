@@ -29,6 +29,8 @@ interface BookLayoutStyle3 extends React.CSSProperties {
 }
 
 interface BookScaleStyle extends React.CSSProperties {
+  "--mc-book-height": string;
+  "--mc-book-width": string;
   "--mc-scale": number;
 }
 
@@ -86,9 +88,9 @@ const Book = ({
       role={props.role ?? "group"}
       aria-label={props["aria-label"] ?? "Book"}
       style={minecraftStyle(style, (__style): BookScaleStyle => ({
+        "--mc-book-height": `${192 * scale}px`,
+        "--mc-book-width": `${192 * scale}px`,
         "--mc-scale": scale,
-        height: 192 * scale,
-        width: 192 * scale,
         ...__style,
       }))}
       onKeyDown={(event) => {

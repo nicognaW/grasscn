@@ -25,9 +25,11 @@ interface AdvancementTreeLayoutStyle2 extends React.CSSProperties {
 }
 
 interface AdvancementTreeScaleStyle extends React.CSSProperties {
+  "--mc-tree-height": string;
   "--mc-tree-image": string;
   "--mc-tree-position": string;
   "--mc-tree-size": string;
+  "--mc-tree-width": string;
   "--mc-scale": number;
 }
 
@@ -265,11 +267,11 @@ const AdvancementTree = ({
         aria-label={props["aria-label"] ?? "Advancement tree"}
         style={minecraftStyle(style, (__style): AdvancementTreeScaleStyle => ({
           "--mc-scale": scale,
+          "--mc-tree-height": `${height * scale}px`,
           "--mc-tree-image": `url("${background}")`,
           "--mc-tree-position": `${(Math.floor(position.x) % 16) * scale}px ${(Math.floor(position.y) % 16) * scale}px`,
           "--mc-tree-size": `${16 * scale}px ${16 * scale}px`,
-          height: height * scale,
-          width: width * scale,
+          "--mc-tree-width": `${width * scale}px`,
           ...__style,
         }))}
         onKeyDown={(event) => {

@@ -35,6 +35,15 @@ type CalendarProps = React.ComponentProps<typeof DayPicker> & {
   captionTextProps?: Omit<LabelProps, "children" | "scale">;
 };
 
+interface CalendarDayStyle extends React.CSSProperties {
+  "--mc-calendar-day-height": string;
+  "--mc-calendar-day-width": string;
+}
+
+interface CalendarDropdownStyle extends React.CSSProperties {
+  "--mc-calendar-dropdown-min-width": string;
+}
+
 interface CalendarAppearance {
   scale: 1 | 2 | 3;
   captionTextProps?: CalendarProps["captionTextProps"];
@@ -138,6 +147,10 @@ const CalendarDropdown = ({
   const { scale } = React.useContext(CalendarContext);
   const native = React.useRef<HTMLSelectElement>(null);
 
+  const dropdownStyle: CalendarDropdownStyle = {
+    "--mc-calendar-dropdown-min-width": `${40 * scale}px`,
+  };
+
   return (
     <span className={cn(className)} style={style}>
       <select
@@ -191,8 +204,8 @@ const CalendarDropdown = ({
           id={id}
           aria-label={props["aria-label"]}
           aria-labelledby={props["aria-labelledby"]}
-          className="w-auto"
-          style={{ minWidth: 40 * scale }}
+          className="mc-calendar-dropdown-trigger w-auto"
+          style={dropdownStyle}
         >
           <SelectValue />
         </SelectTrigger>
@@ -262,9 +275,9 @@ const CalendarDayButton = ({
       data-outside={modifiers.outside || undefined}
       className={cn(`mc-calendar-day`, className)}
       scale={scale}
-      style={minecraftStyle(style, (__style) => ({
-        height: 20 * scale,
-        width: 20 * scale,
+      style={minecraftStyle(style, (__style): CalendarDayStyle => ({
+        "--mc-calendar-day-height": `${20 * scale}px`,
+        "--mc-calendar-day-width": `${20 * scale}px`,
         ...__style,
       }))}
     >

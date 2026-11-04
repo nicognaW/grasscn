@@ -1,5 +1,7 @@
 @layer components {
   .mc-book {
+    height: var(--mc-book-height);
+    width: var(--mc-book-width);
     position: relative;
     flex: none;
     overflow: hidden;
