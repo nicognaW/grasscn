@@ -228,6 +228,16 @@ const renderRosterEntry = (
   );
 };
 
+type RosterHeading =
+  | { kind: "text"; content: string }
+  | { kind: "rich"; content: Exclude<React.ReactNode, string> };
+
+/** A roster heading owns either native document lines or one opaque rich child. */
+const rosterHeading = (content: React.ReactNode): RosterHeading =>
+  typeof content === "string"
+    ? { content, kind: "text" }
+    : { content, kind: "rich" };
+
 const PlayerList = ({
   players,
   header,
@@ -244,10 +254,13 @@ const PlayerList = ({
   const rows = Math.ceil(visible.length / columns);
   const [, refresh] = React.useReducer((v) => v + 1, 0);
 
+  const headerHeading = rosterHeading(header);
+  const footerHeading = rosterHeading(footer);
+
   const text =
     visible.map((p) => p.name).join("") +
-    (typeof header === "string" ? header : "") +
-    (typeof footer === "string" ? footer : "");
+    (headerHeading.kind === "text" ? headerHeading.content : "") +
+    (footerHeading.kind === "text" ? footerHeading.content : "");
 
   React.useEffect(() => {
     let live = true;
@@ -291,24 +304,30 @@ const PlayerList = ({
   const hasHeader = Boolean(header);
   const hasFooter = Boolean(footer);
 
-  let _selectedHead: React.ReactNode[];
+  let _selectedHead: RosterHeading[];
 
-  if (typeof header === "string") {
-    _selectedHead = header.split("\n");
+  if (headerHeading.kind === "text") {
+    _selectedHead = headerHeading.content.split("\n").map((content) => ({
+      content,
+      kind: "text",
+    }));
   } else if (hasHeader) {
-    _selectedHead = [header];
+    _selectedHead = [headerHeading];
   } else {
     _selectedHead = [];
   }
 
   const head = _selectedHead;
 
-  let _selectedFoot: React.ReactNode[];
+  let _selectedFoot: RosterHeading[];
 
-  if (typeof footer === "string") {
-    _selectedFoot = footer.split("\n");
+  if (footerHeading.kind === "text") {
+    _selectedFoot = footerHeading.content.split("\n").map((content) => ({
+      content,
+      kind: "text",
+    }));
   } else if (hasFooter) {
-    _selectedFoot = [footer];
+    _selectedFoot = [footerHeading];
   } else {
     _selectedFoot = [];
   }
@@ -318,7 +337,7 @@ const PlayerList = ({
   const fullWidth = Math.max(
     bodyWidth,
     ...[...head, ...foot].map((line) =>
-      typeof line === "string" ? documentTextWidth(line) : 0
+      line.kind === "text" ? documentTextWidth(line.content) : 0
     )
   );
 
@@ -354,7 +373,7 @@ const PlayerList = ({
             }
           >
             {head.map((line, i) => {
-              const isHeadingText = typeof line === "string";
+              const isHeadingText = line.kind === "text";
 
               const headingPosition:
                 | (React.CSSProperties & { "--mc-roster-line-left": string })
@@ -363,7 +382,7 @@ const PlayerList = ({
                     "--mc-roster-line-left": `${
                       (1 +
                         Math.floor(fullWidth / 2) -
-                        Math.floor(documentTextWidth(line) / 2)) *
+                        Math.floor(documentTextWidth(line.content) / 2)) *
                       scale
                     }px`,
                   }
@@ -388,7 +407,7 @@ const PlayerList = ({
                         : undefined
                     }
                   >
-                    <MinecraftMenuText>{line}</MinecraftMenuText>
+                    <MinecraftMenuText>{line.content}</MinecraftMenuText>
                   </span>
                 </div>
               );
@@ -437,7 +456,7 @@ const PlayerList = ({
             }
           >
             {foot.map((line, i) => {
-              const isHeadingText = typeof line === "string";
+              const isHeadingText = line.kind === "text";
 
               const headingPosition:
                 | (React.CSSProperties & { "--mc-roster-line-left": string })
@@ -446,7 +465,7 @@ const PlayerList = ({
                     "--mc-roster-line-left": `${
                       (1 +
                         Math.floor(fullWidth / 2) -
-                        Math.floor(documentTextWidth(line) / 2)) *
+                        Math.floor(documentTextWidth(line.content) / 2)) *
                       scale
                     }px`,
                   }
@@ -471,7 +490,7 @@ const PlayerList = ({
                         : undefined
                     }
                   >
-                    <MinecraftMenuText>{line}</MinecraftMenuText>
+                    <MinecraftMenuText>{line.content}</MinecraftMenuText>
                   </span>
                 </div>
               );

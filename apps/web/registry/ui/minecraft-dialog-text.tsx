@@ -116,7 +116,8 @@ export const MinecraftDialogText = ({
   const [, loaded] = React.useReducer((n) => n + 1, 0);
 
   const unicode =
-    typeof children === "string" && /[^\u0020-\u007E\n]/u.test(children);
+    isMinecraftTextContent(children) &&
+    /[^\u0020-\u007E\n]/u.test(String(children));
 
   React.useEffect(() => {
     let active = true;
