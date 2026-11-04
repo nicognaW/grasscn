@@ -151,18 +151,37 @@ const sourceMatches = async function sourceMatches(
       return false;
     }
 
+    const sourceTargets: { file: string; sha256: string }[] = [];
+
     for (const source of declaration.sourceFiles) {
       const name = normalizeCasePath(source.file);
 
-      if (
-        required.get(name) !== source.sha256 ||
-        digest(await readFile(path.resolve(currentSourceRoot, name))) !==
-          source.sha256
-      ) {
+      if (required.get(name) !== source.sha256) {
         return false;
       }
 
+      sourceTargets.push({
+        file: path.resolve(currentSourceRoot, name),
+        sha256: source.sha256,
+      });
       required.delete(name);
+    }
+
+    // Establish complete declared owner membership before starting any independent source read.
+    const sourceInputs = await Promise.allSettled(
+      sourceTargets.map(async (target) => ({
+        bytes: await readFile(target.file),
+        sha256: target.sha256,
+      }))
+    );
+
+    for (const sourceInput of sourceInputs) {
+      if (
+        sourceInput.status === "rejected" ||
+        digest(sourceInput.value.bytes) !== sourceInput.value.sha256
+      ) {
+        return false;
+      }
     }
 
     return required.size === 0;
@@ -177,28 +196,42 @@ const verificationArtifactsIntact = async (
 ) => {
   let intact = true;
 
-  for (const artifact of verification.artifacts ?? []) {
-    const output = path.resolve(verification.outputDirectory);
-    const relative = path.relative(run, output);
+  const artifactInputs = await Promise.allSettled(
+    (verification.artifacts ?? []).map(async (artifact) => {
+      const output = path.resolve(verification.outputDirectory);
+      const relative = path.relative(run, output);
 
-    if (
-      relative === ".." ||
-      relative.startsWith(`..${path.sep}`) ||
-      path.isAbsolute(relative) ||
-      path.basename(artifact.file) !== artifact.file
-    ) {
+      if (
+        relative === ".." ||
+        relative.startsWith(`..${path.sep}`) ||
+        path.isAbsolute(relative) ||
+        path.basename(artifact.file) !== artifact.file
+      ) {
+        return null;
+      }
+
+      try {
+        return (
+          digest(await readFile(path.join(output, artifact.file))) ===
+          artifact.pngSha256
+        );
+      } catch {
+        return false;
+      }
+    })
+  );
+
+  for (const artifactInput of artifactInputs) {
+    if (artifactInput.status === "rejected") {
+      throw artifactInput.reason;
+    }
+
+    if (artifactInput.value === null) {
       intact = false;
       break;
     }
 
-    try {
-      if (
-        digest(await readFile(path.join(output, artifact.file))) !==
-        artifact.pngSha256
-      ) {
-        intact = false;
-      }
-    } catch {
+    if (!artifactInput.value) {
       intact = false;
     }
   }
@@ -259,22 +292,100 @@ export const reusableBrowserTests = async function reusableBrowserTests(
     )
   );
 
-  for (const candidate of nativeSortValues) {
-    const run = path.dirname(candidate.filename);
-    const directory = path.join(run, "checkpoints", file);
+  const candidateInputs = await Promise.allSettled(
+    nativeSortValues.map(async (candidate) => {
+      const run = path.dirname(candidate.filename);
+      const directory = path.join(run, "checkpoints", file);
+      const [journalInput] = await Promise.allSettled([
+        readCheckpointJournal(directory),
+      ]);
 
-    let expected: CheckpointCatalogue;
-    let records: CheckpointResult[];
+      if (journalInput.status === "rejected" || journalInput.value === null) {
+        return { journalInput, recordInputs: [] };
+      }
+
+      const { expected, records } = journalInput.value;
+      const declarations = new Map(
+        expected.tests.map((test) => [test.id, test])
+      );
+
+      const recordInputs = await Promise.allSettled(
+        records.map(async (record) => {
+          const declaration = declarations.get(record.id);
+
+          if (
+            record.status !== "passed" ||
+            record.expectedStatus !== "passed" ||
+            record.retry !== 0
+          ) {
+            return { id: record.id, reusable: null };
+          }
+
+          if (
+            !declaration ||
+            declaration.sourceSha256 !== source ||
+            record.sourceChanged !== false
+          ) {
+            return { id: record.id, reusable: null };
+          }
+
+          if (!hasReplayableTestIdentity(record)) {
+            return { id: record.id, reusable: null };
+          }
+
+          if (
+            !(await sourceMatches(
+              expected,
+              declaration,
+              record,
+              file,
+              spec,
+              root,
+              sourceRoot
+            ))
+          ) {
+            return { id: record.id, reusable: null };
+          }
+
+          if (
+            record.verification &&
+            !(await verificationArtifactsIntact(record.verification, run))
+          ) {
+            return { id: record.id, reusable: null };
+          }
+
+          return {
+            id: record.id,
+            reusable: {
+              from: candidate.filename,
+              id: record.id,
+              line: `[${record.title[0]}] › ${file} › ${record.title.slice(2).join(" › ")}`,
+              verification: record.verification,
+            },
+          };
+        })
+      );
+
+      return { journalInput, recordInputs };
+    })
+  );
+
+  for (const candidateInput of candidateInputs) {
+    if (candidateInput.status === "rejected") {
+      throw candidateInput.reason;
+    }
+
+    const { journalInput, recordInputs } = candidateInput.value;
 
     try {
-      const journal = await readCheckpointJournal(directory);
+      if (journalInput.status === "rejected") {
+        throw journalInput.reason;
+      }
 
-      if (journal === null) {
+      if (journalInput.value === null) {
         tests.clear();
         continue;
       }
-
-      ({ expected, records } = journal);
     } catch (error) {
       if (
         !(error instanceof Error && "code" in error && error.code === "ENOENT")
@@ -285,63 +396,19 @@ export const reusableBrowserTests = async function reusableBrowserTests(
       continue;
     }
 
-    const declarations = new Map(expected.tests.map((test) => [test.id, test]));
+    for (const recordInput of recordInputs) {
+      if (recordInput.status === "rejected") {
+        throw recordInput.reason;
+      }
 
-    for (const record of records) {
-      const declaration = declarations.get(record.id);
+      const { id, reusable } = recordInput.value;
 
-      if (
-        record.status !== "passed" ||
-        record.expectedStatus !== "passed" ||
-        record.retry !== 0
-      ) {
-        tests.delete(record.id);
+      if (reusable === null) {
+        tests.delete(id);
         continue;
       }
 
-      if (
-        !declaration ||
-        declaration.sourceSha256 !== source ||
-        record.sourceChanged !== false
-      ) {
-        tests.delete(record.id);
-        continue;
-      }
-
-      if (!hasReplayableTestIdentity(record)) {
-        tests.delete(record.id);
-        continue;
-      }
-
-      if (
-        !(await sourceMatches(
-          expected,
-          declaration,
-          record,
-          file,
-          spec,
-          root,
-          sourceRoot
-        ))
-      ) {
-        tests.delete(record.id);
-        continue;
-      }
-
-      if (
-        record.verification &&
-        !(await verificationArtifactsIntact(record.verification, run))
-      ) {
-        tests.delete(record.id);
-        continue;
-      }
-
-      tests.set(record.id, {
-        from: candidate.filename,
-        id: record.id,
-        line: `[${record.title[0]}] › ${file} › ${record.title.slice(2).join(" › ")}`,
-        verification: record.verification,
-      });
+      tests.set(id, reusable);
     }
   }
 

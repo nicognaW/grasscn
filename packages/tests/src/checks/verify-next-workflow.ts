@@ -127,36 +127,51 @@ const preserveInstalledDependencies = async () => {
   /** @type {{target: string, relative: string, physical: string}[]} */
   const targets: { target: string; relative: string; physical: string }[] = [];
 
-  for (const workspace of new Set(["", ...workspaces])) {
-    const target = path.resolve(repoRoot, workspace, "node_modules");
-    const relative = path.relative(repoRoot, target);
+  const dependencyInputs = await Promise.allSettled(
+    [...new Set(["", ...workspaces])].map(async (workspace) => {
+      const target = path.resolve(repoRoot, workspace, "node_modules");
+      const relative = path.relative(repoRoot, target);
 
-    assert.ok(
-      relative &&
-        !relative.startsWith(`..${path.sep}`) &&
-        relative !== ".." &&
-        !path.isAbsolute(relative),
-      "Dependency backup must stay in this source workspace"
-    );
+      assert.ok(
+        relative &&
+          !relative.startsWith(`..${path.sep}`) &&
+          relative !== ".." &&
+          !path.isAbsolute(relative),
+        "Dependency backup must stay in this source workspace"
+      );
 
-    try {
-      const info = await lstat(target);
-      assert.ok(
-        info.isDirectory() || info.isSymbolicLink(),
-        "Expected an installed dependency directory"
-      );
-      const physical = await realpath(target);
-      assert.ok(
-        physical.startsWith(root + path.sep),
-        "Dependency backup cannot follow an external directory"
-      );
-      targets.push({ physical, relative, target });
-    } catch (error) {
-      // SAFETY: this catch receives only errors from the owned Node filesystem and assertion operations above; their optional errno code is read without changing the original error or rethrow.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Node fs/assert failure boundary; preserve the original code lookup and error object.
-      if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
-        throw error;
+      try {
+        const info = await lstat(target);
+        assert.ok(
+          info.isDirectory() || info.isSymbolicLink(),
+          "Expected an installed dependency directory"
+        );
+        const physical = await realpath(target);
+        assert.ok(
+          physical.startsWith(root + path.sep),
+          "Dependency backup cannot follow an external directory"
+        );
+
+        return { physical, relative, target };
+      } catch (error) {
+        // SAFETY: this catch receives only errors from the owned Node filesystem and assertion operations above; their optional errno code is read without changing the original error or rethrow.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Node fs/assert failure boundary; preserve the original code lookup and error object.
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+          throw error;
+        }
       }
+
+      return null;
+    })
+  );
+
+  for (const dependencyInput of dependencyInputs) {
+    if (dependencyInput.status === "rejected") {
+      throw dependencyInput.reason;
+    }
+
+    if (dependencyInput.value !== null) {
+      targets.push(dependencyInput.value);
     }
   }
 
@@ -185,27 +200,49 @@ const preserveInstalledDependencies = async () => {
 const generatedDocsIdentity = async () => {
   const hash = createHash("sha256");
 
-  /** @param {string} folder - Generated source folder. */
-  const visit = async (folder: string) => {
-    const entries = await readdir(folder, { withFileTypes: true });
+  type GeneratedInput = [filename: string, bytes: Buffer];
 
+  /** @param folder - Generated source folder; retain locale-sorted depth-first bytes. */
+  const visit = async (folder: string): Promise<GeneratedInput[]> => {
+    const entries = await readdir(folder, { withFileTypes: true });
     const sortedEntries = [...entries];
     sortedEntries.sort((left, right) => left.name.localeCompare(right.name));
 
-    for (const entry of sortedEntries) {
-      const filename = path.join(folder, entry.name);
+    const inputs = await Promise.allSettled(
+      sortedEntries.map(async (entry): Promise<GeneratedInput[]> => {
+        const filename = path.join(folder, entry.name);
 
-      if (entry.isDirectory()) {
-        await visit(filename);
-      } else if (entry.isFile()) {
-        hash
-          .update(path.relative(webRoot, filename))
-          .update(await readFile(filename));
+        if (entry.isDirectory()) {
+          return await visit(filename);
+        }
+
+        if (entry.isFile()) {
+          return [[filename, await readFile(filename)]];
+        }
+
+        return [];
+      })
+    );
+
+    const collected: GeneratedInput[] = [];
+
+    for (const input of inputs) {
+      if (input.status === "rejected") {
+        throw input.reason;
+      }
+
+      for (const file of input.value) {
+        collected.push(file);
       }
     }
+
+    return collected;
   };
 
-  await visit(path.join(webRoot, ".source"));
+  for (const [filename, bytes] of await visit(path.join(webRoot, ".source"))) {
+    hash.update(path.relative(webRoot, filename)).update(bytes);
+  }
+
   hash.update(await readFile(path.join(webRoot, "next-env.d.ts")));
 
   return hash.digest("hex");
@@ -232,18 +269,46 @@ try {
   turbo = packageBin("turbo", "turbo", repoRoot);
   report.freshToolchain = {};
 
-  for (const [name, binary, from] of [
-    ["turbo", "turbo", repoRoot],
-    ["next", "next", webRoot],
-    ["uncheck", "uncheck", repoRoot],
-    ["shadcn", "shadcn", webRoot],
-  ]) {
-    const physical = await realpath(packageBin(name, binary, from));
-    assert.ok(
-      physical.startsWith((await realpath(repoRoot)) + path.sep) &&
-        physical.includes(`${path.sep}node_modules${path.sep}`),
-      "Fresh toolchain must resolve inside this source workspace"
-    );
+  const toolInputs = await Promise.allSettled(
+    [
+      ["turbo", "turbo", repoRoot],
+      ["next", "next", webRoot],
+      ["uncheck", "uncheck", repoRoot],
+      ["shadcn", "shadcn", webRoot],
+    ].map(async ([name, binary, from]) => {
+      const [physicalInput, sourceInput] = await Promise.allSettled(
+        [
+          async () => await realpath(packageBin(name, binary, from)),
+          async () => await realpath(repoRoot),
+        ].map(async (read) => await read())
+      );
+
+      if (physicalInput.status === "rejected") {
+        throw physicalInput.reason;
+      }
+
+      if (sourceInput.status === "rejected") {
+        throw sourceInput.reason;
+      }
+
+      const physical = physicalInput.value;
+      const root = sourceInput.value;
+      assert.ok(
+        physical.startsWith(root + path.sep) &&
+          physical.includes(`${path.sep}node_modules${path.sep}`),
+        "Fresh toolchain must resolve inside this source workspace"
+      );
+
+      return { name, physical };
+    })
+  );
+
+  for (const toolInput of toolInputs) {
+    if (toolInput.status === "rejected") {
+      throw toolInput.reason;
+    }
+
+    const { name, physical } = toolInput.value;
     report.freshToolchain[name] = physical;
   }
 
