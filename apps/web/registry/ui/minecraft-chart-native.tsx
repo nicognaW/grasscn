@@ -13,10 +13,20 @@ import { MinecraftText } from "./minecraft-text";
 
 import "./minecraft-chart.css";
 
+interface NativeChartPaintStyle extends React.CSSProperties {
+  "--mc-native-background"?: string;
+  "--mc-native-background-channels"?: string;
+  "--mc-native-color"?: string;
+  "--mc-native-height"?: string;
+  "--mc-native-left"?: string;
+  "--mc-native-top"?: string;
+  "--mc-native-width"?: string;
+}
+
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
   minecraftGlyphs;
 
-interface NativeChartTextStyle extends React.CSSProperties {
+interface NativeChartTextStyle extends NativeChartPaintStyle {
   "--mc-ink": string;
   "--mc-shadow": string;
 }
@@ -72,10 +82,10 @@ const NativeChartText = ({
 
   const textStyle: NativeChartTextStyle = {
     "--mc-ink": ink,
+    "--mc-native-color": ink,
+    "--mc-native-left": `${x * scale}px`,
+    "--mc-native-top": `${y * scale}px`,
     "--mc-shadow": shade,
-    color: ink,
-    left: x * scale,
-    top: y * scale,
   };
 
   return (
@@ -120,77 +130,110 @@ const ChartFpsFrame = ({
   const yScale = useYAxisScale();
   const presentation = guides ? { guides } : undefined;
 
-  const line = (y: number, color: string, key: string) => (
-    <span
-      key={key}
-      className="mc-chart-rect mc-layout-minecraft-chart-native-1"
-      style={{
-        background: color,
-        height: scale,
+  const line = (y: number, color: string, key: string) => {
+    const nativePaint1: NativeChartPaintStyle = {
+      "--mc-native-background": color,
+      "--mc-native-height": `${scale}px`,
+      "--mc-native-top": `${y * scale}px`,
+      "--mc-native-width": `${width * scale}px`,
+    };
 
-        top: y * scale,
-        width: width * scale,
-      }}
-    />
-  );
-
-  const shade = (text: string, y: number) => (
-    <React.Fragment key={text}>
+    return (
       <span
-        className="mc-chart-rect mc-layout-minecraft-chart-native-2"
-        style={{
-          height: 9 * scale,
-          left: scale,
-          top: y * scale,
-          width: (widthOf(text) + 1) * scale,
-        }}
+        key={key}
+        className="mc-chart-rect mc-layout-minecraft-chart-native-1 mc-chart-native-paint-1"
+        style={nativePaint1}
       />
-      {bars.map((bar, i) => {
-        const h = Math.round(bar.height / scale);
-        const baseline = Math.round((bar.y + bar.height) / scale);
-        const top = Math.max(y, baseline - h);
-        const bottom = Math.min(y + 9, baseline);
-        const left = Math.round(bar.x / scale);
+    );
+  };
 
-        const labelOverlapWidth = Math.min(
-          Math.round(bar.width / scale),
-          widthOf(text) + 2 - left
-        );
+  const shade = (text: string, y: number) => {
+    const nativePaint2: NativeChartPaintStyle = {
+      "--mc-native-height": `${9 * scale}px`,
+      "--mc-native-left": `${scale}px`,
+      "--mc-native-top": `${y * scale}px`,
+      "--mc-native-width": `${(widthOf(text) + 1) * scale}px`,
+    };
 
-        if (labelOverlapWidth <= 0 || bottom <= top) {
-          return null;
-        }
+    return (
+      <React.Fragment key={text}>
+        <span
+          className="mc-chart-rect mc-layout-minecraft-chart-native-2 mc-chart-native-paint-2"
+          style={nativePaint2}
+        />
+        {bars.map((bar, i) => {
+          const h = Math.round(bar.height / scale);
+          const baseline = Math.round((bar.y + bar.height) / scale);
+          const top = Math.max(y, baseline - h);
+          const bottom = Math.min(y + 9, baseline);
+          const left = Math.round(bar.x / scale);
 
-        const rgb = chartColorChannels(bar.fill, host.current);
+          const labelOverlapWidth = Math.min(
+            Math.round(bar.width / scale),
+            widthOf(text) + 2 - left
+          );
 
-        const mixed = rgb.map((v) =>
-          Math.round((80 * 144) / 255 + (v * 111) / 255)
-        );
+          if (labelOverlapWidth <= 0 || bottom <= top) {
+            return null;
+          }
 
-        return (
-          <span
-            key={i}
-            className="mc-chart-rect"
-            style={{
-              background: `rgb(${mixed.join(",")})`,
-              height: (bottom - top) * scale,
-              left: left * scale,
-              top: top * scale,
-              width: labelOverlapWidth * scale,
-            }}
-          />
-        );
-      })}
-      <NativeChartText
-        text={text}
-        x={2}
-        y={y + 1}
-        color={0xe0_e0_e0}
-        shadow={false}
-        scale={scale}
-      />
-    </React.Fragment>
-  );
+          const rgb = chartColorChannels(bar.fill, host.current);
+
+          const mixed = rgb.map((v) =>
+            Math.round((80 * 144) / 255 + (v * 111) / 255)
+          );
+
+          const nativePaint3: NativeChartPaintStyle = {
+            "--mc-native-background-channels": mixed.join(","),
+            "--mc-native-height": `${(bottom - top) * scale}px`,
+            "--mc-native-left": `${left * scale}px`,
+            "--mc-native-top": `${top * scale}px`,
+            "--mc-native-width": `${labelOverlapWidth * scale}px`,
+          };
+
+          return (
+            <span
+              key={i}
+              className="mc-chart-rect mc-chart-native-paint-3"
+              style={nativePaint3}
+            />
+          );
+        })}
+        <NativeChartText
+          text={text}
+          x={2}
+          y={y + 1}
+          color={0xe0_e0_e0}
+          shadow={false}
+          scale={scale}
+        />
+      </React.Fragment>
+    );
+  };
+
+  const nativePaint4: NativeChartPaintStyle = {
+    "--mc-native-height": `${chartHeight}px`,
+    "--mc-native-width": `${chartWidth}px`,
+  };
+
+  const nativePaint5: NativeChartPaintStyle = {
+    "--mc-native-height": `${60 * scale}px`,
+    "--mc-native-top": `${9 * scale}px`,
+    "--mc-native-width": `${width * scale}px`,
+  };
+
+  const nativePaint7: NativeChartPaintStyle = {
+    "--mc-native-height": `${59 * scale}px`,
+    "--mc-native-top": `${10 * scale}px`,
+    "--mc-native-width": `${scale}px`,
+  };
+
+  const nativePaint8: NativeChartPaintStyle = {
+    "--mc-native-height": `${59 * scale}px`,
+    "--mc-native-left": `${(width - 1) * scale}px`,
+    "--mc-native-top": `${10 * scale}px`,
+    "--mc-native-width": `${scale}px`,
+  };
 
   return (
     <foreignObject
@@ -204,54 +247,41 @@ const ChartFpsFrame = ({
         ref={host}
         data-slot="chart-fps-frame"
         data-mc-ready={bars.length > 0}
-        className="mc-layout-minecraft-chart-native-5"
-        style={{ height: chartHeight, width: chartWidth }}
+        className="mc-layout-minecraft-chart-native-5 mc-chart-native-paint-4"
+        style={nativePaint4}
       >
         <span
-          className="mc-chart-rect mc-layout-minecraft-chart-native-6"
-          style={{
-            height: 60 * scale,
-
-            top: 9 * scale,
-            width: width * scale,
-          }}
+          className="mc-chart-rect mc-layout-minecraft-chart-native-6 mc-chart-native-paint-5"
+          style={nativePaint5}
         />
         {bars.map((bar, i) => {
           const h = Math.round(bar.height / scale);
 
+          const nativePaint6: NativeChartPaintStyle = {
+            "--mc-native-background": bar.fill,
+            "--mc-native-height": `${h * scale}px`,
+            "--mc-native-left": `${Math.round(bar.x / scale) * scale}px`,
+            "--mc-native-top": `${(Math.round((bar.y + bar.height) / scale) - h) * scale}px`,
+            "--mc-native-width": `${Math.round(bar.width / scale) * scale}px`,
+          };
+
           return (
             <span
               key={i}
-              className="mc-chart-rect"
-              style={{
-                background: bar.fill,
-                height: h * scale,
-                left: Math.round(bar.x / scale) * scale,
-                top: (Math.round((bar.y + bar.height) / scale) - h) * scale,
-                width: Math.round(bar.width / scale) * scale,
-              }}
+              className="mc-chart-rect mc-chart-native-paint-6"
+              style={nativePaint6}
             />
           );
         })}
         {line(9, "white", "top")}
         {line(68, "white", "bottom")}
         <span
-          className="mc-chart-rect mc-layout-minecraft-chart-native-8"
-          style={{
-            height: 59 * scale,
-
-            top: 10 * scale,
-            width: scale,
-          }}
+          className="mc-chart-rect mc-layout-minecraft-chart-native-8 mc-chart-native-paint-7"
+          style={nativePaint7}
         />
         <span
-          className="mc-chart-rect mc-layout-minecraft-chart-native-9"
-          style={{
-            height: 59 * scale,
-            left: (width - 1) * scale,
-            top: 10 * scale,
-            width: scale,
-          }}
+          className="mc-chart-rect mc-layout-minecraft-chart-native-9 mc-chart-native-paint-8"
+          style={nativePaint8}
         />
         {labels.map((text, i) => (
           <NativeChartText
@@ -625,6 +655,18 @@ const ChartProfilerFrame = ({
 
   const sector = sectors[0];
 
+  const nativePaint9: NativeChartPaintStyle = {
+    "--mc-native-height": `${height}px`,
+    "--mc-native-width": `${width}px`,
+  };
+
+  const nativePaint10: NativeChartPaintStyle = {
+    "--mc-native-height": `${114 * unit}px`,
+    "--mc-native-left": `${sector.cx - 130 * unit}px`,
+    "--mc-native-top": `${sector.cy - 52 * unit}px`,
+    "--mc-native-width": `${260 * unit}px`,
+  };
+
   return (
     <foreignObject
       x={0}
@@ -636,22 +678,15 @@ const ChartProfilerFrame = ({
       <div
         data-slot="chart-profiler-frame"
         data-mc-ready={ready}
-        className="mc-layout-minecraft-chart-native-11"
-        style={{ height, width }}
+        className="mc-layout-minecraft-chart-native-11 mc-chart-native-paint-9"
+        style={nativePaint9}
       >
         <canvas
           key="profiler-2d-surface"
           ref={canvas}
           aria-hidden="true"
-          className="mc-layout-minecraft-chart-native-12"
-          style={{
-            height: 114 * unit,
-
-            left: sector.cx - 130 * unit,
-
-            top: sector.cy - 52 * unit,
-            width: 260 * unit,
-          }}
+          className="mc-layout-minecraft-chart-native-12 mc-chart-native-paint-10"
+          style={nativePaint10}
         />
         <NativeChartText text={rootName} x={5} y={5} scale={scale} />
         <NativeChartText
