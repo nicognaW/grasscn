@@ -308,6 +308,7 @@ const Calendar = ({
 
   const defaults = getDefaultClassNames();
 
+  // SAFETY: key comes only from DayPicker's getDefaultClassNames(); classNames is its Partial<ClassNames> override map, and the existing empty-string fallback handles every absent published key.
   const merged = Object.fromEntries(
     Object.entries(defaults).map(([key, value]) => [
       key,
