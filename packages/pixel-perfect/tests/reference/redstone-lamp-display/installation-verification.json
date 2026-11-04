@@ -1,0 +1,42 @@
+{
+  "assets": [
+    {
+      "key": "lit",
+      "member": "assets/minecraft/textures/block/redstone_lamp_on.png",
+      "sha256": "7a1179a50639369b828de16d24c37102be44d81d73205a0950e4549f2c53c899"
+    },
+    {
+      "key": "unlit",
+      "member": "assets/minecraft/textures/block/redstone_lamp.png",
+      "sha256": "60d43bc037630fdf7a770f31e10a59312609f084fcabe73725030036611de84a"
+    }
+  ],
+  "command": "REGISTRY_URL=http://127.0.0.1:<mirror>/r shadcn@4.23.0 add http://127.0.0.1:<mirror>/r/redstone-lamp-display.json --yes (external Bun consumer, TypeScript 5.9.3 strict; the offline mirror serves apps/web/public/r from bun run registry:build, plus empty styles/*/index.json and colors/*.json because ui.shadcn.com is unreachable)",
+  "consumerRsc": false,
+  "files": [
+    {
+      "installedSha256": "92a6071c09ef60fccaff53fa2ae55754d4e0a1b4c48fccf2f7a53a32b8b23a80",
+      "path": "redstone-lamp-display.tsx",
+      "sourcePath": "registry/ui/redstone-lamp-display.tsx",
+      "sourceSha256": "92a6071c09ef60fccaff53fa2ae55754d4e0a1b4c48fccf2f7a53a32b8b23a80"
+    },
+    {
+      "installedSha256": "b2c7fbdee9935491d1160753f54942cb18dedbc2d8bc6fd7ef588967def7d226",
+      "path": "minecraft-block-atlas.ts",
+      "sourcePath": "registry/ui/minecraft-block-atlas.ts",
+      "sourceSha256": "fb46e3c5811650399a9764621fce8c235a4a6c19d1bb088bb18b963da7f7aea4"
+    },
+    {
+      "installedSha256": "70b3141214412ca7b3df9f760b761e4f180fabd61ac2c33642ec636ce9417594",
+      "path": "minecraft-redstone-lamp-assets.ts",
+      "sourcePath": "registry/ui/minecraft-redstone-lamp-assets.ts",
+      "sourceSha256": "e2b79b25caa5fcb1751b01a264a68ce34defc8fe7964666602d6f94643f1eb76"
+    }
+  ],
+  "item": "redstone-lamp-display",
+  "scope": "External consumer outside the repository, installed with the shadcn CLI from the locally built registry. Files, types and embedded textures are verified; pixels are verified by the projected-reference PPTs against the repository source, which the installed files equal beyond CLI transforms.",
+  "typecheck": {
+    "passed": true,
+    "typescript": "5.9.3"
+  }
+}

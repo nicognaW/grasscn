@@ -7,6 +7,7 @@ import HudDemo from "../demos/hud";
 import MapDemo from "../demos/map";
 import PlayerListDemo from "../demos/player-list";
 import PlayerPreviewDemo from "../demos/player-preview";
+import RedstoneLampDisplayDemo from "../demos/redstone-lamp-display";
 import SignDemo from "../demos/sign";
 import TradingDemo from "../demos/trading";
 
@@ -20,6 +21,7 @@ const playgrounds = {
   map: MapDemo,
   "player-list": PlayerListDemo,
   "player-preview": PlayerPreviewDemo,
+  "redstone-lamp-display": RedstoneLampDisplayDemo,
   sign: SignDemo,
   trading: TradingDemo,
 };

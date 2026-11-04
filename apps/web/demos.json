@@ -333,5 +333,10 @@
     "name": "player-list",
     "title": "Player List",
     "category": "Minecraft"
+  },
+  {
+    "name": "redstone-lamp-display",
+    "title": "Redstone Lamp Display",
+    "category": "Minecraft"
   }
 ]

@@ -10,6 +10,7 @@ import PlayerListExample from "./player-list-example";
 import PlayerListScoreboard from "./player-list-scoreboard";
 import PlayerPreviewAlex from "./player-preview-alex";
 import PlayerPreviewExample from "./player-preview-example";
+import RedstoneLampDisplayExample from "./redstone-lamp-display-example";
 import SignExample from "./sign-example";
 import SignHanging from "./sign-hanging";
 import TradingExample from "./trading-example";
@@ -69,6 +70,11 @@ export const minecraftExamples = {
     Component: PlayerPreviewExample,
     filename: "minecraft/player-preview-example.tsx",
     title: "Player Preview Example",
+  },
+  "redstone-lamp-display-example": {
+    Component: RedstoneLampDisplayExample,
+    filename: "minecraft/redstone-lamp-display-example.tsx",
+    title: "Redstone Lamp Display Example",
   },
   "sign-example": {
     Component: SignExample,
