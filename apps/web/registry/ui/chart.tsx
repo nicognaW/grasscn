@@ -37,6 +37,11 @@ interface ChartScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
 
+interface ChartIndicatorStyle extends React.CSSProperties {
+  "--color-bg": unknown;
+  "--color-border": unknown;
+}
+
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { dark: ".dark", light: "" } as const;
 const INITIAL_DIMENSION = { height: 200, width: 320 } as const;
@@ -91,23 +96,24 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     <style
       // oxlint-disable-next-line react/no-danger -- Preserve upstream ChartStyle's per-chart theme-variable stylesheet.
       dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
+        __html:
+          // SAFETY: this private literal has exactly the two ChartConfig theme keys; Object.entries erases those keys.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Restore the exact keys of the owned theme literal without changing its entries.
+          (Object.entries(THEMES) as [keyof typeof THEMES, string][])
+            .map(
+              ([theme, prefix]) => `
 ${prefix} [data-chart=${id}] {
 ${colorConfig
   .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ??
-      itemConfig.color;
+    const color = itemConfig.theme?.[theme] ?? itemConfig.color;
 
     return (color ?? "") === "" ? null : `  --color-${key}: ${color};`;
   })
   .join("\n")}
 }
 `
-          )
-          .join("\n"),
+            )
+            .join("\n"),
       }}
     />
   );
@@ -333,7 +339,8 @@ const ChartTooltipContent = ({
           .map((item, index) => {
             const key = `${nameKey ?? item.name ?? item.dataKey ?? "value"}`;
             const itemConfig = getPayloadConfigFromPayload(config, item, key);
-            const indicatorColor = color ?? item.payload?.fill ?? item.color;
+            const indicatorColor: unknown =
+              color ?? item.payload?.fill ?? item.color;
 
             return (
               <div
@@ -363,11 +370,11 @@ const ChartTooltipContent = ({
                             }
                           )}
                           style={
-                            // SAFETY: --color-bg, --color-border are this owner's CSS custom-property channels; this CSSProperties view passes the exact owned variable map to React without changing its values.
+                            // SAFETY: these owned custom-property channels retain the raw SDK values; React performs the same CSS serialization as before.
                             {
                               "--color-bg": indicatorColor,
                               "--color-border": indicatorColor,
-                            } as React.CSSProperties
+                            } as ChartIndicatorStyle
                           }
                         />
                       )
