@@ -127,12 +127,38 @@ css += `@font-face { font-family: "Minecraft Bitmap"; src: url("data:font/otf;ba
 
 css += `.mc-button { --mc-ascii-atlas: url("data:image/png;base64,${atlasBytes.toString("base64")}"); --mc-atlas-size: ${atlas.width}; }\n`;
 
-for (const [state, filename] of [
-  ["normal", "button.png"],
-  ["highlighted", "button_highlighted.png"],
-  ["disabled", "button_disabled.png"],
-]) {
-  const bytes = await readFile(path.join(input, filename));
+const spriteInputs = await Promise.allSettled(
+  [
+    ["normal", "button.png"],
+    ["highlighted", "button_highlighted.png"],
+    ["disabled", "button_disabled.png"],
+  ].map(async ([state, filename]) => {
+    const [bytes, metadata] = await Promise.allSettled([
+      readFile(path.join(input, filename)),
+      readFile(path.join(input, `${filename}.mcmeta`)),
+    ]);
+
+    return { bytes, filename, metadata, state };
+  })
+);
+
+for (const spriteInput of spriteInputs) {
+  if (spriteInput.status === "rejected") {
+    throw spriteInput.reason;
+  }
+
+  const {
+    state,
+    filename,
+    bytes: bytesInput,
+    metadata: metadataInput,
+  } = spriteInput.value;
+
+  if (bytesInput.status === "rejected") {
+    throw bytesInput.reason;
+  }
+
+  const bytes = bytesInput.value;
   const sprite = PNG.sync.read(bytes);
 
   if (sprite.width !== 200 || sprite.height !== 20) {
@@ -140,7 +166,12 @@ for (const [state, filename] of [
   }
 
   sources[filename] = createHash("sha256").update(bytes).digest("hex");
-  const metadata = await readFile(path.join(input, `${filename}.mcmeta`));
+
+  if (metadataInput.status === "rejected") {
+    throw metadataInput.reason;
+  }
+
+  const metadata = metadataInput.value;
   sources[`${filename}.mcmeta`] = createHash("sha256")
     .update(metadata)
     .digest("hex");

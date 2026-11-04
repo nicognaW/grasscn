@@ -142,22 +142,37 @@ const environment: RuntimeVerificationEnvironment = {
   workers,
 };
 
-for (const executable of [
-  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
-  "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
-]) {
-  try {
-    const info = await stat(executable);
-    environment.edge = { executable, modified: info.mtimeMs, size: info.size };
-    break;
-  } catch (error) {
-    // SAFETY: the Node filesystem call supplies its error/code contract.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const failure = error as NodeJS.ErrnoException;
+const edgeCandidates = await Promise.allSettled(
+  [
+    "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+    "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
+  ].map(async (executable) => {
+    try {
+      const info = await stat(executable);
 
-    if (failure.code !== "ENOENT") {
-      throw error;
+      return { executable, modified: info.mtimeMs, size: info.size };
+    } catch (error) {
+      // SAFETY: the Node filesystem call supplies its error/code contract.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const failure = error as NodeJS.ErrnoException;
+
+      if (failure.code !== "ENOENT") {
+        throw error;
+      }
     }
+
+    return null;
+  })
+);
+
+for (const candidate of edgeCandidates) {
+  if (candidate.status === "rejected") {
+    throw candidate.reason;
+  }
+
+  if (candidate.value !== null) {
+    environment.edge = candidate.value;
+    break;
   }
 }
 
@@ -217,34 +232,52 @@ const cacheAllowed =
 
 const previous: PreviousVerification[] = [];
 
-for (const folder of await readdir(path.dirname(output))) {
-  try {
-    const filename = path.join(
-      path.dirname(output),
-      folder,
-      "verification.json"
-    );
+const previousFolders = await readdir(path.dirname(output));
 
-    // SAFETY: this route reads owned verification.json receipts: current/legacy report writers emit ISO startedAt text; minimal historical states may omit it, preserving the checkpoint filename fallback.
-    const candidate = readVerificationState(await readFile(filename, "utf-8"));
+const previousCandidates = await Promise.allSettled(
+  previousFolders.map(async (folder) => {
+    try {
+      const filename = path.join(
+        path.dirname(output),
+        folder,
+        "verification.json"
+      );
 
-    if (
-      candidate !== undefined &&
-      cacheAllowed &&
-      candidate.source?.treeSha256 === before.treeSha256 &&
-      candidate.source?.commit === before.commit &&
-      JSON.stringify(candidate.environment) === JSON.stringify(environment)
-    ) {
-      previous.push({ filename, report: candidate });
+      // SAFETY: this route reads owned verification.json receipts: current/legacy report writers emit ISO startedAt text; minimal historical states may omit it, preserving the checkpoint filename fallback.
+      const candidate = readVerificationState(
+        await readFile(filename, "utf-8")
+      );
+
+      if (
+        candidate !== undefined &&
+        cacheAllowed &&
+        candidate.source?.treeSha256 === before.treeSha256 &&
+        candidate.source?.commit === before.commit &&
+        JSON.stringify(candidate.environment) === JSON.stringify(environment)
+      ) {
+        return { filename, report: candidate };
+      }
+    } catch (error) {
+      // SAFETY: candidate reads/JSON parsing reject with Node errors or SyntaxError.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const failure = error as NodeJS.ErrnoException;
+
+      if (failure.code !== "ENOENT" && !(error instanceof SyntaxError)) {
+        throw error;
+      }
     }
-  } catch (error) {
-    // SAFETY: candidate reads/JSON parsing reject with Node errors or SyntaxError.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const failure = error as NodeJS.ErrnoException;
 
-    if (failure.code !== "ENOENT" && !(error instanceof SyntaxError)) {
-      throw error;
-    }
+    return null;
+  })
+);
+
+for (const candidate of previousCandidates) {
+  if (candidate.status === "rejected") {
+    throw candidate.reason;
+  }
+
+  if (candidate.value !== null) {
+    previous.push(candidate.value);
   }
 }
 

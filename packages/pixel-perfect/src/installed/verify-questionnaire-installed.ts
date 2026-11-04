@@ -336,7 +336,9 @@ try {
           action,
           m,
           dir,
-          page!
+          // SAFETY: Input actions always create a Page; the first non-input action sees count0 and rotates. Every later action retains that successful Page, and failed creation aborts before capture.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Questionnaire loop ownership contract; no extra guard or altered browser transition.
+          page as Page
         );
 
         const field: keyof QuestionnaireCaseResult =

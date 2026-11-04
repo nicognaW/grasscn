@@ -190,22 +190,17 @@ for (const constituentDirectory of [
             await dialog.evaluate((node) =>
               [
                 node,
-                ...node.querySelectorAll(
+                ...node.querySelectorAll<HTMLElement | SVGElement>(
                   '[data-slot="dialog-title"],.mc-dialog-text,[data-slot="dialog-footer"],button'
                 ),
               ].map((n) => {
                 const r = n.getBoundingClientRect();
 
                 return {
-                  slot: n.getAttribute("data-slot"),
+                  slot: n.dataset.slot ?? null,
                   text: n.textContent,
                   rect: { x: r.x, y: r.y, width: r.width, height: r.height },
-                  shift:
-                    // SAFETY: This Dialog fixture renders HTML content, title, text, footer and button nodes; the existing diagnostic only reads their data-mc-dialog-shift dataset attribute.
-                    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
-                    (n as HTMLElement)
-                      /* oxlint-enable typescript/no-unsafe-type-assertion */
-                      .dataset.mcDialogShift,
+                  shift: n.dataset.mcDialogShift,
                 };
               })
             ),

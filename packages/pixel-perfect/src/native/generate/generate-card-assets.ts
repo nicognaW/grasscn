@@ -85,12 +85,12 @@ await writeFile(
       ["height", image.height],
       [
         "border",
-        {
-          left: border,
-          top: border,
-          right: border,
-          bottom: border,
-        },
+        Object.fromEntries([
+          ["left", border],
+          ["top", border],
+          ["right", border],
+          ["bottom", border],
+        ]),
       ],
       ["stretch", scaling.stretch_inner ?? false],
       ["image", uri(bytes)],

@@ -27,6 +27,7 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
     }
   });
   await page.addInitScript(() => {
+    // oxlint-disable-next-line typescript/unbound-method -- Capture the native method for original.call(this, kind, ...args); every wrapped canvas supplies its own native receiver.
     const original = HTMLCanvasElement.prototype.getContext;
     // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
@@ -64,8 +65,24 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
   await page.goto("/?component=color-painter-stress");
   await expect(page.locator("[data-stress-label]")).toHaveCount(64);
 
-  for (const label of await page.locator("[data-mc-label-ready]").all()) {
-    await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const pendingReadyElements = await page
+      .locator("[data-mc-label-ready]")
+      .all();
+
+    const pendingReadinessResults = await Promise.allSettled(
+      pendingReadyElements.map(async (label) => {
+        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = pendingReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   const checks: { mismatchedPixels: number; scale: number }[] = [];
@@ -147,8 +164,24 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
   ).toBe(0);
   await page.getByRole("button", { name: "Toggle all" }).click();
 
-  for (const label of await page.locator("[data-mc-label-ready]").all()) {
-    await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const pendingReadyElements = await page
+      .locator("[data-mc-label-ready]")
+      .all();
+
+    const pendingReadinessResults = await Promise.allSettled(
+      pendingReadyElements.map(async (label) => {
+        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = pendingReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   await verify(3);
@@ -210,6 +243,7 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
     }
   });
   await page.addInitScript(() => {
+    // oxlint-disable-next-line typescript/unbound-method -- Capture the native method for original.call(this, kind, ...args); every wrapped canvas supplies its own native receiver.
     const original = HTMLCanvasElement.prototype.getContext;
     // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
@@ -250,8 +284,24 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
   await page.goto("/?component=color-painter-stress");
   await expect(page.locator("[data-stress-label]")).toHaveCount(64);
 
-  for (const label of await page.locator("[data-mc-label-ready]").all()) {
-    await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+  {
+    const pendingReadyElements = await page
+      .locator("[data-mc-label-ready]")
+      .all();
+
+    const pendingReadinessResults = await Promise.allSettled(
+      pendingReadyElements.map(async (label) => {
+        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    const rejectedReadiness = pendingReadinessResults.find(
+      (result) => result.status === "rejected"
+    );
+
+    if (rejectedReadiness) {
+      throw rejectedReadiness.reason;
+    }
   }
 
   expect(

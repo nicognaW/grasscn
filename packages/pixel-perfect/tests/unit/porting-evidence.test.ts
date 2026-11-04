@@ -34,10 +34,18 @@ test("evidence chain rejects corrupted inputs, generated outputs and stale trace
   ];
 
   try {
-    for (const file of files) {
-      await cp(evidenceFile(file), path.join(root, file), {
-        recursive: true,
-      });
+    const copies = await Promise.allSettled(
+      files.map(async (file) => {
+        await cp(evidenceFile(file), path.join(root, file), {
+          recursive: true,
+        });
+      })
+    );
+
+    for (const copy of copies) {
+      if (copy.status === "rejected") {
+        throw copy.reason;
+      }
     }
 
     await verifyPortingEvidence(root);

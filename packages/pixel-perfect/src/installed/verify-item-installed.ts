@@ -295,7 +295,8 @@ const verifyItemCase = async ({
 
     if (c.state === "icon-hover") {
       const box = await subject.boundingBox();
-      await page.mouse.move(box!.x + 18 * c.scale, box!.y + 18 * c.scale);
+      assert.ok(box, "Missing required Item icon-hover bounding box");
+      await page.mouse.move(box.x + 18 * c.scale, box.y + 18 * c.scale);
     }
 
     if (c.state === "focus") {

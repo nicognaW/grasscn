@@ -157,7 +157,8 @@ try {
 
       if (c.state === "icon-hover") {
         const b = await subject.boundingBox();
-        await fixturePage.mouse.move(b!.x + 18 * c.scale, b!.y + 18 * c.scale);
+        assert.ok(b, "Missing required Attachment icon-hover bounding box");
+        await fixturePage.mouse.move(b.x + 18 * c.scale, b.y + 18 * c.scale);
       }
 
       if (c.state === "focus") {

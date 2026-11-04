@@ -89,7 +89,8 @@ export const verifyPopoverCase = async ({
 
     return await frameCompletion4.promise;
   });
-  const bounds = (await subject.boundingBox())!;
+  const bounds = await subject.boundingBox();
+  assert.ok(bounds, "Missing required Popover content bounding box");
   assert.equal(bounds.x, c.x * c.scale);
   assert.equal(bounds.y, c.y * c.scale);
 

@@ -143,22 +143,38 @@ await writeFile(frozenCases, caseBytes);
 
 const inputResources: Record<string, CapturedInputResource | undefined> = {};
 
-for (const definition of definitions.filter(
-  (c): c is CaptureCaseInput & { textureFile: string } => Boolean(c.textureFile)
-)) {
-  const name = definition.textureFile;
+const textureInputs = await Promise.allSettled(
+  definitions
+    .filter((c): c is CaptureCaseInput & { textureFile: string } =>
+      Boolean(c.textureFile)
+    )
+    .map(async (definition) => {
+      const name = definition.textureFile;
 
-  if (path.basename(name) !== name) {
-    throw new Error("Texture inputs must use a plain filename");
+      if (path.basename(name) !== name) {
+        throw new Error("Texture inputs must use a plain filename");
+      }
+
+      let bytes;
+
+      try {
+        bytes = await readFile(path.join(path.dirname(caseFile), name));
+      } catch {
+        bytes = await readFile(
+          path.join(path.dirname(caseFile), "inputs", name)
+        );
+      }
+
+      return { bytes, definition, name };
+    })
+);
+
+for (const textureInput of textureInputs) {
+  if (textureInput.status === "rejected") {
+    throw textureInput.reason;
   }
 
-  let bytes;
-
-  try {
-    bytes = await readFile(path.join(path.dirname(caseFile), name));
-  } catch {
-    bytes = await readFile(path.join(path.dirname(caseFile), "inputs", name));
-  }
+  const { bytes, definition, name } = textureInput.value;
 
   if (sha256(bytes) !== definition.textureSha256) {
     throw new Error(`Texture input changed: ${name}`);

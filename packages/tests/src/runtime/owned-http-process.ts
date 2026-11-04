@@ -102,11 +102,13 @@ export const serveOwnedHttpProcess = async ({
 
       if (logs.includes(readyText)) {
         try {
+          // oxlint-disable-next-line no-await-in-loop -- Each startup retry consumes its response and closes the body before delaying and observing readiness again.
           const response = await fetch(url, {
             signal: AbortSignal.timeout(2500),
           });
 
           const ready = response.ok;
+          // oxlint-disable-next-line no-await-in-loop -- Each startup retry consumes its response and closes the body before delaying and observing readiness again.
           await response.body?.cancel();
 
           if (ready) {
@@ -117,6 +119,7 @@ export const serveOwnedHttpProcess = async ({
         }
       }
 
+      // oxlint-disable-next-line no-await-in-loop -- Each startup retry consumes its response and closes the body before delaying and observing readiness again.
       await delay(100);
     }
 
