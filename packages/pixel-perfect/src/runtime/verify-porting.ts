@@ -226,9 +226,7 @@ for (const folder of await readdir(path.dirname(output))) {
     );
 
     // SAFETY: this route reads owned verification.json receipts: current/legacy report writers emit ISO startedAt text; minimal historical states may omit it, preserving the checkpoint filename fallback.
-    const candidate = readVerificationState(
-      await readFile(filename, "utf-8")
-    ) as PreviousVerification["report"] | undefined;
+    const candidate = readVerificationState(await readFile(filename, "utf-8"));
 
     if (
       candidate !== undefined &&

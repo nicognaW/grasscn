@@ -438,7 +438,7 @@ if (
       ) as QuestionnairePartProof
   );
 
-  const base = reports[0];
+  const [base] = reports;
 
   // SAFETY: the combined text proof reads the existing Label captured-reference producer here.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Label captured-reference producer boundary.

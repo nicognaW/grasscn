@@ -65,9 +65,8 @@ const sha = (bytes: Uint8Array) =>
 const map = await readMap("registry/minecraft-map.json");
 const component = map.components.find((c) => c.name === name);
 
-const item = (await readRegistry("registry.json")).items.find(
-  (i) => i.name === name
-);
+const registry = await readRegistry("registry.json");
+const item = registry.items.find((i) => i.name === name);
 
 assert.ok(
   component?.pixelVerification.manifest && item,

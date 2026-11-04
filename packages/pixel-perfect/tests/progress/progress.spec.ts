@@ -179,9 +179,9 @@ test("Progress notch painter preserves the background through transparent corner
   await progress
     .locator("canvas, .mc-progress-fallback")
     .evaluateAll((nodes: HTMLElement[]) => {
-      nodes.forEach((node) => {
+      for (const node of nodes) {
         node.style.visibility = "hidden";
-      });
+      }
     });
   const backdrop = PNG.sync.read(await progress.screenshot());
 

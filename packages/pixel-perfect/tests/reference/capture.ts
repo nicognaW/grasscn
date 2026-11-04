@@ -259,7 +259,7 @@ for (const scale of [1, 2, 3]) {
     const end = Math.min(126, start + 31);
 
     const label = Array.from({ length: end - start + 1 }, (_, index) =>
-      String.fromCharCode(start + index)
+      String.fromCodePoint(start + index)
     ).join("");
 
     for (const state of ["normal", "disabled"]) {

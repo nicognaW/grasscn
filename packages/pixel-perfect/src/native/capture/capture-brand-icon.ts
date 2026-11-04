@@ -63,18 +63,18 @@ const permitted = (library: NativeVersionLibrary) => {
   let allowed = false;
 
   for (const rule of library.rules) {
-    if (
-      rule.os?.name !== undefined &&
-      rule.os.name !== "" &&
-      rule.os.name !== "windows"
-    ) {
+    const name = rule.os?.name;
+
+    if (name !== undefined && name !== "" && name !== "windows") {
       continue;
     }
 
+    const arch = rule.os?.arch;
+
     if (
-      rule.os?.arch !== undefined &&
-      rule.os.arch !== "" &&
-      ![process.arch, "x86_64"].includes(rule.os.arch)
+      arch !== undefined &&
+      arch !== "" &&
+      ![process.arch, "x86_64"].includes(arch)
     ) {
       continue;
     }

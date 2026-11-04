@@ -165,7 +165,7 @@ const textAssets = await readFile(
 
 // SAFETY: the shared generated font sheet owns this font-face marker; preserve its original missing-marker failure.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-const fontFace = (/@font-face[^\n]+/u.exec(textAssets) as RegExpExecArray)[0];
+const [fontFace] = /@font-face[^\n]+/u.exec(textAssets) as RegExpExecArray;
 
 const atlasMatch =
   /--mc-ascii-atlas: (?<atlasUrl>url\("[^"]+"\)); --mc-atlas-size: (?<atlasSize>\d+)/u.exec(
