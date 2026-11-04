@@ -5,6 +5,7 @@ import {
   generatedCode,
   retainedEvidenceData,
   retainedSourceInputs,
+  vendoredSkills,
 } from "./tooling-scope";
 
 export default defineConfig({
@@ -14,5 +15,6 @@ export default defineConfig({
     ...generatedCode,
     ...retainedSourceInputs,
     ...retainedEvidenceData,
+    ...vendoredSkills,
   ],
 });

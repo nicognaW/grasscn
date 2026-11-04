@@ -1,3 +1,5 @@
+import skillsLock from "./skills-lock.json" with { type: "json" };
+
 // Exact outputs backed by checked-in producers or retained machine-output derivations.
 // Provenance and scope: https://github.com/nicognaW/grasscn/issues/31.
 export const generatedCode = [
@@ -45,6 +47,24 @@ export const generatedCode = [
   "apps/web/registry/ui/minecraft-unifont-data.ts",
   "apps/web/registry/ui/minecraft-unifont-metrics.css",
 ];
+
+// Installed external skill packages are vendored, not generated code.
+// Only lock-backed package paths and their installer mirrors are excluded;
+// unlocked/project-owned skills (including port-minecraft-ui) remain checked.
+export const vendoredSkills = Object.entries(skillsLock.skills).flatMap(
+  ([name, skill]) =>
+    /^[a-z0-9][a-z0-9-]*$/u.test(name) &&
+    skill.sourceType === "github" &&
+    skill.source.toLowerCase() !== "nicognaw/grasscn" &&
+    /^[a-f0-9]{64}$/u.test(skill.computedHash)
+      ? [
+          `.agents/skills/${name}`,
+          `.agents/skills/${name}/**`,
+          `.claude/skills/${name}`,
+          `.claude/skills/${name}/**`,
+        ]
+      : []
+);
 
 // Archived authored-source snapshots retain their reviewed historical bytes.
 // Maintained capture runners remain checked.
