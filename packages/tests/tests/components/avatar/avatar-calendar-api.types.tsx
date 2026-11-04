@@ -41,7 +41,7 @@ const rootRef = React.createRef<HTMLSpanElement>();
 
 <Calendar
   mode="single"
-  selected={new Date()}
+  selected={new Date("2026-01-01T00:00:00.000Z")}
   onSelect={(value) => {
     value?.getDate();
   }}
@@ -57,7 +57,7 @@ const rootRef = React.createRef<HTMLSpanElement>();
 <Calendar
   mode="range"
   required
-  selected={{ from: new Date() }}
+  selected={{ from: new Date("2026-01-01T00:00:00.000Z") }}
   onSelect={(range) => {
     range.from?.getDate();
   }}

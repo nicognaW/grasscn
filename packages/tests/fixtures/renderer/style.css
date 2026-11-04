@@ -139,3 +139,8 @@ output {
   height: 256px;
   width: 600px;
 }
+
+/* Fixture-owned desktop sidebar positioning; the mobile receiver keeps its SDK inline fixed position. */
+#root .fixture-sidebar-mode-position {
+  position: var(--fixture-sidebar-position);
+}

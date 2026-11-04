@@ -375,7 +375,11 @@ export const SidebarFixture = () => {
       <Sidebar
         side={p.get("side") === "right" ? "right" : "left"}
         collapsible={selectedFixtureBranch1}
-        style={{ position: p.get("mode") === "none" ? "relative" : "absolute" }}
+        className="fixture-sidebar-mode-position"
+        style={{
+          "--fixture-sidebar-position":
+            p.get("mode") === "none" ? "relative" : "absolute",
+        }}
       >
         <SidebarHeader>
           <SidebarInput

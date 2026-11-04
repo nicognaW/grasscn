@@ -71,7 +71,9 @@ const SidebarTypes = () => {
       scale={3}
       defaultOpen
       open
-      onOpenChange={(next) => void next}
+      onOpenChange={(next) => {
+        void next;
+      }}
       style={sidebarStyle}
     >
       <Sidebar ref={div} variant="sidebar" side="right" collapsible="icon">
@@ -82,8 +84,14 @@ const SidebarTypes = () => {
         <SidebarContent
           ref={div}
           viewportRef={div}
-          viewportProps={{ onScroll: (e) => void e.currentTarget.scrollTop }}
-          onScroll={(e) => void e.currentTarget.scrollTop}
+          viewportProps={{
+            onScroll: (e) => {
+              void e.currentTarget.scrollTop;
+            },
+          }}
+          onScroll={(e) => {
+            void e.currentTarget.scrollTop;
+          }}
         >
           <SidebarGroup>
             <SidebarGroupLabel render={<span />}>Group</SidebarGroupLabel>

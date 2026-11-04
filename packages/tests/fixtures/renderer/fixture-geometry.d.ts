@@ -45,6 +45,7 @@ declare module "react" {
     "--fixture-layout-16"?: string;
     "--fixture-layout-17"?: string;
     "--fixture-layout-18"?: string;
+    "--fixture-sidebar-position"?: "absolute" | "relative";
     "--fixture-height"?: string;
     "--fixture-width"?: string;
     "--fixture-x"?: string;
