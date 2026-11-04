@@ -247,12 +247,15 @@ const MinecraftMap = ({
       onClick={(event) => {
         onClick?.(event);
 
+        // SAFETY: This DOM-forwarded React handler receives ReactDOM-normalized targets; Text dispatch is normalized to its parent Element, including SVG. Only Element.closest is consumed.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- ReactDOM synthetic-event production and standard DOM prop forwarding prove this exact Element target; native/manual event inputs are not projected. */
         if (
           event.defaultPrevented ||
-          (event.target as HTMLElement).closest("button")
+          (event.target as Element).closest("button")
         ) {
           return;
         }
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
 
         const r = event.currentTarget.getBoundingClientRect();
         onMapClick?.({

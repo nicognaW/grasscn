@@ -147,6 +147,8 @@ const ScrollBar = ({
         const element = viewport.current!;
         const bounds = event.currentTarget.getBoundingClientRect();
 
+        // SAFETY: This DOM-forwarded React handler receives ReactDOM-normalized targets; Text dispatch is normalized to its parent Element, including SVG. Only Element.closest is consumed.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- ReactDOM synthetic-event production and standard DOM prop forwarding prove this exact Element target; native/manual event inputs are not projected. */
         if (
           !(event.target as Element).closest('[data-slot="scroll-area-thumb"]')
         ) {
@@ -161,6 +163,7 @@ const ScrollBar = ({
             )
           );
         }
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
 
         drag.current = { scroll: element.scrollTop, y: event.clientY };
         setDragging(true);
