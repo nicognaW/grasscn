@@ -7,6 +7,7 @@ import { expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
 import type {
   MenuReferenceCase,
+  SuggestionHoverTarget,
   MenubarTriggerReferenceCase,
   InstalledCaseResult,
 } from "@ppt/installed/reference-case";
@@ -73,8 +74,10 @@ const verifyMenuRendering = async ({
     node.focus();
   });
 
-  if (Number(c.selectedIndex) >= 0) {
-    await subject.getByRole("menuitem").nth(c.selectedIndex!).focus();
+  const selectedIndex = Number(c.selectedIndex);
+
+  if (selectedIndex >= 0) {
+    await subject.getByRole("menuitem").nth(selectedIndex).focus();
   }
 
   if (c.state === "focus") {
@@ -87,7 +90,11 @@ const verifyMenuRendering = async ({
   }
 
   if (c.state.endsWith("hover")) {
-    await subject.getByRole("menuitem").nth(c.targetIndex!).hover();
+    // SAFETY: the registered suggestion hover producer emits targetIndex; menu-part captures have no hover cases and retain their optional general protocol.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact native suggestion-hover target projection under the original state condition.
+    const hoveredCase = c as SuggestionHoverTarget;
+
+    await subject.getByRole("menuitem").nth(hoveredCase.targetIndex).hover();
   }
 
   await subject.evaluate(

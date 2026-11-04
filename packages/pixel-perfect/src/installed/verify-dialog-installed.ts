@@ -5,7 +5,10 @@ import path from "node:path";
 
 import { expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
-import type { DialogReferenceCase } from "@ppt/installed/reference-case";
+import type {
+  DialogReferenceCase,
+  ConfirmationReferenceContent,
+} from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -83,7 +86,10 @@ export const verifyDialogCase = async ({
 
   if (confirmation) {
     // The AlertDialog capture producer always emits text; Dialog alone also records null text cases.
-    const confirmationText = c.text!;
+    // SAFETY: ConfirmScreen capture text is a string in every fixed AlertDialog producer record; Dialog null-text cases remain valid outside this existing branch.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact existing confirmation dispatch projection; no new validation or default.
+    const confirmationCase = c as ConfirmationReferenceContent;
+    const confirmationText = confirmationCase.text;
 
     const count =
       Number(/\P{ASCII}/u.test(c.label)) +

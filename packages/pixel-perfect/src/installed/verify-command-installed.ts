@@ -11,6 +11,7 @@ import type {
   CommandCaptureManifest,
   RegisteredEntryContent,
 } from "@ppt/installed/control-capture-protocol";
+import type { SuggestionHoverTarget } from "@ppt/installed/reference-case";
 import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
 import { webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
@@ -105,7 +106,14 @@ const verifyCommandReferenceCase = async ({
     await subject.focus();
 
     await (c.state.endsWith("hover")
-      ? subject.getByRole("option").nth(c.targetIndex!).hover()
+      ? subject
+          .getByRole("option")
+          .nth(
+            // SAFETY: all registered suggestion hover captures emit a numeric targetIndex; this original hover-state branch excludes captures that omit it.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact CommandSuggestions hover-target producer projection.
+            (c as SuggestionHoverTarget).targetIndex
+          )
+          .hover()
       : page.mouse.move(0, 0));
 
     await subject.evaluate(

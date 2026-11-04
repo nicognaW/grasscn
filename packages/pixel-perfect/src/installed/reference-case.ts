@@ -1,3 +1,5 @@
+import type confirmationReference from "../../tests/reference/alert-dialog/manifest.json";
+
 /** Shared capture identity emitted by the native capture launchers. */
 export interface CapturedReferenceCase {
   name: string;
@@ -230,3 +232,14 @@ export interface InstalledCaseResult {
   openDecodedRgbaSha256?: string;
   expandedDecodedRgbaSha256?: string;
 }
+
+/** Native CommandSuggestions hover cases emit the hovered option index. */
+export interface SuggestionHoverTarget {
+  targetIndex: number;
+}
+
+/** ConfirmScreen always emits a string message; PopupScreen may omit it. */
+export type ConfirmationReferenceContent = Pick<
+  (typeof confirmationReference)["cases"][number],
+  "text"
+>;
