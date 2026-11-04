@@ -7,6 +7,11 @@ import { MinecraftText } from "./minecraft-text";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-confirmation-text-padding-left"?: string;
+  "--mc-confirmation-text-width"?: string;
+}
+
 const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
   text: string
 ) {
@@ -185,9 +190,13 @@ export const MinecraftConfirmationText = ({
 
   const nativeLines = selectedNativeLines;
 
+  const nativeTextLayout1: NativeTextLayoutStyle = {
+    "--mc-confirmation-text-width": `${widest * scale}px`,
+  };
+
   return (
     <span
-      className="mc-confirmation-text block"
+      className="mc-confirmation-text block w-(--mc-confirmation-text-width)"
       data-mc-confirmation-native-height={
         Math.min(title ? 1 : 15, nativeLines.length) * 9 * scale
       }
@@ -196,29 +205,33 @@ export const MinecraftConfirmationText = ({
           ? Math.max(0, ...text.split("\n").map(widthOf)) * scale
           : undefined
       }
-      style={{ width: widest * scale }}
+      style={nativeTextLayout1}
     >
       <span aria-hidden="true">
-        {lines.map((line, index) => (
-          <span
-            key={index}
-            className="mc-card-text-line"
-            style={{
-              paddingLeft:
-                (Math.floor(widest / 2) - Math.floor(widths[index] / 2)) *
-                scale,
-            }}
-          >
-            {/[^\u0020-\u007E]/u.test(line) ? (
-              <MinecraftUnicodeLabel
-                text={line}
-                atlas={confirmationUnihexAtlas}
-              />
-            ) : (
-              <MinecraftText>{line}</MinecraftText>
-            )}
-          </span>
-        ))}
+        {lines.map((line, index) => {
+          const nativeTextLayout2: NativeTextLayoutStyle = {
+            "--mc-confirmation-text-padding-left": `${
+              (Math.floor(widest / 2) - Math.floor(widths[index] / 2)) * scale
+            }px`,
+          };
+
+          return (
+            <span
+              key={index}
+              className="mc-card-text-line pl-(--mc-confirmation-text-padding-left)"
+              style={nativeTextLayout2}
+            >
+              {/[^\u0020-\u007E]/u.test(line) ? (
+                <MinecraftUnicodeLabel
+                  text={line}
+                  atlas={confirmationUnihexAtlas}
+                />
+              ) : (
+                <MinecraftText>{line}</MinecraftText>
+              )}
+            </span>
+          );
+        })}
       </span>
       <span className="mc-dialog-accessible">{text}</span>
     </span>

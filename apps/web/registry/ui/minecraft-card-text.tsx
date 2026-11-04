@@ -4,6 +4,10 @@ import { minecraftGlyphs } from "./minecraft-font";
 import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-card-text-padding-left"?: string;
+}
+
 interface CardBoldGlyphStyle extends React.CSSProperties {
   "--mc-advance": number;
   "--mc-glyph-x": number;
@@ -125,47 +129,54 @@ export const MinecraftCardText = ({
 
   return (
     <span ref={node} className="mc-card-text" data-mc-card-text="true">
-      {lines.map((line, index) => (
-        <span
-          className="mc-card-text-line"
-          key={index}
-          style={{
-            paddingLeft: `calc(${Math.floor((width - widest) / 2) + Math.floor(widest / 2) - Math.floor(widths[index] / 2)} * var(--mc-pixel))`,
-          }}
-        >
-          {bold ? (
-            <span className="mc-bitmap mc-card-bold">
-              <span className="mc-card-bold-pixels" aria-hidden="true">
-                {Array.from(line, (char, i) => {
-                  const [x, y, advance] =
-                    minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32];
+      {lines.map((line, index) => {
+        const nativeTextLayout1: NativeTextLayoutStyle = {
+          "--mc-card-text-padding-left": `calc(${Math.floor((width - widest) / 2) + Math.floor(widest / 2) - Math.floor(widths[index] / 2)} * var(--mc-pixel))`,
+        };
 
-                  const glyphStyle: CardBoldGlyphStyle = {
-                    "--mc-advance": advance + 1,
-                    "--mc-glyph-x": x,
-                    "--mc-glyph-y": y,
-                    visibility: char === " " ? "hidden" : undefined,
-                  };
+        return (
+          <span
+            className="mc-card-text-line pl-(--mc-card-text-padding-left)"
+            key={index}
+            style={nativeTextLayout1}
+          >
+            {bold ? (
+              <span className="mc-bitmap mc-card-bold">
+                <span className="mc-card-bold-pixels" aria-hidden="true">
+                  {Array.from(line, (char, i) => {
+                    const [x, y, advance] =
+                      minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32];
 
-                  return (
-                    <span
-                      className="mc-card-bold-glyph"
-                      key={i}
-                      style={glyphStyle}
-                    >
-                      <i />
-                      <i />
-                    </span>
-                  );
-                })}
+                    const glyphStyle: CardBoldGlyphStyle = {
+                      "--mc-advance": advance + 1,
+                      "--mc-glyph-x": x,
+                      "--mc-glyph-y": y,
+                    };
+
+                    return (
+                      <span
+                        className={
+                          char === " "
+                            ? "mc-card-bold-glyph invisible"
+                            : "mc-card-bold-glyph"
+                        }
+                        key={i}
+                        style={glyphStyle}
+                      >
+                        <i />
+                        <i />
+                      </span>
+                    );
+                  })}
+                </span>
+                <span className="mc-card-accessible">{line}</span>
               </span>
-              <span className="mc-card-accessible">{line}</span>
-            </span>
-          ) : (
-            <MinecraftText>{line}</MinecraftText>
-          )}
-        </span>
-      ))}
+            ) : (
+              <MinecraftText>{line}</MinecraftText>
+            )}
+          </span>
+        );
+      })}
     </span>
   );
 };

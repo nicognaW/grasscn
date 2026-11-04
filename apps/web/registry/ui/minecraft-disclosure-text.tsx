@@ -15,6 +15,11 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
 
+interface NativeTextWidthLayout {
+  className?: string;
+  width?: string;
+}
+
 const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
   text: string
 ) {
@@ -39,6 +44,7 @@ interface MinecraftDisclosureTextLayoutStyle1 extends React.CSSProperties {
 
 interface MinecraftDisclosureTextScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
+  "--mc-disclosure-text-max-width"?: string;
 }
 
 const advance = (char: string) =>
@@ -181,20 +187,25 @@ const MinecraftDisclosureText = ({
   const widest = Math.max(0, ...lines.map(textWidth));
   const width = containerWidth ?? maxWidth ?? widest;
 
+  const boundedLayout: NativeTextWidthLayout =
+    maxWidth === undefined || maxWidth === null
+      ? {}
+      : {
+          className: "w-(--mc-disclosure-text-max-width)",
+          width: `${maxWidth * scale}px`,
+        };
+
   return (
     <div
       ref={node}
       data-slot="label"
       data-mc-label-layout-ready={!unicode || fontReady}
-      className={cn(`mc-label`, className)}
+      className={cn(`mc-label`, boundedLayout.className, className)}
       style={minecraftStyle(
         style,
         (__style): MinecraftDisclosureTextScaleStyle => ({
+          "--mc-disclosure-text-max-width": boundedLayout.width,
           "--mc-scale": scale,
-          width:
-            maxWidth === undefined || maxWidth === null
-              ? undefined
-              : maxWidth * scale,
           ...__style,
         })
       )}

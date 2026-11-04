@@ -10,6 +10,11 @@ import { loadUnihex } from "./minecraft-unifont";
 import "./minecraft-unifont-metrics.css";
 import "./minecraft-selectable-text.css";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-selectable-text-left"?: string;
+  "--mc-selectable-text-top"?: string;
+}
+
 interface Run {
   text: string;
   x: number;
@@ -125,18 +130,25 @@ const MinecraftSelectableText = ({
         {text}
       </span>
       <span aria-hidden="true" className="mc-selectable-pixels">
-        {runs.map((run, index) => (
-          <span
-            key={index}
-            className="mc-layout-minecraft-selectable-text-1"
-            style={{ left: run.x, top: run.y }}
-          >
-            <MinecraftColorUnicodeLabel
-              text={run.text}
-              atlas={minecraftChatAtlas}
-            />
-          </span>
-        ))}
+        {runs.map((run, index) => {
+          const nativeTextLayout1: NativeTextLayoutStyle = {
+            "--mc-selectable-text-left": `${run.x}px`,
+            "--mc-selectable-text-top": `${run.y}px`,
+          };
+
+          return (
+            <span
+              key={index}
+              className="mc-layout-minecraft-selectable-text-1 top-(--mc-selectable-text-top) left-(--mc-selectable-text-left)"
+              style={nativeTextLayout1}
+            >
+              <MinecraftColorUnicodeLabel
+                text={run.text}
+                atlas={minecraftChatAtlas}
+              />
+            </span>
+          );
+        })}
       </span>
     </span>
   );

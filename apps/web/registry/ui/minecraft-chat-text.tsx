@@ -182,7 +182,7 @@ const MinecraftChatText = ({
           used += next;
         }
 
-        return value + "...";
+        return `${value}...`;
       })
       .join("\n");
   }
@@ -238,7 +238,7 @@ const MinecraftChatText = ({
       return (
         <MinecraftChatText
           scale={scale}
-          style={{ color: "inherit", textShadow: "inherit" }}
+          className="text-inherit [text-shadow:inherit]"
         >
           {value}
         </MinecraftChatText>
