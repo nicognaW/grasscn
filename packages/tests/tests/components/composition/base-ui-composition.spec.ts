@@ -10,20 +10,20 @@ test("Base UI state callbacks retain Minecraft defaults and update on the native
     name: "Stateful button",
   });
 
-  await expect(button).toHaveClass(/mc-button/);
-  await expect(button).toHaveClass(/state-enabled/);
+  await expect(button).toHaveClass(/mc-button/u);
+  await expect(button).toHaveClass(/state-enabled/u);
   await expect(button).toHaveCSS("width", "240px");
   await page
     .getByRole("button", { exact: true, name: "Toggle disabled" })
     .click();
   await expect(button).toBeDisabled();
-  await expect(button).toHaveClass(/state-disabled/);
+  await expect(button).toHaveClass(/state-disabled/u);
   await expect(button).toHaveCSS("width", "300px");
   const checkbox = page.getByRole("checkbox", { name: "Stateful checkbox" });
-  await expect(checkbox).toHaveClass(/mc-checkbox/);
-  await expect(checkbox).toHaveClass(/state-unchecked/);
+  await expect(checkbox).toHaveClass(/mc-checkbox/u);
+  await expect(checkbox).toHaveClass(/state-unchecked/u);
   await checkbox.click();
-  await expect(checkbox).toHaveClass(/state-checked/);
+  await expect(checkbox).toHaveClass(/state-checked/u);
   await expect(checkbox).toHaveCSS("--checked-state", "1");
 });
 
@@ -58,8 +58,8 @@ test("Input uses Base UI Field state and popup callbacks receive popup state", a
     name: "Native state",
   });
 
-  await expect(dialog).toHaveClass(/mc-dialog-content/);
-  await expect(dialog).toHaveClass(/state-open/);
+  await expect(dialog).toHaveClass(/mc-dialog-content/u);
+  await expect(dialog).toHaveClass(/state-open/u);
   await expect(dialog).toHaveCSS("--open-state", "1");
   await page.keyboard.press("Escape");
   await expect(dialog).toHaveCount(0);

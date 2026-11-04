@@ -14,8 +14,8 @@ test("Trace preserves eight slots, status colors, controlled keyboard disclosure
   );
   await expect(
     page.locator('[data-slot="trace-collapsible-content-inner"]')
-  ).toHaveClass(/caller-content/);
-  await expect(page.getByTestId("details")).not.toHaveClass(/caller-content/);
+  ).toHaveClass(/caller-content/u);
+  await expect(page.getByTestId("details")).not.toHaveClass(/caller-content/u);
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("DIV");
 

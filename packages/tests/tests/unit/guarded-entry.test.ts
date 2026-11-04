@@ -65,7 +65,8 @@ test("workload waits for enforced budgets before executing", async () => {
     await setTimeout(150);
     await assert.rejects(access(marker));
     await writeFile(gate, JSON.stringify({ enforced: true, pid: child.pid }));
-    assert.equal((await exited)[0], 0);
+    const awaitedUnitRead1 = await exited;
+    assert.equal(awaitedUnitRead1[0], 0);
     await access(marker);
   });
 });
@@ -76,7 +77,8 @@ test("another process's budget gate cannot start the workload", async () => {
       gate,
       JSON.stringify({ enforced: true, pid: Number(child.pid) + 1 })
     );
-    assert.notEqual((await exited)[0], 0);
+    const awaitedUnitRead2 = await exited;
+    assert.notEqual(awaitedUnitRead2[0], 0);
     await assert.rejects(access(marker));
   });
 });

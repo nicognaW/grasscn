@@ -64,7 +64,7 @@ const verifyButtonGroupOrientation = async (
     "button-group-text"
   );
   await expect(page.locator("#variant")).toHaveClass(
-    /mc-button-group-vertical/
+    /mc-button-group-vertical/u
   );
 };
 

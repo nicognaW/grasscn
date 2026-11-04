@@ -143,10 +143,14 @@ test("failures and retries supersede earlier passes; interrupted writes do not c
       journal,
       `${JSON.stringify(record)}\n` + `{"id":"unfinished"`
     );
-    assert.equal(
-      (await reusableBrowserTests([candidate], file, root)).length,
-      1
+
+    const awaitedUnitRead1 = await reusableBrowserTests(
+      [candidate],
+      file,
+      root
     );
+
+    assert.equal(awaitedUnitRead1.length, 1);
     await writeFile(journal, `{"id":"unfinished"\n${JSON.stringify(record)}\n`);
     assert.deepEqual(await reusableBrowserTests([candidate], file, root), []);
   });
@@ -236,10 +240,13 @@ test("Playwright can retain a complete file without repeating its tests", async 
       "--pass-with-no-tests",
       `--output=${path.join(root, "second/browser")}`,
     ]);
-    assert.deepEqual(
-      (await readFile(path.join(root, "runs.txt"), "utf-8")).trim().split("\n"),
-      ["first", "second"]
+
+    const awaitedUnitRead2 = await readFile(
+      path.join(root, "runs.txt"),
+      "utf-8"
     );
+
+    assert.deepEqual(awaitedUnitRead2.trim().split("\n"), ["first", "second"]);
   });
 });
 
@@ -297,10 +304,14 @@ test("nested helper-defined checkpoints retain only both source-identical inputs
       path.join(directory, "results.jsonl"),
       `${JSON.stringify({ ...record, ...declaration })}\n`
     );
-    assert.equal(
-      (await reusableBrowserTests([candidate], file, root)).length,
-      1
+
+    const awaitedUnitRead3 = await reusableBrowserTests(
+      [candidate],
+      file,
+      root
     );
+
+    assert.equal(awaitedUnitRead3.length, 1);
     await writeFile(path.join(root, definition), "changed helper");
     assert.deepEqual(await reusableBrowserTests([candidate], file, root), []);
     await writeFile(path.join(root, definition), "helper source");
@@ -372,10 +383,14 @@ test("Playwright checkpoints bind a nested owning file separately from its decla
     assert.equal(decl.file, `tests/${file}`);
     assert.equal(decl.definitionFile, definition);
     assert.equal(decl.sourceFiles.length, 2);
-    assert.equal(
-      (await reusableBrowserTests([candidate], file, root)).length,
-      1
+
+    const awaitedUnitRead4 = await reusableBrowserTests(
+      [candidate],
+      file,
+      root
     );
+
+    assert.equal(awaitedUnitRead4.length, 1);
     await writeFile(path.join(root, definition), "changed helper source");
     assert.deepEqual(await reusableBrowserTests([candidate], file, root), []);
   });
