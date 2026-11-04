@@ -29,7 +29,7 @@ a {
 :is(
   .minecraft-prose-link,
   .minecraft-brand,
-  .minecraft-github,
+  .minecraft-star-button,
   .minecraft-header-text-link,
   .skip-link
 ):focus-visible {
@@ -64,8 +64,12 @@ a {
 .minecraft-header .mc-button {
   width: 200px;
 }
-.minecraft-github {
+.minecraft-star-button {
   --mc-scale: 2;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
 }
 .minecraft-document {
   max-width: 1200px;
@@ -156,7 +160,7 @@ a {
     order: 3;
     flex-basis: 100%;
   }
-  .minecraft-github {
+  .minecraft-star-button {
     margin-left: auto;
   }
   .minecraft-document {

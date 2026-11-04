@@ -9,13 +9,17 @@ import type { SearchPage } from "../lib/search-results";
 import { MinecraftText } from "../registry/ui/minecraft-text";
 import { DocumentSearch } from "./document-search";
 import { DocumentSelection } from "./document-selection";
+import { StarButton } from "./star-button";
 
 export const SiteFrame = ({
   children,
   searchPages,
+  starCount,
 }: {
   children: ReactNode;
   searchPages: SearchPage[];
+  /** Formatted repository star count; omitted when it could not be loaded. */
+  starCount?: string;
 }) => {
   const pathname = usePathname();
 
@@ -63,12 +67,7 @@ export const SiteFrame = ({
           </Link>
         </nav>
         <DocumentSearch pages={searchPages} />
-        <a
-          className="minecraft-github"
-          href="https://github.com/nicognaW/grasscn"
-        >
-          <MinecraftText>GitHub</MinecraftText>
-        </a>
+        <StarButton count={starCount} />
       </header>
       {children}
       <footer className="minecraft-footer">

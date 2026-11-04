@@ -6,6 +6,7 @@ import grassBlockIcon48 from "../assets/grass-block-48.png";
 import { LegacyDocumentationLinks } from "../components/legacy-documentation-links";
 import { SiteFrame } from "../components/site-frame";
 import { componentSymbols } from "../lib/component-symbols";
+import { loadStarCount } from "../lib/github-stars";
 import {
   siteDescription,
   siteImage,
@@ -63,7 +64,7 @@ export const viewport: Viewport = {
   themeColor: "#202020",
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const RootLayout = async ({ children }: { children: ReactNode }) => {
   const pages: Record<string, string> = {};
 
   for (const page of source.getPages()) {
@@ -94,6 +95,8 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     }
   }
 
+  const starCount = await loadStarCount();
+
   return (
     <html lang="en">
       <body>
@@ -108,6 +111,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
             title: page.data.title,
             url: page.url,
           }))}
+          starCount={starCount}
         >
           {children}
         </SiteFrame>
