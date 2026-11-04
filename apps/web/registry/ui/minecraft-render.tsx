@@ -90,6 +90,19 @@ export const isMinecraftSelectableTextElement = (
     (typeof value.type === "string" &&
       ["span", "a", "strong", "em", "code", "b", "i"].includes(value.type)));
 
+/** Only intrinsic anchors and buttons own activation audio at this adapter boundary. */
+export const isMinecraftNativeActivationElement = (
+  element: React.ReactElement
+): element is React.ReactElement<unknown, "a" | "button"> =>
+  typeof element.type === "string" && ["a", "button"].includes(element.type);
+
+/** A custom tooltip renderer may expose its direct literal text for native wrapping. */
+export const isMinecraftTooltipTextElement = (
+  value: React.ReactNode
+): value is React.ReactElement<{ children: string }> =>
+  React.isValidElement<{ children?: React.ReactNode }>(value) &&
+  typeof value.props.children === "string";
+
 export type MinecraftRenderProp = useRender.RenderProp<object>;
 
 export type MinecraftProps<T extends React.ElementType> =

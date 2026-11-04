@@ -10,6 +10,7 @@ import { MinecraftItemText } from "./minecraft-item-text";
 import type { MinecraftItemTextProps } from "./minecraft-item-text";
 import { MinecraftProse } from "./minecraft-prose";
 import {
+  isMinecraftNativeActivationElement,
   isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
@@ -78,9 +79,7 @@ const Item = ({
 
   // Custom render components retain their own activation audio, avoiding duplicate voices.
   const nativeActivation =
-    ((child &&
-      typeof child.type === "string" &&
-      ["a", "button"].includes(child.type)) ??
+    ((child && isMinecraftNativeActivationElement(child)) ??
       props.role === "button") ||
     props.role === "link";
 

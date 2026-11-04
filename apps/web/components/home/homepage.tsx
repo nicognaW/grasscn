@@ -180,7 +180,7 @@ const Analytics = () => {
               setType(v);
             }}
           >
-            {(typeof v === "number" ? v : v[0]).toUpperCase() + v.slice(1)}
+            {v[0].toUpperCase() + v.slice(1)}
           </Button>
         ))}
       </div>

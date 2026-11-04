@@ -286,10 +286,7 @@ const Sidebar = ({
           data-state={openMobile ? "expanded" : "collapsed"}
           className={cn(`mc-sidebar mc-sidebar-mobile`, className)}
           style={minecraftStyle(style, (__style) => ({
-            width: Math.min(
-              140 * scale,
-              typeof innerWidth === "number" ? innerWidth : 140 * scale
-            ),
+            width: Math.min(140 * scale, innerWidth),
             ...__style,
             position: "fixed",
           }))}
@@ -345,12 +342,16 @@ type SidebarControlProps = MinecraftPolymorphicProps<"button"> & {
 const sidebarControlLabel = function sidebarControlLabel(
   children: React.ReactNode
 ): React.ReactNode {
-  const parts: React.ReactNode[] = [];
+  const parts: (
+    | { kind: "text"; content: string }
+    | { kind: "child"; content: React.ReactNode }
+  )[] = [];
+
   let run = "";
 
   const flush = () => {
     if (run) {
-      parts.push(run);
+      parts.push({ content: run, kind: "text" });
       run = "";
     }
   };
@@ -379,24 +380,24 @@ const sidebarControlLabel = function sidebarControlLabel(
       run += String(child);
     } else {
       flush();
-      parts.push(child);
+      parts.push({ content: child, kind: "child" });
     }
   };
 
   visit(children);
   flush();
 
-  return parts.map((child, index) => {
+  return parts.map((part, index) => {
     let _selectedContent: React.ReactNode;
 
-    if (typeof child === "string") {
-      _selectedContent = /^[\u0020-\u007E]*$/u.test(child) ? (
-        <MinecraftText className="mc-text">{child}</MinecraftText>
+    if (part.kind === "text") {
+      _selectedContent = /^[\u0020-\u007E]*$/u.test(part.content) ? (
+        <MinecraftText className="mc-text">{part.content}</MinecraftText>
       ) : (
-        <MinecraftUnicodeLabel text={child} />
+        <MinecraftUnicodeLabel text={part.content} />
       );
     } else {
-      _selectedContent = child;
+      _selectedContent = part.content;
     }
 
     return <React.Fragment key={index}>{_selectedContent}</React.Fragment>;

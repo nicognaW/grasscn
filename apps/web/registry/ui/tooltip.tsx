@@ -5,6 +5,7 @@ import * as React from "react";
 
 import {
   isMinecraftTextContent,
+  isMinecraftTooltipTextElement,
   minecraftClasses as cn,
   minecraftStyle,
 } from "./minecraft-render";
@@ -161,13 +162,7 @@ const TooltipContent = ({
 
   if (isMinecraftTextContent(children)) {
     selectedPlain = String(children);
-  } else if (
-    render &&
-    React.isValidElement<{
-      children?: React.ReactNode;
-    }>(children) &&
-    typeof children.props.children === "string"
-  ) {
+  } else if (render && isMinecraftTooltipTextElement(children)) {
     selectedPlain = children.props.children;
   } else {
     selectedPlain = undefined;
