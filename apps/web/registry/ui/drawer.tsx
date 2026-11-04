@@ -31,21 +31,23 @@ const Drawer = ({
   ...props
 }: MinecraftProps<typeof DrawerPrimitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => (
-  <DrawerScale.Provider value={scale}>
-    <DrawerDirection.Provider
-      value={
-        swipeDirection === "down"
-          ? "bottom"
-          : swipeDirection === "up"
-            ? "top"
-            : swipeDirection
-      }
-    >
-      <DrawerPrimitive.Root swipeDirection={swipeDirection} {...props} />
-    </DrawerDirection.Provider>
-  </DrawerScale.Provider>
-);
+}) => {
+  let direction: React.ContextType<typeof DrawerDirection> = "bottom";
+
+  if (swipeDirection === "up") {
+    direction = "top";
+  } else if (swipeDirection !== "down") {
+    direction = swipeDirection;
+  }
+
+  return (
+    <DrawerScale.Provider value={scale}>
+      <DrawerDirection.Provider value={direction}>
+        <DrawerPrimitive.Root swipeDirection={swipeDirection} {...props} />
+      </DrawerDirection.Provider>
+    </DrawerScale.Provider>
+  );
+};
 
 const DrawerTrigger = ({
   render,

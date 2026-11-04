@@ -71,13 +71,15 @@ const Bubble = ({
   const inherited = React.useContext(MessageScale);
   const scale = providedScale ?? inherited;
 
-  const author =
-    providedAuthor ??
-    (from === "user"
-      ? "Player"
-      : from === "assistant"
-        ? "Assistant"
-        : undefined);
+  let defaultAuthor: string | undefined;
+
+  if (from === "user") {
+    defaultAuthor = "Player";
+  } else if (from === "assistant") {
+    defaultAuthor = "Assistant";
+  }
+
+  const author = providedAuthor ?? defaultAuthor;
 
   if (variant !== "default") {
     throw new Error("Minecraft chat supports the default backdrop only");

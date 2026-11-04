@@ -62,15 +62,22 @@ const ComboboxValue = ({
   children,
   placeholder,
   ...props
-}: Primitive.Value.Props) => (
-  <Primitive.Value {...props} placeholder={menuTextNodes(placeholder)}>
-    {typeof children === "function"
-      ? (value) => menuTextNodes(children(value))
-      : children === undefined || children === null
-        ? undefined
-        : menuTextNodes(children)}
-  </Primitive.Value>
-);
+}: Primitive.Value.Props) => {
+  const renderedPlaceholder = menuTextNodes(placeholder);
+  let content: Primitive.Value.Props["children"];
+
+  if (typeof children === "function") {
+    content = (value) => menuTextNodes(children(value));
+  } else if (children !== undefined && children !== null) {
+    content = menuTextNodes(children);
+  }
+
+  return (
+    <Primitive.Value {...props} placeholder={renderedPlaceholder}>
+      {content}
+    </Primitive.Value>
+  );
+};
 
 const ComboboxTrigger = ({
   className,

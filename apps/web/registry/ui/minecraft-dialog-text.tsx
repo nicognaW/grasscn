@@ -53,10 +53,16 @@ const widthOf = function widthOf(text: string, bold: boolean) {
         (advanceCharacter.codePointAt(0) as number) - 32
       ];
 
+    let boldAdvance = 0;
+
+    if (bold) {
+      boldAdvance = ascii ? 1 : 0.5;
+    }
+
     accumulatedGlyphAdvance =
       accumulatedGlyphAdvance +
       (ascii?.[2] ?? getUnihexGlyph(advanceCharacter)?.advance ?? 0) +
-      (bold ? (ascii ? 1 : 0.5) : 0);
+      boldAdvance;
   }
 
   return Math.ceil(accumulatedGlyphAdvance);
