@@ -94,6 +94,25 @@ export const DialogUnicodeLine = ({
         return;
       }
 
+      const paintAsciiGlyph = (
+        glyph: (typeof minecraftGlyphs)[number],
+        dx: number,
+        dy: number
+      ) => {
+        for (let y = 0; y < 8; y += 1) {
+          for (let px = 0; px < 8; px += 1) {
+            if (pixels[((glyph[1] + y) * 128 + glyph[0] + px) * 4 + 3]) {
+              context.fillRect(
+                (dx + px) * scale,
+                (dy + y) * scale,
+                scale,
+                scale
+              );
+            }
+          }
+        }
+      };
+
       const tick = () => {
         if (disposed) {
           return;
@@ -136,20 +155,7 @@ export const DialogUnicodeLine = ({
 
                 if (ascii) {
                   if (char !== " ") {
-                    for (let y = 0; y < 8; y += 1) {
-                      for (let px = 0; px < 8; px += 1) {
-                        if (
-                          pixels[((ascii[1] + y) * 128 + ascii[0] + px) * 4 + 3]
-                        ) {
-                          context.fillRect(
-                            (dx + px) * scale,
-                            (dy + y) * scale,
-                            scale,
-                            scale
-                          );
-                        }
-                      }
-                    }
+                    paintAsciiGlyph(ascii, dx, dy);
                   }
                 } else if (uni) {
                   paintUnihexGPU(context, uni, dx, dy, scale, bold ? 0.1 : 0);

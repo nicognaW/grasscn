@@ -173,44 +173,48 @@ export const paintSignGpu = function paintSignGpu(
   /* oxlint-enable no-bitwise */
   const ts = f((hanging ? 1 : f(0.9765628)) * scale);
 
-  for (const [index, line] of lines.entries()) {
-    const glyphs = Array.from(
-      line,
-      (char) =>
-        asciiGlyphs[
-          // SAFETY: String Array.from iteration supplies a nonempty character. Its first code point therefore exists.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
-          (char.codePointAt(0) as number) - 32
-        ]
-    );
+  const drawSignText = () => {
+    for (const [index, line] of lines.entries()) {
+      const glyphs = Array.from(
+        line,
+        (char) =>
+          asciiGlyphs[
+            // SAFETY: String Array.from iteration supplies a nonempty character. Its first code point therefore exists.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+            (char.codePointAt(0) as number) - 32
+          ]
+      );
 
-    if (!glyphs.every((g) => g !== undefined)) {
-      continue;
-    }
-
-    let dx = -Math.floor(glyphs.reduce((sum, g) => sum + g[2], 0) / 2);
-    const dy = index * (hanging ? 9 : 10) - (hanging ? 18 : 20);
-
-    for (let i = 0; i < glyphs.length; i += 1) {
-      const g = glyphs[i];
-      const width = g[2] - 1;
-
-      if (line[i] !== " " && width > 0) {
-        draw(
-          f(tx + f(dx * ts)),
-          f(origin + f(dy * ts)),
-          f(tx + f((dx + width) * ts)),
-          f(origin + f((dy + 8) * ts)),
-          g[0] / font.naturalWidth,
-          g[1] / font.naturalHeight,
-          (g[0] + width) / font.naturalWidth,
-          (g[1] + 8) / font.naturalHeight
-        );
+      if (!glyphs.every((g) => g !== undefined)) {
+        continue;
       }
 
-      dx += g[2];
+      let dx = -Math.floor(glyphs.reduce((sum, g) => sum + g[2], 0) / 2);
+      const dy = index * (hanging ? 9 : 10) - (hanging ? 18 : 20);
+
+      for (let i = 0; i < glyphs.length; i += 1) {
+        const g = glyphs[i];
+        const width = g[2] - 1;
+
+        if (line[i] !== " " && width > 0) {
+          draw(
+            f(tx + f(dx * ts)),
+            f(origin + f(dy * ts)),
+            f(tx + f((dx + width) * ts)),
+            f(origin + f((dy + 8) * ts)),
+            g[0] / font.naturalWidth,
+            g[1] / font.naturalHeight,
+            (g[0] + width) / font.naturalWidth,
+            (g[1] + 8) / font.naturalHeight
+          );
+        }
+
+        dx += g[2];
+      }
     }
-  }
+  };
+
+  drawSignText();
 
   const width = 120 * scale;
   const height = (hanging ? 74 : 110) * scale;

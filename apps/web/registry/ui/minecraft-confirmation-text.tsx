@@ -183,19 +183,25 @@ export const MinecraftConfirmationText = ({
   const widths = lines.map(widthOf);
   const widest = Math.max(0, ...widths);
 
-  let selectedNativeLines: string[];
+  const planNativeLines = () => {
+    let selectedNativeLines: string[];
 
-  if (text === "") {
-    selectedNativeLines = [];
-  } else if (title) {
-    selectedNativeLines = [text];
-  } else if (compact) {
-    selectedNativeLines = wrap(text, nativeContentWidth);
-  } else {
-    selectedNativeLines = allLines;
-  }
+    if (text === "") {
+      selectedNativeLines = [];
+    } else if (title) {
+      selectedNativeLines = [text];
+    } else if (compact) {
+      selectedNativeLines = wrap(text, nativeContentWidth);
+    } else {
+      selectedNativeLines = allLines;
+    }
 
-  const nativeLines = selectedNativeLines;
+    const nativeLines = selectedNativeLines;
+
+    return nativeLines;
+  };
+
+  const nativeLines = planNativeLines();
 
   const nativeTextLayout1: NativeTextLayoutStyle = {
     "--mc-confirmation-text-width": `${widest * scale}px`,
