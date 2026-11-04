@@ -257,6 +257,64 @@ const SelectFixture = () => {
     );
   }
 
+  const renderSelectTrigger = () => (
+    <SelectTrigger
+      render={
+        params.has("triggerAsChild") ? (
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- SelectTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <button type="button" />
+        ) : undefined
+      }
+      id={single ? "subject" : "select-trigger"}
+      aria-label="Game mode"
+      ref={triggerRef}
+      className="fixture-geometry-width"
+      style={{ "--fixture-width": `${width * scale}px` }}
+      data-subject={
+        (single ? "subject" : "select-trigger") === "subject"
+          ? "true"
+          : undefined
+      }
+    >
+      <SelectValue
+        placeholder={params.get("placeholder") ?? "Choose game mode"}
+      >
+        {single ? (params.get("label") ?? "Survival") : undefined}
+      </SelectValue>
+    </SelectTrigger>
+  );
+
+  const renderSelectPopup = () => (
+    <SelectContent
+      render={params.has("contentAsChild") ? <section /> : undefined}
+      id={capture ? "subject" : "select-popup"}
+      ref={contentRef}
+      alignItemWithTrigger={
+        (capture || params.has("popper") ? "popper" : "item-aligned") ===
+        "item-aligned"
+      }
+      collisionAvoidance={capture ? { align: "none", side: "none" } : undefined}
+      className={cn({
+        "fixture-geometry-height fixture-geometry-width": capture,
+      })}
+      style={
+        capture
+          ? {
+              "--fixture-height": `${Number(params.get("height")) * scale}px`,
+              "--fixture-width": `${width * scale}px`,
+            }
+          : undefined
+      }
+      data-subject={
+        (capture ? "subject" : "select-popup") === "subject"
+          ? "true"
+          : undefined
+      }
+    >
+      {selectedFixtureBranch1}
+    </SelectContent>
+  );
+
   const controls = (
     <>
       <Select
@@ -289,62 +347,8 @@ const SelectFixture = () => {
           params.has("disabled") || (single && state.startsWith("disabled"))
         }
       >
-        <SelectTrigger
-          render={
-            params.has("triggerAsChild") ? (
-              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- SelectTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
-              <button type="button" />
-            ) : undefined
-          }
-          id={single ? "subject" : "select-trigger"}
-          aria-label="Game mode"
-          ref={triggerRef}
-          className="fixture-geometry-width"
-          style={{ "--fixture-width": `${width * scale}px` }}
-          data-subject={
-            (single ? "subject" : "select-trigger") === "subject"
-              ? "true"
-              : undefined
-          }
-        >
-          <SelectValue
-            placeholder={params.get("placeholder") ?? "Choose game mode"}
-          >
-            {single ? (params.get("label") ?? "Survival") : undefined}
-          </SelectValue>
-        </SelectTrigger>
-        {!single && (
-          <SelectContent
-            render={params.has("contentAsChild") ? <section /> : undefined}
-            id={capture ? "subject" : "select-popup"}
-            ref={contentRef}
-            alignItemWithTrigger={
-              (capture || params.has("popper") ? "popper" : "item-aligned") ===
-              "item-aligned"
-            }
-            collisionAvoidance={
-              capture ? { align: "none", side: "none" } : undefined
-            }
-            className={cn({
-              "fixture-geometry-height fixture-geometry-width": capture,
-            })}
-            style={
-              capture
-                ? {
-                    "--fixture-height": `${Number(params.get("height")) * scale}px`,
-                    "--fixture-width": `${width * scale}px`,
-                  }
-                : undefined
-            }
-            data-subject={
-              (capture ? "subject" : "select-popup") === "subject"
-                ? "true"
-                : undefined
-            }
-          >
-            {selectedFixtureBranch1}
-          </SelectContent>
-        )}
+        {renderSelectTrigger()}
+        {!single && renderSelectPopup()}
       </Select>
       <button
         type="submit"
@@ -997,63 +1001,73 @@ const CollapsibleFixture = () => {
     );
   }
 
-  const child = (
-    <>
-      <CollapsibleTrigger
-        render={
-          params.has("asChild") ? (
-            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- CollapsibleTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
-            <button type="button" />
-          ) : undefined
-        }
-        ref={trigger}
-        {...(native && !body ? { "data-subject": "true", id: "subject" } : {})}
-        {...(native && !body && params.get("state") === "disabled"
-          ? { disabled: true }
-          : {})}
-        className={cn({
-          "fixture-native-collapse-hidden-trigger": native && body,
-        })}
-        onClick={
-          params.has("prevent")
-            ? (event) => {
-                event.preventDefault();
-                event.preventBaseUIHandler();
-              }
-            : undefined
-        }
-      >
-        {selectedFixtureBranch5}
-      </CollapsibleTrigger>
-      <CollapsibleContent
-        render={params.has("contentAsChild") ? <section /> : undefined}
-        ref={content}
-        {...(native && body ? { "data-subject": "true", id: "subject" } : {})}
-        wrap={!native}
-        align={params.get("align") === "center" ? "center" : "left"}
-        maxWidth={
-          params.has("wrapWidth") ? Number(params.get("wrapWidth")) : undefined
-        }
-        keepMounted={params.has("forceMount") ? true : undefined}
-        className={cn({
-          "fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-native-collapse-padding":
-            native && body,
-        })}
-        style={
-          native && body
-            ? {
-                "--fixture-height": `${Number(params.get("height")) * scale}px`,
-                "--fixture-x": `${Number(params.get("x") ?? 16) * scale}px`,
-                "--fixture-y": `${Number(params.get("y") ?? 16) * scale}px`,
-                width: Number(params.get("width")) * scale,
-              }
-            : undefined
-        }
-      >
-        {selectedFixtureBranch6}
-      </CollapsibleContent>
-    </>
-  );
+  const renderCollapsibleParts = () => {
+    const subjectParts = (
+      <>
+        <CollapsibleTrigger
+          render={
+            params.has("asChild") ? (
+              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- CollapsibleTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+              <button type="button" />
+            ) : undefined
+          }
+          ref={trigger}
+          {...(native && !body
+            ? { "data-subject": "true", id: "subject" }
+            : {})}
+          {...(native && !body && params.get("state") === "disabled"
+            ? { disabled: true }
+            : {})}
+          className={cn({
+            "fixture-native-collapse-hidden-trigger": native && body,
+          })}
+          onClick={
+            params.has("prevent")
+              ? (event) => {
+                  event.preventDefault();
+                  event.preventBaseUIHandler();
+                }
+              : undefined
+          }
+        >
+          {selectedFixtureBranch5}
+        </CollapsibleTrigger>
+        <CollapsibleContent
+          render={params.has("contentAsChild") ? <section /> : undefined}
+          ref={content}
+          {...(native && body ? { "data-subject": "true", id: "subject" } : {})}
+          wrap={!native}
+          align={params.get("align") === "center" ? "center" : "left"}
+          maxWidth={
+            params.has("wrapWidth")
+              ? Number(params.get("wrapWidth"))
+              : undefined
+          }
+          keepMounted={params.has("forceMount") ? true : undefined}
+          className={cn({
+            "fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-native-collapse-padding":
+              native && body,
+          })}
+          style={
+            native && body
+              ? {
+                  "--fixture-height": `${Number(params.get("height")) * scale}px`,
+                  "--fixture-x": `${Number(params.get("x") ?? 16) * scale}px`,
+                  "--fixture-y": `${Number(params.get("y") ?? 16) * scale}px`,
+                  width: Number(params.get("width")) * scale,
+                }
+              : undefined
+          }
+        >
+          {selectedFixtureBranch6}
+        </CollapsibleContent>
+      </>
+    );
+
+    return subjectParts;
+  };
+
+  const child = renderCollapsibleParts();
 
   let selectedFixtureBranch7: ReactNode;
 
