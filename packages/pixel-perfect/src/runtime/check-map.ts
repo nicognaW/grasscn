@@ -405,13 +405,13 @@ const verifyDeclaredInstallation = async (
   const declaredCaseChecks = await Promise.allSettled(
     manifest.cases.map(async (reference) => {
       // SAFETY: the case-name arrays were just asserted equal to the reference matrix.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion, typescript/non-nullable-type-assertion-style -- Exact case-name equality above proves this lookup exists; retain the approved producer projection while ! remains forbidden.
       const installed = installedByName.get(
         reference.name
       ) as PixelEvidenceCase;
 
       // SAFETY: the repeatability case names were likewise asserted equal above.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion, typescript/non-nullable-type-assertion-style -- Exact case-name equality above proves this lookup exists; retain the approved producer projection while ! remains forbidden.
       const repeated = repeatedByName.get(
         reference.name
       ) as RepeatedEvidenceCase;
