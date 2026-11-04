@@ -229,24 +229,28 @@ export const paintColorUnihexGPU = function paintColorUnihexGPU(
     -2 / canvas.height
   );
 
-  const fill = String(context.fillStyle);
+  const uploadGlyphInk = () => {
+    const fill = String(context.fillStyle);
 
-  const channels = fill.startsWith("#")
-    ? [
-        Number.parseInt(fill.slice(1, 3), 16),
-        Number.parseInt(fill.slice(3, 5), 16),
-        Number.parseInt(fill.slice(5, 7), 16),
-        fill.length === 9 ? Number.parseInt(fill.slice(7, 9), 16) / 255 : 1,
-      ]
-    : (fill.match(/[\d.]+/gu)?.map(Number) ?? [255, 255, 255, 1]);
+    const channels = fill.startsWith("#")
+      ? [
+          Number.parseInt(fill.slice(1, 3), 16),
+          Number.parseInt(fill.slice(3, 5), 16),
+          Number.parseInt(fill.slice(5, 7), 16),
+          fill.length === 9 ? Number.parseInt(fill.slice(7, 9), 16) / 255 : 1,
+        ]
+      : (fill.match(/[\d.]+/gu)?.map(Number) ?? [255, 255, 255, 1]);
 
-  gl.uniform4f(
-    gl.getUniformLocation(program, "ink"),
-    channels[0] / 255,
-    channels[1] / 255,
-    channels[2] / 255,
-    channels[3] ?? 1
-  );
+    gl.uniform4f(
+      gl.getUniformLocation(program, "ink"),
+      channels[0] / 255,
+      channels[1] / 255,
+      channels[2] / 255,
+      channels[3] ?? 1
+    );
+  };
+
+  uploadGlyphInk();
   gl.clearColor(0, 0, 0, 0);
   gl.clear(gl.COLOR_BUFFER_BIT);
   const rgba = new Uint8Array(glyph.width * 16 * 4);
@@ -261,46 +265,53 @@ export const paintColorUnihexGPU = function paintColorUnihexGPU(
     }
   }
 
-  const observed = (atlases.get(context) ?? fallbackGlyphAtlas)[
-    glyph.code.toString(16)
-  ];
+  const submitGlyphQuad = () => {
+    const observed = (atlases.get(context) ?? fallbackGlyphAtlas)[
+      glyph.code.toString(16)
+    ];
 
-  const atlasX = observed ? Math.round(observed.u0 * 256 - 0.01) : 0;
-  const atlasY = observed ? Math.round(observed.v0 * 256 - 0.01) : 0;
+    const atlasX = observed ? Math.round(observed.u0 * 256 - 0.01) : 0;
+    const atlasY = observed ? Math.round(observed.v0 * 256 - 0.01) : 0;
 
-  gl.texSubImage2D(
-    gl.TEXTURE_2D,
-    0,
-    atlasX,
-    atlasY,
-    glyph.width,
-    16,
-    gl.RGBA,
-    gl.UNSIGNED_BYTE,
-    rgba
-  );
+    gl.texSubImage2D(
+      gl.TEXTURE_2D,
+      0,
+      atlasX,
+      atlasY,
+      glyph.width,
+      16,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      rgba
+    );
 
-  const left = originX + x * scale;
-  const top = originY + y * scale;
-  const right = left + (glyph.width / 2) * scale;
-  const bottom = top + 8 * scale;
+    const left = originX + x * scale;
+    const top = originY + y * scale;
+    const right = left + (glyph.width / 2) * scale;
+    const bottom = top + 8 * scale;
 
-  const u0 = observed?.u0 ?? Math.fround(0.01) / 256;
-  const u1 = observed?.u1 ?? Math.fround(glyph.width - Math.fround(0.01)) / 256;
-  const v0 = observed?.v0 ?? u0;
-  const v1 = observed?.v1 ?? Math.fround(16 - Math.fround(0.01)) / 256;
+    const u0 = observed?.u0 ?? Math.fround(0.01) / 256;
 
-  const a = [left, top, u0, v0];
-  const b = [left, bottom, u0, v1];
-  const c = [right, bottom, u1, v1];
-  const d = [right, top, u1, v0];
+    const u1 =
+      observed?.u1 ?? Math.fround(glyph.width - Math.fround(0.01)) / 256;
 
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([...a, ...b, ...c, ...a, ...c, ...d]),
-    gl.STREAM_DRAW
-  );
-  gl.drawArrays(gl.TRIANGLES, 0, 6);
+    const v0 = observed?.v0 ?? u0;
+    const v1 = observed?.v1 ?? Math.fround(16 - Math.fround(0.01)) / 256;
+
+    const a = [left, top, u0, v0];
+    const b = [left, bottom, u0, v1];
+    const c = [right, bottom, u1, v1];
+    const d = [right, top, u1, v0];
+
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([...a, ...b, ...c, ...a, ...c, ...d]),
+      gl.STREAM_DRAW
+    );
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  };
+
+  submitGlyphQuad();
 
   if (gl.isContextLost()) {
     sharedPainter = undefined;

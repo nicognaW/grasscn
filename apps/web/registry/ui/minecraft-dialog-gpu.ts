@@ -190,47 +190,54 @@ export const paintUnihexGPU = function paintUnihexGPU(
     }
   }
 
-  const observed = (atlases.get(context) ?? fallbackGlyphAtlas)[
-    glyph.code.toString(16)
-  ];
+  const submitGlyphQuad = () => {
+    const observed = (atlases.get(context) ?? fallbackGlyphAtlas)[
+      glyph.code.toString(16)
+    ];
 
-  const atlasX = observed ? Math.round(observed.u0 * 256 - 0.01) : 0;
-  const atlasY = observed ? Math.round(observed.v0 * 256 - 0.01) : 0;
+    const atlasX = observed ? Math.round(observed.u0 * 256 - 0.01) : 0;
+    const atlasY = observed ? Math.round(observed.v0 * 256 - 0.01) : 0;
 
-  gl.texSubImage2D(
-    gl.TEXTURE_2D,
-    0,
-    atlasX,
-    atlasY,
-    glyph.width,
-    16,
-    gl.RGBA,
-    gl.UNSIGNED_BYTE,
-    rgba
-  );
+    gl.texSubImage2D(
+      gl.TEXTURE_2D,
+      0,
+      atlasX,
+      atlasY,
+      glyph.width,
+      16,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      rgba
+    );
 
-  // BakedSheetGlyph.extraThickness expands bold quads by 0.1 logical pixels.
-  const left = originX + (x - thickness) * scale;
-  const top = originY + (y - thickness) * scale;
-  const right = originX + (x + glyph.width / 2 + thickness) * scale;
-  const bottom = originY + (y + 8 + thickness) * scale;
+    // BakedSheetGlyph.extraThickness expands bold quads by 0.1 logical pixels.
+    const left = originX + (x - thickness) * scale;
+    const top = originY + (y - thickness) * scale;
+    const right = originX + (x + glyph.width / 2 + thickness) * scale;
+    const bottom = originY + (y + 8 + thickness) * scale;
 
-  const u0 = observed?.u0 ?? Math.fround(0.01) / 256;
-  const u1 = observed?.u1 ?? Math.fround(glyph.width - Math.fround(0.01)) / 256;
-  const v0 = observed?.v0 ?? u0;
-  const v1 = observed?.v1 ?? Math.fround(16 - Math.fround(0.01)) / 256;
+    const u0 = observed?.u0 ?? Math.fround(0.01) / 256;
 
-  const a = [left, top, u0, v0];
-  const b = [left, bottom, u0, v1];
-  const c = [right, bottom, u1, v1];
-  const d = [right, top, u1, v0];
+    const u1 =
+      observed?.u1 ?? Math.fround(glyph.width - Math.fround(0.01)) / 256;
 
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([...a, ...b, ...c, ...a, ...c, ...d]),
-    gl.STREAM_DRAW
-  );
-  gl.drawArrays(gl.TRIANGLES, 0, 6);
+    const v0 = observed?.v0 ?? u0;
+    const v1 = observed?.v1 ?? Math.fround(16 - Math.fround(0.01)) / 256;
+
+    const a = [left, top, u0, v0];
+    const b = [left, bottom, u0, v1];
+    const c = [right, bottom, u1, v1];
+    const d = [right, top, u1, v0];
+
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([...a, ...b, ...c, ...a, ...c, ...d]),
+      gl.STREAM_DRAW
+    );
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  };
+
+  submitGlyphQuad();
   context.drawImage(
     canvas,
     originX,
