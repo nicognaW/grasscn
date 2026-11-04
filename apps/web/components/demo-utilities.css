@@ -283,7 +283,7 @@
   .demo-owned-table-1 {
     width: var(--demo-owned-table-1-width);
   }
-  .demo-owned-tabs-1 {
+  .mc-tabs.demo-owned-tabs-1 {
     flex-shrink: 0;
     min-width: var(--demo-owned-tabs-1-min-width);
     width: var(--demo-owned-tabs-1-width);
