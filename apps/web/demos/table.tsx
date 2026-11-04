@@ -16,8 +16,8 @@ import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
 const TableDemo = ({ scale }: DemoProps) => {
-  const stage = useDemoWidth(scale);
-  const textWidth = Math.max(16, Math.floor((stage.width - 24) / 3));
+  const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
+  const textWidth = Math.max(16, Math.floor((stageWidth - 24) / 3));
 
   const [selected, setSelected] = React.useState("");
 
@@ -29,7 +29,7 @@ const TableDemo = ({ scale }: DemoProps) => {
 
   return (
     <>
-      <div ref={stage.ref} className="demo-stage" data-stage="table">
+      <div ref={stageRef} className="demo-stage" data-stage="table">
         <Table
           scale={scale}
           aria-label="Saved worlds"

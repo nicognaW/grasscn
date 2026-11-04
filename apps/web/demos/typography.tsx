@@ -13,7 +13,7 @@ import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
 const TypographyDemo = ({ scale }: DemoProps) => {
-  const stage = useDemoWidth(scale);
+  const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
   const [text, setText] = React.useState("Hello 世界\nWelcome to your world");
 
   return (
@@ -32,19 +32,19 @@ const TypographyDemo = ({ scale }: DemoProps) => {
           />
         </label>
       </div>
-      <div ref={stage.ref} className="demo-stage" data-stage="typography">
+      <div ref={stageRef} className="demo-stage" data-stage="typography">
         <div className="demo-pair">
           <span>HEADING</span>
-          <TypographyH1 scale={scale} maxWidth={Math.min(200, stage.width)}>
+          <TypographyH1 scale={scale} maxWidth={Math.min(200, stageWidth)}>
             A new adventure
           </TypographyH1>
-          <TypographyH2 scale={scale} maxWidth={Math.min(200, stage.width)}>
+          <TypographyH2 scale={scale} maxWidth={Math.min(200, stageWidth)}>
             Craft your story
           </TypographyH2>
         </div>
         <div className="demo-pair">
           <span>MULTILINE</span>
-          <TypographyP scale={scale} maxWidth={Math.min(200, stage.width)}>
+          <TypographyP scale={scale} maxWidth={Math.min(200, stageWidth)}>
             {text}
           </TypographyP>
         </div>
@@ -52,17 +52,17 @@ const TypographyDemo = ({ scale }: DemoProps) => {
           <span>PROSE / CODE</span>
           <TypographyBlockquote
             scale={scale}
-            maxWidth={Math.min(200, stage.width)}
+            maxWidth={Math.min(200, stageWidth)}
           >
             The world is yours.
           </TypographyBlockquote>
           <TypographyInlineCode
             scale={scale}
-            maxWidth={Math.min(200, stage.width)}
+            maxWidth={Math.min(200, stageWidth)}
           >
             /gamemode creative
           </TypographyInlineCode>
-          <TypographySmall scale={scale} maxWidth={Math.min(200, stage.width)}>
+          <TypographySmall scale={scale} maxWidth={Math.min(200, stageWidth)}>
             Small text and captions
           </TypographySmall>
         </div>

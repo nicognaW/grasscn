@@ -17,7 +17,7 @@ import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
 const TraceDemo = ({ scale }: DemoProps) => {
-  const stage = useDemoWidth(scale);
+  const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
 
   const [status, setStatus] = React.useState<"running" | "error" | "pending">(
     "running"
@@ -54,14 +54,14 @@ const TraceDemo = ({ scale }: DemoProps) => {
           Change status
         </Button>
       </div>
-      <div ref={stage.ref} className="demo-stage" data-stage="trace">
+      <div ref={stageRef} className="demo-stage" data-stage="trace">
         <Trace scale={scale} className="demo-owned-trace-1">
           <TraceLine status={status}>
             <TraceIcon>O</TraceIcon>
             <TraceTitle>
               <MinecraftDisclosureText
                 scale={scale}
-                maxWidth={Math.max(1, Math.min(100, stage.width - 30))}
+                maxWidth={Math.max(1, Math.min(100, stageWidth - 30))}
               >
                 Building terrain 世界
               </MinecraftDisclosureText>

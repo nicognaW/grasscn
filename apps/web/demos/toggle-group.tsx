@@ -7,7 +7,7 @@ import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
 const ToggleGroupDemo = ({ scale }: DemoProps) => {
-  const stage = useDemoWidth(scale);
+  const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
   const id = React.useId();
 
   const [single, setSingle] = React.useState("crafting");
@@ -48,9 +48,9 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
           Reset filters
         </Button>
       </div>
-      <div ref={stage.ref} className="demo-stage" data-stage="toggle-group">
+      <div ref={stageRef} className="demo-stage" data-stage="toggle-group">
         <div className="demo-pair">
-          <Label scale={scale} maxWidth={stage.width}>
+          <Label scale={scale} maxWidth={stageWidth}>
             One crafting station
           </Label>
           <ToggleGroup
@@ -84,7 +84,7 @@ const ToggleGroupDemo = ({ scale }: DemoProps) => {
           </ToggleGroup>
         </div>
         <div className="demo-pair">
-          <Label scale={scale} maxWidth={stage.width}>
+          <Label scale={scale} maxWidth={stageWidth}>
             Several crafting stations
           </Label>
           <ToggleGroup
