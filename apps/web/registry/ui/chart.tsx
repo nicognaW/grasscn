@@ -204,6 +204,16 @@ const ChartText = ({
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
 
+const isChartLabelText = <Value,>(value: Value): value is Value & string =>
+  typeof value === "string";
+
+const isChartNumber = (value: TooltipValueType): value is number =>
+  typeof value === "number";
+
+const isChartValuePresent = (
+  value: TooltipValueType | null | undefined
+): value is TooltipValueType => value !== null && value !== undefined;
+
 // Helper to extract item config from a payload.
 const getPayloadConfigFromPayload = function getPayloadConfigFromPayload(
   config: ChartConfig,
@@ -238,6 +248,44 @@ const getPayloadConfigFromPayload = function getPayloadConfigFromPayload(
 
   return configLabelKey in config ? config[configLabelKey] : config[key];
 };
+
+interface ChartTooltipIndicatorProps {
+  itemConfig: ChartConfig[string] | undefined;
+  hideIndicator: boolean;
+  indicator: "line" | "dot" | "dashed";
+  nestLabel: boolean;
+  indicatorColor: unknown;
+}
+
+const renderChartTooltipIndicator = ({
+  itemConfig,
+  hideIndicator,
+  indicator,
+  nestLabel,
+  indicatorColor,
+}: ChartTooltipIndicatorProps) =>
+  itemConfig?.icon ? (
+    <itemConfig.icon />
+  ) : (
+    !hideIndicator && (
+      <div
+        className={cn("shrink-0 border-(--color-border) bg-(--color-bg)", {
+          "h-2.5 w-2.5": indicator === "dot",
+          "my-0.5": nestLabel && indicator === "dashed",
+          "w-0 border-[1.5px] border-dashed bg-transparent":
+            indicator === "dashed",
+          "w-1": indicator === "line",
+        })}
+        style={
+          // SAFETY: these owned custom-property channels retain the raw SDK values; React performs the same CSS serialization as before.
+          {
+            "--color-bg": indicatorColor,
+            "--color-border": indicatorColor,
+          } as ChartIndicatorStyle
+        }
+      />
+    )
+  );
 
 const ChartTooltipContent = ({
   active,
@@ -280,11 +328,11 @@ const ChartTooltipContent = ({
     }
 
     const [item] = payload;
-    const key = `${labelKey ?? item?.dataKey ?? item?.name ?? "value"}`;
+    const key = String(labelKey ?? item?.dataKey ?? item?.name ?? "value");
     const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
     const value =
-      !(labelKey ?? "") && typeof label === "string"
+      !(labelKey ?? "") && isChartLabelText(label)
         ? (config[label]?.label ?? label)
         : itemConfig?.label;
 
@@ -296,7 +344,9 @@ const ChartTooltipContent = ({
       );
     }
 
-    if (!value) {
+    const showLabel = Boolean(value);
+
+    if (!showLabel) {
       return null;
     }
 
@@ -337,8 +387,9 @@ const ChartTooltipContent = ({
         {payload
           .filter((item) => item.type !== "none")
           .map((item, index) => {
-            const key = `${nameKey ?? item.name ?? item.dataKey ?? "value"}`;
+            const key = String(nameKey ?? item.name ?? item.dataKey ?? "value");
             const itemConfig = getPayloadConfigFromPayload(config, item, key);
+
             const indicatorColor: unknown =
               color ?? item.payload?.fill ?? item.color;
 
@@ -350,35 +401,19 @@ const ChartTooltipContent = ({
                   indicator === "dot" && "items-center"
                 )}
               >
-                {formatter && item?.value !== undefined && item.name != null ? (
+                {formatter &&
+                item?.value !== undefined &&
+                isChartValuePresent(item.name) ? (
                   formatter(item.value, item.name, item, index, item.payload)
                 ) : (
                   <>
-                    {itemConfig?.icon ? (
-                      <itemConfig.icon />
-                    ) : (
-                      !hideIndicator && (
-                        <div
-                          className={cn(
-                            "shrink-0 border-(--color-border) bg-(--color-bg)",
-                            {
-                              "h-2.5 w-2.5": indicator === "dot",
-                              "my-0.5": nestLabel && indicator === "dashed",
-                              "w-0 border-[1.5px] border-dashed bg-transparent":
-                                indicator === "dashed",
-                              "w-1": indicator === "line",
-                            }
-                          )}
-                          style={
-                            // SAFETY: these owned custom-property channels retain the raw SDK values; React performs the same CSS serialization as before.
-                            {
-                              "--color-bg": indicatorColor,
-                              "--color-border": indicatorColor,
-                            } as ChartIndicatorStyle
-                          }
-                        />
-                      )
-                    )}
+                    {renderChartTooltipIndicator({
+                      hideIndicator,
+                      indicator,
+                      indicatorColor,
+                      itemConfig,
+                      nestLabel,
+                    })}
                     <div
                       className={cn(
                         "flex flex-1 justify-between gap-[calc(4*var(--mc-pixel))] leading-none",
@@ -393,10 +428,10 @@ const ChartTooltipContent = ({
                           </ChartText>
                         </span>
                       </div>
-                      {item.value != null && (
+                      {isChartValuePresent(item.value) && (
                         <span className="text-foreground tabular-nums">
                           <ChartText scale={tooltipScale}>
-                            {typeof item.value === "number"
+                            {isChartNumber(item.value)
                               ? item.value.toLocaleString()
                               : String(item.value)}
                           </ChartText>
@@ -442,7 +477,7 @@ const ChartLegendContent = ({
       {payload
         .filter((item) => item.type !== "none")
         .map((item, index) => {
-          const key = `${nameKey ?? item.dataKey ?? "value"}`;
+          const key = String(nameKey ?? item.dataKey ?? "value");
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
           let icon: React.ReactNode;
 
