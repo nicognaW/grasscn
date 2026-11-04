@@ -104,8 +104,7 @@ const overrides =
     providers.providers.find(
       (provider) => provider.hex_file === "minecraft:font/unifont.zip"
     ) as (typeof providers)["providers"][number]
-  )/* oxlint-enable typescript/no-unsafe-type-assertion */
-  .size_overrides
+  ) /* oxlint-enable typescript/no-unsafe-type-assertion */.size_overrides
     .map((range) => [
       // SAFETY: The original indexed Unihex provider encodes range endpoints as codepoint strings; all18 endpoints in the independently hash-matched retained provider are nonempty.
       /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact original provider/API boundary; no new runtime validation. */
