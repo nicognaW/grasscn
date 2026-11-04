@@ -479,7 +479,8 @@ const PlayerPreview = ({
     loadingCallback.current?.("loading");
     const image = new Image();
     image.crossOrigin = "anonymous";
-    image.onload = () => {
+
+    const handleImageLoad = () => {
       if (!live) {
         return;
       }
@@ -499,19 +500,23 @@ const PlayerPreview = ({
       }
     };
 
-    image.onerror = () => {
+    image.addEventListener("load", handleImageLoad);
+
+    const handleImageError = () => {
       if (live) {
         setStatus("error");
         loadingCallback.current?.("error");
       }
     };
 
+    image.addEventListener("error", handleImageError);
+
     image.src = url;
 
     return () => {
       live = false;
-      image.onload = null;
-      image.onerror = null;
+      image.removeEventListener("load", handleImageLoad);
+      image.removeEventListener("error", handleImageError);
       instance?.dispose();
       renderer.current = null;
     };

@@ -168,11 +168,11 @@ const MinecraftMap = ({
             // oxlint-disable-next-line promise/avoid-new -- Preserve this Image event bridge, loaded-element result and raw load-error event.
             await new Promise<HTMLImageElement>((resolve, reject) => {
               const loadedImage = new Image();
-              loadedImage.onload = () => {
+              loadedImage.addEventListener("load", () => {
                 resolve(loadedImage);
-              };
+              });
 
-              loadedImage.onerror = reject;
+              loadedImage.addEventListener("error", reject);
               loadedImage.src = src;
             })
         )
@@ -316,7 +316,8 @@ const LocatorDot = ({
   React.useEffect(() => {
     let live = true;
     const image = new Image();
-    image.onload = () => {
+
+    const handleImageLoad = () => {
       if (!live) {
         return;
       }
@@ -353,10 +354,13 @@ const LocatorDot = ({
       ctx.putImageData(pixels, 0, 0);
     };
 
+    image.addEventListener("load", handleImageLoad);
+
     image.src = adventureAssets[`gui/sprites/hud/locator_bar_dot/${shape}`].src;
 
     return () => {
       live = false;
+      image.removeEventListener("load", handleImageLoad);
     };
   }, [shape, color]);
 

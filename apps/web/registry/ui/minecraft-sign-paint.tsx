@@ -21,11 +21,11 @@ const load = function load(src: string) {
     // oxlint-disable-next-line promise/avoid-new -- Keep the per-source Image event Promise, including cached rejection.
     promise = new Promise<HTMLImageElement>((resolve, reject) => {
       const image = new Image();
-      image.onload = () => {
+      image.addEventListener("load", () => {
         resolve(image);
-      };
+      });
 
-      image.onerror = reject;
+      image.addEventListener("error", reject);
       image.src = src;
     });
     images.set(src, promise);

@@ -135,11 +135,11 @@ const loadImages = function loadImages() {
         // oxlint-disable-next-line promise/avoid-new -- Preserve the cached texture-load event bridge and raw load-error event.
         new Promise<HTMLImageElement>((resolve, reject) => {
           const image = new Image();
-          image.onload = () => {
+          image.addEventListener("load", () => {
             resolve(image);
-          };
+          });
 
-          image.onerror = reject;
+          image.addEventListener("error", reject);
           image.src = src;
         })
     )

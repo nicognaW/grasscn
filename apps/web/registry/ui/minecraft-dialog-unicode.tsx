@@ -21,15 +21,15 @@ const loadAlpha = function loadAlpha() {
   // oxlint-disable-next-line promise/avoid-new -- Preserve the cached Image load/error bridge and its onload alpha-extraction phase.
   return (alpha ??= new Promise((resolve, reject) => {
     const image = new Image();
-    image.onload = () => {
+    image.addEventListener("load", () => {
       const c = document.createElement("canvas");
       c.width = c.height = 128;
       const context = c.getContext("2d")!;
       context.drawImage(image, 0, 0);
       resolve(context.getImageData(0, 0, 128, 128).data);
-    };
+    });
 
-    image.onerror = reject;
+    image.addEventListener("error", reject);
     image.src = minecraftInputAssets.atlas;
   }));
 };

@@ -63,13 +63,13 @@ const loadImages = function loadImages() {
         // oxlint-disable-next-line promise/avoid-new -- Preserve the cached texture-load event bridge and its existing custom load Error.
         new Promise<HTMLImageElement>((resolve, reject) => {
           const image = new Image();
-          image.onload = () => {
+          image.addEventListener("load", () => {
             resolve(image);
-          };
+          });
 
-          image.onerror = () => {
+          image.addEventListener("error", () => {
             reject(new Error("Embedded Minecraft Input image could not load"));
-          };
+          });
 
           image.src = src;
         })
