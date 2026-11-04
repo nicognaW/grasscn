@@ -99,7 +99,9 @@ type ProductionInput =
   | {
       kind: "directory";
       file: string;
-      children: PromiseSettledResult<ProductionInput | null>[];
+      children: PromiseSettledResult<
+        PromiseSettledResult<ProductionInput | null>[]
+      >;
     }
   | { kind: "symlink"; file: string }
   | {
@@ -133,8 +135,21 @@ const readProductionInput = async (
   }
 
   if (info.isDirectory()) {
+    let children: PromiseSettledResult<
+      PromiseSettledResult<ProductionInput | null>[]
+    >;
+
+    try {
+      children = {
+        status: "fulfilled",
+        value: await readProductionDirectory(directory, file),
+      };
+    } catch (error) {
+      children = { reason: error, status: "rejected" };
+    }
+
     return {
-      children: await readProductionDirectory(directory, file),
+      children,
       file,
       kind: "directory",
     };
@@ -170,7 +185,7 @@ type GeneratedInput =
   | {
       kind: "directory";
       file: string;
-      children: PromiseSettledResult<GeneratedInput>[];
+      children: PromiseSettledResult<PromiseSettledResult<GeneratedInput>[]>;
     };
 
 const readGeneratedInput = async (
@@ -186,8 +201,19 @@ const readGeneratedInput = async (
   }
 
   if (info.isDirectory()) {
+    let children: PromiseSettledResult<PromiseSettledResult<GeneratedInput>[]>;
+
+    try {
+      children = {
+        status: "fulfilled",
+        value: await readGeneratedDirectory(directory, file),
+      };
+    } catch (error) {
+      children = { reason: error, status: "rejected" };
+    }
+
     return {
-      children: await readGeneratedDirectory(directory, file),
+      children,
       file,
       kind: "directory",
     };
@@ -260,7 +286,11 @@ export const productionBuildIdentity = async ({
       );
 
       if (input.kind === "directory") {
-        visit(input.children);
+        if (input.children.status === "rejected") {
+          throw input.children.reason;
+        }
+
+        visit(input.children.value);
       } else {
         if (input.fingerprint.status === "rejected") {
           throw input.fingerprint.reason;
@@ -349,7 +379,11 @@ const preparationIdentity = async (root: string, directory: string) => {
       );
 
       if (input.kind === "directory") {
-        visit(input.children);
+        if (input.children.status === "rejected") {
+          throw input.children.reason;
+        }
+
+        visit(input.children.value);
       } else {
         if (input.fingerprint.status === "rejected") {
           throw input.fingerprint.reason;
