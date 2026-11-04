@@ -88,6 +88,7 @@ const files = item.files.map((file) => {
     Object.assign(sourceLocation, { sourcePath: file.path });
   }
 
+  // oxlint-disable-next-line eslint/sort-keys -- Preserve this serialized field order and source spread overwrite/evaluation behavior; retain its inferred producer shape.
   return {
     ...sourceLocation,
     installedPath,

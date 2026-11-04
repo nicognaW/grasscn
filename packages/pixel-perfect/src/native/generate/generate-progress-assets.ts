@@ -58,6 +58,7 @@ for (const [member, pin] of Object.entries(inventory.assets).filter(
   const sha256 = createHash("sha256").update(bytes).digest("hex");
   assert.equal(sha256, pin.sha256);
   const decoded = PNG.sync.read(bytes);
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
   sources[member] = {
     sha256,
     width: pin.width,

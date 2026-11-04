@@ -300,6 +300,7 @@ const cases = caseResults.map((result) => {
   return result.value;
 });
 
+// oxlint-disable-next-line eslint/sort-keys -- Preserve the existing native manifest field order and value evaluation; cleanup keeps serialized bytes unchanged.
 const provenance = {
   source:
     "Actual Minecraft Java Button rendered by the unmodified vanilla game classes and GPU pipeline; test-only Screen supplies layout and state.",

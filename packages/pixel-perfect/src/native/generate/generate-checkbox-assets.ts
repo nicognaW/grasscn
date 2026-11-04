@@ -109,6 +109,7 @@ for (const name of [
 
     const derived = PNG.sync.write(target);
     css.push(`  --mc-${variable}-native-s${scale}: ${uri(derived)};`);
+    // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
     derivatives.push({
       scale,
       width: size,
@@ -117,6 +118,7 @@ for (const name of [
     });
   }
 
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
   assets[member] = {
     sha256: hash(bytes),
     embeddedBytes: "unchanged",

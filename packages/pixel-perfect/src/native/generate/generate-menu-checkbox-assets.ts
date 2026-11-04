@@ -107,6 +107,7 @@ for (const name of [
 
   width = w;
   height = h;
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
   sprites[name] = {
     width: image.width,
     height: image.height,
@@ -119,6 +120,7 @@ for (const name of [
     image: `data:image/png;base64,${bytes.toString("base64")}`,
     rgba: image.data.toString("base64"),
   };
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
   sources[member] = {
     sha256: hash(bytes),
     width: image.width,

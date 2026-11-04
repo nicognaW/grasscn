@@ -414,6 +414,7 @@ for (const frameRead of frameReads) {
   frameRecords.push({ name, sha256: sha256(bytes) });
 }
 
+// oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
 const manifest: ControlCaptureManifest = {
   source:
     "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",

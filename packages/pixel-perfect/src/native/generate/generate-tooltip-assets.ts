@@ -159,15 +159,18 @@ for (const name of ["background", "frame"]) {
     y += heights[row];
   }
 
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
   sprites[name] = {
     width: image.width,
     height: image.height,
+    // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
     border: { left: b, top: b, right: b, bottom: b },
     stretch: scaling.stretch_inner ?? false,
     image: uri(bytes),
     rgba: image.data.toString("base64"),
     pieces,
   };
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
   sources[member] = {
     sha256: hash(bytes),
     metadataSha256: hash(metadata),

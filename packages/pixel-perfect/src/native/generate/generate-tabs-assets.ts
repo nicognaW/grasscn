@@ -123,6 +123,7 @@ for (const name of [
     metadata.toString("utf-8")
   ) as SpriteMetadata;
 
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
   sources[member] = {
     sha256: hash(bytes),
     metadataSha256: hash(metadata),

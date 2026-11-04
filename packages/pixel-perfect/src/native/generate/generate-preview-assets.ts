@@ -65,6 +65,7 @@ for (const [variable, filename] of [
   css.push(
     `  --preview-${variable}: url("data:image/png;base64,${bytes.toString("base64")}");`
   );
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
   sources[member] = {
     sha256,
     embeddedBytes: "unchanged",

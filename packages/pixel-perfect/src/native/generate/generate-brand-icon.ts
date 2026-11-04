@@ -163,6 +163,7 @@ for (const [scaleIndex, scale] of one.scales.entries()) {
 
   // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await writeFile(path.join(assets, filename), bytes);
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
   generated[filename] = {
     width: result.width,
     height: result.height,
@@ -250,6 +251,7 @@ const logo = `<svg xmlns="http://www.w3.org/2000/svg" width="176" height="64" vi
 
 await writeFile(path.join(assets, "grasscn-logo.svg"), logo);
 
+// oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
 generated["grasscn-logo.svg"] = {
   width: 176,
   height: 64,
@@ -283,6 +285,7 @@ const popupSource = JSON.parse(
   popupSourceBytes.toString("utf-8")
 ) as typeof popupAssets;
 
+// oxlint-disable-next-line eslint/sort-keys -- Preserve this serialized field order and source spread overwrite/evaluation behavior; retain its inferred producer shape.
 const provenance = {
   project: "grasscn",
   minecraftVersion: "26.2",

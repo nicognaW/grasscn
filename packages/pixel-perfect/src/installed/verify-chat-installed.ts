@@ -66,7 +66,9 @@ const canonical = (b: Buffer) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item!.files.map((f) => {
+assert.ok(item, `Missing required registry item: ${name}`);
+
+const files = item.files.map((f) => {
   const base = path.basename(f.path);
   const source = fs.readFileSync(webFile(path.join(f.path)));
 

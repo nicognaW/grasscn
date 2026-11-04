@@ -189,6 +189,7 @@ for (const textureInput of textureInputs) {
   // oxlint-disable-next-line eslint/no-await-in-loop -- Preserve the original retained-output write order and first-failure/partial-output boundary before publishing the next artifact.
   await writeFile(path.join(outputDir, "inputs", name), bytes);
 
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
   inputResources[name] = {
     sha256: sha256(bytes),
     size: bytes.length,
@@ -485,6 +486,7 @@ for (const frameRead of frameReads) {
   frameRecords.push({ name, sha256: sha256(bytes) });
 }
 
+// oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
 const manifest: ControlCaptureManifest = {
   source:
     "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",

@@ -70,7 +70,9 @@ const canonical = (bytes: Buffer) => {
   return text.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-const files = item!.files.map((file) => {
+assert.ok(item, `Missing required registry item: ${name}`);
+
+const files = item.files.map((file) => {
   const filename = path.basename(file.path);
 
   let directorySelection: "hooks" | "lib" | "components/ui";
