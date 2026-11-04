@@ -14,7 +14,6 @@ const FireworksDemo = ({ scale }: DemoProps) => {
   };
 
   return (
-    /* eslint-disable shadcn/no-unknown-classes -- These playground classes are defined in components/documentation.css and components/home/homepage.css. */
     <div className="demo-stage" data-stage="fireworks">
       <Button scale={scale} onClick={fire}>
         Launch fireworks
@@ -24,7 +23,6 @@ const FireworksDemo = ({ scale }: DemoProps) => {
         reduced motion only the sounds play.
       </p>
     </div>
-    /* eslint-enable shadcn/no-unknown-classes */
   );
 };
 
