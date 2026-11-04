@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { normalizeCasePath } from "@grasscn/tests/case-paths";
+import type { ReusableBrowserTest } from "@grasscn/tests/checkpoints";
 import {
   fullRoot,
   readRunPlan,
@@ -21,6 +22,7 @@ import {
   readPublicationJournal,
 } from "@ppt/full-runs/report-readers";
 import type {
+  RetainedDeclaration,
   ReportApiResponse,
   FullCaseRecord,
   FullCaseHistory,
@@ -107,10 +109,7 @@ const evidence = function evidence(root: string, file: string) {
   };
 };
 
-/** Read historical evidence only. Never calls authorizeFullRun or launches a browser. */
-export const completedRunReport = function completedRunReport(
-  number: string | number | undefined
-) {
+function readCompletedRun(number: string | number | undefined) {
   const run = readRunPlan(number);
   const testedCommit = run.plan.commit;
   const state = readRunState(number);
@@ -141,6 +140,15 @@ export const completedRunReport = function completedRunReport(
       "Completed state does not bind this plan, snapshot, environment and executor"
     );
   }
+
+  return { approvalEvent: state.approval.eventId, run, state, testedCommit };
+}
+
+/** Read historical evidence only. Never calls authorizeFullRun or launches a browser. */
+export const completedRunReport = function completedRunReport(
+  number: string | number | undefined
+) {
+  const { run, testedCommit, state, approvalEvent } = readCompletedRun(number);
 
   const attemptValues = readRunAttempts(number);
   attemptValues.sort((a, b) => a.directory.localeCompare(b.directory));
@@ -192,30 +200,7 @@ export const completedRunReport = function completedRunReport(
 
   let environment: FullVerificationReceipt["environment"] | undefined;
 
-  for (const attempt of attempts) {
-    beneath(run.paths.attempts, attempt.directory);
-    const resourceFile = path.join(attempt.directory, "resource-summary.json");
-
-    if (fs.existsSync(resourceFile)) {
-      retainedEvidence.push(evidence(attempt.directory, resourceFile));
-    }
-
-    const { receipt } = attempt;
-
-    if (!receipt) {
-      if (
-        attempt === final ||
-        fs.existsSync(path.join(attempt.directory, "checkpoints"))
-      ) {
-        throw new Error(
-          `Missing attempt receipt with collection evidence: ${attempt.directory}`
-        );
-      }
-
-      // A guard can stop before verification starts. This attempt contributes no results.
-      continue;
-    }
-
+  function assertApprovedAttempt(receipt: FullVerificationReceipt) {
     const binding = receipt.environment?.fullRun;
 
     if (
@@ -223,7 +208,7 @@ export const completedRunReport = function completedRunReport(
       receipt.browserScope !== "full" ||
       binding?.issue !== run.number ||
       binding?.planHash !== run.planHash ||
-      binding?.approvalEvent !== state.approval.eventId
+      binding?.approvalEvent !== approvalEvent
     ) {
       throw new Error(
         "Attempt belongs to different source, scope or authorization"
@@ -256,96 +241,68 @@ export const completedRunReport = function completedRunReport(
         "Receipt workers/dependencies differ from approved environment"
       );
     }
+  }
 
-    if (
-      environment &&
-      (!same(environment, receipt.environment) ||
-        receipt.source.treeSha256 !== last.source.treeSha256)
-    ) {
-      throw new Error("Attempt environment/tree changed across resumes");
+  function retainFileEvidence(
+    attempt: ReturnType<typeof readRunAttempts>[number],
+    receipt: FullVerificationReceipt,
+    file: string
+  ) {
+    if (normalizeCasePath(file) !== file) {
+      throw new Error("Browser file is outside Full scope");
     }
 
-    ({ environment } = receipt);
+    const directory = path.join(attempt.directory, "checkpoints", file);
 
-    if (receipt.sourceAfter && !same(receipt.sourceAfter, receipt.source)) {
-      throw new Error("Source changed during collection");
+    if (!fs.existsSync(directory)) {
+      return;
     }
 
-    if (
-      receipt.completed &&
-      (!same(
-        receipt.dependenciesAfter,
-        receipt.environment.installedDependencies
-      ) ||
-        receipt.fixtureBundleAfter?.sha256 !== receipt.fixtureBundle?.sha256)
-    ) {
-      throw new Error("Completed receipt changed dependencies or fixture");
-    }
-
-    retainedEvidence.push(
-      evidence(
-        attempt.directory,
-        path.join(attempt.directory, "verification.json")
-      )
+    const check = receipt.checks?.find(
+      (item) => item.name === `browser:${file}`
     );
 
-    for (const file of files) {
-      if (normalizeCasePath(file) !== file) {
-        throw new Error("Browser file is outside Full scope");
-      }
+    const expectedFile = beneath(
+      attempt.directory,
+      path.join(directory, "expected.json")
+    );
 
-      const directory = path.join(attempt.directory, "checkpoints", file);
+    // SAFETY: the retained checkpoint reporter writes this declaration catalogue; existing schema/source checks remain below.
+    const expected = readRetainedCatalogue(expectedFile);
 
-      if (!fs.existsSync(directory)) {
-        continue;
-      }
+    if (
+      ![2, 3].includes(expected.schemaVersion) ||
+      !Array.isArray(expected.tests)
+    ) {
+      throw new Error("Invalid checkpoint declarations");
+    }
 
-      const check = receipt.checks?.find(
-        (item) => item.name === `browser:${file}`
-      );
+    retainedEvidence.push(evidence(attempt.directory, expectedFile));
 
-      const expectedFile = beneath(
-        attempt.directory,
-        path.join(directory, "expected.json")
-      );
+    const journalFile = beneath(
+      attempt.directory,
+      path.join(directory, "results.jsonl")
+    );
 
-      // SAFETY: the retained checkpoint reporter writes this declaration catalogue; existing schema/source checks remain below.
-      const expected = readRetainedCatalogue(expectedFile);
+    retainedEvidence.push(evidence(attempt.directory, journalFile));
 
-      if (
-        ![2, 3].includes(expected.schemaVersion) ||
-        !Array.isArray(expected.tests)
-      ) {
-        throw new Error("Invalid checkpoint declarations");
-      }
+    const raw = fs.readFileSync(journalFile, "utf-8");
+    const lines = raw.split("\n");
 
-      retainedEvidence.push(evidence(attempt.directory, expectedFile));
+    if (!raw.endsWith("\n")) {
+      lines.pop();
+    }
 
-      const journalFile = beneath(
-        attempt.directory,
-        path.join(directory, "results.jsonl")
-      );
+    const journal = lines.filter(Boolean).map(
+      (line) =>
+        // SAFETY: each complete journal line is a checkpoint reporter result with existing identity checks below.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        JSON.parse(line) as RetainedResult
+    );
 
-      retainedEvidence.push(evidence(attempt.directory, journalFile));
+    const declarations = new Map(expected.tests.map((test) => [test.id, test]));
 
-      const raw = fs.readFileSync(journalFile, "utf-8");
-      const lines = raw.split("\n");
-
-      if (!raw.endsWith("\n")) {
-        lines.pop();
-      }
-
-      const journal = lines.filter(Boolean).map(
-        (line) =>
-          // SAFETY: each complete journal line is a checkpoint reporter result with existing identity checks below.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-          JSON.parse(line) as RetainedResult
-      );
-
-      const declarations = new Map(
-        expected.tests.map((test) => [test.id, test])
-      );
-
+    function approvedCaseSource() {
       let approvedSourceHashes = sourceHashes.get(file);
 
       if (approvedSourceHashes === undefined) {
@@ -390,325 +347,406 @@ export const completedRunReport = function completedRunReport(
         sourceHashes.set(file, approvedSourceHashes);
       }
 
-      for (const declaration of expected.tests) {
-        const key = caseKey({ file, titlePath: declaration.title?.slice(2) });
+      return approvedSourceHashes;
+    }
+
+    const approvedSourceHashes = approvedCaseSource();
+
+    function validateBoundSources(declaration: RetainedDeclaration) {
+      if (
+        !hasText(expected.sourceRoot) ||
+        !hasText(expected.repositoryRoot) ||
+        !Array.isArray(declaration.sourceFiles)
+      ) {
+        throw new Error("Checkpoint is missing source-root binding");
+      }
+
+      const owner = normalizeCasePath(declaration.file);
+      const definition = normalizeCasePath(declaration.definitionFile);
+
+      if (
+        owner !== declaration.file ||
+        definition !== declaration.definitionFile
+      ) {
+        throw new Error("Checkpoint source paths are not canonical");
+      }
+
+      const ownerAbsolute = path.resolve(expected.sourceRoot, owner);
+
+      const caseFile = normalizeCasePath(
+        path.relative(expected.rootDir, ownerAbsolute).replaceAll(path.sep, "/")
+      );
+
+      const ownerRepositoryFile = normalizeCasePath(
+        path
+          .relative(expected.repositoryRoot, ownerAbsolute)
+          .replaceAll(path.sep, "/")
+      );
+
+      if (caseFile !== file || ownerRepositoryFile !== ownerSources.get(file)) {
+        throw new Error("Checkpoint owner differs from approved case source");
+      }
+
+      const required = new Map([
+        [owner, declaration.sourceSha256],
+        [definition, declaration.definitionSha256],
+      ]);
+
+      if (required.size !== declaration.sourceFiles.length) {
+        throw new Error(
+          "Checkpoint does not bind exactly its owner and definition sources"
+        );
+      }
+
+      for (const source of declaration.sourceFiles) {
+        const sourceFile = normalizeCasePath(source.file);
 
         if (
-          !scope.has(key) ||
-          !approvedSourceHashes.has(declaration.sourceSha256)
+          sourceFile !== source.file ||
+          required.get(sourceFile) !== source.sha256
         ) {
+          throw new Error("Checkpoint source inputs are ambiguous");
+        }
+
+        const repositoryFile = normalizeCasePath(
+          path
+            .relative(
+              expected.repositoryRoot,
+              path.resolve(expected.sourceRoot, sourceFile)
+            )
+            .replaceAll(path.sep, "/")
+        );
+
+        if (repositoryFile.includes(":")) {
           throw new Error(
-            "Declaration source or case identity differs from approved scope"
+            "Checkpoint source is outside the approved repository"
           );
         }
 
-        if (expected.schemaVersion === 2) {
-          // A legacy helper declaration cannot establish the owning wrapper's source.
-          const recorded = normalizeCasePath(declaration.file);
+        let approvedDefinitionHashes = definitionHashes.get(repositoryFile);
 
-          if (
-            ![file, `tests/${file}`, ownerSources.get(file)].includes(recorded)
-          ) {
-            throw new Error(
-              "Legacy declaration does not prove a direct owning case source"
-            );
-          }
-        } else {
-          if (
-            !hasText(expected.sourceRoot) ||
-            !hasText(expected.repositoryRoot) ||
-            !Array.isArray(declaration.sourceFiles)
-          ) {
-            throw new Error("Checkpoint is missing source-root binding");
-          }
-
-          const owner = normalizeCasePath(declaration.file);
-          const definition = normalizeCasePath(declaration.definitionFile);
-
-          if (
-            owner !== declaration.file ||
-            definition !== declaration.definitionFile
-          ) {
-            throw new Error("Checkpoint source paths are not canonical");
-          }
-
-          const ownerAbsolute = path.resolve(expected.sourceRoot, owner);
-
-          const caseFile = normalizeCasePath(
-            path
-              .relative(expected.rootDir, ownerAbsolute)
-              .replaceAll(path.sep, "/")
+        if (approvedDefinitionHashes === undefined) {
+          const bytes = execFileSync(
+            "git",
+            ["show", `${testedCommit}:${repositoryFile}`],
+            { cwd: fullRoot, maxBuffer: 16 * 1024 * 1024 }
           );
 
-          const ownerRepositoryFile = normalizeCasePath(
-            path
-              .relative(expected.repositoryRoot, ownerAbsolute)
-              .replaceAll(path.sep, "/")
-          );
-
-          if (
-            caseFile !== file ||
-            ownerRepositoryFile !== ownerSources.get(file)
-          ) {
-            throw new Error(
-              "Checkpoint owner differs from approved case source"
-            );
-          }
-
-          const required = new Map([
-            [owner, declaration.sourceSha256],
-            [definition, declaration.definitionSha256],
+          approvedDefinitionHashes = new Set([
+            hash(bytes),
+            hash(bytes.toString("utf-8").replaceAll(/\r?\n/gu, "\r\n")),
           ]);
-
-          if (required.size !== declaration.sourceFiles.length) {
-            throw new Error(
-              "Checkpoint does not bind exactly its owner and definition sources"
-            );
-          }
-
-          for (const source of declaration.sourceFiles) {
-            const sourceFile = normalizeCasePath(source.file);
-
-            if (
-              sourceFile !== source.file ||
-              required.get(sourceFile) !== source.sha256
-            ) {
-              throw new Error("Checkpoint source inputs are ambiguous");
-            }
-
-            const repositoryFile = normalizeCasePath(
-              path
-                .relative(
-                  expected.repositoryRoot,
-                  path.resolve(expected.sourceRoot, sourceFile)
-                )
-                .replaceAll(path.sep, "/")
-            );
-
-            if (repositoryFile.includes(":")) {
-              throw new Error(
-                "Checkpoint source is outside the approved repository"
-              );
-            }
-
-            let approvedDefinitionHashes = definitionHashes.get(repositoryFile);
-
-            if (approvedDefinitionHashes === undefined) {
-              const bytes = execFileSync(
-                "git",
-                ["show", `${testedCommit}:${repositoryFile}`],
-                { cwd: fullRoot, maxBuffer: 16 * 1024 * 1024 }
-              );
-
-              approvedDefinitionHashes = new Set([
-                hash(bytes),
-                hash(bytes.toString("utf-8").replaceAll(/\r?\n/gu, "\r\n")),
-              ]);
-              definitionHashes.set(repositoryFile, approvedDefinitionHashes);
-            }
-
-            if (!approvedDefinitionHashes.has(source.sha256)) {
-              throw new Error(
-                "Checkpoint definition source differs from approved snapshot"
-              );
-            }
-
-            required.delete(sourceFile);
-          }
-
-          if (required.size) {
-            throw new Error("Checkpoint omitted a source input");
-          }
-        }
-      }
-
-      const terminal = new Set();
-      const accounted = new Set();
-
-      for (const record of journal) {
-        const declaration = declarations.get(record.id);
-
-        if (
-          !declaration ||
-          !same(record.title, declaration.title) ||
-          record.file !== declaration.file ||
-          record.sourceChanged !== false ||
-          !Number.isInteger(record.retry)
-        ) {
-          throw new Error("Journal identity or source changed");
+          definitionHashes.set(repositoryFile, approvedDefinitionHashes);
         }
 
-        if (
-          expected.schemaVersion === 3 &&
-          (record.definitionFile !== declaration.definitionFile ||
-            record.sourceSha256 !== declaration.sourceSha256 ||
-            record.definitionSha256 !== declaration.definitionSha256 ||
-            !same(record.sourceFiles, declaration.sourceFiles))
-        ) {
+        if (!approvedDefinitionHashes.has(source.sha256)) {
           throw new Error(
-            "Journal source binding differs from its declaration"
+            "Checkpoint definition source differs from approved snapshot"
           );
         }
 
-        if (
-          !["passed", "failed", "timedOut", "skipped", "interrupted"].includes(
-            record.status
-          ) ||
-          !["passed", "failed", "skipped"].includes(record.expectedStatus)
-        ) {
-          throw new Error("Invalid recorded result status");
-        }
-
-        const key = caseKey({ file, titlePath: declaration.title.slice(2) });
-        accounted.add(key);
-
-        const { verification } = record;
-
-        const artifacts =
-          verification?.artifacts.map((artifact) => {
-            if (path.basename(artifact.file) !== artifact.file) {
-              throw new Error("Invalid artifact filename");
-            }
-
-            const result = evidence(
-              attempt.directory,
-              path.join(verification.outputDirectory, artifact.file)
-            );
-
-            if (result.sha256 !== artifact.pngSha256) {
-              throw new Error("Artifact hash changed");
-            }
-
-            return result;
-          }) ?? [];
-
-        // SAFETY: these ordered entries define exactly the owned Full case-record protocol.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        const result = Object.fromEntries([
-          ["key", key],
-          ["file", file],
-          ["titlePath", declaration.title.slice(2)],
-          ["status", record.status],
-          ["expectedStatus", record.expectedStatus],
-          ["retry", record.retry],
-          ["errors", record.errors],
-          ["artifacts", artifacts],
-          ["verification", record.verification],
-          ["journal", journalFile],
-          ["attempt", attempt.directory],
-        ]) as FullCaseRecord;
-
-        const previous = records.get(key);
-
-        if (
-          previous?.attempt === attempt.directory &&
-          record.retry < previous.retry
-        ) {
-          throw new Error("Retry journal regressed");
-        }
-
-        records.set(key, result);
-        // SAFETY: these ordered entries preserve one exact case-history record.
-        history.set(key, [
-          ...(history.get(key) ?? []),
-          // SAFETY: these ordered entries define the owned case-history record.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-          Object.fromEntries([
-            ["status", record.status],
-            ["expectedStatus", record.expectedStatus],
-            ["retry", record.retry],
-            ["attempt", attempt.directory],
-          ]) as FullCaseHistory,
-        ]);
-
-        if (record.status !== "interrupted") {
-          terminal.add(record.id);
-        }
+        required.delete(sourceFile);
       }
 
-      if (receipt.completed) {
-        const summaryFile = beneath(
-          attempt.directory,
-          path.join(directory, "summary.json")
+      if (required.size) {
+        throw new Error("Checkpoint omitted a source input");
+      }
+    }
+
+    function validateDeclaration(declaration: RetainedDeclaration) {
+      const key = caseKey({ file, titlePath: declaration.title?.slice(2) });
+
+      if (
+        !scope.has(key) ||
+        !approvedSourceHashes.has(declaration.sourceSha256)
+      ) {
+        throw new Error(
+          "Declaration source or case identity differs from approved scope"
         );
-
-        // SAFETY: the checkpoint reporter writes this terminal summary; original completeness checks remain below.
-        const summary = readRetainedSummary(summaryFile);
-
-        const browserFile = beneath(
-          attempt.directory,
-          path.join(directory, "playwright.json")
-        );
-
-        // SAFETY: Playwright JSON reporter writes its root errors array; original completion checks remain below.
-        const browser = readRetainedBrowserReport(browserFile);
-
-        retainedEvidence.push(
-          evidence(attempt.directory, summaryFile),
-          evidence(attempt.directory, browserFile)
-        );
-
-        if (
-          !["passed", "failed"].includes(summary.status) ||
-          hasNonzeroNumber(summary.changedSources?.length) ||
-          hasNonzeroNumber(summary.counts?.interrupted) ||
-          hasNonzeroNumber(browser.errors?.length) ||
-          (raw && !raw.endsWith("\n")) ||
-          expected.tests.some((test) => !terminal.has(test.id))
-        ) {
-          throw new Error(
-            "Completed receipt has incomplete/corrupt browser collection"
-          );
-        }
       }
 
-      for (const reused of check?.reusedTests ?? []) {
-        // Retained identities are checked below through the prior attempt declarations, not titles in a command string.
-        const from = attempts.find(
-          (item) =>
-            path.join(item.directory, "verification.json") === reused.from
-        );
-
-        if (!from) {
-          throw new Error("Retained pass has no source-bound attempt");
-        }
-
-        const old = readRetainedCatalogue(
-          beneath(
-            from.directory,
-            path.join(from.directory, "checkpoints", file, "expected.json")
-          )
-        ).tests.find((test) => test.id === reused.id);
-
-        const key = old && caseKey({ file, titlePath: old.title.slice(2) });
-        const retained = records.get(key);
+      if (expected.schemaVersion === 2) {
+        // A legacy helper declaration cannot establish the owning wrapper's source.
+        const recorded = normalizeCasePath(declaration.file);
 
         if (
-          !retained ||
-          retained.status !== "passed" ||
-          retained.expectedStatus !== "passed" ||
-          retained.retry !== 0 ||
-          retained.attempt !== from.directory
+          ![file, `tests/${file}`, ownerSources.get(file)].includes(recorded)
         ) {
           throw new Error(
-            "Retained pass was superseded or lacks valid provenance"
+            "Legacy declaration does not prove a direct owning case source"
           );
         }
+      } else {
+        validateBoundSources(declaration);
+      }
+    }
 
-        accounted.add(key);
+    for (const declaration of expected.tests) {
+      validateDeclaration(declaration);
+    }
+
+    const terminal = new Set();
+    const accounted = new Set();
+
+    function retainJournalResult(record: RetainedResult) {
+      const declaration = declarations.get(record.id);
+
+      if (
+        !declaration ||
+        !same(record.title, declaration.title) ||
+        record.file !== declaration.file ||
+        record.sourceChanged !== false ||
+        !Number.isInteger(record.retry)
+      ) {
+        throw new Error("Journal identity or source changed");
       }
 
       if (
-        attempt === final &&
-        [...scope].some(
-          ([key, test]) => test.file === file && !accounted.has(key)
-        )
+        expected.schemaVersion === 3 &&
+        (record.definitionFile !== declaration.definitionFile ||
+          record.sourceSha256 !== declaration.sourceSha256 ||
+          record.definitionSha256 !== declaration.definitionSha256 ||
+          !same(record.sourceFiles, declaration.sourceFiles))
+      ) {
+        throw new Error("Journal source binding differs from its declaration");
+      }
+
+      if (
+        !["passed", "failed", "timedOut", "skipped", "interrupted"].includes(
+          record.status
+        ) ||
+        !["passed", "failed", "skipped"].includes(record.expectedStatus)
+      ) {
+        throw new Error("Invalid recorded result status");
+      }
+
+      const key = caseKey({ file, titlePath: declaration.title.slice(2) });
+      accounted.add(key);
+
+      const { verification } = record;
+
+      const artifacts =
+        verification?.artifacts.map((artifact) => {
+          if (path.basename(artifact.file) !== artifact.file) {
+            throw new Error("Invalid artifact filename");
+          }
+
+          const result = evidence(
+            attempt.directory,
+            path.join(verification.outputDirectory, artifact.file)
+          );
+
+          if (result.sha256 !== artifact.pngSha256) {
+            throw new Error("Artifact hash changed");
+          }
+
+          return result;
+        }) ?? [];
+
+      // SAFETY: these ordered entries define exactly the owned Full case-record protocol.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const result = Object.fromEntries([
+        ["key", key],
+        ["file", file],
+        ["titlePath", declaration.title.slice(2)],
+        ["status", record.status],
+        ["expectedStatus", record.expectedStatus],
+        ["retry", record.retry],
+        ["errors", record.errors],
+        ["artifacts", artifacts],
+        ["verification", record.verification],
+        ["journal", journalFile],
+        ["attempt", attempt.directory],
+      ]) as FullCaseRecord;
+
+      const previous = records.get(key);
+
+      if (
+        previous?.attempt === attempt.directory &&
+        record.retry < previous.retry
+      ) {
+        throw new Error("Retry journal regressed");
+      }
+
+      records.set(key, result);
+      // SAFETY: these ordered entries preserve one exact case-history record.
+      history.set(key, [
+        ...(history.get(key) ?? []),
+        // SAFETY: these ordered entries define the owned case-history record.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        Object.fromEntries([
+          ["status", record.status],
+          ["expectedStatus", record.expectedStatus],
+          ["retry", record.retry],
+          ["attempt", attempt.directory],
+        ]) as FullCaseHistory,
+      ]);
+
+      if (record.status !== "interrupted") {
+        terminal.add(record.id);
+      }
+    }
+
+    for (const record of journal) {
+      retainJournalResult(record);
+    }
+
+    function retainCompletedFile() {
+      const summaryFile = beneath(
+        attempt.directory,
+        path.join(directory, "summary.json")
+      );
+
+      // SAFETY: the checkpoint reporter writes this terminal summary; original completeness checks remain below.
+      const summary = readRetainedSummary(summaryFile);
+
+      const browserFile = beneath(
+        attempt.directory,
+        path.join(directory, "playwright.json")
+      );
+
+      // SAFETY: Playwright JSON reporter writes its root errors array; original completion checks remain below.
+      const browser = readRetainedBrowserReport(browserFile);
+
+      retainedEvidence.push(
+        evidence(attempt.directory, summaryFile),
+        evidence(attempt.directory, browserFile)
+      );
+
+      if (
+        !["passed", "failed"].includes(summary.status) ||
+        hasNonzeroNumber(summary.changedSources?.length) ||
+        hasNonzeroNumber(summary.counts?.interrupted) ||
+        hasNonzeroNumber(browser.errors?.length) ||
+        (raw && !raw.endsWith("\n")) ||
+        expected.tests.some((test) => !terminal.has(test.id))
       ) {
         throw new Error(
-          "Final file omitted cases without retained-pass provenance"
+          "Completed receipt has incomplete/corrupt browser collection"
         );
       }
     }
+
+    if (receipt.completed) {
+      retainCompletedFile();
+    }
+
+    function retainReusedPass(reused: ReusableBrowserTest) {
+      // Retained identities are checked below through the prior attempt declarations, not titles in a command string.
+      const from = attempts.find(
+        (item) => path.join(item.directory, "verification.json") === reused.from
+      );
+
+      if (!from) {
+        throw new Error("Retained pass has no source-bound attempt");
+      }
+
+      const old = readRetainedCatalogue(
+        beneath(
+          from.directory,
+          path.join(from.directory, "checkpoints", file, "expected.json")
+        )
+      ).tests.find((test) => test.id === reused.id);
+
+      const key = old && caseKey({ file, titlePath: old.title.slice(2) });
+      const retained = records.get(key);
+
+      if (
+        !retained ||
+        retained.status !== "passed" ||
+        retained.expectedStatus !== "passed" ||
+        retained.retry !== 0 ||
+        retained.attempt !== from.directory
+      ) {
+        throw new Error(
+          "Retained pass was superseded or lacks valid provenance"
+        );
+      }
+
+      accounted.add(key);
+    }
+
+    for (const reused of check?.reusedTests ?? []) {
+      retainReusedPass(reused);
+    }
+
+    if (
+      attempt === final &&
+      [...scope].some(
+        ([key, test]) => test.file === file && !accounted.has(key)
+      )
+    ) {
+      throw new Error(
+        "Final file omitted cases without retained-pass provenance"
+      );
+    }
+  }
+
+  function retainAttempt(attempt: ReturnType<typeof readRunAttempts>[number]) {
+    beneath(run.paths.attempts, attempt.directory);
+    const resourceFile = path.join(attempt.directory, "resource-summary.json");
+
+    if (fs.existsSync(resourceFile)) {
+      retainedEvidence.push(evidence(attempt.directory, resourceFile));
+    }
+
+    const { receipt } = attempt;
+
+    if (!receipt) {
+      if (
+        attempt === final ||
+        fs.existsSync(path.join(attempt.directory, "checkpoints"))
+      ) {
+        throw new Error(
+          `Missing attempt receipt with collection evidence: ${attempt.directory}`
+        );
+      }
+
+      // A guard can stop before verification starts. This attempt contributes no results.
+      return;
+    }
+
+    assertApprovedAttempt(receipt);
+
+    if (
+      environment &&
+      (!same(environment, receipt.environment) ||
+        receipt.source.treeSha256 !== last.source.treeSha256)
+    ) {
+      throw new Error("Attempt environment/tree changed across resumes");
+    }
+
+    ({ environment } = receipt);
+
+    if (receipt.sourceAfter && !same(receipt.sourceAfter, receipt.source)) {
+      throw new Error("Source changed during collection");
+    }
+
+    if (
+      receipt.completed &&
+      (!same(
+        receipt.dependenciesAfter,
+        receipt.environment.installedDependencies
+      ) ||
+        receipt.fixtureBundleAfter?.sha256 !== receipt.fixtureBundle?.sha256)
+    ) {
+      throw new Error("Completed receipt changed dependencies or fixture");
+    }
+
+    retainedEvidence.push(
+      evidence(
+        attempt.directory,
+        path.join(attempt.directory, "verification.json")
+      )
+    );
+
+    for (const file of files) {
+      retainFileEvidence(attempt, receipt, file);
+    }
+  }
+
+  for (const attempt of attempts) {
+    retainAttempt(attempt);
   }
 
   for (const file of files) {
