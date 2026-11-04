@@ -1,0 +1,24 @@
+{
+  "minecraftVersion": "26.2",
+  "element": "original NETHER_STAR GUI item with its standard enchantment glint",
+  "item": "minecraft:nether_star",
+  "scale": 2,
+  "background": "#202020",
+  "logicalPosition": [16, 16],
+  "window": { "width": 1536, "height": 900 },
+  "sentinels": [
+    [1, 1],
+    [1534, 898]
+  ],
+  "language": "en_us",
+  "mods": [],
+  "resourcePacks": [],
+  "minimumStableFrames": 20,
+  "minimumStableMilliseconds": 1000,
+  "cases": [
+    { "name": "glint-0", "glintMillis": 0 },
+    { "name": "glint-1250", "glintMillis": 1250 },
+    { "name": "glint-4000", "glintMillis": 4000 },
+    { "name": "glint-9000", "glintMillis": 9000 }
+  ]
+}

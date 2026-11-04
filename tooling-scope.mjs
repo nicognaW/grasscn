@@ -47,5 +47,6 @@ export const generatedCode = [
   "packages/pixel-perfect/tests/reference/fireworks/manifest.json",
   "packages/pixel-perfect/tests/reference/fireworks/random-sequences.json",
   "packages/pixel-perfect/tests/reference/redstone-lamp-display/manifest.json",
+  "packages/pixel-perfect/tests/reference/nether-star/manifest.json",
   "packages/tests/fixtures/reference/header-star/asset-provenance.json",
 ];
