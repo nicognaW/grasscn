@@ -21,37 +21,27 @@ import * as React from "react";
 // Navigation owns this immutable fixture query; state updates keep the same document.
 const q = new URLSearchParams(location.search);
 
-const readQuestionnaireReferenceBounds = (scale: 1 | 2 | 3) => {
-  const bounds = {
-    border: 0,
-    height: Number(q.get("height") ?? 20) * scale,
-    left: Number(q.get("x") ?? 16) * scale,
-    margin: 0,
-    padding: 0,
-    position: "fixed",
-    top: Number(q.get("y") ?? 16) * scale,
-    width: Number(q.get("width") ?? 200) * scale,
-  } satisfies React.CSSProperties;
+const readQuestionnaireReferenceGeometry = (scale: 1 | 2 | 3) => {
+  const height = Number(q.get("height") ?? 20) * scale;
+  const left = Number(q.get("x") ?? 16) * scale;
+  const top = Number(q.get("y") ?? 16) * scale;
+  const width = Number(q.get("width") ?? 200) * scale;
 
-  return bounds;
+  return { height, left, top, width };
 };
 
-const readQuestionnaireReferenceProbe = (bounds: React.CSSProperties) => {
+const readQuestionnaireReferenceProbe = () => {
   const part = q.get("part") ?? "title";
   const text = q.get("label") ?? "Hello Minecraft";
 
-  const textProps = {
-    align:
-      // SAFETY: owned fixture callers serialize the align option from the actual component protocol ("left" | "center"); preserve this URL read, original default and component handling.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
-      (q.get("align") ?? "left") as "left" | "center",
-    "data-subject": "true",
-    id: "subject",
-    maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
-    style: bounds,
-  };
+  // SAFETY: owned fixture callers serialize the align option from the actual component protocol ("left" | "center"); preserve this URL read, original default and component handling.
+  const align =
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    (q.get("align") ?? "left") as "left" | "center";
 
-  return { part, text, textProps };
+  const maxWidth = q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined;
+
+  return { align, maxWidth, part, text };
 };
 
 export const QuestionnaireFixture = () => {
@@ -75,10 +65,30 @@ export const QuestionnaireFixture = () => {
     chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
-  const bounds = readQuestionnaireReferenceBounds(scale);
+  const { height, left, top, width } =
+    readQuestionnaireReferenceGeometry(scale);
+
+  const bounds = {
+    border: 0,
+    height,
+    left,
+    margin: 0,
+    padding: 0,
+    position: "fixed",
+    top,
+    width,
+  } satisfies React.CSSProperties;
 
   if (q.has("native")) {
-    const { part, text, textProps } = readQuestionnaireReferenceProbe(bounds);
+    const { align, maxWidth, part, text } = readQuestionnaireReferenceProbe();
+
+    const textProps = {
+      align,
+      "data-subject": "true",
+      id: "subject",
+      maxWidth,
+      style: bounds,
+    };
 
     if (part === "input") {
       return (

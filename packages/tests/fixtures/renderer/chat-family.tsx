@@ -22,7 +22,7 @@ interface ChatFamilyReferenceStyle extends React.CSSProperties {
   "--mc-pixel": string;
 }
 
-const readChatReferenceLayout = (
+const readChatReferenceGeometry = (
   q: URLSearchParams,
   scale: 1 | 2 | 3,
   native: boolean
@@ -40,17 +40,13 @@ const readChatReferenceLayout = (
     chatNativeDimensions.height = Number(q.get("height") ?? 9) * scale;
   }
 
-  const common: ChatFamilyReferenceStyle = {
-    "--fixture-x": chatFixtureX,
-    "--fixture-y": chatFixtureY,
-    "--fixture-width": chatFixtureWidth,
-    ...chatNativeDimensions,
-    color: q.get("color") ?? "#ffffff",
-    "--mc-scale": scale,
-    "--mc-pixel": `${scale}px`,
+  return {
+    chatFixtureWidth,
+    chatFixtureX,
+    chatFixtureY,
+    chatNativeDimensions,
+    scaledWidth,
   };
-
-  return { common, scaledWidth };
 };
 
 export const ChatFamilyFixture = () => {
@@ -69,7 +65,24 @@ export const ChatFamilyFixture = () => {
   const [events, setEvents] = React.useState(0);
   const [tag, setTag] = React.useState("");
   const ref = React.useRef<HTMLDivElement>(null);
-  const { common, scaledWidth } = readChatReferenceLayout(q, scale, native);
+
+  const {
+    chatFixtureWidth,
+    chatFixtureX,
+    chatFixtureY,
+    chatNativeDimensions,
+    scaledWidth,
+  } = readChatReferenceGeometry(q, scale, native);
+
+  const common: ChatFamilyReferenceStyle = {
+    "--fixture-x": chatFixtureX,
+    "--fixture-y": chatFixtureY,
+    "--fixture-width": chatFixtureWidth,
+    ...chatNativeDimensions,
+    color: q.get("color") ?? "#ffffff",
+    "--mc-scale": scale,
+    "--mc-pixel": `${scale}px`,
+  };
 
   const background = q.get("background") ?? "#202020";
 
