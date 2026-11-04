@@ -28,9 +28,20 @@ if (!version || !java || !work || !output) {
   );
 }
 
-for (const directory of [work, output]) {
+const directoryInputs = await Promise.allSettled(
+  [work, output].map(async (directory) => ({
+    directory,
+    entries: await readdir(directory),
+  }))
+);
+
+for (const directoryInput of directoryInputs) {
   try {
-    const completedValue1 = await readdir(directory);
+    if (directoryInput.status === "rejected") {
+      throw directoryInput.reason;
+    }
+
+    const { directory, entries: completedValue1 } = directoryInput.value;
 
     if (completedValue1.length) {
       throw new Error(
