@@ -829,6 +829,17 @@ const ContextFixture = () => {
     selectedFixtureBranch4 = native ? nativeBody : rows;
   }
 
+  let popupNativeHeight: string | undefined;
+  let popupNativeWidth: string | undefined;
+  let popupMaximumHeight: number | undefined;
+
+  if (native) {
+    popupNativeHeight = `${Number(params.get("height")) * scale}px`;
+    popupNativeWidth = `${Number(params.get("width")) * scale}px`;
+  } else if (params.has("maxHeight")) {
+    popupMaximumHeight = Number(params.get("maxHeight"));
+  }
+
   const popup = (
     <ContextMenuContent
       render={params.has("contentAsChild") ? <section /> : undefined}
@@ -852,16 +863,11 @@ const ContextFixture = () => {
       className={cn({
         "fixture-geometry-height fixture-geometry-width": native,
       })}
-      style={
-        native
-          ? {
-              "--fixture-height": `${Number(params.get("height")) * scale}px`,
-              "--fixture-width": `${Number(params.get("width")) * scale}px`,
-            }
-          : params.has("maxHeight")
-            ? { maxHeight: Number(params.get("maxHeight")) }
-            : undefined
-      }
+      style={{
+        "--fixture-height": popupNativeHeight,
+        "--fixture-width": popupNativeWidth,
+        maxHeight: popupMaximumHeight,
+      }}
     >
       {selectedFixtureBranch4}
     </ContextMenuContent>
@@ -1275,6 +1281,17 @@ const MenubarFixture = () => {
     selectedFixtureBranch8 = native ? nativeBody : rows;
   }
 
+  let popupNativeHeight: string | undefined;
+  let popupNativeWidth: string | undefined;
+  let popupMaximumHeight: number | undefined;
+
+  if (native) {
+    popupNativeHeight = `${Number(params.get("height")) * scale}px`;
+    popupNativeWidth = `${Number(params.get("width")) * scale}px`;
+  } else if (params.has("maxHeight")) {
+    popupMaximumHeight = Number(params.get("maxHeight"));
+  }
+
   const popup = (
     <MenubarContent
       render={params.has("contentAsChild") ? <section /> : undefined}
@@ -1301,16 +1318,11 @@ const MenubarFixture = () => {
       className={cn({
         "fixture-geometry-height fixture-geometry-width": native,
       })}
-      style={
-        native
-          ? {
-              "--fixture-height": `${Number(params.get("height")) * scale}px`,
-              "--fixture-width": `${Number(params.get("width")) * scale}px`,
-            }
-          : params.has("maxHeight")
-            ? { maxHeight: Number(params.get("maxHeight")) }
-            : undefined
-      }
+      style={{
+        "--fixture-height": popupNativeHeight,
+        "--fixture-width": popupNativeWidth,
+        maxHeight: popupMaximumHeight,
+      }}
     >
       {selectedFixtureBranch8}
     </MenubarContent>
@@ -1601,6 +1613,17 @@ const DropdownFixture = () => {
     selectedFixtureBranch11 = native ? nativeBody : rows;
   }
 
+  let popupNativeHeight: string | undefined;
+  let popupNativeWidth: string | undefined;
+  let popupMaximumHeight: number | undefined;
+
+  if (native) {
+    popupNativeHeight = `${Number(params.get("height")) * scale}px`;
+    popupNativeWidth = `${Number(params.get("width")) * scale}px`;
+  } else if (params.has("maxHeight")) {
+    popupMaximumHeight = Number(params.get("maxHeight"));
+  }
+
   const popup = (
     <DropdownMenuContent
       render={params.has("contentAsChild") ? <section /> : undefined}
@@ -1627,16 +1650,11 @@ const DropdownFixture = () => {
       className={cn({
         "fixture-geometry-height fixture-geometry-width": native,
       })}
-      style={
-        native
-          ? {
-              "--fixture-height": `${Number(params.get("height")) * scale}px`,
-              "--fixture-width": `${Number(params.get("width")) * scale}px`,
-            }
-          : params.has("maxHeight")
-            ? { maxHeight: Number(params.get("maxHeight")) }
-            : undefined
-      }
+      style={{
+        "--fixture-height": popupNativeHeight,
+        "--fixture-width": popupNativeWidth,
+        maxHeight: popupMaximumHeight,
+      }}
     >
       {selectedFixtureBranch11}
     </DropdownMenuContent>
