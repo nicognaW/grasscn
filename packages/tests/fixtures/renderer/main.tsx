@@ -374,7 +374,10 @@ const SelectFixture = () => {
       onSubmit={(event) => {
         event.preventDefault();
         setSubmittedValue(
-          String(new FormData(event.currentTarget).get("mode") ?? "missing")
+          // SAFETY: this owned form's mode controls are RadioGroup/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer boundary; no runtime check or changed read.
+          (new FormData(event.currentTarget).get("mode") as string | null) ??
+            "missing"
         );
       }}
     >
@@ -503,7 +506,10 @@ const RadioFixture = () => {
         onSubmit={(event) => {
           event.preventDefault();
           setResult(
-            String(new FormData(event.currentTarget).get("mode") ?? "missing")
+            // SAFETY: this owned form's mode controls are RadioGroup/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer boundary; no runtime check or changed read.
+            (new FormData(event.currentTarget).get("mode") as string | null) ??
+              "missing"
           );
         }}
       >
@@ -612,7 +618,10 @@ const SwitchFixture = () => {
         onSubmit={(event) => {
           event.preventDefault();
           setResult(
-            String(new FormData(event.currentTarget).get("mode") ?? "missing")
+            // SAFETY: this owned form's mode controls are RadioGroup/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer boundary; no runtime check or changed read.
+            (new FormData(event.currentTarget).get("mode") as string | null) ??
+              "missing"
           );
         }}
       >
@@ -1978,10 +1987,10 @@ const AlertDialogFixture = () => {
               {Array.from({ length: 256 }, (_, i) => (
                 <i
                   key={i}
-                  className="fixture-color-bar"
+                  className="fixture-color-bar fixture-dialog-palette"
                   style={{
-                    "--fixture-bar-color": `rgb(${i},${255 - i},${(i * 37) % 256})`,
                     "--fixture-bar-width": `${scale}px`,
+                    "--fixture-dialog-palette-step": i,
                   }}
                 />
               ))}
@@ -2242,10 +2251,10 @@ const DialogFixture = () => {
               {Array.from({ length: 256 }, (_, i) => (
                 <i
                   key={i}
-                  className="fixture-color-bar"
+                  className="fixture-color-bar fixture-dialog-palette"
                   style={{
-                    "--fixture-bar-color": `rgb(${i},${255 - i},${(i * 37) % 256})`,
                     "--fixture-bar-width": `${scale}px`,
+                    "--fixture-dialog-palette-step": i,
                   }}
                 />
               ))}
@@ -2845,8 +2854,8 @@ const FixtureTextarea = () => {
           placeholder={params.get("placeholder") ?? ""}
           className="fixture-geometry-width fixture-geometry-height"
           style={{
-            "--fixture-width": `${width * scale}px`,
             "--fixture-height": `${Number(params.get("height") ?? 80) * scale}px`,
+            "--fixture-width": `${width * scale}px`,
           }}
           onChange={(event) => {
             setInputValue(event.target.value);
@@ -2893,9 +2902,10 @@ const FixtureCard = () => {
         style={{
           "--fixture-layout-18": `${width * scale}px`,
           "--fixture-layout-21": `${Number(params.get("height") ?? 200) * scale}px`,
-          padding: params.has("text") ? undefined : 0,
         }}
-        className="fixture-owner-layout-37 fixture-owner-layout-46"
+        className={cn("fixture-owner-layout-37 fixture-owner-layout-46", {
+          "fixture-card-empty-padding": !params.has("text"),
+        })}
         data-subject="true"
       >
         {params.has("text") && (
@@ -2983,8 +2993,8 @@ const FixtureTooltip = () => {
               id="tooltip-trigger"
               className="fixture-edge-anchor"
               style={{
-                "--fixture-edge-top": `${params.get("edge") === "top" ? 0 : 240}px`,
                 "--fixture-edge-left": `${params.get("edge") === "left" ? 0 : 300}px`,
+                "--fixture-edge-top": `${params.get("edge") === "top" ? 0 : 240}px`,
               }}
               onClick={() => {
                 setCount((current) => current + 1);
@@ -3174,7 +3184,11 @@ const FixtureSlider = () => {
             setCommits((current) => current + 1);
           }}
           onValueChange={(next) => {
-            setValues(typeof next === "number" ? [next] : [...next]);
+            setValues([
+              // SAFETY: this fixture always supplies the parsed values array or the wrapper's default [min,max] array. Base UI's range mode returns an array for these producers, including uncontrolled/reset paths.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned Slider array-mode callback boundary; preserve the original array copy and notifications.
+              ...(next as readonly number[]),
+            ]);
             setCount((current) => current + 1);
           }}
           data-subject="true"

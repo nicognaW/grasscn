@@ -2,6 +2,7 @@ import "react";
 
 declare module "react" {
   interface CSSProperties {
+    "--fixture-dialog-palette-step"?: number;
     "--fixture-locator-top"?: string;
     "--fixture-trigger-left"?: string;
     "--fixture-trigger-top"?: string;

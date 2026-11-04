@@ -387,3 +387,15 @@
   position: absolute;
   top: var(--fixture-locator-top);
 }
+
+/* Exact dialog underlay palette: the fixture supplies only its finite 0..255 step; the theme owns RGB channel construction. */
+.fixture-dialog-palette {
+  --fixture-bar-color: rgb(
+    var(--fixture-dialog-palette-step)
+      calc(255 - var(--fixture-dialog-palette-step))
+      mod(calc(var(--fixture-dialog-palette-step) * 37), 256)
+  );
+}
+.fixture-card-empty-padding {
+  padding: 0;
+}
