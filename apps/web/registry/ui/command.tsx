@@ -72,23 +72,31 @@ const CommandDialog = ({
   showCloseButton?: boolean;
   scale?: Scale;
 }) => {
-  const wasOpen = React.useRef(false);
-  const restoreFocus = React.useRef<HTMLElement | null>(null);
   const isOpen = Boolean(props.open ?? props.defaultOpen);
+  const [focusCapture, setFocusCapture] = React.useState<{
+    element: HTMLElement | null;
+    open: boolean;
+  }>({ element: null, open: false });
 
-  if (isOpen && !wasOpen.current && typeof document !== "undefined") {
-    restoreFocus.current = document.activeElement as HTMLElement;
+  // Keep the open-transition snapshot before descendant autofocus/layout effects.
+  // React retries this conditional state adjustment before committing children.
+  if (isOpen !== focusCapture.open) {
+    setFocusCapture({
+      element:
+        isOpen && typeof document !== "undefined"
+          ? (document.activeElement as HTMLElement)
+          : focusCapture.element,
+      open: isOpen,
+    });
   }
-
-  wasOpen.current = isOpen;
 
   return (
     <Dialog scale={scale} {...props}>
       <DialogContent
         className={cn(className)}
         finalFocus={() => {
-          if (restoreFocus.current?.isConnected === true) {
-            return restoreFocus.current;
+          if (focusCapture.element?.isConnected === true) {
+            return focusCapture.element;
           }
         }}
       >
