@@ -41,7 +41,7 @@ export const ButtonCompositionFixture = () => {
         width={8 * scale}
         height={8 * scale}
       >
-        <rect width="100%" height="100%" fill="white" />
+        <rect width="100%" height="100%" fill="var(--fixture-rich-icon-fill)" />
       </svg>,
       <span
         key="rich"

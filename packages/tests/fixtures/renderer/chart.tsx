@@ -28,7 +28,11 @@ const style = {
 
 const DesktopFixtureIcon = () => (
   <svg aria-label="Desktop icon" width="12" height="12">
-    <rect width="12" height="12" fill="green" />
+    <rect
+      width="12"
+      height="12"
+      fill="var(--fixture-chart-desktop-icon-fill)"
+    />
   </svg>
 );
 
