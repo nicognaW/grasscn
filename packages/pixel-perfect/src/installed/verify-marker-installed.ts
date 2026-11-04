@@ -44,6 +44,7 @@ const verifyMarkerCase = async (
     part: dir === "label" ? "text" : "line",
     scale: String(c.scale),
     state: c.state,
+    // oxlint-disable-next-line typescript/no-base-to-string -- Preserve the existing unconstrained legacy JSON timeMs coercion and nullish-zero fallback; current Marker producers omit this field.
     timeMs: String(c.timeMs ?? 0),
     width: String(c.width),
     x: String(c.x),
