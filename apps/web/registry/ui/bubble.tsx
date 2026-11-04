@@ -212,6 +212,7 @@ const BubbleContent = ({
   const text = plainText(content);
   const unicode = /\P{ASCII}/u.test(text);
 
+  // Font readiness belongs to the shared Unihex resource, not individual text.
   React.useLayoutEffect(() => {
     let live = true;
     setFontReady(!unicode);
@@ -233,7 +234,7 @@ const BubbleContent = ({
     return () => {
       live = false;
     };
-  }, [text, unicode]);
+  }, [unicode]);
 
   const naturalWidth = Math.max(
     0,
