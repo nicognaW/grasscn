@@ -6,12 +6,94 @@ import { PlayerList } from "@grasscn/web/ui/player-list";
 import { Trading } from "@grasscn/web/ui/trading";
 import * as React from "react";
 
+const hotbarKeyboardQuery = new URLSearchParams(window.location.search);
+
+const HotbarKeyboardFixture = () => {
+  const [value, setValue] = React.useState(
+    Number(hotbarKeyboardQuery.get("hotbarValue") ?? 0)
+  );
+
+  const [lastRequest, setLastRequest] = React.useState("");
+
+  const [disabledSlots, setDisabledSlots] = React.useState<
+    number[] | undefined
+  >(() =>
+    hotbarKeyboardQuery.has("hotbarMissingItems")
+      ? undefined
+      : (hotbarKeyboardQuery.get("hotbarDisabled") ?? "")
+          .split(",")
+          .filter((slot) => slot !== "")
+          .map(Number)
+  );
+
+  return (
+    <>
+      <button type="button">Before hotbar</button>
+      <Hotbar
+        data-testid="keyboard-hotbar"
+        items={
+          disabledSlots === undefined
+            ? undefined
+            : Array.from({ length: 9 }, (_, slot) => ({
+                disabled: disabledSlots.includes(slot),
+                id: String(slot),
+                label: `Slot ${slot + 1}`,
+              }))
+        }
+        value={value}
+        tabIndex={
+          hotbarKeyboardQuery.has("hotbarTabIndex")
+            ? Number(hotbarKeyboardQuery.get("hotbarTabIndex"))
+            : undefined
+        }
+        onValueChange={(next) => {
+          setLastRequest(String(next));
+
+          if (!hotbarKeyboardQuery.has("hotbarDecline")) {
+            setValue(next);
+          }
+        }}
+      />
+      <button type="button">After hotbar</button>
+      <button
+        type="button"
+        onClick={() => {
+          setDisabledSlots((current) => [...(current ?? []), value]);
+        }}
+      >
+        Disable selected hotbar slot
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setDisabledSlots(Array.from({ length: 9 }, (_, slot) => slot));
+        }}
+      >
+        Disable all hotbar slots
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setDisabledSlots([]);
+        }}
+      >
+        Enable all hotbar slots
+      </button>
+      <output data-testid="hotbar-request">{lastRequest}</output>
+    </>
+  );
+};
+
 export const CustomApiFixture = () => {
   const tree = React.useRef<HTMLDivElement>(null);
   const hotbar = React.useRef<HTMLDivElement>(null);
 
   const [event, setEvent] = React.useState("");
   const [cancel, setCancel] = React.useState(false);
+
+  if (hotbarKeyboardQuery.has("hotbarKeyboard")) {
+    return <HotbarKeyboardFixture />;
+  }
 
   return (
     <>
