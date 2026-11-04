@@ -1,6 +1,13 @@
 import type { GlyphProbeProvenance } from "@ppt/native/generate/glyph-atlas";
 import type { NativeInventory } from "@ppt/runtime/map-evidence";
 
+import type retainedInventory from "../../../tests/reference/catalog/native-inventory.json";
+
+/** Exact fixed catalog consumed by the authored asset generators. */
+export type RetainedNativeInventory = NativeInventory & {
+  assets: Record<keyof (typeof retainedInventory)["assets"], InventoryAsset>;
+};
+
 export type InventoryAsset = NonNullable<NativeInventory["assets"][string]>;
 
 export interface SliceBorder {

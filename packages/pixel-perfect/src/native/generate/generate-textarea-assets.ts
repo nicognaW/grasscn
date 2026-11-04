@@ -4,13 +4,12 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import type {
-  InventoryAsset,
+  RetainedNativeInventory,
   SpriteMetadata,
   SpriteSource,
   FontProvenance,
 } from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
-import type { NativeInventory } from "@ppt/runtime/map-evidence";
 
 const [directory] = process.argv.slice(2);
 
@@ -26,7 +25,7 @@ const inventoryBytes = await readFile(
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   inventoryBytes.toString("utf-8")
-) as NativeInventory;
+) as RetainedNativeInventory;
 
 const assets: Record<string, string> = {};
 const sources: Record<string, SpriteSource> = {};
@@ -47,8 +46,9 @@ const assetInputReads = await Promise.allSettled(
   )
 );
 
-for (const name of ["scroller", "scroller_background"]) {
-  const member = `assets/minecraft/textures/gui/sprites/widget/${name}.png`;
+for (const name of ["scroller", "scroller_background"] as const) {
+  const member =
+    `assets/minecraft/textures/gui/sprites/widget/${name}.png` as const;
 
   const bytesRead = assetInputReads[assetInputNames.indexOf(`${name}.png`)];
 
@@ -67,9 +67,7 @@ for (const name of ["scroller", "scroller_background"]) {
 
   const metadata = metadataRead.value;
 
-  // SAFETY: these original scroller members are present in the pinned native inventory.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-  const original = inventory.assets[member] as InventoryAsset;
+  const original = inventory.assets[member];
 
   if (
     hash(bytes) !== original.sha256 ||
