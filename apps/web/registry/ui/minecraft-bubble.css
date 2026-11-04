@@ -59,3 +59,9 @@
     align-self: flex-end;
   }
 }
+
+@layer components {
+  .mc-owned-paint-bubble-1 {
+    color: inherit;
+  }
+}

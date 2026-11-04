@@ -10,6 +10,11 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-player-preview.css";
 
+interface OwnedPlayerPreviewDimensions1 extends React.CSSProperties {
+  "--mc-z-player-preview-base-1-height"?: string;
+  "--mc-z-player-preview-base-1-width"?: string;
+}
+
 interface PlayerPreviewLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-player-preview-1-visibility": string;
 }
@@ -519,18 +524,24 @@ const PlayerPreview = ({
       data-slot="player-preview"
       data-model={resolvedModel}
       data-ready={status === "loaded"}
-      className={cn(`mc-player-preview`, className)}
+      className={cn(
+        "mc-player-preview mc-owned-base-player-preview-1",
+        className
+      )}
       tabIndex={props.tabIndex ?? 0}
       role={props.role ?? "group"}
       aria-label={
         props["aria-label"] ??
         `${username ?? skin.split("/")[1]} player preview`
       }
-      style={minecraftStyle(style, (__style) => ({
-        height: height * scale,
-        width: width * scale,
-        ...__style,
-      }))}
+      style={minecraftStyle(
+        style,
+        (__style): OwnedPlayerPreviewDimensions1 => ({
+          "--mc-z-player-preview-base-1-height": `${height * scale}px`,
+          "--mc-z-player-preview-base-1-width": `${width * scale}px`,
+          ...__style,
+        })
+      )}
       onKeyDown={(event) => {
         onKeyDown?.(event);
 

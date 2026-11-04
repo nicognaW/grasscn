@@ -8,6 +8,16 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-hud.css";
 
+interface OwnedHudDimensions1 extends React.CSSProperties {
+  "--mc-z-hud-base-1-height"?: string;
+  "--mc-z-hud-base-1-width"?: string;
+}
+
+interface OwnedHudDimensions2 extends React.CSSProperties {
+  "--mc-z-hud-base-2-height"?: string;
+  "--mc-z-hud-base-2-width"?: string;
+}
+
 interface HudLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-hud-1-height": number;
   "--mc-dynamic-hud-1-left": number;
@@ -74,10 +84,10 @@ const IconMeter = ({
       aria-valuemin={0}
       aria-valuemax={Math.min(max, limit)}
       aria-valuenow={amount}
-      className={cn(`mc-hud-meter`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        height: 9 * scale,
-        width: (count * 8 + 1) * scale,
+      className={cn("mc-hud-meter mc-owned-base-hud-1", className)}
+      style={minecraftStyle(style, (__style): OwnedHudDimensions1 => ({
+        "--mc-z-hud-base-1-height": `${9 * scale}px`,
+        "--mc-z-hud-base-1-width": `${(count * 8 + 1) * scale}px`,
         ...__style,
       }))}
     >
@@ -178,10 +188,10 @@ const ExperienceBar = ({
       aria-valuemin={0}
       aria-valuemax={1}
       aria-valuenow={progress}
-      className={cn(`mc-xp-bar`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        height: 5 * scale,
-        width: 182 * scale,
+      className={cn("mc-xp-bar mc-owned-base-hud-2", className)}
+      style={minecraftStyle(style, (__style): OwnedHudDimensions2 => ({
+        "--mc-z-hud-base-2-height": `${5 * scale}px`,
+        "--mc-z-hud-base-2-width": `${182 * scale}px`,
         ...__style,
       }))}
     >

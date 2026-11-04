@@ -10,6 +10,10 @@ import { MinecraftText } from "./minecraft-text";
 import "./minecraft-pagination.css";
 import "./minecraft-pagination-assets.css";
 
+interface OwnedPaginationDimensions1 extends React.CSSProperties {
+  "--mc-z-pagination-base-1-width"?: string;
+}
+
 interface PaginationScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -85,9 +89,9 @@ const PaginationLink = ({
       }
       scale={scale}
       size={size}
-      className={cn(`mc-pagination-link`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        width: 40 * scale,
+      className={cn("mc-pagination-link mc-owned-base-pagination-1", className)}
+      style={minecraftStyle(style, (__style): OwnedPaginationDimensions1 => ({
+        "--mc-z-pagination-base-1-width": `${40 * scale}px`,
         ...__style,
       }))}
     >

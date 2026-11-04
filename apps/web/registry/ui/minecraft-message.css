@@ -62,3 +62,12 @@
     display: inline;
   }
 }
+
+@layer components {
+  .mc-owned-paint-message-1 {
+    color: inherit;
+  }
+  .mc-owned-paint-message-2 {
+    color: inherit;
+  }
+}

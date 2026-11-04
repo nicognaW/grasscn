@@ -177,7 +177,7 @@ const CollapsibleContent = ({
           scale={scale}
           maxWidth={maxWidth ?? (wrap ? width : undefined)}
           align={align}
-          style={{ width: "100%" }}
+          className="mc-owned-paint-collapsible-1"
         >
           {children}
         </MinecraftCollapsibleText>

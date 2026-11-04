@@ -111,6 +111,9 @@ interface TradingLayoutStyle17 extends React.CSSProperties {
 
 interface TradingScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
+
+  "--mc-z-trading-base-1-height"?: string;
+  "--mc-z-trading-base-1-width"?: string;
 }
 
 interface TradeItem {
@@ -309,11 +312,11 @@ const Trading = ({
         data-slot="trading"
         role={props.role ?? "group"}
         aria-label={props["aria-label"] ?? title}
-        className={cn(`mc-trading`, className)}
+        className={cn("mc-trading mc-owned-base-trading-1", className)}
         style={minecraftStyle(style, (__style): TradingScaleStyle => ({
           "--mc-scale": scale,
-          height: 166 * scale,
-          width: 276 * scale,
+          "--mc-z-trading-base-1-height": `${166 * scale}px`,
+          "--mc-z-trading-base-1-width": `${276 * scale}px`,
           ...__style,
         }))}
       >

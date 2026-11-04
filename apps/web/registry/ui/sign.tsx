@@ -8,6 +8,11 @@ import { MinecraftSignPaint } from "./minecraft-sign-paint";
 
 import "./minecraft-sign.css";
 
+interface OwnedSignDimensions1 extends React.CSSProperties {
+  "--mc-z-sign-base-1-height"?: string;
+  "--mc-z-sign-base-1-width"?: string;
+}
+
 type SignWood =
   | "oak"
   | "spruce"
@@ -72,12 +77,12 @@ const SignBoard = ({
       data-slot={hanging ? "hanging-sign" : "sign"}
       data-wood={wood}
       data-glowing={glowing}
-      className={cn(`mc-sign`, className)}
+      className={cn("mc-sign mc-owned-base-sign-1", className)}
       role={props.role ?? "group"}
       aria-label={props["aria-label"] ?? lines.join(". ")}
-      style={minecraftStyle(style, (__style) => ({
-        height: (hanging ? 74 : 110) * scale,
-        width: 120 * scale,
+      style={minecraftStyle(style, (__style): OwnedSignDimensions1 => ({
+        "--mc-z-sign-base-1-height": `${(hanging ? 74 : 110) * scale}px`,
+        "--mc-z-sign-base-1-width": `${120 * scale}px`,
         ...__style,
       }))}
     >

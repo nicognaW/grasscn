@@ -94,3 +94,18 @@
     top: calc(var(--mc-dynamic-map-6-top) * 1px);
   }
 }
+
+@layer components {
+  .mc-owned-base-map-1 {
+    height: var(--mc-z-map-base-1-height);
+    width: var(--mc-z-map-base-1-width);
+  }
+  .mc-owned-base-map-2 {
+    border-image-repeat: repeat;
+    border-image-slice: 1 5 fill;
+    border-image-source: var(--mc-z-map-base-2-border-image-source);
+    border-image-width: var(--mc-z-map-base-2-border-image-width);
+    height: var(--mc-z-map-base-2-height);
+    width: var(--mc-z-map-base-2-width);
+  }
+}

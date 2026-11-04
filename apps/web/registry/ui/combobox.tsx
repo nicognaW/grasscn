@@ -17,6 +17,10 @@ import { Separator } from "./separator";
 import "./minecraft-menu.css";
 import "./minecraft-combobox.css";
 
+interface OwnedComboboxStyle extends React.CSSProperties {
+  "--mc-z-combobox-paint-1-width"?: string;
+}
+
 interface ComboboxLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-combobox-1-width": number;
 }
@@ -509,6 +513,10 @@ const ComboboxChipsInput = ({
 }: Primitive.Input.Props) => {
   const scale = React.useContext(MenuScaleContext);
 
+  const ownedStyle1: OwnedComboboxStyle = {
+    "--mc-z-combobox-paint-1-width": `${80 * scale}px`,
+  };
+
   return (
     <Primitive.Input
       data-slot="combobox-chip-input"
@@ -516,8 +524,8 @@ const ComboboxChipsInput = ({
         render ?? (
           <Input
             scale={scale}
-            className="[border:0]"
-            style={{ background: "transparent", width: 80 * scale }}
+            className="mc-owned-paint-combobox-1 [border:0]"
+            style={ownedStyle1}
           />
         )
       }

@@ -245,7 +245,7 @@ const BubbleContent = ({
     <MinecraftChatText
       scale={scale}
       maxWidth={width}
-      style={{ color: "inherit" }}
+      className="mc-owned-paint-bubble-1"
     >
       {content}
     </MinecraftChatText>

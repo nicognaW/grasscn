@@ -94,7 +94,7 @@ const TableText = ({
       scale={scale}
       maxWidth={maxTextWidth}
       align={textAlign}
-      style={{ width: "100%" }}
+      className="mc-owned-paint-table-1"
     >
       {value}
     </MinecraftDisclosureText>

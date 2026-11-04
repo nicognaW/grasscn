@@ -11,6 +11,11 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-map.css";
 
+interface OwnedMapDimensions1 extends React.CSSProperties {
+  "--mc-z-map-base-1-height"?: string;
+  "--mc-z-map-base-1-width"?: string;
+}
+
 interface MapLayoutStyle1 extends React.CSSProperties {
   "--mc-dynamic-map-1-height": number;
   "--mc-dynamic-map-1-width": number;
@@ -47,6 +52,11 @@ interface MapLayoutStyle6 extends React.CSSProperties {
 
 interface MapScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
+
+  "--mc-z-map-base-2-border-image-source"?: string;
+  "--mc-z-map-base-2-border-image-width"?: string;
+  "--mc-z-map-base-2-height"?: string;
+  "--mc-z-map-base-2-width"?: string;
 }
 
 type MapDecoration = keyof typeof adventureAssets extends infer K
@@ -206,10 +216,10 @@ const MinecraftMap = ({
       data-slot="minecraft-map"
       role={props.role ?? "group"}
       aria-label={props["aria-label"] ?? "Map"}
-      className={cn(`mc-map`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        height: 128 * scale,
-        width: 128 * scale,
+      className={cn("mc-map mc-owned-base-map-1", className)}
+      style={minecraftStyle(style, (__style): OwnedMapDimensions1 => ({
+        "--mc-z-map-base-1-height": `${128 * scale}px`,
+        "--mc-z-map-base-1-width": `${128 * scale}px`,
         ...__style,
       }))}
       onClick={(event) => {
@@ -396,15 +406,13 @@ const LocatorBar = ({
     data-slot="locator-bar"
     role={props.role ?? "group"}
     aria-label={props["aria-label"] ?? "Locator bar"}
-    className={cn(`mc-locator-bar`, className)}
+    className={cn("mc-locator-bar mc-owned-base-map-2", className)}
     style={minecraftStyle(style, (__style): MapScaleStyle => ({
       "--mc-scale": scale,
-      borderImageRepeat: "repeat",
-      borderImageSlice: "1 5 fill",
-      borderImageSource: `url("${adventureAssets["gui/sprites/hud/locator_bar_background"].src}")`,
-      borderImageWidth: `${scale}px ${5 * scale}px`,
-      height: 5 * scale,
-      width: 182 * scale,
+      "--mc-z-map-base-2-border-image-source": `url("${adventureAssets["gui/sprites/hud/locator_bar_background"].src}")`,
+      "--mc-z-map-base-2-border-image-width": `${scale}px ${5 * scale}px`,
+      "--mc-z-map-base-2-height": `${5 * scale}px`,
+      "--mc-z-map-base-2-width": `${182 * scale}px`,
       ...__style,
     }))}
   >

@@ -93,3 +93,10 @@
     --mc-shadow: #3f3f00;
   }
 }
+
+@layer components {
+  .mc-owned-paint-combobox-1 {
+    background: transparent;
+    width: var(--mc-z-combobox-paint-1-width);
+  }
+}

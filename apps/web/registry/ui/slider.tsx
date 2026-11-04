@@ -197,9 +197,8 @@ const Slider = ({
       >
         <SliderPrimitive.Control className="absolute inset-0">
           <SliderPrimitive.Track
-            style={{ inset: 0, position: "absolute" }}
             data-slot="slider-track"
-            className="mc-slider-track"
+            className="mc-slider-track mc-owned-paint-slider-1"
           >
             <MinecraftSurface
               sprite={

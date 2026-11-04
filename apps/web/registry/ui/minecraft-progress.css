@@ -46,3 +46,10 @@
     visibility: hidden;
   }
 }
+
+@layer components {
+  .mc-owned-paint-progress-1 {
+    height: 100%;
+    width: var(--mc-z-progress-paint-1-width);
+  }
+}

@@ -31,6 +31,9 @@ interface HotbarLayoutStyle4 extends React.CSSProperties {
 
 interface HotbarScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
+
+  "--mc-z-hotbar-base-1-height"?: string;
+  "--mc-z-hotbar-base-1-width"?: string;
 }
 
 interface HotbarItem {
@@ -207,11 +210,11 @@ const Hotbar = ({
       role="toolbar"
       aria-label={props["aria-label"] ?? "Hotbar"}
       data-slot="hotbar"
-      className={cn(`mc-hotbar`, className)}
+      className={cn("mc-hotbar mc-owned-base-hotbar-1", className)}
       style={minecraftStyle(style, (__style): HotbarScaleStyle => ({
         "--mc-scale": scale,
-        height: 23 * scale,
-        width: 184 * scale,
+        "--mc-z-hotbar-base-1-height": `${23 * scale}px`,
+        "--mc-z-hotbar-base-1-width": `${184 * scale}px`,
         ...__style,
       }))}
       onKeyDown={(event) => {

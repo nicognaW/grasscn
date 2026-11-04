@@ -146,7 +146,7 @@ const ChatChildren = ({
   const scale = React.useContext(MessageScale);
 
   return isChatInline(children) ? (
-    <MinecraftChatText scale={scale} style={{ color: "inherit" }}>
+    <MinecraftChatText scale={scale} className="mc-owned-paint-message-1">
       {children}
     </MinecraftChatText>
   ) : (
@@ -200,7 +200,7 @@ const MessageContent = ({
         <MinecraftChatText
           scale={scale}
           maxWidth={(width ?? 0) > 0 ? width : undefined}
-          style={{ color: "inherit" }}
+          className="mc-owned-paint-message-2"
         >
           {author ? `<${author}> ${children}` : children}
         </MinecraftChatText>

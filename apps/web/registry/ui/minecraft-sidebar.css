@@ -233,3 +233,16 @@
     }
   }
 }
+
+@layer components {
+  .mc-owned-base-sidebar-1 {
+    position: absolute;
+    right: var(--mc-z-sidebar-base-1-right);
+    top: var(--mc-z-sidebar-base-1-top);
+  }
+  .mc-owned-base-sidebar-2 {
+    position: absolute;
+    right: var(--mc-z-sidebar-base-2-right);
+    top: var(--mc-z-sidebar-base-2-top);
+  }
+}
