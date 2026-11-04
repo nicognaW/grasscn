@@ -77,10 +77,10 @@ export const InputGroupFixture = () => {
           id="subject"
           maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
           align={p.get("align") === "center" ? "center" : "left"}
-          className="fixture-geometry-height fixture-geometry-width"
+          className="fixture-geometry-height"
           style={{
             "--fixture-height": `${Number(p.get("height") ?? 9) * scale}px`,
-            "--fixture-width": `${width * scale}px`,
+            width: width * scale,
           }}
           data-subject="true"
         >

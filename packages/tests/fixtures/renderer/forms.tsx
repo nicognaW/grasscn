@@ -42,7 +42,7 @@ export const FormsFixture = () => {
     align:
       q.get("align") === "center" ? ("center" as const) : ("left" as const),
     className:
-      "fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width",
+      "fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y",
     "data-subject": "true",
     id: "subject",
     maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
@@ -52,7 +52,7 @@ export const FormsFixture = () => {
       "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
 
       "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
-      "--fixture-width": `${Number(q.get("width") ?? 200) * scale}px`,
+      width: Number(q.get("width") ?? 200) * scale,
     },
   };
 
