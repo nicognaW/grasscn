@@ -448,10 +448,10 @@ const PlayerPreview = ({
   } | null>(null);
 
   const current = rotation ?? pose;
-  const latestFrame = React.useRef({ width, height, scale, pose: current });
+  const latestFrame = React.useRef({ height, pose: current, scale, width });
 
   React.useLayoutEffect(() => {
-    latestFrame.current = { width, height, scale, pose: current };
+    latestFrame.current = { height, pose: current, scale, width };
   }, [width, height, scale, current]);
 
   const update = (next: PlayerRotation) => {
@@ -542,6 +542,7 @@ const PlayerPreview = ({
       pitch: current.pitch,
       yaw: current.yaw,
     });
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Image status commits a newly created renderer; repaint it even when size and pose are unchanged.
   }, [width, height, scale, current.pitch, current.yaw, status]);
 
   return (

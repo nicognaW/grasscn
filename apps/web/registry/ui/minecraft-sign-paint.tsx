@@ -34,6 +34,39 @@ const load = function load(src: string) {
   return promise;
 };
 
+/** Own target sizing, output pixels and scratch context for one sign paint. */
+const createSignRasterSurfaces = function createSignRasterSurfaces(
+  canvas: HTMLCanvasElement,
+  scale: number,
+  hanging: boolean
+) {
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) {
+    throw new Error(
+      "Minecraft sign paint 2D canvas context could not be created"
+    );
+  }
+
+  const width = 120 * scale;
+  const height = (hanging ? 74 : 110) * scale;
+
+  canvas.width = width;
+  canvas.height = height;
+
+  const output = ctx.createImageData(width, height);
+  const scratch = document.createElement("canvas");
+  const sc = scratch.getContext("2d");
+
+  if (!sc) {
+    throw new Error(
+      "Minecraft sign paint 2D canvas context could not be created"
+    );
+  }
+
+  return { ctx, height, output, sc, scratch, width };
+};
+
 export const MinecraftSignPaint = ({
   src,
   lines,
@@ -97,29 +130,8 @@ export const MinecraftSignPaint = ({
         return;
       }
 
-      const ctx = canvas.getContext("2d");
-
-      if (!ctx) {
-        throw new Error(
-          "Minecraft sign paint 2D canvas context could not be created"
-        );
-      }
-
-      const width = 120 * scale;
-      const height = (hanging ? 74 : 110) * scale;
-
-      canvas.width = width;
-      canvas.height = height;
-
-      const output = ctx.createImageData(width, height);
-      const scratch = document.createElement("canvas");
-      const sc = scratch.getContext("2d");
-
-      if (!sc) {
-        throw new Error(
-          "Minecraft sign paint 2D canvas context could not be created"
-        );
-      }
+      const { ctx, height, output, sc, scratch, width } =
+        createSignRasterSurfaces(canvas, scale, hanging);
 
       const f = Math.fround;
 

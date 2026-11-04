@@ -355,6 +355,38 @@ export const ChartProfilerSector = (props: PieSectorShapeProps) => (
   <ProfilerSectorGeometry {...props} />
 );
 
+/** Own the mask and one-pixel color planes for one target chart canvas. */
+const createChartRasterSurfaces = function createChartRasterSurfaces(
+  node: HTMLCanvasElement
+) {
+  const scratch = document.createElement("canvas");
+  scratch.width = node.width;
+  scratch.height = node.height;
+
+  const mask = scratch.getContext("2d");
+
+  if (!mask) {
+    throw new Error(
+      "Minecraft chart context 2D canvas context could not be created"
+    );
+  }
+
+  const colorCanvas = document.createElement("canvas");
+
+  colorCanvas.height = 1;
+  colorCanvas.width = 1;
+
+  const colorContext = colorCanvas.getContext("2d");
+
+  if (!colorContext) {
+    throw new Error(
+      "Minecraft chart context 2D canvas context could not be created"
+    );
+  }
+
+  return { colorContext, mask, scratch };
+};
+
 /** Quantize Recharts' rendered SVG geometry; Recharts retains every data and layout API. */
 export const ChartPixelSurface = ({
   background = "#202020",
@@ -429,30 +461,7 @@ export const ChartPixelSurface = ({
     node.height = Math.max(1, Math.floor(height / scale));
     ctx.fillStyle = background;
     ctx.fillRect(0, 0, node.width, node.height);
-    const scratch = document.createElement("canvas");
-    scratch.width = node.width;
-    scratch.height = node.height;
-
-    const mask = scratch.getContext("2d");
-
-    if (!mask) {
-      throw new Error(
-        "Minecraft chart context 2D canvas context could not be created"
-      );
-    }
-
-    const colorCanvas = document.createElement("canvas");
-
-    colorCanvas.height = 1;
-    colorCanvas.width = 1;
-
-    const colorContext = colorCanvas.getContext("2d");
-
-    if (!colorContext) {
-      throw new Error(
-        "Minecraft chart context 2D canvas context could not be created"
-      );
-    }
+    const { colorContext, mask, scratch } = createChartRasterSurfaces(node);
 
     const colors = new Map<string, { ink: string; alpha: number }>();
 
