@@ -18,6 +18,9 @@ import * as React from "react";
 
 import "./native-reference.css";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
 interface CalendarReferenceStyle extends React.CSSProperties {
   "--reference-height": string;
   "--reference-padding"?: string;
@@ -27,7 +30,6 @@ interface CalendarReferenceStyle extends React.CSSProperties {
 }
 
 export const CalendarFixture = () => {
-  const q = new URLSearchParams(location.search);
   const component = q.get("component") ?? "calendar";
   const part = q.get("part") ?? "cell";
 
@@ -94,7 +96,7 @@ export const CalendarFixture = () => {
       cancelAnimationFrame(frame);
       document.documentElement.classList.remove("native-reference-calendar");
     };
-  }, [component, part, scale, width, height, x, y, state, label]);
+  }, [part, scale, width, height, x, y]);
 
   if (q.get("native") === "1" && part.startsWith("trigger")) {
     // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.

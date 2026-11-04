@@ -16,8 +16,10 @@ import { MinecraftProse } from "@grasscn/web/ui/minecraft-prose";
 import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
 export const FormsFixture = () => {
-  const q = new URLSearchParams(location.search);
   const component = q.get("component") ?? "form";
   const native = q.has("native");
   const part = q.get("part") ?? "label";

@@ -12,6 +12,9 @@ import * as React from "react";
 
 import "./native-reference.css";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
 interface NativeCompositionReferenceStyle extends React.CSSProperties {
   "--mc-pixel": string;
   "--mc-scale": number;
@@ -23,7 +26,6 @@ interface NativeCompositionReferenceStyle extends React.CSSProperties {
 }
 
 export const NativeTextCompositionsFixture = () => {
-  const q = new URLSearchParams(location.search);
   const component = q.get("component") ?? q.get("part") ?? "code-block";
 
   // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.

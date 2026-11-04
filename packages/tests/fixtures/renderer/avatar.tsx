@@ -9,6 +9,9 @@ import {
 import type { MinecraftAvatarSkin } from "@grasscn/web/ui/avatar";
 import * as React from "react";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
 declare global {
   interface Window {
     avatarImageRef?: HTMLImageElement | null;
@@ -16,8 +19,6 @@ declare global {
 }
 
 export const AvatarFixture = () => {
-  const q = new URLSearchParams(location.search);
-
   // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
   const scale =
     // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.

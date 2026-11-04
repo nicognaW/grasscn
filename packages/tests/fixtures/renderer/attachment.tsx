@@ -11,9 +11,10 @@ import {
 } from "@grasscn/web/ui/attachment";
 import * as React from "react";
 
-export const AttachmentFixture = () => {
-  const q = new URLSearchParams(location.search);
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
 
+export const AttachmentFixture = () => {
   // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
   const scale =
     // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
