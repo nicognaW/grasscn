@@ -71,7 +71,8 @@ test("Header star button shows the glinting nether star before the lamp display"
   const box = await star.boundingBox();
   expect([box?.width, box?.height]).toEqual([32, 32]);
 
-  // The star comes first, then the count display when there is one.
+  // The star comes first, then the GitHub label, then the count display when
+  // there is one.
   const order = await button.evaluate((node): (string | undefined)[] =>
     [...node.querySelectorAll<HTMLElement>("[data-slot]")].map(
       (element) => element.dataset.slot
@@ -80,8 +81,8 @@ test("Header star button shows the glinting nether star before the lamp display"
 
   expect(order.filter((slot) => slot !== "star-button-star")).toEqual(
     order.includes("redstone-lamp-display")
-      ? ["nether-star", "redstone-lamp-display"]
-      : ["nether-star"]
+      ? ["nether-star", "star-button-label", "redstone-lamp-display"]
+      : ["nether-star", "star-button-label"]
   );
 
   // The glint moves with time: two readouts of the canvas differ.
