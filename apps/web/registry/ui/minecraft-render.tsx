@@ -123,10 +123,10 @@ export const MinecraftRender = function MinecraftRender<
   as?: T;
   render?: MinecraftRenderProp;
 }) {
-  return useRender({
+  return useRender<Record<string, never>, Element>({
     defaultTagName: as ?? "div",
     props: mergeProps({}, props),
-    ref: ref as React.Ref<HTMLElement>,
+    ref,
     render,
   });
 };
