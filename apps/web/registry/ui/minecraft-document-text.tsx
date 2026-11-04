@@ -122,6 +122,10 @@ const MinecraftDocumentText = ({
   const [height, setHeight] = React.useState(9);
 
   React.useEffect(() => {
+    // SAFETY: React attaches this private, unkeyed <canvas> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLCanvasElement capture.
+    const canvas = ref.current as HTMLCanvasElement;
+
     let live = true;
     setReady(false);
 
@@ -137,7 +141,6 @@ const MinecraftDocumentText = ({
         return;
       }
 
-      const canvas = ref.current!;
       const lines = wrap ? documentLines(text, width) : [text];
 
       canvas.width = width * scale;

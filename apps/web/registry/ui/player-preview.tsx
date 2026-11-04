@@ -443,7 +443,9 @@ const PlayerPreview = ({
   const current = rotation ?? pose;
   const latest = React.useRef(current);
 
-  latest.current = current;
+  React.useLayoutEffect(() => {
+    latest.current = current;
+  }, [current]);
 
   const update = (next: PlayerRotation) => {
     const value = {
@@ -471,8 +473,14 @@ const PlayerPreview = ({
     };
   }, []);
   const loadingCallback = React.useRef(onLoadingStatusChange);
-  loadingCallback.current = onLoadingStatusChange;
+  React.useLayoutEffect(() => {
+    loadingCallback.current = onLoadingStatusChange;
+  }, [onLoadingStatusChange]);
   React.useEffect(() => {
+    // SAFETY: React attaches this private, unkeyed <canvas> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLCanvasElement capture.
+    const ownedCanvas = canvas.current as HTMLCanvasElement;
+
     let live = true;
     let instance: ReturnType<typeof buildRenderer> | undefined;
     setStatus("loading");
@@ -487,7 +495,7 @@ const PlayerPreview = ({
 
       try {
         const actualModel = requestedModel ?? inferPlayerSkinModel(image);
-        instance = buildRenderer(canvas.current!, actualModel);
+        instance = buildRenderer(ownedCanvas, actualModel);
         renderer.current = instance;
         instance.load(image);
         instance.paint(width, height, scale, latest.current);

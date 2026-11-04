@@ -80,6 +80,10 @@ export const MinecraftUnicodeLabel = ({
   const [bitmap, setBitmap] = React.useState(false);
 
   React.useLayoutEffect(() => {
+    // SAFETY: React attaches this private, unkeyed <span> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLSpanElement capture.
+    const node = root.current as HTMLSpanElement;
+
     let disposed = false;
     let frame = 0;
     let signature = "";
@@ -121,7 +125,6 @@ export const MinecraftUnicodeLabel = ({
           return;
         }
 
-        const node = root.current!;
         const style = getComputedStyle(node);
         const scale = Number(style.getPropertyValue("--mc-scale")) || 2;
 

@@ -84,7 +84,10 @@ const InputOTPSlot = ({
   const node = React.useRef<HTMLInputElement>(null);
   const active = React.useRef(false);
 
-  active.current = slot?.isActive && context?.isFocused;
+  const isActive = slot?.isActive && context?.isFocused;
+  React.useLayoutEffect(() => {
+    active.current = isActive;
+  }, [isActive]);
   React.useEffect(
     () =>
       node.current
@@ -102,7 +105,7 @@ const InputOTPSlot = ({
   return (
     <div
       data-slot="input-otp-slot"
-      data-active={active.current}
+      data-active={isActive}
       className={cn(`mc-otp-slot`, className)}
       style={minecraftStyle(style, (__style): InputOtpScaleStyle => ({
         "--mc-scale": scale,

@@ -433,18 +433,25 @@ export const ChartPixelSurface = ({
         return null;
       }
 
-      if (!colors.has(value)) {
-        colorContext.clearRect(0, 0, 1, 1);
-        colorContext.fillStyle = value;
-        colorContext.fillRect(0, 0, 1, 1);
-        const c = colorContext.getImageData(0, 0, 1, 1).data;
-        colors.set(value, {
-          alpha: c[3] / 255,
-          ink: `rgb(${c[0]},${c[1]},${c[2]})`,
-        });
+      const cached = colors.get(value);
+
+      if (cached) {
+        return cached;
       }
 
-      return colors.get(value)!;
+      colorContext.clearRect(0, 0, 1, 1);
+      colorContext.fillStyle = value;
+      colorContext.fillRect(0, 0, 1, 1);
+      const c = colorContext.getImageData(0, 0, 1, 1).data;
+
+      const parsed = {
+        alpha: c[3] / 255,
+        ink: `rgb(${c[0]},${c[1]},${c[2]})`,
+      };
+
+      colors.set(value, parsed);
+
+      return parsed;
     };
 
     const selector =

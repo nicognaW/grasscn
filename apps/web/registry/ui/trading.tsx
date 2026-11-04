@@ -292,7 +292,7 @@ const Trading = ({
       return;
     }
 
-    const bounds = rail.current!.getBoundingClientRect();
+    const bounds = event.currentTarget.getBoundingClientRect();
 
     const f = Math.fround;
     const y = f((event.clientY - bounds.top) / scale + 18);

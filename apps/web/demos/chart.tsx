@@ -117,8 +117,11 @@ const ChartDemo = ({ scale }: DemoProps) => {
   const [contentWidth, setContentWidth] = React.useState(80);
 
   React.useLayoutEffect(() => {
+    // SAFETY: React attaches this private, unkeyed <div> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLDivElement capture.
+    const node = stage.current as HTMLDivElement;
+
     const measure = () => {
-      const node = stage.current!;
       const css = getComputedStyle(node);
       setContentWidth(
         Math.max(

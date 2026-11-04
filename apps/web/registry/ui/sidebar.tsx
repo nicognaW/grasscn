@@ -139,19 +139,19 @@ const SidebarProvider = ({
   const [openMobile, setOpenMobile] = React.useState(false);
 
   const open = controlled ?? internal;
-  const latest = React.useRef(open);
-
-  latest.current = open;
+  const pendingOpen = React.useRef(internal);
 
   const setOpen = React.useCallback<
     React.Dispatch<React.SetStateAction<boolean>>
   >(
     (update) => {
       const value =
-        typeof update === "function" ? update(latest.current) : update;
+        typeof update === "function"
+          ? update(controlled ?? pendingOpen.current)
+          : update;
 
       if (controlled === undefined) {
-        latest.current = value;
+        pendingOpen.current = value;
         setInternal(value);
       }
 
