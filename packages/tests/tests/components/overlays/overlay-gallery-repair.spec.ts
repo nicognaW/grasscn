@@ -97,16 +97,26 @@ for (const scale of [2]) {
       })
       .toBe(true);
 
-    for (const name of ["Yes", "No"]) {
-      const r = await dialog
-        .getByRole("button", { exact: true, name })
-        .boundingBox();
+    const readOnlyItems19 = ["Yes", "No"];
 
-      expectNotNull(r, "Missing required bounding box: r");
+    const readOnlyResults19 = await Promise.allSettled(
+      readOnlyItems19.map(async (name) => {
+        const r = await dialog
+          .getByRole("button", { exact: true, name })
+          .boundingBox();
 
-      expect(r.x).toBeGreaterThanOrEqual(0);
-      expect(r.x + r.width).toBeLessThanOrEqual(390);
-      expect(r.y + r.height).toBeLessThanOrEqual(844);
+        expectNotNull(r, "Missing required bounding box: r");
+
+        expect(r.x).toBeGreaterThanOrEqual(0);
+        expect(r.x + r.width).toBeLessThanOrEqual(390);
+        expect(r.y + r.height).toBeLessThanOrEqual(844);
+      })
+    );
+
+    for (const readOnlyResult19 of readOnlyResults19) {
+      if (readOnlyResult19.status === "rejected") {
+        throw readOnlyResult19.reason;
+      }
     }
 
     if (scale > 1) {

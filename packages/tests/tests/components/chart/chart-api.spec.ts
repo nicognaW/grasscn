@@ -67,8 +67,18 @@ test("ChartLegendContent preserves labels, custom icons and CJK bitmap readiness
     legend.locator("[data-mc-label-layout-ready]").first()
   ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-  for (const text of await legend.locator("[data-mc-label-ready]").all()) {
-    await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems4 = await legend.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults4 = await Promise.allSettled(
+    readOnlyItems4.map(async (text) => {
+      await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult4 of readOnlyResults4) {
+    if (readOnlyResult4.status === "rejected") {
+      throw readOnlyResult4.reason;
+    }
   }
 
   await page.goto("/?component=chart&hideIcon=1");

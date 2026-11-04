@@ -29,10 +29,23 @@ for (const component of ["sheet", "drawer"]) {
     await expect(panel).toBeVisible();
     await expect(panel).toHaveAccessibleDescription("Settings 第二行");
 
-    for (const text of await panel
+    const readOnlyItems18 = await panel
       .locator("[data-mc-label-layout-ready]")
-      .all()) {
-      await expect(text).toHaveAttribute("data-mc-label-layout-ready", "true");
+      .all();
+
+    const readOnlyResults18 = await Promise.allSettled(
+      readOnlyItems18.map(async (text) => {
+        await expect(text).toHaveAttribute(
+          "data-mc-label-layout-ready",
+          "true"
+        );
+      })
+    );
+
+    for (const readOnlyResult18 of readOnlyResults18) {
+      if (readOnlyResult18.status === "rejected") {
+        throw readOnlyResult18.reason;
+      }
     }
 
     const input = panel.getByRole("textbox", {

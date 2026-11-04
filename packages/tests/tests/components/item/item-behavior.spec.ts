@@ -17,16 +17,36 @@ const ready = async function ready(page: Page) {
     page.locator("[data-subject] [data-slot=item-content]")
   ).toHaveAttribute("data-mc-item-content-ready", "true");
 
-  for (const text of await page
+  const readOnlyItems16 = await page
     .locator("[data-subject] [data-mc-label-layout-ready]")
-    .all()) {
-    await expect(text).toHaveAttribute("data-mc-label-layout-ready", "true");
+    .all();
+
+  const readOnlyResults16 = await Promise.allSettled(
+    readOnlyItems16.map(async (text) => {
+      await expect(text).toHaveAttribute("data-mc-label-layout-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult16 of readOnlyResults16) {
+    if (readOnlyResult16.status === "rejected") {
+      throw readOnlyResult16.reason;
+    }
   }
 
-  for (const text of await page
+  const readOnlyItems17 = await page
     .locator("[data-subject] [data-mc-label-ready]")
-    .all()) {
-    await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+    .all();
+
+  const readOnlyResults17 = await Promise.allSettled(
+    readOnlyItems17.map(async (text) => {
+      await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult17 of readOnlyResults17) {
+    if (readOnlyResult17.status === "rejected") {
+      throw readOnlyResult17.reason;
+    }
   }
 };
 

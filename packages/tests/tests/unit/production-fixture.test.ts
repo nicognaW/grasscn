@@ -53,9 +53,19 @@ test("production fixture serves bundle assets and skin inputs without exposing o
     assert.equal(image.headers.get("content-type"), "image/png");
     assert.equal(await image.text(), "dream texture");
 
-    for (const name of ["private.txt", "..%2Foutside.txt", "missing.html"]) {
-      const awaitedUnitRead2 = await fetch(`${host.url}/${name}`);
-      assert.equal(awaitedUnitRead2.status, 404);
+    const readOnlyItems24 = ["private.txt", "..%2Foutside.txt", "missing.html"];
+
+    const readOnlyResults24 = await Promise.allSettled(
+      readOnlyItems24.map(async (name) => {
+        const awaitedUnitRead2 = await fetch(`${host.url}/${name}`);
+        assert.equal(awaitedUnitRead2.status, 404);
+      })
+    );
+
+    for (const readOnlyResult24 of readOnlyResults24) {
+      if (readOnlyResult24.status === "rejected") {
+        throw readOnlyResult24.reason;
+      }
     }
   } finally {
     await host.close();

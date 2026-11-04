@@ -157,13 +157,23 @@ test("Button manual installation exposes complete files and defers large resourc
 
   await expect(files.getByRole("button")).toHaveCount(item.files.length);
 
-  for (const file of item.files) {
-    await expect(
-      files.getByRole("button", {
-        exact: true,
-        name: file.path.split("/").at(-1),
-      })
-    ).toBeAttached();
+  const readOnlyItems25 = item.files;
+
+  const readOnlyResults25 = await Promise.allSettled(
+    readOnlyItems25.map(async (file) => {
+      await expect(
+        files.getByRole("button", {
+          exact: true,
+          name: file.path.split("/").at(-1),
+        })
+      ).toBeAttached();
+    })
+  );
+
+  for (const readOnlyResult25 of readOnlyResults25) {
+    if (readOnlyResult25.status === "rejected") {
+      throw readOnlyResult25.reason;
+    }
   }
 
   await page.evaluate(() => {

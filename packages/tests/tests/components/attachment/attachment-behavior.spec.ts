@@ -72,12 +72,22 @@ test("Attachment grouping, orientation, states and CJK text preserve the composi
     page.locator("[data-slot=attachment-title]").first()
   ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-  for (const line of await page
+  const readOnlyItems1 = await page
     .locator("[data-slot=attachment-title]")
     .first()
     .locator("[data-mc-label-ready]")
-    .all()) {
-    await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+    .all();
+
+  const readOnlyResults1 = await Promise.allSettled(
+    readOnlyItems1.map(async (line) => {
+      await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult1 of readOnlyResults1) {
+    if (readOnlyResult1.status === "rejected") {
+      throw readOnlyResult1.reason;
+    }
   }
 
   await expect(

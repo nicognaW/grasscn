@@ -19,12 +19,22 @@ test("Trace preserves eight slots, status colors, controlled keyboard disclosure
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("DIV");
 
-  for (const [state, color] of [
+  const readOnlyItems22 = [
     ["running", "rgb(255, 255, 255)"],
     ["error", "rgb(255, 85, 85)"],
     ["pending", "rgb(85, 85, 85)"],
-  ]) {
-    await expect(page.getByTestId(state)).toHaveCSS("color", color);
+  ];
+
+  const readOnlyResults22 = await Promise.allSettled(
+    readOnlyItems22.map(async ([state, color]) => {
+      await expect(page.getByTestId(state)).toHaveCSS("color", color);
+    })
+  );
+
+  for (const readOnlyResult22 of readOnlyResults22) {
+    if (readOnlyResult22.status === "rejected") {
+      throw readOnlyResult22.reason;
+    }
   }
 
   await trigger.focus();

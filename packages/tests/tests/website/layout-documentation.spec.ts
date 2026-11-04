@@ -46,8 +46,18 @@ test("layout documentation exposes its actual examples and complete source", asy
     // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     await page.goto(`${origin}/docs/components/${slug}`);
 
-    for (const id of ["preview", "usage", "composition", "installation"]) {
-      await expect(page.locator(`h2#${id}`)).toBeVisible();
+    const readOnlyItems26 = ["preview", "usage", "composition", "installation"];
+
+    const readOnlyResults26 = await Promise.allSettled(
+      readOnlyItems26.map(async (id) => {
+        await expect(page.locator(`h2#${id}`)).toBeVisible();
+      })
+    );
+
+    for (const readOnlyResult26 of readOnlyResults26) {
+      if (readOnlyResult26.status === "rejected") {
+        throw readOnlyResult26.reason;
+      }
     }
 
     const example = page.locator(".documentation-example").first();

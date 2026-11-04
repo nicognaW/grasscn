@@ -48,10 +48,20 @@ for (const scale of [2]) {
         await expect(chart).toHaveAttribute("data-chart-type", type);
 
         // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
-        for (const control of await stage.getByRole("combobox").all()) {
-          const b = await control.boundingBox();
-          expect(b!.x).toBeGreaterThanOrEqual(0);
-          expect(b!.x + b!.width).toBeLessThanOrEqual(mobile ? 390 : 1440);
+        const readOnlyItems3 = await stage.getByRole("combobox").all();
+
+        const readOnlyResults3 = await Promise.allSettled(
+          readOnlyItems3.map(async (control) => {
+            const b = await control.boundingBox();
+            expect(b!.x).toBeGreaterThanOrEqual(0);
+            expect(b!.x + b!.width).toBeLessThanOrEqual(mobile ? 390 : 1440);
+          })
+        );
+
+        for (const readOnlyResult3 of readOnlyResults3) {
+          if (readOnlyResult3.status === "rejected") {
+            throw readOnlyResult3.reason;
+          }
         }
 
         const canvas = chart.locator("canvas");

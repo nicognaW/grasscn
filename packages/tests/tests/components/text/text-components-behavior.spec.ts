@@ -38,8 +38,20 @@ const verifyBadgeComposition = async (page: Page, suffix: string) => {
     await page.locator("#read-ref").click();
     await expect(page.locator("#tag")).toHaveText("A");
   } else if (suffix.includes("世界")) {
-    for (const line of await subject.locator("[data-mc-label-ready]").all()) {
-      await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+    const readOnlyItems23 = await subject
+      .locator("[data-mc-label-ready]")
+      .all();
+
+    const readOnlyResults23 = await Promise.allSettled(
+      readOnlyItems23.map(async (line) => {
+        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    for (const readOnlyResult23 of readOnlyResults23) {
+      if (readOnlyResult23.status === "rejected") {
+        throw readOnlyResult23.reason;
+      }
     }
   }
 };
