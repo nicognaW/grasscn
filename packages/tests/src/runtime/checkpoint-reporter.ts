@@ -30,6 +30,9 @@ const hasCheckpointDirectory = (
   directory: string | undefined
 ): directory is string => (directory?.length ?? 0) > 0;
 
+const sourceFileHash = (file: string) =>
+  createHash("sha256").update(readFileSync(file)).digest("hex");
+
 export default class CheckpointReporter implements Reporter {
   directory: string | undefined;
   sources: Map<string, string>;
@@ -108,7 +111,7 @@ export default class CheckpointReporter implements Reporter {
 
       for (const file of files) {
         if (!this.sources.has(file)) {
-          this.sources.set(file, this.hash(file));
+          this.sources.set(file, sourceFileHash(file));
         }
       }
 
@@ -156,13 +159,10 @@ export default class CheckpointReporter implements Reporter {
       return retained;
     }
 
-    const hash = this.hash(file);
+    const hash = sourceFileHash(file);
     this.sources.set(file, hash);
 
     return hash;
-  }
-  hash(file: string) {
-    return createHash("sha256").update(readFileSync(file)).digest("hex");
   }
   onTestEnd(test: TestCase, result: TestResult) {
     if (!hasCheckpointDirectory(this.directory)) {
@@ -177,7 +177,7 @@ export default class CheckpointReporter implements Reporter {
     for (const source of declaration.sourceFiles) {
       const file = path.resolve(this.sourceRoot, source.file);
 
-      if (this.hash(file) !== source.sha256) {
+      if (sourceFileHash(file) !== source.sha256) {
         this.changed.add(file);
         changed = true;
       }

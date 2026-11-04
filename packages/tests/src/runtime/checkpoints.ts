@@ -4,6 +4,7 @@ import path from "node:path";
 
 import { normalizeCasePath } from "@grasscn/tests/case-paths";
 import type {
+  BrowserVerification,
   CheckpointCandidate,
   CheckpointCatalogue,
   CheckpointDeclaration,
@@ -43,6 +44,55 @@ const same = (
   b: string[] | CheckpointSource[] | undefined
 ) => JSON.stringify(a) === JSON.stringify(b);
 
+const resolveCheckpointSourceRoot = (
+  recordedSourceRoot: string,
+  recordedTestRoot: string,
+  owner: string,
+  file: string,
+  spec: string,
+  allowedSourceRoot: string
+) => {
+  const sourceRoot = path.resolve(recordedSourceRoot);
+
+  if (
+    normalizeCasePath(
+      path
+        .relative(recordedTestRoot, path.resolve(sourceRoot, owner))
+        .replaceAll(path.sep, "/")
+    ) !== file
+  ) {
+    return null;
+  }
+
+  const testRelative = normalizeCasePath(
+    path.relative(sourceRoot, recordedTestRoot).replaceAll(path.sep, "/")
+  );
+
+  let currentTestRoot = spec;
+
+  for (const _segment of file.split("/")) {
+    currentTestRoot = path.dirname(currentTestRoot);
+  }
+
+  const currentSourceRoot = path.resolve(
+    currentTestRoot,
+    ...testRelative.split("/").map(() => "..")
+  );
+
+  const allowedRoot = path.resolve(allowedSourceRoot);
+  const outside = path.relative(allowedRoot, currentSourceRoot);
+
+  if (
+    outside === ".." ||
+    outside.startsWith(`..${path.sep}`) ||
+    path.isAbsolute(outside)
+  ) {
+    return null;
+  }
+
+  return currentSourceRoot;
+};
+
 const sourceMatches = async function sourceMatches(
   expected: CheckpointCatalogue,
   declaration: CheckpointDeclaration,
@@ -76,43 +126,19 @@ const sourceMatches = async function sourceMatches(
   }
 
   try {
-    const sourceRoot = path.resolve(expected.sourceRoot);
     const owner = normalizeCasePath(declaration.file);
     const definition = normalizeCasePath(declaration.definitionFile);
 
-    if (
-      normalizeCasePath(
-        path
-          .relative(expected.rootDir, path.resolve(sourceRoot, owner))
-          .replaceAll(path.sep, "/")
-      ) !== file
-    ) {
-      return false;
-    }
-
-    const testRelative = normalizeCasePath(
-      path.relative(sourceRoot, expected.rootDir).replaceAll(path.sep, "/")
+    const currentSourceRoot = resolveCheckpointSourceRoot(
+      expected.sourceRoot,
+      expected.rootDir,
+      owner,
+      file,
+      spec,
+      allowedSourceRoot
     );
 
-    let currentTestRoot = spec;
-
-    for (const _segment of file.split("/")) {
-      currentTestRoot = path.dirname(currentTestRoot);
-    }
-
-    const currentSourceRoot = path.resolve(
-      currentTestRoot,
-      ...testRelative.split("/").map(() => "..")
-    );
-
-    const allowedRoot = path.resolve(allowedSourceRoot);
-    const outside = path.relative(allowedRoot, currentSourceRoot);
-
-    if (
-      outside === ".." ||
-      outside.startsWith(`..${path.sep}`) ||
-      path.isAbsolute(outside)
-    ) {
+    if (currentSourceRoot === null) {
       return false;
     }
 
@@ -145,14 +171,82 @@ const sourceMatches = async function sourceMatches(
   }
 };
 
+const verificationArtifactsIntact = async (
+  verification: BrowserVerification,
+  run: string
+) => {
+  let intact = true;
+
+  for (const artifact of verification.artifacts ?? []) {
+    const output = path.resolve(verification.outputDirectory);
+    const relative = path.relative(run, output);
+
+    if (
+      relative === ".." ||
+      relative.startsWith(`..${path.sep}`) ||
+      path.isAbsolute(relative) ||
+      path.basename(artifact.file) !== artifact.file
+    ) {
+      intact = false;
+      break;
+    }
+
+    try {
+      if (
+        digest(await readFile(path.join(output, artifact.file))) !==
+        artifact.pngSha256
+      ) {
+        intact = false;
+      }
+    } catch {
+      intact = false;
+    }
+  }
+
+  return intact;
+};
+
+const readCheckpointJournal = async (directory: string) => {
+  // SAFETY: checkpoint metadata is written by CheckpointReporter; existing schema/source checks below remain authoritative.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Retain original v2/v3 metadata and every existing integrity guard.
+  const expected = JSON.parse(
+    await readFile(path.join(directory, "expected.json"), "utf-8")
+  ) as CheckpointCatalogue;
+
+  if (
+    ![2, 3].includes(expected.schemaVersion) ||
+    !expected.rootDir ||
+    !Array.isArray(expected.tests)
+  ) {
+    return null;
+  }
+
+  const raw = await readFile(path.join(directory, "results.jsonl"), "utf-8");
+
+  const lines = raw.split("\n");
+
+  if (!raw.endsWith("\n")) {
+    lines.pop();
+  }
+
+  const records = lines.filter(Boolean).map(
+    (line) =>
+      // SAFETY: complete journal lines follow CheckpointReporter results; malformed JSON still rejects the candidate.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing per-record integrity checks remain unchanged below.
+      JSON.parse(line) as CheckpointResult
+  );
+
+  return { expected, records };
+};
+
 /** The caller must already match the entire source tree and runtime environment. */
 export const reusableBrowserTests = async function reusableBrowserTests(
   candidates: CheckpointCandidate[],
-  file: string,
+  requestedFile: string,
   root: string,
   sourceRoot = root
 ) {
-  file = normalizeCasePath(file);
+  const file = normalizeCasePath(requestedFile);
 
   const tests = new Map<string, ReusableBrowserTest>();
   const spec = path.resolve(root, "tests", file);
@@ -173,37 +267,14 @@ export const reusableBrowserTests = async function reusableBrowserTests(
     let records: CheckpointResult[];
 
     try {
-      // SAFETY: checkpoint metadata is written by CheckpointReporter; existing schema/source checks below remain authoritative.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Retain original v2/v3 metadata and every existing integrity guard.
-      expected = JSON.parse(
-        await readFile(path.join(directory, "expected.json"), "utf-8")
-      ) as CheckpointCatalogue;
+      const journal = await readCheckpointJournal(directory);
 
-      if (
-        ![2, 3].includes(expected.schemaVersion) ||
-        !expected.rootDir ||
-        !Array.isArray(expected.tests)
-      ) {
+      if (journal === null) {
         tests.clear();
         continue;
       }
 
-      const raw = await readFile(
-        path.join(directory, "results.jsonl"),
-        "utf-8"
-      );
-
-      const lines = raw.split("\n");
-
-      if (!raw.endsWith("\n")) {
-        lines.pop();
-      }
-
-      records = lines.filter(Boolean).map((line) => {
-        // SAFETY: complete journal lines follow CheckpointReporter results; malformed JSON still rejects the candidate.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing per-record integrity checks remain unchanged below.
-        return JSON.parse(line) as CheckpointResult;
-      });
+      ({ expected, records } = journal);
     } catch (error) {
       if (
         !(error instanceof Error && "code" in error && error.code === "ENOENT")
@@ -257,37 +328,10 @@ export const reusableBrowserTests = async function reusableBrowserTests(
         continue;
       }
 
-      let intact = true;
-
-      if (record.verification) {
-        for (const artifact of record.verification.artifacts ?? []) {
-          const output = path.resolve(record.verification.outputDirectory);
-          const relative = path.relative(run, output);
-
-          if (
-            relative === ".." ||
-            relative.startsWith(`..${path.sep}`) ||
-            path.isAbsolute(relative) ||
-            path.basename(artifact.file) !== artifact.file
-          ) {
-            intact = false;
-            break;
-          }
-
-          try {
-            if (
-              digest(await readFile(path.join(output, artifact.file))) !==
-              artifact.pngSha256
-            ) {
-              intact = false;
-            }
-          } catch {
-            intact = false;
-          }
-        }
-      }
-
-      if (!intact) {
+      if (
+        record.verification &&
+        !(await verificationArtifactsIntact(record.verification, run))
+      ) {
         tests.delete(record.id);
         continue;
       }

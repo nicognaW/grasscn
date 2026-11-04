@@ -9,10 +9,43 @@ import { testRoot as root } from "@grasscn/tests/paths";
 
 const output = path.join(root, "test-results");
 
+interface PrimitiveDependencyManifest {
+  dependencies?: Record<string, string>;
+  optionalDependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+  type?: string;
+}
+
+interface PrimitiveRegistryFile {
+  content?: string;
+  path?: string;
+}
+
+interface PrimitiveRegistryItem {
+  dependencies?: string[];
+  files?: PrimitiveRegistryFile[];
+  name?: string;
+}
+
+interface PrimitiveLockfile {
+  lockfileVersion: number;
+  packages?: Record<string, (string | PrimitiveDependencyManifest)[]>;
+  workspaces?: Record<string, PrimitiveDependencyManifest>;
+}
+
+interface PrimitiveRegistryPayload extends PrimitiveRegistryItem {
+  items?: PrimitiveRegistryItem[];
+}
+
+type PrimitivePolicyDocument =
+  | PrimitiveDependencyManifest
+  | PrimitiveLockfile
+  | PrimitiveRegistryPayload;
+
 interface PrimitivePolicyFixture {
   check: (...args: string[]) => SpawnSyncReturns<string>;
   directory: string;
-  json: (name: string, value: object) => Promise<void>;
+  json: (name: string, value: PrimitivePolicyDocument) => Promise<void>;
 }
 
 const fixture = async function fixture(
@@ -21,7 +54,7 @@ const fixture = async function fixture(
   await mkdir(output, { recursive: true });
   const directory = await mkdtemp(path.join(output, "primitives-"));
 
-  const json = async (name: string, value: object) => {
+  const json = async (name: string, value: PrimitivePolicyDocument) => {
     await writeFile(path.join(directory, name), JSON.stringify(value));
   };
 

@@ -269,7 +269,8 @@ export const readPreparedConsumerProjects = async ({
   /** @type {Map<string, PreparedProject>} */
   const observedByFramework = new Map<string, PreparedProject>();
 
-  const reversedObserved = rawObserved.slice();
+  const observedEntries: unknown[] = rawObserved;
+  const reversedObserved = [...observedEntries];
   reversedObserved.reverse();
 
   for (const entry of reversedObserved) {
