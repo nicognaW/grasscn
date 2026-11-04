@@ -53,7 +53,9 @@ const AttachmentDemo = ({ scale }: DemoProps) => {
         </Button>
       </div>
       <div className="demo-stage min-h-25" data-stage="attachment">
-        {!removed ? (
+        {removed ? (
+          <span>NO ARCHIVE SELECTED</span>
+        ) : (
           <Attachment
             scale={scale}
             selected={opened > 0}
@@ -83,8 +85,6 @@ const AttachmentDemo = ({ scale }: DemoProps) => {
               </AttachmentAction>
             </AttachmentActions>
           </Attachment>
-        ) : (
-          <span>NO ARCHIVE SELECTED</span>
         )}
       </div>
       <div className="demo-result">

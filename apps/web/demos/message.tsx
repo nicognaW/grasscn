@@ -25,12 +25,12 @@ interface ForwardedLayoutStyle4 extends IntrinsicLayoutCSSProperties {
   "--mc-forwarded-demos-message-4-width": `${number}px`;
 }
 
-type Line = {
+interface Line {
   author?: string;
   messageId: string;
   text: string;
   system?: boolean;
-};
+}
 
 const history: Line[] = [
   {

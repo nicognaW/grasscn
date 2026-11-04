@@ -42,12 +42,12 @@ interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-examples-overlays-message-scroller-example-1-padding-top": `${number}px`;
 }
 
-type Line = {
+interface Line {
   author?: string;
   messageId: string;
   text: string;
   system?: boolean;
-};
+}
 
 const history: Line[] = [
   {

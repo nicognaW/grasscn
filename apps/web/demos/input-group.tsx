@@ -80,7 +80,7 @@ const InputGroupDemo = ({ scale }: DemoProps) => {
             <InputGroupText>Chat</InputGroupText>
             <InputGroupButton
               onClick={() => {
-                setSent(name + ": " + message);
+                setSent(`${name}: ${message}`);
               }}
               className="w-(--input-group-send-width)"
               style={sendButtonStyle}

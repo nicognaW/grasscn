@@ -205,7 +205,7 @@ const SidebarDemo = ({ scale }: DemoProps) => {
                     scale={scale}
                     className="w-full"
                     onClick={() => {
-                      setAction("Play requested: " + selected);
+                      setAction(`Play requested: ${selected}`);
                     }}
                   >
                     Play world

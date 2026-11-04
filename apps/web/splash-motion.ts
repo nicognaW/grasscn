@@ -1,7 +1,7 @@
 // Direct port of SplashRenderer.extractRenderState and Mth.sin from the pinned JAR.
 // JOML 1.10.8's default (FASTMATH=false) rotation is rounded to native single-precision values.
 const f = Math.fround;
-const sineIndexScale = 10430.378350470453;
+const sineIndexScale = 10_430.378350470453;
 const angle = f(-0.34906584);
 const rotationCos = f(Math.cos(angle));
 const rotationSin = f(Math.sin(angle));
@@ -11,7 +11,7 @@ export const splashMotion = function splashMotion(
   textWidth: number
 ) {
   const phase = f(f(f(Math.trunc(timeMillis) % 1000) / f(1000)) * f(6.2831855));
-  const index = Math.trunc(phase * sineIndexScale) & 65535;
+  const index = Math.trunc(phase * sineIndexScale) & 65_535;
   // Compute the selected entry of the vanilla 65,536-entry float sine table.
   const sine = f(Math.sin(index / sineIndexScale));
   const pulse = f(f(1.8) - Math.abs(f(sine * f(0.1))));

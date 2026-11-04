@@ -231,7 +231,7 @@ const MinecraftCollapsibleText = ({
           {lines.map((line, index) => {
             let content: React.ReactNode = line;
 
-            if (/^[\u0020-\u007e]*$/u.test(line)) {
+            if (/^[\u0020-\u007E]*$/u.test(line)) {
               content = <MinecraftText>{line}</MinecraftText>;
             } else if (supported) {
               content = (
