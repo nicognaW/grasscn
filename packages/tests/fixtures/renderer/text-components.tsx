@@ -258,7 +258,12 @@ const TextComponentsFixture = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink render={<a href="#world" />}>
+            <BreadcrumbLink
+              render={
+                // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- BreadcrumbLink supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+                <a href="#world" />
+              }
+            >
               {"World"}
             </BreadcrumbLink>
           </BreadcrumbItem>

@@ -118,7 +118,12 @@ export const AvatarFixture = () => {
         </Avatar>
         <AvatarGroupCount>+2</AvatarGroupCount>
       </AvatarGroup>
-      <Avatar render={<a href="#player" id="linked" />}>
+      <Avatar
+        render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Avatar supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href="#player" id="linked" />
+        }
+      >
         <AvatarFallback>
           <strong>Player</strong>
         </AvatarFallback>

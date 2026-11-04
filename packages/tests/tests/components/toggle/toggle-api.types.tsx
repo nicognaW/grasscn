@@ -7,7 +7,10 @@ const groupRef = React.createRef<HTMLDivElement>();
 
 const toggle = (
   <Toggle
-    render={<button type="button" />}
+    render={
+      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Toggle supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+      <button type="button" />
+    }
     ref={itemRef}
     scale={3}
     pressed

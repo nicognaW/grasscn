@@ -45,7 +45,12 @@ export const ToggleGroupFixture = () => {
 
   const items = (native ? ["one"] : ["one", "two", "three"]).map((v, index) => (
     <ToggleGroupItem
-      render={p.has("asChild") ? <a href={`#${v}`} /> : undefined}
+      render={
+        p.has("asChild") ? (
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ToggleGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href={`#${v}`} />
+        ) : undefined
+      }
       key={v}
       value={v}
       id={index === 0 ? "subject" : `item-${v}`}

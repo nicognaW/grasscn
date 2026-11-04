@@ -63,6 +63,7 @@ export const MarkerFixture = () => {
     <>
       <Marker
         render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Marker supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
           <a
             href="#marker"
             id="linked"

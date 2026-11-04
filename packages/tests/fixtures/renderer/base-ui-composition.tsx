@@ -63,11 +63,21 @@ export const BaseUICompositionFixture = () => {
         <Field.Label>Inherited field</Field.Label>
         <Input aria-label="Inherited field" defaultValue="Hello 世界" />
       </Field.Root>
-      <ButtonGroupText render={<a href="#group" />}>
+      <ButtonGroupText
+        render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ButtonGroupText supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href="#group" />
+        }
+      >
         Composed group text
       </ButtonGroupText>
       <SidebarProvider>
-        <SidebarGroupLabel render={<a href="#sidebar" />}>
+        <SidebarGroupLabel
+          render={
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- SidebarGroupLabel supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+            <a href="#sidebar" />
+          }
+        >
           Composed sidebar label
         </SidebarGroupLabel>
         <SidebarMenuSubButton
