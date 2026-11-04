@@ -30,6 +30,20 @@ const SliderTrackArtwork = ({
   ...props
 }: React.ComponentProps<"div">) => <div {...props} />;
 
+const sliderHighlights = (
+  disabled: React.ComponentProps<typeof SliderPrimitive.Root>["disabled"],
+  focused: boolean,
+  editing: boolean,
+  hovered: boolean
+) => {
+  const highlightTrack = !(disabled ?? false) && focused && !editing;
+
+  const highlightHandle =
+    !(disabled ?? false) && (hovered || (focused && editing));
+
+  return { highlightHandle, highlightTrack };
+};
+
 const Slider = ({
   className,
   defaultValue,
@@ -108,10 +122,13 @@ const Slider = ({
   const [focused, setFocused] = React.useState(false);
   const [hovered, setHovered] = React.useState(false);
   const pressed = React.useRef(false);
-  const highlightTrack = !(disabled ?? false) && focused && !editing;
 
-  const highlightHandle =
-    !(disabled ?? false) && (hovered || (focused && editing));
+  const { highlightHandle, highlightTrack } = sliderHighlights(
+    disabled,
+    focused,
+    editing,
+    hovered
+  );
 
   return (
     <BaseDirectionProvider direction={dir}>

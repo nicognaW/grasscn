@@ -837,6 +837,25 @@ type SidebarMenuButtonProps = SidebarControlProps & {
   tooltip?: string | MinecraftProps<typeof TooltipContent>;
 };
 
+const sidebarMenuTooltipContent = (
+  tooltip: SidebarMenuButtonProps["tooltip"],
+  scale: Scale,
+  state: SidebarState["state"],
+  isMobile: SidebarState["isMobile"]
+) => {
+  const info = typeof tooltip === "string" ? { children: tooltip } : tooltip;
+
+  return (
+    <TooltipContent
+      side="right"
+      align="center"
+      scale={scale}
+      hidden={state !== "collapsed" || isMobile}
+      {...info}
+    />
+  );
+};
+
 const SidebarMenuButton = ({
   className,
   render,
@@ -896,18 +915,10 @@ const SidebarMenuButton = ({
     return button;
   }
 
-  const info = typeof tooltip === "string" ? { children: tooltip } : tooltip;
-
   return (
     <Tooltip>
       {button}
-      <TooltipContent
-        side="right"
-        align="center"
-        scale={scale}
-        hidden={state !== "collapsed" || isMobile}
-        {...info}
-      />
+      {sidebarMenuTooltipContent(tooltip, scale, state, isMobile)}
     </Tooltip>
   );
 };

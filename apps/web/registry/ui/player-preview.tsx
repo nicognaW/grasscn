@@ -392,6 +392,19 @@ const buildRenderer = function buildRenderer(
   };
 };
 
+const requestedPlayerModel = (
+  skin: MinecraftAvatarSkin,
+  src: PlayerPreviewProps["src"],
+  username: PlayerPreviewProps["username"],
+  model: PlayerPreviewProps["model"]
+) =>
+  model ??
+  (!(src ?? "") && !(username ?? "")
+    ? skin.startsWith("slim/")
+      ? "slim"
+      : "wide"
+    : undefined);
+
 const PlayerPreview = ({
   skin = "wide/steve",
   src,
@@ -413,13 +426,7 @@ const PlayerPreview = ({
   onPointerCancel,
   ...props
 }: PlayerPreviewProps) => {
-  const requestedModel =
-    model ??
-    (!(src ?? "") && !(username ?? "")
-      ? skin.startsWith("slim/")
-        ? "slim"
-        : "wide"
-      : undefined);
+  const requestedModel = requestedPlayerModel(skin, src, username, model);
 
   const [resolvedModel, setResolvedModel] = React.useState<
     "wide" | "slim" | undefined
