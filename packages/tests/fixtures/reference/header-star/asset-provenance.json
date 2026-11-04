@@ -1,0 +1,341 @@
+{
+  "assetIndex": {
+    "id": "32",
+    "note": "Pinned by the local index bytes, whose SHA-1 matches Mojang's published value. The older repository record 957fc71aae47d44099285bfd32ea9f2896bfff1b1ff7b3f6a74abdbe0ffb8973 does not match these bytes; every object SHA-1 it lists does.",
+    "sha1": "56a546ca1ea01548679d6b4269363d0c6697a454",
+    "sha256": "4cfec4ed901a85a5d532ff210cf4f1ff35e954b5d1c71c3ad2fa7b96b826c2d1"
+  },
+  "embeddedBytes": "unchanged",
+  "files": [
+    {
+      "export": "redstoneLampTextures",
+      "height": 16,
+      "key": [
+        "lit"
+      ],
+      "member": "assets/minecraft/textures/block/redstone_lamp_on.png",
+      "module": "registry/ui/minecraft-redstone-lamp-assets.ts",
+      "sha256": "7a1179a50639369b828de16d24c37102be44d81d73205a0950e4549f2c53c899",
+      "size": 188,
+      "width": 16
+    },
+    {
+      "export": "redstoneLampTextures",
+      "height": 16,
+      "key": [
+        "unlit"
+      ],
+      "member": "assets/minecraft/textures/block/redstone_lamp.png",
+      "module": "registry/ui/minecraft-redstone-lamp-assets.ts",
+      "sha256": "60d43bc037630fdf7a770f31e10a59312609f084fcabe73725030036611de84a",
+      "size": 202,
+      "width": 16
+    },
+    {
+      "export": "netherStarTextures",
+      "height": 16,
+      "key": [
+        "item"
+      ],
+      "member": "assets/minecraft/textures/item/nether_star.png",
+      "module": "lib/minecraft-nether-star-assets.ts",
+      "sha256": "1378e77a3ff64e219a3fa7d5812340a4b4c96c7b2066b728df1940a4f61b89f1",
+      "size": 186,
+      "width": 16
+    },
+    {
+      "export": "netherStarTextures",
+      "height": 128,
+      "key": [
+        "glint"
+      ],
+      "member": "assets/minecraft/textures/misc/enchanted_glint_item.png",
+      "module": "lib/minecraft-nether-star-assets.ts",
+      "sha256": "23831803126a3b75e74deeb5a5e39df9a26c94872d20533f444eb5072b417fb5",
+      "size": 12310,
+      "width": 128,
+      "metadata": {
+        "texture": {
+          "blur": true
+        }
+      },
+      "metadataMember": "assets/minecraft/textures/misc/enchanted_glint_item.png.mcmeta",
+      "metadataSha256": "a4f5e3c3235dd128ee6d2ce397217e8c77037dbcf641aaa5bef65824e3b4b168"
+    },
+    {
+      "export": "fireworkTextures",
+      "height": 16,
+      "key": [
+        "rocket"
+      ],
+      "member": "assets/minecraft/textures/item/firework_rocket.png",
+      "module": "registry/ui/minecraft-firework-assets.ts",
+      "sha256": "661a46e05516554d8ab2df91bd34dfa18dec1728e77a2d369270c429dedc208b",
+      "size": 164,
+      "width": 16
+    },
+    {
+      "export": "fireworkTextures",
+      "height": 32,
+      "key": [
+        "flash"
+      ],
+      "member": "assets/minecraft/textures/particle/flash.png",
+      "module": "registry/ui/minecraft-firework-assets.ts",
+      "sha256": "fb43dd3a354fb84f31b00a1d286a4dcd8beeb5daba75986ca1a5d18594500f30",
+      "size": 774,
+      "width": 32
+    },
+    {
+      "export": "fireworkTextures",
+      "height": 8,
+      "key": [
+        "spark",
+        0
+      ],
+      "member": "assets/minecraft/textures/particle/spark_0.png",
+      "module": "registry/ui/minecraft-firework-assets.ts",
+      "sha256": "be91dc02f3de33dd060b4d2d4e4987bd0853c4721b8db94c86f72e8d111ed9d9",
+      "size": 78,
+      "width": 8
+    },
+    {
+      "export": "fireworkTextures",
+      "height": 8,
+      "key": [
+        "spark",
+        1
+      ],
+      "member": "assets/minecraft/textures/particle/spark_1.png",
+      "module": "registry/ui/minecraft-firework-assets.ts",
+      "sha256": "35dae570734d89e8d5c5ea6beacc61014da7b51103f3692ec89684f8f5b09078",
+      "size": 85,
+      "width": 8
+    },
+    {
+      "export": "fireworkTextures",
+      "height": 8,
+      "key": [
+        "spark",
+        2
+      ],
+      "member": "assets/minecraft/textures/particle/spark_2.png",
+      "module": "registry/ui/minecraft-firework-assets.ts",
+      "sha256": "159017b370afa4e9cdca2fe4c95cb650d13b3743baa43ed49ca750564a83a3b8",
+      "size": 90,
+      "width": 8
+    },
+    {
+      "export": "fireworkTextures",
+      "height": 8,
+      "key": [
+        "spark",
+        3
+      ],
+      "member": "assets/minecraft/textures/particle/spark_3.png",
+      "module": "registry/ui/minecraft-firework-assets.ts",
+      "sha256": "05a3815096149e8f65ed07957cbcc9abf607675393021b998a8e87d5d9bdac8b",
+      "size": 91,
+      "width": 8
+    },
+    {
+      "export": "fireworkTextures",
+      "height": 8,
+      "key": [
+        "spark",
+        4
+      ],
+      "member": "assets/minecraft/textures/particle/spark_4.png",
+      "module": "registry/ui/minecraft-firework-assets.ts",
+      "sha256": "0b381533495f88ff21da0f99f3afd86c3608f9b181a3500fd4543abea97c7e52",
+      "size": 97,
+      "width": 8
+    },
+    {
+      "export": "fireworkTextures",
+      "height": 8,
+      "key": [
+        "spark",
+        5
+      ],
+      "member": "assets/minecraft/textures/particle/spark_5.png",
+      "module": "registry/ui/minecraft-firework-assets.ts",
+      "sha256": "f9d042e733a39e386d199dbd90e7578f545fe09efd15ab5b1b5d3037b738af97",
+      "size": 96,
+      "width": 8
+    },
+    {
+      "export": "fireworkTextures",
+      "height": 8,
+      "key": [
+        "spark",
+        6
+      ],
+      "member": "assets/minecraft/textures/particle/spark_6.png",
+      "module": "registry/ui/minecraft-firework-assets.ts",
+      "sha256": "dd4fd77518077dd6ca227c5499b3aa57c02a998cbe632245cf7680b254a5150b",
+      "size": 94,
+      "width": 8
+    },
+    {
+      "export": "fireworkTextures",
+      "height": 8,
+      "key": [
+        "spark",
+        7
+      ],
+      "member": "assets/minecraft/textures/particle/spark_7.png",
+      "module": "registry/ui/minecraft-firework-assets.ts",
+      "sha256": "f9d042e733a39e386d199dbd90e7578f545fe09efd15ab5b1b5d3037b738af97",
+      "size": 96,
+      "width": 8
+    },
+    {
+      "export": "fireworkSounds",
+      "key": [
+        "launch",
+        0
+      ],
+      "module": "registry/ui/minecraft-firework-sound-assets.ts",
+      "resource": "minecraft/sounds/fireworks/launch1.ogg",
+      "sha1": "9d1ba828a27b2a6b5be6b97e4d6b554db885cb08",
+      "sha256": "25dc188ddaeab5589f532e53e47d5882681a47a8c7a76078765cf670aacbda8e",
+      "size": 16487
+    },
+    {
+      "export": "fireworkSounds",
+      "key": [
+        "blast",
+        0
+      ],
+      "module": "registry/ui/minecraft-firework-sound-assets.ts",
+      "resource": "minecraft/sounds/fireworks/blast1.ogg",
+      "sha1": "71d9ad77da5febc1b2b7bd5916ca730c2b9ab6a8",
+      "sha256": "7edcecfa2b6204c30a9629e001c16fe195d673b254f7d6c13ec601a13aca4d3b",
+      "size": 11824
+    },
+    {
+      "export": "fireworkSounds",
+      "key": [
+        "largeBlast",
+        0
+      ],
+      "module": "registry/ui/minecraft-firework-sound-assets.ts",
+      "resource": "minecraft/sounds/fireworks/largeblast1.ogg",
+      "sha1": "62b284afd1c5805c6300c41e80c3f27e1994b2e3",
+      "sha256": "b11a1fef5e3f341fa5b93e561093d7a1536d612bbd9fb0a64c34482376cb656b",
+      "size": 19489
+    },
+    {
+      "export": "fireworkSounds",
+      "key": [
+        "twinkle",
+        0
+      ],
+      "module": "registry/ui/minecraft-firework-sound-assets.ts",
+      "resource": "minecraft/sounds/fireworks/twinkle1.ogg",
+      "sha1": "cfa1c4fcdb9c70534b54249266f877ad2fac7a9f",
+      "sha256": "03f558b5afbbdcd16e13b50c33dd39f5f997b054b7699f1b2347d4f091acbce2",
+      "size": 15378
+    }
+  ],
+  "generator": "packages/pixel-perfect/src/native/generate/generate-header-star-assets.ts",
+  "minecraftVersion": "26.2",
+  "soundDefinitions": {
+    "resource": "minecraft/sounds.json",
+    "sha1": "9ac006d5537ed0fa4a7bcd1eccfc505155847686",
+    "sha256": "84fe52cea79f67441ac00df61836e15d5c9ae98c406cebba557213b80f59c3b5",
+    "size": 626160
+  },
+  "soundEvents": {
+    "entity.firework_rocket.launch": {
+      "definition": {
+        "sounds": [
+          "fireworks/launch1"
+        ],
+        "subtitle": "subtitles.entity.firework_rocket.launch"
+      },
+      "key": "launch",
+      "variants": [
+        {
+          "attenuationDistance": 16,
+          "name": "fireworks/launch1",
+          "pitch": 1,
+          "preload": false,
+          "resource": "minecraft/sounds/fireworks/launch1.ogg",
+          "stream": false,
+          "type": "file",
+          "volume": 1,
+          "weight": 1
+        }
+      ]
+    },
+    "entity.firework_rocket.blast": {
+      "definition": {
+        "sounds": [
+          "fireworks/blast1"
+        ],
+        "subtitle": "subtitles.entity.firework_rocket.blast"
+      },
+      "key": "blast",
+      "variants": [
+        {
+          "attenuationDistance": 16,
+          "name": "fireworks/blast1",
+          "pitch": 1,
+          "preload": false,
+          "resource": "minecraft/sounds/fireworks/blast1.ogg",
+          "stream": false,
+          "type": "file",
+          "volume": 1,
+          "weight": 1
+        }
+      ]
+    },
+    "entity.firework_rocket.large_blast": {
+      "definition": {
+        "sounds": [
+          "fireworks/largeblast1"
+        ],
+        "subtitle": "subtitles.entity.firework_rocket.blast"
+      },
+      "key": "largeBlast",
+      "variants": [
+        {
+          "attenuationDistance": 16,
+          "name": "fireworks/largeblast1",
+          "pitch": 1,
+          "preload": false,
+          "resource": "minecraft/sounds/fireworks/largeblast1.ogg",
+          "stream": false,
+          "type": "file",
+          "volume": 1,
+          "weight": 1
+        }
+      ]
+    },
+    "entity.firework_rocket.twinkle": {
+      "definition": {
+        "sounds": [
+          "fireworks/twinkle1"
+        ],
+        "subtitle": "subtitles.entity.firework_rocket.twinkle"
+      },
+      "key": "twinkle",
+      "variants": [
+        {
+          "attenuationDistance": 16,
+          "name": "fireworks/twinkle1",
+          "pitch": 1,
+          "preload": false,
+          "resource": "minecraft/sounds/fireworks/twinkle1.ogg",
+          "stream": false,
+          "type": "file",
+          "volume": 1,
+          "weight": 1
+        }
+      ]
+    }
+  },
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
+}

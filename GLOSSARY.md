@@ -6,7 +6,7 @@ A pixel-perfect port of the unmodified Minecraft interface, provided as a shadcn
 
 ### UI and compatibility
 
-**UI port**: A Grasscn component that reproduces a Minecraft interface element through a shadcn-compatible API and web semantics. _Avoid_: Minecraft skin
+**UI port**: A Grasscn component that reproduces a Minecraft interface element or game rendering, such as a block, item or particle effect, through a shadcn-compatible API and web semantics. _Avoid_: Minecraft skin
 
 **Web adaptation**: An interaction or composition introduced for web use that has no corresponding Minecraft behavior or layout.
 
@@ -21,6 +21,8 @@ A pixel-perfect port of the unmodified Minecraft interface, provided as a shadcn
 **Reference case**: A specific combination of content, UI state, dimensions, display conditions and time where applicable, with a known Minecraft result.
 
 **Captured reference**: An appearance or interaction result captured from Minecraft, with its game version and reference conditions identified.
+
+**Projected reference**: A captured reference produced by the Minecraft renderer with only its camera projection replaced by a declared orthographic projection. It establishes a pixel-perfect match under that projection only.
 
 **Pixel-perfect match**: Zero differing pixels between a UI port and its captured reference for a particular reference case, including textures, glyphs, spacing and text shadows. _Avoid_: Visually close
 

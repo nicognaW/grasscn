@@ -1,0 +1,48 @@
+---
+title: Fireworks
+description: A Minecraft firework rocket launched from any element, with its native sounds.
+aliases: [useFireworks, launchFireworks]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+A Minecraft firework rocket launched from any element, with its native sounds.
+
+## Preview
+
+<ComponentExample name="fireworks-example" />
+
+## Usage
+
+Call `useFireworks()` in a client component. It returns `launch(anchor)`; call it from an event handler with the element the rocket should rise from, for example `launch(event.currentTarget)`. The grasscn header launches the fireworks from the nether star in its star button.
+
+Each launch runs one firework rocket at 20 ticks per second: a one-second flight with its trail, then a large ball explosion (the game's `large_ball` shape). Launches draw into a 480x640 canvas per anchor, portaled to the page body above everything else; launches from the same anchor share its canvas, and a launch from another anchor never moves a rocket already in flight. The canvas ignores the pointer, so whatever lies beneath it stays clickable. Its launch point, 56 px above its bottom centre, sits on the bottom centre of its anchor, and the 56 px below leave room for falling sparks.
+
+Every launch uses the same fixed seed, so every rocket flies and explodes the same way. Launches that overlap run as independent instances. When the user prefers reduced motion, a launch plays the sounds on the same ticks and draws nothing.
+
+The sounds are the original launch, large blast and twinkle, played on the ticks the game plays them, at the shared master volume (`setMinecraftSoundVolume`). The launch sound plays inside the click, so browsers allow the later sounds.
+
+## Installation
+
+<Installation name="fireworks" title="Fireworks" />
+
+## Component source
+
+<ComponentSource name="fireworks" title="Fireworks" />
+
+## Interactive playground
+
+<MinecraftPlayground name="fireworks" />
+
+## Verified coverage and limitations
+
+The fireworks are a UI port of the Minecraft Java Edition 26.2 firework rocket (`FireworkRocketEntity`) and its explosion particles (`FireworkParticles`). Its references are projected references: the unmodified renderer draws the rocket, trail and explosion in an isolated world at noon under a clear sky, side-on 22 blocks away, with only the camera projection replaced by an orthographic projection at 16 window pixels per block. The port reproduces the server and client rocket, the particle simulation with every random draw at the fixed seeds, and the particle rasterization, blending and fog of that scene.
+
+Verified coverage: every tick-aligned frame (partialTick 0) from the launch to the last spark, compared within the geometry mask of the native frame with zero differing pixels at DPR 1. The frames at the sound-event ticks (the launch at tick 1, the large blast at tick 26 and the twinkle at tick 42) are what the launch button and the header show. The sound ticks, pitches and volumes match the native sound record, and the embedded sounds are the original bytes.
+
+Web adaptations: placement of the launch point on the anchor; the same fixed seed for every launch; a transparent backdrop instead of the sky, so translucent pixels blend with the page instead of the sky; near sounds only, without positional attenuation or distance delay, as for a listener within 10 blocks; and sound only under `prefers-reduced-motion`.
+
+Unverified conditions: frames interpolated between ticks, device pixel ratios above 1, other seeds, other firework shapes, colours or flight durations, actual audio output, and browsers other than the tested Edge.

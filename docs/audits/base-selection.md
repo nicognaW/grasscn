@@ -49,3 +49,43 @@ The normal and PPT ownership split remains complete. The four mixed documentatio
 Two additional individual PPT mappings carry forward the final #22 default paths: the actual390px documentation240px Preview/Code strip atGUI2 on#202020, and the unchanged intrinsic176x64 header SVG's48px original grass constituent atGUI3 on#202020. Both compare actual production geometry without DOM rewrites and include exact decodedRGBA comparison plus one-pixel negative controls. The header target already has two fresh matching original-renderer launches; this relocation does not regenerate or reinterpret those bytes. The original black/white branding matrix and obsolete Slider label case remain outside Base. Composite SVG badge and whole responsive header remain web adaptations without whole-composition native identity.
 
 The catalogue therefore currently contains32 prepared Base PPT identities (the authoritative30 plus these2); this is source inventory, not an execution result or quota. Independent normal and PPT collection, meaningful normal behavior execution and explicitly selected Base PPTs must be rerun against the final source/environment. No Full PPT was executed for this adaptation. All seven earlier new native families and the `branding-header` family retain their exact relocated bytes and provenance.
+
+## Redstone Lamp display projected references (#45)
+
+`packages/pixel-perfect/tests/redstone-lamp-display/pixels.spec.ts` adds three PPTs: the corpus integrity check, the masked comparison of glyph `0` against its projected reference, and the one-pixel negative control in a temporary copy. All three are Full. Spec #42 names the display demo value `1234` as the lamp's Base mapping, and no website default path shows `0` yet; the header star count (#49) has not landed. Revisit glyph `0` when the header renders the repository's current count of `0` by default, and add `1234` as Base when #46 captures it.
+
+## Redstone Lamp display registry item (#46)
+
+The projected-reference corpus now holds 13 cases: each glyph `0`-`9` and `k` alone, plus `1234` and `12k` (glyph `0` doubles as the `0` case). `pixels.spec.ts` generates one masked comparison per case. Only `redstone lamp display 1234 matches its projected reference within the geometry mask` is Base, mapped to the website default path `/docs/components/redstone-lamp-display#interactive-playground` (the playground default value `1234`, spec #42). Every other comparison, the corpus integrity check and the one-pixel negative control remain Full. The negative control exercises the same fixture route and comparator as the Base case, so no new comparator route was added. The header star count (#49) will show `0` by default; revisit glyph `0` then.
+
+## Firework explosion projected references (#47)
+
+`packages/pixel-perfect/tests/fireworks/explosion-pixels.spec.ts` adds the corpus integrity check, one masked comparison per tick-aligned explosion frame (partialTick 0) at the fixed particle seed, and the one-pixel negative control in a temporary copy. All of them are Full. Spec #42 maps Base to firework frames at each sound-event tick (the blast at tick 2 and the twinkle at tick 18 of this corpus), but no website default path shows the fireworks yet: the header launch and the fireworks demo arrive with #52. Add those individual frames as Base, with their mappings, when #52 lands. The random source unit check (`packages/pixel-perfect/tests/unit/minecraft-random-source.test.ts`) is a harness unit check and runs in ordinary verification.
+
+## Firework rocket projected references (#48)
+
+`packages/pixel-perfect/tests/fireworks/rocket-pixels.spec.ts` adds the corpus integrity check, one masked comparison per tick-aligned frame of the whole rocket sequence (launch to last spark, partialTick 0) at the fixed seeds, and the one-pixel negative control in a temporary copy. All of them are Full. Spec #42 maps Base to firework frames at each sound-event tick; in this corpus those are the launch (tick 1), the blast (tick 26) and the twinkle (tick 42), recorded in the manifest's `sequenceTicks`. No website default path shows the fireworks yet: the header launch and the fireworks demo arrive with #52. Add those individual frames as Base, with their mappings, when #52 lands. The rocket lifetime and sequence unit check (`packages/pixel-perfect/tests/unit/minecraft-firework-rocket.test.ts`) is a harness unit check and runs in ordinary verification.
+
+## Firework sounds (#51)
+
+#51 adds no PPT. The native sound record (`packages/tests/fixtures/reference/firework-sounds/manifest.json`) confirms the sound-event ticks for the declared listener within 10 blocks of the explosion, where no distance delay applies: launch at tick 1, large_blast at tick 26, twinkle at tick 42 of the rocket sequence. The Base mappings to record when #52 adds the website default path (the header launch from the star button and the fireworks demo) are therefore these three individual cases of `packages/pixel-perfect/tests/fireworks/rocket-pixels.spec.ts`:
+
+- `firework rocket tick 1 matches its projected reference within the geometry mask` (launch sound)
+- `firework rocket tick 26 matches its projected reference within the geometry mask` (large_blast sound)
+- `firework rocket tick 42 matches its projected reference within the geometry mask` (twinkle sound)
+
+They stay Full until #52 records each with its `website-default` route. The website shows the rocket sequence, not a standalone explosion, so the #47 explosion corpus frames (ticks 2 and 18) have no website default path of their own and stay Full unless #52 shows one. Sound playback checks (`packages/tests/tests/components/fireworks/firework-sound.spec.ts`) and the native sound sequence unit check (`packages/pixel-perfect/tests/unit/minecraft-firework-sound.test.ts`) are non-PPT and harness unit checks and run in ordinary verification.
+
+## Nether star GUI item captured references (#50)
+
+`packages/pixel-perfect/tests/nether-star/glint-pixels.spec.ts` compares the header nether star UI port with ordinary captured references of the original 26.2 GUI item render at GUI scale 2 on `#202020`, at the glint times 0, 1250, 4000 and 9000 ms (two launches each, glint clock fixed by `GlintClockAgent`). Only `nether star GUI item at glint time 0 ms matches its captured reference` is Base, mapped to the website default path `/`: every page header draws the star in its star button, and spec #42 names glint time 0 as the Base case. The other glint times, the corpus integrity check and the one-pixel negative control are Full. Verified coverage is the declared glint times only; interpolated glint times between them are unverified, as the corpus manifest's `verifiedCoverage` records. The glint texture matrix unit check (`packages/pixel-perfect/tests/unit/nether-star.test.ts`) is a harness unit check and runs in ordinary verification.
+
+## Fireworks registry item and header launch (#52)
+
+#52 adds the website default path for the fireworks: the `Launch fireworks` button of `/docs/components/fireworks#interactive-playground`, and the header star button on every page, both launch the rocket sequence of the #48 corpus at its fixed seeds. The three Base mappings #51 recorded are now in `packages/pixel-perfect/src/selection/base-cases.json`, one per sound event:
+
+- `firework rocket tick 1 matches its projected reference within the geometry mask` (launch sound)
+- `firework rocket tick 26 matches its projected reference within the geometry mask` (large_blast sound)
+- `firework rocket tick 42 matches its projected reference within the geometry mask` (twinkle sound)
+
+Every other rocket frame, the rocket corpus integrity check and its negative control stay Full. The #47 explosion corpus has no website default path of its own (the website shows the rocket sequence, not a standalone explosion at 15 blocks), so all of its cases stay Full. The website draws interpolated frames between ticks and composites over a transparent backdrop; the Base cases cover the tick-aligned frames over the sky colour only, and interpolated frames remain unverified. #52 adds no PPT. The header launch, pointer transparency, overlapping launches and the reduced-motion path are non-PPT website tests in `packages/tests/tests/website/header-star-button.spec.ts`; the demo's launch is in `native-expansion-preview.spec.ts`.

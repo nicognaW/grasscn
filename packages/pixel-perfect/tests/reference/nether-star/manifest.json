@@ -1,0 +1,471 @@
+{
+  "background": "#202020",
+  "caseDefinitionSha256": "ef21db7335636c1c1915624cc1189dcc248170f4b63920d67eb240c054c47553",
+  "cases": [
+    {
+      "bounds": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "control": false,
+      "frame": {
+        "decodedRgbaSha256": "0fa3bda2d0f9e2392342ebada7793a18bc672bd3477af1ae8cdb3a5dd18cedc1",
+        "file": "frames/glint-0.png",
+        "height": 900,
+        "sha256": "e76207a35519280c13f5f51124492d2d5c973dc26d96ade0a462a079dc03a363",
+        "width": 1536
+      },
+      "glintMillis": 0,
+      "name": "glint-0",
+      "reference": {
+        "decodedRgbaSha256": "7d1bd7f2e614f1715cd8b06f69508d54f737de2aefde45f442b7536d9829f86b",
+        "file": "references/glint-0.png",
+        "height": 32,
+        "sha256": "dc57788bae98c5502dd0e4f227d8afb4bd37680c8a6263401a910c8ca01710a9",
+        "width": 32
+      }
+    },
+    {
+      "bounds": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "control": false,
+      "frame": {
+        "decodedRgbaSha256": "a90cdac3acfd4e9194c0ba703b672abbf6a78484b3e7d9d504bfb859ad84f0ec",
+        "file": "frames/glint-1250.png",
+        "height": 900,
+        "sha256": "73a3fe36670ca72d1508d33f4b20c7fd1b3f67ffb7f6eb77fe2878a2be4ea5cb",
+        "width": 1536
+      },
+      "glintMillis": 1250,
+      "name": "glint-1250",
+      "reference": {
+        "decodedRgbaSha256": "947d3392f90de11898d8c7984c25684a675f6e43a8cfd14883b1e0661546ecfd",
+        "file": "references/glint-1250.png",
+        "height": 32,
+        "sha256": "3ca71af0f0780aaeb8c35bc0ccad1e3106dbbdac4d8bff354edf8f31dea2d44c",
+        "width": 32
+      }
+    },
+    {
+      "bounds": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "control": false,
+      "frame": {
+        "decodedRgbaSha256": "704726c271aec1512aad5bbf7e4fe6ca7120255db5800d3623b32628b7e5e594",
+        "file": "frames/glint-4000.png",
+        "height": 900,
+        "sha256": "a833fabf620b3b1d158df79b05da5b1c86529f9531a04b2cfca33c7e36fe2ed4",
+        "width": 1536
+      },
+      "glintMillis": 4000,
+      "name": "glint-4000",
+      "reference": {
+        "decodedRgbaSha256": "1d3c638453de8f19bad785928476ffd0fe0006de13c51d55ab33aa8766f9fd1e",
+        "file": "references/glint-4000.png",
+        "height": 32,
+        "sha256": "a0bdb7a41286c70659d1980632ae810f54e5731b57e91ec682c7df456543fc47",
+        "width": 32
+      }
+    },
+    {
+      "bounds": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "control": false,
+      "frame": {
+        "decodedRgbaSha256": "43617aed2dcb5aa4003e7aa3468675f3e279f535988eb7b3497f15db16d35ac5",
+        "file": "frames/glint-9000.png",
+        "height": 900,
+        "sha256": "90e92789ce1ece6af27df5f06353e7c5454c3b6e34fb0a8031f53f02120ebdb2",
+        "width": 1536
+      },
+      "glintMillis": 9000,
+      "name": "glint-9000",
+      "reference": {
+        "decodedRgbaSha256": "7680392a10454a7b31bee580bedf4aa197a6686047dc83c3878538e0f970fb8d",
+        "file": "references/glint-9000.png",
+        "height": 32,
+        "sha256": "bcfde70fd98a164cb7a810f92e1203c9d73254cc698ac3318f7f5d7477fd50b5",
+        "width": 32
+      }
+    },
+    {
+      "bounds": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "control": true,
+      "frame": {
+        "decodedRgbaSha256": "5bcacd120e1c847d227ba184fbc246e594565657bae0fdf14e68b8700ffb1783",
+        "file": "frames/no-glint.png",
+        "height": 900,
+        "sha256": "c46fc5b663e8dc27d4e4e0f895adf2608145e7bf2fe91fd965d9ef2567313ac4",
+        "width": 1536
+      },
+      "glintMillis": 0,
+      "name": "no-glint",
+      "reference": {
+        "decodedRgbaSha256": "de999523c6153d25237015754b14b7b26a1f8fc042273dbc48da1a2bffae6674",
+        "file": "references/no-glint.png",
+        "height": 32,
+        "sha256": "bbb7c00a89bcc0329dad8bab2545692373a834c490d68aae8e7e5b0f52472d4f",
+        "width": 32
+      }
+    }
+  ],
+  "differenceTolerance": 0,
+  "guiScale": 2,
+  "harnessSources": [
+    {
+      "file": "source/NetherStarReferenceMain.java",
+      "sha256": "a74232884f7a952550144eeec56b66ae8b2d3a425446166e8e753e58ada3d436"
+    },
+    {
+      "file": "source/GlintClockAgent.java",
+      "sha256": "5fc117ad41002dfb66700b41a1dbab7b941e95d22623e177ab4b2814bd7cd5f9"
+    },
+    {
+      "file": "source/capture-nether-star-reference.ts.txt",
+      "sha256": "934bd6905a072cf573c71ec59ff2cf83d208bac8f324c49660d17bb84834644f"
+    },
+    {
+      "file": "source/nether-star-case.ts.txt",
+      "sha256": "da6761b689f152cefe78adae4de19c2c35e6ce0aac3c9d6d566d83da3ca0ca41"
+    }
+  ],
+  "launches": [
+    {
+      "captures": [
+        {
+          "frame": "0fa3bda2d0f9e2392342ebada7793a18bc672bd3477af1ae8cdb3a5dd18cedc1",
+          "name": "glint-0",
+          "reference": "7d1bd7f2e614f1715cd8b06f69508d54f737de2aefde45f442b7536d9829f86b"
+        },
+        {
+          "frame": "a90cdac3acfd4e9194c0ba703b672abbf6a78484b3e7d9d504bfb859ad84f0ec",
+          "name": "glint-1250",
+          "reference": "947d3392f90de11898d8c7984c25684a675f6e43a8cfd14883b1e0661546ecfd"
+        },
+        {
+          "frame": "704726c271aec1512aad5bbf7e4fe6ca7120255db5800d3623b32628b7e5e594",
+          "name": "glint-4000",
+          "reference": "1d3c638453de8f19bad785928476ffd0fe0006de13c51d55ab33aa8766f9fd1e"
+        },
+        {
+          "frame": "43617aed2dcb5aa4003e7aa3468675f3e279f535988eb7b3497f15db16d35ac5",
+          "name": "glint-9000",
+          "reference": "7680392a10454a7b31bee580bedf4aa197a6686047dc83c3878538e0f970fb8d"
+        },
+        {
+          "frame": "5bcacd120e1c847d227ba184fbc246e594565657bae0fdf14e68b8700ffb1783",
+          "name": "no-glint",
+          "reference": "de999523c6153d25237015754b14b7b26a1f8fc042273dbc48da1a2bffae6674"
+        }
+      ],
+      "name": "native-one"
+    },
+    {
+      "captures": [
+        {
+          "frame": "0fa3bda2d0f9e2392342ebada7793a18bc672bd3477af1ae8cdb3a5dd18cedc1",
+          "name": "glint-0",
+          "reference": "7d1bd7f2e614f1715cd8b06f69508d54f737de2aefde45f442b7536d9829f86b"
+        },
+        {
+          "frame": "a90cdac3acfd4e9194c0ba703b672abbf6a78484b3e7d9d504bfb859ad84f0ec",
+          "name": "glint-1250",
+          "reference": "947d3392f90de11898d8c7984c25684a675f6e43a8cfd14883b1e0661546ecfd"
+        },
+        {
+          "frame": "704726c271aec1512aad5bbf7e4fe6ca7120255db5800d3623b32628b7e5e594",
+          "name": "glint-4000",
+          "reference": "1d3c638453de8f19bad785928476ffd0fe0006de13c51d55ab33aa8766f9fd1e"
+        },
+        {
+          "frame": "43617aed2dcb5aa4003e7aa3468675f3e279f535988eb7b3497f15db16d35ac5",
+          "name": "glint-9000",
+          "reference": "7680392a10454a7b31bee580bedf4aa197a6686047dc83c3878538e0f970fb8d"
+        },
+        {
+          "frame": "5bcacd120e1c847d227ba184fbc246e594565657bae0fdf14e68b8700ffb1783",
+          "name": "no-glint",
+          "reference": "de999523c6153d25237015754b14b7b26a1f8fc042273dbc48da1a2bffae6674"
+        }
+      ],
+      "name": "native-two"
+    }
+  ],
+  "minecraftVersion": "26.2",
+  "mods": [],
+  "repeatDecodedRgbaEqual": true,
+  "resourcePacks": [],
+  "runtime": {
+    "animated": true,
+    "backend": "OpenGL",
+    "device": "llvmpipe (LLVM 20.1.2, 256 bits)",
+    "driver": "4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4",
+    "glintSpeed": 0.5,
+    "glintStrength": 0.75,
+    "glintStrengthFloatBits": 1061158912,
+    "glintTexture": {
+      "height": 128,
+      "mipLevels": 1,
+      "sampler": [
+        "LINEAR",
+        "LINEAR",
+        "REPEAT",
+        "REPEAT"
+      ],
+      "width": 128
+    },
+    "glintTextureMatrixBits": {
+      "glint-0": [
+        1090264156,
+        1068617940,
+        0,
+        0,
+        -1078865708,
+        1090264156,
+        0,
+        0,
+        0,
+        0,
+        1090519040,
+        0,
+        -2147483648,
+        0,
+        0,
+        1065353216
+      ],
+      "glint-1250": [
+        1090264156,
+        1068617940,
+        0,
+        0,
+        -1078865708,
+        1090264156,
+        0,
+        0,
+        0,
+        0,
+        1090519040,
+        0,
+        -1120260468,
+        1042983595,
+        0,
+        1065353216
+      ],
+      "glint-4000": [
+        1090264156,
+        1068617940,
+        0,
+        0,
+        -1078865708,
+        1090264156,
+        0,
+        0,
+        0,
+        0,
+        1090519040,
+        0,
+        -1105923575,
+        1057523849,
+        0,
+        1065353216
+      ],
+      "glint-9000": [
+        1090264156,
+        1068617940,
+        0,
+        0,
+        -1078865708,
+        1090264156,
+        0,
+        0,
+        0,
+        0,
+        1090519040,
+        0,
+        -1096314806,
+        1045220557,
+        0,
+        1065353216
+      ]
+    },
+    "guiScale": 2,
+    "itemAtlas": {
+      "height": 512,
+      "mipLevelCount": 1,
+      "sampler": [
+        "NEAREST",
+        "NEAREST",
+        "CLAMP_TO_EDGE",
+        "CLAMP_TO_EDGE"
+      ],
+      "spriteUvBits": [
+        1016594432,
+        1024196608,
+        1060536320,
+        1061060608
+      ],
+      "spriteX": 18,
+      "spriteY": 364,
+      "width": 1024
+    },
+    "itemsFlatLightBits": [
+      [
+        -1100751867,
+        -1104175786,
+        1064677525
+      ],
+      [
+        -1101255644,
+        -1082603126,
+        1036371287
+      ]
+    ],
+    "layers": [
+      {
+        "edgeQuads": {
+          "down": 13,
+          "east": 13,
+          "up": 13,
+          "west": 13
+        },
+        "foilType": "STANDARD",
+        "itemTransform": "ItemTransform[rotation=( 0.000E+0  0.000E+0  0.000E+0), translation=( 0.000E+0  0.000E+0  0.000E+0), scale=( 1.000E+0  1.000E+0  1.000E+0)]",
+        "localTransformBits": [
+          1065353216,
+          0,
+          0,
+          0,
+          0,
+          1065353216,
+          0,
+          0,
+          0,
+          0,
+          1065353216,
+          0,
+          0,
+          0,
+          0,
+          1065353216
+        ],
+        "quads": [
+          {
+            "direction": "south",
+            "itemRenderType": "RenderType[item_cutout:RenderSetup[layeringTransform=LayeringTransform[no_layering], textureTransform=TexturingStateShard[default_texturing], textures={Sampler0=TextureBinding[location=minecraft:textures/atlas/items.png]}, outlineProperty=affects_outline, useLightmap=true, useOverlay=true]]",
+            "layer": "CUTOUT",
+            "shade": true,
+            "sprite": "minecraft:item/nether_star",
+            "tintIndex": 0,
+            "vertices": [
+              [
+                0,
+                1065353216,
+                1057488896,
+                "4366239839796232192"
+              ],
+              [
+                0,
+                0,
+                1057488896,
+                "4366239839796756480"
+              ],
+              [
+                1065353216,
+                0,
+                1057488896,
+                "4398890937095192576"
+              ],
+              [
+                1065353216,
+                1065353216,
+                1057488896,
+                "4398890937094668288"
+              ]
+            ]
+          },
+          {
+            "direction": "north",
+            "itemRenderType": "RenderType[item_cutout:RenderSetup[layeringTransform=LayeringTransform[no_layering], textureTransform=TexturingStateShard[default_texturing], textures={Sampler0=TextureBinding[location=minecraft:textures/atlas/items.png]}, outlineProperty=affects_outline, useLightmap=true, useOverlay=true]]",
+            "layer": "CUTOUT",
+            "shade": true,
+            "sprite": "minecraft:item/nether_star",
+            "tintIndex": 0,
+            "vertices": [
+              [
+                1065353216,
+                1065353216,
+                1055916032,
+                "4398890937094668288"
+              ],
+              [
+                1065353216,
+                0,
+                1055916032,
+                "4398890937095192576"
+              ],
+              [
+                0,
+                0,
+                1055916032,
+                "4366239839796756480"
+              ],
+              [
+                0,
+                1065353216,
+                1055916032,
+                "4366239839796232192"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "usesBlockLight": false,
+    "vendor": "Mesa",
+    "window": [
+      1536,
+      900
+    ]
+  },
+  "scope": "Captured references: the original nether star GUI item at GUI scale 2 on #202020, at the declared glint times only. GlintClockAgent replaces the single Util.getMillis() call of TextureTransform.setupGlintTexturing with the case's fixed glint time; everything else is the vanilla renderer. Captured on llvmpipe under Xvfb. The no-glint case is a diagnostic control without the glint component, not a reference case.",
+  "source": "Original Minecraft GuiGraphicsExtractor.item(original NETHER_STAR holder with explicit minecraft:nether_star ITEM_MODEL and ENCHANTMENT_GLINT_OVERRIDE true, 16, 16)",
+  "sourceJar": {
+    "path": "versions/26.2/26.2.jar",
+    "sha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
+  },
+  "verifiedCoverage": {
+    "unverified": [
+      "Interpolated glint times between the captured glint times",
+      "Other GUI scales and backgrounds",
+      "DPR above 1 and CSS scaling",
+      "Other GPU drivers and browsers other than Edge"
+    ],
+    "verified": "Glint times 0, 1250, 4000, 9000 ms at GUI scale 2 on #202020, zero tolerance, DPR 1",
+    "webAdaptations": [
+      "The animated glint follows the page clock (performance.now()) instead of the game's Util.getMillis() origin"
+    ]
+  },
+  "window": {
+    "height": 900,
+    "width": 1536
+  }
+}

@@ -1,8 +1,43 @@
+// The pre-existing preview cases stay as originally written; the lint rules
+// they predate are off for this file only.
+// oxlint-disable sort-keys, typescript/no-non-null-assertion, anti-slop/require-readable-spacing
 import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@grasscn/tests/test";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"
 ).replace(/\/$/u, "");
+
+// The launch button is the fireworks' website default path: the rocket
+// rises from the button's bottom centre, and the canvas goes after the last
+// spark.
+const launchFromPlayground = async (page: Page) => {
+  const button = page
+    .locator(".documentation-playground")
+    .getByRole("button", { exact: true, name: "Launch fireworks" });
+
+  const canvas = page.locator('canvas[data-slot="fireworks"]');
+
+  await expect(canvas).toHaveCount(0);
+  await button.click();
+  await expect(canvas).toHaveAttribute("data-rendered", "true");
+
+  const [canvasBox, buttonBox] = await Promise.all([
+    canvas.boundingBox(),
+    button.boundingBox(),
+  ]);
+
+  expect((canvasBox?.x ?? 0) + 240).toBeCloseTo(
+    (buttonBox?.x ?? 0) + (buttonBox?.width ?? 0) / 2,
+    0
+  );
+  expect((canvasBox?.y ?? 0) + 584).toBeCloseTo(
+    (buttonBox?.y ?? 0) + (buttonBox?.height ?? 0),
+    0
+  );
+  await expect(canvas).toHaveCount(0, { timeout: 10_000 });
+};
+
 for (const [name, title] of [
   ["book", "Book"],
   ["hotbar", "Hotbar"],
@@ -13,6 +48,8 @@ for (const [name, title] of [
   ["map", "Map"],
   ["trading", "Trading"],
   ["player-list", "Player List"],
+  ["redstone-lamp-display", "Redstone Lamp Display"],
+  ["fireworks", "Fireworks"],
 ]) {
   test(`local ${name} preview`, async ({ page }, info) => {
     const errors: string[] = [];
@@ -210,6 +247,37 @@ for (const [name, title] of [
       ).toContainText("169");
     }
 
+    if (name === "redstone-lamp-display") {
+      const playground = page.locator(".documentation-playground");
+      // The demo default 1234 is the display's website default path.
+      await expect(
+        playground.getByRole("img", { exact: true, name: "1234" })
+      ).toHaveAttribute("data-rendered", "true");
+
+      const number = playground.getByRole("spinbutton", {
+        exact: true,
+        name: "NUMBER",
+      });
+
+      await number.fill("12");
+      await expect(
+        playground.getByRole("img", { exact: true, name: "12" })
+      ).toHaveAttribute("data-rendered", "true");
+      // Values the display cannot show keep the last shown number.
+      await number.fill("-3");
+      await expect(
+        playground.getByRole("img", { exact: true, name: "12" })
+      ).toBeVisible();
+      await number.fill("0042");
+      await expect(
+        playground.getByRole("img", { exact: true, name: "42" })
+      ).toBeVisible();
+    }
+
+    if (name === "fireworks") {
+      await launchFromPlayground(page);
+    }
+
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth
@@ -220,7 +288,13 @@ for (const [name, title] of [
   });
 }
 
-for (const name of ["map", "trading", "player-list"]) {
+for (const name of [
+  "map",
+  "trading",
+  "player-list",
+  "redstone-lamp-display",
+  "fireworks",
+]) {
   test(`mobile ${name} preview fits viewport`, async ({ page }, info) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`${origin}/docs/components/${name}`);

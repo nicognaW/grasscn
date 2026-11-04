@@ -1,6 +1,7 @@
 // Exact outputs backed by checked-in producers or retained machine-output derivations.
 // Provenance and scope: https://github.com/nicognaW/grasscn/issues/31.
 export const generatedCode = [
+  "apps/web/lib/minecraft-nether-star-assets.ts",
   "apps/web/registry/ui/minecraft-advancement-assets.ts",
   "apps/web/registry/ui/minecraft-adventure-assets.ts",
   "apps/web/registry/ui/minecraft-assets.css",
@@ -11,6 +12,8 @@ export const generatedCode = [
   "apps/web/registry/ui/minecraft-control-assets.css",
   "apps/web/registry/ui/minecraft-dialog-atlas.ts",
   "apps/web/registry/ui/minecraft-disclosure-metrics.ts",
+  "apps/web/registry/ui/minecraft-firework-assets.ts",
+  "apps/web/registry/ui/minecraft-firework-sound-assets.ts",
   "apps/web/registry/ui/minecraft-font.ts",
   "apps/web/registry/ui/minecraft-hotbar-rgba.ts",
   "apps/web/registry/ui/minecraft-input-assets.ts",
@@ -24,6 +27,7 @@ export const generatedCode = [
   "apps/web/registry/ui/minecraft-player-list-assets.ts",
   "apps/web/registry/ui/minecraft-popover-atlas.ts",
   "apps/web/registry/ui/minecraft-progress-assets.ts",
+  "apps/web/registry/ui/minecraft-redstone-lamp-assets.ts",
   "apps/web/registry/ui/minecraft-resizable-assets.css",
   "apps/web/registry/ui/minecraft-select-assets.ts",
   "apps/web/registry/ui/minecraft-select-atlas.ts",
@@ -40,4 +44,11 @@ export const generatedCode = [
   "apps/web/registry/ui/minecraft-unifont-atlas.ts",
   "apps/web/registry/ui/minecraft-unifont-data.ts",
   "apps/web/registry/ui/minecraft-unifont-metrics.css",
+  "packages/pixel-perfect/tests/reference/firework-rocket/manifest.json",
+  "packages/pixel-perfect/tests/reference/fireworks/manifest.json",
+  "packages/pixel-perfect/tests/reference/fireworks/random-sequences.json",
+  "packages/pixel-perfect/tests/reference/redstone-lamp-display/manifest.json",
+  "packages/pixel-perfect/tests/reference/nether-star/manifest.json",
+  "packages/tests/fixtures/reference/firework-sounds/manifest.json",
+  "packages/tests/fixtures/reference/header-star/asset-provenance.json",
 ];
