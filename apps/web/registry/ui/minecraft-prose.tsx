@@ -17,6 +17,11 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
 
+interface NativeTextWidthLayout {
+  className?: string;
+  width?: string;
+}
+
 const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
   text: string
 ) {
@@ -41,6 +46,7 @@ interface MinecraftProseLayoutStyle1 extends React.CSSProperties {
 
 interface MinecraftProseScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
+  "--mc-prose-max-width"?: string;
 }
 
 const advance = (char: string) =>
@@ -225,6 +231,14 @@ const MinecraftProse = ({
 
   const Component = MinecraftRender;
 
+  const boundedLayout: NativeTextWidthLayout =
+    maxWidth === undefined || maxWidth === null
+      ? {}
+      : {
+          className: "w-(--mc-prose-max-width)",
+          width: `${maxWidth * scale}px`,
+        };
+
   return (
     <Component
       as={as}
@@ -232,13 +246,10 @@ const MinecraftProse = ({
       ref={node}
       data-slot="minecraft-prose"
       data-mc-label-layout-ready={!unicode || fontReady}
-      className={cn(`mc-label`, className)}
+      className={cn(`mc-label`, boundedLayout.className, className)}
       style={minecraftStyle(style, (__style): MinecraftProseScaleStyle => ({
+        "--mc-prose-max-width": boundedLayout.width,
         "--mc-scale": scale,
-        width:
-          maxWidth === undefined || maxWidth === null
-            ? undefined
-            : maxWidth * scale,
         ...__style,
       }))}
       {...props}

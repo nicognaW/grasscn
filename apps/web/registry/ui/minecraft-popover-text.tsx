@@ -6,6 +6,10 @@ import { PopoverUnicodeLine } from "./minecraft-popover-unicode";
 import { isMinecraftTextContent } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-popover-text-padding-left"?: string;
+}
+
 const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
   text: string
 ) {
@@ -153,26 +157,31 @@ export const MinecraftPopoverText = ({
   return (
     <span className="mc-popover-text" data-mc-popover-text-ready="true">
       <span aria-hidden="true">
-        {lines.map((line, index) => (
-          <span
-            key={index}
-            className="mc-card-text-line"
-            style={{
-              paddingLeft:
-                (Math.floor((width - widest) / 2) +
-                  Math.floor(widest / 2) -
-                  Math.floor(widths[index] / 2)) *
-                scale,
-            }}
-          >
-            <PopoverUnicodeLine
-              text={line}
-              bold={bold}
-              scale={scale as 1 | 2 | 3}
-              width={widths[index]}
-            />
-          </span>
-        ))}
+        {lines.map((line, index) => {
+          const nativeTextLayout1: NativeTextLayoutStyle = {
+            "--mc-popover-text-padding-left": `${
+              (Math.floor((width - widest) / 2) +
+                Math.floor(widest / 2) -
+                Math.floor(widths[index] / 2)) *
+              scale
+            }px`,
+          };
+
+          return (
+            <span
+              key={index}
+              className="mc-card-text-line pl-(--mc-popover-text-padding-left)"
+              style={nativeTextLayout1}
+            >
+              <PopoverUnicodeLine
+                text={line}
+                bold={bold}
+                scale={scale}
+                width={widths[index]}
+              />
+            </span>
+          );
+        })}
       </span>
       <span className="mc-card-accessible">{text}</span>
     </span>

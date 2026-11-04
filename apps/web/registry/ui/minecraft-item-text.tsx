@@ -180,7 +180,7 @@ const MinecraftItemText = ({
           used += next;
         }
 
-        return value + "...";
+        return `${value}...`;
       })
       .join("\n");
   }
@@ -232,7 +232,7 @@ const MinecraftItemText = ({
       return (
         <MinecraftItemText
           scale={scale}
-          style={{ color: "inherit", textShadow: "inherit" }}
+          className="text-inherit [text-shadow:inherit]"
         >
           {value}
         </MinecraftItemText>

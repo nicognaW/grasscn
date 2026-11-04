@@ -13,6 +13,10 @@ import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import "./minecraft-button.css";
 import "./minecraft-kbd.css";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-kbd-width"?: string;
+}
+
 interface KbdGlyphStyle extends React.CSSProperties {
   "--mc-advance": number;
   "--mc-glyph-x": number;
@@ -56,10 +60,15 @@ const keyText = function keyText(content: React.ReactNode): React.ReactNode {
             "--mc-advance": advance,
             "--mc-glyph-x": x,
             "--mc-glyph-y": y,
-            visibility: char === " " ? "hidden" : undefined,
           };
 
-          return <span key={index} className="mc-glyph" style={glyphStyle} />;
+          return (
+            <span
+              key={index}
+              className={char === " " ? "mc-glyph invisible" : "mc-glyph"}
+              style={glyphStyle}
+            />
+          );
         })}
       </span>
       <span className="mc-text-accessible">{text}</span>
@@ -94,6 +103,10 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
     };
   }, [children, scale]);
 
+  const nativeTextLayout1: NativeTextLayoutStyle = {
+    "--mc-kbd-width": `${inkWidth}px`,
+  };
+
   return (
     <kbd
       data-slot="kbd"
@@ -111,8 +124,8 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
       </span>
       <span
         aria-hidden="true"
-        className="mc-kbd-intrinsic"
-        style={{ width: inkWidth }}
+        className="mc-kbd-intrinsic w-(--mc-kbd-width)"
+        style={nativeTextLayout1}
       />
       <span ref={label} className="mc-button-label">
         {keyText(children)}

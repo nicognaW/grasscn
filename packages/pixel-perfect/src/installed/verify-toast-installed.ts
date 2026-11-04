@@ -280,10 +280,13 @@ try {
           await fixturePage
             .locator('[data-slot="toast"]')
             .evaluateAll((nodes) =>
-              nodes.map((n): { rect: unknown; text: string | null } => ({
-                rect: n.getBoundingClientRect().toJSON(),
-                text: n.textContent,
-              }))
+              nodes.map(
+                (n) =>
+                  ({
+                    rect: n.getBoundingClientRect().toJSON(),
+                    text: n.textContent,
+                  }) satisfies { rect: unknown; text: string | null }
+              )
             )
         )
       );

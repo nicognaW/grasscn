@@ -231,26 +231,30 @@ if (sha256(await readFile(jar)) !== sourceJarSha256) {
 }
 
 const files = await readdir(captures);
-const cases = [];
+const caseReads = [];
 
 for (const scale of [1, 2, 3]) {
   for (const [column, width] of [200, 150, 103, 257].entries()) {
     for (const state of ["normal", "hover", "focus", "disabled"]) {
-      const name = `${state}-w${width}-s${scale}.png`;
+      caseReads.push(
+        (async () => {
+          const name = `${state}-w${width}-s${scale}.png`;
 
-      if (!files.includes(name)) {
-        throw new Error(`Missing reference ${name}`);
-      }
+          if (!files.includes(name)) {
+            throw new Error(`Missing reference ${name}`);
+          }
 
-      cases.push({
-        name,
-        state,
-        width,
-        height: 20,
-        scale,
-        label: ["Button", "Done", "iIl! MW@09", "Wider button"][column],
-        sha256: sha256(await readFile(path.join(captures, name))),
-      });
+          return {
+            name,
+            state,
+            width,
+            height: 20,
+            scale,
+            label: ["Button", "Done", "iIl! MW@09", "Wider button"][column],
+            sha256: sha256(await readFile(path.join(captures, name))),
+          };
+        })()
+      );
     }
   }
 
@@ -263,24 +267,38 @@ for (const scale of [1, 2, 3]) {
     ).join("");
 
     for (const state of ["normal", "disabled"]) {
-      const name = `ascii-${start}-${end}-${state}-s${scale}.png`;
+      caseReads.push(
+        (async () => {
+          const name = `ascii-${start}-${end}-${state}-s${scale}.png`;
 
-      if (!files.includes(name)) {
-        throw new Error(`Missing reference ${name}`);
-      }
+          if (!files.includes(name)) {
+            throw new Error(`Missing reference ${name}`);
+          }
 
-      cases.push({
-        name,
-        state,
-        width: 300,
-        height: 20,
-        scale,
-        label,
-        sha256: sha256(await readFile(path.join(captures, name))),
-      });
+          return {
+            name,
+            state,
+            width: 300,
+            height: 20,
+            scale,
+            label,
+            sha256: sha256(await readFile(path.join(captures, name))),
+          };
+        })()
+      );
     }
   }
 }
+
+const caseResults = await Promise.allSettled(caseReads);
+
+const cases = caseResults.map((result) => {
+  if (result.status === "rejected") {
+    throw result.reason;
+  }
+
+  return result.value;
+});
 
 const provenance = {
   source:

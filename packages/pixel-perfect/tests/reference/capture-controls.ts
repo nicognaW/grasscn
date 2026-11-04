@@ -315,7 +315,7 @@ if (sha256(await readFile(jar)) !== sourceJarSha256) {
   throw new Error("Source JAR changed during capture");
 }
 
-const cases: ControlCaptureCase[] = [];
+const caseReads = [];
 
 let layouts: Record<string, NativeCaptureLayout | undefined> = {};
 
@@ -333,27 +333,42 @@ try {
 
 for (const scale of [1, 2, 3]) {
   for (const definition of definitions) {
-    const name = `${definition.name}-s${scale}.png`;
+    caseReads.push(
+      (async () => {
+        const name = `${definition.name}-s${scale}.png`;
 
-    const bytes = await readFile(path.join(captures, name));
+        const bytes = await readFile(path.join(captures, name));
 
-    const capturedLayout: Omit<ControlCaptureCase, "scale" | "sha256"> = {
-      ...definition,
-      ...(layouts[`${definition.name}-s${scale}`] ?? layouts[definition.name]),
-    };
+        const capturedLayout: Omit<ControlCaptureCase, "scale" | "sha256"> = {
+          ...definition,
+          ...(layouts[`${definition.name}-s${scale}`] ??
+            layouts[definition.name]),
+        };
 
-    if (definition.element === "textarea") {
-      capturedLayout.widgetWidth = definition.width;
-    }
+        if (definition.element === "textarea") {
+          capturedLayout.widgetWidth = definition.width;
+        }
 
-    cases.push({
-      ...capturedLayout,
-      name,
-      scale,
-      sha256: sha256(bytes),
-    });
+        return {
+          ...capturedLayout,
+          name,
+          scale,
+          sha256: sha256(bytes),
+        };
+      })()
+    );
   }
 }
+
+const caseResults = await Promise.allSettled(caseReads);
+
+const cases: ControlCaptureCase[] = caseResults.map((result) => {
+  if (result.status === "rejected") {
+    throw result.reason;
+  }
+
+  return result.value;
+});
 
 const pageValues = [...new Set(definitions.map((c) => c.page ?? 0))];
 
@@ -369,16 +384,33 @@ await mkdir(path.join(outputDir, "frames"), { recursive: true });
 
 const frameRecords = [];
 
+const frameReadJobs = [];
+
 for (const page of pages) {
   for (const scale of [1, 2, 3]) {
     const name = `native-controls-${pages.length > 1 ? `p${page}-` : ""}s${scale}.png`;
+    frameReadJobs.push(
+      (async () => {
+        const bytes = await readFile(path.join(frames, name));
 
-    const bytes = await readFile(path.join(frames, name));
-
-    await writeFile(path.join(outputDir, "frames", name), bytes);
-
-    frameRecords.push({ name, sha256: sha256(bytes) });
+        return { bytes, name };
+      })()
+    );
   }
+}
+
+const frameReads = await Promise.allSettled(frameReadJobs);
+
+for (const frameRead of frameReads) {
+  if (frameRead.status === "rejected") {
+    throw frameRead.reason;
+  }
+
+  const { bytes, name } = frameRead.value;
+
+  await writeFile(path.join(outputDir, "frames", name), bytes);
+
+  frameRecords.push({ name, sha256: sha256(bytes) });
 }
 
 const manifest: ControlCaptureManifest = {
@@ -420,22 +452,33 @@ if (
     { sha1: string; sha256: string; size: number } | undefined
   > = {};
 
-  for (const key of [
-    "minecraft/font/include/unifont.json",
-    "minecraft/font/unifont.zip",
-  ]) {
-    // SAFETY: these exact two font keys are present in the selected official asset-index producer; missing inputs still throw at the original property access.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Fixed font-key projection only; the general asset dictionary remains optional and no runtime guard is added.
-    const entry = index.objects[key] as MinecraftCaptureAssetObject;
+  const resourceReads = await Promise.allSettled(
+    ["minecraft/font/include/unifont.json", "minecraft/font/unifont.zip"].map(
+      async (key) => {
+        // SAFETY: these exact two font keys are present in the selected official asset-index producer; missing inputs still throw at the original property access.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Fixed font-key projection only; the general asset dictionary remains optional and no runtime guard is added.
+        const entry = index.objects[key] as MinecraftCaptureAssetObject;
 
-    const bytes = await readFile(
-      path.join(
-        minecraftRoot,
-        "assets/objects",
-        entry.hash.slice(0, 2),
-        entry.hash
-      )
-    );
+        const bytes = await readFile(
+          path.join(
+            minecraftRoot,
+            "assets/objects",
+            entry.hash.slice(0, 2),
+            entry.hash
+          )
+        );
+
+        return { bytes, entry, key };
+      }
+    )
+  );
+
+  for (const resourceRead of resourceReads) {
+    if (resourceRead.status === "rejected") {
+      throw resourceRead.reason;
+    }
+
+    const { bytes, entry, key } = resourceRead.value;
 
     if (
       createHash("sha1").update(bytes).digest("hex") !== entry.hash ||

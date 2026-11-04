@@ -6,6 +6,11 @@ import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-dialog-text-padding-left"?: string;
+  "--mc-dialog-text-width"?: string;
+}
+
 const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
   text: string
 ) {
@@ -135,19 +140,24 @@ export const MinecraftDialogText = ({
   const widths = lines.map((line) => widthOf(line, bold));
   const widest = Math.max(0, ...widths);
 
+  const nativeTextLayout1: NativeTextLayoutStyle = {
+    "--mc-dialog-text-width": `${widest * scale}px`,
+  };
+
   return (
     <span
-      className="mc-dialog-text"
+      className="mc-dialog-text w-(--mc-dialog-text-width)"
       data-mc-dialog-item={item || undefined}
-      style={{ width: widest * scale }}
+      style={nativeTextLayout1}
     >
       <span aria-hidden="true">
         {lines.map((line, index) => {
           const _precedingkey = index;
 
-          const _precedingstyle: React.ComponentProps<"span">["style"] = {
-            paddingLeft:
-              (Math.floor(widest / 2) - Math.floor(widths[index] / 2)) * scale,
+          const _precedingstyle: NativeTextLayoutStyle = {
+            "--mc-dialog-text-padding-left": `${
+              (Math.floor(widest / 2) - Math.floor(widths[index] / 2)) * scale
+            }px`,
           };
 
           let _selectedContent: React.ReactNode;
@@ -173,12 +183,15 @@ export const MinecraftDialogText = ({
                       "--mc-advance": advance + 1,
                       "--mc-glyph-x": x,
                       "--mc-glyph-y": y,
-                      visibility: char === " " ? "hidden" : undefined,
                     };
 
                     return (
                       <span
-                        className="mc-card-bold-glyph"
+                        className={
+                          char === " "
+                            ? "mc-card-bold-glyph invisible"
+                            : "mc-card-bold-glyph"
+                        }
                         key={i}
                         style={glyphStyle}
                       >
@@ -196,7 +209,7 @@ export const MinecraftDialogText = ({
 
           return (
             <span
-              className="mc-card-text-line"
+              className="mc-card-text-line pl-(--mc-dialog-text-padding-left)"
               key={_precedingkey}
               style={_precedingstyle}
             >

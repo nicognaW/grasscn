@@ -83,6 +83,54 @@ export const sourceIdentity = async (directory: string = repoRoot) => {
   };
 };
 
+type ProductionInput =
+  | { kind: "directory"; file: string }
+  | { kind: "symlink"; file: string }
+  | {
+      kind: "file";
+      relative: string;
+      fingerprint: PromiseSettledResult<string>;
+    };
+
+const readProductionInput = async (
+  directory: string,
+  folder: string,
+  name: string
+): Promise<ProductionInput | null> => {
+  const file = path.join(folder, name);
+  const relative = path.relative(directory, file).replaceAll(path.sep, "/");
+
+  if (
+    relative === ".next/cache" ||
+    relative === ".next/server/route-cache" ||
+    relative === ".next/dev" ||
+    relative === ".next/trace" ||
+    relative === ".next/trace-build"
+  ) {
+    return null;
+  }
+
+  const info = await lstat(file);
+
+  if (info.isSymbolicLink()) {
+    return { file, kind: "symlink" };
+  }
+
+  if (info.isDirectory()) {
+    return { file, kind: "directory" };
+  }
+
+  let fingerprint: PromiseSettledResult<string>;
+
+  try {
+    fingerprint = { status: "fulfilled", value: digest(await readFile(file)) };
+  } catch (error) {
+    fingerprint = { reason: error, status: "rejected" };
+  }
+
+  return { fingerprint, kind: "file", relative };
+};
+
 /**
  * @param {{directory?: string, source?: SourceIdentity}} [options] - Verification input.
  * @returns {Promise<ProductionIdentity>} The bound production output.
@@ -108,30 +156,36 @@ export const productionBuildIdentity = async ({
     const entries = await readdir(folder);
     entries.sort();
 
-    for (const name of entries) {
-      const file = path.join(folder, name);
-      const relative = path.relative(directory, file).replaceAll(path.sep, "/");
+    const pending = await Promise.allSettled(
+      entries.map(
+        async (name) => await readProductionInput(directory, folder, name)
+      )
+    );
 
-      if (
-        relative === ".next/cache" ||
-        relative === ".next/server/route-cache" ||
-        relative === ".next/dev" ||
-        relative === ".next/trace" ||
-        relative === ".next/trace-build"
-      ) {
+    for (const result of pending) {
+      if (result.status === "rejected") {
+        throw result.reason;
+      }
+
+      const input = result.value;
+
+      if (input === null) {
         continue;
       }
 
-      const info = await lstat(file);
       assert.ok(
-        !info.isSymbolicLink(),
+        input.kind !== "symlink",
         "Production output cannot contain symlinks"
       );
 
-      if (info.isDirectory()) {
-        await visit(file);
+      if (input.kind === "directory") {
+        await visit(input.file);
       } else {
-        files.push({ path: relative, sha256: digest(await readFile(file)) });
+        if (input.fingerprint.status === "rejected") {
+          throw input.fingerprint.reason;
+        }
+
+        files.push({ path: input.relative, sha256: input.fingerprint.value });
       }
     }
   };
