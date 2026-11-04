@@ -18,7 +18,6 @@
     z-index: 50;
     left: var(--mc-dialog-left, 0);
     top: var(--mc-dialog-top, 0);
-    transform: translateZ(0);
     isolation: isolate;
     box-sizing: border-box;
     display: flex;
@@ -69,7 +68,10 @@
   }
   .mc-dialog-background {
     position: fixed;
-    inset: 0;
+    left: var(--mc-dialog-background-left);
+    top: var(--mc-dialog-background-top);
+    width: var(--mc-dialog-background-width);
+    height: var(--mc-dialog-background-height);
     z-index: -1;
     pointer-events: none;
   }
