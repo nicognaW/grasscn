@@ -119,7 +119,7 @@ const Controls = () => {
             scale={2}
             checked={checked}
             onCheckedChange={(v) => {
-              setChecked(v === true);
+              setChecked(v);
             }}
           />
           <Label htmlFor="home-remember" scale={2}>
@@ -358,15 +358,15 @@ const Team = () => {
   );
 };
 
+const tasks = [
+  "Define the design tokens",
+  "Build the component library",
+  "Polish the onboarding flow",
+  "Ship something memorable",
+];
+
 const Tasks = () => {
   const [done, setDone] = React.useState([true, true, false, false]);
-
-  const tasks = [
-    "Define the design tokens",
-    "Build the component library",
-    "Polish the onboarding flow",
-    "Ship something memorable",
-  ];
 
   return (
     <Panel title="One step closer to shipped." tag="LAUNCH CHECKLIST">
@@ -378,7 +378,7 @@ const Tasks = () => {
               id={`home-task-${i}`}
               checked={done[i]}
               onCheckedChange={(v) => {
-                setDone((old) => old.map((x, j) => (j === i ? v === true : x)));
+                setDone((old) => old.map((x, j) => (j === i ? v : x)));
               }}
             />
             <label

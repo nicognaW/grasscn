@@ -21,25 +21,25 @@ import {
 } from "../registry/ui/questionnaire";
 import type { DemoProps } from "../types";
 
+const items = [
+  {
+    choices: [{ value: "survival" }, { value: "creative" }],
+    name: "mode",
+    required: true,
+  },
+  {
+    choices: [{ value: "caves" }, { value: "villages" }],
+    name: "features",
+    required: false,
+  },
+  { name: "name", required: true },
+] as const;
+
 const QuestionnaireDemo = ({ scale }: DemoProps) => {
   const [result, setResult] = React.useState("");
   const [session, setSession] = React.useState(0);
   const [width, setWidth] = React.useState(180);
   const form = React.useRef<HTMLFormElement>(null);
-
-  const items = [
-    {
-      choices: [{ value: "survival" }, { value: "creative" }],
-      name: "mode",
-      required: true,
-    },
-    {
-      choices: [{ value: "caves" }, { value: "villages" }],
-      name: "features",
-      required: false,
-    },
-    { name: "name", required: true },
-  ] as const;
 
   React.useLayoutEffect(() => {
     // SAFETY: The private demo always renders the SDK default form with this ref; keyed form commit precedes layout setup and cleanup disconnects its observer.

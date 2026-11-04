@@ -5,21 +5,21 @@ import { Trading } from "../registry/ui/trading";
 import type { DemoProps } from "../types";
 import { tradingIcons } from "./trading-icons";
 
+const goods = [
+  ["book", "Field guide", 4],
+  ["bread", "Bread", 1],
+  ["compass", "Compass", 5],
+  ["name_tag", "Name tag", 8],
+  ["glass_bottle", "Glass bottle", 2],
+  ["redstone", "Redstone", 3],
+  ["paper", "Paper", 1],
+  ["diamond", "Diamond", 12],
+  ["book", "Enchanted guide", 16],
+] as const;
+
 const TradingDemo = ({ scale }: DemoProps) => {
   const [completed, setCompleted] = React.useState(0);
   const [selected, setSelected] = React.useState("0");
-
-  const goods = [
-    ["book", "Field guide", 4],
-    ["bread", "Bread", 1],
-    ["compass", "Compass", 5],
-    ["name_tag", "Name tag", 8],
-    ["glass_bottle", "Glass bottle", 2],
-    ["redstone", "Redstone", 3],
-    ["paper", "Paper", 1],
-    ["diamond", "Diamond", 12],
-    ["book", "Enchanted guide", 16],
-  ] as const;
 
   const offers: TradeOffer[] = goods.map(([name, label, count], i) => ({
     cost: {

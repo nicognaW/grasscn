@@ -15,17 +15,17 @@ import {
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
+const worlds = [
+  { name: "Grasslands", players: 4 },
+  { name: "你好，世界", players: 2 },
+  { name: "Deep Dark", players: 1 },
+];
+
 const TableDemo = ({ scale }: DemoProps) => {
   const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
   const textWidth = Math.max(16, Math.floor((stageWidth - 24) / 3));
 
   const [selected, setSelected] = React.useState("");
-
-  const worlds = [
-    { name: "Grasslands", players: 4 },
-    { name: "你好，世界", players: 2 },
-    { name: "Deep Dark", players: 1 },
-  ];
 
   return (
     <>
