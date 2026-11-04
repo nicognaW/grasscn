@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import type { DemoVariables } from "../demo-variables";
+import { isSliderValueList } from "../lib/slider-value";
 import { Button } from "../registry/ui/button";
 import type { BossBarColor, BossBarOverlay } from "../registry/ui/progress";
 import { Progress } from "../registry/ui/progress";
@@ -67,7 +68,7 @@ const ProgressDemo = ({ scale }: DemoProps) => {
           label={`Progress: ${value}%`}
           value={[value]}
           onValueChange={(next) => {
-            setValue(typeof next === "number" ? next : next[0]);
+            setValue(isSliderValueList(next) ? next[0] : next);
           }}
           min={0}
           max={100}

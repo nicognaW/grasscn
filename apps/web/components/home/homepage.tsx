@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
 
+import { isSliderValueList } from "@/lib/slider-value";
+
 import grass from "../../assets/grass-block-48.png";
 import type { AnalyticsChartType } from "../../registry/blocks/chart-analytics";
 import { AnalyticsChartExample } from "../../registry/blocks/chart-analytics";
@@ -706,7 +708,7 @@ const Payout = () => {
         value={[amount]}
         label={`$${amount}`}
         onValueChange={(v) => {
-          setAmount(typeof v === "number" ? v : v[0]);
+          setAmount(isSliderValueList(v) ? v[0] : v);
           setSaved(false);
         }}
       />

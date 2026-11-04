@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { isSliderValueList } from "../lib/slider-value";
 import { Slider } from "../registry/ui/slider";
 import { getPreviewSoundVolume, setPreviewSoundVolume } from "../sound";
 import type { DemoProps } from "../types";
@@ -16,8 +17,8 @@ const SliderDemo = ({ scale }: DemoProps) => {
             scale={scale}
             value={value}
             onValueChange={(next) => {
-              setPreviewSoundVolume(typeof next === "number" ? next : next[0]);
-              setValue(typeof next === "number" ? [next] : [...next]);
+              setPreviewSoundVolume(isSliderValueList(next) ? next[0] : next);
+              setValue(isSliderValueList(next) ? [...next] : [next]);
             }}
             aria-label="Volume"
             label={`Volume: ${value[0]}%`}

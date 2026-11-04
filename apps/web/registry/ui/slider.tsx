@@ -102,9 +102,7 @@ const Slider = ({
 
   const currentValue = value ?? uncontrolled;
 
-  const values = Array.isArray(currentValue)
-    ? currentValue
-    : [currentValue as number];
+  const values = Array.isArray(currentValue) ? currentValue : [currentValue];
 
   const [editing, setEditing] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
