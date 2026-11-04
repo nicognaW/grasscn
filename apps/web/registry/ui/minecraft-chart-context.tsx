@@ -498,18 +498,7 @@ export const ChartPixelSurface = ({
 
     let count = 0;
 
-    for (const element of svg.querySelectorAll<SVGGraphicsElement>(selector)) {
-      if (element.closest("foreignObject,defs")) {
-        continue;
-      }
-
-      // Keep the real SVG shapes for Recharts interaction; only the pixel surface paints them.
-      if (!Object.hasOwn(element.dataset, "mcPixelSource")) {
-        element.dataset.mcPixelSource = "";
-      }
-
-      const style = getComputedStyle(element);
-
+    const readInheritedVisibility = (element: SVGGraphicsElement) => {
       let opacity = 1;
       let visible = true;
 
@@ -528,8 +517,25 @@ export const ChartPixelSurface = ({
         opacity *= Number(s.opacity);
       }
 
+      return { opacity, visible };
+    };
+
+    const rasterizeElement = (element: SVGGraphicsElement) => {
+      if (element.closest("foreignObject,defs")) {
+        return;
+      }
+
+      // Keep the real SVG shapes for Recharts interaction; only the pixel surface paints them.
+      if (!Object.hasOwn(element.dataset, "mcPixelSource")) {
+        element.dataset.mcPixelSource = "";
+      }
+
+      const style = getComputedStyle(element);
+
+      const { opacity, visible } = readInheritedVisibility(element);
+
       if (!visible || opacity === 0) {
-        continue;
+        return;
       }
 
       const path = new Path2D();
@@ -540,7 +546,7 @@ export const ChartPixelSurface = ({
         const d = element.getAttribute("d");
 
         if (!d) {
-          continue;
+          return;
         }
 
         path.addPath(new Path2D(d));
@@ -549,7 +555,7 @@ export const ChartPixelSurface = ({
         path.lineTo(n("x2"), n("y2"));
       } else if (tag === "circle") {
         if (![n("cx"), n("cy"), n("r")].every(Number.isFinite)) {
-          continue;
+          return;
         }
 
         path.arc(n("cx"), n("cy"), Math.max(0, n("r")), 0, Math.PI * 2);
@@ -574,7 +580,7 @@ export const ChartPixelSurface = ({
           path.closePath();
         }
       } else {
-        continue;
+        return;
       }
 
       const rootMatrix = svg.getCTM();
@@ -647,6 +653,10 @@ export const ChartPixelSurface = ({
       stamp(style.fill, Number(style.fillOpacity), false);
       stamp(style.stroke, Number(style.strokeOpacity), true);
       count += 1;
+    };
+
+    for (const element of svg.querySelectorAll<SVGGraphicsElement>(selector)) {
+      rasterizeElement(element);
     }
 
     setReady(count > 0);

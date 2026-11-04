@@ -61,35 +61,18 @@ const solidBackdrop = function solidBackdrop(node: HTMLElement) {
 
   // Flatten only a uniform backdrop. One center sample cannot establish what
   // lies beneath the transparent padding or shadow around the native frame.
-  for (const element of document.body.querySelectorAll("*")) {
-    if (
-      node.contains(element) ||
-      element.contains(node) ||
-      element === under ||
-      element.contains(under)
-    ) {
-      continue;
-    }
+  const isOutsideBackdropBounds = (box: DOMRect) =>
+    !box.width ||
+    !box.height ||
+    box.right <= bounds.left ||
+    box.left >= bounds.right ||
+    box.bottom <= bounds.top ||
+    box.top >= bounds.bottom;
 
-    const box = element.getBoundingClientRect();
-
-    if (
-      !box.width ||
-      !box.height ||
-      box.right <= bounds.left ||
-      box.left >= bounds.right ||
-      box.bottom <= bounds.top ||
-      box.top >= bounds.bottom
-    ) {
-      continue;
-    }
-
-    const style = getComputedStyle(element);
-
-    if (style.visibility !== "visible" || style.display === "none") {
-      continue;
-    }
-
+  const hasForegroundObstruction = (
+    element: Element,
+    style: CSSStyleDeclaration
+  ) => {
     const ownText = [...element.childNodes].some(
       (child) =>
         child.nodeType === Node.TEXT_NODE &&
@@ -103,7 +86,7 @@ const solidBackdrop = function solidBackdrop(node: HTMLElement) {
       (background[3] ?? 1) > 0 &&
       background.slice(0, 3).some((channel, index) => channel !== color[index]);
 
-    if (
+    return (
       ownText ||
       differentColor === true ||
       style.backgroundImage !== "none" ||
@@ -117,7 +100,32 @@ const solidBackdrop = function solidBackdrop(node: HTMLElement) {
         style.borderLeftWidth,
       ].some((value) => Number(value) > 0) ||
       ["IMG", "CANVAS", "INPUT", "VIDEO", "SVG"].includes(element.tagName)
+    );
+  };
+
+  for (const element of document.body.querySelectorAll("*")) {
+    if (
+      node.contains(element) ||
+      element.contains(node) ||
+      element === under ||
+      element.contains(under)
     ) {
+      continue;
+    }
+
+    const box = element.getBoundingClientRect();
+
+    if (isOutsideBackdropBounds(box)) {
+      continue;
+    }
+
+    const style = getComputedStyle(element);
+
+    if (style.visibility !== "visible" || style.display === "none") {
+      continue;
+    }
+
+    if (hasForegroundObstruction(element, style)) {
       return;
     }
   }
