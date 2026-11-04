@@ -178,7 +178,7 @@ const renderRosterEntry = (
       >
         <MinecraftMenuText>{player.name}</MinecraftMenuText>
       </span>
-      {player.score != null && (
+      {player.score !== undefined && (
         <span
           className="mc-roster-score mc-layout-player-list-5 mc-dynamic-layout-player-list-5"
           style={
@@ -292,7 +292,7 @@ const PlayerList = ({
   const scoreWidth = Math.max(
     0,
     ...visible.map((p) =>
-      p.score == null
+      p.score === undefined
         ? 0
         : documentTextWidth(" ") + documentTextWidth(String(p.score))
     )

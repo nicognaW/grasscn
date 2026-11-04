@@ -355,7 +355,7 @@ const Toaster = ({
     };
 
     const beginExit = (model: Model) => {
-      if (model.removedAt != null) {
+      if (model.removedAt !== undefined) {
         return;
       }
 

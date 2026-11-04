@@ -214,7 +214,7 @@ const groupScale = function groupScale(
       continue;
     }
 
-    if (child.type === Avatar && child.props.scale != null) {
+    if (child.type === Avatar && child.props.scale !== undefined) {
       selectedScale = child.props.scale;
       break;
     }
