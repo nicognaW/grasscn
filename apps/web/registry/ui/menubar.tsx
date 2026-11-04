@@ -198,6 +198,7 @@ const useMenuFrame = function useMenuFrame(
       window.removeEventListener("resize", measure);
       cancelAnimationFrame(frame);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Scale and surface alter the committed popup frame; preserve synchronous menu measurement and clipping refresh.
   }, [node, scale, surface]);
 
   return forwarded;

@@ -222,6 +222,7 @@ const MinecraftMap = ({
     return () => {
       live = false;
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Revision is the existing viewport/intersection repaint signal; canvas GPU readback uses current page coordinates.
   }, [pixels, markers, scale, revision]);
 
   return (

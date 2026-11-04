@@ -99,6 +99,7 @@ export const MinecraftCardText = ({
     return () => {
       observer.disconnect();
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Children can replace the measured text span; preserve observer rebinding and width measurement for the committed content.
   }, [children, scale]);
 
   if (

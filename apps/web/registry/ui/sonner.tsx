@@ -125,6 +125,7 @@ const ActionGraphic = ({
       top: `${(model.height + 6) * scale}px`,
       width: `${width * scale}px`,
     });
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Font readiness changes glyph advances outside the model; rerun action geometry when that resource becomes ready.
   }, [action, model, scale, fontReady]);
 
   const actionRender = <span aria-hidden="true" />;

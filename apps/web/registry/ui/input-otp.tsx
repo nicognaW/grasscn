@@ -100,6 +100,7 @@ const InputOTPSlot = ({
       const pos = (slot?.char ?? "").length;
       node.current.setSelectionRange(pos, pos);
     }
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Slot activation must restore its existing caret position even when the displayed character is unchanged.
   }, [slot?.char, slot?.isActive]);
 
   return (

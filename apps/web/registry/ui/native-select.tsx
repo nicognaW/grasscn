@@ -108,6 +108,7 @@ const NativeSelect = ({
       observer.disconnect();
       element.form?.removeEventListener("reset", deferred);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Controlled/default values and form/options/multiple change native selectedOptions; refresh the painted label and reset association after commit.
   }, [props.value, props.defaultValue, props.form, children, multiple]);
 
   return (

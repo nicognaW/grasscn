@@ -543,6 +543,7 @@ const Chat = () => {
     if (el) {
       el.scrollTop = el.scrollHeight;
     }
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- New messages change committed scrollHeight; preserve the existing post-commit scroll-to-bottom trigger.
   }, [messages]);
 
   return (

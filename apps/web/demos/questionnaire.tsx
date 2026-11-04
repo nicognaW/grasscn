@@ -55,6 +55,7 @@ const QuestionnaireDemo = ({ scale }: DemoProps) => {
     return () => {
       observer.disconnect();
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Session replaces the keyed form; scale changes its rendered width, so rebind and measure the committed form before paint.
   }, [scale, session]);
 
   return (

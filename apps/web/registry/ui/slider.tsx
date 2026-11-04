@@ -93,6 +93,7 @@ const Slider = ({
     return () => {
       form.removeEventListener("reset", reset);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- The form prop changes native form association; rebind reset handling to the input's actual form after commit.
   }, [value, props.form]);
   const inheritedDirection = baseDirection();
 

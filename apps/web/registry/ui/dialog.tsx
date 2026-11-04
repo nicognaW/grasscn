@@ -237,6 +237,7 @@ const DialogContent = ({
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", update);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- The rendered width prop changes measured popup bounds; preserve synchronous native centering after that commit.
   }, [element, scale, width]);
 
   const contents = (

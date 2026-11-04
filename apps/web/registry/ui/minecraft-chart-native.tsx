@@ -649,6 +649,7 @@ const ChartProfilerFrame = ({
       disposed = true;
       cancelAnimationFrame(frame);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Geometry-store revision is the existing native repaint signal even when serialized sector data is unchanged.
   }, [data, unit, revision]);
 
   if (data.some((d) => !Number.isFinite(d.percentage) || d.percentage < 0)) {

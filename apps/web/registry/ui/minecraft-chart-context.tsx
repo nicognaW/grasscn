@@ -152,6 +152,7 @@ export const ChartGeometryProvider = ({
 
   React.useLayoutEffect(() => {
     store.invalidate();
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Colors and scale change rendered geometry/style ownership; invalidate the existing shared geometry store after their commit.
   }, [store, colors, scale]);
   React.useLayoutEffect(() => {
     const observer = new MutationObserver(() => {
@@ -618,6 +619,7 @@ export const ChartPixelSurface = ({
     }
 
     setReady(count > 0);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- SVG mutation and geometry revisions are existing native repaint signals; retain them even when canvas bounds stay equal.
   }, [paint, revision, scale, width, height, x, y, background]);
 
   return (

@@ -319,6 +319,7 @@ const ComboboxList = ({
       element.removeEventListener("scroll", measure);
       cancelAnimationFrame(frame);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Scale and surface alter the rendered menu geometry; synchronously refresh clipping/readiness before paint.
   }, [scale, surface]);
 
   return (

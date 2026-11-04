@@ -438,6 +438,7 @@ const SelectContent = ({
     return () => {
       cancelAnimationFrame(frame);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Anchor identity and alignment mode change committed popup positioning; preserve immediate native row/scroll geometry refresh.
   }, [element, viewport, scale, alignItemWithTrigger, anchorId]);
 
   const contents = (

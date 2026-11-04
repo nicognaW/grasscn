@@ -69,6 +69,7 @@ const Empty = ({
     return () => {
       observer.disconnect();
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Children change the committed text node and its measured size; preserve immediate centering and observer rebinding.
   }, [plain, children, scale]);
 
   const textPosition: React.CSSProperties & {

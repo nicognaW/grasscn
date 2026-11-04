@@ -275,6 +275,7 @@ export const MinecraftSignPaint = ({
     return () => {
       live = false;
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Revision is the existing viewport/intersection repaint signal; GPU readback depends on current canvas page coordinates.
   }, [src, lines, scale, color, hanging, revision]);
 
   return (

@@ -99,6 +99,7 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
     return () => {
       observer.disconnect();
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Children and scale change the committed bitmap label bounds; measure that native ink width before paint.
   }, [children, scale]);
 
   const nativeTextLayout1: NativeTextLayoutStyle = {
