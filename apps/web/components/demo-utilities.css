@@ -300,3 +300,36 @@
     padding: var(--demo-owned-tabs-panel-padding);
   }
 }
+
+/* Shared note and team layouts are owned by both the homepage and standalone documentation demos. */
+.grass-note {
+  font-size: 8px !important;
+  line-height: 16px !important;
+  color: #aaa;
+  overflow-wrap: anywhere;
+}
+.grass-team {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.grass-team-member {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.grass-team-member > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.grass-team-member strong {
+  font-size: 16px;
+  font-weight: 400;
+}
+.grass-team-member > div > :is(span, output) {
+  font-size: 8px;
+  line-height: 16px;
+  color: #aaa;
+}
