@@ -288,14 +288,17 @@ const provenance = {
   minecraftVersion: "26.2",
   ...one,
   cases,
-  sourceAssets: {
-    block: blockSource,
-    popup: popupSource,
-    asciiGlyphMetricsSha256: hash(
-      await readFile(webFile("registry/ui/minecraft-font.ts"))
-    ),
-    asciiRasterSha256: hash(Buffer.from(atlas.split(",")[1], "base64")),
-  },
+  sourceAssets: Object.fromEntries<
+    string | typeof blockSource | typeof popupSource
+  >([
+    ["block", blockSource],
+    ["popup", popupSource],
+    [
+      "asciiGlyphMetricsSha256",
+      hash(await readFile(webFile("registry/ui/minecraft-font.ts"))),
+    ],
+    ["asciiRasterSha256", hash(Buffer.from(atlas.split(",")[1], "base64"))],
+  ]),
   generated,
 };
 

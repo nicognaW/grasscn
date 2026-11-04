@@ -196,12 +196,22 @@ for (const constituentDirectory of [
               ].map((n) => {
                 const r = n.getBoundingClientRect();
 
-                return {
-                  slot: n.dataset.slot ?? null,
-                  text: n.textContent,
-                  rect: { x: r.x, y: r.y, width: r.width, height: r.height },
-                  shift: n.dataset.mcDialogShift,
-                };
+                return Object.fromEntries<
+                  string | null | undefined | Record<string, number>
+                >([
+                  ["slot", n.dataset.slot ?? null],
+                  ["text", n.textContent],
+                  [
+                    "rect",
+                    Object.fromEntries<number>([
+                      ["x", r.x],
+                      ["y", r.y],
+                      ["width", r.width],
+                      ["height", r.height],
+                    ]),
+                  ],
+                  ["shift", n.dataset.mcDialogShift],
+                ]);
               })
             ),
             null,

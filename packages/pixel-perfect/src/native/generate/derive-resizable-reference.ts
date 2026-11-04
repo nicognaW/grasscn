@@ -206,23 +206,29 @@ for (const scale of [1, 2, 3]) {
   );
 }
 
-const result = {
-  source:
+const resizableManifestFields = [
+  [
+    "source",
     "Exact scrollbar-thumb crops from the original native AbstractScrollArea capture. Resizable is a web composition; only the reused grip artwork has a native pixel counterpart.",
-  minecraftVersion: manifest.minecraftVersion,
-  sourceJarSha256: manifest.sourceJarSha256,
-  captureSourceSha256: manifest.captureSourceSha256,
-  caseDefinitionSha256: manifest.caseDefinitionSha256,
-  glyphObservationEnabled: false,
-  sourceDirectory: "../scroll-area/source",
-  framesDirectory: "../scroll-area/frames",
-  frames,
-  cases,
-  guiScales: [1, 2, 3],
-  mods: [],
-  resourcePacks: [],
-  differenceTolerance: 0,
-};
+  ],
+  ["minecraftVersion", manifest.minecraftVersion],
+  ["sourceJarSha256", manifest.sourceJarSha256],
+  ["captureSourceSha256", manifest.captureSourceSha256],
+  ["caseDefinitionSha256", manifest.caseDefinitionSha256],
+  ["glyphObservationEnabled", false],
+  ["sourceDirectory", "../scroll-area/source"],
+  ["framesDirectory", "../scroll-area/frames"],
+  ["frames", frames],
+  ["cases", cases],
+  ["guiScales", [1, 2, 3]],
+  ["mods", []],
+  ["resourcePacks", []],
+  ["differenceTolerance", 0],
+] as const;
+
+const result = Object.fromEntries<(typeof resizableManifestFields)[number][1]>(
+  resizableManifestFields
+);
 
 fs.writeFileSync(
   path.join(dest, "manifest.json"),

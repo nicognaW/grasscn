@@ -60,14 +60,17 @@ assert.ok(
   image.data.every((channel, index) => index % 4 !== 3 || channel === 255)
 );
 
-const sprite = {
-  width: image.width,
-  height: image.height,
-  image: `data:image/png;base64,${bytes.toString("base64")}`,
-  rgba: image.data.toString("base64"),
-  border: scaling.border,
-  stretch: scaling.stretch_inner ?? false,
-};
+const toastSpriteFields = [
+  ["width", image.width],
+  ["height", image.height],
+  ["image", `data:image/png;base64,${bytes.toString("base64")}`],
+  ["rgba", image.data.toString("base64")],
+  ["border", scaling.border],
+  ["stretch", scaling.stretch_inner ?? false],
+] as const;
+
+const sprite =
+  Object.fromEntries<(typeof toastSpriteFields)[number][1]>(toastSpriteFields);
 
 await writeFile(
   webFile("registry/ui/minecraft-toast-assets.ts"),
