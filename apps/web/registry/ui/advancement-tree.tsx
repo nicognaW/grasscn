@@ -65,6 +65,32 @@ type AdvancementTreeProps = React.ComponentProps<"div"> & {
   background?: string;
 };
 
+const validateAdvancementParents = function validateAdvancementParents(
+  nodes: readonly AdvancementNode[],
+  ids: ReadonlySet<string>,
+  positions: ReadonlyMap<string, AdvancementNode>
+) {
+  for (const node of nodes) {
+    const parentId = node.parentId ?? "";
+
+    if (parentId && !ids.has(parentId)) {
+      throw new Error(`Missing advancement parent: ${node.parentId}`);
+    }
+
+    const visited = new Set([node.id]);
+    let parent = parentId;
+
+    while (parent) {
+      if (visited.has(parent)) {
+        throw new Error("Advancement parents must not form a cycle");
+      }
+
+      visited.add(parent);
+      parent = positions.get(parent)?.parentId ?? "";
+    }
+  }
+};
+
 const AdvancementTree = ({
   nodes,
   scale = 2,
@@ -112,25 +138,7 @@ const AdvancementTree = ({
 
   const positions = new Map(points.map((node) => [node.id, node]));
 
-  for (const node of nodes) {
-    const parentId = node.parentId ?? "";
-
-    if (parentId && !ids.has(parentId)) {
-      throw new Error(`Missing advancement parent: ${node.parentId}`);
-    }
-
-    const visited = new Set([node.id]);
-    let parent = parentId;
-
-    while (parent) {
-      if (visited.has(parent)) {
-        throw new Error("Advancement parents must not form a cycle");
-      }
-
-      visited.add(parent);
-      parent = positions.get(parent)?.parentId ?? "";
-    }
-  }
+  validateAdvancementParents(nodes, ids, positions);
 
   const initial = () => {
     if (defaultPan) {

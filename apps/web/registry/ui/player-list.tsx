@@ -109,6 +109,22 @@ type PlayerListProps = React.ComponentProps<"div"> & {
   onPlayerSelect?: (id: string) => void;
 };
 
+const rosterAvatarSource = function rosterAvatarSource(
+  player: PlayerListEntry
+): Pick<React.ComponentProps<typeof AvatarImage>, "skin" | "src"> {
+  return {
+    skin:
+      (player.src ?? "") || (player.username ?? "")
+        ? undefined
+        : (player.skin ?? "wide/steve"),
+    src:
+      player.src ??
+      ((player.username ?? "")
+        ? `https://mc-heads.net/avatar/${encodeURIComponent(player.username ?? "")}/8`
+        : undefined),
+  };
+};
+
 const renderRosterEntry = (
   player: PlayerListEntry,
   scale: 1 | 2 | 3,
@@ -154,20 +170,7 @@ const renderRosterEntry = (
   const content = (
     <>
       <Avatar scale={scale} className="mc-roster-avatar" style={avatarStyle}>
-        <AvatarImage
-          skin={
-            (player.src ?? "") || (player.username ?? "")
-              ? undefined
-              : (player.skin ?? "wide/steve")
-          }
-          src={
-            player.src ??
-            ((player.username ?? "")
-              ? `https://mc-heads.net/avatar/${encodeURIComponent(player.username ?? "")}/8`
-              : undefined)
-          }
-          alt=""
-        />
+        <AvatarImage {...rosterAvatarSource(player)} alt="" />
       </Avatar>
       <span
         className="mc-roster-name mc-layout-player-list-4"
