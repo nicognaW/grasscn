@@ -66,7 +66,7 @@ const CalendarCaptionLabel = ({
   );
 };
 
-const CalendarChevron = () => <></>;
+const CalendarChevron = () => null;
 
 const CalendarMonthButton = ({
   direction,
