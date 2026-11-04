@@ -15,17 +15,17 @@ type CollectedMetric =
 const digest = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 
-export const test = base.extend<{ grasscnVerificationArtifacts: void }>({
+export const test = base.extend<{ grasscnVerificationArtifacts: undefined }>({
   grasscnVerificationArtifacts: [
     async ({ page }, use, info) => {
-      await use();
+      await use(undefined);
 
       const files = existsSync(info.outputDir)
         ? readdirSync(info.outputDir)
         : [];
 
       const artifacts = files.flatMap((file) => {
-        if (!/actual.*\.png$/i.test(file)) {
+        if (!/actual.*\.png$/iu.test(file)) {
           return [];
         }
 
