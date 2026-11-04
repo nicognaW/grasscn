@@ -12,7 +12,10 @@ import type {
   RegisteredEntryContent,
   InputGroupEntryElement,
 } from "@ppt/installed/control-capture-protocol";
-import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import type {
+  InstalledTextRegistry,
+  InstalledTextItem,
+} from "@ppt/installed/text-verification-protocol";
 import { webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -224,9 +227,11 @@ const registry = JSON.parse(
   await readFile(webFile(path.join("registry.json")), "utf-8")
 ) as InstalledTextRegistry;
 
+// SAFETY: the authored registry uniquely declares input-group, selected by this existing fixed/validated route; a missing item retains its original later dereference failure.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact authored registry item producer projection; fresh read and original failure timing preserved.
 const item = registry.items.find(
   (registryItem) => registryItem.name === "input-group"
-);
+) as InstalledTextItem;
 
 // SAFETY: the initialized shadcn consumer configuration owns its optional rsc setting.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
@@ -249,7 +254,7 @@ const canonical = (bytes: Buffer) => {
   return s.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
-for (const entry of item!.files) {
+for (const entry of item.files) {
   const name = path.basename(entry.path);
   const source = await readFile(webFile(path.join(entry.path)));
 
