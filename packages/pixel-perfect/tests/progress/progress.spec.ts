@@ -144,7 +144,12 @@ test("Progress retains every original boss-bar PNG", () => {
     expect([image.width, image.height]).toEqual([182, 5]);
 
     const raw = Buffer.from(
-      minecraftProgressRgba[name as keyof typeof minecraftProgressRgba],
+      minecraftProgressRgba[
+        // SAFETY: The generated Progress PNG and RGBA records share the exact same 22 boss-bar sprite keys; this loop visits those original PNG keys and compares their paired decoded bytes.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+        name as keyof typeof minecraftProgressRgba
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
+      ],
       "base64"
     );
 

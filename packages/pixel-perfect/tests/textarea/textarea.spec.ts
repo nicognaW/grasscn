@@ -12,6 +12,8 @@ import type BoundaryReference1 from "../reference/textarea/manifest.json";
 const manifest = {
   cases: ["textarea", "textarea-cjk"].flatMap((directory) =>
     // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // SAFETY: The only input directories are textarea and textarea-cjk; their exact retained manifest schemas are the two adjacent type-only imports. Preserve the fresh reads and existing case projection.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
     (
       JSON.parse(
         readFileSync(
@@ -19,7 +21,9 @@ const manifest = {
           "utf-8"
         )
       ) as typeof BoundaryReference1 | typeof BoundaryReference2
-    ).cases.map((c) => ({ ...c, referenceDirectory: directory }))
+    )/* oxlint-enable typescript/no-unsafe-type-assertion */
+    .cases
+      .map((c) => ({ ...c, referenceDirectory: directory }))
   ),
 };
 

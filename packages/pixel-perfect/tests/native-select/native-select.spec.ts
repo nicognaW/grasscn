@@ -92,7 +92,11 @@ for (const dir of ["native-select", "native-select-extra"]) {
         await (c.state === "focus"
           ? page.locator("[data-subject]").focus()
           : page.evaluate(() => {
-              (document.activeElement as HTMLElement)?.blur();
+              // SAFETY: The controlled NativeSelect fixture focus belongs to its HTML body or native HTML control; retain the existing optional blur call, including null handling.
+              /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+              (document.activeElement as HTMLElement)
+                /* oxlint-enable typescript/no-unsafe-type-assertion */
+                ?.blur();
             }));
 
         if (c.state.endsWith("hover")) {
