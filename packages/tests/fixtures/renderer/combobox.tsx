@@ -71,10 +71,12 @@ export const ComboboxFixture = () => {
   const comboboxFixtureWidth = `${Number(p.get("width") ?? 200) * scale}px`;
   const comboboxFixtureX = `${Number(p.get("x") ?? 16) * scale}px`;
   const comboboxFixtureY = `${Number(p.get("y") ?? 16) * scale}px`;
+
   const comboboxNativeDimensions: Pick<
     React.CSSProperties,
     "height" | "maxHeight"
   > = {};
+
   if (part === "list") {
     comboboxNativeDimensions.height = Number(p.get("height") ?? 36) * scale;
     comboboxNativeDimensions.maxHeight = Number(p.get("height") ?? 36) * scale;

@@ -132,10 +132,12 @@ export const CalendarFixture = () => {
     type NativeCalendarCaptionProps = NonNullable<
       CalendarProps["captionTextProps"]
     > & { "data-subject"?: "true" };
+
     type NativeCalendarProps = CalendarProps & {
       "data-subject"?: "true";
       captionTextProps?: NativeCalendarCaptionProps;
     };
+
     const props: NativeCalendarProps = {
       scale,
       mode: "single",
@@ -148,13 +150,16 @@ export const CalendarFixture = () => {
           : undefined,
       id: part === "surface" ? "subject" : undefined,
     };
+
     if (part === "surface") {
       props["data-subject"] = "true";
     }
+
     props.classNames =
       part === "surface"
         ? { months: "mc-native-hidden", nav: "mc-native-hidden" }
         : undefined;
+
     if (part === "label") {
       // SAFETY: the existing native-reference stylesheet consumes this exact finite CSS-variable map; satisfies checks its values before the CSSProperties view.
       props["captionTextProps"] = {
@@ -172,6 +177,7 @@ export const CalendarFixture = () => {
       };
       props["formatters"] = { formatCaption: () => label };
     }
+
     if (part === "surface" && q.has("text")) {
       props["components"] = {
         Months: () => (
@@ -188,6 +194,7 @@ export const CalendarFixture = () => {
         Nav: () => <></>,
       };
     }
+
     if (part === "cell") {
       // SAFETY: the existing native-reference stylesheet consumes this exact finite CSS-variable map; satisfies checks its values before the CSSProperties view.
       props["components"] = {

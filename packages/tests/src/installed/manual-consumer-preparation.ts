@@ -172,10 +172,12 @@ export const prepareManualConsumer = async (
               !file.destination.includes("..") &&
                 !path.isAbsolute(file.destination)
             );
+
             /** @type {Response} */
             const response: Response = await fetch(
               `${origin}${file.url}?download=1`
             );
+
             assert.ok(response.ok, `Download complete ${file.destination}`);
             assert.equal(
               response.headers.get("x-grasscn-destination"),

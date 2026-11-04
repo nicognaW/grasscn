@@ -169,9 +169,11 @@ export const assertRegistryInstallation = async (
       let importCount = 0;
 
       const bytes = await readFile(filename);
+
       const installedPath = path
         .relative(consumer, filename)
         .replaceAll(path.sep, "/");
+
       const digest = sha256(bytes);
 
       if (!/\.[cm]?[jt]sx?$/u.test(filename)) {

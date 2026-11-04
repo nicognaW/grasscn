@@ -156,6 +156,7 @@ export const DataTableFixture = () => {
             <TableRow key={group.id}>
               {group.headers.map((header) => {
                 let sortOrder: "ascending" | "descending" | "none";
+
                 if (header.column.getIsSorted() === "asc") {
                   sortOrder = "ascending";
                 } else {
@@ -164,7 +165,9 @@ export const DataTableFixture = () => {
                       ? "descending"
                       : "none";
                 }
+
                 let headerContent: React.ReactNode;
+
                 if (header.isPlaceholder) {
                   headerContent = null;
                 } else {
@@ -175,6 +178,7 @@ export const DataTableFixture = () => {
                       <table.FlexRender header={header} />
                     );
                 }
+
                 return (
                   <TableHead key={header.id} aria-sort={sortOrder}>
                     {headerContent}

@@ -46,6 +46,7 @@ export const ChatFamilyFixture = () => {
   const chatFixtureY = `${Number(q.get("y") ?? 16) * scale}px`;
   const chatFixtureWidth = `${scaledWidth}px`;
   const chatNativeDimensions: Pick<React.CSSProperties, "height"> = {};
+
   if (native) {
     chatNativeDimensions.height = Number(q.get("height") ?? 9) * scale;
   }

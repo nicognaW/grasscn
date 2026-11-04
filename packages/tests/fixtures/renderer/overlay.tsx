@@ -84,7 +84,9 @@ export const OverlayFixture = () => {
     scale?: typeof scale;
     style?: React.CSSProperties;
   }
+
   const textProps: OverlayTextProbeProps = {};
+
   if (native && part !== "surface") {
     textProps["id"] = "subject";
     textProps["scale"] = scale;
@@ -95,9 +97,11 @@ export const OverlayFixture = () => {
       top: y,
       width: width * scale,
     } satisfies React.CSSProperties;
+
     if (p.has("wrapWidth")) {
       textProps.maxWidth = Number(p.get("wrapWidth"));
     }
+
     textProps["align"] = p.get("align") ?? "left";
     textProps["data-subject"] = "true";
   }
@@ -181,26 +185,32 @@ export const OverlayFixture = () => {
     React.ComponentProps<typeof Drawer.Drawer>,
     "swipeDirection" | "snapPoints" | "snapPoint" | "onSnapPointChange"
   > = {};
+
   if (isDrawer) {
     let swipeDirection: NonNullable<
       React.ComponentProps<typeof Drawer.Drawer>["swipeDirection"]
     >;
+
     if (side === "bottom") {
       swipeDirection = "down" as const;
     } else {
       swipeDirection = side === "top" ? ("up" as const) : side;
     }
+
     drawerOptions.swipeDirection = swipeDirection;
+
     if (p.has("snap")) {
       drawerOptions.onSnapPointChange = setSnap;
       drawerOptions.snapPoint = snap;
       drawerOptions.snapPoints = [0.25, 0.5, 1];
     }
   }
+
   const contentStyleOptions: Pick<
     React.ComponentProps<typeof Content>,
     "style"
   > = {};
+
   if (native) {
     contentStyleOptions.style = geom;
   } else if (p.has("snap")) {

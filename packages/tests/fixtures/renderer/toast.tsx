@@ -22,15 +22,19 @@ const SonnerFixture = () => {
       const toastIds = ids.current;
       const appendToastId = toastIds.push;
       const createToast = notify;
+
       const notificationContent = p.has("rich") ? (
         <strong>{p.get("label") ?? "World saved"}</strong>
       ) : (
         (p.get("label") ?? "World saved")
       );
+
       const notificationOptions: NonNullable<Parameters<typeof notify>[1]> = {};
+
       if (p.has("text")) {
         notificationOptions.description = p.get("text");
       }
+
       if (p.has("actions")) {
         notificationOptions.action = {
           label: "Undo",
@@ -44,6 +48,7 @@ const SonnerFixture = () => {
         };
         notificationOptions.closeButton = true;
       }
+
       notificationOptions.dismissible = !p.has("disabled");
       notificationOptions.duration = Number(p.get("duration") ?? 5000);
       appendToastId.call(

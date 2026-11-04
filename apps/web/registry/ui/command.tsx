@@ -73,6 +73,7 @@ const CommandDialog = ({
   scale?: Scale;
 }) => {
   const isOpen = Boolean(props.open ?? props.defaultOpen);
+
   const [focusCapture, setFocusCapture] = React.useState<{
     element: HTMLElement | null;
     open: boolean;

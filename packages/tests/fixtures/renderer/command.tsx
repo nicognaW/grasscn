@@ -55,10 +55,12 @@ export const CommandFixture = () => {
   const commandFixtureWidth = `${Number(p.get("width") ?? 200) * scale}px`;
   const commandFixtureX = `${Number(p.get("x") ?? 16) * scale}px`;
   const commandFixtureY = `${Number(p.get("y") ?? 16) * scale}px`;
+
   const commandNativeDimensions: Pick<
     React.CSSProperties,
     "height" | "maxHeight"
   > = {};
+
   if (part === "list" && native) {
     commandNativeDimensions.height = Number(p.get("height") ?? 36) * scale;
     commandNativeDimensions.maxHeight = Number(p.get("height") ?? 36) * scale;

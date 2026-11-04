@@ -120,6 +120,7 @@ export const SidebarFixture = () => {
     defaultOpen: !p.has("collapsed"),
     scale,
   };
+
   if (p.has("controlled")) {
     providerVisibility.open = open;
   }
