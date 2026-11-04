@@ -34,10 +34,22 @@ export const assertExternalProject = async (
   project: string,
   excludedRoots: string[]
 ) => {
-  const resolved = await realpath(project);
+  const [projectPath, ...excludedPaths] = await Promise.allSettled(
+    [project, ...excludedRoots].map(async (root) => await realpath(root))
+  );
 
-  for (const root of excludedRoots) {
-    const excluded = await realpath(root);
+  if (projectPath.status === "rejected") {
+    throw projectPath.reason;
+  }
+
+  const resolved = projectPath.value;
+
+  for (const excludedPath of excludedPaths) {
+    if (excludedPath.status === "rejected") {
+      throw excludedPath.reason;
+    }
+
+    const excluded = excludedPath.value;
     assert.ok(
       !within(resolved, excluded) && !within(excluded, resolved),
       "Consumer must be physically outside the repository/workspace and its ancestors"
@@ -102,30 +114,46 @@ export const assertIndependentDependencies = async (project: string) => {
   const require = createRequire(path.join(consumer, "package.json"));
   const ownedModules = path.join(consumer, "node_modules");
 
+  const ancestorPaths: string[] = [];
+
   for (
     let ancestor = path.dirname(consumer);
     ;
     ancestor = path.dirname(ancestor)
   ) {
-    let ancestorModules = false;
-
-    try {
-      const ancestorStat = await stat(path.join(ancestor, "node_modules"));
-      ancestorModules = ancestorStat.isDirectory();
-    } catch (error) {
-      if (!isMissingFileError(error)) {
-        throw error;
-      }
-    }
-
-    assert.ok(
-      !ancestorModules,
-      "Consumer must use its own node_modules without ancestor module fallback"
-    );
+    ancestorPaths.push(ancestor);
 
     if (path.dirname(ancestor) === ancestor) {
       break;
     }
+  }
+
+  const ancestorInputs = await Promise.allSettled(
+    ancestorPaths.map(async (ancestor) => {
+      let ancestorModules = false;
+
+      try {
+        const ancestorStat = await stat(path.join(ancestor, "node_modules"));
+        ancestorModules = ancestorStat.isDirectory();
+      } catch (error) {
+        if (!isMissingFileError(error)) {
+          throw error;
+        }
+      }
+
+      return ancestorModules;
+    })
+  );
+
+  for (const ancestorInput of ancestorInputs) {
+    if (ancestorInput.status === "rejected") {
+      throw ancestorInput.reason;
+    }
+
+    assert.ok(
+      !ancestorInput.value,
+      "Consumer must use its own node_modules without ancestor module fallback"
+    );
   }
 
   /** @type {Record<string, {path: string, version: string, packageSha256: string}>} */
@@ -141,41 +169,58 @@ export const assertIndependentDependencies = async (project: string) => {
 
   sortedDependencyNames.sort();
 
-  for (const name of sortedDependencyNames) {
-    let resolved;
+  const dependencyInputs = await Promise.allSettled(
+    sortedDependencyNames.map(async (name) => {
+      let resolved;
 
-    try {
-      resolved = require.resolve(`${name}/package.json`);
-    } catch {
-      resolved = require.resolve(name);
-    }
-
-    const physical = await realpath(resolved);
-    assert.ok(
-      within(physical, ownedModules),
-      `${name} must resolve through consumer's own node_modules, received ${physical}`
-    );
-    let directory = path.dirname(physical);
-
-    while (within(directory, ownedModules)) {
       try {
-        const bytes = await readFile(path.join(directory, "package.json"));
-        /** @type {unknown} */
-        const installed: unknown = JSON.parse(bytes.toString("utf-8"));
-
-        if (isInstalledMetadata(installed) && installed.name === name) {
-          identities[name] = {
-            packageSha256: sha256(bytes),
-            path: physical,
-            version: installed.version,
-          };
-          break;
-        }
+        resolved = require.resolve(`${name}/package.json`);
       } catch {
-        /* Missing candidates are expected while walking package/import resolution. */
+        resolved = require.resolve(name);
       }
 
-      directory = path.dirname(directory);
+      const physical = await realpath(resolved);
+      assert.ok(
+        within(physical, ownedModules),
+        `${name} must resolve through consumer's own node_modules, received ${physical}`
+      );
+      let identity: (typeof identities)[string] | undefined;
+      let directory = path.dirname(physical);
+
+      while (within(directory, ownedModules)) {
+        try {
+          const bytes = await readFile(path.join(directory, "package.json"));
+          /** @type {unknown} */
+          const installed: unknown = JSON.parse(bytes.toString("utf-8"));
+
+          if (isInstalledMetadata(installed) && installed.name === name) {
+            identity = {
+              packageSha256: sha256(bytes),
+              path: physical,
+              version: installed.version,
+            };
+            break;
+          }
+        } catch {
+          /* Missing candidates are expected while walking package/import resolution. */
+        }
+
+        directory = path.dirname(directory);
+      }
+
+      return { identity, name };
+    })
+  );
+
+  for (const dependencyInput of dependencyInputs) {
+    if (dependencyInput.status === "rejected") {
+      throw dependencyInput.reason;
+    }
+
+    const { identity, name } = dependencyInput.value;
+
+    if (identity !== undefined) {
+      identities[name] = identity;
     }
 
     assert.ok(
@@ -195,32 +240,61 @@ export const directoryIdentity = async (
   /** @type {Record<string,string>} */
   const files: DirectoryIdentity["files"] = {};
 
-  /** @param {string} relative @returns {Promise<void>} */
-  const visit = async (relative: string): Promise<void> => {
-    for (const entry of await readdir(path.join(directory, relative), {
+  type DirectoryFileIdentity = [file: string, sha256: string];
+
+  /** @param relative - Source-relative directory; results retain depth-first order. */
+  const visit = async (relative: string): Promise<DirectoryFileIdentity[]> => {
+    const entries = await readdir(path.join(directory, relative), {
       withFileTypes: true,
-    })) {
-      if (skipped.has(entry.name)) {
-        continue;
+    });
+
+    const inputs = await Promise.allSettled(
+      entries.map(async (entry): Promise<DirectoryFileIdentity[]> => {
+        if (skipped.has(entry.name)) {
+          return [];
+        }
+
+        const filename = path.join(relative, entry.name);
+        assert.ok(
+          !entry.isSymbolicLink(),
+          `Consumer identity excludes symlink inputs: ${filename}`
+        );
+
+        if (entry.isDirectory()) {
+          return await visit(filename);
+        }
+
+        if (entry.isFile()) {
+          return [
+            [
+              filename.replaceAll(path.sep, "/"),
+              sha256(await readFile(path.join(directory, filename))),
+            ],
+          ];
+        }
+
+        return [];
+      })
+    );
+
+    const collected: DirectoryFileIdentity[] = [];
+
+    for (const input of inputs) {
+      if (input.status === "rejected") {
+        throw input.reason;
       }
 
-      const filename = path.join(relative, entry.name);
-      assert.ok(
-        !entry.isSymbolicLink(),
-        `Consumer identity excludes symlink inputs: ${filename}`
-      );
-
-      if (entry.isDirectory()) {
-        await visit(filename);
-      } else if (entry.isFile()) {
-        files[filename.replaceAll(path.sep, "/")] = sha256(
-          await readFile(path.join(directory, filename))
-        );
+      for (const file of input.value) {
+        collected.push(file);
       }
     }
+
+    return collected;
   };
 
-  await visit("");
+  for (const [filename, digest] of await visit("")) {
+    files[filename] = digest;
+  }
 
   const sortedFiles = Object.entries(files);
   sortedFiles.sort(([first], [second]) => {

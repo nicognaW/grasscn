@@ -223,14 +223,26 @@ export const readPreparedConsumerProjects = async ({
       assert.equal(runtime.publicInputsSha256, prepared.publicInputsSha256);
     }
 
-    for (const [name, digest] of Object.entries(artifacts.files)) {
-      const file = path.resolve(artifactDirectory, name);
-      assert.ok(
-        file.startsWith(path.resolve(artifactDirectory) + path.sep),
-        "Artifact must remain within its receipt owner"
-      );
+    const artifactInputs = await Promise.allSettled(
+      Object.entries(artifacts.files).map(async ([name, digest]) => {
+        const file = path.resolve(artifactDirectory, name);
+        assert.ok(
+          file.startsWith(path.resolve(artifactDirectory) + path.sep),
+          "Artifact must remain within its receipt owner"
+        );
+
+        return { bytes: await readFile(file), digest, name };
+      })
+    );
+
+    for (const artifactInput of artifactInputs) {
+      if (artifactInput.status === "rejected") {
+        throw artifactInput.reason;
+      }
+
+      const { bytes, digest, name } = artifactInput.value;
       assert.equal(
-        sha256(await readFile(file)),
+        sha256(bytes),
         digest,
         `Ordinary consumer artifact changed: ${name}`
       );
@@ -278,30 +290,38 @@ export const readPreparedConsumerProjects = async ({
     observedByFramework.set(project.framework, project);
   }
 
-  for (const project of projects) {
-    if (runtime) {
-      const observed =
-        kind === "manual"
-          ? observedByFramework.get(project.framework)
-          : preparedProject({
-              ...runtime,
-              directory: runtime.consumer,
-              framework: "vite",
-            });
+  const projectInputs = await Promise.allSettled(
+    projects.map(async (project) => {
+      if (runtime) {
+        const observed =
+          kind === "manual"
+            ? observedByFramework.get(project.framework)
+            : preparedProject({
+                ...runtime,
+                directory: runtime.consumer,
+                framework: "vite",
+              });
 
-      assert.ok(
-        observed,
-        "Passed ordinary runtime must cover this prepared project"
-      );
-      assert.deepEqual(
-        observed.inputs,
-        project.inputs,
-        "Ordinary runtime input identity differs from preparation"
-      );
-      assert.deepEqual(observed.installedBytes, project.installedBytes);
+        assert.ok(
+          observed,
+          "Passed ordinary runtime must cover this prepared project"
+        );
+        assert.deepEqual(
+          observed.inputs,
+          project.inputs,
+          "Ordinary runtime input identity differs from preparation"
+        );
+        assert.deepEqual(observed.installedBytes, project.installedBytes);
+      }
+
+      await validatePreparedProject(project);
+    })
+  );
+
+  for (const projectInput of projectInputs) {
+    if (projectInput.status === "rejected") {
+      throw projectInput.reason;
     }
-
-    await validatePreparedProject(project);
   }
 
   return projects.map((project) => ({

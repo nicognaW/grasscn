@@ -282,46 +282,77 @@ for (const item of registry.items) {
   }
 }
 
-const inspect = async function inspect(directory: string, absolute: string) {
-  for (const entry of await readdir(absolute, {
-    withFileTypes: true,
-  })) {
-    const relative = path.posix.join(directory, entry.name);
+const inspect = async function inspect(
+  directory: string,
+  absolute: string
+): Promise<string[]> {
+  const entries = await readdir(absolute, { withFileTypes: true });
 
-    if (entry.isDirectory()) {
-      if (
-        directory === "preview" &&
-        ["registry", "scripts", "node_modules", "dist", "public"].includes(
-          entry.name
-        )
-      ) {
-        continue;
-      }
+  const inputs = await Promise.allSettled(
+    entries.map(async (entry): Promise<string[]> => {
+      const relative = path.posix.join(directory, entry.name);
 
-      await inspect(relative, path.join(absolute, entry.name));
-    } else if (/\.[cm]?[jt]sx?$/u.test(entry.name)) {
-      const source = await readFile(path.join(absolute, entry.name), "utf-8");
-
-      for (const match of source.matchAll(
-        /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?|\brequire\s*\(\s*)["'](?<specifier>[^"']+)["']/gu
-      )) {
+      if (entry.isDirectory()) {
         if (
-          banned(match[1]) ||
-          (cmdk(match[1]) && relative !== "registry/ui/command.tsx")
+          directory === "preview" &&
+          ["registry", "scripts", "node_modules", "dist", "public"].includes(
+            entry.name
+          )
         ) {
-          failures.push(`${relative}: ${match[1]}`);
+          return [];
         }
+
+        return await inspect(relative, path.join(absolute, entry.name));
+      } else if (/\.[cm]?[jt]sx?$/u.test(entry.name)) {
+        const source = await readFile(path.join(absolute, entry.name), "utf-8");
+        const messages: string[] = [];
+
+        for (const match of source.matchAll(
+          /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?|\brequire\s*\(\s*)["'](?<specifier>[^"']+)["']/gu
+        )) {
+          if (
+            banned(match[1]) ||
+            (cmdk(match[1]) && relative !== "registry/ui/command.tsx")
+          ) {
+            messages.push(`${relative}: ${match[1]}`);
+          }
+        }
+
+        return messages;
       }
+
+      return [];
+    })
+  );
+
+  const messages: string[] = [];
+
+  for (const input of inputs) {
+    if (input.status === "rejected") {
+      throw input.reason;
+    }
+
+    for (const message of input.value) {
+      messages.push(message);
     }
   }
+
+  return messages;
 };
 
-await inspect("registry", path.join(sourceRoot, "registry"));
+for (const failure of await inspect(
+  "registry",
+  path.join(sourceRoot, "registry")
+)) {
+  failures.push(failure);
+}
 
-await inspect(
+for (const failure of await inspect(
   "preview",
   rootArgument === -1 ? webRoot : path.join(root, "preview")
-);
+)) {
+  failures.push(failure);
+}
 
 if (process.argv.includes("--built")) {
   const expected = new Set([

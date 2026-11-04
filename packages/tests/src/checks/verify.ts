@@ -74,22 +74,37 @@ const environment: NormalVerificationEnvironment = {
   workers,
 };
 
-for (const executable of [
-  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
-  "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
-]) {
-  try {
-    const info = await stat(executable);
-    environment.edge = { executable, modified: info.mtimeMs, size: info.size };
-    break;
-  } catch (error) {
-    if (
-      // SAFETY: this catch observes only fs.stat for the fixed native Edge executable paths.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Keep the native errno projection and original missing-file/rethrow behavior.
-      (error as NodeJS.ErrnoException).code !== "ENOENT"
-    ) {
-      throw error;
+const edgeInputs = await Promise.allSettled(
+  [
+    "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+    "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
+  ].map(async (executable) => {
+    try {
+      const info = await stat(executable);
+
+      return { executable, modified: info.mtimeMs, size: info.size };
+    } catch (error) {
+      if (
+        // SAFETY: this catch observes only fs.stat for the fixed native Edge executable paths.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Keep the native errno projection and original missing-file/rethrow behavior.
+        (error as NodeJS.ErrnoException).code !== "ENOENT"
+      ) {
+        throw error;
+      }
     }
+
+    return null;
+  })
+);
+
+for (const edgeInput of edgeInputs) {
+  if (edgeInput.status === "rejected") {
+    throw edgeInput.reason;
+  }
+
+  if (edgeInput.value !== null) {
+    environment.edge = edgeInput.value;
+    break;
   }
 }
 
