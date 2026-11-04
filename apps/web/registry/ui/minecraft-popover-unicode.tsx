@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
 import { popoverGlyphAtlas } from "./minecraft-popover-atlas";
@@ -67,9 +68,23 @@ export const PopoverUnicodeLine = ({
   width: number;
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
-  const [ready, setReady] = React.useState(false);
+  const { attach, connection } = useCanvasPaintConnection(ref);
 
-  React.useLayoutEffect(() => {
+  const paintInput = React.useMemo(
+    () => ({ bold, connection, scale, text, width }),
+    [bold, scale, text, width, connection]
+  );
+
+  const [completedInput, setCompletedInput] =
+    React.useState<typeof paintInput>();
+
+  const ready = completedInput === paintInput;
+
+  React.useLayoutEffect((): (() => void) | undefined => {
+    if (connection === null) {
+      return undefined;
+    }
+
     let disposed = false;
     let frame = 0;
     let signature = "";
@@ -87,7 +102,6 @@ export const PopoverUnicodeLine = ({
       );
     }
 
-    setReady(false);
     const glyphResources = Promise.all([loadUnihex(), loadAlpha()]);
 
     const paintAfterGlyphResources = async () => {
@@ -213,7 +227,7 @@ export const PopoverUnicodeLine = ({
             x += glyph.advance + (bold ? glyph.boldOffset : 0);
           }
 
-          setReady(supported);
+          setCompletedInput(supported ? paintInput : undefined);
         }
 
         frame = requestAnimationFrame(tick);
@@ -229,7 +243,7 @@ export const PopoverUnicodeLine = ({
       cancelAnimationFrame(frame);
       disposePopoverGlyphs(context);
     };
-  }, [text, bold, scale, width]);
+  }, [text, bold, scale, width, paintInput, connection]);
 
   const lineStyle: PopoverUnicodeStyle = {
     "--mc-popover-unicode-height": `${9 * scale}px`,
@@ -239,7 +253,7 @@ export const PopoverUnicodeLine = ({
   return (
     <span className="mc-popover-unicode" style={lineStyle}>
       <canvas
-        ref={ref}
+        ref={attach}
         data-mc-popover-unicode-ready={ready}
         aria-hidden="true"
         className="mc-popover-unicode-canvas"

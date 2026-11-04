@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
 import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
@@ -87,11 +88,25 @@ export const MinecraftUnicodeLabel = ({
 }) => {
   const root = React.useRef<HTMLSpanElement>(null);
   const canvas = React.useRef<HTMLCanvasElement>(null);
+  const { attach, connection } = useCanvasPaintConnection(canvas);
 
   const [width, setWidth] = React.useState<number>();
-  const [bitmap, setBitmap] = React.useState(false);
 
-  React.useLayoutEffect(() => {
+  const paintInput = React.useMemo(
+    () => ({ atlas, connection, text }),
+    [atlas, text, connection]
+  );
+
+  const [completedInput, setCompletedInput] =
+    React.useState<typeof paintInput>();
+
+  const bitmap = completedInput === paintInput;
+
+  React.useLayoutEffect((): (() => void) | undefined => {
+    if (connection === null) {
+      return undefined;
+    }
+
     // SAFETY: React attaches this private, unkeyed <span> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLSpanElement capture.
     const node = root.current as HTMLSpanElement;
@@ -112,7 +127,6 @@ export const MinecraftUnicodeLabel = ({
     }
 
     setUnihexAtlas(context, atlas);
-    setBitmap(false);
     const glyphResources = Promise.all([loadUnihex(), loadAlpha()]);
 
     const paintAfterGlyphResources = async () => {
@@ -216,7 +230,7 @@ export const MinecraftUnicodeLabel = ({
             }
           }
 
-          setBitmap(true);
+          setCompletedInput(paintInput);
         }
 
         frame = requestAnimationFrame(tick);
@@ -227,7 +241,7 @@ export const MinecraftUnicodeLabel = ({
 
     paintAfterGlyphResources().catch(() => {
       if (!disposed) {
-        setBitmap(false);
+        setCompletedInput(undefined);
       }
     });
 
@@ -236,7 +250,7 @@ export const MinecraftUnicodeLabel = ({
       cancelAnimationFrame(frame);
       disposeUnihex(context);
     };
-  }, [text, atlas]);
+  }, [text, atlas, paintInput, connection]);
 
   const labelStyle: UnicodeLabelStyle = {
     "--mc-unicode-width":
@@ -251,7 +265,7 @@ export const MinecraftUnicodeLabel = ({
       style={labelStyle}
     >
       <canvas
-        ref={canvas}
+        ref={attach}
         aria-hidden="true"
         className="mc-unicode-label-canvas"
       />

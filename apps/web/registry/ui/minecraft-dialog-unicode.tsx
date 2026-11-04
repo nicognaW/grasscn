@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { useCanvasPaintConnection } from "./minecraft-canvas-connection";
 import { dialogUnihexAtlas } from "./minecraft-dialog-atlas";
 import {
   positionUnihex,
@@ -63,9 +64,23 @@ export const DialogUnicodeLine = ({
   width: number;
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
-  const [ready, setReady] = React.useState(false);
+  const { attach, connection } = useCanvasPaintConnection(ref);
 
-  React.useLayoutEffect(() => {
+  const paintInput = React.useMemo(
+    () => ({ bold, connection, scale, text, width }),
+    [bold, scale, text, width, connection]
+  );
+
+  const [completedInput, setCompletedInput] =
+    React.useState<typeof paintInput>();
+
+  const ready = completedInput === paintInput;
+
+  React.useLayoutEffect((): (() => void) | undefined => {
+    if (connection === null) {
+      return undefined;
+    }
+
     let disposed = false;
     let frame = 0;
     let signature = "";
@@ -84,7 +99,6 @@ export const DialogUnicodeLine = ({
     }
 
     setUnihexAtlas(context, dialogUnihexAtlas);
-    setReady(false);
     const glyphResources = Promise.all([loadUnihex(), loadAlpha()]);
 
     const paintAfterGlyphResources = async () => {
@@ -166,7 +180,7 @@ export const DialogUnicodeLine = ({
             }
           }
 
-          setReady(true);
+          setCompletedInput(paintInput);
         }
 
         frame = requestAnimationFrame(tick);
@@ -182,7 +196,7 @@ export const DialogUnicodeLine = ({
       cancelAnimationFrame(frame);
       disposeUnihex(context);
     };
-  }, [text, bold, scale, width]);
+  }, [text, bold, scale, width, paintInput, connection]);
 
   const canvasStyle: DialogUnicodeStyle = {
     "--mc-dialog-unicode-height": `${9 * scale}px`,
@@ -191,7 +205,7 @@ export const DialogUnicodeLine = ({
 
   return (
     <canvas
-      ref={ref}
+      ref={attach}
       data-mc-dialog-unicode-ready={ready}
       aria-hidden="true"
       className="block h-(--mc-dialog-unicode-height) w-(--mc-dialog-unicode-width)"
