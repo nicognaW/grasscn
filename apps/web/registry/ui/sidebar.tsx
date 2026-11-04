@@ -433,6 +433,7 @@ const SidebarControl = ({
         buttonVariants({ size: "default", variant: "default" }),
         className
       )}
+      // SAFETY: This view adds only the numeric --mc-scale custom property to the caller's CSSProperties; MinecraftRender forwards the unchanged inline object and spread precedence.
       style={{ "--mc-scale": scale, ...style } as React.CSSProperties}
       {...props}
       aria-disabled={inactive || props["aria-disabled"]}

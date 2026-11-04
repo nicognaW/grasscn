@@ -467,10 +467,13 @@ const Toaster = ({
 
     const observer = new MutationObserver((records) => {
       const relevant = records.some((record) => {
+        // SAFETY: MutationObserver supplies genuine DOM Nodes; the existing ELEMENT_NODE check proves Element (including SVG), and this branch uses only closest().
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- The browser-owned MutationRecord and existing nodeType discriminator prove this exact Element projection. */
         const target =
           record.target.nodeType === Node.ELEMENT_NODE
-            ? (record.target as HTMLElement)
+            ? (record.target as Element)
             : record.target.parentElement;
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
 
         if (
           target?.closest("[data-mc-sonner-art],[data-mc-sonner-button-art]")

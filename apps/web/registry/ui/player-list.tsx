@@ -152,7 +152,7 @@ const renderRosterEntry = (
 
   const bars = selectedBars;
 
-  const key = `gui/sprites/icon/ping_${bars}` as keyof typeof playerListAssets;
+  const key: keyof typeof playerListAssets = `gui/sprites/icon/ping_${bars}`;
 
   const avatarStyle: PlayerListAvatarStyle = {
     "--mc-roster-avatar-height": `${8 * scale}px`,

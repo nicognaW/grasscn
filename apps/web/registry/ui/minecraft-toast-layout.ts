@@ -126,9 +126,9 @@ export const toastLayout = async function toastLayout(
 
   const advance = (char: string) => glyph(char).advance;
 
-  const wrap = (text: string | null) => {
+  const wrap = (text: string | null): string[] => {
     if (text === null || text === undefined || text === "") {
-      return [] as string[];
+      return [];
     }
 
     const lines: string[] = [];
