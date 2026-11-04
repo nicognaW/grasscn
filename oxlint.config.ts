@@ -73,6 +73,7 @@ export default defineConfig({
     },
     {
       files: [
+        "**/apps/web/scripts/**/*.{test,spec}.{ts,tsx,js,mjs}",
         "**/packages/tests/tests/**/*.{test,spec}.{ts,tsx,js,mjs}",
         "**/packages/pixel-perfect/tests/**/*.{test,spec}.{ts,tsx,js,mjs}",
       ],
