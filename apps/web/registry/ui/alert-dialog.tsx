@@ -215,6 +215,7 @@ const AlertDialogContent = ({
         naturalTitle > innerWidth ||
         naturalHeight > availableHeight;
 
+      // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter updates native DOM readiness/layout attributes; the stored state value is the element identity, not a mutable render model.
       node.dataset.mcConfirmationCompact = String(nextCompact);
       setCompact(nextCompact);
 
@@ -223,6 +224,7 @@ const AlertDialogContent = ({
         Math.floor(node.clientWidth / scale) * scale
       );
 
+      // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter updates native DOM readiness/layout attributes; the stored state value is the element identity, not a mutable render model.
       node.dataset.mcConfirmationStacked = String(
         nextCompact && availableWidth < 304 * scale
       );
@@ -244,7 +246,9 @@ const AlertDialogContent = ({
       const width = (nextCompact ? node.clientWidth : node.offsetWidth) / scale;
       const height = node.offsetHeight / scale;
 
+      // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter sets native CSSStyleDeclaration positioning on the committed DOM element, not a React state record.
       node.style.left = `${Math.floor((Math.ceil(innerWidth / scale) - boxWidth) / 2) * scale}px`;
+      // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter sets native CSSStyleDeclaration positioning on the committed DOM element, not a React state record.
       node.style.top = `${Math.floor((Math.ceil(innerHeight / scale) - height) / 2) * scale}px`;
       const bounds = node.getBoundingClientRect();
 
@@ -280,6 +284,7 @@ const AlertDialogContent = ({
         item.style.setProperty("--mc-confirmation-x", `${next}px`);
       }
 
+      // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter updates native DOM readiness/layout attributes; the stored state value is the element identity, not a mutable render model.
       node.dataset.mcConfirmationReady = "true";
     };
 

@@ -47,7 +47,7 @@ export const ToggleGroupFixture = () => {
     <ToggleGroupItem
       render={
         p.has("asChild") ? (
-          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ToggleGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/anchor-has-content -- ToggleGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
           <a href={`#${v}`} />
         ) : undefined
       }

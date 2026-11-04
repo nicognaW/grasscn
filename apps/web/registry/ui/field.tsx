@@ -88,6 +88,7 @@ const FieldLabel = ({
   className,
   ...props
 }: React.ComponentProps<typeof Label>) => (
+  // oxlint-disable-next-line jsx-a11y/label-has-associated-control -- FieldLabel forwards the caller’s real htmlFor and children through the complete Label props contract; control association belongs to that caller.
   <Label data-slot="field-label" className={cn(className)} {...props} />
 );
 

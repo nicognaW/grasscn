@@ -25,6 +25,7 @@ test("player list supports pointer and keyboard selection without UI sound", asy
     (window as PlayerListPlaybackState).played = 0;
     const audioMockDescriptor: PropertyDescriptor = {};
     audioMockDescriptor.value = class {
+      // oxlint-disable-next-line eslint/class-methods-use-this -- This method belongs to the browser Audio replacement serialized inside addInitScript; keep its prototype dispatch and recorder behavior.
       play() {
         // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
         // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.

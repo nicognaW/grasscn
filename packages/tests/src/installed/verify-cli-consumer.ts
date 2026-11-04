@@ -405,7 +405,10 @@ try {
       );
 
       try {
-        const response = await fetch(`http://127.0.0.1:${port}`);
+        const response =
+          /* oxlint-disable eslint/no-await-in-loop -- Probe the one owned host sequentially and stop at its first successful response; each retry retains the original exit/attempt checks. */ await fetch(
+            `http://127.0.0.1:${port}`
+          ); /* oxlint-enable eslint/no-await-in-loop */
 
         if (response.ok) {
           break;
@@ -418,7 +421,9 @@ try {
         attempt < 120,
         "CLI consumer production host readiness timeout"
       );
-      await Bun.sleep(500);
+      /* oxlint-disable eslint/no-await-in-loop -- This bounded readiness retry intentionally waits 500 ms after a failed attempt; the next attempt uses the updated host state and attempt budget. */ await Bun.sleep(
+        500
+      ); /* oxlint-enable eslint/no-await-in-loop */
     }
 
     const observerRequire = createRequire(path.join(testRoot, "package.json"));

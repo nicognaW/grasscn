@@ -148,6 +148,7 @@ const CollapsibleContent = ({
 
       if (logical > 0) {
         setWidth(logical);
+        // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter updates native DOM readiness/layout attributes; the stored state value is the element identity, not a mutable render model.
         element.dataset.mcDisclosureReady = "true";
       }
     };

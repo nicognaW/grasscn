@@ -77,7 +77,10 @@ const ItemDemo = ({ scale }: DemoProps) => {
           </Item>
           <ItemSeparator />
           <Item
-            render={<a href="#item" />}
+            render={
+              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- This receiver gets the fixed nonempty world-2 title and description from Item; retain the actual render composition rather than overriding its accessible name.
+              <a href="#item" />
+            }
             selected={selected === "second"}
             className="demo-owned-item-3"
             onClick={() => {

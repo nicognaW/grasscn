@@ -148,7 +148,12 @@ const TooltipContent = ({
         <div className="mc-tooltip-lines">
           {lines
             ? lines.map((line, index) => (
-                <MinecraftText className="mc-tooltip-line" key={index}>
+                <MinecraftText
+                  className="mc-tooltip-line"
+                  /* eslint-disable react-doctor/no-array-index-as-key -- Wrapped plain-text lines occupy native layout rows; duplicate lines and width-driven reflow do not introduce consumer child identities. */
+                  key={index}
+                  /* eslint-enable react-doctor/no-array-index-as-key */
+                >
                   {line}
                 </MinecraftText>
               ))

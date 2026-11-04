@@ -369,7 +369,12 @@ const DialogDescription = ({
   const content =
     typeof text === "string" ? (
       text.split("\n\n").map((part, index) => (
-        <MinecraftDialogText key={index} item>
+        <MinecraftDialogText
+          /* eslint-disable react-doctor/no-array-index-as-key -- These private paragraphs are ordinal slots from one string; repeated paragraphs are valid and native font readiness stays with its paragraph slot. */
+          key={index}
+          /* eslint-enable react-doctor/no-array-index-as-key */
+          item
+        >
           {part}
         </MinecraftDialogText>
       ))

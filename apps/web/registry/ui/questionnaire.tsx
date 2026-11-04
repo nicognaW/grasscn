@@ -182,6 +182,7 @@ const QuestionnaireChoice = ({
               {...input}
               data-checked={state.checked ? "" : undefined}
               className={`mc-checkbox appearance-none ${input.className ?? ""}`}
+              // oxlint-disable-next-line shadcn/no-inline-styles -- The SDK input render contract supplies native styles alongside its ref and handlers; retain them while adding only the owned checkbox variables.
               style={minecraftStyle(
                 input.style,
                 (__style): QuestionnaireCheckboxStyle => ({

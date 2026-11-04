@@ -49,6 +49,7 @@ const BreadcrumbDemo = ({ scale }: DemoProps) => {
             <BreadcrumbItem>
               <BreadcrumbLink
                 render={
+                  // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- BreadcrumbLink supplies the fixed Saved games text to this anchor through its supported render seam.
                   <a
                     href="#breadcrumb"
                     onClick={() => {

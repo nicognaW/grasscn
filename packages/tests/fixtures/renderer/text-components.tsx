@@ -256,7 +256,12 @@ const TextComponentsFixture = () => {
       </BreadcrumbPage>
     ) : (
       <BreadcrumbLink
-        render={q.has("asChild") ? <a /> : undefined}
+        render={
+          q.has("asChild") ? (
+            // oxlint-disable-next-line jsx-a11y/anchor-has-content -- The owned asChild probes supply Continue or World through BreadcrumbLink children; preserve this empty render receiver so those real forwarding assertions stay meaningful.
+            <a />
+          ) : undefined
+        }
         {...common}
         scale={scale}
         maxWidth={width}

@@ -218,6 +218,7 @@ const SelectFixture = () => {
   const capture = params.get("component") === "select-list";
 
   const content = titles.map((title, index) => (
+    /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
     <SelectItem
       render={
         params.has("itemAsChild") && index === 0 ? <section /> : undefined
@@ -239,6 +240,7 @@ const SelectFixture = () => {
     >
       {title}
     </SelectItem>
+    /* oxlint-enable react-doctor/no-array-index-as-key */
   ));
 
   let selectedFixtureBranch1: ReactNode;
@@ -431,7 +433,7 @@ const RadioFixture = () => {
 
     if (params.has("itemAsChild")) {
       selectedFixtureBranch2 = params.has("anchor") ? (
-        // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- RadioGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+        // oxlint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/anchor-has-content -- RadioGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
         <a href="#radio" />
       ) : (
         // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- RadioGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
@@ -566,7 +568,7 @@ const SwitchFixture = () => {
 
   if (params.has("asChild")) {
     selectedFixtureBranch3 = params.has("anchor") ? (
-      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Switch supplies its actual name through explicit aria-labelledby when labelled and aria-label otherwise; keep this receiver empty to verify real forwarding.
+      // oxlint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/anchor-has-content -- Switch supplies its actual name through explicit aria-labelledby when labelled and aria-label otherwise; keep this receiver empty to verify real forwarding.
       <a href="#switch" />
     ) : (
       // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Switch supplies its actual name through explicit aria-labelledby when labelled and aria-label otherwise; keep this receiver empty to verify real forwarding.
@@ -747,9 +749,11 @@ const ContextFixture = () => {
       );
     } else {
       selectedNativeBody = labels.map((contextItemLabel, index) => (
+        /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
         <ContextMenuItem key={index} data-native-index={index}>
           {contextItemLabel}
         </ContextMenuItem>
+        /* oxlint-enable react-doctor/no-array-index-as-key */
       ));
     }
 
@@ -1221,9 +1225,11 @@ const MenubarFixture = () => {
       selectedNativeBody = <MenubarItem disabled>{nativeLabel}</MenubarItem>;
     } else {
       selectedNativeBody = labels.map((menubarItemLabel, index) => (
+        /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
         <MenubarItem key={index} data-native-index={index}>
           {menubarItemLabel}
         </MenubarItem>
+        /* oxlint-enable react-doctor/no-array-index-as-key */
       ));
     }
 
@@ -1581,9 +1587,11 @@ const DropdownFixture = () => {
       );
     } else {
       selectedNativeBody = labels.map((dropdownItemLabel, index) => (
+        /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
         <DropdownMenuItem key={index} data-native-index={index}>
           {dropdownItemLabel}
         </DropdownMenuItem>
+        /* oxlint-enable react-doctor/no-array-index-as-key */
       ));
     }
 
@@ -2186,7 +2194,15 @@ const AlertDialogCompositionFixture = () => {
       <AlertDialogContent render={<section />} ref={content}>
         <>
           <AlertDialogHeader>
-            <AlertDialogTitle render={<h3 />}>Composed title</AlertDialogTitle>
+            <AlertDialogTitle
+              render={
+                /* oxlint-disable jsx-a11y/heading-has-content -- AlertDialogTitle must forward its real Composed title children into this empty H3 receiver; receiver content would mask that existing contract. */
+                <h3 />
+                /* oxlint-enable jsx-a11y/heading-has-content */
+              }
+            >
+              Composed title
+            </AlertDialogTitle>
             <AlertDialogDescription render={<div />}>
               Composed description
             </AlertDialogDescription>
@@ -2264,7 +2280,15 @@ const DialogCompositionFixture = () => {
       >
         <>
           <DialogHeader>
-            <DialogTitle render={<h3 />}>Composed title</DialogTitle>
+            <DialogTitle
+              render={
+                /* oxlint-disable jsx-a11y/heading-has-content -- DialogTitle must forward its real Composed title children into this empty H3 receiver; receiver content would mask that existing contract. */
+                <h3 />
+                /* oxlint-enable jsx-a11y/heading-has-content */
+              }
+            >
+              Composed title
+            </DialogTitle>
             <DialogDescription render={<div />}>
               Composed description
             </DialogDescription>
@@ -2408,6 +2432,7 @@ const DialogFixture = () => {
           </DialogHeader>
           <DialogFooter>
             {labels.map((actionLabel, index) => (
+              /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
               <Button
                 key={index}
                 scale={scale}
@@ -2418,6 +2443,7 @@ const DialogFixture = () => {
               >
                 {actionLabel}
               </Button>
+              /* oxlint-enable react-doctor/no-array-index-as-key */
             ))}
           </DialogFooter>
           {!native && <DialogClose>Done</DialogClose>}
@@ -2503,6 +2529,7 @@ const FixtureTabs = () => {
   const panel = Number(params.get("contentHeight") ?? 0);
 
   const triggers = titles.map((title, index) => (
+    /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
     <TabsTrigger
       render={
         params.has("triggerAsChild") && index === 0 ? (
@@ -2522,6 +2549,7 @@ const FixtureTabs = () => {
     >
       {title}
     </TabsTrigger>
+    /* oxlint-enable react-doctor/no-array-index-as-key */
   ));
 
   const contents = (
@@ -2544,6 +2572,7 @@ const FixtureTabs = () => {
         {triggers}
       </TabsList>
       {titles.map((title, index) => (
+        /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
         <TabsContent
           key={index}
           value={`tab-${index}`}
@@ -2558,6 +2587,7 @@ const FixtureTabs = () => {
             <span>{title} content</span>
           )}
         </TabsContent>
+        /* oxlint-enable react-doctor/no-array-index-as-key */
       ))}
     </>
   );
@@ -2719,6 +2749,7 @@ const FixtureScrollArea = () => {
       className="fixture-owner-layout-32 fixture-owner-layout-33"
     >
       {Array.from({ length: Math.ceil(scrollContent / 24) }, (_, index) => (
+        /* oxlint-disable react-doctor/no-array-index-as-key -- These permanent Row N positions only gain or lose a tail when content height changes; there is no reorder/filter/middle insertion. Preserve the actual ordinal row identity. */
         <div
           key={index}
           style={{ "--fixture-layout-17": `${24 * scale}px` }}
@@ -2732,6 +2763,7 @@ const FixtureScrollArea = () => {
             }}
           >{`Row ${index + 1}`}</Button>
         </div>
+        /* oxlint-enable react-doctor/no-array-index-as-key */
       ))}
     </div>
   );

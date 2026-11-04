@@ -116,6 +116,7 @@ const NativeSelect = ({
       {...wrapperProps}
       data-slot="native-select-wrapper"
       className={`mc-native-select-wrapper ${(multiple ?? false) ? "mc-native-select-multiple" : ""} ${wrapperProps?.className ?? ""}`}
+      // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the supported caller wrapper style API; this factory adds only the owned scale variable and forwards caller properties unchanged.
       style={minecraftStyle(
         wrapperProps?.style,
         (__style): NativeSelectScaleStyle => ({

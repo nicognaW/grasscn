@@ -148,6 +148,7 @@ const PopoverContent = ({
       );
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
+        // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect-owned frame updates the committed DOM readiness attribute; the stored state value is the element identity, not a mutable render model.
         node.dataset.mcPopoverReady = "true";
       });
     };

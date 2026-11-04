@@ -211,20 +211,34 @@ export const prepareManualConsumer = async (
       files.set(file.destination, hash(bytes));
       const existing = path.join(consumer, "src", file.destination);
 
-      if (await exists(existing)) {
+      if (
+        /* oxlint-disable eslint/no-await-in-loop -- Resume checks and source writes consume the filesystem state left by the preceding file, including overlapping destinations. */ await exists(
+          existing
+        ) /* oxlint-enable eslint/no-await-in-loop */
+      ) {
         assert.equal(
-          hash(await readFile(existing)),
+          hash(
+            /* oxlint-disable eslint/no-await-in-loop -- Resume checks and source writes consume the filesystem state left by the preceding file, including overlapping destinations. */ await readFile(
+              existing
+            ) /* oxlint-enable eslint/no-await-in-loop */
+          ),
           hash(bytes),
           `Resume requires unchanged public source: ${file.destination}`
         );
       } else {
-        await write(`src/${file.destination}`, bytes.toString("utf-8"));
+        /* oxlint-disable eslint/no-await-in-loop -- Resume checks and source writes consume the filesystem state left by the preceding file, including overlapping destinations. */ await write(
+          `src/${file.destination}`,
+          bytes.toString("utf-8")
+        ); /* oxlint-enable eslint/no-await-in-loop */
       }
     }
   }
 
   for (const [name, code] of Object.entries(copiedExamples)) {
-    await write(`src/${name}-example.tsx`, code);
+    /* oxlint-disable eslint/no-await-in-loop -- Preserve ordered example publication; path.join can normalize distinct example keys to the same output path, and partial writes retain their original order. */ await write(
+      `src/${name}-example.tsx`,
+      code
+    ); /* oxlint-enable eslint/no-await-in-loop */
   }
 
   const names = Object.keys(copiedExamples);

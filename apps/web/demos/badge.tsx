@@ -74,6 +74,7 @@ const BadgeDemo = ({ scale }: DemoProps) => {
           <span>GOAL / LINK</span>
           <Badge
             render={
+              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Badge supplies the fixed View recipes text to this anchor through its supported render seam.
               <a
                 href="#badge"
                 onClick={() => {

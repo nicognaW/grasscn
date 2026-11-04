@@ -138,7 +138,9 @@ export const MinecraftCardText = ({
         return (
           <span
             className="mc-card-text-line pl-(--mc-card-text-padding-left)"
+            /* eslint-disable react-doctor/no-array-index-as-key -- Private wrapped text rows are identified by their layout position; repeated text is valid and the width observer belongs to the parent span. */
             key={index}
+            /* eslint-enable react-doctor/no-array-index-as-key */
             style={nativeTextLayout1}
           >
             {bold ? (

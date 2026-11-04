@@ -39,7 +39,7 @@ const origin = (
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
     window.__previewVoices = [];
-    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+    // oxlint-disable-next-line typescript/promise-function-async, unicorn/consistent-function-scoping -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing. Keep play inside this initializer because Playwright serializes the callback without its Node lexical scope.
     HTMLMediaElement.prototype.play = function play() {
       // SAFETY: this init script assigns the recorder before installing play; every later clear/navigation write preserves an array of these actual Voice records.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized page-local sound recorder protocol, including subsequent field resets.

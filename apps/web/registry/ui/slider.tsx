@@ -259,6 +259,7 @@ const Slider = ({
                 <SliderPrimitive.Thumb
                   data-slot="slider-thumb"
                   className="mc-slider-thumb"
+                  // oxlint-disable-next-line shadcn/no-inline-styles -- Base UI supplies inline thumb translation; this private native-artwork override cancels that translation without dropping its other positioning, visibility or interaction styles.
                   style={{ translate: "none" }}
                   aria-label={
                     values.length === 1 ? props["aria-label"] : undefined

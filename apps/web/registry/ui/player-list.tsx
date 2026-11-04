@@ -390,7 +390,9 @@ const PlayerList = ({
 
               return (
                 <div
+                  /* eslint-disable react-doctor/no-array-index-as-key -- Heading rows are newline layout positions or one fixed rich-content slot; repeated lines are valid and public player rows retain their actual player ids. */
                   key={i}
+                  /* eslint-enable react-doctor/no-array-index-as-key */
                   className="mc-layout-player-list-2 mc-dynamic-layout-player-list-2"
                   style={
                     /* SAFETY: The owned mc-dynamic-layout-player-list-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
@@ -473,7 +475,9 @@ const PlayerList = ({
 
               return (
                 <div
+                  /* eslint-disable react-doctor/no-array-index-as-key -- Heading rows are newline layout positions or one fixed rich-content slot; repeated lines are valid and public player rows retain their actual player ids. */
                   key={i}
+                  /* eslint-enable react-doctor/no-array-index-as-key */
                   className="mc-layout-player-list-8 mc-dynamic-layout-player-list-8"
                   style={
                     /* SAFETY: The owned mc-dynamic-layout-player-list-8 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */

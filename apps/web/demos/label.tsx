@@ -55,6 +55,7 @@ const LabelDemo = ({ scale }: DemoProps) => {
         </div>
         <div className="demo-pair">
           <span>WRAPPED / CENTERED</span>
+          {/* oxlint-disable-next-line jsx-a11y/label-has-associated-control -- This native wrapping example uses the supported render={<span />} seam: it is a text caption, not a form label. */}
           <Label render={<span />} scale={scale} maxWidth={100} align="center">
             Create a new world with friends
           </Label>
