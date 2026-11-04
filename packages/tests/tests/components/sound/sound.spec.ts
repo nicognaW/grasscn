@@ -29,9 +29,9 @@ test("Click sound contains the exact original OGG and decodes in the browser", a
     const context = new AudioContext();
 
     try {
-      const audio = await context.decodeAudioData(
-        await (await fetch(source)).arrayBuffer()
-      );
+      const decodeAudioData = context.decodeAudioData.bind(context);
+      const response = await fetch(source);
+      const audio = await decodeAudioData(await response.arrayBuffer());
 
       return { channels: audio.numberOfChannels, duration: audio.duration };
     } finally {

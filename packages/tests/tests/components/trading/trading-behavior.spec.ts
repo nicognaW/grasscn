@@ -56,8 +56,11 @@ test("trading original sound bytes decode in the browser", async ({ page }) => {
     try {
       return await Promise.all(
         audioClips.map(async (clip) => {
-          const awaitedDecodeAudioData1 = await context.decodeAudioData(
-            await (await fetch(clip.src)).arrayBuffer()
+          const decodeAudioData = context.decodeAudioData.bind(context);
+          const response = await fetch(clip.src);
+
+          const awaitedDecodeAudioData1 = await decodeAudioData(
+            await response.arrayBuffer()
           );
 
           return awaitedDecodeAudioData1.duration;

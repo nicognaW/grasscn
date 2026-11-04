@@ -57,11 +57,9 @@ test("Header serves the preserved branding source at its actual production geome
       throw new Error("Missing required dom query");
     }
 
-    return [
-      ...new Uint8Array(
-        await (await fetch(requiredElement48.href)).arrayBuffer()
-      ),
-    ];
+    const iconResponse = await fetch(requiredElement48.href);
+
+    return [...new Uint8Array(await iconResponse.arrayBuffer())];
   });
 
   expect(
