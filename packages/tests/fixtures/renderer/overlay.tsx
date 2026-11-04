@@ -88,9 +88,9 @@ export const OverlayFixture = () => {
   const textProps: OverlayTextProbeProps = {};
 
   if (native && part !== "surface") {
-    textProps["id"] = "subject";
-    textProps["scale"] = scale;
-    textProps["style"] = {
+    textProps.id = "subject";
+    textProps.scale = scale;
+    textProps.style = {
       height: height * scale,
       left: x,
       position: "fixed",
@@ -102,7 +102,7 @@ export const OverlayFixture = () => {
       textProps.maxWidth = Number(p.get("wrapWidth"));
     }
 
-    textProps["align"] = p.get("align") ?? "left";
+    textProps.align = p.get("align") ?? "left";
     textProps["data-subject"] = "true";
   }
 

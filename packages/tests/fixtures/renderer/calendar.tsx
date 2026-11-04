@@ -138,33 +138,34 @@ export const CalendarFixture = () => {
       captionTextProps?: NativeCalendarCaptionProps;
     };
 
-    const props: NativeCalendarProps = {
-      scale,
-      mode: "single",
-      defaultMonth: new Date(2026, 9),
-      showOutsideDays: false,
-      disableNavigation: state.startsWith("disabled"),
+    const calendarOptions: NativeCalendarProps = {
       className:
         part === "surface"
           ? "native-reference-geometry native-reference-size native-reference-calendar-surface"
           : undefined,
+      defaultMonth: new Date(2026, 9),
+      disableNavigation: state.startsWith("disabled"),
       id: part === "surface" ? "subject" : undefined,
+      mode: "single",
+      scale,
+      showOutsideDays: false,
     };
 
     if (part === "surface") {
-      props["data-subject"] = "true";
+      calendarOptions["data-subject"] = "true";
     }
 
-    props.classNames =
+    calendarOptions.classNames =
       part === "surface"
         ? { months: "mc-native-hidden", nav: "mc-native-hidden" }
         : undefined;
 
     if (part === "label") {
       // SAFETY: the existing native-reference stylesheet consumes this exact finite CSS-variable map; satisfies checks its values before the CSSProperties view.
-      props["captionTextProps"] = {
+      calendarOptions.captionTextProps = {
         align: q.get("align") === "center" ? "center" : "left",
         className: "native-reference-geometry native-reference-size",
+        "data-subject": "true",
         id: "subject",
         maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
         style: {
@@ -173,13 +174,12 @@ export const CalendarFixture = () => {
           "--reference-x": `${x}px`,
           "--reference-y": `${y}px`,
         } satisfies CalendarReferenceStyle as CalendarReferenceStyle,
-        "data-subject": "true",
       };
-      props["formatters"] = { formatCaption: () => label };
+      calendarOptions.formatters = { formatCaption: () => label };
     }
 
     if (part === "surface" && q.has("text")) {
-      props["components"] = {
+      calendarOptions.components = {
         Months: () => (
           <>
             <CardHeader>
@@ -197,7 +197,7 @@ export const CalendarFixture = () => {
 
     if (part === "cell") {
       // SAFETY: the existing native-reference stylesheet consumes this exact finite CSS-variable map; satisfies checks its values before the CSSProperties view.
-      props["components"] = {
+      calendarOptions.components = {
         DayButton: ({ day, modifiers, ...p }) => (
           <CalendarDayButton
             {...p}
@@ -238,6 +238,21 @@ export const CalendarFixture = () => {
       };
     }
 
+    const props = {
+      ...calendarOptions,
+      // SAFETY: this is the original single native-reference style map; satisfies checks the same finite values before the CSSProperties view.
+      style:
+        part === "surface"
+          ? ({
+              "--reference-height": `${height * scale}px`,
+              "--reference-padding": `${q.has("text") ? 18 * scale : 0}px`,
+              "--reference-width": `${width * scale}px`,
+              "--reference-x": `${x}px`,
+              "--reference-y": `${y}px`,
+            } satisfies CalendarReferenceStyle as CalendarReferenceStyle)
+          : undefined,
+    };
+
     return (
       <>
         {component === "date-picker" ? (
@@ -250,39 +265,11 @@ export const CalendarFixture = () => {
               initialFocus={false}
               className="native-reference-popover native-reference-popover-native"
             >
-              <Calendar
-                {...props}
-                style={
-                  // SAFETY: the existing native-reference stylesheet consumes this exact finite CSS-variable map; satisfies checks its values before the CSSProperties view.
-                  part === "surface"
-                    ? ({
-                        "--reference-height": `${height * scale}px`,
-                        "--reference-padding": `${q.has("text") ? 18 * scale : 0}px`,
-                        "--reference-width": `${width * scale}px`,
-                        "--reference-x": `${x}px`,
-                        "--reference-y": `${y}px`,
-                      } satisfies CalendarReferenceStyle as CalendarReferenceStyle)
-                    : undefined
-                }
-              />
+              <Calendar {...props} />
             </PopoverContent>
           </Popover>
         ) : (
-          <Calendar
-            {...props}
-            style={
-              // SAFETY: the existing native-reference stylesheet consumes this exact finite CSS-variable map; satisfies checks its values before the CSSProperties view.
-              part === "surface"
-                ? ({
-                    "--reference-height": `${height * scale}px`,
-                    "--reference-padding": `${q.has("text") ? 18 * scale : 0}px`,
-                    "--reference-width": `${width * scale}px`,
-                    "--reference-x": `${x}px`,
-                    "--reference-y": `${y}px`,
-                  } satisfies CalendarReferenceStyle as CalendarReferenceStyle)
-                : undefined
-            }
-          />
+          <Calendar {...props} />
         )}
       </>
     );
