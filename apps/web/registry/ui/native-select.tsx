@@ -136,7 +136,7 @@ const NativeSelect = ({
           queueMicrotask(() => {
             if (node.current) {
               setLabel(
-                Array.from(node.current.selectedOptions)
+                [...node.current.selectedOptions]
                   .map((option) => option.label)
                   .join(", ")
               );

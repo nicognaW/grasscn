@@ -100,7 +100,7 @@ const ActionGraphic = ({
 
     const natural = Math.max(
       20,
-      Array.from(action.label).reduce(
+      [...action.label].reduce(
         (n, char) =>
           n +
           (minecraftGlyphs[

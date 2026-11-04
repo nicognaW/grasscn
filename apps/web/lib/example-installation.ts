@@ -28,7 +28,7 @@ export const exampleInstallation = (code: string): string[] => {
     let owner = candidates.find((item) => item.name === basename);
 
     if (owner === undefined) {
-      const candidatesByFileCount = candidates.slice();
+      const candidatesByFileCount = [...candidates];
       candidatesByFileCount.sort(
         (left, right) => left.files.length - right.files.length
       );
