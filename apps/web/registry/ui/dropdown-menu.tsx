@@ -25,6 +25,14 @@ import { Separator } from "./separator";
 import "./minecraft-checkbox.css";
 import "./minecraft-menu.css";
 
+interface DropdownMenuCheckboxPaint extends React.CSSProperties {
+  "--mc-checkbox-checked": string;
+  "--mc-checkbox-checked-focused": string;
+  "--mc-checkbox-focused": string;
+  "--mc-checkbox-normal": string;
+  "--mc-scale": number;
+}
+
 interface DropdownMenuScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -352,7 +360,7 @@ const checkboxIcon = function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
           "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
           "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
           "--mc-scale": scale,
-        } as React.CSSProperties
+        } satisfies DropdownMenuCheckboxPaint as DropdownMenuCheckboxPaint
       }
     >
       <MinecraftMenuCheckboxSprite />
