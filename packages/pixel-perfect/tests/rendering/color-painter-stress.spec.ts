@@ -19,7 +19,9 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (msg) => {
     if (
-      /too many active webgl|context.*lost|shader failed/iu.test(msg.text())
+      /[tT][oO][oO] [mM][aA][nN][yY] [aA][cC][tT][iI][vV][eE] [wW][eE][bB][gG][lL]|[cC][oO][nN][tT][eE][xX][tT].*[lL][oO][sS][tT]|[sS][hH][aA][dD][eE][rR] [fF][aA][iI][lL][eE][dD]/u.test(
+        msg.text()
+      )
     ) {
       warnings.push(msg.text());
     }
