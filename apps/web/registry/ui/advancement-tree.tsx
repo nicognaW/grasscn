@@ -228,7 +228,7 @@ const renderAdvancementNodes = function renderAdvancementNodes(
           <button
             type="button"
             data-slot="advancement-node"
-            data-completed={String(!!(node.completed ?? false))}
+            data-completed={String(node.completed ?? false)}
             aria-label={`${node.title}${(node.completed ?? false) ? ", completed" : ""}`}
             aria-pressed={current === node.id}
             className="mc-advancement-node mc-dynamic-layout-advancement-tree-2"

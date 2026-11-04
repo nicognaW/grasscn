@@ -38,8 +38,8 @@ const InputOTP = ({
 }) => {
   const otpStyle = React.useMemo(
     () => ({
-      disabled: !!(props.disabled ?? false),
-      readOnly: !!(props.readOnly ?? false),
+      disabled: props.disabled ?? false,
+      readOnly: props.readOnly ?? false,
       scale,
     }),
     [props.disabled, props.readOnly, scale]
