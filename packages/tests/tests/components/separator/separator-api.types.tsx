@@ -11,6 +11,7 @@ export const SeparatorApiContract = function SeparatorApiContract() {
     <Separator
       orientation="horizontal"
       edge="footer"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This API case verifies the semantic role on Separator's default primitive, separately from the existing render-as-hr case.
       role="separator"
       scale={3}
       aria-label="Settings"

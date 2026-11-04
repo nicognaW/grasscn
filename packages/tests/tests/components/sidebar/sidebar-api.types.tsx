@@ -80,7 +80,11 @@ const SidebarTypes = () => {
         <SidebarHeader ref={div}>
           <SidebarInput ref={input} readOnly spellCheck={false} />
         </SidebarHeader>
-        <SidebarSeparator edge="footer" role="separator" />
+        <SidebarSeparator
+          edge="footer"
+          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This verifies SidebarSeparator's forwarded Separator role API inside the sidebar composition, not a literal hr substitute.
+          role="separator"
+        />
         <SidebarContent
           ref={div}
           viewportRef={div}

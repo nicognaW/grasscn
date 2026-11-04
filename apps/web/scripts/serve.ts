@@ -64,7 +64,8 @@ const serveRegistryRequest = async (
 };
 
 createServer((request, response) => {
-  serveRegistryRequest(request, response).catch((error) => {
+  // oxlint-disable-next-line promise/prefer-await-to-callbacks, anti-slop/no-unknown-parameters -- Node owns a synchronous void request listener; this rejection callback owns the async handler failure. Rejections are unknown values logged unchanged before destroying only this response.
+  serveRegistryRequest(request, response).catch((error: unknown) => {
     console.error("Registry request failed", error);
     response.destroy();
   });

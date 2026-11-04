@@ -22,6 +22,7 @@ export const Panel = ({
   <Card
     scale={2}
     className={`grass-panel ${className}`}
+    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This region belongs to Card's div-based artwork and scale API; replacing the component with section drops the card contract.
     role="region"
     aria-label={title}
   >

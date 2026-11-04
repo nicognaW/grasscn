@@ -34,6 +34,7 @@ const SeparatorDemo = ({ scale }: DemoProps) => {
             scale={scale}
             className="demo-owned-separator-1"
             style={demoLayout1}
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This calls Separator's explicit semantic-role API on its div primitive; replacing the component with hr drops its artwork and scale contract.
             role="separator"
             aria-label="Menu header separator"
           />
@@ -45,6 +46,7 @@ const SeparatorDemo = ({ scale }: DemoProps) => {
             edge="footer"
             className="demo-owned-separator-2"
             style={demoLayout2}
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This calls Separator's explicit semantic-role API on its div primitive; replacing the component with hr drops its artwork and scale contract.
             role="separator"
             aria-label="Menu footer separator"
           />

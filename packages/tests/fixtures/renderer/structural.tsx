@@ -156,7 +156,11 @@ export const StructuralFixture = () => {
           {selectedFixtureBranch1}
           {native ? null : (
             <>
-              <ButtonGroupSeparator scale={scale} role="separator" />
+              <ButtonGroupSeparator
+                scale={scale}
+                // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This fixture exercises ButtonGroupSeparator's div-based role and scale composition; a native hr is a different component case.
+                role="separator"
+              />
               <ButtonGroupText scale={scale}>Game</ButtonGroupText>
               <ButtonGroupText render={<span id="slotted" />}>
                 Slotted text

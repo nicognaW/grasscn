@@ -2669,6 +2669,7 @@ const FixtureScrollArea = () => {
         id="subject"
         ref={scrollAreaRef}
         viewportRef={viewportRef}
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This fixture covers ScrollArea's default div and section render receivers with the explicit region and root/viewport ref contract.
         role="region"
         aria-label="Test scroll area"
         disabled={state === "disabled"}
