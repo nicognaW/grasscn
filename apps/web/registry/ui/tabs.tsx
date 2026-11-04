@@ -351,11 +351,17 @@ const TabsTrigger = ({
     const unicode = text !== null && /\P{ASCII}/u.test(text);
 
     if (unicode) {
-      void loadUnihex().then(() => {
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
         if (!cancelled) {
           update();
         }
-      });
+      };
+
+      void commitFontReadiness();
     } else {
       update();
     }

@@ -108,11 +108,17 @@ const Badge = ({
     }
 
     let live = true;
-    void loadUnihex().then(() => {
+    const fontLoading = loadUnihex();
+
+    const commitFontReadiness = async () => {
+      await fontLoading;
+
       if (live) {
         refreshFont((v) => v + 1);
       }
-    });
+    };
+
+    void commitFontReadiness();
 
     return () => {
       live = false;

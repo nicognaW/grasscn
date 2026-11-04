@@ -314,14 +314,18 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
 
     if (!loadingUnihex && requiresCJKFont(inputGlyphText)) {
       loadingUnihex = true;
-      loadUnihex()
-        .then(() => {
-          signature = "";
-          paint();
-        })
-        .catch(() => {
-          /* empty */
-        });
+      const fontLoading = loadUnihex();
+
+      const repaintAfterFontLoading = async () => {
+        await fontLoading;
+
+        signature = "";
+        paint();
+      };
+
+      repaintAfterFontLoading().catch(() => {
+        /* empty */
+      });
     }
 
     let pane = width / scale;
@@ -603,16 +607,20 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
   node.addEventListener("pointermove", move);
   node.addEventListener("pointerup", up);
   node.addEventListener("pointercancel", up);
-  loadImages()
-    .then((result) => {
-      if (!cancelled) {
-        loaded = result;
-        tick();
-      }
-    })
-    .catch(() => {
-      node.dataset.mcBitmap = "false";
-    });
+  const imagesLoading = loadImages();
+
+  const startPaintingAfterImages = async () => {
+    const result = await imagesLoading;
+
+    if (!cancelled) {
+      loaded = result;
+      tick();
+    }
+  };
+
+  startPaintingAfterImages().catch(() => {
+    node.dataset.mcBitmap = "false";
+  });
 
   return () => {
     cancelled = true;

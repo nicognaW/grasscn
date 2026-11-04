@@ -71,7 +71,11 @@ export const PopoverUnicodeLine = ({
     const context = canvas.getContext("2d")!;
 
     setReady(false);
-    void Promise.all([loadUnihex(), loadAlpha()]).then(([, source]) => {
+    const glyphResources = Promise.all([loadUnihex(), loadAlpha()]);
+
+    const paintAfterGlyphResources = async () => {
+      const [, source] = await glyphResources;
+
       if (disposed) {
         return;
       }
@@ -191,7 +195,9 @@ export const PopoverUnicodeLine = ({
       };
 
       tick();
-    });
+    };
+
+    void paintAfterGlyphResources();
 
     return () => {
       disposed = true;

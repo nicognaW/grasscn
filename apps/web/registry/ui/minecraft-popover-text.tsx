@@ -115,11 +115,17 @@ export const MinecraftPopoverText = ({
     let active = true;
 
     if (unicode) {
-      void loadUnihex().then(() => {
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
         if (active) {
           loaded();
         }
-      });
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {

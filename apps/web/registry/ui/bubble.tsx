@@ -212,11 +212,17 @@ const BubbleContent = ({
     setFontReady(!unicode);
 
     if (unicode) {
-      void loadUnihex().then(() => {
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
         if (live) {
           setFontReady(true);
         }
-      });
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {

@@ -233,11 +233,17 @@ const SelectTrigger = ({
 
       if (/\P{ASCII}/u.test(text) && !loading) {
         loading = true;
-        void loadUnihex().then(() => {
+        const fontLoading = loadUnihex();
+
+        const commitFontReadiness = async () => {
+          await fontLoading;
+
           if (!stopped) {
             element.dataset.mcSelectReady = "false";
           }
-        });
+        };
+
+        void commitFontReadiness();
       }
 
       const width = Math.floor(element.clientWidth / scale);

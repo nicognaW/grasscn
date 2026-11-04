@@ -12,11 +12,11 @@ import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
 const ButtonGroupDemo = ({ scale }: DemoProps) => {
-  const stage = useDemoWidth(scale);
+  const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
 
   const buttonWidth = Math.min(
     100,
-    Math.max(40, Math.floor((stage.width - 6) / 2))
+    Math.max(40, Math.floor((stageWidth - 6) / 2))
   );
 
   const [orientation, setOrientation] = React.useState<
@@ -67,7 +67,7 @@ const ButtonGroupDemo = ({ scale }: DemoProps) => {
           Change layout
         </Button>
       </div>
-      <div ref={stage.ref} className="demo-stage" data-stage="button-group">
+      <div ref={stageRef} className="demo-stage" data-stage="button-group">
         <ButtonGroup
           scale={scale}
           orientation={orientation}
@@ -76,9 +76,9 @@ const ButtonGroupDemo = ({ scale }: DemoProps) => {
         >
           <ButtonGroupText
             scale={scale}
-            maxWidth={stage.width}
+            maxWidth={stageWidth}
             style={
-              orientation === "horizontal" && stage.width < 300
+              orientation === "horizontal" && stageWidth < 300
                 ? { flexBasis: "100%" }
                 : undefined
             }

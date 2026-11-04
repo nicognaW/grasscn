@@ -12,11 +12,11 @@ import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
 const InputOTPDemo = ({ scale }: DemoProps) => {
-  const stage = useDemoWidth(scale);
+  const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
 
   const slotWidth = Math.min(
     20,
-    Math.max(12, Math.floor((stage.width - 6 - 24 / scale) / 6))
+    Math.max(12, Math.floor((stageWidth - 6 - 24 / scale) / 6))
   );
 
   const [value, setValue] = React.useState("");
@@ -56,7 +56,7 @@ const InputOTPDemo = ({ scale }: DemoProps) => {
           Clear
         </Button>
       </div>
-      <div ref={stage.ref} className="demo-stage" data-stage="input-otp">
+      <div ref={stageRef} className="demo-stage" data-stage="input-otp">
         <div>
           ONE-TIME CODE
           <InputOTP

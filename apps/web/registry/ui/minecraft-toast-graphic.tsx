@@ -41,7 +41,11 @@ export const MinecraftToastGraphic = ({
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
       ref.current as HTMLCanvasElement;
 
-    void toastLayout(title, message).then((layout) => {
+    const layoutLoading = toastLayout(title, message);
+
+    const startToastRendering = async () => {
+      const layout = await layoutLoading;
+
       if (disposed) {
         return;
       }
@@ -117,7 +121,9 @@ export const MinecraftToastGraphic = ({
         window.removeEventListener("resize", paint);
         window.removeEventListener("scroll", paint, true);
       };
-    });
+    };
+
+    void startToastRendering();
     let cleanup = () => {};
 
     return () => {

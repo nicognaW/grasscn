@@ -76,11 +76,17 @@ const ActionGraphic = ({
   const [fontReady, setFontReady] = React.useState(false);
   React.useLayoutEffect(() => {
     let live = true;
-    void loadUnihex().then(() => {
+    const fontLoading = loadUnihex();
+
+    const commitFontReadiness = async () => {
+      await fontLoading;
+
       if (live) {
         setFontReady(true);
       }
-    });
+    };
+
+    void commitFontReadiness();
 
     return () => {
       live = false;

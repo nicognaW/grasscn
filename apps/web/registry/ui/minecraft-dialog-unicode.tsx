@@ -68,7 +68,11 @@ export const DialogUnicodeLine = ({
 
     setUnihexAtlas(context, dialogUnihexAtlas);
     setReady(false);
-    void Promise.all([loadUnihex(), loadAlpha()]).then(([, pixels]) => {
+    const glyphResources = Promise.all([loadUnihex(), loadAlpha()]);
+
+    const paintAfterGlyphResources = async () => {
+      const [, pixels] = await glyphResources;
+
       if (disposed) {
         return;
       }
@@ -146,7 +150,9 @@ export const DialogUnicodeLine = ({
       };
 
       tick();
-    });
+    };
+
+    void paintAfterGlyphResources();
 
     return () => {
       disposed = true;

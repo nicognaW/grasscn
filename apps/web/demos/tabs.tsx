@@ -10,7 +10,7 @@ import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
 const TabsDemo = ({ scale }: DemoProps) => {
-  const stage = useDemoWidth(scale);
+  const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
   const [title, setTitle] = React.useState("Game");
   const [value, setValue] = React.useState("game");
   const [disabled, setDisabled] = React.useState(false);
@@ -48,7 +48,7 @@ const TabsDemo = ({ scale }: DemoProps) => {
           }}
         >{`More tab: ${disabled ? "Disabled" : "Enabled"}`}</Button>
       </div>
-      <div ref={stage.ref} className="demo-stage" data-stage="tabs">
+      <div ref={stageRef} className="demo-stage" data-stage="tabs">
         <Tabs
           scale={scale}
           value={value}
@@ -107,7 +107,7 @@ const TabsDemo = ({ scale }: DemoProps) => {
               <Label
                 htmlFor="tabs-structures"
                 scale={scale}
-                maxWidth={Math.max(1, stage.width - 33 - Math.ceil(16 / scale))}
+                maxWidth={Math.max(1, stageWidth - 33 - Math.ceil(16 / scale))}
               >
                 Generate structures
               </Label>

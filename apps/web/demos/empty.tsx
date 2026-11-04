@@ -14,7 +14,7 @@ import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
 const EmptyDemo = ({ scale }: DemoProps) => {
-  const stage = useDemoWidth(scale);
+  const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
 
   const [title, setTitle] = React.useState("No worlds found");
 
@@ -52,7 +52,7 @@ const EmptyDemo = ({ scale }: DemoProps) => {
           />
         </label>
       </div>
-      <div ref={stage.ref} className="demo-stage" data-stage="empty">
+      <div ref={stageRef} className="demo-stage" data-stage="empty">
         <div className="demo-pair">
           <span>EMPTY WORLD LIST</span>
           <Empty scale={scale}>{title}</Empty>
@@ -61,11 +61,11 @@ const EmptyDemo = ({ scale }: DemoProps) => {
           <span>WITH ACTION</span>
           <Empty scale={scale}>
             <EmptyHeader>
-              <EmptyTitle maxWidth={Math.min(180, stage.width)} align="center">
+              <EmptyTitle maxWidth={Math.min(180, stageWidth)} align="center">
                 {title}
               </EmptyTitle>
               <EmptyDescription
-                maxWidth={Math.min(180, stage.width)}
+                maxWidth={Math.min(180, stageWidth)}
                 align="center"
               >
                 {description}

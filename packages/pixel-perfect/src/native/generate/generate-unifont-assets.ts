@@ -97,14 +97,27 @@ if (
   throw new Error("Indexed Unifont ZIP digest changed");
 }
 
-const overrides = providers.providers
-  .find((provider) => provider.hex_file === "minecraft:font/unifont.zip")!
-  .size_overrides.map((range) => [
-    range.from.codePointAt(0)!,
-    range.to.codePointAt(0)!,
-    range.left,
-    range.right,
-  ]);
+const overrides =
+  // SAFETY: The original indexed Unihex JSON contains exactly one provider for minecraft:font/unifont.zip, supplying the existing nine size overrides. Preserve the original lookup and invalid-input dereference behavior.
+  /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact original provider/API boundary; no new runtime validation. */
+  (
+    providers.providers.find(
+      (provider) => provider.hex_file === "minecraft:font/unifont.zip"
+    ) as (typeof providers)["providers"][number]
+  )/* oxlint-enable typescript/no-unsafe-type-assertion */
+  .size_overrides
+    .map((range) => [
+      // SAFETY: The original indexed Unihex provider encodes range endpoints as codepoint strings; all18 endpoints in the independently hash-matched retained provider are nonempty.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact original provider/API boundary; no new runtime validation. */
+      range.from.codePointAt(0) as number,
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
+      // SAFETY: The original indexed Unihex provider encodes range endpoints as codepoint strings; all18 endpoints in the independently hash-matched retained provider are nonempty.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact original provider/API boundary; no new runtime validation. */
+      range.to.codePointAt(0) as number,
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
+      range.left,
+      range.right,
+    ]);
 
 const isCJK = (code: number) =>
   (code >= 0x11_00 && code <= 0x11_ff) ||

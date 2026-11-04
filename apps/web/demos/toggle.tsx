@@ -8,7 +8,7 @@ import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
 const ToggleDemo = ({ scale }: DemoProps) => {
-  const stage = useDemoWidth(scale);
+  const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
 
   const [pressed, setPressed] = React.useState(false);
   const [disabled, setDisabled] = React.useState(false);
@@ -36,9 +36,9 @@ const ToggleDemo = ({ scale }: DemoProps) => {
           {disabled ? "Enable filter" : "Disable filter"}
         </Button>
       </div>
-      <div ref={stage.ref} className="demo-stage" data-stage="toggle">
+      <div ref={stageRef} className="demo-stage" data-stage="toggle">
         <div className="demo-pair">
-          <Label htmlFor="preview-toggle" scale={scale} maxWidth={stage.width}>
+          <Label htmlFor="preview-toggle" scale={scale} maxWidth={stageWidth}>
             {label || " "}
           </Label>
           <Toggle

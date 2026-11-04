@@ -26,9 +26,13 @@ const definitions = JSON.parse(
   await readFile(path.join(input, "default.json"), "utf-8")
 ) as { providers: { file?: string; ascent: number; chars: string[] }[] };
 
-const provider = definitions.providers.find(
-  (p) => p.file === "minecraft:font/ascii.png"
-)!;
+const provider =
+  // SAFETY: The original JAR font/include/default.json contains exactly one ascii.png bitmap provider, with16char rows. Preserve the original lookup and invalid-input dereference behavior.
+  /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact original provider/API boundary; no new runtime validation. */
+  definitions.providers.find(
+    (p) => p.file === "minecraft:font/ascii.png"
+  ) as (typeof definitions)["providers"][number];
+/* oxlint-enable typescript/no-unsafe-type-assertion */
 
 const cell = atlas.width / 16;
 const glyphs: [number, number, number][] = [];

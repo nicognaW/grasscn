@@ -221,11 +221,17 @@ export const ChartAxisTick = ({
     let live = true;
 
     if (/[^\u0020-\u007E]/u.test(text)) {
-      void loadUnihex().then(() => {
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
         if (live) {
           refresh();
         }
-      });
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {

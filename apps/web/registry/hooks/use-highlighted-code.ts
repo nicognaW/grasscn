@@ -19,15 +19,19 @@ export const useHighlightedCode = function useHighlightedCode(
   React.useEffect(() => {
     let cancelled = false;
 
-    loadHighlighter(language)
-      .then((next) => {
-        if (!cancelled) {
-          setLoaded({ highlighter: next, language });
-        }
-      })
-      .catch(() => {
-        /* empty */
-      });
+    const highlighterLoading = loadHighlighter(language);
+
+    const installHighlighter = async () => {
+      const next = await highlighterLoading;
+
+      if (!cancelled) {
+        setLoaded({ highlighter: next, language });
+      }
+    };
+
+    installHighlighter().catch(() => {
+      /* empty */
+    });
 
     return () => {
       cancelled = true;

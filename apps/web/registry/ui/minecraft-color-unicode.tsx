@@ -93,128 +93,133 @@ export const MinecraftColorUnicodeLabel = ({
 
     setColorUnihexAtlas(context, atlas);
     setBitmap(false);
-    Promise.all([
+
+    const glyphResources = Promise.all([
       /\P{ASCII}/u.test(text) ? loadUnihex() : Promise.resolve(),
       loadAlpha(),
-    ])
-      .then(([, pixels]) => {
+    ]);
+
+    const paintAfterGlyphResources = async () => {
+      const [, pixels] = await glyphResources;
+
+      if (disposed) {
+        return;
+      }
+
+      if (!hasSupportedLineGlyphs(text)) {
+        setWidth(undefined);
+
+        return;
+      }
+
+      let accumulatedGlyphAdvance = 0;
+
+      for (const advanceCharacter of text) {
+        accumulatedGlyphAdvance += advance(advanceCharacter);
+      }
+
+      const logicalWidth = Math.ceil(accumulatedGlyphAdvance);
+
+      setWidth(logicalWidth);
+
+      const tick = () => {
         if (disposed) {
           return;
         }
 
-        if (!hasSupportedLineGlyphs(text)) {
-          setWidth(undefined);
+        const node = root.current!;
+        const style = getComputedStyle(node);
+        const scale = Number(style.getPropertyValue("--mc-scale")) || 2;
 
-          return;
-        }
+        const bounds = node.getBoundingClientRect();
 
-        let accumulatedGlyphAdvance = 0;
+        const ink = style.color.match(/[\d.]+/gu)?.map(Number) ?? [
+          255, 255, 255, 1,
+        ];
 
-        for (const advanceCharacter of text) {
-          accumulatedGlyphAdvance += advance(advanceCharacter);
-        }
+        const next = JSON.stringify([
+          scale,
+          bounds.x,
+          bounds.y,
+          bounds.width,
+          ink,
+          innerWidth,
+          innerHeight,
+        ]);
 
-        const logicalWidth = Math.ceil(accumulatedGlyphAdvance);
+        if (
+          Math.abs(bounds.width - logicalWidth * scale) < 0.1 &&
+          next !== signature
+        ) {
+          signature = next;
+          context.canvas.width = Math.max(1, logicalWidth * scale);
+          context.canvas.height = 9 * scale;
+          context.imageSmoothingEnabled = false;
+          positionColorUnihex(context, bounds);
 
-        setWidth(logicalWidth);
+          for (const shadow of [true, false]) {
+            let x = 0;
 
-        const tick = () => {
-          if (disposed) {
-            return;
-          }
+            const color = shadow
+              ? ink.slice(0, 3).map((value) => Math.floor(value / 4))
+              : ink.slice(0, 3);
 
-          const node = root.current!;
-          const style = getComputedStyle(node);
-          const scale = Number(style.getPropertyValue("--mc-scale")) || 2;
+            context.fillStyle = `rgba(${color.join(",")},${ink[3] ?? 1})`;
 
-          const bounds = node.getBoundingClientRect();
+            for (const char of text) {
+              const glyph =
+                asciiGlyphs[
+                  // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+                  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+                  (char.codePointAt(0) as number) - 32
+                ];
 
-          const ink = style.color.match(/[\d.]+/gu)?.map(Number) ?? [
-            255, 255, 255, 1,
-          ];
-
-          const next = JSON.stringify([
-            scale,
-            bounds.x,
-            bounds.y,
-            bounds.width,
-            ink,
-            innerWidth,
-            innerHeight,
-          ]);
-
-          if (
-            Math.abs(bounds.width - logicalWidth * scale) < 0.1 &&
-            next !== signature
-          ) {
-            signature = next;
-            context.canvas.width = Math.max(1, logicalWidth * scale);
-            context.canvas.height = 9 * scale;
-            context.imageSmoothingEnabled = false;
-            positionColorUnihex(context, bounds);
-
-            for (const shadow of [true, false]) {
-              let x = 0;
-
-              const color = shadow
-                ? ink.slice(0, 3).map((value) => Math.floor(value / 4))
-                : ink.slice(0, 3);
-
-              context.fillStyle = `rgba(${color.join(",")},${ink[3] ?? 1})`;
-
-              for (const char of text) {
-                const glyph =
-                  asciiGlyphs[
-                    // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
-                    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
-                    (char.codePointAt(0) as number) - 32
-                  ];
-
-                if (glyph) {
-                  if (char !== " ") {
-                    for (let y = 0; y < 8; y += 1) {
-                      for (let px = 0; px < 8; px += 1) {
-                        if (
-                          pixels[((glyph[1] + y) * 128 + glyph[0] + px) * 4 + 3]
-                        ) {
-                          context.fillRect(
-                            (x + px + Number(shadow)) * scale,
-                            (y + Number(shadow)) * scale,
-                            scale,
-                            scale
-                          );
-                        }
+              if (glyph) {
+                if (char !== " ") {
+                  for (let y = 0; y < 8; y += 1) {
+                    for (let px = 0; px < 8; px += 1) {
+                      if (
+                        pixels[((glyph[1] + y) * 128 + glyph[0] + px) * 4 + 3]
+                      ) {
+                        context.fillRect(
+                          (x + px + Number(shadow)) * scale,
+                          (y + Number(shadow)) * scale,
+                          scale,
+                          scale
+                        );
                       }
                     }
                   }
-                } else {
-                  const unicodeGlyph = getUnihexGlyph(char)!;
-                  paintUnihex(
-                    context,
-                    unicodeGlyph,
-                    x + (shadow ? 0.5 : 0),
-                    shadow ? 0.5 : 0,
-                    scale
-                  );
                 }
-
-                x += advance(char);
+              } else {
+                const unicodeGlyph = getUnihexGlyph(char)!;
+                paintUnihex(
+                  context,
+                  unicodeGlyph,
+                  x + (shadow ? 0.5 : 0),
+                  shadow ? 0.5 : 0,
+                  scale
+                );
               }
-            }
 
-            setBitmap(true);
+              x += advance(char);
+            }
           }
 
-          frame = requestAnimationFrame(tick);
-        };
+          setBitmap(true);
+        }
 
         frame = requestAnimationFrame(tick);
-      })
-      .catch(() => {
-        if (!disposed) {
-          setBitmap(false);
-        }
-      });
+      };
+
+      frame = requestAnimationFrame(tick);
+    };
+
+    paintAfterGlyphResources().catch(() => {
+      if (!disposed) {
+        setBitmap(false);
+      }
+    });
 
     return () => {
       disposed = true;

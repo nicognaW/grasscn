@@ -40,7 +40,7 @@ interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
 }
 
 const SidebarDemo = ({ scale }: DemoProps) => {
-  const stage = useDemoWidth(scale);
+  const { ref: stageRef, width: stageWidth } = useDemoWidth(scale);
 
   const [search, setSearch] = React.useState("");
   const [selected, setSelected] = React.useState("Survival");
@@ -57,18 +57,18 @@ const SidebarDemo = ({ scale }: DemoProps) => {
 
   const demoLayout1: DemoVariables = {
     "--demo-owned-sidebar-1-flex-direction":
-      stage.width < 300 ? "column" : "row",
+      stageWidth < 300 ? "column" : "row",
     "--sidebar-width": `${120 * scale}px`,
   };
 
   const demoLayout2: DemoVariables = {
     "--demo-owned-sidebar-2-width":
-      stage.width < 300 ? "100%" : `${120 * scale}px`,
+      stageWidth < 300 ? "100%" : `${120 * scale}px`,
   };
 
   return (
     <>
-      <div ref={stage.ref} className="demo-stage" data-stage="sidebar">
+      <div ref={stageRef} className="demo-stage" data-stage="sidebar">
         <SidebarProvider
           scale={scale}
           onKeyDownCapture={(event) => {
@@ -180,7 +180,7 @@ const SidebarDemo = ({ scale }: DemoProps) => {
               >
                 <MinecraftDisclosureText
                   scale={scale}
-                  maxWidth={Math.max(1, Math.min(140, stage.width - 42))}
+                  maxWidth={Math.max(1, Math.min(140, stageWidth - 42))}
                 >
                   Choose a world.
                 </MinecraftDisclosureText>
