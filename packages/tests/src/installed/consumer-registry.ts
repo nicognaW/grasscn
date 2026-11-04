@@ -34,46 +34,60 @@ export const fetchPublicRegistry = async (
   items: { name: string }[],
   source: string
 ): Promise<Map<string, RegistryEntry>> => {
+  const pending = await Promise.allSettled(
+    items.map(async (item) => {
+      assert.ok(
+        /^[a-z0-9-]+$/u.test(item.name),
+        "Safe registry item identity required"
+      );
+      const url = `${origin}/r/${item.name}.json`;
+      const response = await fetch(url);
+      assert.ok(
+        response.ok &&
+          response.headers.get("content-type")?.includes("application/json") ===
+            true,
+        `Public JSON registry item unavailable: ${url}`
+      );
+      const bytes = Buffer.from(await response.arrayBuffer());
+
+      const built = await readFile(
+        path.join(source, "apps/web/public/r", `${item.name}.json`)
+      );
+
+      assert.equal(
+        sha256(bytes),
+        sha256(built),
+        `Public registry payload must match current source build: ${item.name}`
+      );
+      /** @type {unknown} */
+      const decoded: unknown = JSON.parse(bytes.toString("utf-8"));
+      assert.ok(
+        isRegistryPayload(decoded),
+        "Registry item must contain named file definitions"
+      );
+      const payload = decoded;
+      assert.equal(payload.name, item.name);
+      assert.ok(
+        Array.isArray(payload.files) && payload.files.length > 0,
+        `Registry files unavailable: ${item.name}`
+      );
+
+      return {
+        entry: { payload, sha256: sha256(bytes), url },
+        name: item.name,
+      };
+    })
+  );
+
   /** @type {Map<string,RegistryEntry>} */
   const payloads = new Map<string, RegistryEntry>();
 
-  for (const item of items) {
-    assert.ok(
-      /^[a-z0-9-]+$/u.test(item.name),
-      "Safe registry item identity required"
-    );
-    const url = `${origin}/r/${item.name}.json`;
-    const response = await fetch(url);
-    assert.ok(
-      response.ok &&
-        response.headers.get("content-type")?.includes("application/json") ===
-          true,
-      `Public JSON registry item unavailable: ${url}`
-    );
-    const bytes = Buffer.from(await response.arrayBuffer());
+  for (const result of pending) {
+    if (result.status === "rejected") {
+      throw result.reason;
+    }
 
-    const built = await readFile(
-      path.join(source, "apps/web/public/r", `${item.name}.json`)
-    );
-
-    assert.equal(
-      sha256(bytes),
-      sha256(built),
-      `Public registry payload must match current source build: ${item.name}`
-    );
-    /** @type {unknown} */
-    const decoded: unknown = JSON.parse(bytes.toString("utf-8"));
-    assert.ok(
-      isRegistryPayload(decoded),
-      "Registry item must contain named file definitions"
-    );
-    const payload = decoded;
-    assert.equal(payload.name, item.name);
-    assert.ok(
-      Array.isArray(payload.files) && payload.files.length > 0,
-      `Registry files unavailable: ${item.name}`
-    );
-    payloads.set(item.name, { payload, sha256: sha256(bytes), url });
+    payloads.set(result.value.name, result.value.entry);
   }
 
   return payloads;
