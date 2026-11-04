@@ -61,7 +61,7 @@
 }
 
 @layer components {
-  .mc-owned-paint-bubble-1 {
+  .mc-label.mc-owned-paint-bubble-1 {
     color: inherit;
   }
 }

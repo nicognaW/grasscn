@@ -21,24 +21,33 @@ for (const scale of [1, 2, 3] as const) {
       .locator("[data-slot=chart-fps-frame]>.mc-chart-rect")
       .evaluateAll((nodes) =>
         nodes
-          .filter(
-            (n) =>
-              n.style.width ===
-                `${getComputedStyle(n).getPropertyValue("--mc-scale").trim()}px` &&
-              n.style.background.startsWith("rgb(") &&
+          .filter((n) => {
+            const css = getComputedStyle(n);
+
+            return (
+              css.width === `${css.getPropertyValue("--mc-scale").trim()}px` &&
+              // This explicit RGB channel identifies data bars; decorative borders inherit their CSS colors.
+              n.style
+                .getPropertyValue("--mc-native-background")
+                .startsWith("rgb(") &&
               // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-              Number.parseFloat(n.style.top) +
+              Number.parseFloat(css.top) +
                 // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-                Number.parseFloat(n.style.height) ===
-                69 * Number(getComputedStyle(n).getPropertyValue("--mc-scale"))
-          )
-          .map((n) => ({
-            color: n.style.background,
-            // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-            height: Number.parseFloat(n.style.height),
-            // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
-            top: Number.parseFloat(n.style.top),
-          }))
+                Number.parseFloat(css.height) ===
+                69 * Number(css.getPropertyValue("--mc-scale"))
+            );
+          })
+          .map((n) => {
+            const css = getComputedStyle(n);
+
+            return {
+              color: css.backgroundColor,
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+              height: Number.parseFloat(css.height),
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+              top: Number.parseFloat(css.top),
+            };
+          })
       );
 
     expect(bars.map((bar) => bar.height)).toEqual(

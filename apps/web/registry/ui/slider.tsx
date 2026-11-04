@@ -20,6 +20,12 @@ interface SliderScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
 
+// Track state/events/ref still come from Base UI; native artwork owns its absolute positioning.
+const SliderTrackArtwork = ({
+  style: _primitiveStyle,
+  ...props
+}: React.ComponentProps<"div">) => <div {...props} />;
+
 const Slider = ({
   className,
   defaultValue,
@@ -199,6 +205,7 @@ const Slider = ({
           <SliderPrimitive.Track
             data-slot="slider-track"
             className="mc-slider-track mc-owned-paint-slider-1"
+            render={<SliderTrackArtwork />}
           >
             <MinecraftSurface
               sprite={

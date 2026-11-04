@@ -47,6 +47,12 @@ type ProgressProps = Omit<
   scale?: 1 | 2 | 3;
 };
 
+// Base UI supplies percentage/height defaults; this private artwork part owns native pixel geometry.
+const ProgressIndicatorArtwork = ({
+  style: _primitiveStyle,
+  ...props
+}: React.ComponentProps<"div">) => <div {...props} />;
+
 const ProgressTrack = ({
   className,
   ...props
@@ -141,7 +147,11 @@ const Progress = ({
           filled={filled}
         />
       )}
-      <ProgressTrack className="mc-progress-fallback" aria-hidden="true">
+      <ProgressTrack
+        className="mc-progress-fallback"
+        aria-hidden="true"
+        style={ownedStyle1}
+      >
         <span
           aria-hidden="true"
           className="mc-progress-surface"
@@ -158,7 +168,7 @@ const Progress = ({
           data-slot="progress-indicator"
           aria-hidden="true"
           className="mc-progress-indicator mc-owned-paint-progress-1"
-          style={ownedStyle1}
+          render={<ProgressIndicatorArtwork />}
         >
           <span className="mc-progress-surface" style={foregroundStyle} />
           {notchForeground && (

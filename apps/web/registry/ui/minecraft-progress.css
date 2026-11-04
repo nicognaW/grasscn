@@ -18,6 +18,9 @@
     background-repeat: no-repeat;
     pointer-events: none;
   }
+  .mc-progress-indicator:not([data-indeterminate]) {
+    inset-inline-start: 0;
+  }
   .mc-progress-indicator {
     position: absolute;
     top: 0;
