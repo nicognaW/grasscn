@@ -102,7 +102,7 @@ export const DataTableFixture = () => {
         scale={scale}
         maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
         align={p.get("alignment") === "center" ? "center" : "left"}
-        style={{ width: "100%" }}
+        className="fixture-data-table-text-fill"
       >
         {label}
       </MinecraftDisclosureText>

@@ -399,3 +399,6 @@
 .fixture-card-empty-padding {
   padding: 0;
 }
+.fixture-data-table-text-fill {
+  width: 100%;
+}

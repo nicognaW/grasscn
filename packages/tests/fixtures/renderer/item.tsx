@@ -120,13 +120,13 @@ const ItemFixture = () => {
   );
 
   const { height, x, y } = readItemReferenceGeometry();
+  const scaledWidth = width * scale;
 
   const commonStyle = {
     "--fixture-height": `${height}px`,
     "--fixture-x": `${x}px`,
 
     "--fixture-y": `${y}px`,
-    width: width * scale,
   } satisfies React.CSSProperties;
 
   let selectedSubject: React.JSX.Element;
@@ -146,7 +146,7 @@ const ItemFixture = () => {
           left: x,
           position: "fixed",
           top: y,
-          width: commonStyle.width,
+          width: scaledWidth,
           /* oxlint-enable shadcn/no-inline-styles */
         }}
         data-subject="true"
@@ -163,7 +163,7 @@ const ItemFixture = () => {
         edge={state === "footer" ? "footer" : "header"}
         role={q.has("semantic") ? "separator" : "none"}
         className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
-        style={commonStyle}
+        style={{ ...commonStyle, width: scaledWidth }}
         data-subject="true"
       />
     );
@@ -205,6 +205,8 @@ const ItemFixture = () => {
           ...commonStyle,
           // oxlint-disable-next-line shadcn/no-inline-styles -- Approved Item default-layer probe removes inline height before asserting native dimensions; a height class would survive removal.
           height: rich ? undefined : height,
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Approved Item default-layer probe removes inline width before asserting native dimensions; a width class would survive removal.
+          width: scaledWidth,
         }}
         tabIndex={state === "focus" ? 0 : undefined}
         onClick={(event) => {
