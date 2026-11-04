@@ -1,6 +1,34 @@
 import { test, expect } from "@grasscn/tests/test";
 import { PNG } from "pngjs";
 
+interface DrawerCapturedFrame {
+  ms: number;
+  opacity: string;
+  panelTransform: string;
+  ready: string | null;
+  rect: Pick<
+    DOMRectReadOnly,
+    "bottom" | "height" | "left" | "right" | "top" | "width" | "x" | "y"
+  >;
+  transform: string;
+}
+
+/** Completed dense seven-frame producer; this phase uses only its read operations. */
+interface CompletedDrawerFrames extends Array<DrawerCapturedFrame> {
+  readonly 0: DrawerCapturedFrame;
+  readonly 1: DrawerCapturedFrame;
+  readonly 2: DrawerCapturedFrame;
+  readonly 3: DrawerCapturedFrame;
+  readonly 4: DrawerCapturedFrame;
+  readonly 5: DrawerCapturedFrame;
+  readonly 6: DrawerCapturedFrame;
+  readonly length: 7;
+  at: {
+    (index: -1): DrawerCapturedFrame;
+    (index: number): DrawerCapturedFrame | undefined;
+  };
+}
+
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
 for (const scale of [2] as const) {
@@ -87,11 +115,11 @@ for (const scale of [2] as const) {
     expect(first.opacity).toBe("1");
 
     const values: number[][] = [];
-    const states: unknown[] = [];
+    const states: DrawerCapturedFrame[] = [];
 
     for (const ms of [0, 16, 32, 50, 100, 200, 500]) {
       // oxlint-disable-next-line no-await-in-loop -- Sets one shared drawer animation frame, reads its geometry, and attaches that exact screenshot before advancing the frame.
-      const state = await page.evaluate((frame) => {
+      const state = await page.evaluate((frame): DrawerCapturedFrame => {
         const overlay = document.querySelector<HTMLElement>(
           "[data-slot=drawer-overlay]"
         );
@@ -169,9 +197,12 @@ for (const scale of [2] as const) {
       expect(value).toEqual(values.at(-1));
     }
 
-    expect((states[0] as any).panelTransform).not.toBe(
-      (states.at(-1) as any).panelTransform
+    // SAFETY: reaching this statement means all seven fixed frame iterations completed their one typed push; no early normal exits exist and this array never escapes except as a JSON string. Slots 0..6 and bound at(-1) therefore contain the actual captured records.
+    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact completed seven-frame producer view, including its real negative-index operation; no scalar assertion, changed lookup or new runtime premise.
+    expect((states as CompletedDrawerFrames)[0].panelTransform).not.toBe(
+      (states as CompletedDrawerFrames).at(-1).panelTransform
     );
+    // oxlint-enable typescript/no-unsafe-type-assertion
   });
 }
 
