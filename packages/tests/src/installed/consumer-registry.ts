@@ -184,49 +184,52 @@ export const assertRegistryInstallation = async (
         loader: filename.endsWith("x") ? "tsx" : "ts",
       }).scan(bytes.toString("utf-8"));
 
-      for (const entry of parsed.imports) {
-        if (!entry.path.startsWith(".") && !entry.path.startsWith("@/")) {
-          continue;
-        }
-
-        importCount += 1;
-
-        const target = entry.path.startsWith("@/")
-          ? path.join(consumer, "src", entry.path.slice(2))
-          : path.resolve(path.dirname(filename), entry.path);
-
-        assert.ok(
-          target.startsWith(path.resolve(consumer) + path.sep),
-          `${original} imports must stay inside consumer: ${entry.path}`
-        );
-
-        const candidates = [
-          target,
-          ...[
-            ".ts",
-            ".tsx",
-            ".css",
-            ".json",
-            ".js",
-            ".mjs",
-            "/index.ts",
-            "/index.tsx",
-          ].map((extension) => target + extension),
-        ];
-
-        let found = false;
-
-        for (const candidate of candidates) {
-          let isFile = false;
-
-          try {
-            const candidateStat = await stat(candidate);
-            isFile = candidateStat.isFile();
-          } catch {
-            /* Missing candidates are expected while walking package/import resolution. */
+      const importInputs = await Promise.allSettled(
+        parsed.imports.map(async (entry) => {
+          if (!entry.path.startsWith(".") && !entry.path.startsWith("@/")) {
+            return false;
           }
 
-          if (isFile) {
+          const target = entry.path.startsWith("@/")
+            ? path.join(consumer, "src", entry.path.slice(2))
+            : path.resolve(path.dirname(filename), entry.path);
+
+          assert.ok(
+            target.startsWith(path.resolve(consumer) + path.sep),
+            `${original} imports must stay inside consumer: ${entry.path}`
+          );
+
+          const candidates = [
+            target,
+            ...[
+              ".ts",
+              ".tsx",
+              ".css",
+              ".json",
+              ".js",
+              ".mjs",
+              "/index.ts",
+              "/index.tsx",
+            ].map((extension) => target + extension),
+          ];
+
+          const candidateInputs = await Promise.all(
+            candidates.map(async (candidate) => {
+              try {
+                const candidateStat = await stat(candidate);
+
+                return candidateStat.isFile() ? candidate : undefined;
+              } catch {
+                /* Missing candidates are expected while walking package/import resolution. */
+              }
+            })
+          );
+
+          const candidate = candidateInputs.find(
+            (input) => input !== undefined
+          );
+
+          if (candidate !== undefined) {
             const [candidateInput, consumerInput] = await Promise.allSettled([
               realpath(candidate),
               realpath(consumer),
@@ -246,15 +249,25 @@ export const assertRegistryInstallation = async (
               physicalCandidate.startsWith(physicalConsumer + path.sep),
               `${original} imports must stay physically inside consumer`
             );
-            found = true;
-            break;
           }
+
+          assert.ok(
+            candidate !== undefined,
+            `${original} has unresolved installed import ${entry.path}`
+          );
+
+          return true;
+        })
+      );
+
+      for (const importInput of importInputs) {
+        if (importInput.status === "rejected") {
+          throw importInput.reason;
         }
 
-        assert.ok(
-          found,
-          `${original} has unresolved installed import ${entry.path}`
-        );
+        if (importInput.value) {
+          importCount += 1;
+        }
       }
 
       return { digest, importCount, installedPath };

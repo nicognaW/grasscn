@@ -184,29 +184,35 @@ export const assertIndependentDependencies = async (project: string) => {
         within(physical, ownedModules),
         `${name} must resolve through consumer's own node_modules, received ${physical}`
       );
-      let identity: (typeof identities)[string] | undefined;
+      const metadataFiles: string[] = [];
       let directory = path.dirname(physical);
 
       while (within(directory, ownedModules)) {
-        try {
-          const bytes = await readFile(path.join(directory, "package.json"));
-          /** @type {unknown} */
-          const installed: unknown = JSON.parse(bytes.toString("utf-8"));
-
-          if (isInstalledMetadata(installed) && installed.name === name) {
-            identity = {
-              packageSha256: sha256(bytes),
-              path: physical,
-              version: installed.version,
-            };
-            break;
-          }
-        } catch {
-          /* Missing candidates are expected while walking package/import resolution. */
-        }
-
+        metadataFiles.push(path.join(directory, "package.json"));
         directory = path.dirname(directory);
       }
+
+      const metadataInputs = await Promise.all(
+        metadataFiles.map(async (file) => {
+          try {
+            const bytes = await readFile(file);
+            /** @type {unknown} */
+            const installed: unknown = JSON.parse(bytes.toString("utf-8"));
+
+            if (isInstalledMetadata(installed) && installed.name === name) {
+              return {
+                packageSha256: sha256(bytes),
+                path: physical,
+                version: installed.version,
+              };
+            }
+          } catch {
+            /* Missing candidates are expected while walking package/import resolution. */
+          }
+        })
+      );
+
+      const identity = metadataInputs.find((input) => input !== undefined);
 
       return { identity, name };
     })
