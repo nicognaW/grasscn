@@ -187,7 +187,12 @@ export const ComboboxFixture = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setAttempt(String(new FormData(e.currentTarget).get("block")));
+        setAttempt(
+          // SAFETY: this owned form produces only the string-valued text/hidden control named block, never a file. Preserve String's exact string results and absent-null result "null".
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer snapshot consumed as a string; no runtime validation.
+          (new FormData(e.currentTarget).get("block") as string | null) ??
+            "null"
+        );
       }}
     >
       <Combobox

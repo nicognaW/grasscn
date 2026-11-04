@@ -103,7 +103,11 @@ export const InputOTPFixture = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setTag(String(new FormData(e.currentTarget).get("code")));
+        setTag(
+          // SAFETY: this owned form produces only the string-valued text/hidden control named code, never a file. Preserve String's exact string results and absent-null result "null".
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer snapshot consumed as a string; no runtime validation.
+          (new FormData(e.currentTarget).get("code") as string | null) ?? "null"
+        );
       }}
     >
       {root}

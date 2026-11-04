@@ -374,7 +374,7 @@ const SelectFixture = () => {
       onSubmit={(event) => {
         event.preventDefault();
         setSubmittedValue(
-          // SAFETY: this owned form's mode controls are RadioGroup/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
+          // SAFETY: this owned form's mode controls are RadioGroup/Select/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer boundary; no runtime check or changed read.
           (new FormData(event.currentTarget).get("mode") as string | null) ??
             "missing"
@@ -506,7 +506,7 @@ const RadioFixture = () => {
         onSubmit={(event) => {
           event.preventDefault();
           setResult(
-            // SAFETY: this owned form's mode controls are RadioGroup/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
+            // SAFETY: this owned form's mode controls are RadioGroup/Select/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer boundary; no runtime check or changed read.
             (new FormData(event.currentTarget).get("mode") as string | null) ??
               "missing"
@@ -618,7 +618,7 @@ const SwitchFixture = () => {
         onSubmit={(event) => {
           event.preventDefault();
           setResult(
-            // SAFETY: this owned form's mode controls are RadioGroup/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
+            // SAFETY: this owned form's mode controls are RadioGroup/Select/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer boundary; no runtime check or changed read.
             (new FormData(event.currentTarget).get("mode") as string | null) ??
               "missing"
