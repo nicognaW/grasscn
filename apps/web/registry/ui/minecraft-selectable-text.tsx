@@ -40,6 +40,10 @@ const MinecraftSelectableText = ({
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLSpanElement capture.
     const value = raw.current as HTMLSpanElement;
 
+    // SAFETY: useRender composes this private ref with the public ref on the same unkeyed span. Its node identity stays fixed for this effect; alive guards and RAF/ResizeObserver cleanup bound deferred measurements.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The composed intrinsic commit proves this exact HTMLSpanElement capture.
+    const element = root.current as HTMLSpanElement;
+
     let alive = true;
     let fontReady = false;
     let frame = 0;
@@ -50,8 +54,6 @@ const MinecraftSelectableText = ({
       if (!fontReady) {
         return;
       }
-
-      const element = root.current!;
 
       const node = value.firstChild;
 
@@ -122,7 +124,7 @@ const MinecraftSelectableText = ({
       }
     });
 
-    observer.observe(root.current!);
+    observer.observe(element);
 
     return () => {
       alive = false;
