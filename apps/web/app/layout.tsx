@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
+import { Analytics } from "@vercel/analytics/next";
+
 import grassBlockIcon from "../assets/grass-block-16.png";
 import grassBlockIcon48 from "../assets/grass-block-48.png";
 import { LegacyDocumentationLinks } from "../components/legacy-documentation-links";
@@ -112,6 +114,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
           {children}
         </SiteFrame>
         <LegacyDocumentationLinks pages={pages} groups={groups} />
+        <Analytics />
       </body>
     </html>
   );
