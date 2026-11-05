@@ -1966,9 +1966,13 @@ const PopoverFixture = () => {
               | "end"
           }
           sideOffset={native ? 0 : Number(params.get("sideOffset") ?? 4)}
+          className={
+            native && !params.has("text")
+              ? "fixture-popover-empty-padding"
+              : undefined
+          }
           style={{
             height: native ? Number(params.get("height")) * scale : undefined,
-            padding: native && !params.has("text") ? 0 : undefined,
             width: native ? Number(params.get("width")) * scale : undefined,
           }}
           initialFocus={native ? () => content.current : undefined}

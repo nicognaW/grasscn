@@ -402,3 +402,7 @@
 .fixture-data-table-text-fill {
   width: 100%;
 }
+
+.fixture-popover-empty-padding {
+  padding: 0;
+}
