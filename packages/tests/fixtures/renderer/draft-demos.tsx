@@ -147,6 +147,8 @@ const renderDraftPlayerPreviewScenario = ({
       document.documentElement.dataset.rotation = JSON.stringify(pose);
     }}
     skin={
+      // SAFETY: The owned Adventure descriptors emit built-in SDK skin names; custom-skin descriptors pair their non-SDK names with src, and this existing branch normalizes them to wide/steve. The unchanged nullish default covers missing state.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact supported Adventure fixture producer contract after the existing custom-source normalization; no runtime validation or generic cast.
       (hasSkinSource(sample.src) &&
       !["wide/steve", "slim/alex"].includes(sample.state ?? "")
         ? "wide/steve"
@@ -247,7 +249,11 @@ const renderDraftLocatorScenario = ({
 const renderDraftSignScenario = ({ sample, common }: DraftScenarioFrame) => (
   <Sign
     {...common}
-    wood={(sample.state as SignWood) ?? "oak"}
+    wood={
+      // SAFETY: The owned sign/hanging-sign descriptors serialize the twelve SignWood literals, retained unchanged by the capture manifest and Adventure query serializers. Optional state keeps the existing oak default.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact supported Adventure sign-wood producer contract, including the existing optional input; no new validation or changed fallback.
+      (sample.state as SignWood | undefined) ?? "oak"
+    }
     glowing={sample.checked}
     lines={sample.labels ?? ["Welcome", "to grasscn", "", "Make it yours."]}
   />
@@ -259,7 +265,11 @@ const renderDraftHangingSignScenario = ({
 }: DraftScenarioFrame) => (
   <HangingSign
     {...common}
-    wood={(sample.state as SignWood) ?? "oak"}
+    wood={
+      // SAFETY: The owned sign/hanging-sign descriptors serialize the twelve SignWood literals, retained unchanged by the capture manifest and Adventure query serializers. Optional state keeps the existing oak default.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact supported Adventure sign-wood producer contract, including the existing optional input; no new validation or changed fallback.
+      (sample.state as SignWood | undefined) ?? "oak"
+    }
     glowing={sample.checked}
     lines={sample.labels ?? ["Open", "for business", "", "Welcome!"]}
   />
