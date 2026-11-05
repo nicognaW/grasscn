@@ -125,7 +125,7 @@ const BubbleContent = ({
   >(null);
 
   const [available, setAvailable] = React.useState<number>();
-  const [fontReady, setFontReady] = React.useState(false);
+  const [unihexReady, setUnihexReady] = React.useState(false);
 
   React.useLayoutEffect((): (() => void) | undefined => {
     const element = attached;
@@ -223,11 +223,11 @@ const BubbleContent = ({
 
   const text = plainText(content);
   const unicode = /\P{ASCII}/u.test(text);
+  const fontReady = !unicode || unihexReady;
 
   // Font readiness belongs to the shared Unihex resource, not individual text.
   React.useLayoutEffect(() => {
     let live = true;
-    setFontReady(!unicode);
 
     if (unicode) {
       const fontLoading = loadUnihex();
@@ -236,7 +236,7 @@ const BubbleContent = ({
         await fontLoading;
 
         if (live) {
-          setFontReady(true);
+          setUnihexReady(true);
         }
       };
 
@@ -292,7 +292,7 @@ const BubbleContent = ({
       ref={[setAttached, ref ?? null]}
       data-slot="bubble-content"
       data-mc-chat-ready={
-        available !== undefined && (!unicode || fontReady) ? "true" : "false"
+        available !== undefined && fontReady ? "true" : "false"
       }
       className={cn(`mc-bubble-content`, className)}
       {...props}
