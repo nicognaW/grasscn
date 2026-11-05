@@ -7,7 +7,11 @@ import { AdventureImage } from "./minecraft-adventure-image";
 import { mapAtlasPng } from "./minecraft-map-atlas";
 import { mapGpuPixels } from "./minecraft-map-gpu";
 import { minecraftMapPalette } from "./minecraft-map-palette";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  useCanvasPaintConnection,
+} from "./minecraft-render";
 
 import "./minecraft-map.css";
 
@@ -100,8 +104,18 @@ const MinecraftMap = ({
   }
 
   const ref = React.useRef<HTMLCanvasElement>(null);
-  const [gpuReady, setGpuReady] = React.useState(false);
+  const { attach, connection } = useCanvasPaintConnection(ref);
   const [revision, setRevision] = React.useState(0);
+
+  const paintInput = React.useMemo(
+    () => ({ connection, markers, pixels, revision, scale }),
+    [connection, markers, pixels, revision, scale]
+  );
+
+  const [completedPaint, setCompletedPaint] =
+    React.useState<typeof paintInput>();
+
+  const gpuReady = completedPaint === paintInput;
 
   React.useEffect(() => {
     const repaint = () => {
@@ -129,108 +143,109 @@ const MinecraftMap = ({
   React.useLayoutEffect(() => {
     let live = true;
 
-    const canvas =
-      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
-      ref.current as HTMLCanvasElement;
+    if (connection !== null) {
+      const canvas =
+        // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+        ref.current as HTMLCanvasElement;
 
-    const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
 
-    if (!ctx) {
-      throw new Error("Minecraft map 2D canvas context could not be created");
-    }
-
-    const image = ctx.createImageData(128, 128);
-
-    canvas.width = 128;
-    canvas.height = 128;
-    setGpuReady(false);
-
-    for (let i = 0; i < pixels.length; i += 1) {
-      const color = pixels[i];
-      const rgba = minecraftMapPalette[color];
-      const j = i * 4;
-
-      // oxlint-disable-next-line no-bitwise -- Map palette bytes reserve their low two bits for shade; a zero base-color field is transparent.
-      if (color >> 2 === 0) {
-        continue;
+      if (!ctx) {
+        throw new Error("Minecraft map 2D canvas context could not be created");
       }
 
-      /* oxlint-disable no-bitwise -- Unpack the palette ARGB word into the four ImageData byte channels. */
-      image.data[j] = (rgba >>> 16) & 255;
-      image.data[j + 1] = (rgba >>> 8) & 255;
-      image.data[j + 2] = rgba & 255;
-      image.data[j + 3] = rgba >>> 24;
-      /* oxlint-enable no-bitwise */
-    }
+      const image = ctx.createImageData(128, 128);
 
-    ctx.putImageData(image, 0, 0);
+      canvas.width = 128;
+      canvas.height = 128;
 
-    if (markers.length) {
-      const imagesLoading = Promise.all(
-        [
-          ...markers.map(
-            (marker) =>
-              adventureAssets[
-                `map/decorations/${marker.decoration ?? "player"}`
-              ].src
-          ),
-          mapAtlasPng,
-        ].map(
-          async (src) =>
-            // oxlint-disable-next-line promise/avoid-new -- Preserve this Image event bridge, loaded-element result and raw load-error event.
-            await new Promise<HTMLImageElement>((resolve, reject) => {
-              const loadedImage = new Image();
-              loadedImage.addEventListener("load", () => {
-                resolve(loadedImage);
-              });
+      for (let i = 0; i < pixels.length; i += 1) {
+        const color = pixels[i];
+        const rgba = minecraftMapPalette[color];
+        const j = i * 4;
 
-              loadedImage.addEventListener("error", reject);
-              loadedImage.src = src;
-            })
-        )
-      );
-
-      const startMapRendering = async () => {
-        const images = await imagesLoading;
-
-        if (!live) {
-          return;
+        // oxlint-disable-next-line no-bitwise -- Map palette bytes reserve their low two bits for shade; a zero base-color field is transparent.
+        if (color >> 2 === 0) {
+          continue;
         }
 
-        const bounds = canvas.getBoundingClientRect();
+        /* oxlint-disable no-bitwise -- Unpack the palette ARGB word into the four ImageData byte channels. */
+        image.data[j] = (rgba >>> 16) & 255;
+        image.data[j + 1] = (rgba >>> 8) & 255;
+        image.data[j + 2] = rgba & 255;
+        image.data[j + 3] = rgba >>> 24;
+        /* oxlint-enable no-bitwise */
+      }
 
-        const output = mapGpuPixels(
-          image,
-          images,
-          markers,
-          scale,
-          bounds.x,
-          bounds.y
+      ctx.putImageData(image, 0, 0);
+
+      if (markers.length) {
+        const imagesLoading = Promise.all(
+          [
+            ...markers.map(
+              (marker) =>
+                adventureAssets[
+                  `map/decorations/${marker.decoration ?? "player"}`
+                ].src
+            ),
+            mapAtlasPng,
+          ].map(
+            async (src) =>
+              // oxlint-disable-next-line promise/avoid-new -- Preserve this Image event bridge, loaded-element result and raw load-error event.
+              await new Promise<HTMLImageElement>((resolve, reject) => {
+                const loadedImage = new Image();
+                loadedImage.addEventListener("load", () => {
+                  resolve(loadedImage);
+                });
+
+                loadedImage.addEventListener("error", reject);
+                loadedImage.src = src;
+              })
+          )
         );
 
-        if (output) {
-          canvas.width = 128 * scale;
-          canvas.height = 128 * scale;
-          ctx.putImageData(
-            new ImageData(output, canvas.width, canvas.height),
-            0,
-            0
-          );
-          setGpuReady(true);
-        }
-      };
+        const startMapRendering = async () => {
+          const images = await imagesLoading;
 
-      startMapRendering().catch(() => {
-        // Keep the existing fallback on rendering failure; do not publish GPU readiness.
-      });
+          if (!live) {
+            return;
+          }
+
+          const bounds = canvas.getBoundingClientRect();
+
+          const output = mapGpuPixels(
+            image,
+            images,
+            markers,
+            scale,
+            bounds.x,
+            bounds.y
+          );
+
+          if (output) {
+            canvas.width = 128 * scale;
+            canvas.height = 128 * scale;
+            ctx.putImageData(
+              new ImageData(output, canvas.width, canvas.height),
+              0,
+              0
+            );
+            setCompletedPaint(paintInput);
+          }
+        };
+
+        startMapRendering().catch(() => {
+          // Keep the existing fallback on rendering failure; do not publish GPU readiness.
+        });
+      }
     }
 
     return () => {
       live = false;
     };
     // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Revision is the existing viewport/intersection repaint signal; canvas GPU readback uses current page coordinates.
-  }, [pixels, markers, scale, revision]);
+  }, [connection, pixels, markers, scale, revision, paintInput]);
 
   return (
     <div
@@ -271,7 +286,7 @@ const MinecraftMap = ({
       }}
     >
       <canvas
-        ref={ref}
+        ref={attach}
         width={128}
         height={128}
         // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This role describes the dynamically painted HTMLCanvasElement; img cannot provide the owned 2D drawing API.
