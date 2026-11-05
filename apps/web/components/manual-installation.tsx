@@ -311,6 +311,9 @@ export const ManualInstallation = ({
         and imports together.
       </DocumentParagraph>
       <DependencyCommand packages={manifest.dependencies} />
+      {manifest.devDependencies.length > 0 && (
+        <DependencyCommand packages={manifest.devDependencies} development />
+      )}
       <DocumentParagraph>
         Styles, font tables, atlases and click audio are included in these files
         and imported by the implementation. Keep the complete set; no Minecraft

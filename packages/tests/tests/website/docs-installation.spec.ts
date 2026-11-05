@@ -202,8 +202,22 @@ test("Button manual installation exposes complete files and defers large resourc
     .click();
   await expect(dependencyCommand.getByRole("status")).toHaveText("Copied");
   expect(await page.evaluate(() => window.copied)).toBe(
-    "npm install class-variance-authority @base-ui/react"
+    "npm install class-variance-authority @base-ui/react react-is"
   );
+
+  const developmentCommand = installation.getByRole("region", {
+    exact: true,
+    name: "Development dependencies: Terminal",
+  });
+
+  await developmentCommand
+    .getByRole("button", { exact: true, name: "Copy" })
+    .click();
+  await expect(developmentCommand.getByRole("status")).toHaveText("Copied");
+  expect(await page.evaluate(() => window.copied)).toBe(
+    "npm install --save-dev @types/react-is"
+  );
+
   await files
     .getByRole("button", { exact: true, name: "minecraft-unifont-data.ts" })
     .click();

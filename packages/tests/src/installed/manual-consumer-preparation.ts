@@ -34,6 +34,7 @@ interface PrepareManualConsumerInput {
   consumer: string;
   copiedExamples: Record<string, string>;
   dependencies: Record<string, string>;
+  devDependencies?: Record<string, string>;
   framework: string;
   manifests: ConsumerValidationTypes.ManualManifest[];
   origin: string;
@@ -100,6 +101,7 @@ export const prepareManualConsumer = async (
     consumer,
     copiedExamples,
     dependencies,
+    devDependencies,
     framework,
     manifests,
     origin,
@@ -148,6 +150,7 @@ export const prepareManualConsumer = async (
         : { "@tailwindcss/postcss": "4.3.3", next: "16.4.2" }),
     },
     devDependencies: {
+      ...devDependencies,
       "@types/node": "26.6.5",
       "@types/react": "19.3.0",
       "@types/react-dom": "19.3.0",

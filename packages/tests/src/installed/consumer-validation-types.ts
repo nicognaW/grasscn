@@ -27,6 +27,7 @@ export interface WebsiteIdentity {
 
 export interface ManualManifest {
   dependencies: string[];
+  devDependencies?: string[];
   files: { destination: string; url: string }[];
   name: string;
 }
@@ -147,6 +148,9 @@ const isManifest = (value: unknown): value is ManualManifest =>
   isString(value.name) &&
   Array.isArray(value.dependencies) &&
   value.dependencies.every(isString) &&
+  (!("devDependencies" in value) ||
+    (Array.isArray(value.devDependencies) &&
+      value.devDependencies.every(isString))) &&
   Array.isArray(value.files) &&
   value.files.every(isManualFile);
 

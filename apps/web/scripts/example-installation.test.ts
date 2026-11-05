@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { exampleInstallation } from "../lib/example-installation";
+import { installationManifest } from "../lib/installation";
 
 test("copied Tabs example declares independently distributed composition items", () => {
   expect(
@@ -34,4 +35,17 @@ test("every maintained executable example has distributed prerequisites", async 
       expect(exampleInstallation(code).length).toBeGreaterThan(0);
     })
   );
+});
+
+test("manual installation keeps runtime packages and development types separate", async () => {
+  const button = await installationManifest("button");
+  const avatar = await installationManifest("avatar");
+
+  expect(button?.dependencies).toEqual([
+    "class-variance-authority",
+    "@base-ui/react",
+    "react-is",
+  ]);
+  expect(button?.devDependencies).toEqual(["@types/react-is"]);
+  expect(avatar?.devDependencies).toEqual([]);
 });

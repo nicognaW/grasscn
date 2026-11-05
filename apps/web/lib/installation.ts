@@ -13,6 +13,7 @@ export interface InstallationFile {
 export interface InstallationManifest {
   name: string;
   dependencies: string[];
+  devDependencies: string[];
   files: InstallationFile[];
 }
 
@@ -67,6 +68,7 @@ export const installationManifest = async (
 
   return {
     dependencies: [...item.dependencies],
+    devDependencies: [...(item.devDependencies ?? [])],
     files: await Promise.all(
       item.files.map(async (file, index) => {
         const target = installationDestination(file);

@@ -517,6 +517,17 @@ try {
         versionAt > 0 ? specifier.slice(versionAt + 1) : "latest";
     }
 
+    const devDependencies: PrepareManualDependencies = {};
+
+    for (const specifier of new Set(
+      manifests.flatMap((manifest) => manifest.devDependencies ?? [])
+    )) {
+      const versionAt = specifier.lastIndexOf("@");
+      devDependencies[
+        versionAt > 0 ? specifier.slice(0, versionAt) : specifier
+      ] = versionAt > 0 ? specifier.slice(versionAt + 1) : "latest";
+    }
+
     // eslint-disable-next-line no-unreachable-loop -- Preparation continues and runtime closes the host before advancing through both fixed framework entries.
     for (const framework of ["vite", "next"]) {
       const consumer = path.join(projectRoot, framework);
@@ -528,6 +539,7 @@ try {
           consumer,
           copiedExamples,
           dependencies,
+          devDependencies,
           framework,
           manifests,
           origin,
@@ -748,6 +760,7 @@ try {
         installedBytes,
         items: manifests.map((manifest) => ({
           dependencies: manifest.dependencies,
+          devDependencies: manifest.devDependencies ?? [],
           files: manifest.files.length,
           name: manifest.name,
         })),
