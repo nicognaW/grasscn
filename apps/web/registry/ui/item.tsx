@@ -65,17 +65,6 @@ const Item = ({
 
   const inherited = React.useContext(ItemScale);
   const scale = providedScale ?? inherited;
-  const node = React.useRef<HTMLElement>(null);
-
-  const captureNode = React.useCallback(
-    (element: HTMLElement | null) => {
-      node.current = element;
-    },
-    [node]
-  );
-
-  React.useImperativeHandle(ref, () => node.current! as HTMLDivElement, []);
-
   const child = React.isValidElement(render) ? render : null;
 
   const interactive =
@@ -98,7 +87,7 @@ const Item = ({
         <Component
           render={render}
           as="div"
-          ref={captureNode}
+          ref={ref}
           data-slot="item"
           data-variant={variant}
           data-size={size}

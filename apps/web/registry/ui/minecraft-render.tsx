@@ -153,7 +153,8 @@ export const MinecraftRender = function MinecraftRender<
   render,
   ref,
   ...props
-}: Omit<React.ComponentPropsWithRef<T>, "render"> & {
+}: Omit<React.ComponentPropsWithRef<T>, "render" | "ref"> & {
+  ref?: React.ComponentPropsWithRef<T>["ref"] | React.Ref<Element>[];
   as?: T;
   render?: MinecraftRenderProp;
 }) {

@@ -119,21 +119,21 @@ const BubbleContent = ({
 }: MinecraftPolymorphicProps<"div">) => {
   const scale = React.useContext(MessageScale);
   const author = React.useContext(MessageAuthor);
-  const node = React.useRef<HTMLElement>(null);
 
-  const captureNode = React.useCallback(
-    (element: HTMLElement | null) => {
-      node.current = element;
-    },
-    [node]
-  );
+  const [attached, setAttached] = React.useState<
+    (Element & ElementCSSInlineStyle) | null
+  >(null);
 
   const [available, setAvailable] = React.useState<number>();
   const [fontReady, setFontReady] = React.useState(false);
 
-  React.useImperativeHandle(ref, () => node.current! as HTMLDivElement, []);
-  React.useLayoutEffect(() => {
-    const element = node.current!;
+  React.useLayoutEffect((): (() => void) | undefined => {
+    const element = attached;
+
+    if (element === null) {
+      return undefined;
+    }
+
     const bubble = element.closest<HTMLElement>("[data-slot=bubble]");
     const parent = bubble?.parentElement ?? element.parentElement!;
 
@@ -188,7 +188,7 @@ const BubbleContent = ({
     return () => {
       observer.disconnect();
     };
-  }, [scale]);
+  }, [attached, scale]);
 
   const original = children;
 
@@ -285,7 +285,7 @@ const BubbleContent = ({
     <Comp
       render={render}
       as="div"
-      ref={captureNode}
+      ref={[setAttached, ref ?? null]}
       data-slot="bubble-content"
       data-mc-chat-ready={
         available !== undefined && (!unicode || fontReady) ? "true" : "false"
