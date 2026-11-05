@@ -838,7 +838,9 @@ const CollapsibleFixture = () => {
         {...(native && !body && params.get("state") === "disabled"
           ? { disabled: true }
           : {})}
-        style={native && body ? { left: -10000, position: "fixed" } : undefined}
+        style={
+          native && body ? { left: -10_000, position: "fixed" } : undefined
+        }
         onClick={
           params.has("prevent")
             ? (event) => {
@@ -1175,13 +1177,13 @@ const MenubarFixture = () => {
                   style={
                     native
                       ? {
-                          position: "fixed",
+                          border: 0,
+                          height: 0,
                           left: Number(params.get("x")) * scale,
+                          padding: 0,
+                          position: "fixed",
                           top: Number(params.get("y")) * scale,
                           width: 0,
-                          height: 0,
-                          padding: 0,
-                          border: 0,
                         }
                       : undefined
                   }
@@ -1196,8 +1198,8 @@ const MenubarFixture = () => {
             style={
               triggerPixels
                 ? {
-                    position: "fixed",
                     left: Number(params.get("x") ?? 16) * scale,
+                    position: "fixed",
                     top: Number(params.get("y") ?? 16) * scale,
                     width: Number(params.get("width") ?? 200) * scale,
                   }
@@ -1449,13 +1451,13 @@ const DropdownFixture = () => {
                 style={
                   native
                     ? {
-                        position: "fixed",
+                        border: 0,
+                        height: 0,
                         left: Number(params.get("x")) * scale,
+                        padding: 0,
+                        position: "fixed",
                         top: Number(params.get("y")) * scale,
                         width: 0,
-                        height: 0,
-                        padding: 0,
-                        border: 0,
                       }
                     : undefined
                 }
@@ -1470,8 +1472,8 @@ const DropdownFixture = () => {
           style={
             triggerPixels
               ? {
-                  position: "fixed",
                   left: Number(params.get("x") ?? 16) * scale,
+                  position: "fixed",
                   top: Number(params.get("y") ?? 16) * scale,
                   width: Number(params.get("width") ?? 200) * scale,
                 }
@@ -1861,11 +1863,9 @@ const AlertDialogCompositionFixture = () => {
       <AlertDialogContent render={<section />} ref={content}>
         <>
           <AlertDialogHeader>
-            <AlertDialogTitle render={<h3 />}>
-              {"Composed title"}
-            </AlertDialogTitle>
+            <AlertDialogTitle render={<h3 />}>Composed title</AlertDialogTitle>
             <AlertDialogDescription render={<div />}>
-              {"Composed description"}
+              Composed description
             </AlertDialogDescription>
           </AlertDialogHeader>
           <form
@@ -1899,10 +1899,10 @@ const AlertDialogCompositionFixture = () => {
               nativeButton={false}
               render={<a href="#confirmed" />}
             >
-              {"Confirm link"}
+              Confirm link
             </AlertDialogAction>
             <AlertDialogCancel ref={cancel} render={<Button />}>
-              {"Cancel composed"}
+              Cancel composed
             </AlertDialogCancel>
           </AlertDialogFooter>
         </>
@@ -1938,9 +1938,9 @@ const DialogCompositionFixture = () => {
       >
         <>
           <DialogHeader>
-            <DialogTitle render={<h3 />}>{"Composed title"}</DialogTitle>
+            <DialogTitle render={<h3 />}>Composed title</DialogTitle>
             <DialogDescription render={<div />}>
-              {"Composed description"}
+              Composed description
             </DialogDescription>
           </DialogHeader>
           <form
@@ -1968,7 +1968,7 @@ const DialogCompositionFixture = () => {
           <output aria-label="Dialog composed refs">{result}</output>
           <output aria-label="Dialog submissions">{submissions}</output>
           <DialogFooter>
-            <DialogClose render={<Button />}>{"Composed close"}</DialogClose>
+            <DialogClose render={<Button />}>Composed close</DialogClose>
           </DialogFooter>
         </>
       </DialogContent>
@@ -1981,6 +1981,7 @@ const DialogFixture = () => {
   const [open, setOpen] = React.useState(params.has("open") || native);
   const [actions, setActions] = React.useState(0);
   const [changes, setChanges] = React.useState(0);
+  const [scrolledRef, setScrolledRef] = React.useState(-1);
 
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLButtonElement>(null);
@@ -2068,6 +2069,9 @@ const DialogFixture = () => {
           ref={content}
           width={Number(params.get("wrapWidth") ?? 250)}
           initialFocus={native ? () => content.current : undefined}
+          onScroll={() => {
+            setScrolledRef(content.current?.scrollTop ?? -1);
+          }}
         >
           <DialogHeader>
             <DialogTitle>{params.get("label") ?? "World settings"}</DialogTitle>
@@ -2090,7 +2094,9 @@ const DialogFixture = () => {
                   <Button
                     scale={scale}
                     type="button"
-                    onClick={() => setActions((current) => current + 1)}
+                    onClick={() => {
+                      setActions((current) => current + 1);
+                    }}
                   >
                     {`Inspect ${entry}`}
                   </Button>
@@ -2125,6 +2131,7 @@ const DialogFixture = () => {
       </button>
       <output aria-label="Dialog actions">{actions}</output>
       <output aria-label="Dialog changes">{changes}</output>
+      <output aria-label="Dialog ref scroll top">{scrolledRef}</output>
       <button
         id="dialog-read-refs"
         onClick={() => {
@@ -2761,8 +2768,8 @@ const Fixture = () => {
           }
           align={params.get("alignment") === "center" ? "center" : "left"}
           style={{
-            width: width * scale,
             height: Number(params.get("height") ?? 9) * scale,
+            width: width * scale,
           }}
           onClick={() => {
             setCount((current) => current + 1);
@@ -2815,8 +2822,8 @@ const Fixture = () => {
             readOnly={state.includes("readonly")}
             placeholder={params.get("placeholder") ?? ""}
             style={{
-              width: width * scale,
               height: Number(params.get("height") ?? 80) * scale,
+              width: width * scale,
             }}
             onChange={(event) => {
               setInputValue(event.target.value);
@@ -2856,9 +2863,9 @@ const Fixture = () => {
           aria-label="Test card"
           scale={scale}
           style={{
-            width: width * scale,
             height: Number(params.get("height") ?? 200) * scale,
             padding: params.has("text") ? undefined : 0,
+            width: width * scale,
           }}
           data-subject="true"
         >
@@ -2925,8 +2932,8 @@ const Fixture = () => {
               <button
                 id="tooltip-trigger"
                 style={{
-                  marginTop: params.get("edge") === "top" ? 0 : 240,
                   marginLeft: params.get("edge") === "left" ? 0 : 300,
+                  marginTop: params.get("edge") === "top" ? 0 : 240,
                 }}
                 onClick={() => {
                   setCount((current) => current + 1);
@@ -2934,7 +2941,7 @@ const Fixture = () => {
               />
             }
           >
-            {"Inspect"}
+            Inspect
           </TooltipTrigger>
           <TooltipContent
             render={params.has("asChild") ? <div /> : undefined}
@@ -3046,7 +3053,9 @@ const Fixture = () => {
         <button
           id="imperative"
           onClick={() => {
-            if (inputRef.current) inputRef.current.value = "Done";
+            if (inputRef.current) {
+              inputRef.current.value = "Done";
+            }
           }}
         >
           Set through ref

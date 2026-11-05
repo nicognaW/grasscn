@@ -68,10 +68,8 @@
   }
   .mc-dialog-background {
     position: fixed;
-    left: var(--mc-dialog-background-left);
-    top: var(--mc-dialog-background-top);
-    width: var(--mc-dialog-background-width);
-    height: var(--mc-dialog-background-height);
+    left: 0;
+    top: 0;
     z-index: -1;
     pointer-events: none;
   }
