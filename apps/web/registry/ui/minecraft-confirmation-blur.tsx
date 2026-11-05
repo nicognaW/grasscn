@@ -20,7 +20,7 @@ export const MinecraftConfirmationBlur = ({
   const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/gu, "");
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
-  const ready = useConfirmationSnapshot(canvas, identity, radius);
+  const { attach, ready } = useConfirmationSnapshot(canvas, identity, radius);
 
   const size = 2 * Math.max(0, Math.round(radius)) + 1;
   React.useLayoutEffect((): (() => void) | undefined => {
@@ -76,7 +76,7 @@ export const MinecraftConfirmationBlur = ({
         </defs>
       </svg>
       <canvas
-        ref={canvas}
+        ref={attach}
         aria-hidden="true"
         className="pointer-events-none [visibility:var(--mc-intrinsic-registry-ui-minecraft-confirmation-blur-2-visibility)] absolute [inset:0] h-full w-full"
         style={

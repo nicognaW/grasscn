@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { createConfirmationPainter } from "./minecraft-confirmation-gpu";
+import { useCanvasPaintConnection } from "./minecraft-render";
 
 interface FixedPseudo {
   element: HTMLElement;
@@ -39,9 +40,20 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
   identity: string,
   radius: number
 ) {
-  const [ready, setReady] = React.useState(false);
+  const { attach, connection } = useCanvasPaintConnection(canvas);
+
+  const request = React.useMemo(
+    () => ({ connection, identity, radius }),
+    [connection, identity, radius]
+  );
+
+  const [completed, setCompleted] = React.useState<typeof request | null>(null);
   // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- This capture owner clears its latest timer and disconnects all observers/listeners on cleanup. Its recursive async finally only reschedules while !disposed, and every schedule clears the preceding timer; early exits precede all timer allocations.
   React.useLayoutEffect((): ReturnType<React.EffectCallback> => {
+    if (connection === null) {
+      return;
+    }
+
     // SAFETY: This internal hook has one caller, MinecraftConfirmationBlur, which always renders its private canvas; layout setup follows commit and existing disposal guards deferred work.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The sole owned intrinsic canvas producer and existing effect lifetime prove this exact HTMLCanvasElement capture.
     const node = canvas.current as HTMLCanvasElement;
@@ -58,7 +70,6 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
     let timer = 0;
     let version = 0;
 
-    setReady(false);
     // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
     host.dataset.mcConfirmationGpuReady = "false";
 
@@ -478,7 +489,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
           capturedVersion === version
         );
         delete host.dataset.mcConfirmationGpuError;
-        setReady(true);
+        setCompleted(request);
       } catch (error) {
         if (!disposed) {
           host.dataset.mcConfirmationGpuError =
@@ -589,7 +600,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
         version += 1;
         queued = false;
         clearTimeout(timer);
-        setReady(false);
+        setCompleted(null);
         host.dataset.mcConfirmationGpuReady = "false";
       }
     });
@@ -619,7 +630,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
       delete host.dataset.mcConfirmationGpuError;
       delete host.dataset.mcConfirmationFrame;
     };
-  }, [canvas, identity, radius]);
+  }, [canvas, connection, identity, radius, request]);
 
-  return ready;
+  return { attach, ready: completed === request };
 };
