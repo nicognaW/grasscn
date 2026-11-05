@@ -17,7 +17,10 @@ export const MinecraftMenuCheckboxSprite = () => {
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
       ref.current as HTMLCanvasElement;
 
-    const parent = canvas.parentElement!;
+    const parent =
+      // SAFETY: All three registered menu callers place this private canvas directly inside their fixed Base UI Indicator span, with no custom render/ref input; its layout setup follows that DOM commit.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The closed Indicator span producer proves this exact nonnull HTMLElement parent under the approved Q13 contract.
+      canvas.parentElement as HTMLElement;
 
     const item =
       parent.closest<HTMLElement>(".mc-menu-checkbox-item") ??
