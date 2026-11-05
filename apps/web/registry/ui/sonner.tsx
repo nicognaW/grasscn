@@ -286,7 +286,9 @@ const layoutToastStack = function layoutToastStack(
 
     const nodes = [
       ...list.querySelectorAll<HTMLElement>("[data-sonner-toast]"),
-    ].sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
+    ];
+
+    nodes.sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
 
     for (const node of nodes) {
       const model = entries.get(node);

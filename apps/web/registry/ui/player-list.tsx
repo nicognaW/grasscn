@@ -552,25 +552,25 @@ const Scoreboard = ({
     };
   }, [text]);
 
-  const visible = [...entries.filter((e) => !e.name.startsWith("#"))]
-    .sort((a, b) => {
-      const scoreDifference = b.score - a.score;
+  const rankedEntries = [...entries.filter((e) => !e.name.startsWith("#"))];
+  rankedEntries.sort((a, b) => {
+    const scoreDifference = b.score - a.score;
 
-      if (scoreDifference) {
-        return scoreDifference;
-      }
+    if (scoreDifference) {
+      return scoreDifference;
+    }
 
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        return -1;
-      }
+    if (a.name.toLowerCase() < b.name.toLowerCase()) {
+      return -1;
+    }
 
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1;
-      }
+    if (a.name.toLowerCase() > b.name.toLowerCase()) {
+      return 1;
+    }
 
-      return 0;
-    })
-    .slice(0, 15);
+    return 0;
+  });
+  const visible = rankedEntries.slice(0, 15);
 
   const contentWidth = Math.max(
     documentTextWidth(title),

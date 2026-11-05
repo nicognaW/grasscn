@@ -70,7 +70,8 @@ const createGeometryStore = () => {
   let profilerKey = "[]";
 
   const invalidate = () => {
-    const nextEntries = [...entries.values()].sort((a, b) => a.index - b.index);
+    const nextEntries = [...entries.values()];
+    nextEntries.sort((a, b) => a.index - b.index);
     const sectors = nextEntries.filter((item) => item.kind === "sector");
     const nextProfilerKey = JSON.stringify(sectors);
 
