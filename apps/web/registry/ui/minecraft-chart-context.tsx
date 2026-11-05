@@ -192,6 +192,7 @@ export const ChartGeometryProvider = ({
   host: React.RefObject<HTMLDivElement | null>;
   colors: unknown;
 }) => {
+  // oxlint-disable-next-line react/hook-use-state -- Lazy state owns one geometry store for this mounted provider; the store itself owns external subscriptions and mutable snapshots. No setter is needed, and useMemo would not supply the same semantic lifetime guarantee.
   const [store] = React.useState(createGeometryStore);
   const context = React.useMemo(() => ({ scale, store }), [scale, store]);
 
@@ -487,6 +488,7 @@ export const ChartPixelSurface = ({
       observer.disconnect();
 
       for (const element of svg.querySelectorAll("[data-mc-pixel-source]")) {
+        // oxlint-disable-next-line unicorn/prefer-dom-node-dataset -- The public SVG subtree query returns namespace-generic Element, including foreign descendants; removeAttribute does not require an unsupported dataset projection.
         element.removeAttribute("data-mc-pixel-source");
       }
     };

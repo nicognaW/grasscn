@@ -95,6 +95,7 @@ export const FormsFixture = () => {
     return (
       <form
         noValidate
+        // oxlint-disable-next-line typescript/no-misused-promises, typescript/strict-void-return -- React Hook Form documents its Promise-returning handleSubmit as the native form handler; preserve validation/callback ordering and existing rejection ownership rather than inventing a discarded Promise or error policy.
         onSubmit={form.handleSubmit((v) => {
           setSaved(v.name);
         })}

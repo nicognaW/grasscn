@@ -69,6 +69,7 @@ const SonnerFixture = () => {
   React.useEffect(() => {
     if (!p.has("closed")) {
       createFixtureToasts(ids, setActions);
+      // oxlint-disable-next-line react/set-state-in-effect -- Publish the existing successful mount-notification count after the external toast resource is created; initializing it during render or delaying it changes the fixture first-frame/resource-order contract.
       setCreated((v) => v + count);
     }
   }, []);

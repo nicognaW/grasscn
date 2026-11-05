@@ -109,7 +109,8 @@ const layoutAdvancementNodes = function layoutAdvancementNodes(
     ids.add(node.id);
 
     if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) {
-      throw Error("Advancement positions must be finite");
+      // oxlint-disable-next-line unicorn/prefer-type-error -- This existing numeric-domain validation rejects NaN and infinities and preserves the public Error class; changing to TypeError alters the established failure contract.
+      throw new Error("Advancement positions must be finite");
     }
   }
 

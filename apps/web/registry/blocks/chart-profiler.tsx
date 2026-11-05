@@ -75,6 +75,7 @@ export const ProfilerChartExample = ({
           shape={ChartProfilerSector}
         >
           {data.map((row, index) => (
+            // oxlint-disable-next-line typescript/no-deprecated -- Retain the current Recharts 3 Cell configuration contract and per-row profiler-color precedence in sector/legend/tooltip payloads; migrating to shape/content requires a separately qualified rendering and payload change before Recharts 4 removes Cell.
             <Cell
               // oxlint-disable-next-line react-doctor/no-array-index-as-key -- Recharts consumes this stateless Cell configuration by sector ordinal; the caller-selected name field may repeat and is not a guaranteed unique identity.
               key={index}

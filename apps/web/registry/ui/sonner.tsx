@@ -348,6 +348,7 @@ const Toaster = ({
     },
     []
   );
+  // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- Exit timers belong to retained toast models, spanning host/scale/gap observer reconnects; the preceding unmount effect clears every retained model timer and the map. Clearing them on each observer reconnect would abandon existing removedAt deadlines.
   React.useLayoutEffect((): (() => void) | undefined => {
     if (!host) {
       return undefined;

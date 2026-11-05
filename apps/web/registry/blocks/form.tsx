@@ -86,6 +86,7 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
         ref={host}
         aria-label="Player and world settings"
         noValidate
+        // oxlint-disable-next-line typescript/no-misused-promises, typescript/strict-void-return -- React Hook Form documents handleSubmit as the native form handler; preserve its existing validation and Promise rejection ownership instead of adding a new error policy.
         onSubmit={form.handleSubmit(setSaved)}
         className="grid max-w-(--mc-intrinsic-registry-blocks-form-1-max-width) min-w-0 gap-(--mc-intrinsic-registry-blocks-form-1-gap)"
         style={

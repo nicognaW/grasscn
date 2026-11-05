@@ -307,6 +307,7 @@ const ScrollArea = ({
   const content = children;
 
   const flatten = (value: React.ReactNode): React.ReactNode[] =>
+    // oxlint-disable-next-line react/no-react-children -- The existing ScrollArea composition separates caller ScrollBar elements from arbitrary ReactNode viewport content, including Fragment nesting and React iterable/thenable traversal; retain this collection contract.
     React.Children.toArray(value).flatMap((node) =>
       React.isValidElement<{
         children?: React.ReactNode;

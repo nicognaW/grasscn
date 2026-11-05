@@ -107,6 +107,7 @@ export const MinecraftMenuText = ({
 
 // oxlint-disable-next-line react-doctor/only-export-components -- Preserve the existing menu child-normalization API used by its composed menu and combobox consumers; accept mixed-module Fast Refresh state fallback.
 export const menuTextNodes = function menuTextNodes(children: React.ReactNode) {
+  // oxlint-disable-next-line react/no-react-children -- This existing public ReactNode normalizer retains React-owned nested-array keys, iterable/thenable traversal and scalar adaptation; a plain array map changes the accepted children contract.
   return React.Children.map(children, (child): React.ReactNode =>
     isMinecraftTextContent(child) ? (
       <MinecraftMenuText>{child}</MinecraftMenuText>

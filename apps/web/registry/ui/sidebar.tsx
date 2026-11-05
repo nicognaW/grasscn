@@ -169,6 +169,7 @@ const SidebarProvider = ({
   );
 
   React.useEffect(() => {
+    // oxlint-disable-next-line unicorn/no-document-cookie -- Preserve shadcn Sidebar's synchronous cookie persistence and browser support; asynchronous CookieStore changes ordering, availability and rejection ownership.
     document.cookie = `sidebar_state=${open}; path=/; max-age=${60 * 60 * 24 * 7}`;
   }, [open]);
 
@@ -786,6 +787,7 @@ const SidebarMenuItem = ({ className, ...props }: MinecraftProps<"li">) => (
 );
 
 const plainText = function plainText(children: React.ReactNode): string {
+  // oxlint-disable-next-line react/no-react-children -- Collapsed Sidebar text is derived from arbitrary caller ReactNode children using the existing React traversal/order; replacing it with raw-array traversal changes iterable and thenable behavior.
   return React.Children.toArray(children)
     .map((child) => {
       if (isMinecraftTextContent(child)) {
@@ -809,6 +811,7 @@ const plainText = function plainText(children: React.ReactNode): string {
 const collapsedContent = function collapsedContent(
   children: React.ReactNode
 ): React.ReactNode {
+  // oxlint-disable-next-line react/no-react-children -- Preserve the existing arbitrary ReactNode collection and first-icon selection before collapsed-text fallback; the public API does not require a normalized child array.
   const values = React.Children.toArray(children);
 
   const icon = values.find(

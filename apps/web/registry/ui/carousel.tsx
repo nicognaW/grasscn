@@ -81,6 +81,7 @@ const Carousel = ({
 
   React.useEffect(() => {
     if (api) {
+      // oxlint-disable-next-line react-doctor/no-prop-callback-in-effect, react-doctor/no-pass-live-state-to-parent, react-doctor/no-pass-data-to-parent -- Preserve the public setApi contract: publish the committed Embla instance after api or caller callback changes. This is an imperative SDK handle, not mirrored parent data; moving publication into render or dropping it changes lifecycle/callback behavior.
       setApi?.(api);
     }
   }, [api, setApi]);

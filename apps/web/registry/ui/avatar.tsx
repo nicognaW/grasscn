@@ -204,6 +204,7 @@ const groupScale = function groupScale(
 ): 1 | 2 | 3 | undefined {
   let selectedScale: 1 | 2 | 3 | undefined;
 
+  // oxlint-disable-next-line react/no-react-children -- AvatarGroup infers scale from the first owned Avatar across arbitrary caller ReactNode collections and Fragments; preserve existing React traversal and first-match order without imposing a new array-only API.
   for (const child of React.Children.toArray(children)) {
     if (
       !React.isValidElement<{

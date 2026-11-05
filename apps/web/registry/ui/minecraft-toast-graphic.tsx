@@ -29,6 +29,7 @@ export const MinecraftToastGraphic = ({
   const ref = React.useRef<HTMLCanvasElement>(null);
   const [ready, setReady] = React.useState(false);
 
+  // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- The async painter installs its resize/scroll remover after layout; disposed checks prevent installation after cleanup. Cleanup synchronously marks disposed, cancels the current RAF and invokes that installed remover; recursive ticks stop before reallocating.
   React.useLayoutEffect(() => {
     let disposed = false;
     let frame = 0;

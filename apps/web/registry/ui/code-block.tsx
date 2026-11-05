@@ -189,6 +189,7 @@ const selectable = function selectable(
   }
 
   if (isMinecraftSelectableTextElement(value)) {
+    // oxlint-disable-next-line react/no-clone-element -- Selectable code adapts only the supported intrinsic formatting children, preserving each caller element key/ref/type/props while replacing its children; a wrapper or reconstructed element changes composition.
     return React.cloneElement(
       value,
       undefined,

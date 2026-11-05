@@ -153,6 +153,7 @@ export const AnalyticsChartExample = ({
           isAnimationActive={false}
         >
           {data.map((_, index) => (
+            // oxlint-disable-next-line typescript/no-deprecated -- Retain the current Recharts 3 Cell configuration contract and per-row palette precedence in sector/legend/tooltip payloads; migrating to shape/content requires a separately qualified rendering and payload change before Recharts 4 removes Cell.
             <Cell
               // oxlint-disable-next-line react-doctor/no-array-index-as-key -- Recharts consumes these stateless Cell configurations by data ordinal; names may repeat and the public row schema has no required unique ID. Keep the palette/index binding.
               key={index}
@@ -179,6 +180,7 @@ export const AnalyticsChartExample = ({
         <PolarAngleAxis type="number" domain={[0, "dataMax"]} tick={false} />
         <RadialBar dataKey={series[0]} isAnimationActive={false}>
           {data.map((_, index) => (
+            // oxlint-disable-next-line typescript/no-deprecated -- Retain the current Recharts 3 Cell configuration contract and per-row palette precedence in sector/legend/tooltip payloads; migrating to shape/content requires a separately qualified rendering and payload change before Recharts 4 removes Cell.
             <Cell
               // oxlint-disable-next-line react-doctor/no-array-index-as-key -- Recharts consumes these stateless Cell configurations by data ordinal; names may repeat and the public row schema has no required unique ID. Keep the palette/index binding.
               key={index}

@@ -149,6 +149,7 @@ export const paintMenuGlyph = function paintMenuGlyph(
     -2 / canvas.height
   );
 
+  // oxlint-disable-next-line typescript/no-base-to-string -- The existing Canvas context API accepts string, CanvasGradient and CanvasPattern; retain its exact String coercion and downstream color-parse fallback without narrowing the context or changing custom coercion behavior.
   const fill = String(context.fillStyle);
 
   const ink = fill.startsWith("#")

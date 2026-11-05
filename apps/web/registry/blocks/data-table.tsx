@@ -32,6 +32,7 @@ const DataTableValueCell = (
 
   return (
     <MinecraftDisclosureText scale={scale}>
+      {/* oxlint-disable-next-line typescript/no-base-to-string -- TanStack default cells accept opaque values; preserve standard String conversion, including caller custom coercion and the existing nullish-empty fallback. */}
       {String(info.getValue() ?? "")}
     </MinecraftDisclosureText>
   );

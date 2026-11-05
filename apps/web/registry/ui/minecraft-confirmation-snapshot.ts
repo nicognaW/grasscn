@@ -40,6 +40,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
   radius: number
 ) {
   const [ready, setReady] = React.useState(false);
+  // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- This capture owner clears its latest timer and disconnects all observers/listeners on cleanup. Its recursive async finally only reschedules while !disposed, and every schedule clears the preceding timer; early exits precede all timer allocations.
   React.useLayoutEffect((): ReturnType<React.EffectCallback> => {
     // SAFETY: This internal hook has one caller, MinecraftConfirmationBlur, which always renders its private canvas; layout setup follows commit and existing disposal guards deferred work.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The sole owned intrinsic canvas producer and existing effect lifetime prove this exact HTMLCanvasElement capture.

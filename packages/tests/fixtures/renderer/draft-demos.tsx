@@ -240,6 +240,7 @@ const renderDraftLocatorScenario = ({
                 color: sample.color ?? "#ffffff",
                 id: "point",
                 label: "Waypoint",
+                // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- LocatorMarker requires the actual geometric shape field; renaming this public component-input key changes its protocol.
                 shape: "default_3",
               },
             ]

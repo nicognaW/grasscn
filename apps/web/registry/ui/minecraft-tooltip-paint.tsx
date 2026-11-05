@@ -19,6 +19,7 @@ const solidBackdrop = function solidBackdrop(node: HTMLElement) {
     )
     .find(
       (element) =>
+        // oxlint-disable-next-line unicorn/prefer-dom-node-dataset -- elementsFromPoint returns namespace-generic Element; hasAttribute supports arbitrary element namespaces whereas dataset is not an Element capability.
         !node.contains(element) && !element.hasAttribute("data-mc-positioner")
     );
 

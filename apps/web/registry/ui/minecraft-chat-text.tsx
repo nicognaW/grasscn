@@ -300,6 +300,7 @@ const MinecraftChatText = ({
     }
 
     if (isMinecraftInlineTextElement(value)) {
+      // oxlint-disable-next-line react/no-clone-element -- This whitelist-owned inline text adaptation changes children only, retaining the caller element type, key, ref and other props; rebuilding elements or adding wrappers changes rich-child identity/composition.
       return React.cloneElement(
         value,
         undefined,
