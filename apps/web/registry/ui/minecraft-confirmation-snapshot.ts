@@ -118,6 +118,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
       const pseudos: FixedPseudo[] = [];
 
       try {
+        // oxlint-disable-next-line react/todo -- The compiler cannot lower this valid dynamic import; capture owns the existing asynchronous screenshot dependency/load phase and cancellation checks. React Compiler is not integrated into this application; retain real async resource ownership instead of eagerly importing or changing capture timing.
         const { domToCanvas } = await import("modern-screenshot");
         await document.fonts.ready;
 
@@ -483,6 +484,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
           host.dataset.mcConfirmationGpuError =
             error instanceof Error ? error.message : String(error);
         }
+        // oxlint-disable-next-line react/todo -- The compiler cannot lower a try statement with finally; this valid async capture must restore temporary viewport markers and release busy/queued ownership on success, rejection and cancellation. Preserve the real finally lifetime barrier.
       } finally {
         const restoreViewportMarkers = () => {
           for (const item of pseudos) {
