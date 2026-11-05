@@ -135,7 +135,11 @@ const BubbleContent = ({
     }
 
     const bubble = element.closest<HTMLElement>("[data-slot=bubble]");
-    const parent = bubble?.parentElement ?? element.parentElement!;
+    const parent = bubble?.parentElement ?? element.parentElement;
+
+    if (!parent) {
+      return undefined;
+    }
 
     const update = () => {
       const ownStyle = getComputedStyle(element);

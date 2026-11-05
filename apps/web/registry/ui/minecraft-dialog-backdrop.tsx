@@ -15,10 +15,11 @@ export const MinecraftDialogBackdrop = () => {
 
   const [bands, setBands] = React.useState<Band[]>([]);
   React.useLayoutEffect((): (() => void) | undefined => {
-    const host =
-      // SAFETY: React attaches this always-rendered <svg> before its synchronous layout effect setup reads the owned ref.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact SVGSVGElement result.
-      (ref.current as SVGSVGElement).parentElement!;
+    const host = ref.current?.parentElement;
+
+    if (!host) {
+      return undefined;
+    }
 
     const canvas = document.createElement("canvas");
 
@@ -131,11 +132,12 @@ export const MinecraftDialogBackdrop = () => {
     };
   }, []);
   React.useLayoutEffect(() => {
-    if (bands.length) {
-      // SAFETY: React attaches this always-rendered <svg> before its synchronous layout effect setup reads the owned ref.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact SVGSVGElement result.
-      (ref.current as SVGSVGElement).parentElement!.dataset.mcBackdropReady =
-        "true";
+    // SAFETY: React attaches this always-rendered <svg> before its synchronous layout effect setup reads the owned ref.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact SVGSVGElement result.
+    const host = (ref.current as SVGSVGElement).parentElement;
+
+    if (bands.length && host) {
+      host.dataset.mcBackdropReady = "true";
     }
   }, [bands]);
 
