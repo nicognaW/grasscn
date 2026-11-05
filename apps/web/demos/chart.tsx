@@ -358,6 +358,8 @@ const renderNativeF3Charts = function renderNativeF3Charts({
   );
 };
 
+const initialChartType = "area";
+
 const ChartDemo = ({ scale }: DemoProps) => {
   const stage = React.useRef<HTMLDivElement>(null);
   const [contentWidth, setContentWidth] = React.useState(80);
@@ -403,7 +405,7 @@ const ChartDemo = ({ scale }: DemoProps) => {
     </MinecraftDisclosureText>
   );
 
-  const [type, setType] = React.useState<AnalyticsChartType>("area");
+  const [type, setType] = React.useState<AnalyticsChartType>(initialChartType);
   const [period, setPeriod] = React.useState("6");
   const [device, setDevice] = React.useState("both");
 
@@ -528,12 +530,12 @@ const ChartDemo = ({ scale }: DemoProps) => {
             } satisfies DemoVariables as DemoVariables
           }
         >
-          <Select
+          <Select<AnalyticsChartType>
             items={types}
             scale={scale}
             value={type}
             onValueChange={(v) => {
-              setType(v as AnalyticsChartType);
+              setType(v ?? initialChartType);
             }}
           >
             <SelectTrigger

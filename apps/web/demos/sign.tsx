@@ -33,8 +33,10 @@ const woods: SignWood[] = [
   "pale_oak",
 ];
 
+const initialWood = "oak";
+
 const SignDemo = ({ scale }: DemoProps) => {
-  const [wood, setWood] = React.useState<SignWood>("oak");
+  const [wood, setWood] = React.useState<SignWood>(initialWood);
   const [title, setTitle] = React.useState("Welcome");
 
   const lines = [title, "to grasscn", "", "Open daily"];
@@ -62,11 +64,11 @@ const SignDemo = ({ scale }: DemoProps) => {
             } satisfies DemoVariables as DemoVariables
           }
         />
-        <Select
+        <Select<SignWood>
           scale={scale}
           value={wood}
           onValueChange={(value) => {
-            setWood(value as SignWood);
+            setWood(value ?? initialWood);
           }}
         >
           <SelectTrigger
