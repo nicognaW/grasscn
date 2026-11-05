@@ -136,6 +136,7 @@ const loadImages = function loadImages() {
       minecraftTextareaAssets.scroller,
       minecraftTextareaAssets.scroller_background,
     ].map(
+      // oxlint-disable-next-line typescript/promise-function-async -- C15b: return this synchronous image-load/error adapter Promise directly; async would add adoption jobs before Promise.all readiness.
       (src) =>
         // oxlint-disable-next-line promise/avoid-new -- Preserve the cached texture-load event bridge and raw load-error event.
         new Promise<HTMLImageElement>((resolve, reject) => {
