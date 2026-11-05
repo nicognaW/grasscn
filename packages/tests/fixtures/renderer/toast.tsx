@@ -12,57 +12,64 @@ const scale =
 
 const count = Number(p.get("count") ?? 1);
 
+const createFixtureToasts = (
+  ids: React.RefObject<(string | number)[]>,
+  setActions: React.Dispatch<React.SetStateAction<number>>
+) => {
+  for (let i = 0; i < count; i += 1) {
+    const toastIds = ids.current;
+    const appendToastId = toastIds.push;
+    const createToast = notify;
+
+    const notificationContent = p.has("rich") ? (
+      <strong>{p.get("label") ?? "World saved"}</strong>
+    ) : (
+      (p.get("label") ?? "World saved")
+    );
+
+    const notificationOptions: NonNullable<Parameters<typeof notify>[1]> = {};
+
+    if (p.has("text")) {
+      notificationOptions.description = p.get("text");
+    }
+
+    if (p.has("actions")) {
+      notificationOptions.action = {
+        label: "Undo",
+        onClick: (event) => {
+          setActions((v) => v + 1);
+
+          if (p.has("cancelAction")) {
+            event.preventDefault();
+          }
+        },
+      };
+      notificationOptions.closeButton = true;
+    }
+
+    notificationOptions.dismissible = !p.has("disabled");
+    notificationOptions.duration = Number(p.get("duration") ?? 5000);
+    appendToastId.call(
+      toastIds,
+      createToast(notificationContent, notificationOptions)
+    );
+  }
+};
+
 const SonnerFixture = () => {
   const [actions, setActions] = React.useState(0);
   const [created, setCreated] = React.useState(0);
   const ids = React.useRef<(string | number)[]>([]);
 
   const show = () => {
-    for (let i = 0; i < count; i += 1) {
-      const toastIds = ids.current;
-      const appendToastId = toastIds.push;
-      const createToast = notify;
-
-      const notificationContent = p.has("rich") ? (
-        <strong>{p.get("label") ?? "World saved"}</strong>
-      ) : (
-        (p.get("label") ?? "World saved")
-      );
-
-      const notificationOptions: NonNullable<Parameters<typeof notify>[1]> = {};
-
-      if (p.has("text")) {
-        notificationOptions.description = p.get("text");
-      }
-
-      if (p.has("actions")) {
-        notificationOptions.action = {
-          label: "Undo",
-          onClick: (event) => {
-            setActions((v) => v + 1);
-
-            if (p.has("cancelAction")) {
-              event.preventDefault();
-            }
-          },
-        };
-        notificationOptions.closeButton = true;
-      }
-
-      notificationOptions.dismissible = !p.has("disabled");
-      notificationOptions.duration = Number(p.get("duration") ?? 5000);
-      appendToastId.call(
-        toastIds,
-        createToast(notificationContent, notificationOptions)
-      );
-    }
-
+    createFixtureToasts(ids, setActions);
     setCreated((v) => v + count);
   };
 
   React.useEffect(() => {
     if (!p.has("closed")) {
-      show();
+      createFixtureToasts(ids, setActions);
+      setCreated((v) => v + count);
     }
   }, []);
 
