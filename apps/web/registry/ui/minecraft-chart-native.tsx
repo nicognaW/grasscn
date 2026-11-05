@@ -102,6 +102,73 @@ const NativeChartText = ({
   );
 };
 
+/** Resolve chart CSS colors from their committed element, never during rendering. */
+const useCommittedChartColors = <ElementType extends HTMLElement>(
+  fills: readonly string[],
+  revision: number,
+  attachElement?: (element: ElementType | null) => void
+) => {
+  const elementRef = React.useRef<ElementType | null>(null);
+
+  const [connection, setConnection] = React.useState<{
+    element: ElementType;
+  } | null>(null);
+
+  const attach = React.useCallback(
+    (element: ElementType | null) => {
+      attachElement?.(element);
+      elementRef.current = element;
+      setConnection(element === null ? null : { element });
+    },
+    [attachElement]
+  );
+
+  const input = React.useMemo(
+    () => ({ connection, fills, revision }),
+    [connection, fills, revision]
+  );
+
+  const [snapshot, setSnapshot] = React.useState<{
+    input: typeof input;
+    channels: number[][];
+  } | null>(null);
+
+  // oxlint-disable-next-line react/rule-suppression -- This private DOM sampler intentionally forgoes React Compiler eligibility to resample committed CSS on every render.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- Sample actual committed CSS after every render; unchanged input and RGB snapshots reuse previous state to prevent an update loop.
+  React.useLayoutEffect(() => {
+    const element = elementRef.current;
+
+    if (element === null) {
+      return;
+    }
+
+    const channels = fills.map((fill) => chartColorChannels(fill, element));
+
+    setSnapshot((previous) => {
+      if (
+        previous?.input === input &&
+        previous.channels.length === channels.length &&
+        channels.every(
+          (color, index) =>
+            color.length === previous.channels[index].length &&
+            color.every((value, channel) =>
+              Object.is(value, previous.channels[index][channel])
+            )
+        )
+      ) {
+        return previous;
+      }
+
+      return { channels, input };
+    });
+  });
+
+  return {
+    attach,
+    channels: snapshot?.input === input ? snapshot.channels : undefined,
+  };
+};
+
 /** Minecraft's frame-duration gradient; input is in nanoseconds. */
 export const chartFpsColor = function chartFpsColor(nanos: number) {
   const ms = Math.max(0, Math.min(56, nanos / 1e6));
@@ -122,14 +189,23 @@ const ChartFpsFrame = ({
   guides?: readonly { label: string; value: number }[];
   framerateLimit?: number;
 }) => {
-  const { entries, scale } = useChartGeometry();
+  const { entries, scale, revision } = useChartGeometry();
 
   const chartWidth = useChartWidth() ?? 0;
   const chartHeight = useChartHeight() ?? 0;
 
   const width = chartWidth / scale;
-  const bars = entries.filter((item) => item.kind === "bar");
-  const host = React.useRef<HTMLDivElement>(null);
+
+  const bars = React.useMemo(
+    () => entries.filter((item) => item.kind === "bar"),
+    [entries]
+  );
+
+  const fills = React.useMemo(() => bars.map((bar) => bar.fill), [bars]);
+
+  const { attach: attachHost, channels } =
+    useCommittedChartColors<HTMLDivElement>(fills, revision);
+
   const yScale = useYAxisScale();
   const presentation = guides ? { guides } : undefined;
 
@@ -180,7 +256,11 @@ const ChartFpsFrame = ({
             return null;
           }
 
-          const rgb = chartColorChannels(bar.fill, host.current);
+          const rgb = channels?.[i];
+
+          if (!rgb) {
+            return null;
+          }
 
           const mixed = rgb.map((v) =>
             Math.round((80 * 144) / 255 + (v * 111) / 255)
@@ -247,9 +327,9 @@ const ChartFpsFrame = ({
       className="mc-layout-minecraft-chart-native-4"
     >
       <div
-        ref={host}
+        ref={attachHost}
         data-slot="chart-fps-frame"
-        data-mc-ready={bars.length > 0}
+        data-mc-ready={bars.length > 0 && channels !== undefined}
         className="mc-layout-minecraft-chart-native-5 mc-chart-native-paint-4"
         style={nativePaint4}
       >
@@ -609,6 +689,10 @@ const ChartProfilerFrame = ({
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const { attach: attachCanvas, connection } = useCanvasPaintConnection(canvas);
+  const fills = React.useMemo(() => data.map((item) => item.fill), [data]);
+
+  const { attach: attachProfiler, channels } =
+    useCommittedChartColors<HTMLCanvasElement>(fills, revision, attachCanvas);
 
   const paintInput = React.useMemo(
     () => ({ connection, data, revision, unit }),
@@ -618,7 +702,7 @@ const ChartProfilerFrame = ({
   const [completedInput, setCompletedInput] =
     React.useState<typeof paintInput>();
 
-  const ready = completedInput === paintInput;
+  const ready = completedInput === paintInput && channels !== undefined;
 
   React.useLayoutEffect((): (() => void) | undefined => {
     if (!data.length) {
@@ -687,7 +771,7 @@ const ChartProfilerFrame = ({
       >
         <canvas
           key="profiler-2d-surface"
-          ref={attachCanvas}
+          ref={attachProfiler}
           aria-hidden="true"
           className="mc-layout-minecraft-chart-native-12 mc-chart-native-paint-10"
           style={nativePaint10}
@@ -700,7 +784,12 @@ const ChartProfilerFrame = ({
           scale={scale}
         />
         {data.map((item, i) => {
-          const rgb = chartColorChannels(item.fill, canvas.current);
+          const rgb = channels?.[i];
+
+          if (!rgb) {
+            return null;
+          }
+
           // oxlint-disable-next-line no-bitwise -- Pack the resolved chart RGB bytes into the native color word.
           const color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 
