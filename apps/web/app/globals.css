@@ -177,6 +177,10 @@ a {
 @media (max-width: 359px) {
   .minecraft-star-button {
     gap: 4px;
+    max-width: calc(100% - 176px - 16px);
+  }
+  .minecraft-star-button > [data-slot="redstone-lamp-display"] {
+    min-width: 0;
   }
   .minecraft-star-button [data-slot="star-button-label"] {
     --mc-scale: 1;
