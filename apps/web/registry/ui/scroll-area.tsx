@@ -332,12 +332,17 @@ const ScrollArea = ({
         ref={setViewportRef}
         tabIndex={disabled ? -1 : 0}
         {...viewportProps}
-        className={`mc-scroll-area-viewport ${viewportProps?.className ?? ""}`}
+        className={cn("mc-scroll-area-viewport", viewportProps?.className)}
         // oxlint-disable-next-line shadcn/no-inline-styles -- Disabled scrolling must override the SDK inline overflow:scroll; caller viewport styles retain their existing final precedence.
-        style={minecraftStyle(viewportProps?.style, (__style) => ({
-          ...(disabled ? { overflowY: "hidden" } : {}),
-          ...__style,
-        }))}
+        style={minecraftStyle(viewportProps?.style, (__style) => {
+          const paint: React.CSSProperties = {};
+
+          if (disabled) {
+            paint.overflowY = "hidden";
+          }
+
+          return { ...paint, ...__style };
+        })}
       >
         {contents}
       </ScrollAreaPrimitive.Viewport>
