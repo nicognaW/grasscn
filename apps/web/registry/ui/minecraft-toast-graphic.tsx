@@ -116,10 +116,18 @@ export const MinecraftToastGraphic = ({
 
       const tick = () => {
         paint();
-        frame = requestAnimationFrame(tick);
+
+        if (!disposed) {
+          frame = requestAnimationFrame(tick);
+        }
       };
 
       tick();
+
+      if (disposed) {
+        return;
+      }
+
       window.addEventListener("resize", paint);
       window.addEventListener("scroll", paint, true);
       cleanup = () => {
