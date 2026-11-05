@@ -452,14 +452,17 @@ const PlayerPreview = ({
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const { attach, connection } = useCanvasPaintConnection(canvas);
+
   const request = React.useMemo(
-    () => ({ url, requestedModel, connection }),
+    () => ({ connection, requestedModel, url }),
     [url, requestedModel, connection]
   );
+
   const [settled, setSettled] = React.useState<{
     request: typeof request;
     status: "loaded" | "error";
   } | null>(null);
+
   const status = settled?.request === request ? settled.status : "loading";
   const renderer = React.useRef<ReturnType<typeof buildRenderer> | null>(null);
 
@@ -506,9 +509,9 @@ const PlayerPreview = ({
   React.useLayoutEffect(() => {
     loadingCallback.current = onLoadingStatusChange;
   }, [onLoadingStatusChange]);
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
     if (request.connection === null) {
-      return;
+      return undefined;
     }
 
     const ownedCanvas = request.connection.canvas;
@@ -527,6 +530,7 @@ const PlayerPreview = ({
       try {
         const actualModel =
           request.requestedModel ?? inferPlayerSkinModel(image);
+
         instance = buildRenderer(ownedCanvas, actualModel);
         renderer.current = instance;
         instance.load(image);
