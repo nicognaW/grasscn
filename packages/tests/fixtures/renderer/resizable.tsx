@@ -101,13 +101,10 @@ export const ResizableFixture = () => {
         type="button"
         id="read-ref"
         onClick={() => {
-          setRefs(
-            `${element.current?.tagName}/${handle.current?.tagName}/${Object.keys(
-              group.current?.getLayout() ?? {}
-            )
-              .sort()
-              .join(",")}`
-          );
+          const refTags = `${element.current?.tagName}/${handle.current?.tagName}`;
+          const panelIds = Object.keys(group.current?.getLayout() ?? {});
+          panelIds.sort();
+          setRefs(`${refTags}/${panelIds.join(",")}`);
         }}
       >
         Read refs
