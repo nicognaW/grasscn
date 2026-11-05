@@ -169,13 +169,27 @@ const CommandList = ({
   const scale = React.useContext(MenuScaleContext);
   const node = React.useRef<HTMLDivElement>(null);
 
+  const [attached, setAttached] = React.useState<HTMLDivElement | null>(null);
+
+  const captureNode = React.useCallback((element: HTMLDivElement | null) => {
+    node.current = element;
+
+    setAttached(element);
+  }, []);
+
   React.useImperativeHandle<typeof node.current, typeof node.current>(
     ref,
     () => node.current,
     []
   );
   React.useLayoutEffect((): (() => void) | undefined => {
-    const element = node.current!;
+    // The committed attachment schedules this lifetime; the private ref retains its mutable DOM capability.
+    const element = node.current;
+
+    if (element === null) {
+      return undefined;
+    }
+
     const items = element.querySelector<HTMLElement>("[data-mc-command-items]");
 
     if (!items) {
@@ -239,7 +253,7 @@ const CommandList = ({
       cancelAnimationFrame(frame);
     };
     // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Scale and surface alter the rendered menu geometry; synchronously refresh clipping/readiness before paint.
-  }, [scale, surface]);
+  }, [attached, scale, surface]);
 
   const contents = (
     <>
@@ -271,7 +285,7 @@ const CommandList = ({
     <CommandPrimitive.List
       data-slot="command-list"
       data-surface={surface}
-      ref={node}
+      ref={captureNode}
       className={listClassName}
       style={listStyle}
       {...props}

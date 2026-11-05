@@ -258,13 +258,27 @@ const ComboboxList = ({
   const scale = React.useContext(MenuScaleContext);
   const node = React.useRef<HTMLDivElement>(null);
 
+  const [attached, setAttached] = React.useState<HTMLDivElement | null>(null);
+
+  const captureNode = React.useCallback((element: HTMLDivElement | null) => {
+    node.current = element;
+
+    setAttached(element);
+  }, []);
+
   React.useImperativeHandle<typeof node.current, typeof node.current>(
     ref,
     () => node.current,
     []
   );
-  React.useLayoutEffect(() => {
-    const element = node.current!;
+  React.useLayoutEffect((): (() => void) | undefined => {
+    // The committed attachment schedules this lifetime; the private ref retains its mutable DOM capability.
+    const element = node.current;
+
+    if (element === null) {
+      return undefined;
+    }
+
     const items = element.querySelector<HTMLElement>(".mc-menu-items")!;
 
     let frame = 0;
@@ -324,13 +338,13 @@ const ComboboxList = ({
       cancelAnimationFrame(frame);
     };
     // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Scale and surface alter the rendered menu geometry; synchronously refresh clipping/readiness before paint.
-  }, [scale, surface]);
+  }, [attached, scale, surface]);
 
   return (
     <Primitive.List
       data-slot="combobox-list"
       data-surface={surface}
-      ref={node}
+      ref={captureNode}
       className={classes("mc-menu-content mc-combobox-list", className)}
       style={minecraftStyle(style, (__style): ComboboxScaleStyle => ({
         "--mc-scale": scale,
