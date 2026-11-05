@@ -278,11 +278,15 @@ export const SidebarFixture = () => {
         );
       } else if (part === "group-action") {
         selectedNativeSidebarSubject = (
-          <SidebarGroupAction {...buttonProps}>{label}</SidebarGroupAction>
+          <SidebarGroupAction {...nativeSidebarButtonProps}>
+            {label}
+          </SidebarGroupAction>
         );
       } else if (part === "menu-action") {
         selectedNativeSidebarSubject = (
-          <SidebarMenuAction {...buttonProps}>{label}</SidebarMenuAction>
+          <SidebarMenuAction {...nativeSidebarButtonProps}>
+            {label}
+          </SidebarMenuAction>
         );
       } else if (part === "input") {
         selectedNativeSidebarSubject = renderNativeInput();

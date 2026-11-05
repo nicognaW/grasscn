@@ -162,8 +162,8 @@ const ItemFixture = () => {
         scale={scale}
         edge={state === "footer" ? "footer" : "header"}
         role={q.has("semantic") ? "separator" : "none"}
-        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
-        style={{ ...commonStyle, width: scaledWidth }}
+        className="fixture-geometry-height fixture-geometry-width fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
+        style={{ ...commonStyle, "--fixture-width": `${scaledWidth}px` }}
         data-subject="true"
       />
     );

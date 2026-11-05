@@ -4,6 +4,19 @@
 .fixture-geometry-width {
   width: var(--fixture-width);
 }
+.fixture-chat-foreground {
+  color: var(--fixture-chat-color, #ffffff);
+}
+#root .fixture-questionnaire-native-bounds {
+  border: 0;
+  height: var(--fixture-height);
+  left: var(--fixture-x);
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: var(--fixture-y);
+  width: var(--fixture-width);
+}
 .fixture-geometry-x {
   left: var(--fixture-x);
 }
@@ -239,7 +252,7 @@
   pointer-events: none;
 }
 
-/* Sidebar-owned geometry. Group/Menu Action inline position/top overrides stay intact. */
+/* Sidebar-owned geometry, including native Group/Menu Action receivers. */
 #root .fixture-sidebar-native-geometry {
   height: var(--fixture-sidebar-native-height);
   left: var(--fixture-sidebar-native-left);
