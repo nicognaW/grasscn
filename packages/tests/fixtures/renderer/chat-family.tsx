@@ -34,17 +34,16 @@ const readChatReferenceGeometry = (
   const chatFixtureX = `${Number(q.get("x") ?? 16) * scale}px`;
   const chatFixtureY = `${Number(q.get("y") ?? 16) * scale}px`;
   const chatFixtureWidth = `${scaledWidth}px`;
-  const chatNativeDimensions: Pick<React.CSSProperties, "height"> = {};
 
-  if (native) {
-    chatNativeDimensions.height = Number(q.get("height") ?? 9) * scale;
-  }
+  const chatFixtureHeight = native
+    ? `${Number(q.get("height") ?? 9) * scale}px`
+    : undefined;
 
   return {
+    chatFixtureHeight,
     chatFixtureWidth,
     chatFixtureX,
     chatFixtureY,
-    chatNativeDimensions,
     scaledWidth,
   };
 };
@@ -70,18 +69,18 @@ export const ChatFamilyFixture = () => {
     chatFixtureWidth,
     chatFixtureX,
     chatFixtureY,
-    chatNativeDimensions,
+    chatFixtureHeight,
     scaledWidth,
   } = readChatReferenceGeometry(q, scale, native);
 
   const common: ChatFamilyReferenceStyle = {
+    "--fixture-chat-color": q.get("color") ?? undefined,
+    "--fixture-height": chatFixtureHeight,
     "--fixture-width": chatFixtureWidth,
     "--fixture-x": chatFixtureX,
     "--fixture-y": chatFixtureY,
-    ...chatNativeDimensions,
     "--mc-pixel": `${scale}px`,
     "--mc-scale": scale,
-    color: q.get("color") ?? "#ffffff",
   };
 
   const background = q.get("background") ?? "#202020";
@@ -99,7 +98,7 @@ export const ChatFamilyFixture = () => {
       <BubbleGroup
         data-testid="bubble-group"
         className={cn({
-          "fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width":
+          "fixture-chat-foreground fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width":
             !native,
         })}
         style={native ? undefined : common}
@@ -123,8 +122,8 @@ export const ChatFamilyFixture = () => {
             }
             id="subject"
             ref={ref}
-            className={cn({
-              "fixture-placement-fixed fixture-geometry-x fixture-geometry-y":
+            className={cn("fixture-chat-foreground", {
+              "fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-height":
                 native,
             })}
             style={
@@ -134,7 +133,7 @@ export const ChatFamilyFixture = () => {
                     // oxlint-disable-next-line shadcn/no-inline-styles -- Approved native Bubble fixture input: BubbleContent reads element.style.width to select fixed sizing; a class changes that algorithm input.
                     width: scaledWidth,
                   }
-                : { color: common.color }
+                : { "--fixture-chat-color": common["--fixture-chat-color"] }
             }
             onClick={(event) => {
               setEvents((n) => n + 1);
@@ -183,7 +182,10 @@ export const ChatFamilyFixture = () => {
           <MessageContent
             id="subject"
             ref={ref}
-            className="fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width"
+            className={cn(
+              "fixture-chat-foreground fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width",
+              { "fixture-geometry-height": native }
+            )}
             style={common}
             data-subject="true"
           >
