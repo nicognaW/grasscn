@@ -310,13 +310,19 @@ const layoutToastStack = function layoutToastStack(
   }
 };
 
+// Native clicks bubbling through the owned toast host have DOM Node targets;
+// nodeType keeps that closed producer contract valid across adopted/iframe realms.
+const isSonnerClickNode = (target: EventTarget | null): target is Node =>
+  target !== null && "nodeType" in target;
+
+const isSonnerElementNode = (target: Node): target is Element =>
+  target.nodeType === Node.ELEMENT_NODE;
+
 const sonnerActionButton = (target: EventTarget | null) => {
   let element: Element | null = null;
 
-  if (target instanceof Element) {
-    element = target;
-  } else if (target instanceof Node) {
-    element = target.parentElement;
+  if (isSonnerClickNode(target)) {
+    element = isSonnerElementNode(target) ? target : target.parentElement;
   }
 
   return element?.closest<HTMLButtonElement>(
