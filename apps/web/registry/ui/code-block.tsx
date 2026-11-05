@@ -151,8 +151,12 @@ const CodeBlockCopyButton = ({
           const announceCopy = async () => {
             await clipboardWrite;
 
-            if (live.current && navigator.clipboard) {
-              setCopied(true);
+            if (live.current) {
+              const { clipboard } = navigator;
+
+              if (clipboard !== undefined && clipboard !== null) {
+                setCopied(true);
+              }
             }
           };
 
