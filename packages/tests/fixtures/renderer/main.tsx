@@ -553,6 +553,8 @@ const RadioFixture = () => {
 };
 
 const SwitchFixture = () => {
+  const hasRequestedWidth = params.has("width");
+
   const [checked, setChecked] = React.useState(
     params.get("checked") === "true"
   );
@@ -606,7 +608,12 @@ const SwitchFixture = () => {
       aria-labelledby={
         params.has("labelled") ? "switch-setting-label" : undefined
       }
-      style={params.has("width") ? { width: width * scale } : undefined}
+      className={hasRequestedWidth ? "fixture-geometry-width" : undefined}
+      style={
+        hasRequestedWidth
+          ? { "--fixture-width": `${width * scale}px` }
+          : undefined
+      }
       onClick={(event) => {
         setEvents((current) => current + 1);
 
@@ -3383,6 +3390,8 @@ const FixtureCheckbox = () => {
 };
 
 const FixtureButton = () => {
+  const hasRequestedWidth = params.has("width");
+
   const [count, setCount] = React.useState(0);
 
   return (
@@ -3391,7 +3400,12 @@ const FixtureButton = () => {
         id="subject"
         scale={scale}
         disabled={state === "disabled"}
-        style={params.has("width") ? { width: width * scale } : undefined}
+        className={hasRequestedWidth ? "fixture-geometry-width" : undefined}
+        style={
+          hasRequestedWidth
+            ? { "--fixture-width": `${width * scale}px` }
+            : undefined
+        }
         onClick={() => {
           setCount(count + 1);
         }}
