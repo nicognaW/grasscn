@@ -552,7 +552,7 @@ const Scoreboard = ({
     };
   }, [text]);
 
-  const rankedEntries = [...entries.filter((e) => !e.name.startsWith("#"))];
+  const rankedEntries = entries.filter((e) => !e.name.startsWith("#"));
   rankedEntries.sort((a, b) => {
     const scoreDifference = b.score - a.score;
 

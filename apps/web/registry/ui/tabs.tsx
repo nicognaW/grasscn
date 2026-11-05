@@ -111,7 +111,7 @@ const Tabs = ({
 
   const [, forwarded, element] = useLocalRef(ref);
 
-  const requested = React.useRef<string | undefined>(undefined);
+  const requested = React.useRef<unknown>(undefined);
   const expiry = React.useRef(0);
 
   React.useLayoutEffect((): (() => void) | undefined => {
@@ -280,7 +280,12 @@ const TabSurface = ({ name }: { name: keyof typeof assets.sprites }) => (
   </span>
 );
 
-type TabsTriggerProps = MinecraftProps<typeof TabsPrimitive.Tab>;
+type TabsTriggerProps = Omit<
+  MinecraftProps<typeof TabsPrimitive.Tab>,
+  "value"
+> & {
+  value: unknown;
+};
 
 const TabsTrigger = ({
   className,
