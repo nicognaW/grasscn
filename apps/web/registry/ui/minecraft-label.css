@@ -1,4 +1,7 @@
 @layer components {
+  .mc-label-heading {
+    margin: 0;
+  }
   .mc-label {
     --mc-pixel: calc(1px * var(--mc-scale, 2));
     display: inline-flex;

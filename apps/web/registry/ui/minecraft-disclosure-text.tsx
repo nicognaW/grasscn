@@ -122,21 +122,26 @@ type DisclosureTextProps = React.ComponentProps<"div"> & {
   align?: "left" | "center";
 };
 
-const MinecraftDisclosureText = ({
-  children,
-  className,
-  scale = 2,
-  maxWidth,
-  align = "left",
-  style,
-  ref,
-  ...props
-}: DisclosureTextProps) => {
-  const node = React.useRef<HTMLDivElement>(null);
+type DisclosureHeadingProps = React.ComponentProps<"h2"> &
+  Pick<DisclosureTextProps, "scale" | "maxWidth" | "align">;
+
+const useDisclosureTextLayout = (
+  node: React.RefObject<HTMLDivElement | HTMLHeadingElement | null>,
+  {
+    children,
+    className,
+    scale = 2,
+    maxWidth,
+    align = "left",
+    style,
+    ref,
+    ...props
+  }: DisclosureTextProps | DisclosureHeadingProps
+) => {
   React.useImperativeHandle<typeof node.current, typeof node.current>(
     ref,
     () => node.current,
-    []
+    [node]
   );
   const [fontReady, setFontReady] = React.useState(false);
   const [containerWidth, setContainerWidth] = React.useState<number>();
@@ -168,9 +173,9 @@ const MinecraftDisclosureText = ({
   }, [unicode]);
   React.useLayoutEffect(() => {
     const element =
-      // SAFETY: React attaches this always-rendered <div> before layout effect setup. Its private ref has one attachment and no other writer; the public ref is removed from the trailing props spread.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit proves this exact HTMLDivElement capture.
-      node.current as HTMLDivElement;
+      // SAFETY: React attaches the caller’s always-rendered intrinsic div or h2 before layout effect setup. Each caller owns its intrinsic ref with no other writer; the public ref is removed from the trailing props spread.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Both private callers attach this ref directly to a fixed div or h2 before layout setup.
+      node.current as HTMLDivElement | HTMLHeadingElement;
 
     const update = () => {
       setContainerWidth(Math.floor(element.clientWidth / scale));
@@ -183,7 +188,7 @@ const MinecraftDisclosureText = ({
     return () => {
       observer.disconnect();
     };
-  }, [scale]);
+  }, [scale, node]);
 
   const supported =
     text !== null &&
@@ -202,58 +207,86 @@ const MinecraftDisclosureText = ({
           width: `${maxWidth * scale}px`,
         };
 
+  const rootClassName = cn("mc-label", boundedLayout.className, className);
+
+  const rootStyle = minecraftStyle(
+    style,
+    (__style): MinecraftDisclosureTextScaleStyle => ({
+      "--mc-disclosure-text-max-width": boundedLayout.width,
+      "--mc-scale": scale,
+      ...__style,
+    })
+  );
+
+  return {
+    children: supported ? (
+      <>
+        {lines.map((line, index) => (
+          <span
+            aria-hidden="true"
+            className="mc-label-line mc-dynamic-layout-minecraft-disclosure-text-1"
+            key={index}
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-minecraft-disclosure-text-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-minecraft-disclosure-text-1-padding-left":
+                  align === "center"
+                    ? (Math.floor((width - widest) / 2) +
+                        Math.floor(widest / 2) -
+                        Math.floor(textWidth(line) / 2)) *
+                      scale
+                    : 0,
+              } satisfies MinecraftDisclosureTextLayoutStyle1 as MinecraftDisclosureTextLayoutStyle1
+            }
+          >
+            {/^[\u0020-\u007E]*$/u.test(line) ? (
+              <MinecraftText>{line}</MinecraftText>
+            ) : (
+              <MinecraftUnicodeLabel text={line} atlas={labelUnihexAtlas} />
+            )}
+          </span>
+        ))}
+        <span className="mc-text-accessible">{text}</span>
+      </>
+    ) : (
+      children
+    ),
+    props: {
+      className: rootClassName,
+      "data-mc-label-layout-ready": !unicode || fontReady,
+      "data-slot": "label",
+      style: rootStyle,
+      ...props,
+    },
+  };
+};
+
+const MinecraftDisclosureText = (props: DisclosureTextProps) => {
+  const node = React.useRef<HTMLDivElement>(null);
+  const layout = useDisclosureTextLayout(node, props);
+
   return (
-    <div
-      ref={node}
-      data-slot="label"
-      data-mc-label-layout-ready={!unicode || fontReady}
-      className={cn(`mc-label`, boundedLayout.className, className)}
-      style={minecraftStyle(
-        style,
-        (__style): MinecraftDisclosureTextScaleStyle => ({
-          "--mc-disclosure-text-max-width": boundedLayout.width,
-          "--mc-scale": scale,
-          ...__style,
-        })
-      )}
-      {...props}
-    >
-      {supported ? (
-        <>
-          {lines.map((line, index) => (
-            <span
-              aria-hidden="true"
-              className="mc-label-line mc-dynamic-layout-minecraft-disclosure-text-1"
-              key={index}
-              style={
-                /* SAFETY: The owned mc-dynamic-layout-minecraft-disclosure-text-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-                {
-                  "--mc-dynamic-minecraft-disclosure-text-1-padding-left":
-                    align === "center"
-                      ? (Math.floor((width - widest) / 2) +
-                          Math.floor(widest / 2) -
-                          Math.floor(textWidth(line) / 2)) *
-                        scale
-                      : 0,
-                } satisfies MinecraftDisclosureTextLayoutStyle1 as MinecraftDisclosureTextLayoutStyle1
-              }
-            >
-              {/^[\u0020-\u007E]*$/u.test(line) ? (
-                <MinecraftText>{line}</MinecraftText>
-              ) : (
-                <MinecraftUnicodeLabel text={line} atlas={labelUnihexAtlas} />
-              )}
-            </span>
-          ))}
-          <span className="mc-text-accessible">{text}</span>
-        </>
-      ) : (
-        children
-      )}
+    <div ref={node} {...layout.props}>
+      {layout.children}
     </div>
   );
 };
 
-export { MinecraftDisclosureText };
+const MinecraftDisclosureHeading = (props: DisclosureHeadingProps) => {
+  const node = React.useRef<HTMLHeadingElement>(null);
+  const layout = useDisclosureTextLayout(node, props);
 
-export type { DisclosureTextProps };
+  return (
+    <h2
+      ref={node}
+      {...layout.props}
+      className={cn("mc-label-heading", layout.props.className)}
+    >
+      {layout.children}
+    </h2>
+  );
+};
+
+export { MinecraftDisclosureText, MinecraftDisclosureHeading };
+
+export type { DisclosureTextProps, DisclosureHeadingProps };

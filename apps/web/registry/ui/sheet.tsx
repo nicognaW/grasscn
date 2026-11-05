@@ -7,7 +7,10 @@ import { Button } from "./button";
 import { minecraftCardSprite } from "./minecraft-card-sprite";
 import { CardScaleContext } from "./minecraft-card-text";
 import { MinecraftDialogBackdrop } from "./minecraft-dialog-backdrop";
-import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
+import {
+  MinecraftDisclosureText,
+  MinecraftDisclosureHeading,
+} from "./minecraft-disclosure-text";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
@@ -176,15 +179,7 @@ const SheetTitle = ({
     <SheetPrimitive.Title
       data-slot="sheet-title"
       className={className}
-      render={
-        render ?? (
-          <MinecraftDisclosureText
-            role="heading"
-            aria-level={2}
-            scale={scale}
-          />
-        )
-      }
+      render={render ?? <MinecraftDisclosureHeading scale={scale} />}
       {...props}
     >
       {children}
