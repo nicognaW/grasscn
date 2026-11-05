@@ -417,7 +417,10 @@ try {
 
       assert.ok(
         // eslint-disable-next-line anti-slop/no-runtime-typeof -- Validate the clipboard protocol value before accepting visitor source.
-        typeof code === "string" && code.includes("export default"),
+        typeof code === "string" &&
+          new Set(new Bun.Transpiler({ loader: "tsx" }).scan(code).exports).has(
+            "default"
+          ),
         `Complete visitor code: ${filename}`
       );
       copiedExamples[filename] = code;
