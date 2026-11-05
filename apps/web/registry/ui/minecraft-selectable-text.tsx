@@ -16,6 +16,10 @@ interface NativeTextLayoutStyle extends React.CSSProperties {
   "--mc-selectable-text-top"?: string;
 }
 
+interface SelectableTextConnection {
+  element: HTMLSpanElement;
+}
+
 interface Run {
   text: string;
   x: number;
@@ -33,9 +37,29 @@ const MinecraftSelectableText = ({
   const root = React.useRef<HTMLSpanElement>(null);
   const raw = React.useRef<HTMLSpanElement>(null);
   const [runs, setRuns] = React.useState<Run[]>([]);
-  const [ready, setReady] = React.useState(false);
 
-  React.useLayoutEffect(() => {
+  const [connection, setConnection] =
+    React.useState<SelectableTextConnection | null>(null);
+
+  const attach = React.useCallback((element: HTMLSpanElement | null) => {
+    setConnection(element === null ? null : { element });
+  }, []);
+
+  const paintInput = React.useMemo(
+    () => ({ connection, text }),
+    [connection, text]
+  );
+
+  const [completedInput, setCompletedInput] =
+    React.useState<typeof paintInput>();
+
+  const ready = completedInput === paintInput;
+
+  React.useLayoutEffect((): (() => void) | undefined => {
+    if (connection === null) {
+      return undefined;
+    }
+
     // SAFETY: React attaches this private, unkeyed <span> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLSpanElement capture.
     const value = raw.current as HTMLSpanElement;
@@ -47,8 +71,6 @@ const MinecraftSelectableText = ({
     let alive = true;
     let fontReady = false;
     let frame = 0;
-
-    setReady(false);
 
     const measure = () => {
       if (!fontReady) {
@@ -101,7 +123,7 @@ const MinecraftSelectableText = ({
       }
 
       setRuns(next);
-      setReady(true);
+      setCompletedInput(paintInput);
     };
 
     const glyphResources = Promise.all([document.fonts.ready, loadUnihex()]);
@@ -131,11 +153,11 @@ const MinecraftSelectableText = ({
       cancelAnimationFrame(frame);
       observer.disconnect();
     };
-  }, [text]);
+  }, [connection, paintInput, text]);
 
   return useRender({
     defaultTagName: "span",
-    ref: [root, ref ?? null],
+    ref: [root, attach, ref ?? null],
     render: (
       <span
         data-mc-selectable-ready={ready ? "true" : "false"}
