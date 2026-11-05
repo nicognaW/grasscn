@@ -98,7 +98,15 @@ export const CommandFixture = () => {
         "fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width":
           nativeInput,
       })}
-      style={nativeInput ? position : undefined}
+      style={
+        nativeInput
+          ? {
+              "--fixture-width": position["--fixture-width"],
+              "--fixture-x": position["--fixture-x"],
+              "--fixture-y": position["--fixture-y"],
+            }
+          : undefined
+      }
       data-subject={
         (native && part === "input" ? "subject" : undefined) === "subject"
           ? "true"

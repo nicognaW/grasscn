@@ -116,7 +116,11 @@ export const ComboboxFixture = () => {
             p.has("maxLength") ? Number(p.get("maxLength")) : undefined
           }
           className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
-          style={pos}
+          style={{
+            "--fixture-width": pos["--fixture-width"],
+            "--fixture-x": pos["--fixture-x"],
+            "--fixture-y": pos["--fixture-y"],
+          }}
           data-subject="true"
         />
       </Combobox>
