@@ -667,10 +667,9 @@ const Trading = ({
             } satisfies TradingLayoutStyle4 as TradingLayoutStyle4
           }
         />
-        <div
+        <fieldset
           id={listId}
           className="mc-trade-offers mc-dynamic-layout-trading-5"
-          role="group"
           aria-label="Trade offers"
           style={
             /* SAFETY: The owned mc-dynamic-layout-trading-5 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
@@ -688,7 +687,7 @@ const Trading = ({
             scale,
             choose
           )}
-        </div>
+        </fieldset>
         {renderTradeScrollbar({
           changeOffset,
           listId,

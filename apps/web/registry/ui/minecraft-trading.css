@@ -6,6 +6,10 @@
     image-rendering: pixelated;
   }
   .mc-trade-offers {
+    min-inline-size: 0;
+    margin: 0;
+    border: 0;
+    padding: 0;
     position: absolute;
     overflow: hidden;
   }
