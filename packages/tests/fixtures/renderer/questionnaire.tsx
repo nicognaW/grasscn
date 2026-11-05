@@ -69,14 +69,10 @@ export const QuestionnaireFixture = () => {
     readQuestionnaireReferenceGeometry(scale);
 
   const bounds = {
-    border: 0,
-    height,
-    left,
-    margin: 0,
-    padding: 0,
-    position: "fixed",
-    top,
-    width,
+    "--fixture-height": `${height}px`,
+    "--fixture-width": `${width}px`,
+    "--fixture-x": `${left}px`,
+    "--fixture-y": `${top}px`,
   } satisfies React.CSSProperties;
 
   if (q.has("native")) {
@@ -84,10 +80,11 @@ export const QuestionnaireFixture = () => {
 
     const textProps = {
       align,
+      className: "fixture-questionnaire-native-bounds",
       "data-subject": "true",
       id: "subject",
       maxWidth,
-      style: bounds,
+      style: { ...bounds },
     };
 
     if (part === "input") {
@@ -104,6 +101,7 @@ export const QuestionnaireFixture = () => {
                 q.has("maxLength") ? Number(q.get("maxLength")) : undefined
               }
               placeholder={q.get("placeholder") ?? undefined}
+              className="fixture-questionnaire-native-bounds"
               style={bounds}
               data-subject="true"
             />
@@ -135,7 +133,7 @@ export const QuestionnaireFixture = () => {
                 value="yes"
                 checked={q.get("checked") === "true"}
                 disabled={q.get("state") === "disabled"}
-                className="fixture-questionnaire-native-choice"
+                className="fixture-questionnaire-native-choice fixture-questionnaire-native-bounds"
                 style={{ ...bounds }}
                 data-subject="true"
               />
@@ -177,6 +175,7 @@ export const QuestionnaireFixture = () => {
           <QuestionnaireItem name="third" />
           <Action
             id="subject"
+            className="fixture-questionnaire-native-bounds"
             style={bounds}
             disabled={q.get("state") === "disabled"}
             data-subject="true"
