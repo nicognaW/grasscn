@@ -248,6 +248,7 @@ const MinecraftMap = ({
   }, [connection, pixels, markers, scale, revision, paintInput]);
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- This named, caller-overridable group owns pointer-coordinate selection; keyboard users activate its actual marker buttons. Inventing a keyboard coordinate cursor is a separate interaction API.
     <div
       {...props}
       data-slot="minecraft-map"

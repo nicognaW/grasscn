@@ -79,6 +79,7 @@ export const loadUnihex = function loadUnihex() {
           view.getUint16(local + 26, true) +
           view.getUint16(local + 28, true);
 
+        // oxlint-disable-next-line eslint/no-await-in-loop -- ZIP members append in directory order, preserving duplicate-glyph precedence and the first decompression/next-header failure; parallel decoding changes that protocol.
         contents += await new Response(
           new Blob([bytes.slice(start, start + length)])
             .stream()

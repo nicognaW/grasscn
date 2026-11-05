@@ -556,6 +556,7 @@ const Scoreboard = ({
     };
   }, [text]);
 
+  // oxlint-disable-next-line unicorn/no-useless-spread -- Normalize the public array filter result before private sorting; an Array subclass or custom filter can return a shared/species array whose mutation must not escape.
   const rankedEntries = [...entries.filter((e) => !e.name.startsWith("#"))];
   rankedEntries.sort((a, b) => {
     const scoreDifference = b.score - a.score;

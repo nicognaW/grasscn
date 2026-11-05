@@ -559,6 +559,7 @@ const PlayerPreview = ({
   }, [width, height, scale, current.pitch, current.yaw, status]);
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- The named preview group preserves its public role override and existing keyboard pose controls; the dynamic fallback is not an absent role.
     <div
       {...props}
       data-slot="player-preview"

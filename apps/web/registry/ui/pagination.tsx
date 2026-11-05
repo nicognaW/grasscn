@@ -68,6 +68,7 @@ const PaginationLink = ({
   return (
     <Button
       render={
+        // oxlint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- Preserve the upstream anchor-prop render API: the caller forwards href through props and Button supplies composition. Href-less custom actions remain caller accessibility responsibility.
         <a
           aria-current={(isActive ?? false) ? "page" : undefined}
           data-slot="pagination-link"
@@ -120,6 +121,7 @@ const PaginationArrow = ({
   }
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- This anchor preserves caller href/ref/navigation semantics and native Enter activation when href is supplied; href-less action use remains explicit compatibility debt.
     <a
       data-slot={
         direction === "forward" ? "pagination-next" : "pagination-previous"

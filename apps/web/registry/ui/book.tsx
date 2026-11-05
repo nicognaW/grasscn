@@ -80,6 +80,7 @@ const Book = ({
   };
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- The public role override falls back to the existing named Book group, which already handles page navigation keys; a fixed role would remove that caller contract.
     <div
       {...props}
       data-slot="book"

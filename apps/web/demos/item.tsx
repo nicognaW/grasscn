@@ -61,6 +61,7 @@ const ItemDemo = ({ scale }: DemoProps) => {
         <ItemGroup scale={scale} className="demo-owned-item-1">
           <Item
             aria-label={hasFirstWorldLabel ? undefined : "Open first world"}
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- This anchor receives its actual accessible content and optional aria-label from the Item owner through the supported render composition.
             render={<a href="#item" />}
             selected={selected === "first"}
             className="demo-owned-item-2"

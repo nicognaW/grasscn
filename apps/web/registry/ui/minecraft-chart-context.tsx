@@ -335,6 +335,7 @@ const useRegister = function useRegister(geometry: Geometry) {
 
   React.useLayoutEffect(() => {
     // SAFETY: serialized was produced immediately above from this hook's Geometry input.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Only this hook serializes the typed Geometry above; retain the existing JSON normalization rather than pretending externally supplied JSON was validated.
     store.set(id, JSON.parse(serialized) as Geometry);
 
     return () => {
@@ -372,6 +373,7 @@ const ProfilerSectorGeometry = (props: PieSectorShapeProps) => {
     cy: props.cy,
     endAngle: props.endAngle,
     fill: props.fill ?? "#55ff55",
+    // oxlint-disable-next-line typescript/no-unsafe-assignment, typescript/no-unsafe-member-access -- Recharts declares the original datum payload as any; preserve its optional profiler value without fabricating a narrower row schema or changing coercion.
     globalPercentage: props.payload?.globalPercentage,
     index: props.index,
     innerRadius: props.innerRadius,

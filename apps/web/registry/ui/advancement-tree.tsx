@@ -404,6 +404,7 @@ const AdvancementTree = ({
 
   return (
     <TooltipProvider>
+      {/* oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- The named tree group keeps its public role override and existing arrow/Home pan controls; fixing its role would change the composition API. */}
       <div
         {...props}
         ref={root}
