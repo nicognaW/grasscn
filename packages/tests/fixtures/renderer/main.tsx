@@ -1056,16 +1056,16 @@ const CollapsibleFixture = () => {
           }
           keepMounted={params.has("forceMount") ? true : undefined}
           className={cn({
-            "fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-native-collapse-padding":
+            "fixture-geometry-height fixture-geometry-width fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-native-collapse-padding":
               native && body,
           })}
           style={
             native && body
               ? {
                   "--fixture-height": `${Number(params.get("height")) * scale}px`,
+                  "--fixture-width": `${Number(params.get("width")) * scale}px`,
                   "--fixture-x": `${Number(params.get("x") ?? 16) * scale}px`,
                   "--fixture-y": `${Number(params.get("y") ?? 16) * scale}px`,
-                  width: Number(params.get("width")) * scale,
                 }
               : undefined
           }
@@ -1973,14 +1973,17 @@ const PopoverFixture = () => {
               | "end"
           }
           sideOffset={native ? 0 : Number(params.get("sideOffset") ?? 4)}
-          className={
-            native && !params.has("text")
-              ? "fixture-popover-empty-padding"
-              : undefined
-          }
+          className={cn({
+            "fixture-geometry-height fixture-geometry-width": native,
+            "fixture-popover-empty-padding": native && !params.has("text"),
+          })}
           style={{
-            height: native ? Number(params.get("height")) * scale : undefined,
-            width: native ? Number(params.get("width")) * scale : undefined,
+            "--fixture-height": native
+              ? `${Number(params.get("height")) * scale}px`
+              : undefined,
+            "--fixture-width": native
+              ? `${Number(params.get("width")) * scale}px`
+              : undefined,
           }}
           initialFocus={native ? () => content.current : undefined}
           data-subject="true"
@@ -2804,12 +2807,17 @@ const FixtureScrollArea = () => {
             setScrollValue(event.currentTarget.scrollTop);
           },
         }}
+        className={
+          params.has("defaults")
+            ? undefined
+            : "fixture-geometry-height fixture-geometry-width"
+        }
         style={
           params.has("defaults")
             ? undefined
             : {
-                height: Number(params.get("height") ?? 80) * scale,
-                width: width * scale,
+                "--fixture-height": `${Number(params.get("height") ?? 80) * scale}px`,
+                "--fixture-width": `${width * scale}px`,
               }
         }
         data-subject="true"
