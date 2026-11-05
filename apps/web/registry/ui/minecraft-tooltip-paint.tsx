@@ -53,7 +53,9 @@ const solidBackdrop = function solidBackdrop(node: HTMLElement) {
 
   const color = [255, 255, 255];
 
-  for (const layer of [...layers].reverse()) {
+  layers.reverse();
+
+  for (const layer of layers) {
     for (let c = 0; c < 3; c += 1) {
       color[c] = Math.round(layer[c] * layer[3] + color[c] * (1 - layer[3]));
     }

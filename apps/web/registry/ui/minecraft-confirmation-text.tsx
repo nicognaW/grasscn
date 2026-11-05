@@ -170,7 +170,7 @@ export const MinecraftConfirmationText = ({
   const lines = compact ? allLines : allLines.slice(0, title ? 1 : 15);
 
   if (!compact && !title && allLines.length > 15) {
-    let last = lines[14];
+    let { 14: last } = lines;
     const limit = widthOf(last) - widthOf("...");
 
     while (last.length && widthOf(last) > limit) {
