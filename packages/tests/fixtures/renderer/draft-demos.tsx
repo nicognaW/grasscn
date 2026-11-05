@@ -43,6 +43,25 @@ interface Sample {
   background?: string;
 }
 
+interface NativeHeartConditions {
+  readonly [nativeState: string]: React.ComponentProps<
+    typeof HealthMeter
+  >["condition"];
+  readonly ABSORBING: "absorbing";
+  readonly FROZEN: "frozen";
+  readonly NORMAL: "normal";
+  readonly POISIONED: "poisoned";
+  readonly WITHERED: "withered";
+}
+
+const heartConditions: NativeHeartConditions = {
+  ABSORBING: "absorbing",
+  FROZEN: "frozen",
+  NORMAL: "normal",
+  POISIONED: "poisoned",
+  WITHERED: "withered",
+};
+
 const hasSkinSource = (src: Sample["src"]): src is string =>
   (src?.length ?? 0) > 0;
 
@@ -104,17 +123,7 @@ const renderDraftHealthScenario = ({
   <HealthMeter
     {...common}
     value={value}
-    condition={
-      (
-        {
-          ABSORBING: "absorbing",
-          FROZEN: "frozen",
-          NORMAL: "normal",
-          POISIONED: "poisoned",
-          WITHERED: "withered",
-        } as const
-      )[sample.state as "NORMAL"] ?? "normal"
-    }
+    condition={heartConditions[String(sample.state)] ?? "normal"}
   />
 );
 
