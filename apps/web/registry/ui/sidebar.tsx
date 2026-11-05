@@ -436,6 +436,41 @@ const sidebarControlLabel = function sidebarControlLabel(
   });
 };
 
+interface SidebarControlScaleStyle extends React.CSSProperties {
+  "--mc-scale": Scale;
+}
+
+/** The intrinsic owner supplies the actual event target and its disabled state. */
+const sidebarControlActivation = <Target extends HTMLElement>(
+  inactive: boolean,
+  onClick: React.MouseEventHandler<Target> | undefined,
+  onClickCapture: React.MouseEventHandler<Target> | undefined
+) => ({
+  onClick: (event: React.MouseEvent<Target>) => {
+    if (inactive) {
+      event.preventDefault();
+
+      return;
+    }
+
+    onClick?.(event);
+
+    if (!event.defaultPrevented) {
+      playMinecraftClick();
+    }
+  },
+  onClickCapture: (event: React.MouseEvent<Target>) => {
+    if (inactive) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      return;
+    }
+
+    onClickCapture?.(event);
+  },
+});
+
 const SidebarControl = ({
   scale = 2,
   render,
@@ -466,29 +501,7 @@ const SidebarControl = ({
       {...props}
       aria-disabled={inactive || props["aria-disabled"]}
       tabIndex={inactive ? -1 : props.tabIndex}
-      onClickCapture={(event) => {
-        if (inactive) {
-          event.preventDefault();
-          event.stopPropagation();
-
-          return;
-        }
-
-        onClickCapture?.(event);
-      }}
-      onClick={(event) => {
-        if (inactive) {
-          event.preventDefault();
-
-          return;
-        }
-
-        onClick?.(event);
-
-        if (!event.defaultPrevented) {
-          playMinecraftClick();
-        }
-      }}
+      {...sidebarControlActivation(inactive, onClick, onClickCapture)}
     >
       <span className="mc-button-surface" aria-hidden="true">
         {Array.from({ length: 9 }, (_, index) => (
@@ -1083,24 +1096,68 @@ const SidebarMenuSubButton = ({
   className,
   children,
   size = "default",
+  style,
+  onClick,
+  onClickCapture,
   ...props
 }: MinecraftPolymorphicProps<"a"> & {
   isActive?: boolean;
   size?: "default";
-}) => (
-  <SidebarMenuButton
-    {...(props as SidebarMenuButtonProps)}
-    render={render ?? <a />}
-    isActive={isActive}
-    size={size}
-    aria-disabled={props["aria-disabled"]}
-    data-slot="sidebar-menu-sub-button"
-    data-sidebar="menu-sub-button"
-    className={cn(className)}
-  >
-    {children}
-  </SidebarMenuButton>
-);
+}) => {
+  const { state, isMobile, scale } = useSidebarContext();
+  const mode = React.useContext(CollapsibleContext);
+  const collapsed = !isMobile && state === "collapsed" && mode === "icon";
+
+  const inactive =
+    props["aria-disabled"] === true || props["aria-disabled"] === "true";
+
+  if (size !== "default") {
+    throw new Error(
+      "Minecraft sidebar menu buttons support the native default visual variant and size only"
+    );
+  }
+
+  const label = props["aria-label"] ?? plainText(children);
+  const display = collapsed ? collapsedContent(children) : children;
+
+  const menuClassName = cn(
+    sidebarMenuButtonVariants({ size, variant: "default" }),
+    cn(className)
+  );
+
+  const paint: SidebarControlScaleStyle = { "--mc-scale": scale, ...style };
+
+  return (
+    <MinecraftRender
+      as="a"
+      render={render}
+      type="button"
+      data-variant="default"
+      data-size={size}
+      data-active={isActive || undefined}
+      aria-current={isActive ? "page" : undefined}
+      aria-label={label || undefined}
+      className={cn(
+        buttonVariants({ size: "default", variant: "default" }),
+        menuClassName
+      )}
+      style={paint}
+      {...props}
+      data-slot="sidebar-menu-sub-button"
+      data-sidebar="menu-sub-button"
+      aria-disabled={inactive || props["aria-disabled"]}
+      tabIndex={inactive ? -1 : props.tabIndex}
+      {...sidebarControlActivation(inactive, onClick, onClickCapture)}
+    >
+      <span className="mc-button-surface" aria-hidden="true">
+        {Array.from({ length: 9 }, (_, index) => (
+          <span key={index} />
+        ))}
+      </span>
+      <span className="mc-button-label">{sidebarControlLabel(display)}</span>
+    </MinecraftRender>
+  );
+};
 
 export {
   Sidebar,
