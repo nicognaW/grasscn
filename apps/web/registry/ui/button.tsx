@@ -5,6 +5,7 @@ import { cva } from "class-variance-authority";
 import type { VariantProps } from "class-variance-authority";
 // Primitive composition: shadcn-ui/ui apps/v4/registry/bases/base/ui/button.tsx (MIT).
 import * as React from "react";
+import { isPortal } from "react-is";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
@@ -69,15 +70,15 @@ const bitmapText = function bitmapText(
         children?: React.ReactNode;
       }>(child);
 
+      const childKey = isElement || isPortal(child) ? child.key : null;
+
       const childScope =
-        isElement && child.key !== null
-          ? [...scope.slice(0, -1), `key:${child.key}`]
-          : scope;
+        childKey === null ? scope : [...scope.slice(0, -1), `key:${childKey}`];
 
       if (isElement && child.type === React.Fragment) {
         visit(child.props.children, [
           ...childScope,
-          `fragment:${child.key ?? ""}`,
+          `fragment:${childKey ?? ""}`,
         ]);
 
         return;

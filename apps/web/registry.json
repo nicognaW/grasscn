@@ -8,7 +8,11 @@
       "type": "registry:ui",
       "title": "Minecraft Button",
       "description": "Minecraft Button with original textures, ASCII/Unihex glyphs and click sound. Native default variant and size; scale, refs, native props and render supported. 66 ASCII plus 96 fixed CJK native cases at scales 1–3. Other glyphs and scrolling labels remain unverified.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -66,7 +70,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "checkbox",
@@ -807,7 +812,11 @@
       "type": "registry:ui",
       "title": "Dialog",
       "description": "Original Minecraft PopupScreen appearance with shadcn Dialog semantics.",
-      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -925,7 +934,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "alert-dialog",
@@ -935,7 +945,8 @@
       "dependencies": [
         "class-variance-authority",
         "modern-screenshot@4.7.0",
-        "@base-ui/react"
+        "@base-ui/react",
+        "react-is"
       ],
       "files": [
         {
@@ -1046,14 +1057,19 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "popover",
       "type": "registry:ui",
       "title": "Minecraft Popover",
       "description": "Original Minecraft popup surface and typography, with shadcn/Base UI anchoring and interactive web behavior. 156 native appearance cases at scales 1-3; fixed CJK glyphs, original textures and click sound.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -1171,14 +1187,19 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "dropdown-menu",
       "type": "registry:ui",
       "title": "Minecraft Dropdown Menu",
       "description": "Shadcn/Base UI menu semantics with original Minecraft popup, suggestion-row typography, checkbox/radio and separator artwork. Fifteen standard exports, original click sound and fixed ASCII/CJK native appearance cases. Default visual variant only.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -1316,7 +1337,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "context-menu",
@@ -1452,7 +1474,11 @@
       "type": "registry:ui",
       "title": "Minecraft Menubar",
       "description": "Sixteen standard shadcn/Base UI menubar exports with original Button triggers, popup and suggestion-row surfaces, checkbox textures, glyphs, separators and click audio. Menubar geometry is a designed web composition. Default visual variant only.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -1594,14 +1620,19 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Minecraft Collapsible",
       "description": "Three standard shadcn Collapsible exports with original Button appearance, normal/CJK text, native wrapping and click audio. Open-content layout is a designed web composition.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -1699,7 +1730,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "toggle",
@@ -1797,7 +1829,11 @@
       "type": "registry:ui",
       "title": "Minecraft Button Group",
       "description": "Horizontal/vertical web grouping of original native Button and Label skins. Default button visuals only. Group geometry and rotated vertical separator are designed compositions.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -1903,14 +1939,19 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Minecraft Pagination",
       "description": "Original recipe-book12×17 page arrows and original Button-skinned numeric links, bitmap fonts and native click audio; accessible web pagination semantics. Arrow and numeric-link cases are independently verified; web arrangement is a composition.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -2004,7 +2045,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "badge",
@@ -2335,7 +2377,11 @@
       "type": "registry:ui",
       "title": "Minecraft Sheet",
       "description": "Original popup surface and native text constituents in an explicitly designed sheet composition. Native variants only.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -2449,14 +2495,19 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "drawer",
       "type": "registry:ui",
       "title": "Minecraft Drawer",
       "description": "Original popup surface and native text constituents in an explicitly designed drawer composition. Native variants only.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -2570,7 +2621,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "empty",
@@ -2690,7 +2742,8 @@
       "dependencies": [
         "class-variance-authority",
         "@base-ui/react",
-        "cmdk@1.1.1"
+        "cmdk@1.1.1",
+        "react-is"
       ],
       "files": [
         {
@@ -2861,14 +2914,19 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "sidebar",
       "type": "registry:ui",
       "title": "Minecraft Sidebar",
       "description": "The25standard shadcn Sidebar exports with original Button/Input/Popup/Label/Separator/ScrollArea/Tooltip artwork. Controlled and responsive web navigation, original click audio, native fonts/CJK and mobile Sheet. Sidebar layout is an explicit web composition; unsupported visual variants omitted.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -3062,7 +3120,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "sonner",
@@ -3072,7 +3131,8 @@
       "dependencies": [
         "class-variance-authority",
         "sonner@2.0.8",
-        "@base-ui/react"
+        "@base-ui/react",
+        "react-is"
       ],
       "files": [
         {
@@ -3171,7 +3231,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "avatar",
@@ -3263,7 +3324,11 @@
       "type": "registry:ui",
       "title": "Minecraft Input Group",
       "description": "Standard Input Group exports composed from original EditBox, multiline edit, Button and native text appearances. Addon alignment/group layout are web composition; default native visual sizes/variants only.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -3385,7 +3450,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "table",
@@ -3477,7 +3543,8 @@
         "react-day-picker@10.0.2",
         "date-fns@4.4.0",
         "class-variance-authority",
-        "@base-ui/react"
+        "@base-ui/react",
+        "react-is"
       ],
       "files": [
         {
@@ -3620,7 +3687,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "date-picker",
@@ -3631,7 +3699,8 @@
         "react-day-picker@10.0.2",
         "date-fns@4.4.0",
         "class-variance-authority",
-        "@base-ui/react"
+        "@base-ui/react",
+        "react-is"
       ],
       "files": [
         {
@@ -3803,7 +3872,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "item",
@@ -4066,7 +4136,8 @@
       "dependencies": [
         "class-variance-authority",
         "@shadcn/react@0.3.1",
-        "@base-ui/react"
+        "@base-ui/react",
+        "react-is"
       ],
       "files": [
         {
@@ -4181,7 +4252,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "form",
@@ -4193,7 +4265,8 @@
         "class-variance-authority",
         "@base-ui/react",
         "@hookform/resolvers",
-        "zod"
+        "zod",
+        "react-is"
       ],
       "files": [
         {
@@ -4341,7 +4414,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "code-block",
@@ -4351,7 +4425,8 @@
       "dependencies": [
         "class-variance-authority",
         "shiki@4.5.0",
-        "@base-ui/react"
+        "@base-ui/react",
+        "react-is"
       ],
       "files": [
         {
@@ -4478,7 +4553,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "chart",
@@ -4609,7 +4685,11 @@
       "type": "registry:ui",
       "title": "Minecraft Trace",
       "description": "Standard current shadcn trace APIs using original Minecraft font, palette, sprites or loading phases. Layout and web interactions compose native constituents; verified scope is recorded separately.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -4739,7 +4819,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "spinner",
@@ -5049,7 +5130,8 @@
       "dependencies": [
         "@shadcn/react@0.3.1",
         "class-variance-authority",
-        "@base-ui/react"
+        "@base-ui/react",
+        "react-is"
       ],
       "files": [
         {
@@ -5164,14 +5246,19 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "attachment",
       "type": "registry:ui",
       "title": "Minecraft attachment",
       "description": "Original world-list row, item thumbnail/text constituents and button actions in an explicit file-attachment composition.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/attachment.tsx",
@@ -5273,7 +5360,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "combobox",
@@ -5283,7 +5371,8 @@
       "dependencies": [
         "@base-ui/react@1.9.0",
         "class-variance-authority",
-        "@base-ui/react"
+        "@base-ui/react",
+        "react-is"
       ],
       "files": [
         {
@@ -5422,7 +5511,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "advancement-tree",
@@ -5824,7 +5914,11 @@
       "type": "registry:ui",
       "title": "Trading",
       "description": "A selectable trade list with payment, result and original merchant feedback.",
-      "dependencies": ["class-variance-authority", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@base-ui/react",
+        "react-is"
+      ],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -5954,7 +6048,8 @@
           "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
-      ]
+      ],
+      "devDependencies": ["@types/react-is"]
     },
     {
       "name": "player-list",
