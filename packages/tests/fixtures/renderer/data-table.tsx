@@ -110,6 +110,7 @@ export const DataTableFixture = () => {
 
     return (
       <>
+        {/* oxlint-disable-next-line shadcn/no-inline-styles -- This isolated native DataTable probe preserves its original query-generated stylesheet declarations and CSS-parser invalid-value recovery; custom-property geometry can change fallback/cascade, and the protocol has no positive-finite-only restriction. */}
         <style>{`[data-slot=data-table]{position:fixed;left:${Number(p.get("x") ?? 16) * scale}px;top:${Number(p.get("y") ?? 16) * scale}px;width:${width * scale}px}[data-slot=table]{width:${width * scale}px;table-layout:fixed}[data-slot=table-header]::after{background:none}[data-slot=table-body]{background:none}[data-slot=table-row]{height:${height * scale}px}[data-slot=table-head],[data-slot=table-cell]{padding:0;height:${height * scale}px;vertical-align:top}${part === "head" ? "[data-slot=table-body]{display:none}" : "[data-slot=table-header]{display:none}"}`}</style>
         <DataTable
           scale={scale}

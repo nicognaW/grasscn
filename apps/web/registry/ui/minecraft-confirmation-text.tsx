@@ -29,6 +29,7 @@ const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
   return true;
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the shared Confirmation text context identity consumed by AlertDialog layout and its text renderer; accept mixed-module Fast Refresh state fallback.
 export const ConfirmationTextContext = React.createContext<{
   scale: number;
   contentWidth: number;
@@ -90,6 +91,7 @@ const wrap = function wrap(text: string, maximum: number) {
   return lines;
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the existing AlertDialog button-text adapter import path shared with its native text renderer; accept mixed-module Fast Refresh state fallback.
 export const confirmationButtonText = function confirmationButtonText(
   children: React.ReactNode
 ): React.ReactNode {

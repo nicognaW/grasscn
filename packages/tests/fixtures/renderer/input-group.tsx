@@ -80,6 +80,7 @@ export const InputGroupFixture = () => {
           className="fixture-geometry-height"
           style={{
             "--fixture-height": `${Number(p.get("height") ?? 9) * scale}px`,
+            // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the numeric caller-width fallback contract: invalid widths retain the Prose default; the measured class migration changed widths for NaN, negative and infinite input.
             width: width * scale,
           }}
           data-subject="true"

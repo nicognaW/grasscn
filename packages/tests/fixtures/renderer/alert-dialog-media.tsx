@@ -22,6 +22,8 @@ export const AlertDialogMediaFixture = () => {
           {/* oxlint-disable shadcn/no-inline-styles -- This caller style is asserted as gap=8px by the forwarding test. */}
           <AlertDialogMedia
             ref={media}
+
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This fixture explicitly verifies AlertDialogMedia div ref and caller role forwarding with rich children and a nested button; replacing the receiver would change the tested public contract.
             role="group"
             aria-label="Confirmation media"
             data-user="kept"

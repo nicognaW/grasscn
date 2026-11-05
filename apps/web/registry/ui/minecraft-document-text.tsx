@@ -296,4 +296,5 @@ const MinecraftDocumentText = ({
   );
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the existing document-width measurement API consumed by Sign and PlayerList alongside Document rendering; accept mixed-module Fast Refresh state fallback.
 export { MinecraftDocumentText, documentTextWidth };

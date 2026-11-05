@@ -196,6 +196,7 @@ export const TableFixture = () => {
             <TableCell>你好，世界</TableCell>
             <TableCell>
               {2}
+              {/* oxlint-disable-next-line react/jsx-no-useless-fragment -- This fixture deliberately nests the scalar 3 in a Fragment next to 2 to exercise TableCell's recursive fragment collector; the existing test requires the resulting cell name 23. */}
               <>{3}</>
             </TableCell>
             <TableCell>

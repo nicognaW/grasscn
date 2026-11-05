@@ -190,11 +190,16 @@ export const CommandFixture = () => {
             label="Native command rows"
             surface={p.get("surface") === "popup" ? "popup" : "suggestions"}
             className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width"
+            // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve this list map's existing numeric height/maxHeight rejection and CSS cap fallback; CSS-variable substitution or new URL validation would change that contract.
             style={position}
             data-subject="true"
           >
             {labels.map((label, i) => (
-              <CommandItem key={i} value={`row-${i}`}>
+              <CommandItem
+                // oxlint-disable-next-line react-doctor/no-array-index-as-key -- This document-owned immutable query list permits duplicate labels; the ordinal also owns its existing row-i command value and native case position.
+                key={i}
+                value={`row-${i}`}
+              >
                 {label}
               </CommandItem>
             ))}

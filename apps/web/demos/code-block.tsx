@@ -79,7 +79,12 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
           </CodeBlockHeader>
           <CodeBlockContent wrap={wrap} lineNumbers={numbers} startLine={1}>
             {lines.map((line, index) => (
-              <CodeBlockLine key={index}>{line}</CodeBlockLine>
+              <CodeBlockLine
+                // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These private highlighted document rows are identified by line position; duplicate or blank lines are valid and edits repaint that row rather than identify a new entity.
+                key={index}
+              >
+                {line}
+              </CodeBlockLine>
             ))}
           </CodeBlockContent>
           <CodeBlockFooter>Minecraft colors</CodeBlockFooter>

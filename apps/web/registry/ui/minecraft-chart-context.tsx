@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- Recharts geometry components and context hooks participate in the same synchronous chart render; introducing lazy loading changes its current readiness/context contract.
 import {
   Rectangle,
   Sector,
@@ -128,6 +129,7 @@ interface GeometryContext {
 
 const Context = React.createContext<GeometryContext | null>(null);
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the existing CSS color-channel resolution API consumed by the native Chart renderer and its geometry owner; accept mixed-module Fast Refresh state fallback.
 export const chartColorChannels = function chartColorChannels(
   color: string,
   element?: Element | null

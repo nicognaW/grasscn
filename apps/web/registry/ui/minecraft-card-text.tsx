@@ -14,6 +14,7 @@ interface CardBoldGlyphStyle extends React.CSSProperties {
   "--mc-glyph-y": number;
 }
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the shared Card scale context identity used by Card, Sheet, Drawer and Popover composition; accept mixed-module Fast Refresh state fallback.
 export const CardScaleContext = React.createContext(2);
 
 const wrap = function wrap(text: string, width: number, bold: boolean) {
@@ -106,6 +107,7 @@ export const MinecraftCardText = ({
     !isMinecraftTextContent(children) ||
     !/^[\u0020-\u007E\n]*$/u.test(String(children))
   ) {
+    // oxlint-disable-next-line react/jsx-no-useless-fragment -- This opaque ReactNode fallback retains the existing ReactElement return and fragment boundary; directly returning arbitrary children changes the public return and reconciliation contract.
     return <>{children}</>;
   }
 

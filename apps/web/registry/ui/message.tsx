@@ -257,6 +257,7 @@ export {
   MessageScale,
   MessageAuthor,
   ChatChildren,
+  // oxlint-disable-next-line react-doctor/only-export-components -- Preserve the existing chat child-classification API consumed by Bubble with Message renderers; accept mixed-module Fast Refresh state fallback.
   isChatInline,
 };
 

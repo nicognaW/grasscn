@@ -53,7 +53,10 @@ export const InputOTPFixture = () => {
     >
       <InputOTPGroup>
         {Array.from({ length: native ? 1 : 6 }, (_, i) => (
-          <React.Fragment key={i}>
+          <React.Fragment
+            // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These fixed one-or-six code slots are owned by the existing index prop, not the changing character value. Slot identities remain fixed for the navigation.
+            key={i}
+          >
             {!native && i === 3 && <InputOTPSeparator />}
             <InputOTPSlot
               id={native ? "subject" : undefined}

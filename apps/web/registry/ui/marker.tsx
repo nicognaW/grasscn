@@ -129,6 +129,7 @@ const MarkerIcon = ({ className, ...props }: MinecraftProps<"span">) => (
   />
 );
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the installed Marker variant factory API exercised by the existing public type and fixture consumers; accept mixed-module Fast Refresh state fallback.
 export { Marker, MarkerIcon, MarkerContent, markerVariants };
 
 export type { MarkerProps };

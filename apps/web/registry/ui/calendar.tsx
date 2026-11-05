@@ -66,6 +66,7 @@ const CalendarCaptionLabel = ({
   );
 };
 
+// oxlint-disable-next-line react/jsx-no-useless-fragment -- This intentionally empty SDK Chevron component must return a ReactElement; null does not satisfy its existing component-slot type.
 const CalendarChevron = () => <></>;
 
 const CalendarMonthButton = ({
@@ -246,6 +247,8 @@ const CalendarDayButton = ({
       render={
         <button
           {...props}
+
+          // oxlint-disable-next-line react/button-has-type -- DayButton props type is the declared native button-type union; its existing type ?? button expression preserves valid caller types and the supported default without runtime normalization.
           type={props.type ?? "button"}
           onClick={(event) => {
             if (!event.defaultPrevented && !(props.disabled ?? false)) {

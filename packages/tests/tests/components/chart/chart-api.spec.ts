@@ -147,6 +147,7 @@ test("Profiler recovers transient GPU creation failures without unmounting its c
   page,
 }) => {
   await page.addInitScript(() => {
+    // oxlint-disable-next-line typescript/unbound-method -- Capture the original browser method before the test stub replaces it; every delegated call uses original.apply(this, args) with the same canvas receiver.
     const original = HTMLCanvasElement.prototype.getContext;
     let attempts = 0;
     // SAFETY: every original getContext overload delegates to the captured browser method with the same receiver/arguments; the first two webgl2 attempts return null, a permitted result for that overload.

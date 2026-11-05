@@ -192,6 +192,7 @@ test("Combobox IME Enter cannot commit a suggestion before CJK composition compl
       throw new Error("Missing required native input descriptor");
     }
 
+    // oxlint-disable-next-line typescript/unbound-method -- Capture the native value descriptor setter after the existing descriptor check; its sole invocation is setter.call(node, value) with the actual input receiver.
     const setter = nativeValueDescriptor26.set;
 
     if (setter === undefined) {

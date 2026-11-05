@@ -122,6 +122,7 @@ const renderNativeScrollContent = () => (
         { length: Math.ceil(Number(p.get("contentHeight") ?? 0) / 24) },
         (_, index) => (
           <Button
+            // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These navigation-owned Row N slots have immutable query-derived length and fixed top coordinates; they do not reorder or filter within the document.
             key={index}
             scale={scale}
             className="fixture-sidebar-native-row"

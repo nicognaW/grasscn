@@ -562,7 +562,12 @@ const Chat = () => {
       >
         <MessageGroup>
           {messages.map((message, i) => (
-            <Message scale={2} author={message.author} key={i}>
+            <Message
+              scale={2}
+              author={message.author}
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- This private chat list only appends at its tail; duplicate messages are allowed and existing message ordinals never reorder or shift. No separate message ID exists.
+              key={i}
+            >
               <MessageContent>{message.text}</MessageContent>
             </Message>
           ))}

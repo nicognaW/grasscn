@@ -891,6 +891,7 @@ const ContextFixture = () => {
         style={{
           "--fixture-height": popupNativeHeight,
           "--fixture-width": popupNativeWidth,
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the URL numeric maxHeight fallback and explicit zero; invalid CSS-variable substitution can lose the existing popup cap, and no finite-only schema or new validation is authorized.
           maxHeight: popupMaximumHeight,
         }}
       >
@@ -1374,6 +1375,7 @@ const MenubarFixture = () => {
         style={{
           "--fixture-height": popupNativeHeight,
           "--fixture-width": popupNativeWidth,
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the URL numeric maxHeight fallback and explicit zero; invalid CSS-variable substitution can lose the existing popup cap, and no finite-only schema or new validation is authorized.
           maxHeight: popupMaximumHeight,
         }}
       >
@@ -1736,6 +1738,7 @@ const DropdownFixture = () => {
         style={{
           "--fixture-height": popupNativeHeight,
           "--fixture-width": popupNativeWidth,
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the URL numeric maxHeight fallback and explicit zero; invalid CSS-variable substitution can lose the existing popup cap, and no finite-only schema or new validation is authorized.
           maxHeight: popupMaximumHeight,
         }}
       >
@@ -2934,6 +2937,7 @@ const FixtureLabel = () => {
         className="fixture-geometry-height"
         style={{
           "--fixture-height": `${Number(params.get("height") ?? 9) * scale}px`,
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the numeric caller-width fallback contract: zero and rejected invalid widths retain the original Label wrapping behavior; the measured class migration changed this boundary.
           width: width * scale,
         }}
         onClick={() => {

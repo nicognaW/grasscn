@@ -266,6 +266,8 @@ const CodeBlockContent = ({
     data-wrap={wrap || undefined}
     data-numbered={lineNumbers || undefined}
     dir="ltr"
+
+    // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- This pre is the existing keyboard-scroll entry for overflowing code; removing its tab stop or replacing its native pre structure changes that access contract.
     tabIndex={0}
     style={minecraftStyle(
       style,
@@ -287,7 +289,12 @@ const CodeBlockContent = ({
             .replace(/\n$/u, "")
             .split("\n")
             .map((line, index) => (
-              <CodeBlockLine key={index}>{line}</CodeBlockLine>
+              <CodeBlockLine
+                // oxlint-disable-next-line react-doctor/no-array-index-as-key -- This branch creates document line slots from a string only; repeated and empty lines are valid. Rich React children use the separate keyed-children path.
+                key={index}
+              >
+                {line}
+              </CodeBlockLine>
             ))
         : selectable(children)}
     </code>

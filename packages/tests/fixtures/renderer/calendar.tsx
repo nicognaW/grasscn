@@ -66,6 +66,7 @@ const NativeCalendarMonths = () => {
   );
 };
 
+// oxlint-disable-next-line react/jsx-no-useless-fragment -- This intentionally empty SDK navigation component must return a ReactElement; null does not satisfy its existing component-slot type.
 const NativeCalendarNav = () => <></>;
 
 const NativeCalendarDayButton = ({

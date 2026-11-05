@@ -30,6 +30,7 @@ const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
 const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
   minecraftGlyphs;
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the shared Popover text-layout context identity used by its provider and native text receiver; accept mixed-module Fast Refresh state fallback.
 export const PopoverTextContext = React.createContext({ scale: 2, width: 214 });
 
 const advance = (char: string, bold: boolean) => {
@@ -137,6 +138,7 @@ export const MinecraftPopoverText = ({
   }, [unicode]);
 
   if (!scalar) {
+    // oxlint-disable-next-line react/jsx-no-useless-fragment -- This opaque ReactNode fallback retains the existing ReactElement return and fragment boundary; directly returning arbitrary children changes the public return and reconciliation contract.
     return <>{children}</>;
   }
 

@@ -37,6 +37,7 @@ interface DialogBoldGlyphStyle extends React.CSSProperties {
   "--mc-glyph-y": number;
 }
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the shared Dialog layout context identity used by the Dialog provider and native text receiver; accept mixed-module Fast Refresh state fallback.
 export const DialogLayoutContext = React.createContext({
   contentWidth: 214,
   scale: 2,

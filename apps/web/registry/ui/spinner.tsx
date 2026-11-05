@@ -88,12 +88,20 @@ const Spinner = ({
       }))}
       {...props}
     >
-      <g aria-hidden="true" fill="#202020">
+      <g
+        aria-hidden="true"
+        // oxlint-disable-next-line shadcn/no-raw-colors -- Vanilla LoadingDotsWidget uses the pinned0xff202020 shadow; retain the literal SVG presentation attribute and its existing consumer-selector/cascade behavior.
+        fill="#202020"
+      >
         {pixels.map(([pixelX, y], index) => (
           <rect key={index} x={pixelX + 1} y={y + 1} width="1" height="1" />
         ))}
       </g>
-      <g aria-hidden="true" fill="#808080">
+      <g
+        aria-hidden="true"
+        // oxlint-disable-next-line shadcn/no-raw-colors -- Vanilla LoadingDotsWidget uses the pinned0xff808080 foreground; retain the literal SVG presentation attribute and its existing consumer-selector/cascade behavior.
+        fill="#808080"
+      >
         {pixels.map(([pixelX, y], index) => (
           <rect key={index} x={pixelX} y={y} width="1" height="1" />
         ))}

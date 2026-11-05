@@ -247,6 +247,7 @@ const Slider = ({
 
             return (
               <span
+                // oxlint-disable-next-line react-doctor/no-array-index-as-key -- The SDK thumb is owned by its value-array slot; values may coincide or change during dragging. A value key would remount the active thumb or collide.
                 key={index}
                 className="mc-slider-position"
                 style={

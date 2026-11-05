@@ -43,6 +43,7 @@ export const ButtonCompositionFixture = () => {
       >
         <rect width="100%" height="100%" fill="var(--fixture-rich-icon-fill)" />
       </svg>,
+      // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- This nested rich span tests click-handler forwarding inside the real Button; it is not a separate activation target, and adding keyboard/button semantics changes that composition probe.
       <span
         key="rich"
         data-testid="consumer-rich"

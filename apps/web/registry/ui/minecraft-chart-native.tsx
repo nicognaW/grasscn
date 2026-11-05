@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- These native chart adapters call Recharts context hooks during synchronous React rendering; importing inside async paint work cannot replace those hook calls.
 import { useChartWidth, useChartHeight, useYAxisScale } from "recharts";
 
 import {
@@ -170,6 +171,7 @@ const useCommittedChartColors = <ElementType extends HTMLElement>(
 };
 
 /** Minecraft's frame-duration gradient; input is in nanoseconds. */
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the native frame-color function import path shared by Chart and its FPS block; accept mixed-module Fast Refresh state fallback.
 export const chartFpsColor = function chartFpsColor(nanos: number) {
   const ms = Math.max(0, Math.min(56, nanos / 1e6));
   const t = f(ms < 28 ? ms / 28 : (ms - 28) / 28);
@@ -379,6 +381,7 @@ const ChartFpsFrame = ({
 
           return (
             <NativeChartText
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These scalar FPS labels own left, middle and right ordinal positions; duplicate or changing strings do not provide entity IDs. Retain the existing native layout slots.
               key={i}
               text={text}
               x={x}
@@ -399,7 +402,10 @@ const ChartFpsFrame = ({
             );
 
             return (
-              <React.Fragment key={index}>
+              <React.Fragment
+                // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These scalar guide pairs retain caller order and paint stacking; repeated labels/values are allowed, and each pair has no required public entity ID.
+                key={index}
+              >
                 {line(y, "white", `guide-${index}`)}
                 {shade(guide.label, Math.min(59, y + 1))}
               </React.Fragment>
@@ -427,6 +433,7 @@ const ChartFpsFrame = ({
   );
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the native UTF-16 profiler-color function import path shared by Chart and its profiler block; accept mixed-module Fast Refresh state fallback.
 export const chartProfilerColor = function chartProfilerColor(name: string) {
   let hash = 0;
 
@@ -798,7 +805,10 @@ const ChartProfilerFrame = ({
           const y = 134 + i * 9;
 
           return (
-            <React.Fragment key={i}>
+            <React.Fragment
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These private profiler text rows own their native row ordinal, displayed ordinal number and y coordinate. Duplicate sector names are permitted; no entity ID is present in this projection.
+              key={i}
+            >
               <NativeChartText
                 text={`${item.name === "unspecified" ? "[?]" : `[${i + 1}]`} ${item.name}`}
                 x={5}

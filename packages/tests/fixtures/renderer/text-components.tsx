@@ -274,7 +274,7 @@ const TextComponentsFixture = () => {
       <BreadcrumbLink
         render={
           q.has("asChild") ? (
-            // oxlint-disable-next-line jsx-a11y/anchor-has-content -- The owned asChild probes supply Continue or World through BreadcrumbLink children; preserve this empty render receiver so those real forwarding assertions stay meaningful.
+            // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid -- The owned asChild probes supply Continue or World through BreadcrumbLink children; preserve this empty render receiver so those real forwarding assertions stay meaningful.
             <a />
           ) : undefined
         }

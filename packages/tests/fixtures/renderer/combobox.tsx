@@ -145,6 +145,7 @@ export const ComboboxFixture = () => {
           aria-label="Native options"
           surface={p.get("surface") === "popup" ? "popup" : "suggestions"}
           className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve this list map's existing numeric height/maxHeight rejection and CSS cap fallback; CSS-variable substitution or new URL validation would change that contract.
           style={pos}
           data-subject="true"
         >

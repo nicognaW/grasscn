@@ -9,6 +9,7 @@ import {
 } from "@grasscn/web/ui/chart";
 import type { ChartConfig } from "@grasscn/web/ui/chart";
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- This compiler-owned JSX API contract checks the real synchronous Recharts component types; it is not an application entrypoint or page-load bundle.
 import { BarChart, Bar } from "recharts";
 
 const config: ChartConfig = {

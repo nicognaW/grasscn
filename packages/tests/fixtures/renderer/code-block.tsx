@@ -143,7 +143,12 @@ export const CodeBlockFixture = () => {
 
   if (q.has("highlight")) {
     selectedFixtureBranch1 = highlighted.map((line, index) => (
-      <CodeBlockLine key={index}>{line}</CodeBlockLine>
+      <CodeBlockLine
+        // oxlint-disable-next-line react-doctor/no-array-index-as-key -- The actual highlighter produces private text/token rows by document position, including duplicate and blank lines; there is no caller-owned stateful row identity.
+        key={index}
+      >
+        {line}
+      </CodeBlockLine>
     ));
   } else {
     selectedFixtureBranch1 = q.has("lines") ? (

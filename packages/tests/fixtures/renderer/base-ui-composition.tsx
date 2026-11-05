@@ -81,7 +81,10 @@ export const BaseUICompositionFixture = () => {
           Composed sidebar label
         </SidebarGroupLabel>
         <SidebarMenuSubButton
-          render={<a />}
+          render={
+            // oxlint-disable-next-line jsx-a11y/anchor-is-valid -- SidebarMenuSubButton supplies the real href and accessible children to this empty anchor render receiver; preserve the actual composition probe.
+            <a />
+          }
           href="#composed-sub"
           onClick={(event) => {
             event.preventDefault();

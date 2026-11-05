@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- The exported profiler composition renders Recharts synchronously; retain the existing chart contract instead of adding a suspension/loading phase.
 import { PieChart, Pie, Cell } from "recharts";
 
 import {
@@ -74,7 +75,11 @@ export const ProfilerChartExample = ({
           shape={ChartProfilerSector}
         >
           {data.map((row, index) => (
-            <Cell key={index} fill={chartProfilerColor(String(row[nameKey]))} />
+            <Cell
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- Recharts consumes this stateless Cell configuration by sector ordinal; the caller-selected name field may repeat and is not a guaranteed unique identity.
+              key={index}
+              fill={chartProfilerColor(String(row[nameKey]))}
+            />
           ))}
         </Pie>
         <ChartProfilerFrame

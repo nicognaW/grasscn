@@ -671,6 +671,7 @@ const SidebarContent = ({
         },
       }}
     >
+      {/* oxlint-disable-next-line react/jsx-no-useless-fragment -- Keep arbitrary caller content grouped as one child beside the ScrollBar slot; dropping this Fragment changes the public ScrollArea child-collection boundary. */}
       <>{children}</>
       <ScrollBar />
     </ScrollArea>

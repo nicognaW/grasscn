@@ -52,6 +52,7 @@ export const FormsFixture = () => {
       "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
 
       "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
+      // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the numeric caller-width fallback contract: invalid widths are rejected by CSS and retain the wrapped text component default; var()-based classes changed the measured result.
       width: Number(q.get("width") ?? 200) * scale,
     },
   };

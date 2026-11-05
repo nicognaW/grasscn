@@ -49,6 +49,7 @@ const InputGroupAddon = ({
 }: React.ComponentProps<"div"> & {
   align?: "inline-start" | "inline-end" | "block-start" | "block-end";
 }) => (
+  // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- Preserve upstream InputGroupAddon div grouping and pointer-padding focus delegation; keyboard users reach the real input and nested controls, not a new wrapper activation target.
   <div
     data-slot="input-group-addon"
     data-align={align}

@@ -21,6 +21,7 @@ const hasSupportedLineGlyphs = function hasSupportedLineGlyphs(text: string) {
   return true;
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the shared menu-scale context identity used by menu, command and combobox providers and text receivers; accept mixed-module Fast Refresh state fallback.
 export const MenuScaleContext = React.createContext<1 | 2 | 3>(2);
 
 export const MinecraftMenuText = ({
@@ -59,6 +60,7 @@ export const MinecraftMenuText = ({
   }, [unicode]);
 
   if (!scalar) {
+    // oxlint-disable-next-line react/jsx-no-useless-fragment -- This opaque ReactNode fallback retains the existing ReactElement return and fragment boundary; directly returning arbitrary children changes the public return and reconciliation contract.
     return <>{children}</>;
   }
 
@@ -103,6 +105,7 @@ export const MinecraftMenuText = ({
   );
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the existing menu child-normalization API used by its composed menu and combobox consumers; accept mixed-module Fast Refresh state fallback.
 export const menuTextNodes = function menuTextNodes(children: React.ReactNode) {
   return React.Children.map(children, (child): React.ReactNode =>
     isMinecraftTextContent(child) ? (

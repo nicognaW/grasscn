@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- The exported chart composition renders Recharts synchronously; a lazy boundary would introduce suspension/loading and change the existing rendering contract.
 import {
   BarChart,
   Bar,
@@ -152,7 +153,11 @@ export const AnalyticsChartExample = ({
           isAnimationActive={false}
         >
           {data.map((_, index) => (
-            <Cell key={index} fill={colors[index % colors.length]} />
+            <Cell
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- Recharts consumes these stateless Cell configurations by data ordinal; names may repeat and the public row schema has no required unique ID. Keep the palette/index binding.
+              key={index}
+              fill={colors[index % colors.length]}
+            />
           ))}
         </Pie>
         <ChartPixelSurface />
@@ -174,7 +179,11 @@ export const AnalyticsChartExample = ({
         <PolarAngleAxis type="number" domain={[0, "dataMax"]} tick={false} />
         <RadialBar dataKey={series[0]} isAnimationActive={false}>
           {data.map((_, index) => (
-            <Cell key={index} fill={colors[index % colors.length]} />
+            <Cell
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- Recharts consumes these stateless Cell configurations by data ordinal; names may repeat and the public row schema has no required unique ID. Keep the palette/index binding.
+              key={index}
+              fill={colors[index % colors.length]}
+            />
           ))}
         </RadialBar>
         <ChartPixelSurface />

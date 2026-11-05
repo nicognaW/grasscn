@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- The exported FPS chart renders Recharts synchronously; preserve its existing render/context/readiness contract rather than introducing an async loading boundary.
 import { BarChart, Bar, XAxis, YAxis } from "recharts";
 
 import {
