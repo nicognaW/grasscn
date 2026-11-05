@@ -95,10 +95,12 @@ const Carousel = ({
     };
 
     update();
-    api.on("select", update).on("reInit", update);
+    api.on("select", update);
+    api.on("reInit", update);
 
     return () => {
-      api.off("select", update).off("reInit", update);
+      api.off("select", update);
+      api.off("reInit", update);
     };
   }, [api]);
 
