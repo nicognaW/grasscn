@@ -351,52 +351,75 @@ const sidebarControlLabel = function sidebarControlLabel(
   children: React.ReactNode
 ): React.ReactNode {
   const parts: (
-    | { kind: "text"; content: string }
-    | { kind: "child"; content: React.ReactNode }
+    | { kind: "text"; content: string; key: string }
+    | { kind: "child"; content: React.ReactNode; key: string }
   )[] = [];
 
   let run = "";
+  let runKey = "";
 
   const flush = () => {
     if (run) {
-      parts.push({ content: run, kind: "text" });
+      parts.push({ content: run, key: runKey, kind: "text" });
       run = "";
     }
   };
 
-  const visit = (child: React.ReactNode) => {
+  const visit = (child: React.ReactNode, scope: string[]) => {
     if (isMinecraftEmptyChild(child)) {
       return;
     }
 
     if (Array.isArray(child)) {
+      let position = 0;
       // oxlint-disable-next-line unicorn/no-array-for-each -- Preserve this consumer ReactNode array's existing method dispatch and sparse/mutation behavior; indexed traversal would bypass custom forEach overrides.
-      child.forEach(visit);
+      child.forEach((entry: React.ReactNode) => {
+        const identity = `position:${position}`;
+        position += 1;
+        visit(entry, [...scope, identity]);
+      });
 
       return;
     }
 
-    if (
-      React.isValidElement<{ children?: React.ReactNode }>(child) &&
-      child.type === React.Fragment
-    ) {
-      visit(child.props.children);
+    const isElement = React.isValidElement<{
+      children?: React.ReactNode;
+    }>(child);
+
+    const childScope =
+      isElement && child.key !== null
+        ? [...scope.slice(0, -1), `key:${child.key}`]
+        : scope;
+
+    if (isElement && child.type === React.Fragment) {
+      visit(child.props.children, [
+        ...childScope,
+        `fragment:${child.key ?? ""}`,
+      ]);
 
       return;
     }
 
     if (isMinecraftTextScalar(child)) {
+      if (!run) {
+        runKey = `text:${JSON.stringify(childScope)}`;
+      }
+
       run += String(child);
     } else {
       flush();
-      parts.push({ content: child, kind: "child" });
+      parts.push({
+        content: child,
+        key: `child:${JSON.stringify(childScope)}`,
+        kind: "child",
+      });
     }
   };
 
-  visit(children);
+  visit(children, []);
   flush();
 
-  return parts.map((part, index) => {
+  return parts.map((part) => {
     let _selectedContent: React.ReactNode;
 
     if (part.kind === "text") {
@@ -409,7 +432,7 @@ const sidebarControlLabel = function sidebarControlLabel(
       _selectedContent = part.content;
     }
 
-    return <React.Fragment key={index}>{_selectedContent}</React.Fragment>;
+    return <React.Fragment key={part.key}>{_selectedContent}</React.Fragment>;
   });
 };
 
