@@ -140,6 +140,15 @@ const MinecraftProse = ({
   ...props
 }: MinecraftProseProps) => {
   const node = React.useRef<HTMLElement>(null);
+
+  const [attached, setAttached] = React.useState<HTMLElement | null>(null);
+
+  const captureNode = React.useCallback((element: HTMLElement | null) => {
+    node.current = element;
+
+    setAttached(element);
+  }, []);
+
   React.useImperativeHandle<typeof node.current, typeof node.current>(
     ref,
     () => node.current,
@@ -176,20 +185,23 @@ const MinecraftProse = ({
     return undefined;
   }, [unicode]);
   React.useLayoutEffect(() => {
-    const element = node.current!;
+    const element = attached;
+    let observer: ResizeObserver | undefined;
 
-    const update = () => {
-      setContainerWidth(Math.floor(element.clientWidth / scale));
-    };
+    if (element !== null) {
+      const update = () => {
+        setContainerWidth(Math.floor(element.clientWidth / scale));
+      };
 
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(element);
+      update();
+      observer = new ResizeObserver(update);
+      observer.observe(element);
+    }
 
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
     };
-  }, [scale]);
+  }, [attached, scale]);
 
   const supported =
     text !== null &&
@@ -247,7 +259,7 @@ const MinecraftProse = ({
     <Component
       as={as}
       render={render}
-      ref={node}
+      ref={captureNode}
       data-slot="minecraft-prose"
       data-mc-label-layout-ready={!unicode || fontReady}
       className={cn(`mc-label`, boundedLayout.className, className)}

@@ -89,6 +89,15 @@ const Badge = ({
   }
 
   const node = React.useRef<HTMLElement>(null);
+
+  const [attached, setAttached] = React.useState<HTMLElement | null>(null);
+
+  const captureNode = React.useCallback((element: HTMLElement | null) => {
+    node.current = element;
+
+    setAttached(element);
+  }, []);
+
   const [available, setAvailable] = React.useState<number>();
 
   React.useImperativeHandle<typeof node.current, typeof node.current>(
@@ -97,20 +106,23 @@ const Badge = ({
     []
   );
   React.useLayoutEffect(() => {
-    const element = node.current!;
+    const element = attached;
+    let observer: ResizeObserver | undefined;
 
-    const measure = () => {
-      setAvailable(Math.max(1, Math.floor(element.clientWidth / scale) - 37));
-    };
+    if (element !== null) {
+      const measure = () => {
+        setAvailable(Math.max(1, Math.floor(element.clientWidth / scale) - 37));
+      };
 
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(element);
+      measure();
+      observer = new ResizeObserver(measure);
+      observer.observe(element);
+    }
 
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
     };
-  }, [scale]);
+  }, [attached, scale]);
 
   const content = children;
 
@@ -184,7 +196,7 @@ const Badge = ({
     <Component
       render={render}
       as="span"
-      ref={node}
+      ref={captureNode}
       data-slot="badge"
       data-achievement={achievement}
       data-earned={String(earned)}

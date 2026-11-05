@@ -130,6 +130,15 @@ const Label = ({
   ...props
 }: LabelProps) => {
   const node = React.useRef<HTMLLabelElement>(null);
+
+  const [attached, setAttached] = React.useState<HTMLLabelElement | null>(null);
+
+  const captureNode = React.useCallback((element: HTMLLabelElement | null) => {
+    node.current = element;
+
+    setAttached(element);
+  }, []);
+
   React.useImperativeHandle<typeof node.current, typeof node.current>(
     ref,
     () => node.current,
@@ -162,20 +171,23 @@ const Label = ({
     }
   }, [unicode]);
   React.useLayoutEffect(() => {
-    const element = node.current!;
+    const element = attached;
+    let observer: ResizeObserver | undefined;
 
-    const update = () => {
-      setContainerWidth(Math.floor(element.clientWidth / scale));
-    };
+    if (element !== null) {
+      const update = () => {
+        setContainerWidth(Math.floor(element.clientWidth / scale));
+      };
 
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(element);
+      update();
+      observer = new ResizeObserver(update);
+      observer.observe(element);
+    }
 
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
     };
-  }, [scale]);
+  }, [attached, scale]);
 
   const supported =
     text !== null &&
@@ -194,7 +206,7 @@ const Label = ({
   return (
     <MinecraftRender
       as="label"
-      ref={node}
+      ref={captureNode}
       data-slot="label"
       data-mc-label-layout-ready={!unicode || fontReady}
       className={cn("mc-label", widthLayout.className, className)}
