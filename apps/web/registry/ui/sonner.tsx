@@ -439,14 +439,12 @@ const Toaster = ({
           button.classList.add(...buttonVariants().split(" "));
 
           const text = [...button.childNodes]
-            .filter(
-              (n) =>
-                !(
-                  n instanceof HTMLElement &&
-                  Object.hasOwn(n.dataset, "mcSonnerButtonArt")
-                )
+            .flatMap((child) =>
+              child instanceof HTMLElement &&
+              Object.hasOwn(child.dataset, "mcSonnerButtonArt")
+                ? []
+                : (child.textContent ?? "")
             )
-            .map((n) => n.textContent ?? "")
             .join("");
 
           return {
@@ -590,15 +588,19 @@ const Toaster = ({
               model.node,
               String(model.key)
             )}
-            {model.buttons
-              .filter((a) => a.node.isConnected)
-              .map((action) =>
-                createPortal(
-                  <ActionGraphic action={action} model={model} scale={scale} />,
-                  action.node,
-                  `${model.key}-action-${action.index}`
-                )
-              )}
+            {model.buttons.flatMap((action) =>
+              action.node.isConnected
+                ? createPortal(
+                    <ActionGraphic
+                      action={action}
+                      model={model}
+                      scale={scale}
+                    />,
+                    action.node,
+                    `${model.key}-action-${action.index}`
+                  )
+                : []
+            )}
           </React.Fragment>
         );
       })}

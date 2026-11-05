@@ -34,31 +34,36 @@ for (const width of [320, 390, 768, 1024, 1565]) {
     ).toBe(true);
 
     const escaped = await page.locator(".grass-panel").evaluateAll((panels) =>
-      panels.flatMap((panel) =>
-        [
+      panels.flatMap((panel) => {
+        const controls = [
           ...panel.querySelectorAll(
             "input:not([type=hidden]):not([aria-hidden=true]),textarea,button[data-slot]"
           ),
-        ]
-          .filter((el) => {
-            // Base UI form proxy inputs are visually hidden; measure the visible controls.
-            if (
-              el.tagName === "INPUT" &&
-              getComputedStyle(el).opacity === "0"
-            ) {
-              return false;
-            }
+        ];
 
-            const box = el.getBoundingClientRect();
-            const outer = panel.getBoundingClientRect();
+        const escapedControls: (string | null)[] = [];
 
-            return (
-              box.width > 0 &&
-              (box.left < outer.left - 1 || box.right > outer.right + 1)
+        for (const el of controls) {
+          // Base UI form proxy inputs are visually hidden; measure the visible controls.
+          if (el.tagName === "INPUT" && getComputedStyle(el).opacity === "0") {
+            continue;
+          }
+
+          const box = el.getBoundingClientRect();
+          const outer = panel.getBoundingClientRect();
+
+          if (
+            box.width > 0 &&
+            (box.left < outer.left - 1 || box.right > outer.right + 1)
+          ) {
+            escapedControls.push(
+              el.getAttribute("aria-label") ?? el.textContent
             );
-          })
-          .map((el) => el.getAttribute("aria-label") ?? el.textContent)
-      )
+          }
+        }
+
+        return escapedControls;
+      })
     );
 
     expect(escaped).toEqual([]);
