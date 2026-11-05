@@ -6,7 +6,11 @@ import { minecraftAvatarSkins } from "./minecraft-avatar-assets";
 import type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
 import { playerMeshes } from "./minecraft-player-mesh";
 import { inferPlayerSkinModel } from "./minecraft-player-skin";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  useCanvasPaintConnection,
+} from "./minecraft-render";
 
 import "./minecraft-player-preview.css";
 
@@ -446,11 +450,17 @@ const PlayerPreview = ({
 
   const [pose, setPose] = React.useState(defaultRotation);
 
-  const [status, setStatus] = React.useState<"loading" | "loaded" | "error">(
-    "loading"
-  );
-
   const canvas = React.useRef<HTMLCanvasElement>(null);
+  const { attach, connection } = useCanvasPaintConnection(canvas);
+  const request = React.useMemo(
+    () => ({ url, requestedModel, connection }),
+    [url, requestedModel, connection]
+  );
+  const [settled, setSettled] = React.useState<{
+    request: typeof request;
+    status: "loaded" | "error";
+  } | null>(null);
+  const status = settled?.request === request ? settled.status : "loading";
   const renderer = React.useRef<ReturnType<typeof buildRenderer> | null>(null);
 
   const drag = React.useRef<{
@@ -497,13 +507,14 @@ const PlayerPreview = ({
     loadingCallback.current = onLoadingStatusChange;
   }, [onLoadingStatusChange]);
   React.useEffect(() => {
-    // SAFETY: React attaches this private, unkeyed <canvas> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLCanvasElement capture.
-    const ownedCanvas = canvas.current as HTMLCanvasElement;
+    if (request.connection === null) {
+      return;
+    }
+
+    const ownedCanvas = request.connection.canvas;
 
     let live = true;
     let instance: ReturnType<typeof buildRenderer> | undefined;
-    setStatus("loading");
     loadingCallback.current?.("loading");
     const image = new Image();
     image.crossOrigin = "anonymous";
@@ -514,17 +525,18 @@ const PlayerPreview = ({
       }
 
       try {
-        const actualModel = requestedModel ?? inferPlayerSkinModel(image);
+        const actualModel =
+          request.requestedModel ?? inferPlayerSkinModel(image);
         instance = buildRenderer(ownedCanvas, actualModel);
         renderer.current = instance;
         instance.load(image);
         const frame = latestFrame.current;
         instance.paint(frame.width, frame.height, frame.scale, frame.pose);
         setResolvedModel(actualModel);
-        setStatus("loaded");
+        setSettled({ request, status: "loaded" });
         loadingCallback.current?.("loaded");
       } catch {
-        setStatus("error");
+        setSettled({ request, status: "error" });
         loadingCallback.current?.("error");
       }
     };
@@ -533,14 +545,14 @@ const PlayerPreview = ({
 
     const handleImageError = () => {
       if (live) {
-        setStatus("error");
+        setSettled({ request, status: "error" });
         loadingCallback.current?.("error");
       }
     };
 
     image.addEventListener("error", handleImageError);
 
-    image.src = url;
+    image.src = request.url;
 
     return () => {
       live = false;
@@ -549,7 +561,7 @@ const PlayerPreview = ({
       instance?.dispose();
       renderer.current = null;
     };
-  }, [url, requestedModel]);
+  }, [request]);
   React.useLayoutEffect(() => {
     renderer.current?.paint(width, height, scale, {
       pitch: current.pitch,
@@ -661,7 +673,7 @@ const PlayerPreview = ({
       }}
     >
       <canvas
-        ref={canvas}
+        ref={attach}
         width={width * scale}
         height={height * scale}
         aria-hidden="true"
