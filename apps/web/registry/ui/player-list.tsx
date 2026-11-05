@@ -10,7 +10,11 @@ import {
 } from "./minecraft-document-text";
 import { MinecraftMenuText, MenuScaleContext } from "./minecraft-menu-text";
 import { playerListAssets } from "./minecraft-player-list-assets";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftDocumentText,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-player-list.css";
@@ -234,7 +238,7 @@ type RosterHeading =
 
 /** A roster heading owns either native document lines or one opaque rich child. */
 const rosterHeading = (content: React.ReactNode): RosterHeading =>
-  typeof content === "string"
+  isMinecraftDocumentText(content)
     ? { content, kind: "text" }
     : { content, kind: "rich" };
 

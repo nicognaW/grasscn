@@ -123,6 +123,11 @@ const useIsMobile = function useIsMobile() {
   return mobile;
 };
 
+/** The Sidebar setter accepts either a concrete boolean or React's boolean updater. */
+const isSidebarOpenUpdater = (
+  update: React.SetStateAction<boolean>
+): update is (value: boolean) => boolean => typeof update === "function";
+
 const SidebarProvider = ({
   defaultOpen = true,
   open: controlled,
@@ -149,10 +154,9 @@ const SidebarProvider = ({
     React.Dispatch<React.SetStateAction<boolean>>
   >(
     (update) => {
-      const value =
-        typeof update === "function"
-          ? update(controlled ?? pendingOpen.current)
-          : update;
+      const value = isSidebarOpenUpdater(update)
+        ? update(controlled ?? pendingOpen.current)
+        : update;
 
       if (controlled === undefined) {
         pendingOpen.current = value;
@@ -839,13 +843,18 @@ type SidebarMenuButtonProps = SidebarControlProps & {
   tooltip?: string | MinecraftProps<typeof TooltipContent>;
 };
 
+/** Literal tooltip text is distinct from the existing forwarded TooltipContent props. */
+const isSidebarTooltipText = (
+  tooltip: SidebarMenuButtonProps["tooltip"]
+): tooltip is string => typeof tooltip === "string";
+
 const sidebarMenuTooltipContent = (
   tooltip: SidebarMenuButtonProps["tooltip"],
   scale: Scale,
   state: SidebarState["state"],
   isMobile: SidebarState["isMobile"]
 ) => {
-  const info = typeof tooltip === "string" ? { children: tooltip } : tooltip;
+  const info = isSidebarTooltipText(tooltip) ? { children: tooltip } : tooltip;
 
   return (
     <TooltipContent

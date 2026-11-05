@@ -11,6 +11,7 @@ import {
   MinecraftDialogText,
 } from "./minecraft-dialog-text";
 import {
+  isMinecraftDocumentText,
   isMinecraftRefCallback,
   isMinecraftRefCleanup,
   minecraftClasses as cn,
@@ -366,21 +367,20 @@ const DialogDescription = ({
 }: MinecraftProps<typeof DialogPrimitive.Description>) => {
   const text = children;
 
-  const content =
-    typeof text === "string" ? (
-      text.split("\n\n").map((part, index) => (
-        <MinecraftDialogText
-          /* eslint-disable react-doctor/no-array-index-as-key -- These private paragraphs are ordinal slots from one string; repeated paragraphs are valid and native font readiness stays with its paragraph slot. */
-          key={index}
-          /* eslint-enable react-doctor/no-array-index-as-key */
-          item
-        >
-          {part}
-        </MinecraftDialogText>
-      ))
-    ) : (
-      <MinecraftDialogText item>{text}</MinecraftDialogText>
-    );
+  const content = isMinecraftDocumentText(text) ? (
+    text.split("\n\n").map((part, index) => (
+      <MinecraftDialogText
+        /* eslint-disable react-doctor/no-array-index-as-key -- These private paragraphs are ordinal slots from one string; repeated paragraphs are valid and native font readiness stays with its paragraph slot. */
+        key={index}
+        /* eslint-enable react-doctor/no-array-index-as-key */
+        item
+      >
+        {part}
+      </MinecraftDialogText>
+    ))
+  ) : (
+    <MinecraftDialogText item>{text}</MinecraftDialogText>
+  );
 
   return (
     <DialogPrimitive.Description

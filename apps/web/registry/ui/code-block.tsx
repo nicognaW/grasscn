@@ -7,6 +7,7 @@ import { Button } from "./button";
 import { ChatChildren, MessageScale } from "./message";
 import { minecraftLoadingGlyphs } from "./minecraft-loading-glyphs";
 import {
+  isMinecraftDocumentText,
   isMinecraftSelectableTextElement,
   isMinecraftTextContent,
   minecraftClasses as cn,
@@ -281,7 +282,7 @@ const CodeBlockContent = ({
     {...props}
   >
     <code data-slot="code-block-code">
-      {lineNumbers && typeof children === "string"
+      {lineNumbers && isMinecraftDocumentText(children)
         ? children
             .replace(/\n$/u, "")
             .split("\n")

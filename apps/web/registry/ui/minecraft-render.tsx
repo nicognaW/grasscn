@@ -47,6 +47,11 @@ export const isMinecraftTextContent = <Content,>(
 ): content is Content & (string | number) =>
   typeof content === "string" || typeof content === "number";
 
+/** A string document owns line/paragraph parsing; other React children remain opaque. */
+export const isMinecraftDocumentText = (
+  content: React.ReactNode
+): content is string => typeof content === "string";
+
 /** Text scalars concatenated by label renderers, including React bigint children. */
 export const isMinecraftTextScalar = (
   content: React.ReactNode
