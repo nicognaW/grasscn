@@ -11,6 +11,7 @@ export const splashMotion = function splashMotion(
   textWidth: number
 ) {
   const phase = f(f(f(Math.trunc(timeMillis) % 1000) / f(1000)) * f(6.2831855));
+  // oxlint-disable-next-line eslint/no-bitwise -- Native Mth.sin selects the low 16 bits of its 65,536-entry sine-table index; the pinned native/JOML oracle verifies all 1,000 splash phases.
   const index = Math.trunc(phase * sineIndexScale) & 65_535;
   // Compute the selected entry of the vanilla 65,536-entry float sine table.
   const sine = f(Math.sin(index / sineIndexScale));
