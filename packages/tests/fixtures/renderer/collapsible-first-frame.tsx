@@ -21,11 +21,17 @@ export const CollapsibleFirstFrameFixture = () => {
   React.useLayoutEffect((): ReturnType<React.EffectCallback> => {
     if (warm) {
       let live = true;
-      void loadUnihex().then(() => {
+      const glyphResource = loadUnihex();
+
+      const finishWarmup = async () => {
+        await glyphResource;
+
         if (live) {
           setReady(true);
         }
-      });
+      };
+
+      void finishWarmup();
 
       return () => {
         live = false;
