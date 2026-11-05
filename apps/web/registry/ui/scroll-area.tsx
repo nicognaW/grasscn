@@ -144,7 +144,12 @@ const ScrollBar = ({
 
         event.preventDefault();
 
-        const element = viewport.current!;
+        const element = viewport.current;
+
+        if (!element) {
+          return;
+        }
+
         const bounds = event.currentTarget.getBoundingClientRect();
 
         // SAFETY: This DOM-forwarded React handler receives ReactDOM-normalized targets; Text dispatch is normalized to its parent Element, including SVG. Only Element.closest is consumed.
@@ -173,10 +178,12 @@ const ScrollBar = ({
         onPointerMoveCapture?.(event);
         event.preventBaseUIHandler();
 
-        if (!event.defaultPrevented && drag.current && !disabled) {
+        const element = viewport.current;
+
+        if (!event.defaultPrevented && drag.current && !disabled && element) {
           event.preventDefault();
           // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
-          viewport.current!.scrollTop =
+          element.scrollTop =
             drag.current.scroll +
             ((event.clientY - drag.current.y) * geometry.maximum) /
               Math.max(1, geometry.height - geometry.thumb);
@@ -230,10 +237,12 @@ const ScrollArea = ({
   }
 
   const viewport = React.useRef<HTMLDivElement>(null);
+  const [attached, setAttached] = React.useState<HTMLDivElement | null>(null);
 
   const setViewportRef = React.useCallback(
     (element: HTMLDivElement | null): (() => void) | undefined => {
       viewport.current = element;
+      setAttached(element);
 
       if (isMinecraftRefCallback(viewportRef)) {
         const cleanup = viewportRef(element);
@@ -241,6 +250,7 @@ const ScrollArea = ({
         if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             viewport.current = null;
+            setAttached(null);
             cleanup();
           };
         }
@@ -256,13 +266,17 @@ const ScrollArea = ({
 
   const [geometry, setGeometry] = React.useState(empty);
   const [ready, setReady] = React.useState(false);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
+    const element = attached;
+
+    if (!element) {
+      return undefined;
+    }
+
     let frame = 0;
     let signature = "";
 
     const measure = () => {
-      const element = viewport.current!;
-
       const height = element.clientHeight / scale;
       const content = element.scrollHeight / scale;
 
@@ -303,7 +317,7 @@ const ScrollArea = ({
     return () => {
       cancelAnimationFrame(frame);
     };
-  }, [scale]);
+  }, [attached, scale]);
   const content = children;
 
   const flatten = (value: React.ReactNode): React.ReactNode[] =>

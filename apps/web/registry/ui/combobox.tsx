@@ -257,6 +257,7 @@ const ComboboxList = ({
 }: Primitive.List.Props & { surface?: "suggestions" | "popup" }) => {
   const scale = React.useContext(MenuScaleContext);
   const node = React.useRef<HTMLDivElement>(null);
+  const itemsRef = React.useRef<HTMLDivElement>(null);
 
   const [attached, setAttached] = React.useState<HTMLDivElement | null>(null);
 
@@ -279,7 +280,11 @@ const ComboboxList = ({
       return undefined;
     }
 
-    const items = element.querySelector<HTMLElement>(".mc-menu-items")!;
+    const items = itemsRef.current;
+
+    if (!items) {
+      return undefined;
+    }
 
     let frame = 0;
 
@@ -357,7 +362,7 @@ const ComboboxList = ({
           <MinecraftSurface sprite={minecraftCardSprite} />
         </span>
       )}
-      <div className="mc-menu-items">
+      <div ref={itemsRef} className="mc-menu-items">
         {isMinecraftRenderCallback(children) ? (
           <Primitive.Collection>{children}</Primitive.Collection>
         ) : (

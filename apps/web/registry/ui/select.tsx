@@ -221,6 +221,7 @@ const SelectTrigger = ({
   const scale = React.useContext(ScaleContext);
   const anchorId = React.useContext(AnchorContext);
   const [element, forwarded] = useElement(ref);
+  const labelRef = React.useRef<HTMLSpanElement>(null);
 
   React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
@@ -232,9 +233,11 @@ const SelectTrigger = ({
     let stopped = false;
 
     const measure = () => {
-      const label = element.querySelector<HTMLElement>(
-        ".mc-select-trigger-label"
-      )!;
+      const label = labelRef.current;
+
+      if (!label) {
+        return;
+      }
 
       const text = label.textContent ?? "";
 
@@ -310,7 +313,9 @@ const SelectTrigger = ({
         ))}
       </span>
       <span className="mc-select-trigger-window">
-        <span className="mc-select-trigger-label">{textSkin(children)}</span>
+        <span ref={labelRef} className="mc-select-trigger-label">
+          {textSkin(children)}
+        </span>
       </span>
     </>
   );

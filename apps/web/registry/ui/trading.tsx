@@ -520,7 +520,9 @@ const Trading = ({
   const offer = offers.find((o) => o.id === selected) ?? offers.at(0);
 
   const latestOffset = React.useRef(offset);
-  latestOffset.current = offset;
+  React.useLayoutEffect(() => {
+    latestOffset.current = offset;
+  }, [offset]);
   const cancelledWheel = React.useRef<WheelEvent | null>(null);
   React.useImperativeHandle<typeof root.current, typeof root.current>(
     forwardedRef,
