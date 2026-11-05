@@ -14,6 +14,13 @@ import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 
 import "./minecraft-scroll-area.css";
 
+const scrollAreaThumb = (
+  <ScrollAreaPrimitive.Thumb
+    data-slot="scroll-area-thumb"
+    className="mc-scroll-area-thumb"
+  />
+);
+
 interface ScrollAreaThumbStyle extends React.CSSProperties {
   "--mc-thumb": string;
   "--mc-thumb-height": string;
@@ -99,13 +106,6 @@ const ScrollBar = ({
     drag.current = null;
     setDragging(false);
   };
-
-  const thumb = (
-    <ScrollAreaPrimitive.Thumb
-      data-slot="scroll-area-thumb"
-      className="mc-scroll-area-thumb"
-    />
-  );
 
   return (
     <ScrollAreaPrimitive.Scrollbar
@@ -201,7 +201,7 @@ const ScrollBar = ({
       }}
     >
       <>
-        {thumb}
+        {scrollAreaThumb}
         {children}
       </>
     </ScrollAreaPrimitive.Scrollbar>

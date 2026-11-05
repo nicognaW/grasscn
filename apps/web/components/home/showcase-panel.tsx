@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { Button } from "../../registry/ui/button";
 import { Card } from "../../registry/ui/card";
+import { minecraftClasses } from "../../registry/ui/minecraft-render";
 import { DocumentText } from "../document-text";
 
 export const Panel = ({
@@ -52,7 +53,7 @@ export const Action = ({
   <Button
     scale={2}
     {...props}
-    className={`grass-action ${props.className ?? ""}`}
+    className={minecraftClasses("grass-action", props.className)}
   >
     {children}
   </Button>

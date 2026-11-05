@@ -17,6 +17,8 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-sonner.css";
 
+const actionRender = <span aria-hidden="true" />;
+
 interface OwnedSonnerStyle extends React.CSSProperties {
   "--mc-z-sonner-paint-1-height"?: string;
   "--mc-z-sonner-paint-1-position"?: string;
@@ -212,7 +214,6 @@ const ActionGraphic = ({
     // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Font readiness changes glyph advances outside the model; rerun action geometry when that resource becomes ready.
   }, [action, model, scale, fontReady]);
 
-  const actionRender = <span aria-hidden="true" />;
   const actionDisabled = action.node.disabled;
 
   return (

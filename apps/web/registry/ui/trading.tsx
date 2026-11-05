@@ -116,6 +116,16 @@ interface TradingScaleStyle extends React.CSSProperties {
   "--mc-z-trading-base-1-width"?: string;
 }
 
+interface TradingScrollOffsets {
+  readonly [key: string]: number | undefined;
+  readonly ArrowDown: number;
+  readonly ArrowUp: number;
+  readonly End: number;
+  readonly Home: number;
+  readonly PageDown: number;
+  readonly PageUp: number;
+}
+
 interface TradeItem {
   label: string;
   icon: React.ReactNode;
@@ -407,16 +417,16 @@ const renderTradeScrollbar = function renderTradeScrollbar({
           return;
         }
 
-        const next = (
-          {
-            ArrowDown: offset + 1,
-            ArrowUp: offset - 1,
-            End: maxOffset,
-            Home: 0,
-            PageDown: offset + 7,
-            PageUp: offset - 7,
-          } as Record<string, number>
-        )[event.key];
+        const offsets: TradingScrollOffsets = {
+          ArrowDown: offset + 1,
+          ArrowUp: offset - 1,
+          End: maxOffset,
+          Home: 0,
+          PageDown: offset + 7,
+          PageUp: offset - 7,
+        };
+
+        const next = offsets[event.key];
 
         if (next !== undefined) {
           event.preventDefault();

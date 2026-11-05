@@ -397,13 +397,19 @@ const requestedPlayerModel = (
   src: PlayerPreviewProps["src"],
   username: PlayerPreviewProps["username"],
   model: PlayerPreviewProps["model"]
-) =>
-  model ??
-  (!(src ?? "") && !(username ?? "")
-    ? skin.startsWith("slim/")
-      ? "slim"
-      : "wide"
-    : undefined);
+) => {
+  let resolvedModel = model;
+
+  if (model === undefined || model === null) {
+    if (!(src ?? "") && !(username ?? "")) {
+      resolvedModel = skin.startsWith("slim/") ? "slim" : "wide";
+    } else {
+      resolvedModel = undefined;
+    }
+  }
+
+  return resolvedModel;
+};
 
 const PlayerPreview = ({
   skin = "wide/steve",

@@ -10,6 +10,14 @@ import { playMinecraftClick } from "./minecraft-sound";
 
 import "./minecraft-radio-group.css";
 
+const indicator = (
+  <RadioPrimitive.Indicator
+    data-slot="radio-group-indicator"
+    className="mc-radio-indicator"
+    aria-hidden="true"
+  />
+);
+
 interface RadioGroupItemPaintStyle extends React.CSSProperties {
   "--mc-checkbox-checked": string;
   "--mc-checkbox-checked-focused": string;
@@ -99,14 +107,6 @@ const RadioGroupItem = ({
   const context = React.useContext(RadioContext);
   const scale = explicitScale ?? context.scale;
   const disabled = itemDisabled || context.disabled;
-
-  const indicator = (
-    <RadioPrimitive.Indicator
-      data-slot="radio-group-indicator"
-      className="mc-radio-indicator"
-      aria-hidden="true"
-    />
-  );
 
   return (
     <RadioPrimitive.Root

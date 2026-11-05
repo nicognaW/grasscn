@@ -42,9 +42,9 @@ export const useCanvasPaintConnection = (
 type ClassValue = Parameters<typeof mergeClasses>[number];
 
 /** Scalar content supported by the Minecraft bitmap text renderers. */
-export const isMinecraftTextContent = (
-  content: unknown
-): content is string | number =>
+export const isMinecraftTextContent = <Content,>(
+  content: Content
+): content is Content & (string | number) =>
   typeof content === "string" || typeof content === "number";
 
 /** Text scalars concatenated by label renderers, including React bigint children. */
