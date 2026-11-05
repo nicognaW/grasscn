@@ -138,7 +138,8 @@ const RadioGroupItem = ({
           disabled ||
           Object.hasOwn(event.currentTarget.dataset, "disabled") ||
           event.currentTarget.getAttribute("aria-disabled") === "true" ||
-          (event.currentTarget as HTMLButtonElement).disabled
+          ("disabled" in event.currentTarget &&
+            Boolean(event.currentTarget.disabled))
         ) {
           event.preventDefault();
 

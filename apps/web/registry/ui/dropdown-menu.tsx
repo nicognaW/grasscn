@@ -107,9 +107,7 @@ const useMenuFrame = function useMenuFrame(
       return undefined;
     }
 
-    const items = [...node.children].find((child) =>
-      child.classList.contains("mc-menu-items")
-    ) as HTMLElement | undefined;
+    const items = node.querySelector<HTMLDivElement>(":scope > .mc-menu-items");
 
     if (!items) {
       return undefined;

@@ -310,6 +310,20 @@ const layoutToastStack = function layoutToastStack(
   }
 };
 
+const sonnerActionButton = (target: EventTarget | null) => {
+  let element: Element | null = null;
+
+  if (target instanceof Element) {
+    element = target;
+  } else if (target instanceof Node) {
+    element = target.parentElement;
+  }
+
+  return element?.closest<HTMLButtonElement>(
+    "button[data-button],button[data-close-button]"
+  );
+};
+
 const Toaster = ({
   scale = 2,
   richColors = false,
@@ -523,9 +537,7 @@ const Toaster = ({
     scan();
 
     const click = (event: MouseEvent) => {
-      const button = (event.target as Element)?.closest<HTMLButtonElement>(
-        "button[data-button],button[data-close-button]"
-      );
+      const button = sonnerActionButton(event.target);
 
       if (button && !button.disabled) {
         queueMicrotask(() => {
