@@ -599,22 +599,8 @@ const ChartProfilerFrame = ({
   rootName?: string;
   globalPercentage?: number;
 }) => {
-  const { entries, scale, revision } = useChartGeometry();
+  const { entries, profilerData: data, scale, revision } = useChartGeometry();
   const sectors = entries.filter((item) => item.kind === "sector");
-  const key = JSON.stringify(sectors);
-
-  const data = React.useMemo(
-    () =>
-      sectors.map((item) => ({
-        fill: item.fill,
-        globalPercentage: item.globalPercentage,
-        name: item.name,
-        percentage: item.percent * 100,
-        start: ((item.startAngle + 90) / 360) * 100,
-        sweep: ((item.endAngle - item.startAngle) / 360) * 100,
-      })),
-    [key]
-  );
 
   const unit = sectors.at(0) ? sectors[0].outerRadius / 105 : scale;
 

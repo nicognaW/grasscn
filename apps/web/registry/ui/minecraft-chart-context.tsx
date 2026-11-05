@@ -41,20 +41,55 @@ type Geometry =
       fill: string;
     };
 
+interface ProfilerRow {
+  fill: string;
+  globalPercentage: number | undefined;
+  name: string;
+  percentage: number;
+  start: number;
+  sweep: number;
+}
+
 interface GeometrySnapshot {
   entries: Geometry[];
+  profilerData: ProfilerRow[];
   revision: number;
 }
 
 const createGeometryStore = () => {
   const entries = new Map<string, Geometry>();
   const listeners = new Set<() => void>();
-  const initialSnapshot: GeometrySnapshot = { entries: [], revision: 0 };
+
+  const initialSnapshot: GeometrySnapshot = {
+    entries: [],
+    profilerData: [],
+    revision: 0,
+  };
+
   let snapshot = initialSnapshot;
+  let profilerKey = "[]";
 
   const invalidate = () => {
+    const nextEntries = [...entries.values()].sort((a, b) => a.index - b.index);
+    const sectors = nextEntries.filter((item) => item.kind === "sector");
+    const nextProfilerKey = JSON.stringify(sectors);
+
+    const profilerData =
+      nextProfilerKey === profilerKey
+        ? snapshot.profilerData
+        : sectors.map((item) => ({
+            fill: item.fill,
+            globalPercentage: item.globalPercentage,
+            name: item.name,
+            percentage: item.percent * 100,
+            start: ((item.startAngle + 90) / 360) * 100,
+            sweep: ((item.endAngle - item.startAngle) / 360) * 100,
+          }));
+
+    profilerKey = nextProfilerKey;
     snapshot = {
-      entries: [...entries.values()].sort((a, b) => a.index - b.index),
+      entries: nextEntries,
+      profilerData,
       revision: snapshot.revision + 1,
     };
 
