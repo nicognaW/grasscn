@@ -36,52 +36,70 @@ const bitmapText = function bitmapText(
     Array.isArray(content) ||
     (React.isValidElement(content) && content.type === React.Fragment)
   ) {
-    const parts: React.ReactNode[] = [];
+    const parts: { child: React.ReactNode; key: string }[] = [];
     let run = "";
+    let runKey = "";
 
     const flush = () => {
       if (run) {
-        parts.push(run);
+        parts.push({ child: run, key: runKey });
         run = "";
       }
     };
 
-    const visit = (child: React.ReactNode) => {
+    const visit = (child: React.ReactNode, scope: string[]) => {
       if (isMinecraftEmptyChild(child)) {
         return;
       }
 
       if (Array.isArray(child)) {
+        let position = 0;
         // oxlint-disable-next-line unicorn/no-array-for-each -- Preserve this consumer ReactNode array's existing method dispatch and sparse/mutation behavior; indexed traversal would bypass custom forEach overrides.
-        child.forEach(visit);
+        child.forEach((entry: React.ReactNode) => {
+          const identity = `position:${position}`;
+
+          position += 1;
+          visit(entry, [...scope, identity]);
+        });
 
         return;
       }
 
-      if (
-        React.isValidElement<{
-          children?: React.ReactNode;
-        }>(child) &&
-        child.type === React.Fragment
-      ) {
-        visit(child.props.children);
+      const isElement = React.isValidElement<{
+        children?: React.ReactNode;
+      }>(child);
+
+      const childScope =
+        isElement && child.key !== null
+          ? [...scope.slice(0, -1), `key:${child.key}`]
+          : scope;
+
+      if (isElement && child.type === React.Fragment) {
+        visit(child.props.children, [
+          ...childScope,
+          `fragment:${child.key ?? ""}`,
+        ]);
 
         return;
       }
 
       if (isMinecraftTextScalar(child)) {
+        if (!run) {
+          runKey = `text:${JSON.stringify(childScope)}`;
+        }
+
         run += String(child);
       } else {
         flush();
-        parts.push(child);
+        parts.push({ child, key: `child:${JSON.stringify(childScope)}` });
       }
     };
 
-    visit(content);
+    visit(content, []);
     flush();
 
-    return parts.map((child, index) => (
-      <React.Fragment key={index}>{bitmapText(child)}</React.Fragment>
+    return parts.map(({ child, key }) => (
+      <React.Fragment key={key}>{bitmapText(child)}</React.Fragment>
     ));
   }
 
