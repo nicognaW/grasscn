@@ -450,7 +450,9 @@ const ChartDemo = ({ scale }: DemoProps) => {
 
   const circular = ["pie", "donut", "radial"].includes(type);
 
-  const data = React.useMemo(
+  const data = React.useMemo<
+    React.ComponentProps<typeof AnalyticsChartExample>["data"]
+  >(
     () => (circular ? browsers : visitors.slice(-Number(period))),
     [circular, period]
   );
@@ -468,12 +470,7 @@ const ChartDemo = ({ scale }: DemoProps) => {
   }, [circular, device]);
 
   const total = data.reduce(
-    (n, row) =>
-      n +
-      series.reduce(
-        (s, key) => s + Number((row as Record<string, string | number>)[key]),
-        0
-      ),
+    (n, row) => n + series.reduce((s, key) => s + Number(row[key]), 0),
     0
   );
 
