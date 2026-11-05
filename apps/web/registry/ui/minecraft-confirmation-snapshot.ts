@@ -101,7 +101,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
       target.height === "0" &&
       target.style.visibility === "hidden";
 
-    const capture = async () => {
+    const capture = async (reschedule: () => void) => {
       if (disposed || !Object.hasOwn(host.dataset, "open")) {
         return;
       }
@@ -528,7 +528,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
         busy = false;
 
         if (queued && !disposed) {
-          schedule();
+          reschedule();
         }
       }
     };
@@ -543,7 +543,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
       version += 1;
       host.dataset.mcConfirmationGpuReady = "false";
       timer = window.setTimeout(() => {
-        void capture();
+        void capture(schedule);
       }, 100);
     };
 
@@ -614,7 +614,7 @@ export const useConfirmationSnapshot = function useConfirmationSnapshot(
     document.fonts.addEventListener("loadingdone", schedule);
     // Let modal autofocus and hover leave the underlying controls first.
     timer = window.setTimeout(() => {
-      void capture();
+      void capture(schedule);
     }, 0);
 
     return () => {
