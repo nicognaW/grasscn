@@ -55,13 +55,11 @@ const Dialog = ({
   ...props
 }: MinecraftProps<typeof DialogPrimitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <ScaleContext.Provider value={scale}>
-      <DialogPrimitive.Root {...props} />
-    </ScaleContext.Provider>
-  );
-};
+}) => (
+  <ScaleContext.Provider value={scale}>
+    <DialogPrimitive.Root {...props} />
+  </ScaleContext.Provider>
+);
 
 const DialogTrigger = ({
   render,
@@ -99,9 +97,9 @@ const DialogClose = ({
   );
 };
 
-const DialogPortal = (props: MinecraftProps<typeof DialogPrimitive.Portal>) => {
-  return <DialogPrimitive.Portal {...props} />;
-};
+const DialogPortal = (props: MinecraftProps<typeof DialogPrimitive.Portal>) => (
+  <DialogPrimitive.Portal {...props} />
+);
 
 const DialogOverlay = ({
   className,
@@ -128,6 +126,41 @@ const DialogOverlay = ({
       {content}
     </DialogPrimitive.Backdrop>
   );
+};
+
+// oxlint-disable-next-line unicorn/prefer-number-coercion -- Computed lengths end in "px", which Number() reads as NaN.
+const pixels = (length: string) => Number.parseFloat(length);
+
+// The background is position: fixed so that it stays with the visible popup
+// while the popup scrolls. Its containing block is normally the viewport, but a
+// transform, filter or contain on an ancestor (or on the popup) changes it, so
+// the offset is corrected from where the background actually lands.
+const placeBackground = (element: HTMLElement) => {
+  const bounds = element.getBoundingClientRect();
+
+  const background = element.querySelector<HTMLElement>(
+    ":scope > .mc-dialog-background"
+  );
+
+  if (!background) {
+    return bounds;
+  }
+
+  const placed = background.getBoundingClientRect();
+
+  const left =
+    Number(background.dataset.mcLeft ?? 0) + bounds.left - placed.left;
+
+  const top = Number(background.dataset.mcTop ?? 0) + bounds.top - placed.top;
+
+  background.dataset.mcLeft = String(left);
+  background.dataset.mcTop = String(top);
+  background.style.setProperty("left", `${left}px`);
+  background.style.setProperty("top", `${top}px`);
+  background.style.setProperty("width", `${element.offsetWidth}px`);
+  background.style.setProperty("height", `${element.offsetHeight}px`);
+
+  return bounds;
 };
 
 type DialogContentProps = MinecraftProps<typeof DialogPrimitive.Popup> & {
@@ -177,8 +210,17 @@ const DialogContent = ({
         `${Math.floor((Math.ceil(innerHeight / scale) - logicalHeight) / 2) * scale}px`
       );
 
-      const bounds = element.getBoundingClientRect();
-      const inside = logicalWidth - 36;
+      const bounds = placeBackground(element);
+      const computed = getComputedStyle(element);
+
+      // Border plus padding, so custom padding still centres dialog items.
+      const insetLeft =
+        pixels(computed.borderLeftWidth) + pixels(computed.paddingLeft);
+
+      const insetRight =
+        pixels(computed.borderRightWidth) + pixels(computed.paddingRight);
+
+      const inside = logicalWidth - (insetLeft + insetRight) / scale;
 
       for (const node of element.querySelectorAll<HTMLElement>(
         '[data-mc-dialog-item="true"]'
@@ -193,7 +235,7 @@ const DialogContent = ({
         const next =
           previous +
           bounds.left +
-          18 * scale +
+          insetLeft +
           Math.floor((inside - rect.width / scale) / 2) * scale -
           rect.left;
 
@@ -212,6 +254,10 @@ const DialogContent = ({
     const resize = new ResizeObserver(update);
     const mutation = new MutationObserver(update);
 
+    const scroll = () => {
+      placeBackground(element);
+    };
+
     resize.observe(element);
     mutation.observe(element, {
       characterData: true,
@@ -219,12 +265,14 @@ const DialogContent = ({
       subtree: true,
     });
     measure();
+    element.addEventListener("scroll", scroll, { passive: true });
     window.addEventListener("resize", update);
 
     return () => {
       resize.disconnect();
       mutation.disconnect();
       cancelAnimationFrame(frame);
+      element.removeEventListener("scroll", scroll);
       window.removeEventListener("resize", update);
     };
   }, [element, scale, width]);
@@ -272,15 +320,13 @@ const DialogContent = ({
   );
 };
 
-const DialogHeader = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="dialog-header"
-      className={cn(`mc-dialog-header`, className)}
-      {...props}
-    />
-  );
-};
+const DialogHeader = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="dialog-header"
+    className={cn(`mc-dialog-header`, className)}
+    {...props}
+  />
+);
 
 const DialogFooter = ({
   className,
