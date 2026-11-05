@@ -75,7 +75,7 @@ const CommandDialog = ({
   const isOpen = Boolean(props.open ?? props.defaultOpen);
 
   const [focusCapture, setFocusCapture] = React.useState<{
-    element: HTMLElement | null;
+    element: Element | null;
     open: boolean;
   }>({ element: null, open: false });
 
@@ -85,19 +85,21 @@ const CommandDialog = ({
     setFocusCapture({
       element:
         isOpen && typeof document !== "undefined"
-          ? (document.activeElement as HTMLElement)
+          ? document.activeElement
           : focusCapture.element,
       open: isOpen,
     });
   }
 
+  // SAFETY: finalFocus adapts the installed SDK callback declaration only: its getFirstTabbableElement accepts Element roots, including SVG with HTML descendants, and its subsequent isHTMLElement guard protects focus. The capture remains Element|null, not a claimed HTML producer.
   return (
     <Dialog scale={scale} {...props}>
       <DialogContent
         className={cn(className)}
         finalFocus={() =>
           focusCapture.element?.isConnected === true
-            ? focusCapture.element
+            ? // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- SAFETY: The installed SDK accepts Element roots through getFirstTabbableElement and checks isHTMLElement on the selected target before focus; this bridges its narrower callback declaration without claiming the captured SVG is HTML.
+              (focusCapture.element as HTMLElement)
             : undefined
         }
       >
