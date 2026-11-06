@@ -5,6 +5,10 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  isMinecraftRenderCallback,
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -21,46 +25,67 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 import "./minecraft-button.css";
 import "./minecraft-select.css";
 
+interface SelectSeparatorTextureStyle extends React.CSSProperties {
+  "--mc-separator-image": string;
+}
+
+interface SelectPopupPaintStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-select-background": string;
+  "--mc-select-footer": string;
+  "--mc-select-header": string;
+  "--mc-select-thumb": string;
+  "--mc-select-track": string;
+}
+
+interface SelectScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 const AnchorContext = React.createContext("");
 
-function useElement<T extends HTMLElement>(ref: React.Ref<T> | undefined) {
+const useElement = function useElement<T extends HTMLElement>(
+  ref: React.Ref<T> | undefined
+) {
   const [element, setElement] = React.useState<T | null>(null);
 
   const callback = React.useCallback(
-    (node: T | null) => {
+    (node: T | null): (() => void) | undefined => {
       setElement(node);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(node);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setElement(null);
             cleanup();
           };
         }
       } else if (ref) {
+        // oxlint-disable-next-line react/immutability -- React commit forwards this mutable object ref outside render; preserve the existing callback and cleanup order.
         ref.current = node;
       }
+
+      return undefined;
     },
     [ref]
   );
 
   return [element, callback] as const;
-}
+};
 
-function textSkin(children: React.ReactNode): React.ReactNode {
+const textSkin = function textSkin(children: React.ReactNode): React.ReactNode {
   if (Array.isArray(children)) {
-    return children.map((child, index) => (
-      <React.Fragment key={index}>{textSkin(child)}</React.Fragment>
-    ));
+    // oxlint-disable-next-line react/no-react-children -- This recursive renderer adapts opaque ReactNode children; React owns supplied-key composition and nested sibling scopes. Preserve the public children ABI without fabricating IDs or reimplementing key escaping.
+    return React.Children.map(children, textSkin);
   }
 
-  if (typeof children === "string" || typeof children === "number") {
+  if (isMinecraftTextContent(children)) {
     const text = String(children);
 
-    return /^[\u0020-\u007E]*$/.test(text) ? (
+    return /^[\u0020-\u007E]*$/u.test(text) ? (
       <MinecraftText>{text}</MinecraftText>
     ) : (
       <MinecraftUnicodeLabel text={text} atlas={selectUnihexAtlas} />
@@ -68,7 +93,7 @@ function textSkin(children: React.ReactNode): React.ReactNode {
   }
 
   return children;
-}
+};
 
 const Select = <Value = string, Multiple extends boolean = false>({
   scale = 2,
@@ -122,9 +147,9 @@ const Select = <Value = string, Multiple extends boolean = false>({
   );
 };
 
-const SelectGroup = (props: MinecraftProps<typeof SelectPrimitive.Group>) => {
-  return <SelectPrimitive.Group data-slot="select-group" {...props} />;
-};
+const SelectGroup = (props: MinecraftProps<typeof SelectPrimitive.Group>) => (
+  <SelectPrimitive.Group data-slot="select-group" {...props} />
+);
 
 const SelectValue = ({
   children,
@@ -141,7 +166,7 @@ const SelectValue = ({
       children: textSkin(elementProps.children),
     };
 
-    if (typeof render === "function") {
+    if (isMinecraftRenderCallback(render)) {
       return render(painted, state);
     }
 
@@ -152,6 +177,16 @@ const SelectValue = ({
     );
   };
 
+  let content: typeof children;
+
+  if (children === undefined) {
+    content = undefined;
+  } else if (isMinecraftRenderCallback(children)) {
+    content = (value): React.ReactNode => textSkin(children(value));
+  } else {
+    content = textSkin(children);
+  }
+
   return (
     <SelectPrimitive.Value
       data-slot="select-value"
@@ -159,11 +194,7 @@ const SelectValue = ({
       placeholder={textSkin(placeholder)}
       {...props}
     >
-      {children === undefined
-        ? undefined
-        : typeof children === "function"
-          ? (value) => textSkin(children(value))
-          : textSkin(children)}
+      {content}
     </SelectPrimitive.Value>
   );
 };
@@ -190,44 +221,57 @@ const SelectTrigger = ({
   const scale = React.useContext(ScaleContext);
   const anchorId = React.useContext(AnchorContext);
   const [element, forwarded] = useElement(ref);
+  const labelRef = React.useRef<HTMLSpanElement>(null);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
-    let frame = 0,
-      loading = false,
-      stopped = false;
+    let frame = 0;
+    let loading = false;
+    let stopped = false;
 
     const measure = () => {
-      const label = element.querySelector<HTMLElement>(
-        ".mc-select-trigger-label"
-      )!;
+      const label = labelRef.current;
+
+      if (!label) {
+        return;
+      }
 
       const text = label.textContent ?? "";
 
-      if (/[^\x00-\x7F]/.test(text) && !loading) {
+      if (/\P{ASCII}/u.test(text) && !loading) {
         loading = true;
-        void loadUnihex().then(() => {
+        const fontLoading = loadUnihex();
+
+        const commitFontReadiness = async () => {
+          await fontLoading;
+
           if (!stopped) {
             element.dataset.mcSelectReady = "false";
           }
-        });
+        };
+
+        void commitFontReadiness();
       }
 
       const width = Math.floor(element.clientWidth / scale);
 
-      const textWidth = Math.ceil(
-        [...text].reduce(
-          (sum, char) =>
-            sum +
-            (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
-              getUnihexGlyph(char)?.advance ??
-              6),
-          0
-        )
-      );
+      let accumulatedGlyphAdvance = 0;
+
+      for (const advanceCharacter of text) {
+        accumulatedGlyphAdvance +=
+          minecraftGlyphs[
+            // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+            (advanceCharacter.codePointAt(0) as number) - 32
+          ]?.[2] ??
+          getUnihexGlyph(advanceCharacter)?.advance ??
+          6;
+      }
+
+      const textWidth = Math.ceil(accumulatedGlyphAdvance);
 
       const available = width - 4;
       const overflow = textWidth - available;
@@ -260,7 +304,6 @@ const SelectTrigger = ({
       cancelAnimationFrame(frame);
     };
   }, [element, scale]);
-  const child = null;
 
   const contents = (
     <>
@@ -270,7 +313,9 @@ const SelectTrigger = ({
         ))}
       </span>
       <span className="mc-select-trigger-window">
-        <span className="mc-select-trigger-label">{textSkin(children)}</span>
+        <span ref={labelRef} className="mc-select-trigger-label">
+          {textSkin(children)}
+        </span>
       </span>
     </>
   );
@@ -283,11 +328,10 @@ const SelectTrigger = ({
       data-size={size}
       ref={forwarded}
       className={cn(`mc-button mc-select-trigger`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): SelectScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {contents}
@@ -305,6 +349,99 @@ const ListContext = React.createContext<ContentContext>({
   viewport: null,
 });
 
+const SelectScrollbar = () => {
+  const { viewport, scale } = React.useContext(ListContext);
+
+  const drag = React.useRef<{
+    y: number;
+    top: number;
+  } | null>(null);
+
+  return (
+    <div
+      className="mc-select-scrollbar"
+      aria-hidden="true"
+      onPointerDown={(event) => {
+        if (!viewport) {
+          return;
+        }
+
+        event.preventDefault();
+
+        const rect = event.currentTarget.getBoundingClientRect();
+        const content = viewport.scrollHeight / scale;
+        const height = viewport.clientHeight / scale;
+
+        const thumb = Math.min(
+          height - 8,
+          Math.max(
+            32,
+            Math.trunc(
+              Math.fround(Math.fround(height * height) / Math.fround(content))
+            )
+          )
+        );
+
+        const offset = Math.floor(
+          (Math.floor(viewport.scrollTop / scale) * (height - thumb)) /
+            (content - height)
+        );
+
+        const y = (event.clientY - rect.top) / scale;
+        drag.current = { top: viewport.scrollTop, y: event.clientY };
+
+        if (y < offset || y > offset + thumb) {
+          // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
+          viewport.scrollTop =
+            Math.floor(
+              (Math.max(0, y - thumb / 2) * (content - height)) /
+                (height - thumb)
+            ) * scale;
+          drag.current.top = viewport.scrollTop;
+        }
+
+        event.currentTarget.setPointerCapture(event.pointerId);
+      }}
+      onPointerMove={(event) => {
+        if (!viewport || !drag.current) {
+          return;
+        }
+
+        const content = viewport.scrollHeight / scale;
+        const height = viewport.clientHeight / scale;
+
+        const thumb = Math.min(
+          height - 8,
+          Math.max(
+            32,
+            Math.trunc(
+              Math.fround(Math.fround(height * height) / Math.fround(content))
+            )
+          )
+        );
+
+        // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
+        viewport.scrollTop =
+          Math.floor(
+            (drag.current.top +
+              ((event.clientY - drag.current.y) * (content - height)) /
+                (height - thumb)) /
+              scale
+          ) * scale;
+      }}
+      onPointerUp={(event) => {
+        drag.current = null;
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }}
+      onLostPointerCapture={() => {
+        drag.current = null;
+      }}
+    >
+      <span />
+    </div>
+  );
+};
+
 const SelectContent = ({
   children,
   className,
@@ -319,10 +456,9 @@ const SelectContent = ({
   collisionBoundary,
   collisionAvoidance,
   alignItemWithTrigger = true,
-  keepMounted,
   ...props
 }: MinecraftProps<typeof SelectPrimitive.Popup> &
-  (Pick<
+  Pick<
     MinecraftProps<typeof SelectPrimitive.Positioner>,
     | "side"
     | "align"
@@ -332,23 +468,18 @@ const SelectContent = ({
     | "collisionBoundary"
     | "collisionAvoidance"
     | "alignItemWithTrigger"
-  > & {
-    keepMounted?: boolean;
-  })) => {
+  >) => {
   const scale = React.useContext(ScaleContext);
   const anchorId = React.useContext(AnchorContext);
   const [element, forwarded] = useElement(ref);
 
   const [viewport, setViewport] = React.useState<HTMLDivElement | null>(null);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element || !viewport) {
-      return;
+      return undefined;
     }
 
-    let frame = 0,
-      placed = "",
-      placedHeight = "",
-      placedTop = "";
+    let frame = 0;
 
     const measure = () => {
       const width = Math.floor(viewport.clientWidth / scale);
@@ -402,8 +533,8 @@ const SelectContent = ({
     return () => {
       cancelAnimationFrame(frame);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Anchor identity and alignment mode change committed popup positioning; preserve immediate native row/scroll geometry refresh.
   }, [element, viewport, scale, alignItemWithTrigger, anchorId]);
-  const child = null;
 
   const contents = (
     <>
@@ -431,12 +562,17 @@ const SelectContent = ({
     </>
   );
 
+  const listContext = React.useMemo(
+    () => ({ scale, viewport }),
+    [scale, viewport]
+  );
+
   return (
     <SelectPrimitive.Portal>
-      <ListContext.Provider value={{ scale, viewport }}>
+      <ListContext.Provider value={listContext}>
         <SelectPrimitive.Positioner
           data-mc-positioner=""
-          style={{ zIndex: 50 }}
+          className="z-50"
           side={side}
           align={align}
           sideOffset={sideOffset}
@@ -452,19 +588,15 @@ const SelectContent = ({
             data-align-trigger={alignItemWithTrigger}
             ref={forwarded}
             className={cn(`mc-select-content`, className)}
-            style={minecraftStyle(
-              style,
-              (__style) =>
-                ({
-                  "--mc-scale": scale,
-                  "--mc-select-background": assets.menu_list_background,
-                  "--mc-select-footer": assets.footer_separator,
-                  "--mc-select-header": assets.header_separator,
-                  "--mc-select-thumb": `url("${scrollbar.scroller}")`,
-                  "--mc-select-track": `url("${scrollbar.scroller_background}")`,
-                  ...__style,
-                }) as React.CSSProperties
-            )}
+            style={minecraftStyle(style, (__style): SelectPopupPaintStyle => ({
+              "--mc-scale": scale,
+              "--mc-select-background": assets.menu_list_background,
+              "--mc-select-footer": assets.footer_separator,
+              "--mc-select-header": assets.header_separator,
+              "--mc-select-thumb": `url("${scrollbar.scroller}")`,
+              "--mc-select-track": `url("${scrollbar.scroller_background}")`,
+              ...__style,
+            }))}
             {...props}
           >
             {contents}
@@ -475,105 +607,12 @@ const SelectContent = ({
   );
 };
 
-const SelectScrollbar = () => {
-  const { viewport, scale } = React.useContext(ListContext);
-
-  const drag = React.useRef<{
-    y: number;
-    top: number;
-  } | null>(null);
-
-  return (
-    <div
-      className="mc-select-scrollbar"
-      aria-hidden="true"
-      onPointerDown={(event) => {
-        if (!viewport) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const rect = event.currentTarget.getBoundingClientRect();
-        const content = viewport.scrollHeight / scale;
-        const height = viewport.clientHeight / scale;
-
-        const thumb = Math.min(
-          height - 8,
-          Math.max(
-            32,
-            Math.trunc(
-              Math.fround(Math.fround(height * height) / Math.fround(content))
-            )
-          )
-        );
-
-        const offset = Math.floor(
-          (Math.floor(viewport.scrollTop / scale) * (height - thumb)) /
-            (content - height)
-        );
-
-        const y = (event.clientY - rect.top) / scale;
-        drag.current = { top: viewport.scrollTop, y: event.clientY };
-
-        if (y < offset || y > offset + thumb) {
-          viewport.scrollTop =
-            Math.floor(
-              (Math.max(0, y - thumb / 2) * (content - height)) /
-                (height - thumb)
-            ) * scale;
-          drag.current.top = viewport.scrollTop;
-        }
-
-        event.currentTarget.setPointerCapture(event.pointerId);
-      }}
-      onPointerMove={(event) => {
-        if (!viewport || !drag.current) {
-          return;
-        }
-
-        const content = viewport.scrollHeight / scale;
-        const height = viewport.clientHeight / scale;
-
-        const thumb = Math.min(
-          height - 8,
-          Math.max(
-            32,
-            Math.trunc(
-              Math.fround(Math.fround(height * height) / Math.fround(content))
-            )
-          )
-        );
-
-        viewport.scrollTop =
-          Math.floor(
-            (drag.current.top +
-              ((event.clientY - drag.current.y) * (content - height)) /
-                (height - thumb)) /
-              scale
-          ) * scale;
-      }}
-      onPointerUp={(event) => {
-        drag.current = null;
-        event.currentTarget.releasePointerCapture(event.pointerId);
-      }}
-      onLostPointerCapture={() => {
-        drag.current = null;
-      }}
-    >
-      <span />
-    </div>
-  );
-};
-
 const SelectItem = ({
   children,
   className,
   render,
   ...props
 }: MinecraftProps<typeof SelectPrimitive.Item>) => {
-  const child = null;
-
   const contents = (
     <span className="mc-select-item-label">
       <SelectPrimitive.ItemText>{textSkin(children)}</SelectPrimitive.ItemText>
@@ -596,37 +635,35 @@ const SelectLabel = ({
   children,
   className,
   ...props
-}: MinecraftProps<typeof SelectPrimitive.GroupLabel>) => {
-  return (
-    <SelectPrimitive.GroupLabel
-      data-slot="select-label"
-      className={cn(`mc-select-label`, className)}
-      {...props}
-    >
-      {textSkin(children)}
-    </SelectPrimitive.GroupLabel>
-  );
-};
+}: MinecraftProps<typeof SelectPrimitive.GroupLabel>) => (
+  <SelectPrimitive.GroupLabel
+    data-slot="select-label"
+    className={cn(`mc-select-label`, className)}
+    {...props}
+  >
+    {textSkin(children)}
+  </SelectPrimitive.GroupLabel>
+);
 
 const SelectSeparator = ({
   className,
   style,
   ...props
-}: MinecraftProps<typeof SelectPrimitive.Separator>) => {
-  return (
-    <SelectPrimitive.Separator
-      data-slot="select-separator"
-      className={cn(`mc-select-separator`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        backgroundImage: assets.footer_separator,
-        ...__style,
-      }))}
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof SelectPrimitive.Separator>) => (
+  <SelectPrimitive.Separator
+    data-slot="select-separator"
+    className={cn(`mc-select-separator`, className)}
+    style={minecraftStyle(style, (__style): SelectSeparatorTextureStyle => ({
+      "--mc-separator-image": assets.footer_separator,
+      ...__style,
+    }))}
+    {...props}
+  />
+);
 
-function scrollButtonContents(children: React.ReactNode) {
+const scrollButtonContents = function scrollButtonContents(
+  children: React.ReactNode
+) {
   return (
     <>
       <span className="mc-button-surface" aria-hidden="true">
@@ -637,39 +674,35 @@ function scrollButtonContents(children: React.ReactNode) {
       <span className="mc-button-label">{textSkin(children)}</span>
     </>
   );
-}
+};
 
 const SelectScrollUpButton = ({
   children = "^",
   className,
   ...props
-}: MinecraftProps<typeof SelectPrimitive.ScrollUpArrow>) => {
-  return (
-    <SelectPrimitive.ScrollUpArrow
-      data-slot="select-scroll-up-button"
-      className={cn(`mc-button mc-select-scroll-button`, className)}
-      {...props}
-    >
-      {scrollButtonContents(children)}
-    </SelectPrimitive.ScrollUpArrow>
-  );
-};
+}: MinecraftProps<typeof SelectPrimitive.ScrollUpArrow>) => (
+  <SelectPrimitive.ScrollUpArrow
+    data-slot="select-scroll-up-button"
+    className={cn(`mc-button mc-select-scroll-button`, className)}
+    {...props}
+  >
+    {scrollButtonContents(children)}
+  </SelectPrimitive.ScrollUpArrow>
+);
 
 const SelectScrollDownButton = ({
   children = "v",
   className,
   ...props
-}: MinecraftProps<typeof SelectPrimitive.ScrollDownArrow>) => {
-  return (
-    <SelectPrimitive.ScrollDownArrow
-      data-slot="select-scroll-down-button"
-      className={cn(`mc-button mc-select-scroll-button`, className)}
-      {...props}
-    >
-      {scrollButtonContents(children)}
-    </SelectPrimitive.ScrollDownArrow>
-  );
-};
+}: MinecraftProps<typeof SelectPrimitive.ScrollDownArrow>) => (
+  <SelectPrimitive.ScrollDownArrow
+    data-slot="select-scroll-down-button"
+    className={cn(`mc-button mc-select-scroll-button`, className)}
+    {...props}
+  >
+    {scrollButtonContents(children)}
+  </SelectPrimitive.ScrollDownArrow>
+);
 
 export {
   Select,

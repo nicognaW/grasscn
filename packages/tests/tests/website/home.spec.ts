@@ -34,31 +34,36 @@ for (const width of [320, 390, 768, 1024, 1565]) {
     ).toBe(true);
 
     const escaped = await page.locator(".grass-panel").evaluateAll((panels) =>
-      panels.flatMap((panel) =>
-        [
+      panels.flatMap((panel) => {
+        const controls = [
           ...panel.querySelectorAll(
             "input:not([type=hidden]):not([aria-hidden=true]),textarea,button[data-slot]"
           ),
-        ]
-          .filter((el) => {
-            // Base UI form proxy inputs are visually hidden; measure the visible controls.
-            if (
-              el.tagName === "INPUT" &&
-              getComputedStyle(el).opacity === "0"
-            ) {
-              return false;
-            }
+        ];
 
-            const box = el.getBoundingClientRect();
-            const outer = panel.getBoundingClientRect();
+        const escapedControls: (string | null)[] = [];
 
-            return (
-              box.width > 0 &&
-              (box.left < outer.left - 1 || box.right > outer.right + 1)
+        for (const el of controls) {
+          // Base UI form proxy inputs are visually hidden; measure the visible controls.
+          if (el.tagName === "INPUT" && getComputedStyle(el).opacity === "0") {
+            continue;
+          }
+
+          const box = el.getBoundingClientRect();
+          const outer = panel.getBoundingClientRect();
+
+          if (
+            box.width > 0 &&
+            (box.left < outer.left - 1 || box.right > outer.right + 1)
+          ) {
+            escapedControls.push(
+              el.getAttribute("aria-label") ?? el.textContent
             );
-          })
-          .map((el) => el.getAttribute("aria-label") ?? el.textContent)
-      )
+          }
+        }
+
+        return escapedControls;
+      })
     );
 
     expect(escaped).toEqual([]);
@@ -175,7 +180,7 @@ test("installation picker copies the selected real registry command", async ({
   await page
     .getByRole("combobox", { exact: true, name: "Component to install" })
     .click();
-  await page.getByRole("option", { name: "card", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "card" }).click();
   await page
     .locator(".grass-install")
     .getByRole("button", { exact: true, name: "Copy" })
@@ -183,9 +188,9 @@ test("installation picker copies the selected real registry command", async ({
   await expect(page.locator(".grass-install").getByRole("status")).toHaveText(
     "Copied"
   );
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-    `npx shadcn@latest add ${new URL(origin).origin}/r/card.json`
-  );
+  expect(
+    await page.evaluate(async () => await navigator.clipboard.readText())
+  ).toBe(`npx shadcn@latest add ${new URL(origin).origin}/r/card.json`);
 });
 
 test("Minecraft-style title has a yellow splash and respects reduced motion", async ({

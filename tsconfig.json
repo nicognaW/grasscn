@@ -13,5 +13,5 @@
     "resolveJsonModule": true,
     "allowJs": true
   },
-  "include": ["*.config.ts", "workspace-paths.mjs"]
+  "include": ["*.config.ts", "tooling-scope.ts"]
 }

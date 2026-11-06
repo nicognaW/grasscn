@@ -3,26 +3,43 @@
 import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 
 import "./minecraft-button.css";
 import "./minecraft-kbd.css";
 
-function keyText(content: React.ReactNode): React.ReactNode {
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-kbd-width"?: string;
+}
+
+interface KbdGlyphStyle extends React.CSSProperties {
+  "--mc-advance": number;
+  "--mc-glyph-x": number;
+  "--mc-glyph-y": number;
+}
+
+interface KbdScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+const keyText = function keyText(content: React.ReactNode): React.ReactNode {
   if (Array.isArray(content)) {
-    return content.map((child, index) => (
-      <React.Fragment key={index}>{keyText(child)}</React.Fragment>
-    ));
+    // oxlint-disable-next-line react/no-react-children -- This recursive renderer adapts opaque ReactNode children; React owns supplied-key composition and nested sibling scopes. Preserve the public children ABI without fabricating IDs or reimplementing key escaping.
+    return React.Children.map(content, keyText);
   }
 
-  if (typeof content !== "string" && typeof content !== "number") {
+  if (!isMinecraftTextContent(content)) {
     return content;
   }
 
   const text = String(content);
 
-  if (!/^[\u0020-\u007E]*$/.test(text)) {
+  if (!/^[\u0020-\u007E]*$/u.test(text)) {
     return <MinecraftUnicodeLabel text={text} />;
   }
 
@@ -38,18 +55,17 @@ function keyText(content: React.ReactNode): React.ReactNode {
 
           const [x, y, advance] = minecraftGlyphs[codePoint - 32];
 
+          const glyphStyle: KbdGlyphStyle = {
+            "--mc-advance": advance,
+            "--mc-glyph-x": x,
+            "--mc-glyph-y": y,
+          };
+
           return (
             <span
               key={index}
-              className="mc-glyph"
-              style={
-                {
-                  "--mc-advance": advance,
-                  "--mc-glyph-x": x,
-                  "--mc-glyph-y": y,
-                  visibility: char === " " ? "hidden" : undefined,
-                } as React.CSSProperties
-              }
+              className={char === " " ? "mc-glyph invisible" : "mc-glyph"}
+              style={glyphStyle}
             />
           );
         })}
@@ -57,7 +73,7 @@ function keyText(content: React.ReactNode): React.ReactNode {
       <span className="mc-text-accessible">{text}</span>
     </span>
   );
-}
+};
 
 type KbdProps = React.ComponentProps<"kbd"> & {
   scale?: 1 | 2 | 3;
@@ -68,7 +84,10 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
   const [inkWidth, setInkWidth] = React.useState(0);
 
   React.useLayoutEffect(() => {
-    const element = label.current!;
+    const element =
+      // SAFETY: React attaches this always-rendered <span> before its synchronous layout effect setup reads the owned label ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLSpanElement result.
+      label.current as HTMLSpanElement;
 
     const measure = () => {
       setInkWidth(Math.ceil(element.getBoundingClientRect().width));
@@ -81,17 +100,21 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
     return () => {
       observer.disconnect();
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Children and scale change the committed bitmap label bounds; measure that native ink width before paint.
   }, [children, scale]);
+
+  const nativeTextLayout1: NativeTextLayoutStyle = {
+    "--mc-kbd-width": `${inkWidth}px`,
+  };
 
   return (
     <kbd
       data-slot="kbd"
       className={cn(`mc-button mc-kbd`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): KbdScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       <span className="mc-button-surface" aria-hidden="true">
@@ -101,8 +124,8 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
       </span>
       <span
         aria-hidden="true"
-        className="mc-kbd-intrinsic"
-        style={{ width: inkWidth }}
+        className="mc-kbd-intrinsic w-(--mc-kbd-width)"
+        style={nativeTextLayout1}
       />
       <span ref={label} className="mc-button-label">
         {keyText(children)}
@@ -111,15 +134,13 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
   );
 };
 
-const KbdGroup = ({ className, ...props }: React.ComponentProps<"span">) => {
-  return (
-    <span
-      data-slot="kbd-group"
-      className={cn(`mc-kbd-group`, className)}
-      {...props}
-    />
-  );
-};
+const KbdGroup = ({ className, ...props }: React.ComponentProps<"span">) => (
+  <span
+    data-slot="kbd-group"
+    className={cn(`mc-kbd-group`, className)}
+    {...props}
+  />
+);
 
 export { Kbd, KbdGroup };
 

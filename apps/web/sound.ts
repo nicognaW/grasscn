@@ -8,9 +8,12 @@ import {
 // it here. Keep the registry's default gain intact.
 setMinecraftSoundVolume(0.5);
 
-export const getPreviewSoundVolume = () =>
-  Math.round(getMinecraftSoundVolume() * 100);
+export const getPreviewSoundVolume = function getPreviewSoundVolume() {
+  return Math.round(getMinecraftSoundVolume() * 100);
+};
 
-export const setPreviewSoundVolume = (percent: number) => {
+export const setPreviewSoundVolume = function setPreviewSoundVolume(
+  percent: number
+) {
   setMinecraftSoundVolume(percent / 100);
 };

@@ -1,5 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
-import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
+import { documentationInventory } from "@tests/checks/documentation-inventory";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
@@ -19,13 +19,13 @@ test("canonical documentation independently exposes grouped public parts and omi
       inventory.pages.find((item) => item.name === name)?.registryItem
     ).toBe(owner);
     expect(inventory.items).not.toContain(name);
-    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(`${origin}docs/components/${name}`);
-    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
       title
     );
-    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(
       page.getByRole("heading", { exact: true, name: "Installation" })
     ).toBeVisible();
@@ -35,10 +35,13 @@ test("canonical documentation independently exposes grouped public parts and omi
   await expect(page.getByRole("group", { name: "Preview scale" })).toHaveCount(
     0
   );
-  await expect(page.getByRole("button", { name: /Hat:/ })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Hat:/u })).toHaveCount(0);
   await expect(
     page.locator('.documentation-playground [data-stage="avatar"]')
   ).toContainText("Jordan Lee");
+  await expect(
+    page.locator('.documentation-playground [data-stage="avatar"]')
+  ).not.toContainText("玩家");
   await expect(
     page.getByRole("contentinfo").getByRole("navigation")
   ).toHaveCount(0);
@@ -51,11 +54,13 @@ test("canonical documentation independently exposes grouped public parts and omi
 
 for (const width of [320, 1440]) {
   test(`sidebar remains visible at ${width}px`, async ({ page }) => {
-    await page.setViewportSize({ width, height: 900 });
-    await page.goto(origin + "docs/components/sidebar");
+    await page.setViewportSize({ height: 900, width });
+    await page.goto(`${origin}docs/components/sidebar`);
+
     const stage = page.locator(
       '.documentation-playground [data-stage="sidebar"]'
     );
+
     await expect(stage.locator('[data-slot="sidebar"]')).toHaveAttribute(
       "data-collapsible",
       "none"
@@ -97,7 +102,10 @@ test("new homepage examples respond to input", async ({ page }) => {
   await page.getByRole("button", { exact: true, name: "Save plan" }).click();
   await expect(page.getByLabel("Plan status")).toContainText("Annual");
   await page
-    .getByRole("button", { exact: true, name: "Tuesday, November 3rd, 2026" })
+    .getByRole("button", {
+      exact: true,
+      name: /^(?:Today, )?Tuesday, November 3rd, 2026$/u,
+    })
     .click();
   await expect(page.getByLabel("Review date")).toHaveText("November 3, 2026");
 });

@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
@@ -11,7 +12,7 @@ for (const scale of [2] as const) {
     test(`Original F3 charts stay visible and analytics selector stays on screen at GUI${scale} ${device}`, async ({
       page,
     }) => {
-      await page.setViewportSize({ width, height });
+      await page.setViewportSize({ height, width });
       await page.goto(`${preview.replace(/\/$/u, "")}/docs/components/chart`);
 
       const native = page.locator("[data-chart-native-examples]");
@@ -22,14 +23,21 @@ for (const scale of [2] as const) {
       await expect(profiler).toBeVisible();
       expect(await native.locator("details").count()).toBe(0);
       expect(
-        await native.evaluate(
-          (n) =>
-            !!(
-              n.compareDocumentPosition(
-                document.querySelector('[data-slot="chart-example"]')!
-              ) & Node.DOCUMENT_POSITION_FOLLOWING
-            )
-        )
+        await native.evaluate((n) => {
+          const requiredElement28 = document.querySelector(
+            '[data-slot="chart-example"]'
+          );
+
+          if (requiredElement28 === null) {
+            throw new Error("Missing required dom query");
+          }
+
+          return !!(
+            // oxlint-disable-next-line no-bitwise -- compareDocumentPosition returns combined DOM position flags; test the FOLLOWING bit while retaining other flags.
+            n.compareDocumentPosition(requiredElement28) &
+            Node.DOCUMENT_POSITION_FOLLOWING
+          );
+        })
       ).toBe(true);
       await expect(
         profiler.locator("[data-slot=chart-profiler-frame]")
@@ -42,8 +50,10 @@ for (const scale of [2] as const) {
         .getByRole("button", { exact: true, name: "Next sample" })
         .click();
       await expect(page.getByLabel("Chart sample")).toHaveText("Sample 2");
-      expect((await fps.screenshot()).equals(firstFps)).toBe(false);
-      expect((await profiler.screenshot()).equals(firstProfiler)).toBe(false);
+      const awaitedScreenshot1 = await fps.screenshot();
+      expect(awaitedScreenshot1.equals(firstFps)).toBe(false);
+      const awaitedScreenshot2 = await profiler.screenshot();
+      expect(awaitedScreenshot2.equals(firstProfiler)).toBe(false);
       await native
         .getByRole("button", { exact: true, name: "120 FPS cap" })
         .click();
@@ -54,13 +64,15 @@ for (const scale of [2] as const) {
       const trigger = page.locator(
         '[data-slot=select-trigger][aria-label="Chart type"]'
       );
+
       await trigger.evaluate((n) => {
         scrollBy(0, n.getBoundingClientRect().top - 80);
       });
       await trigger.click();
       const popup = page.locator("[data-slot=select-content]");
       await expect(popup).toBeVisible();
-      const before = (await popup.boundingBox())!;
+      const before = await popup.boundingBox();
+      expectNotNull(before, "Missing required bounding box: before");
       expect(before.x).toBeGreaterThanOrEqual(0);
       expect(before.x + before.width).toBeLessThanOrEqual(width);
       expect(before.y).toBeGreaterThanOrEqual(0);
@@ -81,31 +93,49 @@ for (const scale of [2] as const) {
 
       if (scroll.maximum > 0) {
         await expect
-          .poll(async () => viewport.evaluate((n) => n.scrollTop))
+          .poll(async () => await viewport.evaluate((n) => n.scrollTop))
           .not.toBe(scroll.top);
       } else {
         // Base UI may show the entire list when item alignment has enough room.
-        for (const option of await popup.getByRole("option").all()) {
-          const bounds = (await option.boundingBox())!;
-          expect(bounds.y).toBeGreaterThanOrEqual(before.y);
-          expect(bounds.y + bounds.height).toBeLessThanOrEqual(
-            before.y + before.height
-          );
+        const readOnlyItems5 = await popup.getByRole("option").all();
+
+        const readOnlyResults5 = await Promise.allSettled(
+          readOnlyItems5.map(async (option) => {
+            const bounds = await option.boundingBox();
+            expectNotNull(bounds, "Missing required bounding box: bounds");
+            expect(bounds.y).toBeGreaterThanOrEqual(before.y);
+            expect(bounds.y + bounds.height).toBeLessThanOrEqual(
+              before.y + before.height
+            );
+          })
+        );
+
+        for (const readOnlyResult5 of readOnlyResults5) {
+          if (readOnlyResult5.status === "rejected") {
+            throw readOnlyResult5.reason;
+          }
         }
       }
 
-      await page.evaluate(
-        async () =>
-          new Promise<void>((r) =>
-            requestAnimationFrame(() =>
-              requestAnimationFrame(() => {
-                r();
-              })
-            )
-          )
-      );
+      await page.evaluate(async () => {
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
+
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        await frameCompletion.promise;
+      });
       // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
-      const after = (await popup.boundingBox())!;
+      const after = await popup.boundingBox();
+      expectNotNull(after, "Missing required bounding box: after");
       expect(after.y).toBeGreaterThanOrEqual(0);
       expect(after.y + after.height).toBeLessThanOrEqual(height);
       await page.keyboard.press("End");

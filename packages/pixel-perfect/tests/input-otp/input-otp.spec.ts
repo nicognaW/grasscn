@@ -6,13 +6,17 @@ import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type inputOtpReference from "../reference/input-otp/manifest.json";
+
 test.describe.configure({ mode: "parallel" });
 
 const dir = "tests/reference/input-otp";
 
+// SAFETY: this fixed read consumes the retained input-otp manifest represented by the exact type-only JSON import; its case-definition and capture-source hashes match the retained producers. Keep the existing fresh read and parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained-manifest contract at JSON.parse; no runtime loader, validation or generic caster.
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf-8")
-);
+) as typeof inputOtpReference;
 
 for (const c of manifest.cases) {
   test(`InputOTP actual native EditBox slot ${c.name}`, async ({
@@ -43,7 +47,7 @@ for (const c of manifest.cases) {
 
     await expect(mirror).toHaveAttribute("data-mc-ready", "true");
 
-    if (/[^\x00-\x7F]/.test(c.text)) {
+    if (/\P{ASCII}/u.test(c.text)) {
       await expect(mirror).toHaveAttribute("data-mc-bitmap", "true");
     }
 
@@ -76,7 +80,7 @@ for (const c of manifest.cases) {
         alias: "base",
         case: c.name,
         component: "input-otp",
-        manifest: dir + "/manifest.json",
+        manifest: `${dir}/manifest.json`,
         mismatchedPixels,
         part: "slot",
         tolerance: 0,
@@ -93,6 +97,7 @@ test("InputOTP comparator rejects one changed native pixel", () => {
 
   const a = PNG.sync.read(PNG.sync.write(e));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   a.data[0] ^= 1;
   expect(compare(e, a).mismatchedPixels).toBe(1);
 });

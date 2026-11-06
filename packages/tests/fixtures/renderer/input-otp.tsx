@@ -6,9 +6,16 @@ import {
 } from "@grasscn/web/ui/input-otp";
 import * as React from "react";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
 export const InputOTPFixture = () => {
-  const q = new URLSearchParams(location.search);
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const native = q.has("native");
   const state = q.get("state") ?? "normal";
   const [value, setValue] = React.useState(q.get("text") ?? "");
@@ -17,8 +24,11 @@ export const InputOTPFixture = () => {
   const [tag, setTag] = React.useState("");
 
   React.useLayoutEffect(() => {
-    document.documentElement.style.background = document.body.style.background =
-      q.get("background") ?? "#202020";
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = q.get("background") ?? "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
   const root = (
@@ -43,16 +53,24 @@ export const InputOTPFixture = () => {
     >
       <InputOTPGroup>
         {Array.from({ length: native ? 1 : 6 }, (_, i) => (
-          <React.Fragment key={i}>
+          <React.Fragment
+            // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These fixed one-or-six code slots are owned by the existing index prop, not the changing character value. Slot identities remain fixed for the navigation.
+            key={i}
+          >
             {!native && i === 3 && <InputOTPSeparator />}
             <InputOTPSlot
               id={native ? "subject" : undefined}
               index={i}
+              className={
+                native
+                  ? "fixture-geometry-height fixture-geometry-width"
+                  : undefined
+              }
               style={
                 native
                   ? {
-                      height: Number(q.get("height") ?? 20) * scale,
-                      width: Number(q.get("width") ?? 20) * scale,
+                      "--fixture-height": `${Number(q.get("height") ?? 20) * scale}px`,
+                      "--fixture-width": `${Number(q.get("width") ?? 20) * scale}px`,
                     }
                   : undefined
               }
@@ -71,12 +89,12 @@ export const InputOTPFixture = () => {
   if (native) {
     return (
       <div
+        className="fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width fixture-geometry-height"
         style={{
-          position: "fixed",
-          left: Number(q.get("x") ?? 16) * scale,
-          top: Number(q.get("y") ?? 16) * scale,
-          width: Number(q.get("width") ?? 20) * scale,
-          height: Number(q.get("height") ?? 20) * scale,
+          "--fixture-height": `${Number(q.get("height") ?? 20) * scale}px`,
+          "--fixture-width": `${Number(q.get("width") ?? 20) * scale}px`,
+          "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
+          "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
         }}
       >
         {root}
@@ -88,7 +106,11 @@ export const InputOTPFixture = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setTag(String(new FormData(e.currentTarget).get("code")));
+        setTag(
+          // SAFETY: this owned form produces only the string-valued text/hidden control named code, never a file. Preserve String's exact string results and absent-null result "null".
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer snapshot consumed as a string; no runtime validation.
+          (new FormData(e.currentTarget).get("code") as string | null) ?? "null"
+        );
       }}
     >
       {root}

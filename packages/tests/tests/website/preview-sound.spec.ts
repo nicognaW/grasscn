@@ -1,3 +1,4 @@
+import { expectLength } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 import {
@@ -6,6 +7,16 @@ import {
 } from "@grasscn/web/ui/minecraft-sound";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
+interface PreviewSoundFixtureWindow extends Window {
+  __previewVoices: Voice[];
+}
+
+declare global {
+  interface Window {
+    __previewVoices?: Voice[];
+  }
+}
+
 interface Voice {
   source: string;
   volume: number;
@@ -13,12 +24,13 @@ interface Voice {
 }
 
 const voices = async (page: Page) =>
-  page.evaluate(() => (window as any).__previewVoices as Voice[]);
+  await page.evaluate(() => window.__previewVoices);
 
-const clearVoices = async (page: Page) =>
-  page.evaluate(() => {
-    (window as any).__previewVoices = [];
+const clearVoices = async (page: Page) => {
+  await page.evaluate(() => {
+    window.__previewVoices = [];
   });
+};
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
@@ -26,9 +38,12 @@ const origin = (
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
-    (window as any).__previewVoices = [];
+    window.__previewVoices = [];
+    // oxlint-disable-next-line typescript/promise-function-async, unicorn/consistent-function-scoping -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing. Keep play inside this initializer because Playwright serializes the callback without its Node lexical scope.
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).__previewVoices.push({
+      // SAFETY: this init script assigns the recorder before installing play; every later clear/navigation write preserves an array of these actual Voice records.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized page-local sound recorder protocol, including subsequent field resets.
+      (window as PreviewSoundFixtureWindow).__previewVoices.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -64,9 +79,11 @@ for (const [key, value] of [
     page,
   }) => {
     await page.goto(`${origin}docs/components/slider`);
+
     const volume = page
       .locator(".documentation-playground")
       .getByRole("slider", { exact: true, name: "Volume" });
+
     await volume.focus();
     await page.keyboard.press(key);
     await expect(volume).toHaveAttribute("aria-valuenow", value);
@@ -84,6 +101,7 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
   page,
 }) => {
   await page.goto(`${origin}docs/components/slider`);
+
   // Isolate demo control audio from the navigation buttons.
   const navigate = async (name: string) => {
     const previous = await voices(page);
@@ -91,10 +109,11 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
       .getByRole("navigation", { exact: true, name: "Documentation" })
       .getByRole("link", { exact: true, name })
       .click();
-    await page.evaluate((previous) => {
-      (window as any).__previewVoices = previous;
+    await page.evaluate((previousVoices) => {
+      window.__previewVoices = previousVoices;
     }, previous);
   };
+
   const volume = page
     .locator(".documentation-playground")
     .getByRole("slider", { exact: true, name: "Volume" });
@@ -110,6 +129,7 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
     .getByRole("checkbox", {
       name: "Enable shadows",
     });
+
   await expect(volume).toHaveAttribute("aria-valuenow", "50");
   await navigate("Button");
   await button.click();
@@ -143,7 +163,7 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
   await navigate("Checkbox");
   await checkbox.check();
   const audible = await voices(page);
-  expect(audible).toHaveLength(3);
+  expectLength(audible, 3);
 
   for (const voice of audible) {
     expect(voice).toEqual({
@@ -162,6 +182,7 @@ test("Keyboard volume changes persist when the slider demo is filtered out", asy
   const volume = page
     .locator(".documentation-playground")
     .getByRole("slider", { exact: true, name: "Volume" });
+
   await volume.focus();
   await page.keyboard.press("ArrowRight");
   await expect(page.getByLabel("Slider value", { exact: true })).toHaveText(
@@ -179,7 +200,7 @@ test("Keyboard volume changes persist when the slider demo is filtered out", asy
     .first()
     .click();
   const played = await voices(page);
-  expect(played).toHaveLength(1);
+  expectLength(played, 1);
   expect(played[0].volume).toBeCloseTo(0.1275);
   expect(played[0].source).toBe(minecraftClickSound);
   expect(played[0].rate).toBe(1);

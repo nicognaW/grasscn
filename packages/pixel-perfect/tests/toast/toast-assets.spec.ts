@@ -10,16 +10,22 @@ import {
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData0 from "../reference/catalog/native-inventory.json";
+import type CapturedData1 from "../reference/toast/glyph-atlas.json";
+import type CapturedData2 from "../reference/toast/toast-atlas.json";
+
 const hash = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 
 test("SystemToast retains original PNG bytes, RGBA and asymmetric nine-slice metadata", () => {
+  // SAFETY: This read consumes the same pinned tests/reference/catalog/native-inventory.json producer data described by the type-only import; retain the runtime read and parse phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const inventory = JSON.parse(
     readFileSync(
       pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
       "utf-8"
     )
-  );
+  ) as typeof CapturedData0;
 
   const pin =
     inventory.assets["assets/minecraft/textures/gui/sprites/toast/system.png"];
@@ -35,21 +41,27 @@ test("SystemToast retains original PNG bytes, RGBA and asymmetric nine-slice met
 });
 
 test("SystemToast uses the UVs and metrics observed in its normalized native context", () => {
+  // SAFETY: This read consumes the same pinned tests/reference/toast/glyph-atlas.json producer data described by the type-only import; retain the runtime read and parse phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const glyphs = JSON.parse(
     readFileSync(
       pixelPerfectFile("tests/reference/toast/glyph-atlas.json"),
       "utf-8"
     )
-  );
+  ) as typeof CapturedData1;
 
-  const observed = Object.values(
+  // SAFETY: This read consumes the same pinned tests/reference/toast/toast-atlas.json producer data described by the type-only import; retain the runtime read and parse phase.
+  const [observed] = Object.values(
+    // SAFETY: This exact retained toast/toast-atlas.json read is represented by the existing CapturedData2 producer type; retain the original read, parse, first-value selection and UV assertions.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
     JSON.parse(
       readFileSync(
         pixelPerfectFile("tests/reference/toast/toast-atlas.json"),
         "utf-8"
       )
-    )
-  )[0] as any;
+    ) as typeof CapturedData2
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
+  );
 
   expect(toastGlyphAtlas).toEqual(glyphs);
   expect(Object.keys(glyphs)).toHaveLength(112);

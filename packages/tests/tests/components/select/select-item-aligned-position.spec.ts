@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 for (const scale of [1, 2, 3] as const) {
@@ -5,14 +6,14 @@ for (const scale of [1, 2, 3] as const) {
     test(`Explicit item-aligned mode aligns the selected row GUI${scale} ${mobile ? "mobile" : "desktop"}`, async ({
       page,
     }) => {
-      const width = mobile ? 390 : 1536,
-        height = mobile ? 844 : 900;
+      const width = mobile ? 390 : 1536;
+      const height = mobile ? 844 : 900;
 
-      await page.setViewportSize({ width, height });
+      await page.setViewportSize({ height, width });
 
       const labels = Array.from(
         { length: 12 },
-        (_, i) => `\u6708\u4efd ${i + 1}`
+        (_, i) => `\u6708\u4EFD ${i + 1}`
       );
 
       await page.goto(
@@ -20,32 +21,35 @@ for (const scale of [1, 2, 3] as const) {
       );
       const trigger = page.locator("#select-trigger");
       await trigger.evaluate(
-        (n, { scale, mobile }) =>
+        (n, { scale: renderScale, mobile: isMobile }) =>
           Object.assign(n.style, {
+            left: isMobile ? "40px" : "500px",
             position: "fixed",
-            left: mobile ? "40px" : "500px",
             top: "300px",
-            width: `${Math.min(200 * scale, 300)}px`,
+            width: `${Math.min(200 * renderScale, 300)}px`,
           }),
-        { scale, mobile }
+        { mobile, scale }
       );
       await trigger.click();
 
-      const popup = page.locator("#select-popup"),
-        selected = popup.locator("[data-selected]");
+      const popup = page.locator("#select-popup");
+      const selected = popup.locator("[data-selected]");
 
       await expect(popup).toHaveAttribute("data-mc-select-ready", "true");
       await expect
         .poll(async () => {
-          const row = (await selected.boundingBox())!,
-            anchor = (await trigger.boundingBox())!;
+          const row = await selected.boundingBox();
+          expectNotNull(row, "Missing required bounding box: row");
+          const anchor = await trigger.boundingBox();
+          expectNotNull(anchor, "Missing required bounding box: anchor");
 
           return Math.abs(
             row.y + row.height / 2 - anchor.y - anchor.height / 2
           );
         })
         .toBeLessThanOrEqual(1);
-      const before = (await popup.boundingBox())!;
+      const before = await popup.boundingBox();
+      expectNotNull(before, "Missing required bounding box: before");
       expect(before.x).toBeGreaterThanOrEqual(0);
       expect(before.x + before.width).toBeLessThanOrEqual(width);
       expect(before.y).toBeGreaterThanOrEqual(0);
@@ -53,17 +57,24 @@ for (const scale of [1, 2, 3] as const) {
       const viewport = popup.locator("[data-slot=select-viewport]");
       await viewport.hover();
       await page.mouse.wheel(0, -100);
-      await page.evaluate(
-        async () =>
-          await new Promise<void>((r) =>
-            requestAnimationFrame(() =>
-              requestAnimationFrame(() => {
-                r();
-              })
-            )
-          )
-      );
-      const after = (await popup.boundingBox())!;
+      await page.evaluate(async () => {
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
+
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        await frameCompletion.promise;
+      });
+      const after = await popup.boundingBox();
+      expectNotNull(after, "Missing required bounding box: after");
       expect(after.x).toBeGreaterThanOrEqual(0);
       expect(after.y).toBeGreaterThanOrEqual(0);
       expect(after.x + after.width).toBeLessThanOrEqual(width);

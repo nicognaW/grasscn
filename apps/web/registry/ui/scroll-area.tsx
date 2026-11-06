@@ -4,14 +4,33 @@ import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area";
 import * as React from "react";
 
 import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 
 import "./minecraft-scroll-area.css";
+
+const scrollAreaThumb = (
+  <ScrollAreaPrimitive.Thumb
+    data-slot="scroll-area-thumb"
+    className="mc-scroll-area-thumb"
+  />
+);
+
+interface ScrollAreaThumbStyle extends React.CSSProperties {
+  "--mc-thumb": string;
+  "--mc-thumb-height": string;
+  "--mc-thumb-offset": string;
+  "--mc-track": string;
+}
+
+interface ScrollAreaScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 interface Geometry {
   height: number;
@@ -51,6 +70,151 @@ type ScrollAreaProps = Omit<
   >;
 };
 
+const ScrollBar = ({
+  children,
+  render,
+  className,
+  orientation = "vertical",
+  style,
+  onPointerDownCapture,
+  onPointerMoveCapture,
+  onPointerUpCapture,
+  onPointerCancelCapture,
+  onLostPointerCapture,
+  ...props
+}: ScrollBarProps) => {
+  if (orientation !== "vertical") {
+    throw new Error("Minecraft ScrollBar supports vertical orientation only");
+  }
+
+  const context = React.useContext(ScrollContext);
+
+  if (!context) {
+    throw new Error("ScrollBar must be rendered inside ScrollArea");
+  }
+
+  const { viewport, scale, disabled, geometry } = context;
+
+  const drag = React.useRef<{
+    y: number;
+    scroll: number;
+  } | null>(null);
+
+  const [dragging, setDragging] = React.useState(false);
+
+  const stop = () => {
+    drag.current = null;
+    setDragging(false);
+  };
+
+  return (
+    <ScrollAreaPrimitive.Scrollbar
+      render={render}
+      {...props}
+      orientation={orientation}
+      data-slot="scroll-area-scrollbar"
+      data-dragging={dragging || undefined}
+      aria-disabled={disabled || undefined}
+      className={cn(`mc-scroll-area-scrollbar`, className)}
+      style={minecraftStyle(style, (__style): ScrollAreaThumbStyle => ({
+        "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
+        "--mc-thumb-height": `${geometry.thumb * scale}px`,
+        "--mc-thumb-offset": `${geometry.offset * scale}px`,
+        "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
+        ...__style,
+      }))}
+      onPointerDownCapture={(event) => {
+        onPointerDownCapture?.(event);
+        event.preventBaseUIHandler();
+
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        if (disabled) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          return;
+        }
+
+        if (event.button !== 0) {
+          return;
+        }
+
+        event.preventDefault();
+
+        const element = viewport.current;
+
+        if (!element) {
+          return;
+        }
+
+        const bounds = event.currentTarget.getBoundingClientRect();
+
+        // SAFETY: This DOM-forwarded React handler receives ReactDOM-normalized targets; Text dispatch is normalized to its parent Element, including SVG. Only Element.closest is consumed.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- ReactDOM synthetic-event production and standard DOM prop forwarding prove this exact Element target; native/manual event inputs are not projected. */
+        if (
+          !(event.target as Element).closest('[data-slot="scroll-area-thumb"]')
+        ) {
+          // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
+          element.scrollTop = Math.max(
+            0,
+            Math.min(
+              geometry.maximum * scale,
+              ((event.clientY - bounds.top - (geometry.thumb * scale) / 2) *
+                geometry.maximum) /
+                Math.max(1, geometry.height - geometry.thumb)
+            )
+          );
+        }
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
+
+        drag.current = { scroll: element.scrollTop, y: event.clientY };
+        setDragging(true);
+        event.currentTarget.setPointerCapture(event.pointerId);
+      }}
+      onPointerMoveCapture={(event) => {
+        onPointerMoveCapture?.(event);
+        event.preventBaseUIHandler();
+
+        const element = viewport.current;
+
+        if (!event.defaultPrevented && drag.current && !disabled && element) {
+          event.preventDefault();
+          // oxlint-disable-next-line react/immutability -- This pointer handler uses the native scrollTop setter; scrollTo previously failed per-frame equivalence controls.
+          element.scrollTop =
+            drag.current.scroll +
+            ((event.clientY - drag.current.y) * geometry.maximum) /
+              Math.max(1, geometry.height - geometry.thumb);
+        }
+      }}
+      onPointerUpCapture={(event) => {
+        onPointerUpCapture?.(event);
+        event.preventBaseUIHandler();
+
+        if (drag.current) {
+          event.preventDefault();
+          stop();
+        }
+      }}
+      onPointerCancelCapture={(event) => {
+        onPointerCancelCapture?.(event);
+        stop();
+      }}
+      onLostPointerCapture={(event) => {
+        onLostPointerCapture?.(event);
+        stop();
+      }}
+    >
+      <>
+        {scrollAreaThumb}
+        {children}
+      </>
+    </ScrollAreaPrimitive.Scrollbar>
+  );
+};
+
 const ScrollArea = ({
   children,
   className,
@@ -73,36 +237,46 @@ const ScrollArea = ({
   }
 
   const viewport = React.useRef<HTMLDivElement>(null);
+  const [attached, setAttached] = React.useState<HTMLDivElement | null>(null);
 
   const setViewportRef = React.useCallback(
-    (element: HTMLDivElement | null) => {
+    (element: HTMLDivElement | null): (() => void) | undefined => {
       viewport.current = element;
+      setAttached(element);
 
-      if (typeof viewportRef === "function") {
+      if (isMinecraftRefCallback(viewportRef)) {
         const cleanup = viewportRef(element);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             viewport.current = null;
+            setAttached(null);
             cleanup();
           };
         }
       } else if (viewportRef) {
+        // oxlint-disable-next-line react/immutability -- React commit forwards this mutable object ref outside render; preserve the existing callback and cleanup order.
         viewportRef.current = element;
       }
+
+      return undefined;
     },
     [viewportRef]
   );
 
   const [geometry, setGeometry] = React.useState(empty);
   const [ready, setReady] = React.useState(false);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
+    const element = attached;
+
+    if (!element) {
+      return undefined;
+    }
+
     let frame = 0;
     let signature = "";
 
     const measure = () => {
-      const element = viewport.current!;
-
       const height = element.clientHeight / scale;
       const content = element.scrollHeight / scale;
 
@@ -143,10 +317,11 @@ const ScrollArea = ({
     return () => {
       cancelAnimationFrame(frame);
     };
-  }, [scale]);
+  }, [attached, scale]);
   const content = children;
 
   const flatten = (value: React.ReactNode): React.ReactNode[] =>
+    // oxlint-disable-next-line react/no-react-children -- The existing ScrollArea composition separates caller ScrollBar elements from arbitrary ReactNode viewport content, including Fragment nesting and React iterable/thenable traversal; retain this collection contract.
     React.Children.toArray(value).flatMap((node) =>
       React.isValidElement<{
         children?: React.ReactNode;
@@ -172,11 +347,17 @@ const ScrollArea = ({
         ref={setViewportRef}
         tabIndex={disabled ? -1 : 0}
         {...viewportProps}
-        className={`mc-scroll-area-viewport ${viewportProps?.className ?? ""}`}
-        style={minecraftStyle(viewportProps?.style, (__style) => ({
-          ...(disabled ? { overflowY: "hidden" } : {}),
-          ...__style,
-        }))}
+        className={cn("mc-scroll-area-viewport", viewportProps?.className)}
+        // oxlint-disable-next-line shadcn/no-inline-styles -- Disabled scrolling must override the SDK inline overflow:scroll; caller viewport styles retain their existing final precedence.
+        style={minecraftStyle(viewportProps?.style, (__style) => {
+          const paint: React.CSSProperties = {};
+
+          if (disabled) {
+            paint.overflowY = "hidden";
+          }
+
+          return { ...paint, ...__style };
+        })}
       >
         {contents}
       </ScrollAreaPrimitive.Viewport>
@@ -184,8 +365,13 @@ const ScrollArea = ({
     </>
   );
 
+  const scrollContext = React.useMemo(
+    () => ({ disabled, geometry, scale, viewport }),
+    [disabled, geometry, scale, viewport]
+  );
+
   return (
-    <ScrollContext.Provider value={{ disabled, geometry, scale, viewport }}>
+    <ScrollContext.Provider value={scrollContext}>
       <ScrollAreaPrimitive.Root
         render={render}
         ref={ref}
@@ -194,11 +380,10 @@ const ScrollArea = ({
         data-scrollable={geometry.maximum > 0}
         data-disabled={disabled || undefined}
         className={cn(`mc-scroll-area`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): ScrollAreaScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         onWheelCapture={(event) => {
           onWheelCapture?.(event);
 
@@ -239,150 +424,6 @@ type ScrollBarProps = Omit<
   "orientation"
 > & {
   orientation?: "vertical";
-};
-
-const ScrollBar = ({
-  children,
-  render,
-  className,
-  orientation = "vertical",
-  style,
-  onPointerDownCapture,
-  onPointerMoveCapture,
-  onPointerUpCapture,
-  onPointerCancelCapture,
-  onLostPointerCapture,
-  ...props
-}: ScrollBarProps) => {
-  if (orientation !== "vertical") {
-    throw new Error("Minecraft ScrollBar supports vertical orientation only");
-  }
-
-  const context = React.useContext(ScrollContext);
-
-  if (!context) {
-    throw new Error("ScrollBar must be rendered inside ScrollArea");
-  }
-
-  const { viewport, scale, disabled, geometry } = context;
-
-  const drag = React.useRef<{
-    y: number;
-    scroll: number;
-  } | null>(null);
-
-  const [dragging, setDragging] = React.useState(false);
-
-  const stop = () => {
-    drag.current = null;
-    setDragging(false);
-  };
-
-  const thumb = (
-    <ScrollAreaPrimitive.Thumb
-      data-slot="scroll-area-thumb"
-      className="mc-scroll-area-thumb"
-    />
-  );
-
-  return (
-    <ScrollAreaPrimitive.Scrollbar
-      render={render}
-      {...props}
-      orientation={orientation}
-      data-slot="scroll-area-scrollbar"
-      data-dragging={dragging || undefined}
-      aria-disabled={disabled || undefined}
-      className={cn(`mc-scroll-area-scrollbar`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
-            "--mc-thumb-height": `${geometry.thumb * scale}px`,
-            "--mc-thumb-offset": `${geometry.offset * scale}px`,
-            "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
-            ...__style,
-          }) as React.CSSProperties
-      )}
-      onPointerDownCapture={(event) => {
-        onPointerDownCapture?.(event);
-        event.preventBaseUIHandler();
-
-        if (event.defaultPrevented) {
-          return;
-        }
-
-        if (disabled) {
-          event.preventDefault();
-          event.stopPropagation();
-
-          return;
-        }
-
-        if (event.button !== 0) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const element = viewport.current!;
-        const bounds = event.currentTarget.getBoundingClientRect();
-
-        if (
-          !(event.target as Element).closest('[data-slot="scroll-area-thumb"]')
-        ) {
-          element.scrollTop = Math.max(
-            0,
-            Math.min(
-              geometry.maximum * scale,
-              ((event.clientY - bounds.top - (geometry.thumb * scale) / 2) *
-                geometry.maximum) /
-                Math.max(1, geometry.height - geometry.thumb)
-            )
-          );
-        }
-
-        drag.current = { scroll: element.scrollTop, y: event.clientY };
-        setDragging(true);
-        event.currentTarget.setPointerCapture(event.pointerId);
-      }}
-      onPointerMoveCapture={(event) => {
-        onPointerMoveCapture?.(event);
-        event.preventBaseUIHandler();
-
-        if (!event.defaultPrevented && drag.current && !disabled) {
-          event.preventDefault();
-          viewport.current!.scrollTop =
-            drag.current.scroll +
-            ((event.clientY - drag.current.y) * geometry.maximum) /
-              Math.max(1, geometry.height - geometry.thumb);
-        }
-      }}
-      onPointerUpCapture={(event) => {
-        onPointerUpCapture?.(event);
-        event.preventBaseUIHandler();
-
-        if (drag.current) {
-          event.preventDefault();
-          stop();
-        }
-      }}
-      onPointerCancelCapture={(event) => {
-        onPointerCancelCapture?.(event);
-        stop();
-      }}
-      onLostPointerCapture={(event) => {
-        onLostPointerCapture?.(event);
-        stop();
-      }}
-    >
-      <>
-        {thumb}
-        {children}
-      </>
-    </ScrollAreaPrimitive.Scrollbar>
-  );
 };
 
 export { ScrollArea, ScrollBar };

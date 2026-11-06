@@ -4,9 +4,21 @@ import path from "node:path";
 
 import { testRoot } from "@tests/paths";
 
-export function packageBin(name: string, binary = name, from = testRoot) {
+interface PackageManifest {
+  bin?: string | Record<string, string>;
+  name?: string;
+}
+
+const isBinaryPath = (value: PackageManifest["bin"]): value is string =>
+  typeof value === "string";
+
+export const packageBin = function packageBin(
+  name: string,
+  binary = name,
+  from = testRoot
+) {
   const require = createRequire(path.join(from, "package.json"));
-  let location;
+  let location: string;
 
   try {
     location = require.resolve(`${name}/package.json`);
@@ -16,10 +28,13 @@ export function packageBin(name: string, binary = name, from = testRoot) {
     for (;;) {
       const candidate = path.join(folder, "package.json");
 
-      if (
-        fs.existsSync(candidate) &&
-        JSON.parse(fs.readFileSync(candidate, "utf-8")).name === name
-      ) {
+      // SAFETY: candidate manifests belong to the installed dependency being resolved; only its declared package name is inspected.
+      const candidateManifest = fs.existsSync(candidate)
+        ? // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- SAFETY: installed package.json owns this package-name contract.
+          (JSON.parse(fs.readFileSync(candidate, "utf-8")) as PackageManifest)
+        : undefined;
+
+      if (candidateManifest?.name === name) {
         location = candidate;
         break;
       }
@@ -34,16 +49,21 @@ export function packageBin(name: string, binary = name, from = testRoot) {
     }
   }
 
-  const manifest = JSON.parse(fs.readFileSync(location, "utf-8"));
+  // SAFETY: location was resolved as the installed package manifest; bin is its standard Node package metadata field.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Consume actual installed package metadata, without changing it.
+  const manifest = JSON.parse(
+    fs.readFileSync(location, "utf-8")
+  ) as PackageManifest;
 
-  const bins =
-    typeof manifest.bin === "string" ? { [name]: manifest.bin } : manifest.bin;
+  const bins = isBinaryPath(manifest.bin)
+    ? { [name]: manifest.bin }
+    : manifest.bin;
 
   const target = bins?.[binary ?? name] ?? Object.values(bins ?? {})[0];
 
-  if (typeof target !== "string") {
+  if (!isBinaryPath(target)) {
     throw new Error(`Package ${name} does not expose ${binary ?? name}`);
   }
 
   return path.resolve(path.dirname(location), target);
-}
+};

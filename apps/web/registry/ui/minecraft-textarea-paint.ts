@@ -9,20 +9,65 @@ import {
 } from "./minecraft-unifont";
 import { positionUnihex, disposeUnihex } from "./minecraft-unifont-gpu";
 
+const requiresCJKFont = function requiresCJKFont(text: string) {
+  for (const character of text) {
+    if (
+      isCJKCodepoint(
+        // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+        character.codePointAt(0) as number
+      )
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+const supportsInputGlyphs = function supportsInputGlyphs(text: string) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E\n]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
+
 interface Line {
   begin: number;
   end: number;
 }
 
 const glyphAdvance = (char: string) =>
-  minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
+  asciiGlyphs[
+    // SAFETY: Private glyph callers supply nonempty iteration characters or guarded in-bounds code units. Its first code point therefore exists.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+    (char.codePointAt(0) as number) - 32
+  ]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   6;
 
-const advance = (text: string) =>
-  Math.ceil([...text].reduce((sum, char) => sum + glyphAdvance(char), 0));
+const advance = (text: string) => {
+  let measuredGlyphWidth = 0;
 
-function wrap(value: string, width: number): Line[] {
+  for (const glyphCharacter of text) {
+    measuredGlyphWidth += glyphAdvance(glyphCharacter);
+  }
+
+  return Math.ceil(measuredGlyphWidth);
+};
+
+const wrap = function wrap(value: string, width: number): Line[] {
   const lines: Line[] = [];
   let start = 0;
 
@@ -40,7 +85,12 @@ function wrap(value: string, width: number): Line[] {
           space = count;
         }
 
-        const char = String.fromCodePoint(remaining.codePointAt(count)!);
+        const char = String.fromCodePoint(
+          // SAFETY: This loop calls codePointAt only with count below the current string length; count starts at zero and advances by each nonempty character length.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The existing in-bounds string traversal proves this exact codePointAt result.
+          remaining.codePointAt(count) as number
+        );
+
         const next = glyphAdvance(char);
 
         if (used + next > width && count > 0) {
@@ -63,7 +113,7 @@ function wrap(value: string, width: number): Line[] {
   }
 
   return lines;
-}
+};
 
 let images:
   | Promise<{
@@ -76,7 +126,8 @@ let images:
     }>
   | undefined;
 
-function loadImages() {
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
+const loadImages = function loadImages() {
   return (images ??= Promise.all(
     [
       minecraftInputAssets.normal,
@@ -85,21 +136,31 @@ function loadImages() {
       minecraftTextareaAssets.scroller,
       minecraftTextareaAssets.scroller_background,
     ].map(
+      // oxlint-disable-next-line typescript/promise-function-async -- C15b: return this synchronous image-load/error adapter Promise directly; async would add adoption jobs before Promise.all readiness.
       (src) =>
+        // oxlint-disable-next-line promise/avoid-new -- Preserve the cached texture-load event bridge and raw load-error event.
         new Promise<HTMLImageElement>((resolve, reject) => {
           const image = new Image();
-          image.onload = () => {
+          image.addEventListener("load", () => {
             resolve(image);
-          };
+          });
 
-          image.onerror = reject;
+          image.addEventListener("error", reject);
           image.src = src;
         })
     )
   ).then(([normal, highlighted, atlas, scroller, track]) => {
     const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = 128;
-    const context = canvas.getContext("2d")!;
+    canvas.height = 128;
+    canvas.width = 128;
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error(
+        "Minecraft textarea paint 2D canvas context could not be created"
+      );
+    }
+
     context.drawImage(atlas, 0, 0);
 
     return {
@@ -111,9 +172,9 @@ function loadImages() {
       track,
     };
   }));
-}
+};
 
-function sprite(
+const sprite = function sprite(
   context: CanvasRenderingContext2D,
   image: HTMLImageElement,
   dx: number,
@@ -139,8 +200,8 @@ function sprite(
     ) {
       for (let oy = 0; oy < dh[row]; oy += heights[row] * scale) {
         for (let ox = 0; ox < dw[col]; ox += widths[col] * scale) {
-          const w = Math.min(widths[col] * scale, dw[col] - ox),
-            h = Math.min(heights[row] * scale, dh[row] - oy);
+          const w = Math.min(widths[col] * scale, dw[col] - ox);
+          const h = Math.min(heights[row] * scale, dh[row] - oy);
 
           context.drawImage(
             image,
@@ -157,9 +218,9 @@ function sprite(
       }
     }
   }
-}
+};
 
-function text(
+const text = function text(
   context: CanvasRenderingContext2D,
   alpha: Uint8ClampedArray,
   value: string,
@@ -174,7 +235,12 @@ function text(
     let offset = x;
 
     for (const char of value) {
-      const glyph = minecraftGlyphs[char.codePointAt(0)! - 32];
+      const glyph =
+        asciiGlyphs[
+          // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+          (char.codePointAt(0) as number) - 32
+        ];
 
       if (!glyph) {
         const unihex = getUnihexGlyph(char);
@@ -195,32 +261,40 @@ function text(
 
       if (char !== " ") {
         for (let py = 0; py < 8; py += 1) {
-          for (let px = 0; px < 8; px++)
-            if (alpha[((glyph[1] + py) * 128 + glyph[0] + px) * 4 + 3])
+          for (let px = 0; px < 8; px += 1) {
+            if (alpha[((glyph[1] + py) * 128 + glyph[0] + px) * 4 + 3]) {
               context.fillRect(
                 (offset + px + Number(shadow)) * scale,
                 (y + py + Number(shadow)) * scale,
                 scale,
                 scale
               );
+            }
+          }
         }
       }
 
       offset += glyph[2];
     }
   }
-}
+};
 
-export function attachMinecraftTextarea(
+export const attachMinecraftTextarea = function attachMinecraftTextarea(
   node: HTMLTextAreaElement,
   initialScale: number
 ) {
   const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d", { willReadFrequently: true })!;
+  const context = canvas.getContext("2d", { willReadFrequently: true });
+
+  if (!context) {
+    throw new Error(
+      "Minecraft textarea paint 2D canvas context could not be created"
+    );
+  }
 
   let cancelled = false;
   let frame = 0;
-  let loaded: Awaited<ReturnType<typeof loadImages>>;
+  let loaded: Awaited<ReturnType<typeof loadImages>> | undefined;
   let signature = "";
   let focusedAt = Date.now();
 
@@ -255,21 +329,22 @@ export function attachMinecraftTextarea(
 
     const bounds = node.getBoundingClientRect();
     positionUnihex(context, bounds);
-    const characters = [...(value + node.placeholder)];
+    const inputGlyphText = value + node.placeholder;
 
-    if (
-      !loadingUnihex &&
-      characters.some((char) => isCJKCodepoint(char.codePointAt(0)!))
-    ) {
+    if (!loadingUnihex && requiresCJKFont(inputGlyphText)) {
       loadingUnihex = true;
-      loadUnihex()
-        .then(() => {
-          signature = "";
-          paint();
-        })
-        .catch(() => {
-          /* empty */
-        });
+      const fontLoading = loadUnihex();
+
+      const repaintAfterFontLoading = async () => {
+        await fontLoading;
+
+        signature = "";
+        paint();
+      };
+
+      repaintAfterFontLoading().catch(() => {
+        /* empty */
+      });
     }
 
     let pane = width / scale;
@@ -285,9 +360,7 @@ export function attachMinecraftTextarea(
     node.dataset.mcScrollbar = String(scrollable);
 
     const supported =
-      characters.every(
-        (char) => /^[\u0020-\u007E\n]$/.test(char) || getUnihexGlyph(char)
-      ) && style.direction !== "rtl";
+      supportsInputGlyphs(inputGlyphText) && style.direction !== "rtl";
 
     node.dataset.mcBitmap = String(supported);
 
@@ -356,121 +429,136 @@ export function attachMinecraftTextarea(
     );
 
     if (supported) {
-      context.save();
-      context.beginPath();
-      context.rect(scale, scale, (pane - 2) * scale, height - 2 * scale);
-      context.clip();
+      const paintEditableText = (
+        frameImages: Awaited<ReturnType<typeof loadImages>>
+      ) => {
+        context.save();
+        context.beginPath();
+        context.rect(scale, scale, (pane - 2) * scale, height - 2 * scale);
+        context.clip();
 
-      if (!value && !focused && node.placeholder) {
-        context.globalAlpha = 0.8;
+        if (!value && !focused && node.placeholder) {
+          context.globalAlpha = 0.8;
 
-        for (const [row, line] of wrap(node.placeholder, pane - 8).entries()) {
-          text(
-            context,
-            loaded.alpha,
-            node.placeholder.slice(line.begin, line.end),
-            4,
-            4 + row * 9 - scroll,
-            224,
-            scale
-          );
-        }
-
-        context.globalAlpha = 1;
-      } else {
-        const row = Math.max(
-          0,
-          lines.findIndex((line) => cursor >= line.begin && cursor <= line.end)
-        );
-
-        const line = lines[row];
-
-        const x = 4 + advance(value.slice(line.begin, cursor));
-        const y = 4 + row * 9 - scroll;
-
-        for (const [lineIndex, current] of lines.entries()) {
-          if (blink && cursor < value.length && lineIndex === row) {
+          for (const [row, line] of wrap(
+            node.placeholder,
+            pane - 8
+          ).entries()) {
             text(
               context,
-              loaded.alpha,
-              value.slice(current.begin, cursor),
+              frameImages.alpha,
+              node.placeholder.slice(line.begin, line.end),
               4,
-              y,
-              224,
-              scale
-            );
-            text(
-              context,
-              loaded.alpha,
-              value.slice(cursor, current.end),
-              x,
-              y,
-              224,
-              scale
-            );
-            context.fillStyle = "#d0d0d0";
-            context.fillRect(x * scale, (y - 1) * scale, scale, 11 * scale);
-          } else {
-            text(
-              context,
-              loaded.alpha,
-              value.slice(current.begin, current.end),
-              4,
-              4 + lineIndex * 9 - scroll,
+              4 + row * 9 - scroll,
               224,
               scale
             );
           }
-        }
 
-        if (blink && cursor >= value.length) {
-          text(context, loaded.alpha, "_", x, y, 208, scale);
-        }
+          context.globalAlpha = 1;
+        } else {
+          const row = Math.max(
+            0,
+            lines.findIndex(
+              (line) => cursor >= line.begin && cursor <= line.end
+            )
+          );
 
-        if (cursor !== anchor) {
-          for (const [row, line] of lines.entries()) {
-            const begin = Math.max(line.begin, Math.min(cursor, anchor));
-            const end = Math.min(line.end, Math.max(cursor, anchor));
+          const line = lines[row];
 
-            if (end < begin) {
-              continue;
+          const x = 4 + advance(value.slice(line.begin, cursor));
+          const y = 4 + row * 9 - scroll;
+
+          for (const [lineIndex, current] of lines.entries()) {
+            if (blink && cursor < value.length && lineIndex === row) {
+              text(
+                context,
+                frameImages.alpha,
+                value.slice(current.begin, cursor),
+                4,
+                y,
+                224,
+                scale
+              );
+              text(
+                context,
+                frameImages.alpha,
+                value.slice(cursor, current.end),
+                x,
+                y,
+                224,
+                scale
+              );
+              context.fillStyle = "#d0d0d0";
+              context.fillRect(x * scale, (y - 1) * scale, scale, 11 * scale);
+            } else {
+              text(
+                context,
+                frameImages.alpha,
+                value.slice(current.begin, current.end),
+                4,
+                4 + lineIndex * 9 - scroll,
+                224,
+                scale
+              );
             }
+          }
 
-            const left = 4 + advance(value.slice(line.begin, begin));
+          if (blink && cursor >= value.length) {
+            text(context, frameImages.alpha, "_", x, y, 208, scale);
+          }
 
-            const right =
-              Math.max(cursor, anchor) > line.end
-                ? pane
-                : 4 + advance(value.slice(line.begin, end));
-
-            const top = 4 + row * 9 - scroll;
-
-            const x0 = Math.max(1, left);
-            const x1 = Math.min(pane - 1, right);
-            const y0 = Math.max(1, top);
-            const y1 = Math.min(height / scale - 1, top + 9);
-
-            if (x1 > x0 && y1 > y0) {
-              const pixels = context.getImageData(
-                x0 * scale,
-                y0 * scale,
-                (x1 - x0) * scale,
-                (y1 - y0) * scale
+          if (cursor !== anchor) {
+            for (const [selectionRowIndex, selectionLine] of lines.entries()) {
+              const begin = Math.max(
+                selectionLine.begin,
+                Math.min(cursor, anchor)
               );
 
-              for (let i = 0; i < pixels.data.length; i += 4) {
-                pixels.data[i] = 255 - pixels.data[i];
-                pixels.data[i + 1] = 255 - pixels.data[i + 1];
-                pixels.data[i + 2] = 255;
+              const end = Math.min(selectionLine.end, Math.max(cursor, anchor));
+
+              if (end < begin) {
+                continue;
               }
 
-              context.putImageData(pixels, x0 * scale, y0 * scale);
+              const left = 4 + advance(value.slice(selectionLine.begin, begin));
+
+              const right =
+                Math.max(cursor, anchor) > selectionLine.end
+                  ? pane
+                  : 4 + advance(value.slice(selectionLine.begin, end));
+
+              const top = 4 + selectionRowIndex * 9 - scroll;
+
+              const x0 = Math.max(1, left);
+              const x1 = Math.min(pane - 1, right);
+              const y0 = Math.max(1, top);
+              const y1 = Math.min(height / scale - 1, top + 9);
+
+              if (x1 > x0 && y1 > y0) {
+                const pixels = context.getImageData(
+                  x0 * scale,
+                  y0 * scale,
+                  (x1 - x0) * scale,
+                  (y1 - y0) * scale
+                );
+
+                for (let i = 0; i < pixels.data.length; i += 4) {
+                  pixels.data[i] = 255 - pixels.data[i];
+                  pixels.data[i + 1] = 255 - pixels.data[i + 1];
+                  pixels.data[i + 2] = 255;
+                }
+
+                context.putImageData(pixels, x0 * scale, y0 * scale);
+              }
             }
           }
         }
-      }
 
-      context.restore();
+        context.restore();
+      };
+
+      paintEditableText(loaded);
     }
 
     if (scrollable) {
@@ -549,16 +637,20 @@ export function attachMinecraftTextarea(
   node.addEventListener("pointermove", move);
   node.addEventListener("pointerup", up);
   node.addEventListener("pointercancel", up);
-  loadImages()
-    .then((result) => {
-      if (!cancelled) {
-        loaded = result;
-        tick();
-      }
-    })
-    .catch(() => {
-      node.dataset.mcBitmap = "false";
-    });
+  const imagesLoading = loadImages();
+
+  const startPaintingAfterImages = async () => {
+    const result = await imagesLoading;
+
+    if (!cancelled) {
+      loaded = result;
+      tick();
+    }
+  };
+
+  startPaintingAfterImages().catch(() => {
+    node.dataset.mcBitmap = "false";
+  });
 
   return () => {
     cancelled = true;
@@ -570,4 +662,4 @@ export function attachMinecraftTextarea(
     node.removeEventListener("pointerup", up);
     node.removeEventListener("pointercancel", up);
   };
-}
+};

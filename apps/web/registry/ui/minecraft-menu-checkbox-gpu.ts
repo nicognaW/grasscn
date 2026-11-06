@@ -11,7 +11,7 @@ interface Painter {
 let painter: Painter | null | undefined;
 let users = 0;
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -26,15 +26,24 @@ function create(): Painter | null {
   }
 
   const shader = (kind: number, source: string) => {
-    const shader = gl.createShader(kind)!;
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
+    const shaderHandle = gl.createShader(kind);
 
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      throw new Error(gl.getShaderInfoLog(shader) ?? "Checkbox shader failed");
+    if (!shaderHandle) {
+      throw new Error(
+        "Minecraft menu checkbox gpu WebGL shader could not be created"
+      );
     }
 
-    return shader;
+    gl.shaderSource(shaderHandle, source);
+    gl.compileShader(shaderHandle);
+
+    if (gl.getShaderParameter(shaderHandle, gl.COMPILE_STATUS) !== true) {
+      throw new Error(
+        gl.getShaderInfoLog(shaderHandle) ?? "Checkbox shader failed"
+      );
+    }
+
+    return shaderHandle;
   };
 
   const vertex = shader(
@@ -53,7 +62,7 @@ function create(): Painter | null {
   gl.linkProgram(program);
   gl.useProgram(program);
 
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+  if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
     throw new Error(
       gl.getProgramInfoLog(program) ?? "Checkbox shader link failed"
     );
@@ -94,7 +103,10 @@ function create(): Painter | null {
       sprite.height,
       gl.RGBA,
       gl.UNSIGNED_BYTE,
-      Uint8Array.from(atob(sprite.rgba), (char) => char.charCodeAt(0))
+      Uint8Array.from(
+        atob(sprite.rgba),
+        (char) => char.codePointAt(0) ?? Number.NaN
+      )
     );
   }
 
@@ -113,37 +125,38 @@ function create(): Painter | null {
   gl.disable(gl.DITHER);
 
   return { buffer, canvas, gl, program, texture };
-}
+};
 
-export function retainMenuCheckboxPainter() {
+export const retainMenuCheckboxPainter = function retainMenuCheckboxPainter() {
   users += 1;
-}
+};
 
-export function releaseMenuCheckboxPainter() {
-  users -= 1;
+export const releaseMenuCheckboxPainter =
+  function releaseMenuCheckboxPainter() {
+    users -= 1;
 
-  if (users > 0) {
-    return;
-  }
+    if (users > 0) {
+      return;
+    }
 
-  if (painter) {
-    const { gl, texture, program, buffer } = painter;
-    gl.deleteBuffer(buffer);
-    gl.deleteTexture(texture);
-    gl.deleteProgram(program);
-    gl.getExtension("WEBGL_lose_context")?.loseContext();
-  }
+    if (painter) {
+      const { gl, texture, program, buffer } = painter;
+      gl.deleteBuffer(buffer);
+      gl.deleteTexture(texture);
+      gl.deleteProgram(program);
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+    }
 
-  painter = undefined;
-}
+    painter = undefined;
+  };
 
-export function menuCheckboxPixels(
+export const menuCheckboxPixels = function menuCheckboxPixels(
   name: keyof typeof atlas.sprites,
   scale: number,
   x: number,
   y: number
 ) {
-  if (painter?.gl.isContextLost()) {
+  if (painter?.gl.isContextLost() ?? false) {
     painter = undefined;
   }
 
@@ -215,5 +228,6 @@ export function menuCheckboxPixels(
     }
   }
 
+  // oxlint-disable-next-line typescript/consistent-return -- An unavailable native rendering resource intentionally returns undefined; explicit undefined conflicts with unicorn/no-useless-undefined, while successful rendering returns these original pixels or backdrop.
   return result;
-}
+};

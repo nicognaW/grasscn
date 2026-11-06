@@ -7,11 +7,7 @@ import {
 import { Slider as SliderPrimitive } from "@base-ui/react/slider";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { minecraftSliderSprites as sprites } from "./minecraft-slider-sprites";
 import { playMinecraftClick } from "./minecraft-sound";
@@ -19,6 +15,34 @@ import { MinecraftSurface } from "./minecraft-surface";
 
 import "./minecraft-slider.css";
 import { MinecraftText } from "./minecraft-text";
+
+interface SliderThumbPaint extends React.CSSProperties {
+  "--mc-thumb-fraction": number;
+}
+
+interface SliderScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+// Track state/events/ref still come from Base UI; native artwork owns its absolute positioning.
+const SliderTrackArtwork = ({
+  style: _primitiveStyle,
+  ...props
+}: React.ComponentProps<"div">) => <div {...props} />;
+
+const sliderHighlights = (
+  disabled: React.ComponentProps<typeof SliderPrimitive.Root>["disabled"],
+  focused: boolean,
+  editing: boolean,
+  hovered: boolean
+) => {
+  const highlightTrack = !(disabled ?? false) && focused && !editing;
+
+  const highlightHandle =
+    !(disabled ?? false) && (hovered || (focused && editing));
+
+  return { highlightHandle, highlightTrack };
+};
 
 const Slider = ({
   className,
@@ -47,20 +71,26 @@ const Slider = ({
   scale?: 1 | 2 | 3;
   label?: string;
 }) => {
-  const initialValue = React.useRef(defaultValue ?? [min, max]);
-  const [uncontrolled, setUncontrolled] = React.useState(initialValue.current);
+  const [uncontrolled, setUncontrolled] = React.useState(
+    () => defaultValue ?? [min, max]
+  );
+
+  const initialValue = React.useRef(uncontrolled);
   const root = React.useRef<HTMLDivElement>(null);
-  React.useImperativeHandle(ref, () => root.current!);
-  React.useEffect(() => {
+  React.useImperativeHandle<typeof root.current, typeof root.current>(
+    ref,
+    () => root.current
+  );
+  React.useEffect((): (() => void) | undefined => {
     if (value !== undefined) {
-      return;
+      return undefined;
     }
 
     const input = root.current?.querySelector("input");
     const form = input?.form ?? root.current?.closest("form");
 
     if (!form) {
-      return;
+      return undefined;
     }
 
     // The bitmap value and the primitive must reset together in ordinary HTML forms.
@@ -77,6 +107,7 @@ const Slider = ({
     return () => {
       form.removeEventListener("reset", reset);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- The form prop changes native form association; rebind reset handling to the input's actual form after commit.
   }, [value, props.form]);
   const inheritedDirection = baseDirection();
 
@@ -85,16 +116,19 @@ const Slider = ({
 
   const currentValue = value ?? uncontrolled;
 
-  const values = Array.isArray(currentValue)
-    ? currentValue
-    : [currentValue as number];
+  const values = Array.isArray(currentValue) ? currentValue : [currentValue];
 
   const [editing, setEditing] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
   const [hovered, setHovered] = React.useState(false);
   const pressed = React.useRef(false);
-  const highlightTrack = !disabled && focused && !editing;
-  const highlightHandle = !disabled && (hovered || (focused && editing));
+
+  const { highlightHandle, highlightTrack } = sliderHighlights(
+    disabled,
+    focused,
+    editing,
+    hovered
+  );
 
   return (
     <BaseDirectionProvider direction={dir}>
@@ -109,11 +143,10 @@ const Slider = ({
         disabled={disabled}
         orientation={orientation}
         thumbAlignment="edge"
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): SliderScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         onValueChange={(next, details) => {
           onValueChange?.(next, details);
 
@@ -166,12 +199,18 @@ const Slider = ({
         onPointerDownCapture={(event) => {
           onPointerDownCapture?.(event);
           pressed.current =
-            !disabled && !event.defaultPrevented && event.button === 0;
+            !(disabled ?? false) &&
+            !event.defaultPrevented &&
+            event.button === 0;
         }}
         onPointerUpCapture={(event) => {
           onPointerUpCapture?.(event);
 
-          if (pressed.current && !disabled && !event.defaultPrevented) {
+          if (
+            pressed.current &&
+            !(disabled ?? false) &&
+            !event.defaultPrevented
+          ) {
             playMinecraftClick();
           }
 
@@ -182,11 +221,11 @@ const Slider = ({
           onPointerCancelCapture?.(event);
         }}
       >
-        <SliderPrimitive.Control style={{ inset: 0, position: "absolute" }}>
+        <SliderPrimitive.Control className="absolute inset-0">
           <SliderPrimitive.Track
-            style={{ inset: 0, position: "absolute" }}
             data-slot="slider-track"
-            className="mc-slider-track"
+            className="mc-slider-track mc-owned-paint-slider-1"
+            render={<SliderTrackArtwork />}
           >
             <MinecraftSurface
               sprite={
@@ -208,17 +247,20 @@ const Slider = ({
 
             return (
               <span
+                // oxlint-disable-next-line react-doctor/no-array-index-as-key -- The SDK thumb is owned by its value-array slot; values may coincide or change during dragging. A value key would remount the active thumb or collide.
                 key={index}
                 className="mc-slider-position"
                 style={
+                  // SAFETY: --mc-thumb-fraction is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
                   {
                     "--mc-thumb-fraction": reverse ? 1 - fraction : fraction,
-                  } as React.CSSProperties
+                  } satisfies SliderThumbPaint as SliderThumbPaint
                 }
               >
                 <SliderPrimitive.Thumb
                   data-slot="slider-thumb"
                   className="mc-slider-thumb"
+                  // oxlint-disable-next-line shadcn/no-inline-styles -- Base UI supplies inline thumb translation; this private native-artwork override cancels that translation without dropping its other positioning, visibility or interaction styles.
                   style={{ translate: "none" }}
                   aria-label={
                     values.length === 1 ? props["aria-label"] : undefined
@@ -240,7 +282,7 @@ const Slider = ({
               </span>
             );
           })}
-          {label != null && (
+          {label !== undefined && label !== null && (
             <MinecraftText className="mc-slider-label">{label}</MinecraftText>
           )}
         </SliderPrimitive.Control>

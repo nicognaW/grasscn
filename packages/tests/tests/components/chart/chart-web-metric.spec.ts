@@ -21,20 +21,33 @@ for (const scale of [1, 2, 3] as const) {
       .locator("[data-slot=chart-fps-frame]>.mc-chart-rect")
       .evaluateAll((nodes) =>
         nodes
-          .filter(
-            (n) =>
-              (n as HTMLElement).style.width ===
-                `${getComputedStyle(n).getPropertyValue("--mc-scale").trim()}px` &&
-              (n as HTMLElement).style.background.startsWith("rgb(") &&
-              Number.parseFloat((n as HTMLElement).style.top) +
-                Number.parseFloat((n as HTMLElement).style.height) ===
-                69 * Number(getComputedStyle(n).getPropertyValue("--mc-scale"))
-          )
-          .map((n) => ({
-            color: (n as HTMLElement).style.background,
-            height: Number.parseFloat((n as HTMLElement).style.height),
-            top: Number.parseFloat((n as HTMLElement).style.top),
-          }))
+          .filter((n) => {
+            const css = getComputedStyle(n);
+
+            return (
+              css.width === `${css.getPropertyValue("--mc-scale").trim()}px` &&
+              // This explicit RGB channel identifies data bars; decorative borders inherit their CSS colors.
+              n.style
+                .getPropertyValue("--mc-native-background")
+                .startsWith("rgb(") &&
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+              Number.parseFloat(css.top) +
+                // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+                Number.parseFloat(css.height) ===
+                69 * Number(css.getPropertyValue("--mc-scale"))
+            );
+          })
+          .map((n) => {
+            const css = getComputedStyle(n);
+
+            return {
+              color: css.backgroundColor,
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+              height: Number.parseFloat(css.height),
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+              top: Number.parseFloat(css.top),
+            };
+          })
       );
 
     expect(bars.map((bar) => bar.height)).toEqual(
@@ -55,10 +68,12 @@ for (const scale of [2] as const) {
   test(`F3 web-data demo updates native bars and browser-share 3D profiler GUI${scale}`, async ({
     page,
   }) => {
-    await page.goto(`${preview.replace(/\/$/, "")}/docs/components/chart`);
-    const section = page.locator("[data-f3-web-data]"),
-      metric = section.locator("[data-web-chart=metric]"),
-      profiler = section.locator("[data-web-chart=profiler]");
+    await page.goto(`${preview.replace(/\/$/u, "")}/docs/components/chart`);
+
+    const section = page.locator("[data-f3-web-data]");
+    const metric = section.locator("[data-web-chart=metric]");
+    const profiler = section.locator("[data-web-chart=profiler]");
+
     await expect(metric).toBeVisible();
     await expect(profiler).toBeVisible();
     await expect(
@@ -70,14 +85,21 @@ for (const scale of [2] as const) {
     await expect(profiler).toContainText("Safari");
     await expect(profiler).not.toContainText("render");
     expect(
-      await section.evaluate(
-        (n) =>
-          !!(
-            n.compareDocumentPosition(
-              document.querySelector("[data-slot=chart-example]")!
-            ) & Node.DOCUMENT_POSITION_FOLLOWING
-          )
-      )
+      await section.evaluate((n) => {
+        const requiredElement39 = document.querySelector(
+          "[data-slot=chart-example]"
+        );
+
+        if (requiredElement39 === null) {
+          throw new Error("Missing required dom query");
+        }
+
+        return !!(
+          // oxlint-disable-next-line no-bitwise -- compareDocumentPosition returns combined DOM position flags; test the FOLLOWING bit while retaining other flags.
+          n.compareDocumentPosition(requiredElement39) &
+          Node.DOCUMENT_POSITION_FOLLOWING
+        );
+      })
     ).toBe(true);
 
     const beforeBars = await metric.screenshot();
@@ -89,8 +111,10 @@ for (const scale of [2] as const) {
     await expect(
       profiler.locator("[data-slot=chart-profiler-frame]")
     ).toHaveAttribute("data-mc-ready", "true");
-    expect((await metric.screenshot()).equals(beforeBars)).toBe(false);
-    expect((await profiler.screenshot()).equals(beforePie)).toBe(false);
+    const awaitedScreenshot1 = await metric.screenshot();
+    expect(awaitedScreenshot1.equals(beforeBars)).toBe(false);
+    const awaitedScreenshot2 = await profiler.screenshot();
+    expect(awaitedScreenshot2.equals(beforePie)).toBe(false);
     await page
       .getByRole("combobox", { exact: true, name: "F3 metric" })
       .click();

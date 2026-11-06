@@ -1,5 +1,8 @@
 @layer theme, base, components, utilities;
 @layer components {
+  .mc-bubble.mc-bubble-system {
+    color: #ffff55;
+  }
   .mc-bubble-group {
     display: flex;
     min-width: 0;
@@ -57,5 +60,11 @@
   }
   .mc-bubble-reactions[data-align="end"] {
     align-self: flex-end;
+  }
+}
+
+@layer components {
+  .mc-label.mc-owned-paint-bubble-1 {
+    color: inherit;
   }
 }

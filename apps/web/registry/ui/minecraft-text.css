@@ -25,6 +25,9 @@
       calc(-1 * var(--mc-glyph-y) * var(--mc-pixel));
     mask-repeat: no-repeat;
   }
+  .mc-bitmap .mc-glyph-space {
+    visibility: hidden;
+  }
   .mc-bitmap > .mc-text-accessible {
     position: absolute;
     width: 1px;

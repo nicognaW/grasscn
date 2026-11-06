@@ -7,11 +7,16 @@ const groupRef = React.createRef<HTMLDivElement>();
 
 const toggle = (
   <Toggle
-    render={<button />}
+    render={
+      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Toggle supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+      <button type="button" />
+    }
     ref={itemRef}
     scale={3}
     pressed
-    onPressedChange={(value) => value satisfies boolean}
+    onPressedChange={(value) => {
+      value satisfies boolean;
+    }}
   >
     {"Crafting \u4E16\u754C"}
   </Toggle>
@@ -21,7 +26,9 @@ const single = (
   <ToggleGroup
     ref={groupRef}
     value={["a"]}
-    onValueChange={(value) => value satisfies readonly string[]}
+    onValueChange={(value) => {
+      value satisfies readonly string[];
+    }}
     dir="rtl"
     orientation="vertical"
     multiple={false}
@@ -33,7 +40,9 @@ const single = (
 const multiple = (
   <ToggleGroup
     defaultValue={["a"]}
-    onValueChange={(value) => value satisfies readonly string[]}
+    onValueChange={(value) => {
+      value satisfies readonly string[];
+    }}
     spacing={4}
     multiple
   >

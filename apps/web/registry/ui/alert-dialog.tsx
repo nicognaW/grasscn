@@ -12,15 +12,24 @@ import {
   confirmationButtonText,
 } from "./minecraft-confirmation-text";
 import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-card.css";
 import "./minecraft-dialog.css";
 import "./minecraft-alert-dialog.css";
+
+interface AlertDialogTextureStyle extends React.CSSProperties {
+  "--mc-overlay-image": string;
+}
+
+interface AlertDialogScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 const IdentityContext = React.createContext("");
@@ -60,9 +69,9 @@ const AlertDialogTrigger = ({
   );
 };
 
-const AlertDialogPortal = (props: MinecraftProps<typeof Primitive.Portal>) => {
-  return <Primitive.Portal {...props} />;
-};
+const AlertDialogPortal = (props: MinecraftProps<typeof Primitive.Portal>) => (
+  <Primitive.Portal {...props} />
+);
 
 const AlertDialogOverlay = ({
   className,
@@ -75,7 +84,6 @@ const AlertDialogOverlay = ({
   blur?: number;
 }) => {
   const identity = React.useContext(IdentityContext);
-  const child = null;
 
   const content = (
     <>
@@ -90,8 +98,8 @@ const AlertDialogOverlay = ({
       data-slot="alert-dialog-overlay"
       data-mc-confirmation-id={identity}
       className={cn(`mc-alert-dialog-overlay`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        backgroundImage: `url("${confirmationMenuBackground}")`,
+      style={minecraftStyle(style, (__style): AlertDialogTextureStyle => ({
+        "--mc-overlay-image": `url("${confirmationMenuBackground}")`,
         ...__style,
       }))}
       {...props}
@@ -133,13 +141,13 @@ const AlertDialogContent = ({
   const [measuredWidth, setMeasuredWidth] = React.useState(462);
 
   const forwarded = React.useCallback(
-    (element: HTMLDivElement | null) => {
+    (element: HTMLDivElement | null): (() => void) | undefined => {
       setNode(element);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(element);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setNode(null);
             cleanup();
@@ -148,13 +156,15 @@ const AlertDialogContent = ({
       } else if (ref) {
         ref.current = element;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
@@ -162,6 +172,7 @@ const AlertDialogContent = ({
     const measure = () => {
       setViewport(innerWidth);
 
+      // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
       if (!node.offsetWidth) {
         return;
       }
@@ -204,6 +215,7 @@ const AlertDialogContent = ({
         naturalTitle > innerWidth ||
         naturalHeight > availableHeight;
 
+      // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter updates native DOM readiness/layout attributes; the stored state value is the element identity, not a mutable render model.
       node.dataset.mcConfirmationCompact = String(nextCompact);
       setCompact(nextCompact);
 
@@ -212,6 +224,7 @@ const AlertDialogContent = ({
         Math.floor(node.clientWidth / scale) * scale
       );
 
+      // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter updates native DOM readiness/layout attributes; the stored state value is the element identity, not a mutable render model.
       node.dataset.mcConfirmationStacked = String(
         nextCompact && availableWidth < 304 * scale
       );
@@ -233,7 +246,9 @@ const AlertDialogContent = ({
       const width = (nextCompact ? node.clientWidth : node.offsetWidth) / scale;
       const height = node.offsetHeight / scale;
 
+      // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter sets native CSSStyleDeclaration positioning on the committed DOM element, not a React state record.
       node.style.left = `${Math.floor((Math.ceil(innerWidth / scale) - boxWidth) / 2) * scale}px`;
+      // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter sets native CSSStyleDeclaration positioning on the committed DOM element, not a React state record.
       node.style.top = `${Math.floor((Math.ceil(innerHeight / scale) - height) / 2) * scale}px`;
       const bounds = node.getBoundingClientRect();
 
@@ -251,11 +266,11 @@ const AlertDialogContent = ({
           header &&
           item.closest('[data-slot="alert-dialog-header"]') === header;
 
-        const areaWidth = inHeader ? header.clientWidth / scale : width;
+        const areaWidth =
+          inHeader === true ? header.clientWidth / scale : width;
 
-        const areaLeft = inHeader
-          ? header.getBoundingClientRect().left
-          : bounds.left;
+        const areaLeft =
+          inHeader === true ? header.getBoundingClientRect().left : bounds.left;
 
         const previous = Number(item.dataset.mcConfirmationShift ?? 0);
 
@@ -269,6 +284,7 @@ const AlertDialogContent = ({
         item.style.setProperty("--mc-confirmation-x", `${next}px`);
       }
 
+      // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter updates native DOM readiness/layout attributes; the stored state value is the element identity, not a mutable render model.
       node.dataset.mcConfirmationReady = "true";
     };
 
@@ -297,31 +313,33 @@ const AlertDialogContent = ({
     };
   }, [node, scale]);
 
+  const confirmationText = React.useMemo(
+    () => ({
+      compact,
+      contentWidth: compact
+        ? measuredWidth
+        : Math.max(1, Math.ceil(viewport / scale) - 50),
+      nativeContentWidth: Math.max(1, Math.ceil(viewport / scale) - 50),
+      scale,
+    }),
+    [compact, measuredWidth, viewport, scale]
+  );
+
   return (
     <AlertDialogPortal keepMounted={keepMounted}>
       <AlertDialogOverlay blur={blur} />
       <ScaleContext.Provider value={scale}>
-        <ConfirmationTextContext.Provider
-          value={{
-            compact,
-            contentWidth: compact
-              ? measuredWidth
-              : Math.max(1, Math.ceil(viewport / scale) - 50),
-            nativeContentWidth: Math.max(1, Math.ceil(viewport / scale) - 50),
-            scale,
-          }}
-        >
+        <ConfirmationTextContext.Provider value={confirmationText}>
           <Primitive.Popup
             render={render}
             data-slot="alert-dialog-content"
             data-mc-confirmation-id={identity}
             ref={forwarded}
             className={cn(`mc-alert-dialog-content`, className)}
-            style={minecraftStyle(
-              style,
-              (__style) =>
-                ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-            )}
+            style={minecraftStyle(style, (__style): AlertDialogScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {children}
@@ -342,34 +360,30 @@ const AlertDialogHeader = ({
   return (
     <div
       data-slot="alert-dialog-header"
-      tabIndex={tabIndex ?? (compact ? 0 : undefined)}
+      tabIndex={tabIndex ?? ((compact ?? false) ? 0 : undefined)}
       className={cn(`mc-alert-dialog-header`, className)}
       {...props}
     />
   );
 };
 
-const AlertDialogMedia = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="alert-dialog-media"
-      data-mc-confirmation-item="true"
-      className={cn(`mc-alert-dialog-media`, className)}
-      {...props}
-    />
-  );
-};
+const AlertDialogMedia = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="alert-dialog-media"
+    data-mc-confirmation-item="true"
+    className={cn(`mc-alert-dialog-media`, className)}
+    {...props}
+  />
+);
 
-const AlertDialogFooter = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="alert-dialog-footer"
-      data-mc-confirmation-item="true"
-      className={cn(`mc-alert-dialog-footer`, className)}
-      {...props}
-    />
-  );
-};
+const AlertDialogFooter = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="alert-dialog-footer"
+    data-mc-confirmation-item="true"
+    className={cn(`mc-alert-dialog-footer`, className)}
+    {...props}
+  />
+);
 
 const AlertDialogTitle = ({
   children,
@@ -377,8 +391,6 @@ const AlertDialogTitle = ({
   render,
   ...props
 }: MinecraftProps<typeof Primitive.Title>) => {
-  const child = null;
-
   const content = (
     <MinecraftConfirmationText title>{children}</MinecraftConfirmationText>
   );
@@ -402,8 +414,6 @@ const AlertDialogDescription = ({
   render,
   ...props
 }: MinecraftProps<typeof Primitive.Description>) => {
-  const child = null;
-
   const content = (
     <MinecraftConfirmationText>{children}</MinecraftConfirmationText>
   );

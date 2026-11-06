@@ -1,25 +1,33 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
 for (const scale of [2] as const) {
   for (const mobile of [false, true]) {
-    for (const route of ["calendar", "chart", "select", "date-picker"] as const)
+    for (const route of [
+      "calendar",
+      "chart",
+      "select",
+      "date-picker",
+    ] as const) {
       test(`Default ${route} Select anchors initially at GUI${scale} ${mobile ? "mobile" : "desktop"}`, async ({
         page,
       }) => {
-        const width = mobile ? 390 : 1440,
-          height = mobile ? 844 : 955;
+        const width = mobile ? 390 : 1440;
+        const height = mobile ? 844 : 955;
 
-        await page.setViewportSize({ width, height });
+        await page.setViewportSize({ height, width });
         await page.goto(
           `${preview.replace(/\/$/u, "")}/docs/components/${route}`
         );
-        if (route === "date-picker")
+
+        if (route === "date-picker") {
           await page
             .locator(".documentation-playground")
-            .getByRole("button", { name: "Pick a range", exact: true })
+            .getByRole("button", { exact: true, name: "Pick a range" })
             .click();
+        }
 
         const triggers =
           route === "date-picker"
@@ -31,11 +39,12 @@ for (const scale of [2] as const) {
               );
 
         for (
-          let index = 0, count = await triggers.count();
+          let count = await triggers.count(), index = 0;
           index < count;
-          index++
+          index += 1
         ) {
           const trigger = triggers.nth(index);
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await expect
             .poll(
               async () =>
@@ -44,16 +53,23 @@ for (const scale of [2] as const) {
                 )
             )
             .toBe(String(scale));
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await trigger.evaluate((n) => {
             scrollBy(0, n.getBoundingClientRect().top - 160);
           });
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await trigger.click();
           const popup = page.locator("[data-slot=select-content][data-open]");
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await expect(popup).toBeVisible();
-          const anchor = (await trigger.boundingBox())!;
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
+          const anchor = await trigger.boundingBox();
+          expectNotNull(anchor, "Missing required bounding box: anchor");
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await expect
             .poll(async () => {
-              const p = (await popup.boundingBox())!;
+              const p = await popup.boundingBox();
+              expectNotNull(p, "Missing required bounding box: p");
 
               return Math.max(
                 p.y - anchor.y - anchor.height,
@@ -64,13 +80,16 @@ for (const scale of [2] as const) {
             .toBeLessThanOrEqual(8 * scale);
 
           const itemAligned =
+            // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
             (await popup.getAttribute("data-align-trigger")) === "true";
 
           if (itemAligned) {
             const selected = popup.locator("[data-selected]");
+            // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
             await expect
               .poll(async () => {
-                const row = (await selected.boundingBox())!;
+                const row = await selected.boundingBox();
+                expectNotNull(row, "Missing required bounding box: row");
 
                 return Math.abs(
                   row.y + row.height / 2 - anchor.y - anchor.height / 2
@@ -78,14 +97,18 @@ for (const scale of [2] as const) {
               })
               .toBeLessThanOrEqual(scale);
           } else {
-            const bounds = (await popup.boundingBox())!;
+            // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
+            const bounds = await popup.boundingBox();
+            expectNotNull(bounds, "Missing required bounding box: bounds");
             expect(
               bounds.y >= anchor.y + anchor.height - 1 ||
                 bounds.y + bounds.height <= anchor.y + 1
             ).toBe(true);
           }
 
-          const p = (await popup.boundingBox())!;
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
+          const p = await popup.boundingBox();
+          expectNotNull(p, "Missing required bounding box: p");
 
           let expectedX = Math.min(
             Math.max(anchor.x, 10),
@@ -96,13 +119,19 @@ for (const scale of [2] as const) {
 
           if (itemAligned) {
             // Base UI aligns the selected text with the value, clamping at its 5px screen inset.
-            const value = (await trigger
+            // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
+            const value = await trigger
               .locator("[data-slot=select-value]")
-              .boundingBox())!;
+              .boundingBox();
 
-            const text = (await popup
+            expectNotNull(value, "Missing required bounding box: value");
+
+            // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
+            const text = await popup
               .locator("[data-selected] .mc-select-item-label")
-              .boundingBox())!;
+              .boundingBox();
+
+            expectNotNull(text, "Missing required bounding box: text");
 
             expectedX = Math.min(
               Math.max(p.x + value.x - text.x, 5),
@@ -123,10 +152,13 @@ for (const scale of [2] as const) {
           expect(p.y).toBeGreaterThanOrEqual(0);
           expect(p.x + p.width).toBeLessThanOrEqual(width);
           expect(p.y + p.height).toBeLessThanOrEqual(height);
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await page.keyboard.press("Escape");
+          // oxlint-disable-next-line no-await-in-loop -- One page/trigger/popup viewport and focus owner; each open/geometry/scroll/Escape/focus cycle precedes next query case.
           await expect(trigger).toBeFocused();
         }
       });
+    }
   }
 }
 
@@ -136,16 +168,16 @@ for (const scale of [2] as const) {
       page,
     }) => {
       await page.setViewportSize({
-        width: mobile ? 390 : 1440,
         height: mobile ? 844 : 955,
+        width: mobile ? 390 : 1440,
       });
-      await page.goto(`${preview.replace(/\/$/, "")}/#native-select`);
+      await page.goto(`${preview.replace(/\/$/u, "")}/#native-select`);
       const select = page.locator("select#native-mode");
       await select.selectOption("world");
       await expect(select).toHaveValue("world");
       await expect(
         page.locator("[data-stage=native-select] .mc-native-select-art").first()
-      ).toContainText("\u4e16\u754c");
+      ).toContainText("\u4E16\u754C");
       // OS-native popup placement is platform-controlled, not a DOM/native-Minecraft popup claim.
       await expect(page.locator("[data-slot=select-content]")).toHaveCount(0);
     });

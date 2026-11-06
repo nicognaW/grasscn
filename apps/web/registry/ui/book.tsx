@@ -9,6 +9,31 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-book.css";
 
+interface BookLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-book-1-left": number;
+  "--mc-dynamic-book-1-top": number;
+}
+
+interface BookLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-book-2-height": number;
+  "--mc-dynamic-book-2-left": number;
+  "--mc-dynamic-book-2-top": number;
+  "--mc-dynamic-book-2-width": number;
+}
+
+interface BookLayoutStyle3 extends React.CSSProperties {
+  "--mc-dynamic-book-3-height": number;
+  "--mc-dynamic-book-3-left": number;
+  "--mc-dynamic-book-3-top": number;
+  "--mc-dynamic-book-3-width": number;
+}
+
+interface BookScaleStyle extends React.CSSProperties {
+  "--mc-book-height": string;
+  "--mc-book-width": string;
+  "--mc-scale": number;
+}
+
 type BookProps = React.ComponentProps<"div"> & {
   pages: readonly string[];
   page?: number;
@@ -55,6 +80,7 @@ const Book = ({
   };
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- The public role override falls back to the existing named Book group, which already handles page navigation keys; a fixed role would remove that caller contract.
     <div
       {...props}
       data-slot="book"
@@ -62,16 +88,12 @@ const Book = ({
       tabIndex={props.tabIndex ?? 0}
       role={props.role ?? "group"}
       aria-label={props["aria-label"] ?? "Book"}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-scale": scale,
-            height: 192 * scale,
-            width: 192 * scale,
-            ...__style,
-          }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): BookScaleStyle => ({
+        "--mc-book-height": `${192 * scale}px`,
+        "--mc-book-width": `${192 * scale}px`,
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       onKeyDown={(event) => {
         onKeyDown?.(event);
 
@@ -93,25 +115,35 @@ const Book = ({
       <AdventureImage
         texture="gui/book"
         scale={scale}
-        style={{ left: 0, maxWidth: "none", position: "absolute", top: 0 }}
+        className="mc-layout-book-1"
       />
       <MinecraftDocumentText
         text={`Page ${index + 1} of ${Math.max(1, pages.length)}`}
         width={114}
         scale={scale}
         align="right"
-        style={{ left: 34 * scale, position: "absolute", top: 16 * scale }}
+        className="mc-layout-book-2 mc-dynamic-layout-book-1"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-book-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-book-1-left": 34 * scale,
+            "--mc-dynamic-book-1-top": 16 * scale,
+          } satisfies BookLayoutStyle1 as BookLayoutStyle1
+        }
       />
       <div
-        className="mc-book-page"
+        className="mc-book-page mc-dynamic-layout-book-2"
         role="document"
         aria-label={`Page ${index + 1}`}
-        style={{
-          height: 128 * scale,
-          left: 36 * scale,
-          top: 30 * scale,
-          width: 114 * scale,
-        }}
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-book-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-book-2-height": 128 * scale,
+            "--mc-dynamic-book-2-left": 36 * scale,
+            "--mc-dynamic-book-2-top": 30 * scale,
+            "--mc-dynamic-book-2-width": 114 * scale,
+          } satisfies BookLayoutStyle2 as BookLayoutStyle2
+        }
       >
         <MinecraftDocumentText
           text={pages[index] ?? ""}
@@ -128,7 +160,7 @@ const Book = ({
             <button
               type="button"
               key={direction}
-              className="mc-book-arrow"
+              className="mc-book-arrow mc-dynamic-layout-book-3"
               aria-label={
                 direction === "forward" ? "Next page" : "Previous page"
               }
@@ -149,12 +181,16 @@ const Book = ({
                   change(index + (direction === "forward" ? 1 : -1), true);
                 }
               }}
-              style={{
-                height: 13 * scale,
-                left: (direction === "forward" ? 116 : 43) * scale,
-                top: 157 * scale,
-                width: 23 * scale,
-              }}
+              style={
+                /* SAFETY: The owned mc-dynamic-layout-book-3 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                {
+                  "--mc-dynamic-book-3-height": 13 * scale,
+                  "--mc-dynamic-book-3-left":
+                    (direction === "forward" ? 116 : 43) * scale,
+                  "--mc-dynamic-book-3-top": 157 * scale,
+                  "--mc-dynamic-book-3-width": 23 * scale,
+                } satisfies BookLayoutStyle3 as BookLayoutStyle3
+              }
             >
               <AdventureImage
                 texture={`gui/sprites/widget/page_${direction}${hover === direction ? "_highlighted" : ""}`}

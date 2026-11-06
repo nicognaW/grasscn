@@ -29,119 +29,108 @@ import "./minecraft-calendar.css";
 import "./minecraft-pagination.css";
 import "./minecraft-pagination-assets.css";
 
-const CalendarScaleContext = React.createContext<1 | 2 | 3>(2);
-
 type CalendarProps = React.ComponentProps<typeof DayPicker> & {
   scale?: 1 | 2 | 3;
   buttonVariant?: "default";
   captionTextProps?: Omit<LabelProps, "children" | "scale">;
 };
 
-const Calendar = ({
-  scale = 2,
-  buttonVariant = "default",
-  showOutsideDays = true,
-  captionLayout = "label",
-  className,
-  classNames,
-  components,
-  captionTextProps,
+interface CalendarDayStyle extends React.CSSProperties {
+  "--mc-calendar-day-height": string;
+  "--mc-calendar-day-width": string;
+}
+
+interface CalendarDropdownStyle extends React.CSSProperties {
+  "--mc-calendar-dropdown-min-width": string;
+}
+
+interface CalendarAppearance {
+  scale: 1 | 2 | 3;
+  captionTextProps?: CalendarProps["captionTextProps"];
+}
+
+const CalendarContext = React.createContext<CalendarAppearance>({ scale: 2 });
+
+const CalendarCaptionLabel = ({
+  children,
   ...props
-}: CalendarProps) => {
-  if (buttonVariant !== "default") {
-    throw Error(
-      "Minecraft Calendar supports the native default button appearance only"
-    );
-  }
-
-  const defaults = getDefaultClassNames();
-
-  const merged = Object.fromEntries(
-    Object.entries(defaults).map(([key, value]) => [
-      key,
-      `${value} ${(classNames as Record<string, string> | undefined)?.[key] ?? ""}`,
-    ])
-  );
+}: React.ComponentProps<typeof CaptionLabel>) => {
+  const { scale, captionTextProps } = React.useContext(CalendarContext);
 
   return (
-    <CalendarScaleContext.Provider value={scale}>
-      <DayPicker
-        showOutsideDays={showOutsideDays}
-        captionLayout={captionLayout}
-        className={cn(`mc-calendar`, className)}
-        classNames={merged}
-        components={{
-          CaptionLabel: ({
-            children,
-            ...p
-          }: React.ComponentProps<typeof CaptionLabel>) => (
-            <span {...p}>
-              <Label scale={scale} {...captionTextProps}>
-                {children}
-              </Label>
-            </span>
-          ),
-          Chevron: () => <></>,
-          DayButton: CalendarDayButton,
-          Dropdown: CalendarDropdown,
-          NextMonthButton: ({ className, onClick, ...p }) => (
-            <button
-              type="button"
-              className={cn(`mc-pagination-arrow mc-calendar-arrow`, className)}
-              data-direction="forward"
-              aria-disabled={p.disabled ?? undefined}
-              {...p}
-              onClick={(e) => {
-                if (!e.defaultPrevented) playMinecraftClick();
-                onClick?.(e);
-              }}
-            />
-          ),
-          PreviousMonthButton: ({ className, onClick, ...p }) => (
-            <button
-              type="button"
-              className={cn(`mc-pagination-arrow mc-calendar-arrow`, className)}
-              data-direction="backward"
-              aria-disabled={p.disabled ?? undefined}
-              {...p}
-              onClick={(e) => {
-                if (!e.defaultPrevented) playMinecraftClick();
-                onClick?.(e);
-              }}
-            />
-          ),
-          Root: ({
-            rootRef,
-            ...rootProps
-          }: React.ComponentProps<typeof Root>) => (
-            <Card
-              ref={rootRef}
-              data-slot="calendar"
-              scale={scale}
-              {...rootProps}
-            />
-          ),
-          WeekNumber: ({
-            children,
-            ...p
-          }: React.ComponentProps<typeof WeekNumber>) => (
-            <td {...p}>
-              <Label scale={scale}>{children}</Label>
-            </td>
-          ),
-          Weekday: ({
-            children,
-            ...p
-          }: React.ComponentProps<typeof Weekday>) => (
-            <th {...p}>
-              <Label scale={scale}>{children}</Label>
-            </th>
-          ),
-          ...components,
-        }}
-        {...props}
-      />
-    </CalendarScaleContext.Provider>
+    <span {...props}>
+      <Label scale={scale} {...captionTextProps}>
+        {children}
+      </Label>
+    </span>
+  );
+};
+
+// oxlint-disable-next-line react/jsx-no-useless-fragment -- This intentionally empty SDK Chevron component must return a ReactElement; null does not satisfy its existing component-slot type.
+const CalendarChevron = () => <></>;
+
+const CalendarMonthButton = ({
+  direction,
+  className,
+  onClick,
+  ...props
+}: React.ComponentProps<"button"> & { direction: "forward" | "backward" }) => (
+  <button
+    type="button"
+    className={cn(`mc-pagination-arrow mc-calendar-arrow`, className)}
+    data-direction={direction}
+    aria-disabled={props.disabled ?? undefined}
+    {...props}
+    onClick={(event) => {
+      if (!event.defaultPrevented) {
+        playMinecraftClick();
+      }
+
+      onClick?.(event);
+    }}
+  />
+);
+
+const CalendarNextMonthButton = (props: React.ComponentProps<"button">) => (
+  <CalendarMonthButton direction="forward" {...props} />
+);
+
+const CalendarPreviousMonthButton = (props: React.ComponentProps<"button">) => (
+  <CalendarMonthButton direction="backward" {...props} />
+);
+
+const CalendarRoot = ({
+  rootRef,
+  ...props
+}: React.ComponentProps<typeof Root>) => {
+  const { scale } = React.useContext(CalendarContext);
+
+  return <Card ref={rootRef} data-slot="calendar" scale={scale} {...props} />;
+};
+
+const CalendarWeekNumber = ({
+  children,
+  ...props
+}: React.ComponentProps<typeof WeekNumber>) => {
+  const { scale } = React.useContext(CalendarContext);
+
+  return (
+    <td {...props}>
+      <Label scale={scale}>{children}</Label>
+    </td>
+  );
+};
+
+const CalendarWeekday = ({
+  children,
+  ...props
+}: React.ComponentProps<typeof Weekday>) => {
+  const { scale } = React.useContext(CalendarContext);
+
+  return (
+    <th {...props}>
+      <Label scale={scale}>{children}</Label>
+    </th>
   );
 };
 
@@ -156,11 +145,15 @@ const CalendarDropdown = ({
   onChange,
   ...props
 }: React.ComponentProps<typeof Dropdown>) => {
-  const scale = React.useContext(CalendarScaleContext);
+  const { scale } = React.useContext(CalendarContext);
   const native = React.useRef<HTMLSelectElement>(null);
 
+  const dropdownStyle: CalendarDropdownStyle = {
+    "--mc-calendar-dropdown-min-width": `${40 * scale}px`,
+  };
+
   return (
-    <span className={cn(`mc-calendar-dropdown`, className)} style={style}>
+    <span className={cn(className)} style={style}>
       <select
         ref={native}
         value={value}
@@ -170,13 +163,7 @@ const CalendarDropdown = ({
         {...props}
         aria-hidden="true"
         tabIndex={-1}
-        style={{
-          height: 1,
-          opacity: 0,
-          pointerEvents: "none",
-          position: "absolute",
-          width: 1,
-        }}
+        className="pointer-events-none absolute h-px w-px opacity-0"
       >
         {options?.map((option) => (
           <option
@@ -194,8 +181,14 @@ const CalendarDropdown = ({
           value: String(option.value),
         }))}
         scale={scale}
-        value={value == null ? undefined : String(value)}
-        defaultValue={defaultValue == null ? undefined : String(defaultValue)}
+        value={
+          value === undefined || value === null ? undefined : String(value)
+        }
+        defaultValue={
+          defaultValue === undefined || defaultValue === null
+            ? undefined
+            : String(defaultValue)
+        }
         disabled={disabled}
         onValueChange={(next) => {
           if (native.current) {
@@ -210,7 +203,8 @@ const CalendarDropdown = ({
           id={id}
           aria-label={props["aria-label"]}
           aria-labelledby={props["aria-labelledby"]}
-          style={{ minWidth: 40 * scale, width: "auto" }}
+          className="mc-calendar-dropdown-trigger w-auto"
+          style={dropdownStyle}
         >
           <SelectValue />
         </SelectTrigger>
@@ -239,7 +233,7 @@ const CalendarDayButton = ({
   onClick,
   ...props
 }: React.ComponentProps<typeof DayButton>) => {
-  const scale = React.useContext(CalendarScaleContext);
+  const { scale } = React.useContext(CalendarContext);
   const ref = React.useRef<HTMLButtonElement>(null);
 
   React.useEffect(() => {
@@ -253,9 +247,11 @@ const CalendarDayButton = ({
       render={
         <button
           {...props}
+
+          // oxlint-disable-next-line react/button-has-type -- DayButton props type is the declared native button-type union; its existing type ?? button expression preserves valid caller types and the supported default without runtime normalization.
           type={props.type ?? "button"}
           onClick={(event) => {
-            if (!event.defaultPrevented && !props.disabled) {
+            if (!event.defaultPrevented && !(props.disabled ?? false)) {
               playMinecraftClick();
             }
 
@@ -280,14 +276,71 @@ const CalendarDayButton = ({
       data-outside={modifiers.outside || undefined}
       className={cn(`mc-calendar-day`, className)}
       scale={scale}
-      style={minecraftStyle(style, (__style) => ({
-        height: 20 * scale,
-        width: 20 * scale,
+      style={minecraftStyle(style, (__style): CalendarDayStyle => ({
+        "--mc-calendar-day-height": `${20 * scale}px`,
+        "--mc-calendar-day-width": `${20 * scale}px`,
         ...__style,
       }))}
     >
       {children}
     </Button>
+  );
+};
+
+const Calendar = ({
+  scale = 2,
+  buttonVariant = "default",
+  showOutsideDays = true,
+  captionLayout = "label",
+  className,
+  classNames,
+  components,
+  captionTextProps,
+  ...props
+}: CalendarProps) => {
+  const appearance = React.useMemo(
+    () => ({ captionTextProps, scale }),
+    [scale, captionTextProps]
+  );
+
+  if (buttonVariant !== "default") {
+    throw new Error(
+      "Minecraft Calendar supports the native default button appearance only"
+    );
+  }
+
+  const defaults = getDefaultClassNames();
+
+  // SAFETY: key comes only from DayPicker's getDefaultClassNames(); classNames is its Partial<ClassNames> override map, and the existing empty-string fallback handles every absent published key.
+  const merged = Object.fromEntries(
+    Object.entries(defaults).map(([key, value]) => [
+      key,
+      `${value} ${(classNames as Record<string, string> | undefined)?.[key] ?? ""}`,
+    ])
+  );
+
+  return (
+    <CalendarContext.Provider value={appearance}>
+      <DayPicker
+        showOutsideDays={showOutsideDays}
+        captionLayout={captionLayout}
+        className={cn(`mc-calendar`, className)}
+        classNames={merged}
+        components={{
+          CaptionLabel: CalendarCaptionLabel,
+          Chevron: CalendarChevron,
+          DayButton: CalendarDayButton,
+          Dropdown: CalendarDropdown,
+          NextMonthButton: CalendarNextMonthButton,
+          PreviousMonthButton: CalendarPreviousMonthButton,
+          Root: CalendarRoot,
+          WeekNumber: CalendarWeekNumber,
+          Weekday: CalendarWeekday,
+          ...components,
+        }}
+        {...props}
+      />
+    </CalendarContext.Provider>
   );
 };
 

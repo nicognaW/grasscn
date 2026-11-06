@@ -11,7 +11,7 @@ export const api = (
       className="native-footer"
       data-passed="yes"
     >
-      <button>Existing action</button>
+      <button type="button">Existing action</button>
     </DialogFooter>
     <DialogFooter showCloseButton={false} />
     <DialogFooter showCloseButton={undefined} />

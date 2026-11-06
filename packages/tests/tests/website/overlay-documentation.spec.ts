@@ -45,8 +45,11 @@ test("overlay documentation exposes exact examples, own grouped source and retai
     errors.push(`${page.url()}: ${error.message}`)
   );
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
-  for (const slug of slugs) {
+  const overlaySlugs = slugs;
+
+  const verifyOverlayDocumentation = async (
+    slug: (typeof overlaySlugs)[number]
+  ) => {
     await page.goto(`${origin}/docs/components/${slug}`);
 
     if (slug === "calendar") {
@@ -63,8 +66,18 @@ test("overlay documentation exposes exact examples, own grouped source and retai
       );
     }
 
-    for (const id of ["preview", "usage", "composition", "installation"]) {
-      await expect(page.locator(`h2#${id}`)).toBeVisible();
+    const readOnlyItems27 = ["preview", "usage", "composition", "installation"];
+
+    const readOnlyResults27 = await Promise.allSettled(
+      readOnlyItems27.map(async (id) => {
+        await expect(page.locator(`h2#${id}`)).toBeVisible();
+      })
+    );
+
+    for (const readOnlyResult27 of readOnlyResults27) {
+      if (readOnlyResult27.status === "rejected") {
+        throw readOnlyResult27.reason;
+      }
     }
 
     const example = page.locator(".documentation-example").first();
@@ -111,8 +124,12 @@ test("overlay documentation exposes exact examples, own grouped source and retai
     await expect(
       page.locator(".minecraft-prose").getByRole("alert")
     ).toHaveCount(0);
+  };
+
+  for (const slug of overlaySlugs) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyOverlayDocumentation(slug);
   }
-  /* eslint-enable no-await-in-loop */
 
   expect(errors).toEqual([]);
 });
@@ -158,8 +175,11 @@ test("documentation confirmation callbacks update once and close their actual mo
 test("documentation edge panels expose labelled Done actions", async ({
   page,
 }) => {
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
-  for (const slug of ["sheet", "drawer"]) {
+  const edgePanelSlugs = ["sheet", "drawer"];
+
+  const verifyEdgePanelComposition = async (
+    slug: (typeof edgePanelSlugs)[number]
+  ) => {
     await page.goto(`${origin}/docs/components/${slug}`);
     const example = page.locator(".documentation-example").first();
 
@@ -179,8 +199,12 @@ test("documentation edge panels expose labelled Done actions", async ({
     await dialog.getByRole("button", { exact: true, name: "Done" }).click();
     await expect(dialog).toHaveCount(0);
     await expect(trigger).toBeFocused();
+  };
+
+  for (const slug of edgePanelSlugs) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyEdgePanelComposition(slug);
   }
-  /* eslint-enable no-await-in-loop */
 });
 
 test("documentation menu and command examples dispatch real selections", async ({
@@ -381,8 +405,16 @@ test("overlay documentation remains usable at its default mobile width", async (
 }, info) => {
   await page.setViewportSize({ height: 844, width: 390 });
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
-  for (const slug of ["dialog", "data-table", "message-scroller", "chart"]) {
+  const mobileOverlaySlugs = [
+    "dialog",
+    "data-table",
+    "message-scroller",
+    "chart",
+  ];
+
+  const verifyMobileOverlayDocumentation = async (
+    slug: (typeof mobileOverlaySlugs)[number]
+  ) => {
     await page.goto(`${origin}/docs/components/${slug}`);
     await expect(page.locator(".documentation-example").first()).toBeVisible();
     expect(
@@ -392,6 +424,10 @@ test("overlay documentation remains usable at its default mobile width", async (
       fullPage: true,
       path: info.outputPath(`${slug}-390-actual.png`),
     });
+  };
+
+  for (const slug of mobileOverlaySlugs) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyMobileOverlayDocumentation(slug);
   }
-  /* eslint-enable no-await-in-loop */
 });

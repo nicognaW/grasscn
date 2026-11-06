@@ -7,17 +7,20 @@ import { Button } from "./button";
 import { minecraftCardSprite } from "./minecraft-card-sprite";
 import { CardScaleContext } from "./minecraft-card-text";
 import { MinecraftDialogBackdrop } from "./minecraft-dialog-backdrop";
-import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
 import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+  MinecraftDisclosureText,
+  MinecraftDisclosureHeading,
+} from "./minecraft-disclosure-text";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 
 import "./minecraft-card.css";
 import "./minecraft-sheet.css";
+
+interface SheetScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const SheetScale = React.createContext<1 | 2 | 3>(2);
 
@@ -26,13 +29,11 @@ const Sheet = ({
   ...props
 }: MinecraftProps<typeof SheetPrimitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <SheetScale.Provider value={scale}>
-      <SheetPrimitive.Root {...props} />
-    </SheetScale.Provider>
-  );
-};
+}) => (
+  <SheetScale.Provider value={scale}>
+    <SheetPrimitive.Root {...props} />
+  </SheetScale.Provider>
+);
 
 const SheetTrigger = ({
   render,
@@ -70,9 +71,9 @@ const SheetClose = ({
   );
 };
 
-const SheetPortal = (props: MinecraftProps<typeof SheetPrimitive.Portal>) => {
-  return <SheetPrimitive.Portal {...props} />;
-};
+const SheetPortal = (props: MinecraftProps<typeof SheetPrimitive.Portal>) => (
+  <SheetPrimitive.Portal {...props} />
+);
 
 const SheetOverlay = ({
   className,
@@ -80,8 +81,6 @@ const SheetOverlay = ({
   children,
   ...props
 }: MinecraftProps<typeof SheetPrimitive.Backdrop>) => {
-  const child = null;
-
   const content = (
     <>
       <MinecraftDialogBackdrop />
@@ -120,8 +119,6 @@ const SheetContent = ({
   const inherited = React.useContext(SheetScale);
   const scale = explicit ?? inherited;
 
-  const child = null;
-
   const content = (
     <>
       <MinecraftSurface sprite={minecraftCardSprite} />
@@ -140,11 +137,10 @@ const SheetContent = ({
             data-slot="sheet-content"
             data-side={side}
             className={cn(`mc-card mc-sheet-content`, className)}
-            style={minecraftStyle(
-              style,
-              (__style) =>
-                ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-            )}
+            style={minecraftStyle(style, (__style): SheetScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {content}
@@ -155,25 +151,21 @@ const SheetContent = ({
   );
 };
 
-const SheetHeader = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="sheet-header"
-      className={cn(`mc-sheet-header`, className)}
-      {...props}
-    />
-  );
-};
+const SheetHeader = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="sheet-header"
+    className={cn(`mc-sheet-header`, className)}
+    {...props}
+  />
+);
 
-const SheetFooter = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="sheet-footer"
-      className={cn(`mc-sheet-footer`, className)}
-      {...props}
-    />
-  );
-};
+const SheetFooter = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="sheet-footer"
+    className={cn(`mc-sheet-footer`, className)}
+    {...props}
+  />
+);
 
 const SheetTitle = ({
   render,
@@ -187,15 +179,7 @@ const SheetTitle = ({
     <SheetPrimitive.Title
       data-slot="sheet-title"
       className={className}
-      render={
-        render ?? (
-          <MinecraftDisclosureText
-            role="heading"
-            aria-level={2}
-            scale={scale}
-          />
-        )
-      }
+      render={render ?? <MinecraftDisclosureHeading scale={scale} />}
       {...props}
     >
       {children}

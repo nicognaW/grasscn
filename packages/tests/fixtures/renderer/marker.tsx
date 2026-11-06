@@ -6,16 +6,26 @@ import {
 } from "@grasscn/web/ui/marker";
 import * as React from "react";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
 export const MarkerFixture = () => {
-  const q = new URLSearchParams(location.search);
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const [count, setCount] = React.useState(0);
   const [tag, setTag] = React.useState("");
   const ref = React.useRef<HTMLDivElement>(null);
 
   React.useLayoutEffect(() => {
-    document.documentElement.style.background = document.body.style.background =
-      q.get("background") ?? "#202020";
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = q.get("background") ?? "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
   if (q.has("native")) {
@@ -27,15 +37,12 @@ export const MarkerFixture = () => {
         scale={scale}
         variant={part === "line" ? "border" : "default"}
         separatorEdge={q.get("state") === "footer" ? "footer" : "header"}
+        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width fixture-marker-native-layout"
         style={{
-          alignItems: "flex-start",
-          height: Number(q.get("height") ?? 9) * scale,
-          left: Number(q.get("x") ?? 16) * scale,
-          minHeight: 0,
-          padding: 0,
-          position: "fixed",
-          top: Number(q.get("y") ?? 16) * scale,
-          width: Number(q.get("width") ?? 200) * scale,
+          "--fixture-height": `${Number(q.get("height") ?? 9) * scale}px`,
+          "--fixture-width": `${Number(q.get("width") ?? 200) * scale}px`,
+          "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
+          "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
         }}
         data-subject="true"
       >
@@ -44,7 +51,7 @@ export const MarkerFixture = () => {
             maxWidth={
               q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined
             }
-            align={(q.get("align") ?? "left") as "left" | "center"}
+            align={q.get("align") === "center" ? "center" : "left"}
           >
             {q.get("label") ?? ""}
           </MarkerContent>
@@ -57,6 +64,7 @@ export const MarkerFixture = () => {
     <>
       <Marker
         render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Marker supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
           <a
             href="#marker"
             id="linked"
@@ -84,6 +92,7 @@ export const MarkerFixture = () => {
       </Marker>
       <output id="events">{count}</output>
       <button
+        type="button"
         id="read-marker-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");

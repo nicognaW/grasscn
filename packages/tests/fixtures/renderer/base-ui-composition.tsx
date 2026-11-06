@@ -16,6 +16,14 @@ import {
 } from "@grasscn/web/ui/sidebar";
 import * as React from "react";
 
+interface CompositionCheckedStyle extends React.CSSProperties {
+  "--checked-state": number;
+}
+
+interface CompositionOpenStyle extends React.CSSProperties {
+  "--open-state": number;
+}
+
 export const BaseUICompositionFixture = () => {
   const [disabled, setDisabled] = React.useState(false);
   const [subClicks, setSubClicks] = React.useState(0);
@@ -23,6 +31,7 @@ export const BaseUICompositionFixture = () => {
   return (
     <>
       <button
+        type="button"
         onClick={() => {
           setDisabled((value) => !value);
         }}
@@ -34,7 +43,10 @@ export const BaseUICompositionFixture = () => {
         className={(state) =>
           state.disabled ? "state-disabled" : "state-enabled"
         }
-        style={(state) => ({ width: state.disabled ? 300 : 240 })}
+        style={
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Approved style(state) API probe: existing assertions require the native callback to change width from 240px to 300px.
+          (state) => ({ width: state.disabled ? 300 : 240 })
+        }
       >
         Stateful button
       </Button>
@@ -43,23 +55,36 @@ export const BaseUICompositionFixture = () => {
         className={(state) =>
           state.checked ? "state-checked" : "state-unchecked"
         }
-        style={(state) =>
-          ({ "--checked-state": state.checked ? 1 : 0 }) as React.CSSProperties
-        }
+        style={(state): CompositionCheckedStyle => ({
+          "--checked-state": state.checked ? 1 : 0,
+        })}
       />
       <Field.Root disabled={disabled}>
         <Field.Label>Inherited field</Field.Label>
         <Input aria-label="Inherited field" defaultValue="Hello 世界" />
       </Field.Root>
-      <ButtonGroupText render={<a href="#group" />}>
+      <ButtonGroupText
+        render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ButtonGroupText supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href="#group" />
+        }
+      >
         Composed group text
       </ButtonGroupText>
       <SidebarProvider>
-        <SidebarGroupLabel render={<a href="#sidebar" />}>
+        <SidebarGroupLabel
+          render={
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- SidebarGroupLabel supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+            <a href="#sidebar" />
+          }
+        >
           Composed sidebar label
         </SidebarGroupLabel>
         <SidebarMenuSubButton
-          render={<a />}
+          render={
+            // oxlint-disable-next-line jsx-a11y/anchor-is-valid -- SidebarMenuSubButton supplies the real href and accessible children to this empty anchor render receiver; preserve the actual composition probe.
+            <a />
+          }
           href="#composed-sub"
           onClick={(event) => {
             event.preventDefault();
@@ -74,9 +99,9 @@ export const BaseUICompositionFixture = () => {
         <DialogTrigger>Open stateful dialog</DialogTrigger>
         <DialogContent
           className={(state) => (state.open ? "state-open" : "state-closed")}
-          style={(state) =>
-            ({ "--open-state": state.open ? 1 : 0 }) as React.CSSProperties
-          }
+          style={(state): CompositionOpenStyle => ({
+            "--open-state": state.open ? 1 : 0,
+          })}
         >
           <DialogTitle>Native state</DialogTitle>
         </DialogContent>

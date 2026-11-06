@@ -2,16 +2,32 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+/** Fields consumed from the two retained closed native Select matrices. */
+interface ClosedNativeSelectCase extends CapturedReferenceCase {
+  background: string;
+  label: string;
+  timeMs: number;
+  x: number;
+  y: number;
+}
+
+interface ClosedNativeSelectManifest {
+  cases: ClosedNativeSelectCase[];
+}
+
 for (const dir of ["native-select", "native-select-extra"]) {
+  // SAFETY: Both retained native-select/native-select-extra manifests supply every consumed identity, geometry, background, label and numeric timeMs field; no unrelated variant properties are added.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture boundary; preserve the original fresh runtime read/parse phase.
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
       "utf-8"
     )
-  );
+  ) as ClosedNativeSelectManifest;
 
   test.describe(`${dir} real HTMLSelect closed native appearance`, () => {
     test.describe.configure({ mode: "parallel" });
@@ -48,32 +64,58 @@ for (const dir of ["native-select", "native-select-extra"]) {
           c.label
         );
 
-        for (const label of await page
-          .locator(".mc-native-select-art [data-mc-label-ready]")
-          .all()) {
-          await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+        {
+          const readyElements = await page
+            .locator(".mc-native-select-art [data-mc-label-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (label) => {
+              await expect(label).toHaveAttribute(
+                "data-mc-label-ready",
+                "true"
+              );
+            })
+          );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
         await page.mouse.move(0, 0);
 
-        if (c.state === "focus") {
-          await page.locator("[data-subject]").focus();
-        } else {
-          await page.evaluate(() => {
-            (document.activeElement as HTMLElement)?.blur();
-          });
-        }
+        await (c.state === "focus"
+          ? page.locator("[data-subject]").focus()
+          : page.evaluate(() => {
+              // SAFETY: The controlled NativeSelect fixture focus belongs to its HTML body or native HTML control; retain the existing optional blur call, including null handling.
+              /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+              (document.activeElement as HTMLElement)
+                /* oxlint-enable typescript/no-unsafe-type-assertion */
+                ?.blur();
+            }));
 
         if (c.state.endsWith("hover")) {
           await page.locator("[data-subject]").hover({ force: true });
         }
 
-        await page.evaluate(
-          async () =>
-            new Promise((r) =>
-              requestAnimationFrame(() => requestAnimationFrame(r))
-            )
-        );
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers();
+
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion.resolve);
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          return await frameCompletion.promise;
+        });
 
         const bytes = readFileSync(
           pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)

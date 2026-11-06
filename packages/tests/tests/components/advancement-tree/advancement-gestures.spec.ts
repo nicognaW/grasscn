@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const fixture =
@@ -12,7 +13,9 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
   page,
 }, info) => {
   for (const width of [1440, 1024, 390]) {
+    // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
     await page.setViewportSize({ height: 1000, width });
+    // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
     await page.goto("http://127.0.0.1:5176/components/advancement-tree");
 
     const browse = page.getByRole("button", {
@@ -20,11 +23,11 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
       name: "Browse documentation",
     });
 
-    // eslint-disable-next-line no-await-in-loop -- This page must expose its mobile tree before the current viewport's clipping checks.
+    // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
     const mobileNavigation = await browse.isVisible();
 
     if (mobileNavigation) {
-      // eslint-disable-next-line no-await-in-loop -- Complete this viewport's navigation before resizing the same page.
+      // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
       await browse.click();
     }
 
@@ -33,10 +36,12 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
       name: "Documentation",
     });
 
+    // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
     await expect(
       navigation.getByRole("link", { exact: true, name: "Advancement Tree" })
     ).toBeVisible();
 
+    // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
     const clipped = await navigation
       .locator("a.mc-button")
       .evaluateAll((links) =>
@@ -59,6 +64,7 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
     expect(clipped, `clipped component labels at ${width}px`).toEqual([]);
 
     if (width === 1440) {
+      // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
       await page.screenshot({
         path: info.outputPath("advancement-navigation-fixed.png"),
       });
@@ -69,12 +75,13 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
 test("small pointer movement still selects an advancement", async ({
   page,
 }) => {
-  await page.goto(fixture + "?scale=2&mask=1");
+  await page.goto(`${fixture}?scale=2&mask=1`);
 
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
   const plane = page.locator(".mc-advancement-plane");
   const before = await plane.getAttribute("style");
-  const box = (await node.boundingBox())!;
+  const box = await node.boundingBox();
+  expectNotNull(box, "Missing required bounding box: box");
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2 + 5, box.y + box.height / 2);
@@ -92,12 +99,13 @@ test("dragging from a node pans without selecting and does not block keyboard se
       warnings.push(message.text());
     }
   });
-  await page.goto(fixture + "?scale=2&mask=1");
+  await page.goto(`${fixture}?scale=2&mask=1`);
 
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
   const plane = page.locator(".mc-advancement-plane");
   const before = await plane.getAttribute("style");
-  const box = (await node.boundingBox())!;
+  const box = await node.boundingBox();
+  expectNotNull(box, "Missing required bounding box: box");
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(
@@ -114,18 +122,23 @@ test("dragging from a node pans without selecting and does not block keyboard se
   await node.click();
   await expect(node).toHaveAttribute("aria-pressed", "true");
   expect(
-    warnings.filter((message) => /controlled|pointer capture/iu.test(message))
+    warnings.filter((message) =>
+      /[cC][oO][nN][tT][rR][oO][lL][lL][eE][dD]|[pP][oO][iI][nN][tT][eE][rR] [cC][aA][pP][tT][uU][rR][eE]/u.test(
+        message
+      )
+    )
   ).toEqual([]);
 });
 
 test("cancelled drag permits the next click and keyboard selection", async ({
   page,
 }) => {
-  await page.goto(fixture + "?scale=2&mask=1");
+  await page.goto(`${fixture}?scale=2&mask=1`);
   const tree = page.getByRole("group", { name: "Advancement tree" });
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
-  const box = (await node.boundingBox())!,
-    plane = page.locator(".mc-advancement-plane");
+  const box = await node.boundingBox();
+  expectNotNull(box, "Missing required bounding box: box");
+  const plane = page.locator(".mc-advancement-plane");
   await node.hover();
   await expect(page.locator('[data-slot="tooltip-content"]')).toBeVisible();
   await page.mouse.down();

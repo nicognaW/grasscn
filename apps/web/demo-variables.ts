@@ -1,0 +1,46 @@
+import type { CSSProperties } from "react";
+
+export interface DemoVariables extends CSSProperties {
+  "--demo-gap"?: `${number}px`;
+  "--demo-height"?: `${number}px`;
+  "--demo-margin-bottom"?: `${number}px`;
+  "--demo-min-height"?: `${number}px`;
+  "--demo-padding"?: `${number}px`;
+  "--demo-padding-top"?: `${number}px`;
+  "--demo-stage-gap"?: `${number}px`;
+  "--demo-stage-padding"?: `${number}px`;
+  "--demo-width"?: `${number}px`;
+  "--mc-scale"?: number;
+  "--demo-owned-aspect-ratio-1-width"?: string;
+  "--demo-owned-button-1-width"?: string;
+  "--demo-owned-button-2-width"?: string;
+  "--demo-owned-button-group-2-width"?: string;
+  "--demo-owned-button-group-3-width"?: string;
+  "--demo-owned-carousel-1-height"?: string;
+  "--demo-owned-carousel-1-width"?: string;
+  "--demo-owned-carousel-2-height"?: string;
+  "--demo-owned-chart-1-width"?: string;
+  "--demo-owned-chart-2-width"?: string;
+  "--demo-owned-chart-3-width"?: string;
+  "--demo-owned-chart-4-width"?: string;
+  "--demo-owned-chart-5-width"?: string;
+  "--demo-owned-code-block-2-width"?: string;
+  "--demo-owned-input-otp-1-width"?: string;
+  "--demo-owned-input-otp-2-width"?: string;
+  "--demo-owned-input-otp-3-width"?: string;
+  "--demo-owned-pagination-2-width"?: string;
+  "--demo-owned-resizable-1-height"?: string;
+  "--demo-owned-resizable-1-width"?: string;
+  "--demo-owned-scroll-area-1-height"?: string;
+  "--demo-owned-scroll-area-1-width"?: string;
+  "--demo-owned-separator-1-width"?: string;
+  "--demo-owned-separator-2-width"?: string;
+  "--demo-owned-sidebar-1-flex-direction"?: string;
+  "--demo-owned-sidebar-2-width"?: string;
+  "--demo-owned-table-1-width"?: string;
+  "--demo-owned-tabs-1-min-width"?: string;
+  "--demo-owned-tabs-1-width"?: string;
+  "--demo-owned-tabs-panel-height"?: string;
+  "--demo-owned-tabs-panel-padding"?: string;
+  "--sidebar-width"?: string;
+}

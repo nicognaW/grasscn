@@ -1,30 +1,126 @@
-import * as React from "react"
-import { ScrollArea } from "../registry/ui/scroll-area"
-import { Button } from "../registry/ui/button"
-import type { DemoProps } from "../types"
+import * as React from "react";
 
-export default function ScrollAreaDemo({ scale }: DemoProps) {
-  const viewport = React.useRef<HTMLDivElement>(null)
-  const [offset, setOffset] = React.useState(0), [selected, setSelected] = React.useState<number>()
-  const [disabled, setDisabled] = React.useState(false)
+import type { DemoVariables } from "../demo-variables";
+import { Button } from "../registry/ui/button";
+import { ScrollArea } from "../registry/ui/scroll-area";
+import type { DemoProps } from "../types";
+
+const ScrollAreaDemo = ({ scale }: DemoProps) => {
+  const viewport = React.useRef<HTMLDivElement>(null);
+
+  const [offset, setOffset] = React.useState(0);
+  const [selected, setSelected] = React.useState<number>();
+
+  const [disabled, setDisabled] = React.useState(false);
+
   const jump = (fraction: number) => {
-    const node = viewport.current!
-    node.scrollTop = (node.scrollHeight - node.clientHeight) * fraction
-  }
-  return <>
-    <div className="demo-options">
-      <Button aria-label="Scroll to top" onClick={() => jump(0)}>Top</Button>
-      <Button aria-label="Scroll to middle" onClick={() => jump(.5)}>Middle</Button>
-      <Button aria-label="Scroll to bottom" onClick={() => jump(1)}>Bottom</Button>
-      <Button aria-pressed={disabled} onClick={() => setDisabled(current => !current)}>{`Scrolling: ${disabled ? "Off" : "On"}`}</Button>
-    </div>
-    <div className="demo-stage" data-stage="scroll-area">
-      <div className="demo-pair"><span className="sample-caption">VERTICAL SCROLLING</span>
-        <ScrollArea role="region" aria-label="Demo scroll area" scale={scale} disabled={disabled} viewportRef={viewport} viewportProps={{ "aria-label": "Scrollable rows", onScroll: event => setOffset(Math.round(event.currentTarget.scrollTop / scale)) }} style={{ width: 200 * scale, maxWidth: "100%", height: 64 * scale }}>
-          <div style={{ height: 2400 * scale, overflow: "hidden" }}>{Array.from({ length: 100 }, (_, index) => <div key={index} style={{ height: 24 * scale, display: "flex", alignItems: "flex-start" }}><Button scale={scale} style={{ width: "100%" }} onClick={() => setSelected(index + 1)}>{`Row ${index + 1}`}</Button></div>)}</div>
-        </ScrollArea>
+    // SAFETY: This private demo always mounts the SDK default div viewport and passes no viewport render/ref override; only its mounted buttons invoke jump synchronously.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The fixed viewport producer and synchronous post-commit click lifetime prove this exact HTMLDivElement capture.
+    const node = viewport.current as HTMLDivElement;
+    node.scrollTop = (node.scrollHeight - node.clientHeight) * fraction;
+  };
+
+  const demoLayout1: DemoVariables = {
+    "--demo-owned-scroll-area-1-height": `${64 * scale}px`,
+    "--demo-owned-scroll-area-1-width": `${200 * scale}px`,
+  };
+
+  return (
+    <>
+      <div className="demo-options">
+        <Button
+          aria-label="Scroll to top"
+          onClick={() => {
+            jump(0);
+          }}
+        >
+          Top
+        </Button>
+        <Button
+          aria-label="Scroll to middle"
+          onClick={() => {
+            jump(0.5);
+          }}
+        >
+          Middle
+        </Button>
+        <Button
+          aria-label="Scroll to bottom"
+          onClick={() => {
+            jump(1);
+          }}
+        >
+          Bottom
+        </Button>
+        <Button
+          aria-pressed={disabled}
+          onClick={() => {
+            setDisabled((current) => !current);
+          }}
+        >{`Scrolling: ${disabled ? "Off" : "On"}`}</Button>
       </div>
-    </div>
-    <div className="demo-result"><span className="status-dot" /><output aria-label="Scroll area offset">{offset} px</output><span>{selected == null ? "Select a row" : `Selected Row ${selected}`}</span></div>
-  </>
-}
+      <div className="demo-stage" data-stage="scroll-area">
+        <div className="demo-pair">
+          <span>VERTICAL SCROLLING</span>
+          <ScrollArea
+            render={<section />}
+            aria-label="Demo scroll area"
+            scale={scale}
+            disabled={disabled}
+            viewportRef={viewport}
+            viewportProps={{
+              "aria-label": "Scrollable rows",
+              onScroll: (event) => {
+                setOffset(Math.round(event.currentTarget.scrollTop / scale));
+              },
+            }}
+            className="demo-owned-scroll-area-1"
+            style={demoLayout1}
+          >
+            <div
+              className="h-(--demo-height) overflow-hidden"
+              style={
+                /* SAFETY: satisfies checks --demo-height against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+                {
+                  "--demo-height": `${2400 * scale}px`,
+                } satisfies DemoVariables as DemoVariables
+              }
+            >
+              {Array.from({ length: 100 }, (_, index) => (
+                <div
+                  key={index}
+                  className="flex h-(--demo-height) items-start"
+                  style={
+                    /* SAFETY: satisfies checks --demo-height against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+                    {
+                      "--demo-height": `${24 * scale}px`,
+                    } satisfies DemoVariables as DemoVariables
+                  }
+                >
+                  <Button
+                    scale={scale}
+                    className="w-full"
+                    onClick={() => {
+                      setSelected(index + 1);
+                    }}
+                  >{`Row ${index + 1}`}</Button>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+        </div>
+      </div>
+      <div className="demo-result">
+        <span />
+        <output aria-label="Scroll area offset">{offset} px</output>
+        <span>
+          {selected === null || selected === undefined
+            ? "Select a row"
+            : `Selected Row ${selected}`}
+        </span>
+      </div>
+    </>
+  );
+};
+
+export { ScrollAreaDemo as default };

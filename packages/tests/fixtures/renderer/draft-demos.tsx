@@ -15,8 +15,11 @@ import { setMinecraftSoundVolume } from "@grasscn/web/ui/minecraft-sound";
 import { PlayerList, Scoreboard } from "@grasscn/web/ui/player-list";
 import { PlayerPreview } from "@grasscn/web/ui/player-preview";
 import { Sign, HangingSign } from "@grasscn/web/ui/sign";
+import type { SignWood } from "@grasscn/web/ui/sign";
 import { Trading } from "@grasscn/web/ui/trading";
 import * as React from "react";
+
+import "./draft-demos.css";
 
 interface Sample {
   element: string;
@@ -40,20 +43,419 @@ interface Sample {
   background?: string;
 }
 
-export default function DraftDemos({
+interface NativeHeartConditions {
+  readonly [nativeState: string]: React.ComponentProps<
+    typeof HealthMeter
+  >["condition"];
+  readonly ABSORBING: "absorbing";
+  readonly FROZEN: "frozen";
+  readonly NORMAL: "normal";
+  readonly POISIONED: "poisoned";
+  readonly WITHERED: "withered";
+}
+
+const heartConditions: NativeHeartConditions = {
+  ABSORBING: "absorbing",
+  FROZEN: "frozen",
+  NORMAL: "normal",
+  POISIONED: "poisoned",
+  WITHERED: "withered",
+};
+
+const hasSkinSource = (src: Sample["src"]): src is string =>
+  (src?.length ?? 0) > 0;
+
+interface DraftScenarioFrame {
+  sample: Sample;
+  scale: 1 | 2 | 3;
+  common: { "data-subject": string; id: string; scale: 1 | 2 | 3 };
+  value: number;
+  selected: string;
+  scroll: number;
+  setValue: React.Dispatch<React.SetStateAction<number>>;
+  setSelected: React.Dispatch<React.SetStateAction<string>>;
+  setScroll: React.Dispatch<React.SetStateAction<number>>;
+  setTrades: React.Dispatch<React.SetStateAction<number>>;
+  pixels: React.ComponentProps<typeof MinecraftMap>["pixels"];
+  roster: React.ComponentProps<typeof PlayerList>["players"];
+  offers: React.ComponentProps<typeof Trading>["offers"];
+}
+
+const renderDraftBookScenario = ({
+  sample,
+  common,
+  value,
+  setValue,
+}: DraftScenarioFrame) => (
+  <Book
+    {...common}
+    pages={
+      sample.labels ?? [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.",
+        "Your next chapter.",
+      ]
+    }
+    page={value}
+    onPageChange={setValue}
+  />
+);
+
+const renderDraftHotbarScenario = ({
+  sample,
+  common,
+  value,
+  setValue,
+}: DraftScenarioFrame) => (
+  <Hotbar
+    {...common}
+    background={sample.background ?? "#202020"}
+    value={value}
+    onValueChange={setValue}
+  />
+);
+
+const renderDraftHealthScenario = ({
+  sample,
+  common,
+  value,
+}: DraftScenarioFrame) => (
+  <HealthMeter
+    {...common}
+    value={value}
+    condition={heartConditions[String(sample.state)] ?? "normal"}
+  />
+);
+
+const renderDraftArmorScenario = ({ common, value }: DraftScenarioFrame) => (
+  <ArmorMeter {...common} value={value} />
+);
+
+const renderDraftHungerScenario = ({ common, value }: DraftScenarioFrame) => (
+  <HungerMeter {...common} value={value} />
+);
+
+const renderDraftAirScenario = ({ common, value }: DraftScenarioFrame) => (
+  <AirMeter {...common} value={value} />
+);
+
+const renderDraftExperienceScenario = ({
+  common,
+  value,
+}: DraftScenarioFrame) => <ExperienceBar {...common} value={value} />;
+
+const renderDraftPlayerPreviewScenario = ({
+  sample,
+  common,
+}: DraftScenarioFrame) => (
+  <PlayerPreview
+    {...common}
+    src={sample.src}
+    model={sample.model}
+    onRotationChange={(pose) => {
+      document.documentElement.dataset.rotation = JSON.stringify(pose);
+    }}
+    skin={
+      // SAFETY: The owned Adventure descriptors emit built-in SDK skin names; custom-skin descriptors pair their non-SDK names with src, and this existing branch normalizes them to wide/steve. The unchanged nullish default covers missing state.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact supported Adventure fixture producer contract after the existing custom-source normalization; no runtime validation or generic cast.
+      (hasSkinSource(sample.src) &&
+      !["wide/steve", "slim/alex"].includes(sample.state ?? "")
+        ? "wide/steve"
+        : (sample.state ?? "wide/steve")) as MinecraftAvatarSkin
+    }
+    width={sample.width ?? 80}
+    height={sample.height ?? 120}
+    defaultRotation={{
+      pitch: sample.anchor ?? -5,
+      yaw: sample.value ?? 30,
+    }}
+  />
+);
+
+const renderDraftMapScenario = ({
+  sample,
+  common,
+  pixels,
+  value,
+  setSelected,
+}: DraftScenarioFrame) => (
+  <MinecraftMap
+    onMapClick={(point) => {
+      document.documentElement.dataset.mapClick = JSON.stringify(point);
+    }}
+    {...common}
+    pixels={pixels}
+    markers={
+      sample.checked === true
+        ? [
+            {
+              decoration: "frame",
+              id: "home",
+              label: "Home",
+              rotation: value,
+              x: 0,
+              y: 0,
+            },
+            {
+              decoration: "plains_village",
+              id: "village",
+              label: "Village",
+              rotation: value,
+              x: 70,
+              y: -50,
+            },
+          ]
+        : []
+    }
+    onMarkerSelect={(id) => {
+      setSelected(id);
+      document.documentElement.dataset.marker = id;
+    }}
+  />
+);
+
+const renderDraftLocatorScenario = ({
+  sample,
+  scale,
+  value,
+  setSelected,
+}: DraftScenarioFrame) => (
+  <div
+    id="subject"
+    style={{
+      "--fixture-layout-1": `${17 * scale}px`,
+      "--fixture-layout-2": `${182 * scale}px`,
+    }}
+    className="fixture-owner-layout-2 fixture-owner-layout-3 fixture-owner-layout-4"
+    data-subject="true"
+  >
+    <LocatorBar
+      scale={scale}
+      heading={sample.heading ?? 0}
+      markers={
+        sample.checked === true
+          ? [
+              {
+                bearing: value,
+                color: sample.color ?? "#ffffff",
+                id: "point",
+                label: "Waypoint",
+                // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- LocatorMarker requires the actual geometric shape field; renaming this public component-input key changes its protocol.
+                shape: "default_3",
+              },
+            ]
+          : []
+      }
+      className="fixture-native-locator-offset"
+      style={{ "--fixture-locator-top": `${6 * scale}px` }}
+      onMarkerSelect={(id) => {
+        setSelected(id);
+        document.documentElement.dataset.marker = id;
+      }}
+    />
+  </div>
+);
+
+const renderDraftSignScenario = ({ sample, common }: DraftScenarioFrame) => (
+  <Sign
+    {...common}
+    wood={
+      // SAFETY: The owned sign/hanging-sign descriptors serialize the twelve SignWood literals, retained unchanged by the capture manifest and Adventure query serializers. Optional state keeps the existing oak default.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact supported Adventure sign-wood producer contract, including the existing optional input; no new validation or changed fallback.
+      (sample.state as SignWood | undefined) ?? "oak"
+    }
+    glowing={sample.checked}
+    lines={sample.labels ?? ["Welcome", "to grasscn", "", "Make it yours."]}
+  />
+);
+
+const renderDraftHangingSignScenario = ({
+  sample,
+  common,
+}: DraftScenarioFrame) => (
+  <HangingSign
+    {...common}
+    wood={
+      // SAFETY: The owned sign/hanging-sign descriptors serialize the twelve SignWood literals, retained unchanged by the capture manifest and Adventure query serializers. Optional state keeps the existing oak default.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact supported Adventure sign-wood producer contract, including the existing optional input; no new validation or changed fallback.
+      (sample.state as SignWood | undefined) ?? "oak"
+    }
+    glowing={sample.checked}
+    lines={sample.labels ?? ["Open", "for business", "", "Welcome!"]}
+  />
+);
+
+const renderDraftPlayerListScenario = ({
+  sample,
+  common,
+  roster,
+  setSelected,
+}: DraftScenarioFrame) => (
+  <PlayerList
+    {...common}
+    players={(sample.labels ?? roster.map((p) => p.name)).map((name, i) => {
+      let selectedFixtureBranch1: number | undefined;
+
+      if (sample.checked === true) {
+        selectedFixtureBranch1 =
+          (sample.labels?.length ?? 3) === 3 ? [18, 12, 7][i] : i * 3 + 7;
+      } else {
+        selectedFixtureBranch1 = undefined;
+      }
+
+      return {
+        id: String(i),
+        latency:
+          (sample.labels?.length ?? 3) === 3
+            ? [42, 220, 670][i]
+            : [-1, 42, 149, 150, 299, 300, 670, 1200][i % 8],
+        name,
+        score: selectedFixtureBranch1,
+        skin: (["slim/alex", "wide/steve", "wide/kai"] as const)[i % 3],
+      };
+    })}
+    header={sample.label}
+    footer={sample.text}
+    onPlayerSelect={setSelected}
+  />
+);
+
+const renderDraftScoreboardScenario = ({
+  sample,
+  common,
+  roster,
+}: DraftScenarioFrame) => (
+  <Scoreboard
+    {...common}
+    title={sample.label ?? "Build leaderboard"}
+    entries={(sample.labels ?? roster.map((p) => p.name)).map((name, i) => ({
+      id: String(i),
+      name,
+      score: (sample.labels?.length ?? 3) === 3 ? [18, 12, 7][i] : i * 3 + 7,
+    }))}
+  />
+);
+
+const renderDraftTradingScenario = ({
+  sample,
+  common,
+  scroll,
+  setScroll,
+  offers,
+  selected,
+  setSelected,
+  setTrades,
+}: DraftScenarioFrame) => (
+  <Trading
+    ref={(node) => {
+      document.documentElement.dataset.tradingRef = node?.dataset.slot ?? "";
+    }}
+    defaultScrollOffset={sample.cursor ?? 0}
+    scrollOffset={sample.uncontrolled === true ? undefined : scroll}
+    onScrollOffsetChange={setScroll}
+    {...common}
+    id={sample.element === "trading-scrollbar" ? undefined : "subject"}
+    offers={offers}
+    title="Component shop"
+    selectedId={selected}
+    onSelectedIdChange={setSelected}
+    onTrade={() => {
+      setTrades((v) => v + 1);
+    }}
+    data-subject={
+      (sample.element === "trading-scrollbar" ? undefined : "subject") ===
+      "subject"
+        ? "true"
+        : undefined
+    }
+  />
+);
+
+const renderDraftScenario = (frame: DraftScenarioFrame): React.ReactNode => {
+  const { sample } = frame;
+
+  switch (sample.element) {
+    case "book": {
+      return renderDraftBookScenario(frame);
+    }
+
+    case "hotbar": {
+      return renderDraftHotbarScenario(frame);
+    }
+
+    case "health": {
+      return renderDraftHealthScenario(frame);
+    }
+
+    case "armor": {
+      return renderDraftArmorScenario(frame);
+    }
+
+    case "hunger": {
+      return renderDraftHungerScenario(frame);
+    }
+
+    case "air": {
+      return renderDraftAirScenario(frame);
+    }
+
+    case "experience": {
+      return renderDraftExperienceScenario(frame);
+    }
+
+    case "player-preview": {
+      return renderDraftPlayerPreviewScenario(frame);
+    }
+
+    case "map": {
+      return renderDraftMapScenario(frame);
+    }
+
+    case "locator": {
+      return renderDraftLocatorScenario(frame);
+    }
+
+    case "sign": {
+      return renderDraftSignScenario(frame);
+    }
+
+    case "hanging-sign": {
+      return renderDraftHangingSignScenario(frame);
+    }
+
+    case "player-list": {
+      return renderDraftPlayerListScenario(frame);
+    }
+
+    case "scoreboard": {
+      return renderDraftScoreboardScenario(frame);
+    }
+
+    case "trading-scrollbar":
+    case "trading": {
+      return renderDraftTradingScenario(frame);
+    }
+
+    default: {
+      throw new Error(`Unknown draft feature: ${sample.element}`);
+    }
+  }
+};
+
+const DraftDemos = ({
   sample,
   scale,
 }: {
   sample: Sample;
   scale: 1 | 2 | 3;
-}) {
+}) => {
   const [value, setValue] = React.useState(sample.value ?? 0);
   const [selected, setSelected] = React.useState(String(sample.value ?? 0));
   const [trades, setTrades] = React.useState(0);
   const [scroll, setScroll] = React.useState(sample.cursor ?? 0);
 
   React.useEffect(() => {
-    setMinecraftSoundVolume(sample.muted ? 0 : 1);
+    setMinecraftSoundVolume(sample.muted === true ? 0 : 1);
   }, [sample.muted]);
   const common = { "data-subject": "true", id: "subject", scale };
 
@@ -61,19 +463,29 @@ export default function DraftDemos({
     () =>
       sample.state === "saved-world"
         ? getWorldMapPixels()
-        : Uint8Array.from({ length: 16_384 }, (_, i) =>
-            sample.state === "palette"
-              ? i % 256
-              : sample.state === "empty"
-                ? 0
-                : Math.floor(i / 128) < 40
-                  ? 6
-                  : i % 128 < 48
-                    ? 50
-                    : Math.floor(i / 128) > 100
-                      ? 10
-                      : 34
-          ),
+        : Uint8Array.from({ length: 16_384 }, (_, i) => {
+            if (sample.state === "palette") {
+              return i % 256;
+            }
+
+            if (sample.state === "empty") {
+              return 0;
+            }
+
+            if (Math.floor(i / 128) < 40) {
+              return 6;
+            }
+
+            if (i % 128 < 48) {
+              return 50;
+            }
+
+            if (Math.floor(i / 128) > 100) {
+              return 10;
+            }
+
+            return 34;
+          }),
     [sample.state]
   );
 
@@ -111,309 +523,39 @@ export default function DraftDemos({
     result: { count: 1, icon, label: `Reward ${i + 1}` },
   }));
 
-  let content: React.ReactNode;
-
-  switch (sample.element) {
-    case "book": {
-      content = (
-        <Book
-          {...common}
-          pages={
-            sample.labels ?? [
-              "Welcome to grasscn.\n\nEvery pixel counts.",
-              "Plan. Build. Ship.",
-              "Your next chapter.",
-            ]
-          }
-          page={value}
-          onPageChange={setValue}
-        />
-      );
-      break;
-    }
-
-    case "hotbar": {
-      content = (
-        <Hotbar
-          {...common}
-          background={sample.background ?? "#202020"}
-          value={value}
-          onValueChange={setValue}
-        />
-      );
-      break;
-    }
-
-    case "health": {
-      content = (
-        <HealthMeter
-          {...common}
-          value={value}
-          condition={
-            (
-              {
-                ABSORBING: "absorbing",
-                FROZEN: "frozen",
-                NORMAL: "normal",
-                POISIONED: "poisoned",
-                WITHERED: "withered",
-              } as const
-            )[sample.state as "NORMAL"] ?? "normal"
-          }
-        />
-      );
-      break;
-    }
-
-    case "armor": {
-      content = <ArmorMeter {...common} value={value} />;
-      break;
-    }
-
-    case "hunger": {
-      content = <HungerMeter {...common} value={value} />;
-      break;
-    }
-
-    case "air": {
-      content = <AirMeter {...common} value={value} />;
-      break;
-    }
-
-    case "experience": {
-      content = <ExperienceBar {...common} value={value} />;
-      break;
-    }
-
-    case "player-preview": {
-      content = (
-        <PlayerPreview
-          {...common}
-          src={sample.src}
-          model={sample.model}
-          onRotationChange={(pose) =>
-            (document.documentElement.dataset.rotation = JSON.stringify(pose))
-          }
-          skin={
-            (sample.src &&
-            !["wide/steve", "slim/alex"].includes(sample.state ?? "")
-              ? "wide/steve"
-              : (sample.state ?? "wide/steve")) as MinecraftAvatarSkin
-          }
-          width={sample.width ?? 80}
-          height={sample.height ?? 120}
-          defaultRotation={{
-            pitch: sample.anchor ?? -5,
-            yaw: sample.value ?? 30,
-          }}
-        />
-      );
-      break;
-    }
-
-    case "map": {
-      content = (
-        <MinecraftMap
-          onMapClick={(point) =>
-            (document.documentElement.dataset.mapClick = JSON.stringify(point))
-          }
-          {...common}
-          pixels={pixels}
-          markers={
-            sample.checked
-              ? [
-                  {
-                    decoration: "frame",
-                    id: "home",
-                    label: "Home",
-                    rotation: value,
-                    x: 0,
-                    y: 0,
-                  },
-                  {
-                    decoration: "plains_village",
-                    id: "village",
-                    label: "Village",
-                    rotation: value,
-                    x: 70,
-                    y: -50,
-                  },
-                ]
-              : []
-          }
-          onMarkerSelect={(id) => {
-            setSelected(id);
-            document.documentElement.dataset.marker = id;
-          }}
-        />
-      );
-      break;
-    }
-
-    case "locator": {
-      content = (
-        <div
-          id="subject"
-          style={{
-            height: 17 * scale,
-            position: "relative",
-            width: 182 * scale,
-          }}
-          data-subject="true"
-        >
-          <LocatorBar
-            scale={scale}
-            heading={sample.heading ?? 0}
-            markers={
-              sample.checked
-                ? [
-                    {
-                      bearing: value,
-                      color: sample.color ?? "#ffffff",
-                      id: "point",
-                      label: "Waypoint",
-                      shape: "default_3",
-                    },
-                  ]
-                : []
-            }
-            style={{ left: 0, position: "absolute", top: 6 * scale }}
-            onMarkerSelect={(id) => {
-              setSelected(id);
-              document.documentElement.dataset.marker = id;
-            }}
-          />
-        </div>
-      );
-      break;
-    }
-
-    case "sign": {
-      content = (
-        <Sign
-          {...common}
-          wood={
-            (sample.state as import("@grasscn/web/ui/sign").SignWood) ?? "oak"
-          }
-          glowing={sample.checked}
-          lines={
-            sample.labels ?? ["Welcome", "to grasscn", "", "Make it yours."]
-          }
-        />
-      );
-      break;
-    }
-
-    case "hanging-sign": {
-      content = (
-        <HangingSign
-          {...common}
-          wood={
-            (sample.state as import("@grasscn/web/ui/sign").SignWood) ?? "oak"
-          }
-          glowing={sample.checked}
-          lines={sample.labels ?? ["Open", "for business", "", "Welcome!"]}
-        />
-      );
-      break;
-    }
-
-    case "player-list": {
-      content = (
-        <PlayerList
-          {...common}
-          players={(sample.labels ?? roster.map((p) => p.name)).map(
-            (name, i) => ({
-              id: String(i),
-              latency:
-                (sample.labels?.length ?? 3) === 3
-                  ? [42, 220, 670][i]
-                  : [-1, 42, 149, 150, 299, 300, 670, 1200][i % 8],
-              name,
-              score: sample.checked
-                ? (sample.labels?.length ?? 3) === 3
-                  ? [18, 12, 7][i]
-                  : i * 3 + 7
-                : undefined,
-              skin: (["slim/alex", "wide/steve", "wide/kai"] as const)[i % 3],
-            })
-          )}
-          header={sample.label}
-          footer={sample.text}
-          onPlayerSelect={setSelected}
-        />
-      );
-      break;
-    }
-
-    case "scoreboard": {
-      content = (
-        <Scoreboard
-          {...common}
-          title={sample.label ?? "Build leaderboard"}
-          entries={(sample.labels ?? roster.map((p) => p.name)).map(
-            (name, i) => ({
-              id: String(i),
-              name,
-              score:
-                (sample.labels?.length ?? 3) === 3 ? [18, 12, 7][i] : i * 3 + 7,
-            })
-          )}
-        />
-      );
-      break;
-    }
-
-    case "trading-scrollbar":
-    case "trading": {
-      content = (
-        <Trading
-          ref={(node) => {
-            document.documentElement.dataset.tradingRef =
-              node?.dataset.slot ?? "";
-          }}
-          defaultScrollOffset={sample.cursor ?? 0}
-          scrollOffset={sample.uncontrolled ? undefined : scroll}
-          onScrollOffsetChange={setScroll}
-          {...common}
-          id={sample.element === "trading-scrollbar" ? undefined : "subject"}
-          offers={offers}
-          title="Component shop"
-          selectedId={selected}
-          onSelectedIdChange={setSelected}
-          onTrade={() => {
-            setTrades((v) => v + 1);
-          }}
-          data-subject={
-            (sample.element === "trading-scrollbar" ? undefined : "subject") ===
-            "subject"
-              ? "true"
-              : undefined
-          }
-        />
-      );
-      break;
-    }
-
-    default: {
-      throw new Error(`Unknown draft feature: ${sample.element}`);
-    }
-  }
+  const content = renderDraftScenario({
+    common,
+    offers,
+    pixels,
+    roster,
+    sample,
+    scale,
+    scroll,
+    selected,
+    setScroll,
+    setSelected,
+    setTrades,
+    setValue,
+    value,
+  });
 
   if (sample.element === "trading-scrollbar") {
     return (
       <div
         id="subject"
         style={{
-          height: 140 * scale,
-          overflow: "hidden",
-          position: "relative",
-          width: 6 * scale,
+          "--fixture-layout-3": `${140 * scale}px`,
+          "--fixture-layout-4": `${6 * scale}px`,
         }}
+        className="fixture-owner-layout-5 fixture-owner-layout-6 fixture-owner-layout-7 fixture-owner-layout-8"
         data-subject="true"
       >
         <div
-          style={{ left: -94 * scale, position: "absolute", top: -18 * scale }}
+          style={{
+            "--fixture-layout-5": `${-94 * scale}px`,
+            "--fixture-layout-6": `${-18 * scale}px`,
+          }}
+          className="fixture-owner-layout-9 fixture-owner-layout-10 fixture-owner-layout-11"
         >
           {content}
         </div>
@@ -434,12 +576,11 @@ export default function DraftDemos({
           }}
         />
       )}
-      <output
-        aria-label="Demo value"
-        style={{ color: "white", display: "block", marginTop: 20 }}
-      >
+      <output aria-label="Demo value" className="fixture-demo-value">
         {value} / {selected} / {trades}
       </output>
     </>
   );
-}
+};
+
+export { DraftDemos as default };

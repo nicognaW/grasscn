@@ -7,7 +7,16 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-spinner.css";
 
-const frames = ["O o o", "o O o", "o o O", "o O o"] as const;
+interface SpinnerScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+const frames = [
+  ["O", " ", "o", " ", "o"],
+  ["o", " ", "O", " ", "o"],
+  ["o", " ", "o", " ", "O"],
+  ["o", " ", "O", " ", "o"],
+] as const;
 
 const Spinner = ({
   className,
@@ -23,9 +32,9 @@ const Spinner = ({
   logicalWidth?: number;
 }) => {
   const [time, setTime] = React.useState(0);
-  React.useEffect(() => {
-    if (timeMs != null) {
-      return;
+  React.useEffect((): (() => void) | undefined => {
+    if (timeMs !== undefined && timeMs !== null) {
+      return undefined;
     }
 
     let frame = 0;
@@ -54,7 +63,7 @@ const Spinner = ({
       continue;
     }
 
-    const glyph = minecraftLoadingGlyphs[char as "O" | "o"];
+    const glyph = minecraftLoadingGlyphs[char];
 
     for (const [px, py] of glyph.pixels) {
       pixels.push([x + px, py]);
@@ -66,27 +75,35 @@ const Spinner = ({
   return (
     <svg
       data-slot="spinner"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn Spinner's SVG status indicator and SVG props/ref contract.
       role="status"
       aria-label="Loading"
       viewBox={`0 0 ${logicalWidth} 9`}
       width={logicalWidth * scale}
       height={9 * scale}
       className={cn(`mc-spinner`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): SpinnerScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
-      <g aria-hidden="true" fill="#202020">
-        {pixels.map(([x, y], index) => (
-          <rect key={index} x={x + 1} y={y + 1} width="1" height="1" />
+      <g
+        aria-hidden="true"
+        // oxlint-disable-next-line shadcn/no-raw-colors -- Vanilla LoadingDotsWidget uses the pinned0xff202020 shadow; retain the literal SVG presentation attribute and its existing consumer-selector/cascade behavior.
+        fill="#202020"
+      >
+        {pixels.map(([pixelX, y], index) => (
+          <rect key={index} x={pixelX + 1} y={y + 1} width="1" height="1" />
         ))}
       </g>
-      <g aria-hidden="true" fill="#808080">
-        {pixels.map(([x, y], index) => (
-          <rect key={index} x={x} y={y} width="1" height="1" />
+      <g
+        aria-hidden="true"
+        // oxlint-disable-next-line shadcn/no-raw-colors -- Vanilla LoadingDotsWidget uses the pinned0xff808080 foreground; retain the literal SVG presentation attribute and its existing consumer-selector/cascade behavior.
+        fill="#808080"
+      >
+        {pixels.map(([pixelX, y], index) => (
+          <rect key={index} x={pixelX} y={y} width="1" height="1" />
         ))}
       </g>
       {children}

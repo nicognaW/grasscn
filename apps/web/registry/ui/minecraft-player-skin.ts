@@ -1,5 +1,7 @@
 /** Unused UV columns distinguish the standard three-pixel arm layout. */
-export function inferPlayerSkinModel(image: HTMLImageElement): "wide" | "slim" {
+export const inferPlayerSkinModel = function inferPlayerSkinModel(
+  image: HTMLImageElement
+): "wide" | "slim" {
   const canvas = document.createElement("canvas");
   canvas.width = image.naturalWidth;
   canvas.height = image.naturalHeight;
@@ -8,7 +10,14 @@ export function inferPlayerSkinModel(image: HTMLImageElement): "wide" | "slim" {
     throw new Error("Player skins must be 64×64 PNG images");
   }
 
-  const context = canvas.getContext("2d")!;
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    throw new Error(
+      "Minecraft player skin 2D canvas context could not be created"
+    );
+  }
+
   context.drawImage(image, 0, 0);
   const { data } = context.getImageData(0, 0, 64, 64);
 
@@ -19,10 +28,13 @@ export function inferPlayerSkinModel(image: HTMLImageElement): "wide" | "slim" {
     [46, 52, 2, 12],
   ]) {
     for (let row = y; row < y + height; row += 1) {
-      for (let column = x; column < x + width; column++)
-        if (data[(row * 64 + column) * 4 + 3] !== 0) return "wide";
+      for (let column = x; column < x + width; column += 1) {
+        if (data[(row * 64 + column) * 4 + 3] !== 0) {
+          return "wide";
+        }
+      }
     }
   }
 
   return "slim";
-}
+};

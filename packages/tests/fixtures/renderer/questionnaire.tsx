@@ -15,11 +15,42 @@ import {
   QuestionnaireProgress,
   QuestionnaireChoiceDescription,
 } from "@grasscn/web/ui/questionnaire";
+import type { ReactNode } from "react";
 import * as React from "react";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
+const readQuestionnaireReferenceGeometry = (scale: 1 | 2 | 3) => {
+  const height = Number(q.get("height") ?? 20) * scale;
+  const left = Number(q.get("x") ?? 16) * scale;
+  const top = Number(q.get("y") ?? 16) * scale;
+  const width = Number(q.get("width") ?? 200) * scale;
+
+  return { height, left, top, width };
+};
+
+const readQuestionnaireReferenceProbe = () => {
+  const part = q.get("part") ?? "title";
+  const text = q.get("label") ?? "Hello Minecraft";
+
+  // SAFETY: owned fixture callers serialize the align option from the actual component protocol ("left" | "center"); preserve this URL read, original default and component handling.
+  const align =
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    (q.get("align") ?? "left") as "left" | "center";
+
+  const maxWidth = q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined;
+
+  return { align, maxWidth, part, text };
+};
+
 export const QuestionnaireFixture = () => {
-  const q = new URLSearchParams(location.search);
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const [result, setResult] = React.useState("");
   const [item, setItem] = React.useState("");
   const [tag, setTag] = React.useState("");
@@ -27,31 +58,33 @@ export const QuestionnaireFixture = () => {
   const ref = React.useRef<HTMLFormElement>(null);
 
   React.useLayoutEffect(() => {
-    document.documentElement.style.background = document.body.style.background =
-      q.get("background") ?? "#202020";
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = q.get("background") ?? "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
+  const { height, left, top, width } =
+    readQuestionnaireReferenceGeometry(scale);
+
   const bounds = {
-    border: 0,
-    height: Number(q.get("height") ?? 20) * scale,
-    left: Number(q.get("x") ?? 16) * scale,
-    margin: 0,
-    padding: 0,
-    position: "fixed",
-    top: Number(q.get("y") ?? 16) * scale,
-    width: Number(q.get("width") ?? 200) * scale,
-  } as React.CSSProperties;
+    "--fixture-height": `${height}px`,
+    "--fixture-width": `${width}px`,
+    "--fixture-x": `${left}px`,
+    "--fixture-y": `${top}px`,
+  } satisfies React.CSSProperties;
 
   if (q.has("native")) {
-    const part = q.get("part") ?? "title";
-    const text = q.get("label") ?? "Hello Minecraft";
+    const { align, maxWidth, part, text } = readQuestionnaireReferenceProbe();
 
     const textProps = {
-      align: (q.get("align") ?? "left") as "left" | "center",
+      align,
+      className: "fixture-questionnaire-native-bounds",
       "data-subject": "true",
       id: "subject",
-      maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
-      style: bounds,
+      maxWidth,
+      style: { ...bounds },
     };
 
     if (part === "input") {
@@ -68,6 +101,7 @@ export const QuestionnaireFixture = () => {
                 q.has("maxLength") ? Number(q.get("maxLength")) : undefined
               }
               placeholder={q.get("placeholder") ?? undefined}
+              className="fixture-questionnaire-native-bounds"
               style={bounds}
               data-subject="true"
             />
@@ -82,10 +116,13 @@ export const QuestionnaireFixture = () => {
           scale={scale}
           items={[
             {
-              name: "check",
               choices: [
-                { value: "yes", disabled: q.get("state") === "disabled" },
+                {
+                  disabled: q.get("state") === "disabled",
+                  value: "yes",
+                },
               ],
+              name: "check",
             },
           ]}
         >
@@ -96,7 +133,8 @@ export const QuestionnaireFixture = () => {
                 value="yes"
                 checked={q.get("checked") === "true"}
                 disabled={q.get("state") === "disabled"}
-                style={{ ...bounds, display: "flex", minHeight: 0, gap: 0 }}
+                className="fixture-questionnaire-native-choice fixture-questionnaire-native-bounds"
+                style={{ ...bounds }}
                 data-subject="true"
               />
             </QuestionnaireChoices>
@@ -108,14 +146,21 @@ export const QuestionnaireFixture = () => {
     if (part === "action") {
       const action = q.get("action") ?? "next";
 
-      const Action =
-        action === "previous"
-          ? QuestionnairePrevious
-          : action === "skip"
-            ? QuestionnaireSkip
-            : action === "submit"
-              ? QuestionnaireSubmit
-              : QuestionnaireNext;
+      let Action:
+        | typeof QuestionnairePrevious
+        | typeof QuestionnaireSkip
+        | typeof QuestionnaireSubmit
+        | typeof QuestionnaireNext;
+
+      if (action === "previous") {
+        Action = QuestionnairePrevious;
+      } else if (action === "skip") {
+        Action = QuestionnaireSkip;
+      } else if (action === "submit") {
+        Action = QuestionnaireSubmit;
+      } else {
+        Action = QuestionnaireNext;
+      }
 
       const active = action === "submit" ? "third" : "second";
 
@@ -130,6 +175,7 @@ export const QuestionnaireFixture = () => {
           <QuestionnaireItem name="third" />
           <Action
             id="subject"
+            className="fixture-questionnaire-native-bounds"
             style={bounds}
             disabled={q.get("state") === "disabled"}
             data-subject="true"
@@ -140,20 +186,31 @@ export const QuestionnaireFixture = () => {
       );
     }
 
+    let selectedFixtureBranch1: ReactNode;
+
+    if (part === "description") {
+      selectedFixtureBranch1 = (
+        <QuestionnaireDescription {...textProps}>
+          {text}
+        </QuestionnaireDescription>
+      );
+    } else if (part === "error") {
+      selectedFixtureBranch1 = (
+        <QuestionnaireError {...textProps}>{text}</QuestionnaireError>
+      );
+    } else {
+      selectedFixtureBranch1 =
+        part === "progress" ? (
+          <QuestionnaireProgress {...textProps}>{text}</QuestionnaireProgress>
+        ) : (
+          <QuestionnaireTitle {...textProps}>{text}</QuestionnaireTitle>
+        );
+    }
+
     return (
       <Questionnaire scale={scale} items={[{ name: "text" }]}>
         <QuestionnaireItem name="text" invalid={part === "error"}>
-          {part === "description" ? (
-            <QuestionnaireDescription {...textProps}>
-              {text}
-            </QuestionnaireDescription>
-          ) : part === "error" ? (
-            <QuestionnaireError {...textProps}>{text}</QuestionnaireError>
-          ) : part === "progress" ? (
-            <QuestionnaireProgress {...textProps}>{text}</QuestionnaireProgress>
-          ) : (
-            <QuestionnaireTitle {...textProps}>{text}</QuestionnaireTitle>
-          )}
+          {selectedFixtureBranch1}
         </QuestionnaireItem>
       </Questionnaire>
     );
@@ -242,6 +299,7 @@ export const QuestionnaireFixture = () => {
         </QuestionnaireActions>
       </Questionnaire>
       <button
+        type="button"
         id="read-questionnaire-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");
@@ -251,6 +309,7 @@ export const QuestionnaireFixture = () => {
       </button>
       <output id="questionnaire-ref">{tag}</output>
       <button
+        type="button"
         id="force-features"
         onClick={() => {
           setForced("features");

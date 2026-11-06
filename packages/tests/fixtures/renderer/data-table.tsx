@@ -11,7 +11,12 @@ import {
   TableHead,
   TableCell,
 } from "@grasscn/web/ui/table";
-import { createColumnHelper, useTable } from "@tanstack/react-table";
+import {
+  createColumnHelper,
+  flexRender,
+  useTable,
+} from "@tanstack/react-table";
+import type { CellContext } from "@tanstack/react-table";
 import * as React from "react";
 
 interface World {
@@ -30,17 +35,36 @@ const worlds: World[] = [
 ];
 
 const p = new URLSearchParams(location.search);
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
 const part = p.get("part");
 const width = Number(p.get("width") ?? 200);
 const height = Number(p.get("height") ?? 9);
 const label = p.get("label") ?? "Minecraft";
 
+const WorldPlayersCell = (
+  info: CellContext<DataTableFeatures, World, number>
+) => <strong data-testid="rich-cell">{info.getValue()}</strong>;
+
+const WorldValueCell = (info: CellContext<DataTableFeatures, World>) => (
+  <MinecraftDisclosureText scale={scale}>
+    {String(info.getValue<World[keyof World] | null | undefined>() ?? "")}
+  </MinecraftDisclosureText>
+);
+
 export const DataTableFixture = () => {
   React.useLayoutEffect(() => {
     const bg = p.get("background") ?? "#202020";
-    document.documentElement.style.background = document.body.style.background =
-      bg;
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = bg;
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
   const [events, setEvents] = React.useState(0);
 
@@ -53,9 +77,7 @@ export const DataTableFixture = () => {
           sortFn: "text",
         }),
         helper.accessor("players", {
-          cell: (info) => (
-            <strong data-testid="rich-cell">{info.getValue()}</strong>
-          ),
+          cell: WorldPlayersCell,
           header: "Players",
           sortFn: "alphanumeric",
         }),
@@ -67,11 +89,7 @@ export const DataTableFixture = () => {
     columns,
     data: worlds,
     defaultColumn: {
-      cell: (info) => (
-        <MinecraftDisclosureText scale={scale}>
-          {String(info.getValue() ?? "")}
-        </MinecraftDisclosureText>
-      ),
+      cell: WorldValueCell,
     },
     features,
     getRowId: (row) => row.id,
@@ -84,7 +102,7 @@ export const DataTableFixture = () => {
         scale={scale}
         maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
         align={p.get("alignment") === "center" ? "center" : "left"}
-        style={{ width: "100%" }}
+        className="fixture-data-table-text-fill"
       >
         {label}
       </MinecraftDisclosureText>
@@ -92,6 +110,7 @@ export const DataTableFixture = () => {
 
     return (
       <>
+        {/* oxlint-disable-next-line shadcn/no-inline-styles -- This isolated native DataTable probe preserves its original query-generated stylesheet declarations and CSS-parser invalid-value recovery; custom-property geometry can change fallback/cascade, and the protocol has no positive-finite-only restriction. */}
         <style>{`[data-slot=data-table]{position:fixed;left:${Number(p.get("x") ?? 16) * scale}px;top:${Number(p.get("y") ?? 16) * scale}px;width:${width * scale}px}[data-slot=table]{width:${width * scale}px;table-layout:fixed}[data-slot=table-header]::after{background:none}[data-slot=table-body]{background:none}[data-slot=table-row]{height:${height * scale}px}[data-slot=table-head],[data-slot=table-cell]{padding:0;height:${height * scale}px;vertical-align:top}${part === "head" ? "[data-slot=table-body]{display:none}" : "[data-slot=table-header]{display:none}"}`}</style>
         <DataTable
           scale={scale}
@@ -108,24 +127,32 @@ export const DataTableFixture = () => {
     <>
       <Input
         aria-label="Filter worlds"
-        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+        value={
+          // SAFETY: this owned name-column filter starts absent and its sole UI writer below passes e.target.value; TanStack may remove the empty filter, so preserve both string and undefined plus the existing empty default.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned filter-state producer boundary; retain the SDK read, optional column and existing fallback without adding runtime validation.
+          (table.getColumn("name")?.getFilterValue() as string | undefined) ??
+          ""
+        }
         onChange={(e) =>
           table.getColumn("name")?.setFilterValue(e.target.value)
         }
       />
       <button
+        type="button"
         id="sort"
         onClick={() => table.getColumn("name")?.toggleSorting()}
       >
         Sort
       </button>
       <button
+        type="button"
         id="visibility"
         onClick={() => table.getColumn("players")?.toggleVisibility()}
       >
         Columns
       </button>
       <button
+        type="button"
         id="page-size"
         onClick={() => {
           table.setPageSize(4);
@@ -137,25 +164,31 @@ export const DataTableFixture = () => {
         <TableHeader>
           {table.getHeaderGroups().map((group) => (
             <TableRow key={group.id}>
-              {group.headers.map((header) => (
-                <TableHead
-                  key={header.id}
-                  aria-sort={
-                    header.column.getIsSorted() === "asc"
-                      ? "ascending"
-                      : header.column.getIsSorted() === "desc"
-                        ? "descending"
-                        : "none"
-                  }
-                >
-                  {header.isPlaceholder ? null : typeof header.column.columnDef
-                      .header === "string" ? (
-                    header.column.columnDef.header
-                  ) : (
-                    <table.FlexRender header={header} />
-                  )}
-                </TableHead>
-              ))}
+              {group.headers.map((header) => {
+                let sortOrder: "ascending" | "descending" | "none";
+
+                if (header.column.getIsSorted() === "asc") {
+                  sortOrder = "ascending";
+                } else {
+                  sortOrder =
+                    header.column.getIsSorted() === "desc"
+                      ? "descending"
+                      : "none";
+                }
+
+                const headerContent: React.ReactNode = header.isPlaceholder
+                  ? null
+                  : flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    );
+
+                return (
+                  <TableHead key={header.id} aria-sort={sortOrder}>
+                    {headerContent}
+                  </TableHead>
+                );
+              })}
             </TableRow>
           ))}
         </TableHeader>
@@ -191,6 +224,7 @@ export const DataTableFixture = () => {
         </TableBody>
       </Table>
       <button
+        type="button"
         id="previous"
         disabled={!table.getCanPreviousPage()}
         onClick={() => {
@@ -200,6 +234,7 @@ export const DataTableFixture = () => {
         Previous
       </button>
       <button
+        type="button"
         id="next"
         disabled={!table.getCanNextPage()}
         onClick={() => {
@@ -211,6 +246,7 @@ export const DataTableFixture = () => {
       <output id="page">{table.state.pagination.pageIndex + 1}</output>
       <output id="selection">{table.getSelectedRowModel().rows.length}</output>
       <button
+        type="button"
         id="ref"
         onClick={() => {
           setEvents(table.getCoreRowModel().rows.length);

@@ -6,6 +6,9 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type BoundaryReference1 from "../reference/chart-fps/manifest.json";
+import type BoundaryReference2 from "../reference/chart-pie/manifest.json";
+
 const repo = path.resolve(".");
 const audits = new WeakMap<object, string[]>();
 
@@ -29,9 +32,12 @@ test.describe.configure({ mode: "parallel" });
 for (const kind of ["fps", "pie"]) {
   const dir = path.join(repo, `tests/reference/chart-${kind}`);
 
-  const manifest = JSON.parse(
-    readFileSync(pixelPerfectFile(path.join(dir, "manifest.json")), "utf-8")
-  );
+  const manifest =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(pixelPerfectFile(path.join(dir, "manifest.json")), "utf-8")
+    ) as typeof BoundaryReference1 | typeof BoundaryReference2;
 
   for (const c of manifest.cases) {
     test(`Native ${kind}:${c.name}`, async ({ page }, info) => {
@@ -49,16 +55,22 @@ for (const kind of ["fps", "pie"]) {
         ).toHaveAttribute("data-mc-ready", "true");
       }
 
-      await page.evaluate(
-        async () =>
-          new Promise<void>((r) =>
-            requestAnimationFrame(() =>
-              requestAnimationFrame(() => {
-                r();
-              })
-            )
-          )
-      );
+      await page.evaluate(async () => {
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
+
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        await frameCompletion.promise;
+      });
 
       const bytes = readFileSync(
         pixelPerfectFile(path.join(dir, "captures", c.name))
@@ -82,7 +94,10 @@ for (const kind of ["fps", "pie"]) {
           .subarray(i, i + 4)
           .equals(expected.data.subarray(i, i + 4));
 
-        if (changed) count += 1;
+        if (changed) {
+          count += 1;
+        }
+
         diff.data.set(changed ? [255, 0, 255, 255] : [0, 0, 0, 255], i);
       }
 

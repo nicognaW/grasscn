@@ -6,38 +6,27 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-interface NativeCase {
-  name: string;
-  text: string;
-  placeholder?: string;
-  state: string;
-  width: number;
-  height: number;
-  scale: number;
-  x: number;
-  y: number;
-  value?: number;
-  cursor?: number;
-  anchor?: number;
-  caretMs: number;
-  sha256: string;
-  referenceDirectory: string;
-}
+import type BoundaryReference2 from "../reference/textarea-cjk/manifest.json";
+import type BoundaryReference1 from "../reference/textarea/manifest.json";
 
 const manifest = {
   cases: ["textarea", "textarea-cjk"].flatMap((directory) =>
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // SAFETY: The only input directories are textarea and textarea-cjk; their exact retained manifest schemas are the two adjacent type-only imports. Preserve the fresh reads and existing case projection.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
     (
       JSON.parse(
         readFileSync(
           pixelPerfectFile(`tests/reference/${directory}/manifest.json`),
           "utf-8"
         )
-      ).cases as NativeCase[]
-    ).map((c) => ({ ...c, referenceDirectory: directory }))
+      ) as typeof BoundaryReference1 | typeof BoundaryReference2
+    ) /* oxlint-enable typescript/no-unsafe-type-assertion */.cases
+      .map((c) => ({ ...c, referenceDirectory: directory }))
   ),
 };
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -55,9 +44,9 @@ function compare(expected: PNG, actual: PNG) {
       different
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -65,7 +54,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Textarea comparator catches a one-pixel mutation", async () => {
   const expected = PNG.sync.read(
@@ -77,6 +66,7 @@ test("Textarea comparator catches a one-pixel mutation", async () => {
   );
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -84,7 +74,7 @@ test("Textarea comparator catches a one-pixel mutation", async () => {
 for (const c of manifest.cases) {
   test(`Textarea native pixels: ${c.name}`, async ({ page }, testInfo) => {
     if (c.referenceDirectory === "textarea-cjk") {
-      await page.setViewportSize({ width: 1536, height: 900 });
+      await page.setViewportSize({ height: 900, width: 1536 });
     }
 
     await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
@@ -96,8 +86,8 @@ for (const c of manifest.cases) {
 
     if (c.referenceDirectory === "textarea-cjk") {
       await area.evaluate(
-        (node, position) => {
-          Object.assign((node as HTMLElement).style, {
+        (node: HTMLElement, position) => {
+          Object.assign(node.style, {
             left: `${position.x}px`,
             position: "fixed",
             top: `${position.y}px`,
@@ -117,14 +107,14 @@ for (const c of manifest.cases) {
 
     await page.mouse.move(0, 0);
     await area.evaluate(
-      (node, settings) => {
-        const area = node as HTMLTextAreaElement;
-        area.setSelectionRange(
+      (node: HTMLTextAreaElement, settings) => {
+        const textareaElement = node;
+        textareaElement.setSelectionRange(
           Math.min(settings.cursor, settings.anchor),
           Math.max(settings.cursor, settings.anchor),
           settings.cursor < settings.anchor ? "backward" : "forward"
         );
-        area.scrollTop = settings.scroll;
+        textareaElement.scrollTop = settings.scroll;
       },
       {
         anchor: c.anchor ?? c.cursor ?? c.text.length,

@@ -1,31 +1,13 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile("tests/reference/input/manifest.json"), "utf-8")
-) as {
-  cases: {
-    name: string;
-    text: string;
-    placeholder?: string;
-    cursor?: number;
-    anchor?: number;
-    caretMs: number;
-    maxLength?: number;
-    state: string;
-    width: number;
-    height: number;
-    scale: number;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/input/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -43,9 +25,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -53,7 +35,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Input pixel comparator detects a one-pixel change", async () => {
   const expected = PNG.sync.read(
@@ -65,6 +47,7 @@ test("Input pixel comparator detects a one-pixel change", async () => {
   );
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -99,19 +82,15 @@ for (const c of manifest.cases) {
       await expect(input).toBeFocused();
     }
 
-    if (c.state === "hover") {
-      await input.hover();
-    } else {
-      await page.mouse.move(0, 0);
-    }
+    await (c.state === "hover" ? input.hover() : page.mouse.move(0, 0));
 
     const cursor = c.cursor ?? c.text.length;
     const anchor = c.anchor ?? cursor;
 
     await input.evaluate(
-      (node, selection) => {
-        const input = node as HTMLInputElement;
-        input.setSelectionRange(
+      (node: HTMLInputElement, selection) => {
+        const inputElement = node;
+        inputElement.setSelectionRange(
           Math.min(selection.cursor, selection.anchor),
           Math.max(selection.cursor, selection.anchor),
           selection.cursor < selection.anchor ? "backward" : "forward"

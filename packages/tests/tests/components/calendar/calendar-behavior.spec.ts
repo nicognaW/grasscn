@@ -1,4 +1,8 @@
 import { test, expect } from "@grasscn/tests/test";
+import {
+  recordAudioPlayback,
+  recordedAudioPlayback,
+} from "@tests/harness/audio-playback";
 
 test("Calendar single selection, disabled dates, keyboard and month navigation use actual DayPicker", async ({
   page,
@@ -6,18 +10,18 @@ test("Calendar single selection, disabled dates, keyboard and month navigation u
   await page.goto("/?component=calendar");
   const calendar = page.locator("[data-slot=calendar]").first();
   await expect(
-    calendar.getByRole("button", { name: /October 1st/ })
+    calendar.getByRole("button", { name: /October 1st/u })
   ).toBeDisabled();
-  await calendar.getByRole("button", { name: /October 10th/ }).click();
+  await calendar.getByRole("button", { name: /October 10th/u }).click();
   await expect(page.locator("#selected")).toHaveText("10/10/2026");
-  await calendar.getByRole("button", { name: /October 10th/ }).focus();
+  await calendar.getByRole("button", { name: /October 10th/u }).focus();
   await page.keyboard.press("ArrowRight");
   await expect(
-    calendar.getByRole("button", { name: /October 11th/ })
+    calendar.getByRole("button", { name: /October 11th/u })
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("#selected")).toHaveText("10/11/2026");
-  await calendar.getByRole("button", { name: /next month/i }).click();
+  await calendar.getByRole("button", { name: /next month/iu }).click();
   await expect(calendar).toContainText("November 2026");
 });
 
@@ -30,7 +34,7 @@ test("DatePicker opens by keyboard, selects value, submits form text and restore
   await page.keyboard.press("Enter");
   const popup = page.locator("[data-slot=date-picker-content]");
   await expect(popup).toBeVisible();
-  await popup.getByRole("button", { name: /October 15th/ }).click();
+  await popup.getByRole("button", { name: /October 15th/u }).click();
   await expect(popup).toHaveCount(0);
   await expect(trigger).toContainText("October 15th, 2026");
   await expect(page.locator("input[name=date]")).toHaveValue("2026-10-15");
@@ -45,8 +49,8 @@ test("Calendar range is genuine DayPicker range selection with two months", asyn
 }) => {
   await page.goto("/?component=calendar");
   const calendar = page.locator("[data-slot=calendar]").nth(1);
-  await calendar.getByRole("button", { name: /October 10th/ }).click();
-  await calendar.getByRole("button", { name: /October 15th/ }).click();
+  await calendar.getByRole("button", { name: /October 10th/u }).click();
+  await calendar.getByRole("button", { name: /October 15th/u }).click();
   await expect(calendar.locator("[data-range-start=true]")).toHaveCount(1);
   await expect(calendar.locator("[data-range-end=true]")).toHaveCount(1);
   await expect(calendar.locator("[data-range-middle=true]")).toHaveCount(4);
@@ -58,22 +62,22 @@ test("Calendar multiple selection and custom Minecraft month/year dropdowns pres
 }) => {
   await page.goto("/?component=calendar");
   const multiple = page.getByLabel("Multiple dates", { exact: true });
-  await multiple.getByRole("button", { name: /October 10th/ }).click();
-  await multiple.getByRole("button", { name: /October 12th/ }).click();
+  await multiple.getByRole("button", { name: /October 10th/u }).click();
+  await multiple.getByRole("button", { name: /October 12th/u }).click();
   await expect(page.locator("#multiple")).toHaveText("2");
-  await multiple.getByRole("button", { name: /October 10th/ }).click();
+  await multiple.getByRole("button", { name: /October 10th/u }).click();
   await expect(page.locator("#multiple")).toHaveText("1");
   const dropdown = page.getByLabel("Dropdown calendar", { exact: true });
-  await dropdown.getByRole("combobox", { name: /month/i }).click();
+  await dropdown.getByRole("combobox", { name: /month/iu }).click();
   await page.getByRole("option", { exact: true, name: "November" }).click();
   await expect(
-    dropdown.getByRole("gridcell", { name: /November 10th/ })
+    dropdown.getByRole("gridcell", { name: /November 10th/u })
   ).toBeVisible();
-  await dropdown.getByRole("combobox", { name: /year/i }).focus();
+  await dropdown.getByRole("combobox", { name: /year/iu }).focus();
   await page.keyboard.press("Enter");
   await page.getByRole("option", { exact: true, name: "2027" }).click();
   await expect(
-    dropdown.getByRole("gridcell", { name: /November 10th, 2027/ })
+    dropdown.getByRole("gridcell", { name: /November 10th, 2027/u })
   ).toBeVisible();
 });
 
@@ -92,7 +96,7 @@ test("Date picker example owns selection across close and reopen", async ({
 }) => {
   await page.goto("/?component=calendar&scenario=uncontrolled");
   await page.locator("[data-slot=date-picker-trigger]").click();
-  await page.getByRole("button", { name: /October 20th/ }).click();
+  await page.getByRole("button", { name: /October 20th/u }).click();
   await expect(page.locator("[data-slot=date-picker-trigger]")).toContainText(
     "October 20th, 2026"
   );
@@ -107,29 +111,18 @@ test("Date picker example owns selection across close and reopen", async ({
 test("Calendar cell and navigation activation preserve original one-voice click audio; hover remains silent", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).voices.push({
-        rate: this.playbackRate,
-        source: this.src,
-        volume: this.volume,
-      });
-
-      return Promise.resolve();
-    };
-  });
+  await recordAudioPlayback(page);
   await page.goto("/?component=calendar");
   const calendar = page.locator("[data-slot=calendar]").first();
-  await calendar.getByRole("button", { name: /October 10th/ }).hover();
-  expect(await page.evaluate(() => (window as any).voices)).toHaveLength(0);
-  await calendar.getByRole("button", { name: /October 10th/ }).click();
-  await calendar.getByRole("button", { name: /next month/i }).click();
-  const voices = await page.evaluate(() => (window as any).voices);
+  await calendar.getByRole("button", { name: /October 10th/u }).hover();
+  expect(await recordedAudioPlayback(page)).toHaveLength(0);
+  await calendar.getByRole("button", { name: /October 10th/u }).click();
+  await calendar.getByRole("button", { name: /next month/iu }).click();
+  const voices = await recordedAudioPlayback(page);
   expect(voices).toHaveLength(2);
   expect(
     voices.every(
-      (v: any) =>
+      (v) =>
         v.source.startsWith("data:audio/ogg;base64,") &&
         v.volume === 0.25 &&
         v.rate === 1

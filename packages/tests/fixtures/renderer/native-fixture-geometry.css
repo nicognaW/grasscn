@@ -1,0 +1,421 @@
+.fixture-geometry-height {
+  height: var(--fixture-height);
+}
+.fixture-geometry-width {
+  width: var(--fixture-width);
+}
+.fixture-chat-foreground {
+  color: var(--fixture-chat-color, #ffffff);
+}
+#root .fixture-questionnaire-native-bounds {
+  border: 0;
+  height: var(--fixture-height);
+  left: var(--fixture-x);
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: var(--fixture-y);
+  width: var(--fixture-width);
+}
+.fixture-geometry-x {
+  left: var(--fixture-x);
+}
+.fixture-geometry-y {
+  top: var(--fixture-y);
+}
+.fixture-height-1 {
+  height: 1px;
+}
+.fixture-height-160 {
+  height: 160px;
+}
+.fixture-height-180 {
+  height: 180px;
+}
+.fixture-height-200 {
+  height: 200px;
+}
+.fixture-height-300 {
+  height: 300px;
+}
+.fixture-left-0 {
+  left: 0px;
+}
+.fixture-placement-absolute {
+  position: absolute;
+}
+.fixture-placement-fixed {
+  position: fixed;
+}
+.fixture-placement-static {
+  position: static;
+}
+.fixture-top-0 {
+  top: 0px;
+}
+.fixture-width-1 {
+  width: 1px;
+}
+.fixture-width-300 {
+  width: 300px;
+}
+.fixture-width-320 {
+  width: 320px;
+}
+.fixture-width-500 {
+  width: 500px;
+}
+.fixture-width-520 {
+  width: 520px;
+}
+.fixture-width-180 {
+  width: 180px;
+}
+
+/* Authored intrinsic fixture layouts; component caller-style probes stay inline. */
+.fixture-layout-bulk-1 {
+  height: 24px;
+  left: 240px;
+  position: fixed;
+  top: 180px;
+  width: 32px;
+}
+
+/* Additional fixture-owned composition layout. */
+.fixture-owner-layout-1 {
+  display: grid;
+}
+.fixture-owner-layout-2 {
+  height: var(--fixture-layout-1);
+}
+.fixture-owner-layout-3 {
+  position: relative;
+}
+.fixture-owner-layout-4 {
+  width: var(--fixture-layout-2);
+}
+.fixture-owner-layout-5 {
+  height: var(--fixture-layout-3);
+}
+.fixture-owner-layout-6 {
+  overflow: hidden;
+}
+.fixture-owner-layout-7 {
+  position: relative;
+}
+.fixture-owner-layout-8 {
+  width: var(--fixture-layout-4);
+}
+.fixture-owner-layout-9 {
+  left: var(--fixture-layout-5);
+}
+.fixture-owner-layout-10 {
+  position: absolute;
+}
+.fixture-owner-layout-11 {
+  top: var(--fixture-layout-6);
+}
+.fixture-owner-layout-12 {
+  align-items: center;
+}
+.fixture-owner-layout-13 {
+  display: flex;
+}
+.fixture-owner-layout-14 {
+  gap: var(--fixture-layout-7);
+}
+.fixture-owner-layout-15 {
+  height: 0;
+}
+.fixture-owner-layout-16 {
+  position: fixed;
+}
+.fixture-owner-layout-17 {
+  width: 0;
+}
+.fixture-owner-layout-18 {
+  display: flex;
+}
+.fixture-owner-layout-19 {
+  gap: var(--fixture-layout-8);
+}
+.fixture-owner-layout-20 {
+  width: 100%;
+}
+.fixture-owner-layout-21 {
+  width: var(--fixture-layout-9);
+}
+.fixture-owner-layout-22 {
+  display: flex;
+}
+.fixture-owner-layout-23 {
+  height: var(--fixture-layout-10);
+}
+.fixture-owner-layout-24 {
+  left: var(--fixture-layout-11);
+}
+.fixture-owner-layout-25 {
+  position: absolute;
+}
+.fixture-owner-layout-26 {
+  top: var(--fixture-layout-12);
+}
+.fixture-owner-layout-27 {
+  display: flex;
+}
+.fixture-owner-layout-28 {
+  height: var(--fixture-layout-13);
+}
+.fixture-owner-layout-29 {
+  left: var(--fixture-layout-14);
+}
+.fixture-owner-layout-30 {
+  position: absolute;
+}
+.fixture-owner-layout-31 {
+  top: var(--fixture-layout-15);
+}
+.fixture-owner-layout-32 {
+  height: var(--fixture-layout-16);
+}
+.fixture-owner-layout-33 {
+  overflow: hidden;
+}
+.fixture-owner-layout-34 {
+  align-items: flex-start;
+}
+.fixture-owner-layout-35 {
+  display: flex;
+}
+.fixture-owner-layout-36 {
+  height: var(--fixture-layout-17);
+}
+.fixture-owner-layout-37 {
+  width: var(--fixture-layout-18);
+}
+.fixture-owner-layout-38 {
+  position: relative;
+}
+.fixture-owner-layout-39 {
+  overflow: hidden;
+}
+.fixture-owner-layout-40 {
+  display: block;
+}
+.fixture-owner-layout-41 {
+  padding: 0;
+}
+
+/* Additional fixture-owned composition layout. */
+.fixture-owner-layout-42 {
+  place-items: center;
+}
+.fixture-owner-layout-43 {
+  opacity: 0;
+}
+.fixture-owner-layout-44 {
+  left: var(--fixture-layout-19);
+}
+.fixture-owner-layout-45 {
+  top: var(--fixture-layout-20);
+}
+.fixture-owner-layout-46 {
+  height: var(--fixture-layout-21);
+}
+.fixture-owner-layout-47 {
+  height: var(--fixture-layout-22);
+}
+
+/* Intrinsic fixture controls; component caller-style probes keep their public inline contracts. */
+.fixture-native-anchor {
+  border: 0;
+  height: 0;
+  left: var(--fixture-anchor-x);
+  padding: 0;
+  position: fixed;
+  top: var(--fixture-anchor-y);
+  width: 0;
+}
+.fixture-color-bar {
+  background: var(--fixture-bar-color);
+  display: block;
+  height: 100%;
+  width: var(--fixture-bar-width);
+}
+.fixture-edge-anchor {
+  margin-top: var(--fixture-edge-top);
+  margin-left: var(--fixture-edge-left);
+}
+
+/* Authored fixture DOM layout; caller style API probes remain inline. */
+#root div.fixture-owned-inline-1 {
+  pointer-events: none;
+}
+
+/* Sidebar-owned geometry, including native Group/Menu Action receivers. */
+#root .fixture-sidebar-native-geometry {
+  height: var(--fixture-sidebar-native-height);
+  left: var(--fixture-sidebar-native-left);
+  position: fixed;
+  top: var(--fixture-sidebar-native-top);
+  width: var(--fixture-sidebar-native-width);
+}
+#root .fixture-sidebar-margin-zero {
+  margin: 0;
+}
+#root .fixture-sidebar-min-height-zero {
+  min-height: 0;
+}
+#root .fixture-sidebar-padding {
+  padding: var(--fixture-sidebar-native-padding);
+}
+#root .fixture-sidebar-gap {
+  gap: var(--fixture-sidebar-native-gap);
+}
+#root .fixture-sidebar-native-provider {
+  min-height: 0;
+}
+#root .fixture-sidebar-app-provider {
+  min-height: 400px;
+  position: relative;
+}
+#root .fixture-sidebar-native-row {
+  left: 0;
+  position: absolute;
+  top: var(--fixture-sidebar-row-top);
+  width: 100%;
+}
+
+/* Presentation-only fixture overrides; style API probes remain inline. */
+#root .fixture-table-fixed {
+  table-layout: fixed;
+}
+#root .fixture-table-padding-zero {
+  padding: 0;
+}
+#root .fixture-table-align-top {
+  vertical-align: top;
+}
+#root .fixture-table-background-none {
+  background-image: none;
+}
+#root .fixture-carousel-untransformed {
+  transform: none;
+}
+#root .fixture-carousel-slide-a {
+  background: #505050;
+}
+#root .fixture-carousel-slide-b {
+  background: #303030;
+}
+#root .fixture-carousel-slide-c {
+  background: #707070;
+}
+#root .fixture-avatar-reference-fallback {
+  background: transparent;
+  display: block;
+}
+#root .fixture-toggle-hidden-helper {
+  display: none;
+}
+#root .fixture-code-max-height {
+  max-height: 400px;
+}
+#root .fixture-collapsible-max-width {
+  max-width: 100%;
+}
+
+/* Native fixture composition layout; public inline-style probes stay inline. */
+#root .fixture-questionnaire-native-choice {
+  display: flex;
+  min-height: 0;
+  gap: 0;
+}
+#root .fixture-marker-native-layout {
+  align-items: flex-start;
+  min-height: 0;
+  padding: 0;
+}
+#root .fixture-combobox-native-anchor {
+  opacity: 0;
+}
+#root .fixture-structural-min-width-zero {
+  min-width: 0;
+}
+#root .fixture-pagination-native-start {
+  justify-content: flex-start;
+}
+#root .fixture-pagination-native-hidden {
+  display: none;
+}
+
+/* Fixture-owned dimensions and composition hit areas. */
+#root .fixture-main-full-width {
+  width: 100%;
+}
+.fixture-dialog-underlay .fixture-dialog-underlay-button {
+  left: var(--fixture-x);
+  position: absolute;
+  top: var(--fixture-y);
+  width: var(--fixture-width);
+}
+#root .fixture-context-native-hit {
+  inset: 0;
+  position: fixed;
+}
+#root .fixture-context-web-hit {
+  border: 2px solid #aaa;
+  display: block;
+  height: 200px;
+  width: 400px;
+}
+
+/* Native fixture geometry is applied only in the original active branches. */
+#root .fixture-native-collapse-hidden-trigger {
+  left: -10000px;
+  position: fixed;
+}
+#root .fixture-native-collapse-padding {
+  padding: 0;
+}
+#root .fixture-native-collapse-root {
+  left: var(--fixture-collapse-left);
+  position: fixed;
+  top: var(--fixture-collapse-top);
+  width: var(--fixture-collapse-width);
+}
+#root .fixture-main-slider-width[data-orientation="horizontal"] {
+  width: var(--fixture-width);
+}
+
+/* The original positioned-trigger branch owns these dimensions. */
+#root .fixture-native-menu-trigger {
+  left: var(--fixture-trigger-left);
+  position: fixed;
+  top: var(--fixture-trigger-top);
+  width: var(--fixture-trigger-width);
+}
+#root .fixture-native-locator-offset {
+  left: 0;
+  position: absolute;
+  top: var(--fixture-locator-top);
+}
+
+/* Exact dialog underlay palette: the fixture supplies only its finite 0..255 step; the theme owns RGB channel construction. */
+.fixture-dialog-palette {
+  --fixture-bar-color: rgb(
+    var(--fixture-dialog-palette-step)
+      calc(255 - var(--fixture-dialog-palette-step))
+      mod(calc(var(--fixture-dialog-palette-step) * 37), 256)
+  );
+}
+.fixture-card-empty-padding {
+  padding: 0;
+}
+.fixture-data-table-text-fill {
+  width: 100%;
+}
+
+.fixture-popover-empty-padding {
+  padding: 0;
+}

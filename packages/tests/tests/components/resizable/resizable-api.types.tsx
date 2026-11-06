@@ -12,7 +12,7 @@ import type {
 const Types = () => {
   const g = React.useRef<GroupImperativeHandle>(null);
   const p = React.useRef<PanelImperativeHandle>(null);
-  const e = React.createRef<HTMLDivElement>();
+  const e = React.useRef<HTMLDivElement>(null);
 
   return (
     <ResizablePanelGroup

@@ -6,15 +6,34 @@ import { minecraftSelectAssets } from "@grasscn/web/ui/minecraft-select-assets";
 import { selectUnihexAtlas } from "@grasscn/web/ui/minecraft-select-atlas";
 import { pixelPerfectFile } from "@ppt/paths";
 
-const json = (file: string) =>
-  JSON.parse(readFileSync(pixelPerfectFile(file), "utf-8"));
+import type BoundaryReference2 from "../reference/select-extra/glyph-atlas.json";
+import type BoundaryReference3 from "../reference/select-extra/repeatability.json";
+import type BoundaryReference1 from "../reference/select/asset-provenance.json";
 
 test("Select retains original list texture bytes", () => {
-  const provenance = json("tests/reference/select/asset-provenance.json");
+  const provenance =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/select/asset-provenance.json"),
+        "utf-8"
+      )
+    ) as typeof BoundaryReference1 & {
+      sources: Record<
+        string,
+        (typeof BoundaryReference1)["sources"][keyof (typeof BoundaryReference1)["sources"]]
+      >;
+    };
 
   for (const [name, uri] of Object.entries(minecraftSelectAssets)) {
     const bytes = Buffer.from(
-      /base64,([A-Za-z0-9+/=]+)/.exec(uri)![1],
+      // SAFETY: The imported generated Select texture producer writes every URI as data:image/png;base64 followed by nonempty PNG bytes; this regex consumes exactly that fixed producer format.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+      (/base64,(?<pngBase64>[A-Za-z0-9+/=]+)/u.exec(uri) as RegExpExecArray)[
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
+        1
+      ],
       "base64"
     );
 
@@ -25,10 +44,30 @@ test("Select retains original list texture bytes", () => {
 });
 
 test("Select uses the observed CJK atlas without changing the original renderer", () => {
-  const observed = json("tests/reference/select-extra/glyph-atlas.json");
-  expect(Object.keys(selectUnihexAtlas).sort()).toEqual(
-    Object.keys(observed).sort()
-  );
+  const observed =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/select-extra/glyph-atlas.json"),
+        "utf-8"
+      )
+    ) as Record<
+      string,
+      (typeof BoundaryReference2)[keyof typeof BoundaryReference2]
+    >;
+
+  const atlasCodepoints = Object.keys(selectUnihexAtlas);
+
+  atlasCodepoints.sort();
+
+  const atlasComparison = expect(atlasCodepoints);
+
+  const observedCodepoints = Object.keys(observed);
+
+  observedCodepoints.sort();
+
+  atlasComparison.toEqual(observedCodepoints);
 
   for (const [code, uv] of Object.entries(selectUnihexAtlas)) {
     for (const axis of ["u0", "u1", "v0", "v1"] as const) {
@@ -36,7 +75,16 @@ test("Select uses the observed CJK atlas without changing the original renderer"
     }
   }
 
-  const repeat = json("tests/reference/select-extra/repeatability.json");
+  const repeat =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/select-extra/repeatability.json"),
+        "utf-8"
+      )
+    ) as typeof BoundaryReference3;
+
   expect(repeat.glyphObservationEnabled).toEqual({
     runOne: true,
     runTwo: false,

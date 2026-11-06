@@ -34,7 +34,13 @@ import {
 import * as React from "react";
 
 const p = new URLSearchParams(location.search);
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
 const part = p.get("part") ?? "app";
 const native = p.has("native");
 const state = p.get("state") ?? "normal";
@@ -42,23 +48,33 @@ const width = Number(p.get("width") ?? 200);
 const height = Number(p.get("height") ?? 20);
 const label = p.get("label") ?? "Worlds";
 
-const position: React.CSSProperties = {
+const nativeSidebarGeometry = {
   height: height * scale,
   left: Number(p.get("x") ?? 16) * scale,
   position: "fixed",
   top: Number(p.get("y") ?? 16) * scale,
   width: width * scale,
+} satisfies React.CSSProperties;
+
+const position: React.CSSProperties = nativeSidebarGeometry;
+
+const nativeSidebarLayout = {
+  "--fixture-sidebar-native-height": `${nativeSidebarGeometry.height}px`,
+  "--fixture-sidebar-native-left": `${nativeSidebarGeometry.left}px`,
+  "--fixture-sidebar-native-top": `${nativeSidebarGeometry.top}px`,
+  "--fixture-sidebar-native-width": `${nativeSidebarGeometry.width}px`,
 };
 
 const Inspector = () => {
   const ctx = useSidebar();
 
   return (
-    <div style={{ left: 32, position: "absolute", top: 700 }}>
+    <div className="fixture-sidebar-inspector">
       <output id="state">{ctx.state}</output>
       <output id="mobile">{String(ctx.isMobile)}</output>
       <output id="open-mobile">{String(ctx.openMobile)}</output>
       <button
+        type="button"
         id="external"
         onClick={() => {
           ctx.setOpen((value) => !value);
@@ -67,6 +83,7 @@ const Inspector = () => {
         External toggle
       </button>
       <button
+        type="button"
         id="double"
         onClick={() => {
           ctx.setOpen((v) => !v);
@@ -78,6 +95,46 @@ const Inspector = () => {
     </div>
   );
 };
+
+const renderNativeScrollContent = () => (
+  <SidebarContent
+    id="subject"
+    className="fixture-sidebar-native-geometry"
+    style={{
+      "--fixture-sidebar-native-height":
+        nativeSidebarLayout["--fixture-sidebar-native-height"],
+      "--fixture-sidebar-native-left":
+        nativeSidebarLayout["--fixture-sidebar-native-left"],
+      "--fixture-sidebar-native-top":
+        nativeSidebarLayout["--fixture-sidebar-native-top"],
+      "--fixture-sidebar-native-width":
+        nativeSidebarLayout["--fixture-sidebar-native-width"],
+    }}
+    data-subject="true"
+  >
+    <div
+      style={{
+        "--fixture-layout-22": `${Number(p.get("contentHeight") ?? 0) * scale}px`,
+      }}
+      className="fixture-owner-layout-38 fixture-owner-layout-39 fixture-owner-layout-47"
+    >
+      {Array.from(
+        { length: Math.ceil(Number(p.get("contentHeight") ?? 0) / 24) },
+        (_, index) => (
+          <Button
+            // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These navigation-owned Row N slots have immutable query-derived length and fixed top coordinates; they do not reorder or filter within the document.
+            key={index}
+            scale={scale}
+            className="fixture-sidebar-native-row"
+            style={{
+              "--fixture-sidebar-row-top": `${24 * index * scale}px`,
+            }}
+          >{`Row ${index + 1}`}</Button>
+        )
+      )}
+    </div>
+  </SidebarContent>
+);
 
 export const SidebarFixture = () => {
   React.useLayoutEffect(() => {
@@ -96,10 +153,20 @@ export const SidebarFixture = () => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const contentRef = React.useRef<HTMLDivElement>(null);
 
-  const provider = {
-    scale,
+  const providerVisibility: Pick<
+    React.ComponentProps<typeof SidebarProvider>,
+    "scale" | "defaultOpen" | "open"
+  > = {
     defaultOpen: !p.has("collapsed"),
-    ...(p.has("controlled") ? { open } : {}),
+    scale,
+  };
+
+  if (p.has("controlled")) {
+    providerVisibility.open = open;
+  }
+
+  const provider = {
+    ...providerVisibility,
     onOpenChange: (value: boolean) => {
       setEvents((v) => v + 1);
 
@@ -127,18 +194,77 @@ export const SidebarFixture = () => {
     style: position,
   };
 
+  const nativeSidebarButtonProps = {
+    ...buttonProps,
+    className: "fixture-sidebar-native-geometry",
+    style: {
+      "--fixture-sidebar-native-height":
+        nativeSidebarLayout["--fixture-sidebar-native-height"],
+      "--fixture-sidebar-native-left":
+        nativeSidebarLayout["--fixture-sidebar-native-left"],
+      "--fixture-sidebar-native-top":
+        nativeSidebarLayout["--fixture-sidebar-native-top"],
+      "--fixture-sidebar-native-width":
+        nativeSidebarLayout["--fixture-sidebar-native-width"],
+    },
+  };
+
+  const renderNativeInput = () => (
+    <SidebarInput
+      id="subject"
+      aria-label="Test input"
+      value={text}
+      onChange={(event) => {
+        setText(event.target.value);
+      }}
+      placeholder={p.get("placeholder") ?? ""}
+      disabled={state === "disabled"}
+      readOnly={state.includes("readonly")}
+      maxLength={p.has("maxLength") ? Number(p.get("maxLength")) : undefined}
+      className="fixture-sidebar-native-geometry"
+      style={{
+        "--fixture-sidebar-native-height":
+          nativeSidebarLayout["--fixture-sidebar-native-height"],
+        "--fixture-sidebar-native-left":
+          nativeSidebarLayout["--fixture-sidebar-native-left"],
+        "--fixture-sidebar-native-top":
+          nativeSidebarLayout["--fixture-sidebar-native-top"],
+        "--fixture-sidebar-native-width":
+          nativeSidebarLayout["--fixture-sidebar-native-width"],
+      }}
+      data-subject="true"
+    />
+  );
+
   if (native) {
-    return (
-      <SidebarProvider {...provider} style={{ minHeight: 0 }}>
-        {part === "menu-button" ? (
-          <SidebarMenuButton {...buttonProps} isActive={p.has("active")}>
+    const renderNativeSidebar = () => {
+      let selectedNativeSidebarSubject: React.JSX.Element | null;
+
+      if (part === "menu-button") {
+        selectedNativeSidebarSubject = (
+          <SidebarMenuButton
+            {...nativeSidebarButtonProps}
+            isActive={p.has("active")}
+          >
             {label}
           </SidebarMenuButton>
-        ) : part === "sub-button" ? (
+        );
+      } else if (part === "sub-button") {
+        selectedNativeSidebarSubject = (
           <SidebarMenuSubButton
             id="subject"
             href="#destination"
-            style={position}
+            className="fixture-sidebar-native-geometry"
+            style={{
+              "--fixture-sidebar-native-height":
+                nativeSidebarLayout["--fixture-sidebar-native-height"],
+              "--fixture-sidebar-native-left":
+                nativeSidebarLayout["--fixture-sidebar-native-left"],
+              "--fixture-sidebar-native-top":
+                nativeSidebarLayout["--fixture-sidebar-native-top"],
+              "--fixture-sidebar-native-width":
+                nativeSidebarLayout["--fixture-sidebar-native-width"],
+            }}
             aria-disabled={state === "disabled" || undefined}
             isActive={p.has("active")}
             onClick={click}
@@ -146,68 +272,109 @@ export const SidebarFixture = () => {
           >
             {label}
           </SidebarMenuSubButton>
-        ) : part === "trigger" ? (
-          <SidebarTrigger {...buttonProps}>{label}</SidebarTrigger>
-        ) : part === "group-action" ? (
-          <SidebarGroupAction {...buttonProps}>{label}</SidebarGroupAction>
-        ) : part === "menu-action" ? (
-          <SidebarMenuAction {...buttonProps}>{label}</SidebarMenuAction>
-        ) : part === "input" ? (
-          <SidebarInput
-            id="subject"
-            aria-label="Test input"
-            value={text}
-            onChange={(event) => {
-              setText(event.target.value);
-            }}
-            placeholder={p.get("placeholder") ?? ""}
-            disabled={state === "disabled"}
-            readOnly={state.includes("readonly")}
-            maxLength={
-              p.has("maxLength") ? Number(p.get("maxLength")) : undefined
-            }
-            style={position}
-            data-subject="true"
-          />
-        ) : part === "label" ? (
+        );
+      } else if (part === "trigger") {
+        selectedNativeSidebarSubject = (
+          <SidebarTrigger {...nativeSidebarButtonProps}>{label}</SidebarTrigger>
+        );
+      } else if (part === "group-action") {
+        selectedNativeSidebarSubject = (
+          <SidebarGroupAction {...nativeSidebarButtonProps}>
+            {label}
+          </SidebarGroupAction>
+        );
+      } else if (part === "menu-action") {
+        selectedNativeSidebarSubject = (
+          <SidebarMenuAction {...nativeSidebarButtonProps}>
+            {label}
+          </SidebarMenuAction>
+        );
+      } else if (part === "input") {
+        selectedNativeSidebarSubject = renderNativeInput();
+      } else if (part === "label") {
+        selectedNativeSidebarSubject = (
           <SidebarGroupLabel
             id="subject"
             maxWidth={
               p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
             }
             align={p.get("alignment") === "center" ? "center" : "left"}
-            style={{ ...position, margin: 0, minHeight: 0 }}
+            className="fixture-sidebar-native-geometry fixture-sidebar-margin-zero fixture-sidebar-min-height-zero"
+            style={{
+              "--fixture-sidebar-native-height":
+                nativeSidebarLayout["--fixture-sidebar-native-height"],
+              "--fixture-sidebar-native-left":
+                nativeSidebarLayout["--fixture-sidebar-native-left"],
+              "--fixture-sidebar-native-top":
+                nativeSidebarLayout["--fixture-sidebar-native-top"],
+              "--fixture-sidebar-native-width":
+                nativeSidebarLayout["--fixture-sidebar-native-width"],
+            }}
             data-subject="true"
           >
             {label}
           </SidebarGroupLabel>
-        ) : part === "badge" ? (
+        );
+      } else if (part === "badge") {
+        selectedNativeSidebarSubject = (
           <SidebarMenuBadge
             id="subject"
             maxWidth={
               p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
             }
             align={p.get("alignment") === "center" ? "center" : "left"}
-            style={{ ...position, margin: 0 }}
+            className="fixture-sidebar-native-geometry fixture-sidebar-margin-zero"
+            style={{
+              "--fixture-sidebar-native-height":
+                nativeSidebarLayout["--fixture-sidebar-native-height"],
+              "--fixture-sidebar-native-left":
+                nativeSidebarLayout["--fixture-sidebar-native-left"],
+              "--fixture-sidebar-native-top":
+                nativeSidebarLayout["--fixture-sidebar-native-top"],
+              "--fixture-sidebar-native-width":
+                nativeSidebarLayout["--fixture-sidebar-native-width"],
+            }}
             data-subject="true"
           >
             {label}
           </SidebarMenuBadge>
-        ) : part === "separator" ? (
+        );
+      } else if (part === "separator") {
+        selectedNativeSidebarSubject = (
           <SidebarSeparator
             id="subject"
             edge={state === "footer" ? "footer" : "header"}
-            style={{ ...position, margin: 0 }}
+            className="fixture-sidebar-native-geometry fixture-sidebar-margin-zero"
+            style={{
+              "--fixture-sidebar-native-height":
+                nativeSidebarLayout["--fixture-sidebar-native-height"],
+              "--fixture-sidebar-native-left":
+                nativeSidebarLayout["--fixture-sidebar-native-left"],
+              "--fixture-sidebar-native-top":
+                nativeSidebarLayout["--fixture-sidebar-native-top"],
+              "--fixture-sidebar-native-width":
+                nativeSidebarLayout["--fixture-sidebar-native-width"],
+            }}
             data-subject="true"
           />
-        ) : part === "panel" ? (
+        );
+      } else if (part === "panel") {
+        selectedNativeSidebarSubject = (
           <Sidebar
             id="subject"
             collapsible="none"
+            className="fixture-sidebar-native-geometry fixture-sidebar-padding fixture-sidebar-gap"
             style={{
-              ...position,
-              padding: p.has("text") ? 18 * scale : 0,
-              gap: 12 * scale,
+              "--fixture-sidebar-native-gap": `${12 * scale}px`,
+              "--fixture-sidebar-native-height":
+                nativeSidebarLayout["--fixture-sidebar-native-height"],
+              "--fixture-sidebar-native-left":
+                nativeSidebarLayout["--fixture-sidebar-native-left"],
+              "--fixture-sidebar-native-padding": `${p.has("text") ? 18 * scale : 0}px`,
+              "--fixture-sidebar-native-top":
+                nativeSidebarLayout["--fixture-sidebar-native-top"],
+              "--fixture-sidebar-native-width":
+                nativeSidebarLayout["--fixture-sidebar-native-width"],
             }}
             data-subject="true"
           >
@@ -223,52 +390,47 @@ export const SidebarFixture = () => {
               </>
             ) : null}
           </Sidebar>
-        ) : part === "scroll" ? (
-          <SidebarContent id="subject" style={position} data-subject="true">
-            <div
-              style={{
-                height: Number(p.get("contentHeight") ?? 0) * scale,
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              {Array.from(
-                { length: Math.ceil(Number(p.get("contentHeight") ?? 0) / 24) },
-                (_, index) => (
-                  <Button
-                    key={index}
-                    scale={scale}
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      top: 24 * index * scale,
-                      width: "100%",
-                    }}
-                  >{`Row ${index + 1}`}</Button>
-                )
-              )}
-            </div>
-          </SidebarContent>
-        ) : null}
-      </SidebarProvider>
-    );
+        );
+      } else if (part === "scroll") {
+        selectedNativeSidebarSubject = renderNativeScrollContent();
+      } else {
+        selectedNativeSidebarSubject = null;
+      }
+
+      const nativeSidebarSubject = selectedNativeSidebarSubject;
+
+      return (
+        <SidebarProvider
+          {...provider}
+          className="fixture-sidebar-native-provider"
+        >
+          {nativeSidebarSubject}
+        </SidebarProvider>
+      );
+    };
+
+    return renderNativeSidebar();
+  }
+
+  let selectedFixtureBranch1: "none" | "offcanvas" | "icon";
+
+  if (p.get("mode") === "none") {
+    selectedFixtureBranch1 = "none";
+  } else {
+    selectedFixtureBranch1 =
+      p.get("mode") === "offcanvas" ? "offcanvas" : "icon";
   }
 
   return (
-    <SidebarProvider
-      {...provider}
-      style={{ minHeight: 400, position: "relative" }}
-    >
+    <SidebarProvider {...provider} className="fixture-sidebar-app-provider">
       <Sidebar
         side={p.get("side") === "right" ? "right" : "left"}
-        collapsible={
-          p.get("mode") === "none"
-            ? "none"
-            : p.get("mode") === "offcanvas"
-              ? "offcanvas"
-              : "icon"
-        }
-        style={{ position: p.get("mode") === "none" ? "relative" : "absolute" }}
+        collapsible={selectedFixtureBranch1}
+        className="fixture-sidebar-mode-position"
+        style={{
+          "--fixture-sidebar-position":
+            p.get("mode") === "none" ? "relative" : "absolute",
+        }}
       >
         <SidebarHeader>
           <SidebarInput
@@ -327,6 +489,7 @@ export const SidebarFixture = () => {
                 <SidebarMenuItem>
                   <SidebarMenuButton
                     render={
+                      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- SidebarMenuButton supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
                       <a id="settings" href="#settings" onClick={click} />
                     }
                     tooltip="Settings"
@@ -337,6 +500,7 @@ export const SidebarFixture = () => {
                 <SidebarMenuItem>
                   <SidebarMenuButton
                     render={
+                      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- SidebarMenuButton supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
                       <a
                         href="#disabled"
                         onClick={() => {
@@ -379,6 +543,7 @@ export const SidebarFixture = () => {
       <SidebarInset>
         <SidebarTrigger id="toggle" />
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefValue(

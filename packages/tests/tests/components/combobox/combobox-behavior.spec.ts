@@ -1,6 +1,10 @@
 import { writeFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
+import {
+  recordPitchedPlayback,
+  recordedPitchedPlayback,
+} from "@tests/harness/audio-playback";
 
 const audits = new WeakMap<object, string[]>();
 
@@ -86,7 +90,7 @@ test("Combobox preserves render functions, state classes, DOM refs and labeled g
   const input = page.getByRole("combobox");
   await input.click();
   await expect(input).toHaveAttribute("data-custom", "open");
-  await expect(input).toHaveClass(/custom-open/);
+  await expect(input).toHaveClass(/custom-open/u);
   await expect(page.locator("[data-rendered]")).toHaveCount(4);
   await page.locator("#ref").dispatchEvent("click");
   await expect(page.locator("#refs")).toHaveText("INPUT/DIV");
@@ -148,31 +152,22 @@ test("Combobox multiple mode preserves values, collection rendering and chip rem
 test("Combobox uses original click audio for native buttons while typing and choosing suggestions stay silent", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
-        pitch: this.playbackRate,
-        source: this.src,
-        volume: this.volume,
-      });
-
-      return Promise.resolve();
-    };
-  });
+  await recordPitchedPlayback(page);
   await page.goto("/?component=combobox");
   await page.getByRole("button", { name: "Show options" }).click();
-  expect((await page.evaluate(() => (window as any).sounds)).length).toBe(1);
+  const awaitedRecordedPitchedPlayback1 = await recordedPitchedPlayback(page);
+  expect(awaitedRecordedPitchedPlayback1.length).toBe(1);
   await page.getByRole("combobox").fill("Stone");
   await page.getByRole("combobox").press("ArrowDown");
   await page.getByRole("combobox").press("Enter");
-  expect((await page.evaluate(() => (window as any).sounds)).length).toBe(1);
+  const awaitedRecordedPitchedPlayback2 = await recordedPitchedPlayback(page);
+  expect(awaitedRecordedPitchedPlayback2.length).toBe(1);
   await page.locator("#explicit-clear").click();
-  const sounds = await page.evaluate(() => (window as any).sounds);
+  const sounds = await recordedPitchedPlayback(page);
   expect(sounds.length).toBe(2);
   expect(
     sounds.every(
-      (s: any) =>
+      (s) =>
         s.source.startsWith("data:audio/ogg;base64,") &&
         s.volume === 0.25 &&
         s.pitch === 1
@@ -188,10 +183,21 @@ test("Combobox IME Enter cannot commit a suggestion before CJK composition compl
   await input.focus();
   await input.dispatchEvent("compositionstart", { data: "世" });
   await input.evaluate((node) => {
-    const setter = Object.getOwnPropertyDescriptor(
+    const nativeValueDescriptor26 = Object.getOwnPropertyDescriptor(
       HTMLInputElement.prototype,
       "value"
-    )!.set!;
+    );
+
+    if (nativeValueDescriptor26 === undefined) {
+      throw new Error("Missing required native input descriptor");
+    }
+
+    // oxlint-disable-next-line typescript/unbound-method -- Capture the native value descriptor setter after the existing descriptor check; its sole invocation is setter.call(node, value) with the actual input receiver.
+    const setter = nativeValueDescriptor26.set;
+
+    if (setter === undefined) {
+      throw new Error("Missing required native input setter: setter");
+    }
 
     setter.call(node, "世界");
     node.dispatchEvent(

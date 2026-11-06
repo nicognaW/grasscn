@@ -1,7 +1,17 @@
 import { writeFileSync } from "node:fs";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { RecordedPitchedPlayback } from "@tests/harness/audio-playback";
+
+interface SidebarClickAudioState {
+  sounds: RecordedPitchedPlayback[];
+}
+
+interface SidebarPreventedAudioState {
+  sounds: number;
+}
 
 const runtimeErrors = new WeakMap<object, string[]>();
 
@@ -36,10 +46,10 @@ test("Sidebar preserves desktop toggling, keyboard shortcut and persisted actual
     "aria-expanded",
     "false"
   );
-  expect(
-    (await page.context().cookies()).find((c) => c.name === "sidebar_state")
-      ?.value
-  ).toBe("false");
+  const awaitedCookies1 = await page.context().cookies();
+  expect(awaitedCookies1.find((c) => c.name === "sidebar_state")?.value).toBe(
+    "false"
+  );
   await page.keyboard.press("Control+b");
   await expect(page.locator("#state")).toHaveText("expanded");
   await page.locator("#external").click();
@@ -56,10 +66,10 @@ test("Sidebar controlled state accepts changes and honors rejection", async ({
   await page.locator("#toggle").click();
   await expect(page.locator("#state")).toHaveText("expanded");
   await expect(page.locator("#events")).toHaveText("1");
-  expect(
-    (await page.context().cookies()).find((c) => c.name === "sidebar_state")
-      ?.value
-  ).toBe("true");
+  const awaitedCookies2 = await page.context().cookies();
+  expect(awaitedCookies2.find((c) => c.name === "sidebar_state")?.value).toBe(
+    "true"
+  );
 });
 
 test("Sidebar functional updates do not lose synchronous toggles", async ({
@@ -117,17 +127,21 @@ test("Sidebar right-side positioning reserves the matching inset space", async (
 }) => {
   await page.goto("/?component=sidebar&side=right");
 
-  const provider = (await page
+  const provider = await page
     .locator('[data-slot="sidebar-wrapper"]')
-    .boundingBox())!;
+    .boundingBox();
 
-  const container = (await page
+  expectNotNull(provider, "Missing required bounding box: provider");
+
+  const container = await page
     .locator('[data-slot="sidebar-container"]')
-    .boundingBox())!;
+    .boundingBox();
 
-  const inset = (await page
-    .locator('[data-slot="sidebar-inset"]')
-    .boundingBox())!;
+  expectNotNull(container, "Missing required bounding box: container");
+
+  const inset = await page.locator('[data-slot="sidebar-inset"]').boundingBox();
+
+  expectNotNull(inset, "Missing required bounding box: inset");
 
   expect(container.x + container.width).toBe(provider.x + provider.width);
   expect(inset.x + inset.width).toBe(container.x);
@@ -158,7 +172,9 @@ test("Sidebar mobile backdrop closes and a desktop containment style cannot move
   await expect(page.locator("#mobile")).toHaveText("true");
   await page.locator("#toggle").click();
   const dialog = page.getByRole("dialog", { exact: true, name: "Sidebar" });
-  expect((await dialog.boundingBox())!.y).toBe(0);
+  const requiredBounds27 = await dialog.boundingBox();
+  expectNotNull(requiredBounds27, "Missing required bounding box");
+  expect(requiredBounds27.y).toBe(0);
   await page.mouse.click(365, 10);
   await expect(dialog).toHaveCount(0);
   await expect(page.locator("#open-mobile")).toHaveText("false");
@@ -205,7 +221,7 @@ test("Sidebar content uses original scrolling geometry and forwards scroll event
   await viewport.hover();
   await page.mouse.wheel(0, 500);
   await expect
-    .poll(async () => viewport.evaluate((node) => node.scrollTop))
+    .poll(async () => await viewport.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
   await expect
     .poll(async () =>
@@ -222,11 +238,14 @@ test("Sidebar skeleton is deterministic and optional action placement does not c
     page.locator('[data-slot="sidebar-menu-skeleton"]')
   ).toHaveAttribute("aria-busy", "true");
 
-  const action = (await page
+  const action = await page
     .getByRole("button", { exact: true, name: "World actions" })
-    .boundingBox())!;
+    .boundingBox();
 
-  const button = (await page.locator("#menu-worlds").boundingBox())!;
+  expectNotNull(action, "Missing required bounding box: action");
+
+  const button = await page.locator("#menu-worlds").boundingBox();
+  expectNotNull(button, "Missing required bounding box: button");
 
   expect(action.y).toBe(button.y);
   expect(action.x).toBeGreaterThan(button.x);
@@ -236,9 +255,14 @@ test("Sidebar uses the original click sound once per accepted native-button acti
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
+    // SAFETY: This init script owns this test document's pitched-playback trace and creates its empty array before installing play.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+    (window as typeof window & SidebarClickAudioState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The same test initializer creates this trace; the unchanged play mock appends pitch, source and volume from its media receiver.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+      (window as typeof window & SidebarClickAudioState).sounds.push({
         pitch: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -249,26 +273,61 @@ test("Sidebar uses the original click sound once per accepted native-button acti
   });
   await page.goto("/?component=sidebar");
   await page.locator("#menu-worlds").hover();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+        (window as typeof window & SidebarClickAudioState).sounds
+    )
+  ).toEqual([]);
   await page.locator("#menu-worlds").click();
   await page.locator("#toggle").click();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+        (window as typeof window & SidebarClickAudioState).sounds
+    )
+  ).toEqual([
     { pitch: 1, source: minecraftClickSound, volume: 0.25 },
     { pitch: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
   await page.locator("#disabled").dispatchEvent("click");
-  expect((await page.evaluate(() => (window as any).sounds)).length).toBe(2);
+
+  const awaitedEvaluate3 = await page.evaluate(
+    () =>
+      // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+      (window as typeof window & SidebarClickAudioState).sounds
+  );
+
+  expect(awaitedEvaluate3.length).toBe(2);
   await page.keyboard.press("Control+b");
-  expect((await page.evaluate(() => (window as any).sounds)).length).toBe(2);
+
+  const awaitedEvaluate4 = await page.evaluate(
+    () =>
+      // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+      (window as typeof window & SidebarClickAudioState).sounds
+  );
+
+  expect(awaitedEvaluate4.length).toBe(2);
 });
 
 test("Sidebar prevented trigger activation stays silent and does not change state", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = 0;
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds += 1;
+    // SAFETY: This separate init script owns a numeric play counter and initializes it before installing its counter-only mock.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+    (window as typeof window & SidebarPreventedAudioState).sounds = 0;
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: This test initializes sounds to0; the unchanged mock increments that numeric counter once per play invocation.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+      (window as typeof window & SidebarPreventedAudioState).sounds += 1;
 
       return Promise.resolve();
     };
@@ -277,5 +336,12 @@ test("Sidebar prevented trigger activation stays silent and does not change stat
   const button = page.locator("[data-subject]");
   await button.click();
   await expect(button).toHaveAttribute("aria-expanded", "true");
-  expect(await page.evaluate(() => (window as any).sounds)).toBe(0);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This paired reader runs after navigation initializes this test's numeric play counter; no playback-array contract is assumed.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+        (window as typeof window & SidebarPreventedAudioState).sounds
+    )
+  ).toBe(0);
 });

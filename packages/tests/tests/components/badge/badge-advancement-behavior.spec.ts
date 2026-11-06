@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const origin = (
@@ -9,25 +10,28 @@ for (const scale of [2]) {
     test(`Advancement Badge compact/CJK/link/state at ${width} GUI${scale}`, async ({
       page,
     }) => {
-      await page.setViewportSize({ width, height: 1000 });
-      await page.goto(origin + "docs/components/badge");
-      const stage = page.locator('[data-stage="badge"]'),
-        badge = stage.locator('[data-slot="badge"]').first();
+      await page.setViewportSize({ height: 1000, width });
+      await page.goto(`${origin}docs/components/badge`);
 
-      expect((await badge.boundingBox())!.height).toBe(26 * scale);
+      const stage = page.locator('[data-stage="badge"]');
+      const badge = stage.locator('[data-slot="badge"]').first();
+
+      const requiredBounds13 = await badge.boundingBox();
+      expectNotNull(requiredBounds13, "Missing required bounding box");
+      expect(requiredBounds13.height).toBe(26 * scale);
       await page.getByLabel("Badge text").fill("挑战完成！");
       await expect(
         badge.locator('[data-mc-label-layout-ready="false"]')
       ).toHaveCount(0);
       await expect(badge).toContainText("挑战完成！");
       await page
-        .getByRole("button", { name: "Reset challenge", exact: true })
+        .getByRole("button", { exact: true, name: "Reset challenge" })
         .click();
       await expect(badge).toHaveAttribute("data-earned", "false");
 
       const link = page.getByRole("link", {
-        name: "View recipes",
         exact: true,
+        name: "View recipes",
       });
 
       await link.focus();

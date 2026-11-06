@@ -1,5 +1,6 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
-import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
+import { documentationInventory } from "@tests/checks/documentation-inventory";
 import { PNG } from "pngjs";
 
 const catalog = { components: documentationInventory().playgrounds };
@@ -16,9 +17,11 @@ test("Toggle preview supports CJK labels, native pressed state and disabling", a
     .locator(".documentation-playground")
     .getByRole("textbox", { name: "Toggle filter label" })
     .fill("只显示可合成的配方");
+
   const control = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "只显示可合成的配方" });
+
   await expect(control).toHaveAttribute("aria-pressed", "false");
   await control.click();
   await expect(control).toHaveAttribute("aria-pressed", "true");
@@ -45,11 +48,13 @@ test("Toggle Group preview exposes independent single and multiple values", asyn
   await page.goto(`${origin}docs/components/toggle-group`);
 
   const single = page
-      .locator(".documentation-playground")
-      .getByRole("group", { name: "One recipe station" }),
-    multiple = page
-      .locator(".documentation-playground")
-      .getByRole("group", { name: "Several recipe stations" });
+    .locator(".documentation-playground")
+    .getByRole("group", { name: "One recipe station" });
+
+  const multiple = page
+    .locator(".documentation-playground")
+    .getByRole("group", { name: "Several recipe stations" });
+
   await single.getByRole("button", { name: "Furnace recipes" }).click();
   await expect(
     page
@@ -98,9 +103,11 @@ test("Collapsible preview supports CJK content, line breaks and external control
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Collapsible message" })
     .fill("こんにちは\n안녕하세요");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "你好，世界" });
+
   await expect(trigger.locator("[data-mc-label-ready]")).toHaveAttribute(
     "data-mc-label-ready",
     "true"
@@ -118,8 +125,18 @@ test("Collapsible preview supports CJK content, line breaks and external control
     "true"
   );
 
-  for (const glyphs of await body.locator("[data-mc-label-ready]").all()) {
-    await expect(glyphs).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems36 = await body.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults36 = await Promise.allSettled(
+    readOnlyItems36.map(async (glyphs) => {
+      await expect(glyphs).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult36 of readOnlyResults36) {
+    if (readOnlyResult36.status === "rejected") {
+      throw readOnlyResult36.reason;
+    }
   }
 
   await trigger.press("Enter");
@@ -179,7 +196,7 @@ test("Menubar preview supports CJK titles, menu switching and nested actions", a
   ).toBeDisabled();
   await trigger.press("ArrowDown");
   await expect(
-    page.getByRole("menuitem", { name: /こんにちは/ })
+    page.getByRole("menuitem", { name: /こんにちは/u })
   ).toBeFocused();
 
   const checkbox = page.getByRole("menuitemcheckbox", {
@@ -216,7 +233,7 @@ test("Menubar preview supports CJK titles, menu switching and nested actions", a
       .getByLabel("Menubar status", { exact: true })
   ).toHaveText("Create world");
   await trigger.click();
-  await page.getByRole("menuitem", { name: /こんにちは/ }).click();
+  await page.getByRole("menuitem", { name: /こんにちは/u }).click();
   await expect(
     page
       .locator(".documentation-playground")
@@ -258,11 +275,14 @@ test("Context Menu preview supports CJK actions, toggles and right-click submenu
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Context menu action" })
     .fill("こんにちは");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByLabel("World context menu target", { exact: true });
-  const open = () =>
-    trigger.click({ button: "right", position: { x: 24, y: 24 } });
+
+  const open = async () => {
+    await trigger.click({ button: "right", position: { x: 24, y: 24 } });
+  };
 
   await open();
   const menu = page.getByRole("menu").first();
@@ -270,10 +290,23 @@ test("Context Menu preview supports CJK actions, toggles and right-click submenu
     menu.locator('[data-slot="context-menu-label"] .mc-menu-accessible')
   ).toHaveText("你好，世界");
 
-  for (const glyphs of await menu
+  const readOnlyItems37 = await menu
     .locator("[data-mc-menu-unicode-ready]")
-    .all()) {
-    await expect(glyphs).toHaveAttribute("data-mc-menu-unicode-ready", "true");
+    .all();
+
+  const readOnlyResults37 = await Promise.allSettled(
+    readOnlyItems37.map(async (glyphs) => {
+      await expect(glyphs).toHaveAttribute(
+        "data-mc-menu-unicode-ready",
+        "true"
+      );
+    })
+  );
+
+  for (const readOnlyResult37 of readOnlyResults37) {
+    if (readOnlyResult37.status === "rejected") {
+      throw readOnlyResult37.reason;
+    }
   }
 
   const checkbox = page.getByRole("menuitemcheckbox", {
@@ -298,7 +331,7 @@ test("Context Menu preview supports CJK actions, toggles and right-click submenu
       .getByLabel("Context menu status", { exact: true })
   ).toHaveText("Video settings");
   await open();
-  await page.getByRole("menuitem", { name: /こんにちは/ }).click();
+  await page.getByRole("menuitem", { name: /こんにちは/u }).click();
   await expect(
     page
       .locator(".documentation-playground")
@@ -324,19 +357,34 @@ test("Dropdown Menu preview supports CJK actions, toggles and nested menus", asy
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Dropdown menu action" })
     .fill("こんにちは");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Game menu" });
+
   await trigger.click();
   const menu = page.getByRole("menu").first();
   await expect(
     menu.locator('[data-slot="dropdown-menu-label"] .mc-menu-accessible')
   ).toHaveText("你好，世界");
 
-  for (const glyphs of await menu
+  const readOnlyItems38 = await menu
     .locator("[data-mc-menu-unicode-ready]")
-    .all()) {
-    await expect(glyphs).toHaveAttribute("data-mc-menu-unicode-ready", "true");
+    .all();
+
+  const readOnlyResults38 = await Promise.allSettled(
+    readOnlyItems38.map(async (glyphs) => {
+      await expect(glyphs).toHaveAttribute(
+        "data-mc-menu-unicode-ready",
+        "true"
+      );
+    })
+  );
+
+  for (const readOnlyResult38 of readOnlyResults38) {
+    if (readOnlyResult38.status === "rejected") {
+      throw readOnlyResult38.reason;
+    }
   }
 
   await expect(
@@ -366,7 +414,7 @@ test("Dropdown Menu preview supports CJK actions, toggles and nested menus", asy
   ).toHaveText("Video settings");
   await expect(trigger).toBeFocused();
   await trigger.click();
-  await page.getByRole("menuitem", { name: /こんにちは/ }).click();
+  await page.getByRole("menuitem", { name: /こんにちは/u }).click();
   await expect(
     page
       .locator(".documentation-playground")
@@ -386,7 +434,11 @@ test("Every component has a working dedicated preview and navigation", async ({
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
 
-  for (const component of documentationInventory().pages) {
+  const documentationPages = documentationInventory().pages;
+
+  const verifyDocumentationPage = async (
+    component: (typeof documentationPages)[number]
+  ) => {
     await page.goto(`${origin}${component.route.slice(1)}`);
     await expect(
       page.getByRole("heading", { exact: true, name: component.title }).first()
@@ -395,6 +447,11 @@ test("Every component has a working dedicated preview and navigation", async ({
     if (component.playground) {
       await expect(page.locator(".documentation-playground")).toBeVisible();
     }
+  };
+
+  for (const component of documentationPages) {
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
+    await verifyDocumentationPage(component);
   }
 
   await page.goto(`${origin}docs/components/button`);
@@ -475,17 +532,28 @@ test("Preview Separator width control updates both original surfaces", async ({
       .locator(".documentation-playground")
       .getByLabel("Separator width", { exact: true })
   ).toHaveText("257 px");
-  for (const name of ["Menu header separator", "Menu footer separator"]) {
-    await expect(
-      page
-        .locator(".documentation-playground")
-        .getByRole("separator", { exact: true, name })
-    ).toHaveCSS("width", "514px");
-    await expect(
-      page
-        .locator(".documentation-playground")
-        .getByRole("separator", { name, exact: true })
-    ).toHaveCSS("height", "4px");
+
+  const readOnlyItems39 = ["Menu header separator", "Menu footer separator"];
+
+  const readOnlyResults39 = await Promise.allSettled(
+    readOnlyItems39.map(async (name) => {
+      await expect(
+        page
+          .locator(".documentation-playground")
+          .getByRole("separator", { exact: true, name })
+      ).toHaveCSS("width", "514px");
+      await expect(
+        page
+          .locator(".documentation-playground")
+          .getByRole("separator", { exact: true, name })
+      ).toHaveCSS("height", "4px");
+    })
+  );
+
+  for (const readOnlyResult39 of readOnlyResults39) {
+    if (readOnlyResult39.status === "rejected") {
+      throw readOnlyResult39.reason;
+    }
   }
 });
 
@@ -522,9 +590,11 @@ test("Preview ScrollArea scrolls, selects rows and locks scrolling", async ({
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Scrolling: On" })
     .click();
+
   const root = page
     .locator(".documentation-playground")
     .getByRole("region", { exact: true, name: "Demo scroll area" });
+
   await expect(root).toHaveAttribute("data-disabled", "true");
   await root.locator('[data-slot="scroll-area-viewport"]').hover();
   await page.mouse.wheel(0, 120);
@@ -587,7 +657,11 @@ test("Mobile component pages contain default previews before and after paragraph
   test.setTimeout(180_000);
   await page.setViewportSize({ height: 844, width: 390 });
 
-  for (const component of catalog.components) {
+  const previewComponents = catalog.components;
+
+  const verifyMobilePreviewComponent = async (
+    component: (typeof previewComponents)[number]
+  ) => {
     await page.goto(`${origin}docs/components/${component.name}`);
     expect(
       await page.evaluate(
@@ -595,16 +669,19 @@ test("Mobile component pages contain default previews before and after paragraph
       )
     ).toBe(true);
     await expect(page.locator(".documentation-playground")).toBeVisible();
-    // eslint-disable-next-line no-await-in-loop -- Wait for this page's real selection font metrics before measuring its ready layout.
     await page.evaluate(async () => {
       await document.fonts.ready;
     });
     expect(
-      // eslint-disable-next-line no-await-in-loop -- Measure this document after its own paragraphs settle before navigating the shared page.
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth
       )
     ).toBe(true);
+  };
+
+  for (const component of previewComponents) {
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
+    await verifyMobilePreviewComponent(component);
   }
 });
 
@@ -622,7 +699,8 @@ test("Tooltip padding preserves the controls underneath it", async ({
     "data-mc-tooltip-painted",
     "false"
   );
-  const clip = (await content.boundingBox())!;
+  const clip = await content.boundingBox();
+  expectNotNull(clip, "Missing required bounding box: clip");
   const shown = PNG.sync.read(await page.screenshot({ clip }));
   await content.evaluate((node) => {
     node.style.visibility = "hidden";
@@ -646,23 +724,29 @@ test("Button label editor accepts CJK text without stripping characters", async 
   page,
 }) => {
   await page.goto(`${origin}docs/components/button`);
+
   for (const label of ["你好，世界", "こんにちは世界", "안녕하세요 세계"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await page
       .locator(".documentation-playground")
       .getByLabel("Button label", { exact: true })
       .fill(label);
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await expect(
       page
         .locator(".documentation-playground")
         .getByLabel("Button label", { exact: true })
     ).toHaveValue(label);
+
     const button = page
       .locator(
         '.documentation-playground [data-stage="button"] [data-slot="button"]'
       )
       .first();
 
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await expect(button).toHaveAccessibleName(label);
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await expect(button.locator("[data-mc-label-ready]")).toHaveAttribute(
       "data-mc-label-ready",
       "true"
@@ -675,14 +759,34 @@ test("Text entry defaults disable browser spelling and correction", async ({
 }) => {
   test.setTimeout(120_000);
 
-  for (const component of catalog.components) {
+  const textControlComponents = catalog.components;
+
+  const verifyTextControlComponent = async (
+    component: (typeof textControlComponents)[number]
+  ) => {
     await page.goto(`${origin}docs/components/${component.name}`);
-    for (const field of await page
+
+    const readOnlyItems40 = await page
       .locator('input[data-slot="input"], textarea[data-slot="textarea"]')
-      .all()) {
-      await expect(field).toHaveAttribute("spellcheck", "false");
-      await expect(field).toHaveAttribute("autocorrect", "off");
+      .all();
+
+    const readOnlyResults40 = await Promise.allSettled(
+      readOnlyItems40.map(async (field) => {
+        await expect(field).toHaveAttribute("spellcheck", "false");
+        await expect(field).toHaveAttribute("autocorrect", "off");
+      })
+    );
+
+    for (const readOnlyResult40 of readOnlyResults40) {
+      if (readOnlyResult40.status === "rejected") {
+        throw readOnlyResult40.reason;
+      }
     }
+  };
+
+  for (const component of textControlComponents) {
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
+    await verifyTextControlComponent(component);
   }
 });
 
@@ -698,19 +802,35 @@ test("Dialog preview supports editable CJK titles, multiline messages and footer
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Dialog message" })
     .fill("Hello 世界\nこんにちは");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Open world settings" });
+
   await trigger.click();
   const dialog = page.getByRole("dialog", { exact: true, name: "你好，世界" });
   await expect(dialog).toBeVisible();
   await expect(dialog).toHaveAccessibleDescription("Hello 世界 こんにちは");
 
-  for (const line of await dialog
+  const readOnlyItems41 = await dialog
     .locator("[data-mc-dialog-unicode-ready]")
-    .all()) {
-    await expect(line).toHaveAttribute("data-mc-dialog-unicode-ready", "true");
+    .all();
+
+  const readOnlyResults41 = await Promise.allSettled(
+    readOnlyItems41.map(async (line) => {
+      await expect(line).toHaveAttribute(
+        "data-mc-dialog-unicode-ready",
+        "true"
+      );
+    })
+  );
+
+  for (const readOnlyResult41 of readOnlyResults41) {
+    if (readOnlyResult41.status === "rejected") {
+      throw readOnlyResult41.reason;
+    }
   }
+
   await dialog.getByRole("button", { exact: true, name: "Continue" }).click();
   await expect(dialog).toHaveCount(0);
   await expect(
@@ -742,9 +862,11 @@ test("Alert Dialog preview supports CJK text, native blur, confirmation and canc
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Alert dialog message" })
     .fill("こんにちは\n안녕하세요");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Open confirmation" });
+
   await trigger.click();
 
   const dialog = page.getByRole("alertdialog", {
@@ -756,8 +878,18 @@ test("Alert Dialog preview supports CJK text, native blur, confirmation and canc
     timeout: 15_000,
   });
 
-  for (const line of await dialog.locator("[data-mc-label-ready]").all()) {
-    await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems42 = await dialog.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults42 = await Promise.allSettled(
+    readOnlyItems42.map(async (line) => {
+      await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult42 of readOnlyResults42) {
+    if (readOnlyResult42.status === "rejected") {
+      throw readOnlyResult42.reason;
+    }
   }
 
   await expect(
@@ -790,26 +922,37 @@ test("Editable, read-only and disabled textarea examples render real line breaks
   page,
 }) => {
   await page.goto(`${origin}docs/components/textarea`);
-  for (const name of [
+
+  const readOnlyItems43 = [
     "Demo textarea",
     "Read-only demo textarea",
     "Disabled demo textarea",
-  ]) {
-    const field = page
-      .locator(".documentation-playground")
-      .getByRole("textbox", { name, exact: true });
-    await expect(field).toHaveValue("Line one\nLine two\nLine three");
-    await expect(field).toHaveAttribute("data-mc-ready", "true");
-    await expect(field).toHaveAttribute("data-mc-bitmap", "true");
+  ];
+
+  const readOnlyResults43 = await Promise.allSettled(
+    readOnlyItems43.map(async (name) => {
+      const field = page
+        .locator(".documentation-playground")
+        .getByRole("textbox", { exact: true, name });
+
+      await expect(field).toHaveValue("Line one\nLine two\nLine three");
+      await expect(field).toHaveAttribute("data-mc-ready", "true");
+      await expect(field).toHaveAttribute("data-mc-bitmap", "true");
+    })
+  );
+
+  for (const readOnlyResult43 of readOnlyResults43) {
+    if (readOnlyResult43.status === "rejected") {
+      throw readOnlyResult43.reason;
+    }
   }
 
   await page.getByRole("heading", { exact: true, name: "Textarea" }).click();
+
   const images = await page
     .locator('[data-stage="textarea"] textarea')
-    .evaluateAll((nodes) =>
-      nodes.map((node) =>
-        (node as HTMLElement).style.getPropertyValue("--mc-textarea-image")
-      )
+    .evaluateAll((nodes: HTMLElement[]) =>
+      nodes.map((node) => node.style.getPropertyValue("--mc-textarea-image"))
     );
 
   expect(images).toHaveLength(3);
@@ -826,6 +969,7 @@ test("Tabs preview supports keyboard navigation, CJK titles and settings", async
   const world = page
     .locator(".documentation-playground")
     .getByRole("tab", { exact: true, name: "World" });
+
   await page
     .locator(".documentation-playground")
     .getByLabel("Tabs world name", { exact: true })
@@ -863,9 +1007,11 @@ test("Tabs preview supports keyboard navigation, CJK titles and settings", async
     .locator(".documentation-playground")
     .getByLabel("First tab title", { exact: true })
     .fill("你好，世界");
+
   const renamed = page
     .locator(".documentation-playground")
     .getByRole("tab", { exact: true, name: "你好，世界" });
+
   await expect(renamed.locator("[data-mc-label-ready]")).toHaveAttribute(
     "data-mc-label-ready",
     "true"
@@ -881,6 +1027,7 @@ test("Select preview supports CJK labels, disabled choices and keyboard selectio
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("combobox", { exact: true, name: "Demo game mode" });
+
   await trigger.focus();
   await page.keyboard.press("ArrowDown");
   await expect(
@@ -990,8 +1137,18 @@ test("Radio Group preview supports exclusive selection, CJK labels and disabled 
     .getByRole("button", { exact: true, name: "Group: Enabled" })
     .click();
 
-  for (const radio of await group.getByRole("radio").all()) {
-    await expect(radio).toBeDisabled();
+  const readOnlyItems44 = await group.getByRole("radio").all();
+
+  const readOnlyResults44 = await Promise.allSettled(
+    readOnlyItems44.map(async (radio) => {
+      await expect(radio).toBeDisabled();
+    })
+  );
+
+  for (const readOnlyResult44 of readOnlyResults44) {
+    if (readOnlyResult44.status === "rejected") {
+      throw readOnlyResult44.reason;
+    }
   }
 });
 
@@ -1003,6 +1160,7 @@ test("Switch preview supports CJK labels, keyboard toggling and disabled state",
   const control = page
     .locator(".documentation-playground")
     .getByRole("switch", { exact: true, name: "Enable clouds" });
+
   await control.click();
   await expect(
     page
@@ -1018,9 +1176,11 @@ test("Switch preview supports CJK labels, keyboard toggling and disabled state",
   await expect(
     page.locator(".documentation-playground [data-mc-label-ready]")
   ).toHaveAttribute("data-mc-label-ready", "true");
+
   const renamed = page
     .locator(".documentation-playground")
     .getByRole("switch", { exact: true, name: "你好，世界" });
+
   await renamed.click();
   await expect(renamed).toBeChecked();
   await page
@@ -1049,9 +1209,11 @@ test("Popover preview supports editable CJK text, world settings and dismissal",
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Popover message" })
     .fill("こんにちは\n안녕하세요");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Open world options" });
+
   await trigger.click();
   const dialog = page.getByRole("dialog", { exact: true, name: "你好，世界" });
   await expect(dialog).toHaveAccessibleDescription("こんにちは 안녕하세요");
@@ -1062,10 +1224,23 @@ test("Popover preview supports editable CJK text, world settings and dismissal",
     await dialog.locator("[data-mc-popover-unicode-ready]").count()
   ).toBeGreaterThan(0);
 
-  for (const line of await dialog
+  const readOnlyItems45 = await dialog
     .locator("[data-mc-popover-unicode-ready]")
-    .all()) {
-    await expect(line).toHaveAttribute("data-mc-popover-unicode-ready", "true");
+    .all();
+
+  const readOnlyResults45 = await Promise.allSettled(
+    readOnlyItems45.map(async (line) => {
+      await expect(line).toHaveAttribute(
+        "data-mc-popover-unicode-ready",
+        "true"
+      );
+    })
+  );
+
+  for (const readOnlyResult45 of readOnlyResults45) {
+    if (readOnlyResult45.status === "rejected") {
+      throw readOnlyResult45.reason;
+    }
   }
 
   await dialog

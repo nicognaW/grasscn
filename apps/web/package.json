@@ -121,11 +121,11 @@
     "./ui/typography": "./registry/ui/typography.tsx"
   },
   "scripts": {
-    "generate": "bun x --bun --no-install fumadocs-mdx && bun scripts/generate-component-symbols.mjs && bun --bun next typegen",
-    "dev": "bun scripts/generate-component-symbols.mjs && BUN_OPTIONS=\"--smol $BUN_OPTIONS\" bun --bun next dev --webpack --hostname 127.0.0.1 --port 5176",
+    "generate": "bun x --bun --no-install fumadocs-mdx && bun scripts/generate-component-symbols.ts && bun --bun next typegen",
+    "dev": "bun scripts/generate-component-symbols.ts && BUN_OPTIONS=\"--smol $BUN_OPTIONS\" bun --bun next dev --webpack --hostname 127.0.0.1 --port 5176",
     "build": "BUN_OPTIONS=\"--smol $BUN_OPTIONS\" bun --bun next build --webpack",
     "registry:build": "bun x --bun --no-install shadcn build",
-    "registry:serve": "bun run registry:build && bun scripts/serve.mjs",
+    "registry:serve": "bun run registry:build && bun scripts/serve.ts",
     "start": "bun --bun next start --hostname 127.0.0.1 --port 5176"
   },
   "dependencies": {
@@ -149,6 +149,7 @@
     "react-day-picker": "10.0.2",
     "react-dom": "^19.3.1",
     "react-hook-form": "^7.91.0",
+    "react-is": "19.3.1",
     "react-resizable-panels": "^4.15.1",
     "recharts": "3.8.0",
     "shiki": "4.5.0",
@@ -162,6 +163,7 @@
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/react-is": "19.3.0",
     "shadcn": "4.23.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2"

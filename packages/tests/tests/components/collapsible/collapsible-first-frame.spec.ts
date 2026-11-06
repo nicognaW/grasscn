@@ -8,23 +8,34 @@ for (const scale of [1, 2, 3]) {
       test(`Collapsible first paint ${variant} GUI${scale} ${warm ? "warm" : "cold"}`, async ({
         page,
       }, info) => {
-        const text =
-          variant === "ascii"
-            ? "Hello Minecraft\n\nNext adventure"
-            : variant === "cjk"
-              ? "你好，世界\n\nHello Minecraft"
-              : "你好，世界你好，世界你好，世界\nMinecraft adventures start here.";
+        let selectedText:
+          | "Hello Minecraft\n\nNext adventure"
+          | "你好，世界\n\nHello Minecraft"
+          | "你好，世界你好，世界你好，世界\nMinecraft adventures start here.";
 
-        await page.goto(
-          "/?" +
-            new URLSearchParams({
-              component: "collapsible-first-frame",
-              scale: String(scale),
-              text,
-              width: variant === "wrapped" ? "80" : "200",
-              ...(warm ? { warm: "1" } : {}),
-            })
-        );
+        if (variant === "ascii") {
+          selectedText = "Hello Minecraft\n\nNext adventure";
+        } else if (variant === "cjk") {
+          selectedText = "你好，世界\n\nHello Minecraft";
+        } else {
+          selectedText =
+            "你好，世界你好，世界你好，世界\nMinecraft adventures start here.";
+        }
+
+        const text = selectedText;
+
+        const frameQuery = new URLSearchParams({
+          component: "collapsible-first-frame",
+          scale: String(scale),
+          text,
+          width: variant === "wrapped" ? "80" : "200",
+        });
+
+        if (warm) {
+          frameQuery.set("warm", "1");
+        }
+
+        await page.goto(`/?${frameQuery}`);
         await expect(page.locator("[data-warm-ready]")).toHaveAttribute(
           "data-warm-ready",
           "true"
@@ -33,57 +44,99 @@ for (const scale of [1, 2, 3]) {
         // No text/font readiness wait occurs before clicking or sampling.
         const frames = await page.evaluate(async () => {
           const trigger = document.querySelector<HTMLButtonElement>(
-              '[data-slot="collapsible-trigger"]'
-            )!,
-            start = performance.now();
+            '[data-slot="collapsible-trigger"]'
+          );
+
+          if (trigger === null) {
+            throw new Error("Missing required dom query: trigger");
+          }
+
+          const start = performance.now();
 
           trigger.click();
-          const frames = [];
+          const capturedFrames = [];
 
           for (const milestone of [0, 16, 32, 50, 100]) {
-            await new Promise((resolve) =>
+            const samplingCompletion = Promise.withResolvers();
+
+            try {
               setTimeout(
-                resolve,
+                samplingCompletion.resolve,
                 Math.max(0, milestone - (performance.now() - start))
-              )
-            );
+              );
+            } catch (error) {
+              samplingCompletion.reject(error);
+            }
+
+            // oxlint-disable-next-line no-await-in-loop -- Samples one live animation at ordered milestones; each frame observation must follow its timer and precede the next sample.
+            await samplingCompletion.promise;
 
             const content = document.querySelector<HTMLElement>(
-                '[data-slot="collapsible-content"]'
-              )!,
-              label = content.querySelector<HTMLElement>(
-                "[data-mc-label-layout-ready]"
-              )!,
-              rect = content.getBoundingClientRect(),
-              style = getComputedStyle(content);
+              '[data-slot="collapsible-content"]'
+            );
 
-            const lines = Array.from(
-              label.querySelectorAll<HTMLElement>(".mc-label-line")
-            ).map((line) => ({
-              text:
+            if (content === null) {
+              throw new Error("Missing required dom query: content");
+            }
+
+            const label = content.querySelector<HTMLElement>(
+              "[data-mc-label-layout-ready]"
+            );
+
+            if (label === null) {
+              throw new Error("Missing required dom query: label");
+            }
+
+            const rect = content.getBoundingClientRect();
+            const style = getComputedStyle(content);
+
+            const lines = [
+              ...label.querySelectorAll<HTMLElement>(".mc-label-line"),
+            ].map((line) => {
+              const lineText =
                 line.querySelector(".mc-text-accessible")?.textContent ??
-                line.textContent,
-              height: line.getBoundingClientRect().height,
-            }));
+                line.textContent;
 
-            frames.push({
-              milestone,
-              elapsed: performance.now() - start,
-              height: rect.height,
-              width: rect.width,
-              ready: label.dataset.mcLabelLayoutReady,
-              display: style.display,
-              visibility: style.visibility,
+              return {
+                height: line.getBoundingClientRect().height,
+                text: lineText,
+              };
+            });
+
+            const elapsed = performance.now() - start;
+            const { height } = rect;
+            const { width } = rect;
+            const ready = label.dataset.mcLabelLayoutReady;
+            const { display } = style;
+            const { visibility } = style;
+
+            capturedFrames.push({
+              display,
+              elapsed,
+              height,
               lines,
+              milestone,
+              ready,
+              visibility,
+              width,
             });
           }
 
-          return frames;
+          return capturedFrames;
         });
 
         writeFileSync(
           info.outputPath("first-frames.json"),
-          JSON.stringify({ text, scale, warm, frames }, null, 2)
+          JSON.stringify(
+            Object.fromEntries<string | number | boolean | typeof frames>([
+              ["text", text],
+              ["scale", scale],
+              ["warm", warm],
+              ["frames", frames],
+            ]),
+            null,
+            2
+          )
         );
         await expect(
           page.locator("[data-mc-label-layout-ready]")
@@ -103,7 +156,9 @@ for (const scale of [1, 2, 3]) {
           variant === "wrapped" ? 4 : 3
         );
 
-        if (variant !== "wrapped") expect(finalLines).toEqual(text.split("\n"));
+        if (variant !== "wrapped") {
+          expect(finalLines).toEqual(text.split("\n"));
+        }
 
         for (const frame of frames) {
           expect(frame.display).not.toBe("none");
@@ -111,7 +166,9 @@ for (const scale of [1, 2, 3]) {
           expect(frame.lines.map((line) => line.text)).toEqual(finalLines);
           expect(frame.height).toBe((finalLines.length * 9 + 12) * scale);
 
-          for (const line of frame.lines) expect(line.height).toBe(9 * scale);
+          for (const line of frame.lines) {
+            expect(line.height).toBe(9 * scale);
+          }
         }
 
         await page

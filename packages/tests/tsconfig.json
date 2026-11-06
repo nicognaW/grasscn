@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2023", "DOM"],
+    "lib": ["ES2022", "DOM", "ES2024.Promise"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
@@ -20,6 +20,7 @@
     "resolveJsonModule": true
   },
   "include": [
+    "cli/**/*.ts",
     "src/**/*.ts",
     "src/**/*.mts",
     "src/**/*.mjs",

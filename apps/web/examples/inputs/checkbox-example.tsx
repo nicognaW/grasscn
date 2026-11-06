@@ -10,10 +10,7 @@ const CheckboxExample = () => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ alignItems: "center", display: "flex", gap: 12 }}
-      /* eslint-enable shadcn/no-inline-styles */
-    >
+    <div className="flex items-center gap-3">
       <Checkbox id={id} checked={checked} onCheckedChange={setChecked} />
       <Label htmlFor={id}>Enable shadows</Label>
     </div>

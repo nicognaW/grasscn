@@ -10,7 +10,12 @@ import type {
 } from "react-resizable-panels";
 
 const p = new URLSearchParams(location.search);
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
 
 const orientation =
   p.get("orientation") === "vertical" ? "vertical" : "horizontal";
@@ -31,65 +36,75 @@ export const ResizableFixture = () => {
 
   return (
     <>
-      <ResizablePanelGroup
-        id="group"
-        scale={scale}
-        groupRef={group}
-        elementRef={element}
-        orientation={orientation}
-        disabled={p.has("groupDisabled")}
-        onLayoutChanged={(value) => {
-          setLayout(JSON.stringify(value));
-        }}
-        style={{ height: 256, width: 600 }}
-      >
-        <ResizablePanel
-          id="left"
-          defaultSize="50%"
-          minSize="10%"
-          collapsible
-          collapsedSize="0%"
-          panelRef={panel}
+      <div className="fixture-resizable-frame">
+        <ResizablePanelGroup
+          id="group"
+          scale={scale}
+          groupRef={group}
+          elementRef={element}
+          orientation={orientation}
+          disabled={p.has("groupDisabled")}
+          onLayoutChanged={(value) => {
+            setLayout(JSON.stringify(value));
+          }}
         >
-          <div style={{ background: "#555", height: "100%" }}>First panel</div>
-        </ResizablePanel>
-        <ResizableHandle
-          id="subject"
-          aria-label="Resize panels"
-          withHandle={!p.has("noHandle")}
-          disabled={p.has("disabled")}
-          elementRef={handle}
-          data-subject="true"
-        />
-        <ResizablePanel id="right" defaultSize="50%" minSize="10%">
-          <div style={{ background: "#333", height: "100%" }}>Second panel</div>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+          <ResizablePanel
+            id="left"
+            defaultSize="50%"
+            minSize="10%"
+            collapsible
+            collapsedSize="0%"
+            panelRef={panel}
+          >
+            <div className="fixture-resizable-first-surface">First panel</div>
+          </ResizablePanel>
+          <ResizableHandle
+            id="subject"
+            aria-label="Resize panels"
+            withHandle={!p.has("noHandle")}
+            disabled={p.has("disabled")}
+            elementRef={handle}
+            data-subject="true"
+          />
+          <ResizablePanel id="right" defaultSize="50%" minSize="10%">
+            <div className="fixture-resizable-second-surface">Second panel</div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
       <button
+        type="button"
         id="set-layout"
-        onClick={() => group.current?.setLayout({ left: 25, right: 75 })}
+        onClick={() => {
+          group.current?.setLayout({ left: 25, right: 75 });
+        }}
       >
         Set layout
       </button>
-      <button id="collapse" onClick={() => panel.current?.collapse()}>
+      <button
+        type="button"
+        id="collapse"
+        onClick={() => panel.current?.collapse()}
+      >
         Collapse
       </button>
-      <button id="expand" onClick={() => panel.current?.expand()}>
+      <button type="button" id="expand" onClick={() => panel.current?.expand()}>
         Expand
       </button>
-      <button id="resize" onClick={() => panel.current?.resize("35%")}>
+      <button
+        type="button"
+        id="resize"
+        onClick={() => panel.current?.resize("35%")}
+      >
         Resize panel
       </button>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
-          setRefs(
-            `${element.current?.tagName}/${handle.current?.tagName}/${Object.keys(
-              group.current?.getLayout() ?? {}
-            )
-              .sort()
-              .join(",")}`
-          );
+          const refTags = `${element.current?.tagName}/${handle.current?.tagName}`;
+          const panelIds = Object.keys(group.current?.getLayout() ?? {});
+          panelIds.sort();
+          setRefs(`${refTags}/${panelIds.join(",")}`);
         }}
       >
         Read refs

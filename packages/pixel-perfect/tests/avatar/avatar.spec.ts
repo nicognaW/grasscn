@@ -5,13 +5,18 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type avatarReference from "../reference/avatar/manifest.json";
+import type CapturedData0 from "../reference/label/manifest.json";
+
 const dir = "tests/reference/avatar";
 
+// SAFETY: The fixed avatar directory reads the retained PlayerFaceExtractor manifest represented by the exact type-only JSON import.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf-8")
-);
+) as typeof avatarReference;
 
-function difference(a: PNG, b: PNG) {
+const difference = function difference(a: PNG, b: PNG) {
   expect([a.width, a.height]).toEqual([b.width, b.height]);
   let count = 0;
 
@@ -22,7 +27,7 @@ function difference(a: PNG, b: PNG) {
   }
 
   return count;
-}
+};
 
 test("Avatar comparator catches a changed pixel", () => {
   const a = PNG.sync.read(
@@ -31,6 +36,7 @@ test("Avatar comparator catches a changed pixel", () => {
 
   const b = PNG.sync.read(PNG.sync.write(a));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   b.data[0] ^= 1;
   expect(difference(a, b)).toBe(1);
 });
@@ -61,12 +67,19 @@ test.describe("Actual original PlayerFaceExtractor", () => {
         "data-ready",
         "true"
       );
-      await page.evaluate(
-        async () =>
-          new Promise((r) =>
-            requestAnimationFrame(() => requestAnimationFrame(r))
-          )
-      );
+      await page.evaluate(async () => {
+        const frameCompletion = Promise.withResolvers();
+
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(frameCompletion.resolve);
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        return await frameCompletion.promise;
+      });
 
       const expected = readFileSync(
         pixelPerfectFile(`${dir}/captures/${c.name}`)
@@ -91,7 +104,7 @@ test.describe("Actual original PlayerFaceExtractor", () => {
           alias: "base",
           case: c.name,
           component: "avatar",
-          manifest: dir + "/manifest.json",
+          manifest: `${dir}/manifest.json`,
           mismatchedPixels,
           part: "face",
           tolerance: 0,
@@ -103,9 +116,34 @@ test.describe("Actual original PlayerFaceExtractor", () => {
   }
 });
 
+// SAFETY: This read consumes the same pinned tests/reference/label/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const labels = JSON.parse(
   readFileSync(pixelPerfectFile("tests/reference/label/manifest.json"), "utf-8")
-);
+) as typeof CapturedData0;
+
+// Native capture Case.wrapWidth is a nullable Integer; zero or absence disables wrapping.
+const avatarFallbackQuery = (c: (typeof CapturedData0)["cases"][number]) => {
+  const q = new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background,
+    component: "avatar",
+    height: String(c.height),
+    label: c.label,
+    native: "1",
+    part: "label",
+    scale: String(c.scale),
+    width: String(c.width),
+    x: String(c.x),
+    y: String(c.y),
+  });
+
+  if ((c.wrapWidth ?? 0) !== 0) {
+    q.set("wrapWidth", String(c.wrapWidth));
+  }
+
+  return q;
+};
 
 test.describe("AvatarFallback original Label constituents", () => {
   test.describe.configure({ mode: "parallel" });
@@ -114,39 +152,44 @@ test.describe("AvatarFallback original Label constituents", () => {
     test(`avatar fallback ${c.name}`, async ({ page }, info) => {
       await page.setViewportSize({ height: 900, width: 1536 });
 
-      const q = new URLSearchParams({
-        align: c.alignment ?? "left",
-        background: c.background,
-        component: "avatar",
-        height: String(c.height),
-        label: c.label,
-        native: "1",
-        part: "label",
-        scale: String(c.scale),
-        width: String(c.width),
-        x: String(c.x),
-        y: String(c.y),
-      });
-
-      if (c.wrapWidth) {
-        q.set("wrapWidth", String(c.wrapWidth));
-      }
+      const q = avatarFallbackQuery(c);
 
       await page.goto(`/?${q}`);
       await expect(
         page.locator("[data-mc-label-layout-ready]")
       ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-      for (const canvas of await page.locator("[data-mc-label-ready]").all()) {
-        await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+      {
+        const glyphs = await page.locator("[data-mc-label-ready]").all();
+
+        const glyphReadinessResults = await Promise.allSettled(
+          glyphs.map(async (canvas) => {
+            await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+          })
+        );
+
+        const rejectedReadiness = glyphReadinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
 
-      await page.evaluate(
-        async () =>
-          new Promise((r) =>
-            requestAnimationFrame(() => requestAnimationFrame(r))
-          )
-      );
+      await page.evaluate(async () => {
+        const frameCompletion2 = Promise.withResolvers();
+
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(frameCompletion2.resolve);
+          });
+        } catch (error) {
+          frameCompletion2.reject(error);
+        }
+
+        return await frameCompletion2.promise;
+      });
 
       const expected = readFileSync(
         pixelPerfectFile(`tests/reference/label/captures/${c.name}`)

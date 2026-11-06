@@ -1,40 +1,13 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/tabs-extra/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    element: string;
-    label?: string;
-    labels?: string[];
-    selected?: boolean;
-    selectedIndex?: number;
-    targetIndex?: number;
-    disabledIndex?: number;
-    timeMs: number;
-    contentHeight?: number;
-    state: string;
-    x: number;
-    y: number;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/tabs-extra/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -52,9 +25,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -62,7 +35,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Tabs comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
@@ -74,6 +47,7 @@ test("Tabs comparator catches a one-pixel change", async () => {
   );
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -104,14 +78,16 @@ test.describe("Tabs extra native matrix", () => {
         "targetIndex",
         "disabledIndex",
       ] as const) {
-        if (c[key] != null) query.set(key, String(c[key]));
+        if (c[key] !== undefined) {
+          query.set(key, String(c[key]));
+        }
       }
 
       if (c.labels) {
         query.set("labels", JSON.stringify(c.labels));
       }
 
-      if (c.contentHeight) {
+      if (c.contentHeight ?? 0) {
         query.set("contentHeight", String(c.contentHeight));
       }
 
@@ -121,11 +97,11 @@ test.describe("Tabs extra native matrix", () => {
       await card.evaluate(
         (node, p) =>
           Object.assign(node.style, {
-            left: p.x + "px",
+            left: `${p.x}px`,
             position: "fixed",
-            top: p.y + "px",
+            top: `${p.y}px`,
             visibility: "visible",
-            width: p.width + "px",
+            width: `${p.width}px`,
           }),
         { width: c.width * c.scale, x: c.x * c.scale, y: c.y * c.scale }
       );
@@ -145,9 +121,10 @@ test.describe("Tabs extra native matrix", () => {
           await card.focus();
         }
       } else {
-        const list = c.contentHeight
-          ? card.locator('[data-slot="tabs-list"]')
-          : card;
+        const list =
+          (c.contentHeight ?? 0)
+            ? card.locator('[data-slot="tabs-list"]')
+            : card;
 
         await expect(list).toHaveAttribute("data-mc-tabs-ready", "true");
         const target = list.getByRole("tab").nth(c.targetIndex ?? 0);
@@ -161,8 +138,22 @@ test.describe("Tabs extra native matrix", () => {
         }
       }
 
-      for (const label of await card.locator("[data-mc-label-ready]").all()) {
-        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+      {
+        const readyElements = await card.locator("[data-mc-label-ready]").all();
+
+        const readinessResults = await Promise.allSettled(
+          readyElements.map(async (label) => {
+            await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+          })
+        );
+
+        const rejectedReadiness = readinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
 
       const expectedBytes = await readFile(

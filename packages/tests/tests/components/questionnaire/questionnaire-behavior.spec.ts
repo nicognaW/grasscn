@@ -1,4 +1,9 @@
 import { test, expect } from "@grasscn/tests/test";
+import type { RecordedOriginalClick } from "@tests/harness/audio-playback";
+
+interface QuestionnairePlaybackState {
+  voices: RecordedOriginalClick[];
+}
 
 test("Questionnaire uses the official ordered items, validation and previous/next navigation", async ({
   page,
@@ -7,23 +12,23 @@ test("Questionnaire uses the official ordered items, validation and previous/nex
   await expect(page.locator("#progress")).toContainText("Question 1 of 3");
   await page.getByRole("button", { exact: true, name: "Next" }).click();
   await expect(page.getByRole("alert")).toBeVisible();
-  await expect(page.getByRole("radio", { name: /Creative/ })).toBeVisible();
-  await page.getByRole("radio", { name: /Creative/ }).check();
+  await expect(page.getByRole("radio", { name: /Creative/u })).toBeVisible();
+  await page.getByRole("radio", { name: /Creative/u }).check();
   await page.getByRole("button", { exact: true, name: "Next" }).click();
   await expect(page.locator("#active")).toHaveText("features");
-  await expect(page.getByRole("checkbox", { name: /Caves/ })).toBeVisible();
+  await expect(page.getByRole("checkbox", { name: /Caves/u })).toBeVisible();
   await page.getByRole("button", { exact: true, name: "Previous" }).click();
-  await expect(page.getByRole("radio", { name: /Creative/ })).toBeChecked();
+  await expect(page.getByRole("radio", { name: /Creative/u })).toBeChecked();
 });
 
 test("Questionnaire submits native values for single/multiple/freeform fields", async ({
   page,
 }) => {
   await page.goto("/?component=questionnaire");
-  await page.getByRole("radio", { name: /Survival/ }).check();
+  await page.getByRole("radio", { name: /Survival/u }).check();
   await page.getByRole("button", { exact: true, name: "Next" }).click();
-  await page.getByRole("checkbox", { name: /Caves/ }).check();
-  await page.getByRole("checkbox", { name: /Villages/ }).check();
+  await page.getByRole("checkbox", { name: /Caves/u }).check();
+  await page.getByRole("checkbox", { name: /Villages/u }).check();
   await page.getByRole("button", { exact: true, name: "Next" }).click();
   await page
     .getByRole("textbox", { exact: true, name: "World name" })
@@ -72,7 +77,7 @@ test("Questionnaire forwards actual form refs and supports numbered shortcuts", 
   await expect(page.locator("#questionnaire-ref")).toHaveText("FORM");
   await page.getByRole("group").first().focus();
   await page.keyboard.press("2");
-  await expect(page.getByRole("radio", { name: /Creative/ })).toBeChecked();
+  await expect(page.getByRole("radio", { name: /Creative/u })).toBeChecked();
   await page.keyboard.press("Enter");
   await expect(page.locator("#active")).toHaveText("features");
 });
@@ -82,13 +87,13 @@ test("Questionnaire controlled item changes and render-state callbacks preserve 
 }) => {
   await page.goto("/?component=questionnaire&controlled=1&customRender=1");
   await expect(page.locator("#custom-progress")).toHaveText("1/3");
-  await page.getByRole("radio", { name: /Creative/ }).check();
+  await page.getByRole("radio", { name: /Creative/u }).check();
   await page.getByRole("button", { exact: true, name: "Next" }).click();
   await expect(page.locator("#active")).toHaveText("features");
-  await expect(page.getByRole("radio", { name: /Creative/ })).toBeVisible();
-  await expect(page.getByRole("checkbox", { name: /Caves/ })).toHaveCount(0);
+  await expect(page.getByRole("radio", { name: /Creative/u })).toBeVisible();
+  await expect(page.getByRole("checkbox", { name: /Caves/u })).toHaveCount(0);
   await page.locator("#force-features").click();
-  await expect(page.getByRole("checkbox", { name: /Caves/ })).toBeVisible();
+  await expect(page.getByRole("checkbox", { name: /Caves/u })).toBeVisible();
   await expect(page.locator("#custom-progress")).toHaveText("2/3");
 });
 
@@ -96,9 +101,14 @@ test("Questionnaire choice and navigation interactions play the original click e
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).voices.push({
+    // SAFETY: This Questionnaire initScript creates voices as an empty playback trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & QuestionnairePlaybackState).voices = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The paired Questionnaire initializer owns voices; this unchanged native play mock appends only original-asset flag, rate and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & QuestionnairePlaybackState).voices.push({
         original: this.src.startsWith("data:audio/ogg;base64,"),
         rate: this.playbackRate,
         volume: this.volume,
@@ -108,12 +118,26 @@ test("Questionnaire choice and navigation interactions play the original click e
     };
   });
   await page.goto("/?component=questionnaire");
-  const choice = page.getByRole("radio", { name: /Creative/ });
+  const choice = page.getByRole("radio", { name: /Creative/u });
   await choice.hover();
-  expect(await page.evaluate(() => (window as any).voices.length)).toBe(0);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Questionnaire reader follows navigation initialized with the exact paired voices producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & QuestionnairePlaybackState).voices.length
+    )
+  ).toBe(0);
   await choice.check();
   await page.getByRole("button", { exact: true, name: "Next" }).click();
-  expect(await page.evaluate(() => (window as any).voices)).toEqual([
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Questionnaire reader follows navigation initialized with the exact paired voices producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & QuestionnairePlaybackState).voices
+    )
+  ).toEqual([
     { original: true, rate: 1, volume: 0.25 },
     { original: true, rate: 1, volume: 0.25 },
   ]);

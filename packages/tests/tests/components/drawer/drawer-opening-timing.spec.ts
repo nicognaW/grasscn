@@ -1,13 +1,41 @@
 import { test, expect } from "@grasscn/tests/test";
 import { PNG } from "pngjs";
 
+interface DrawerCapturedFrame {
+  ms: number;
+  opacity: string;
+  panelTransform: string;
+  ready: string | null;
+  rect: Pick<
+    DOMRectReadOnly,
+    "bottom" | "height" | "left" | "right" | "top" | "width" | "x" | "y"
+  >;
+  transform: string;
+}
+
+/** Completed dense seven-frame producer; this phase uses only its read operations. */
+interface CompletedDrawerFrames extends Array<DrawerCapturedFrame> {
+  readonly 0: DrawerCapturedFrame;
+  readonly 1: DrawerCapturedFrame;
+  readonly 2: DrawerCapturedFrame;
+  readonly 3: DrawerCapturedFrame;
+  readonly 4: DrawerCapturedFrame;
+  readonly 5: DrawerCapturedFrame;
+  readonly 6: DrawerCapturedFrame;
+  readonly length: 7;
+  at: {
+    (index: -1): DrawerCapturedFrame;
+    (index: number): DrawerCapturedFrame | undefined;
+  };
+}
+
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
 for (const scale of [2] as const) {
   test(`Drawer backdrop covers first frame while panel moves GUI${scale}`, async ({
     page,
   }, info) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     await page.goto(`${preview.replace(/\/$/u, "")}/#drawer`);
 
     const trigger = page
@@ -41,50 +69,72 @@ for (const scale of [2] as const) {
       document.body.append(s);
     });
 
-    const first = await trigger.evaluate(
-      async (button: HTMLButtonElement) =>
-        // eslint-disable-next-line promise/avoid-new -- Observe the first mounted frame before animations advance.
-        await new Promise<{ ready: string | null; opacity: string }>(
-          (resolve) => {
-            const observer = new MutationObserver(() => {
-              const overlay = document.querySelector<HTMLElement>(
-                  "[data-slot=drawer-overlay]"
-                ),
-                content = document.querySelector("[data-slot=drawer-content]");
-              if (!overlay || !content) return;
-              observer.disconnect();
-              for (const n of [overlay, content])
-                for (const a of n.getAnimations()) {
-                  a.pause();
-                  a.currentTime = 0;
-                }
-              resolve({
-                ready: overlay.getAttribute("data-mc-backdrop-ready"),
-                opacity: getComputedStyle(overlay).opacity,
-              });
-            });
-            observer.observe(document.body, { subtree: true, childList: true });
-            button.click();
+    const first = await trigger.evaluate(async (button: HTMLButtonElement) => {
+      const mutationCompletion = Promise.withResolvers<{
+        ready: string | null;
+        opacity: string;
+      }>();
+
+      try {
+        const observer = new MutationObserver(() => {
+          const overlay = document.querySelector<HTMLElement>(
+            "[data-slot=drawer-overlay]"
+          );
+
+          const content = document.querySelector("[data-slot=drawer-content]");
+
+          if (!overlay || !content) {
+            return;
           }
-        )
-    );
+
+          observer.disconnect();
+
+          for (const n of [overlay, content]) {
+            for (const a of n.getAnimations()) {
+              a.pause();
+              a.currentTime = 0;
+            }
+          }
+
+          mutationCompletion.resolve({
+            opacity: getComputedStyle(overlay).opacity,
+            ready: overlay.dataset.mcBackdropReady ?? null,
+          });
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+        button.click();
+      } catch (error) {
+        mutationCompletion.reject(error);
+      }
+
+      return await mutationCompletion.promise;
+    });
 
     // No waiting for backdrop-ready or animation end: inspect the first mounted frame.
     expect(first.opacity).toBe("1");
 
     const values: number[][] = [];
-    const states: unknown[] = [];
+    const states: DrawerCapturedFrame[] = [];
 
     for (const ms of [0, 16, 32, 50, 100, 200, 500]) {
-      // eslint-disable-next-line no-await-in-loop -- Capture each paused animation frame before advancing the same owned popup.
-      const state = await page.evaluate((frame) => {
+      // oxlint-disable-next-line no-await-in-loop -- Sets one shared drawer animation frame, reads its geometry, and attaches that exact screenshot before advancing the frame.
+      const state = await page.evaluate((frame): DrawerCapturedFrame => {
         const overlay = document.querySelector<HTMLElement>(
           "[data-slot=drawer-overlay]"
-        )!;
+        );
+
+        if (overlay === null) {
+          throw new Error("Missing required dom query: overlay");
+        }
 
         const content = document.querySelector<HTMLElement>(
           "[data-slot=drawer-content]"
-        )!;
+        );
+
+        if (content === null) {
+          throw new Error("Missing required dom query: content");
+        }
 
         for (const n of [overlay, content]) {
           for (const a of n.getAnimations()) {
@@ -115,7 +165,9 @@ for (const scale of [2] as const) {
       }, ms);
 
       states.push(state);
+      // oxlint-disable-next-line no-await-in-loop -- Sets one shared drawer animation frame, reads its geometry, and attaches that exact screenshot before advancing the frame.
       const bytes = await page.screenshot();
+      // oxlint-disable-next-line no-await-in-loop -- Sets one shared drawer animation frame, reads its geometry, and attaches that exact screenshot before advancing the frame.
       await info.attach(`frame-${ms}.png`, {
         body: bytes,
         contentType: "image/png",
@@ -145,9 +197,12 @@ for (const scale of [2] as const) {
       expect(value).toEqual(values.at(-1));
     }
 
-    expect((states[0] as any).panelTransform).not.toBe(
-      (states.at(-1) as any).panelTransform
+    // SAFETY: reaching this statement means all seven fixed frame iterations completed their one typed push; no early normal exits exist and this array never escapes except as a JSON string. Slots 0..6 and bound at(-1) therefore contain the actual captured records.
+    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact completed seven-frame producer view, including its real negative-index operation; no scalar assertion, changed lookup or new runtime premise.
+    expect((states as CompletedDrawerFrames)[0].panelTransform).not.toBe(
+      (states as CompletedDrawerFrames).at(-1).panelTransform
     );
+    // oxlint-enable typescript/no-unsafe-type-assertion
   });
 }
 
@@ -159,47 +214,67 @@ test("Drawer stays visible during its closing transition, then restores focus", 
   const trigger = page
     .getByRole("region", { exact: true, name: "Interactive drawer playground" })
     .getByRole("button", { exact: true, name: "Open drawer" });
+
   await trigger.click();
   const panel = page.locator("[data-slot=drawer-content]");
   await expect(panel).toBeVisible();
   await expect
-    .poll(async () =>
-      panel.evaluate((n) =>
-        n.getAnimations().every((a) => a.playState === "finished")
-      )
+    .poll(
+      async () =>
+        await panel.evaluate((n) =>
+          n.getAnimations().every((a) => a.playState === "finished")
+        )
     )
     .toBe(true);
 
-  const closing = await page.evaluate(
-    async () =>
-      // eslint-disable-next-line promise/avoid-new -- Observe the real closing attribute transition before the first frame can advance.
-      await new Promise<{ ending: boolean; display: string }>((resolve) => {
-        const panel = document.querySelector<HTMLElement>(
-          "[data-slot=drawer-content]"
-        )!;
+  const closing = await page.evaluate(async () => {
+    const mutationCompletion2 = Promise.withResolvers<{
+      ending: boolean;
+      display: string;
+    }>();
 
-        const observer = new MutationObserver(() => {
-          if (!Object.hasOwn(panel.dataset, "endingStyle")) {
-            return;
-          }
+    try {
+      const drawerPanel = document.querySelector<HTMLElement>(
+        "[data-slot=drawer-content]"
+      );
 
-          observer.disconnect();
-          const { display } = getComputedStyle(panel);
+      if (drawerPanel === null) {
+        throw new Error("Missing required dom query: drawerPanel");
+      }
 
-          for (const animation of panel.getAnimations()) {
-            animation.pause();
-            animation.currentTime = 100;
-          }
+      const observer = new MutationObserver(() => {
+        if (!Object.hasOwn(drawerPanel.dataset, "endingStyle")) {
+          return;
+        }
 
-          resolve({ display, ending: true });
-        });
+        observer.disconnect();
+        const { display } = getComputedStyle(drawerPanel);
 
-        observer.observe(panel, { attributes: true });
-        document
-          .querySelector<HTMLButtonElement>("[data-slot=drawer-close]")!
-          .click();
-      })
-  );
+        for (const animation of drawerPanel.getAnimations()) {
+          animation.pause();
+          animation.currentTime = 100;
+        }
+
+        mutationCompletion2.resolve({ display, ending: true });
+      });
+
+      observer.observe(drawerPanel, { attributes: true });
+
+      const requiredElement22 = document.querySelector<HTMLButtonElement>(
+        "[data-slot=drawer-close]"
+      );
+
+      if (requiredElement22 === null) {
+        throw new Error("Missing required dom query");
+      }
+
+      requiredElement22.click();
+    } catch (error) {
+      mutationCompletion2.reject(error);
+    }
+
+    return await mutationCompletion2.promise;
+  });
 
   expect(closing.ending).toBe(true);
   expect(closing.display).not.toBe("none");

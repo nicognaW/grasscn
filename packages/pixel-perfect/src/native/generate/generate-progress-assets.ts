@@ -1,0 +1,98 @@
+// Ordered entries preserve generated source and provenance byte order.
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+
+import type { InventoryAsset } from "@ppt/native/generate/asset-protocol";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
+import { PNG } from "pngjs";
+
+const [directory] = process.argv.slice(2);
+
+if (!directory) {
+  throw new Error("Pass the original boss-bar PNG directory");
+}
+
+// SAFETY: the retained native inventory is produced by the catalog exporter and pins these original assets.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const inventory = JSON.parse(
+  await readFile(
+    pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
+    "utf-8"
+  )
+) as NativeInventory & { assets: Record<string, InventoryAsset> };
+
+const sources: Record<
+  string,
+  { sha256: string; width: number; height: number; decodedRgbaSha256: string }
+> = {};
+
+const assets: Record<string, string> = {};
+
+const rgba: Record<string, string> = {};
+
+const assetInputNames = Object.keys(inventory.assets).flatMap((member) =>
+  member.includes("/sprites/boss_bar/") ? [path.basename(member)] : []
+);
+
+const assetInputReads = await Promise.allSettled(
+  assetInputNames.map(
+    async (filename) => await readFile(path.join(directory, filename))
+  )
+);
+
+for (const [member, pin] of Object.entries(inventory.assets).filter(
+  ([assetMember]) => assetMember.includes("/sprites/boss_bar/")
+)) {
+  const filename = path.basename(member);
+  const bytesRead = assetInputReads[assetInputNames.indexOf(filename)];
+
+  if (bytesRead.status === "rejected") {
+    throw bytesRead.reason;
+  }
+
+  const bytes = bytesRead.value;
+
+  const sha256 = createHash("sha256").update(bytes).digest("hex");
+  assert.equal(sha256, pin.sha256);
+  const decoded = PNG.sync.read(bytes);
+  // oxlint-disable-next-line eslint/sort-keys -- Retain the existing serialized field order and contextual required-key checks; a dynamic entries record loses this producer shape.
+  sources[member] = {
+    sha256,
+    width: pin.width,
+    height: pin.height,
+    decodedRgbaSha256: createHash("sha256").update(decoded.data).digest("hex"),
+  };
+  assets[filename.slice(0, -4)] =
+    `data:image/png;base64,${bytes.toString("base64")}`;
+  rgba[filename.slice(0, -4)] = decoded.data.toString("base64");
+}
+
+assert.equal(Object.keys(assets).length, 22);
+
+await writeFile(
+  webFile("registry/ui/minecraft-progress-assets.ts"),
+  `// Original Minecraft boss-bar artwork: Mojang Studios. Unchanged PNG bytes and losslessly decoded original RGBA.\nexport const minecraftProgressAssets = ${JSON.stringify(
+    assets
+  )} as const\nexport const minecraftProgressRgba = ${JSON.stringify(
+    rgba
+  )} as const\n`
+);
+
+await writeFile(
+  pixelPerfectFile("tests/reference/progress/asset-provenance.json"),
+  `${JSON.stringify(
+    Object.fromEntries([
+      ["sourceJarSha256", inventory.jarSha256],
+      ["sources", sources],
+      [
+        "rendering",
+        "Original BossHealthOverlay.extractBar with fixed LerpingBossEvent initial/current/target progress; no time-varying interpolation. Native182x5 dimensions. Paint color background then notch background, then cropped color progress and cropped notch progress. All22 original PNGs and losslessly decoded RGBA retained. Translucent notch pixels are uploaded as original unpremultiplied RGBA and composited with native source-alpha blending in a shared offscreen WebGL painter. Output preserves transparent original corners without flattening an external backdrop. Fill is Mth.lerpDiscrete(floatProgress,0,182): floor(float(floatProgress*181)) plus1 for positive progress. Web maximum/value semantics remain Radix; unknown progress uses the native empty surface without animation. Arbitrary resizing and other raster environments remain unverified.",
+      ],
+    ]),
+    null,
+    2
+  )}\n`
+);

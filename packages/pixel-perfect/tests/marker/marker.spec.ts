@@ -5,13 +5,44 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type labelReference from "../reference/label/manifest.json";
+import type separatorReference from "../reference/separator/manifest.json";
+
+type MarkerSource =
+  | (typeof labelReference)["cases"][number]
+  | (typeof separatorReference)["cases"][number];
+
+type MarkerCase = Pick<
+  MarkerSource,
+  | "name"
+  | "background"
+  | "height"
+  | "scale"
+  | "state"
+  | "width"
+  | "x"
+  | "y"
+  | "sha256"
+> & {
+  alignment?: string;
+  label?: string;
+  wrapWidth?: number;
+  timeMs?: number;
+};
+
+interface MarkerReference {
+  cases: MarkerCase[];
+}
+
 for (const dir of ["label", "separator"]) {
+  // SAFETY: Only retained label/separator cases reach this read; the owned consumed protocol preserves their optional label/alignment/wrapWidth and original timeMs fallback.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
       "utf-8"
     )
-  );
+  ) as MarkerReference;
 
   test.describe(`Marker ${dir} native constituents`, () => {
     test.describe.configure({ mode: "parallel" });
@@ -25,7 +56,7 @@ for (const dir of ["label", "separator"]) {
               Number(new URLSearchParams(location.search).get("timeMs") ?? 0))
         );
 
-        const q = new URLSearchParams({
+        const queryFields = {
           align: c.alignment ?? "left",
           background: c.background,
           component: "marker",
@@ -39,8 +70,13 @@ for (const dir of ["label", "separator"]) {
           width: String(c.width),
           x: String(c.x),
           y: String(c.y),
-          ...(c.wrapWidth ? { wrapWidth: String(c.wrapWidth) } : {}),
-        });
+        };
+
+        if (c.wrapWidth ?? 0) {
+          Object.assign(queryFields, { wrapWidth: String(c.wrapWidth) });
+        }
+
+        const q = new URLSearchParams(queryFields);
 
         await page.goto(`/?${q}`);
 
@@ -49,33 +85,59 @@ for (const dir of ["label", "separator"]) {
             page.locator("[data-mc-label-layout-ready]")
           ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-          for (const label of await page
-            .locator("[data-mc-label-ready]")
-            .all()) {
-            await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+          {
+            const readyElements = await page
+              .locator("[data-mc-label-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (label) => {
+                await expect(label).toHaveAttribute(
+                  "data-mc-label-ready",
+                  "true"
+                );
+              })
+            );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
           }
         }
 
         await page.mouse.move(0, 0);
 
-        if (c.state === "focus") {
-          await page.locator("[data-subject]").focus();
-        } else {
-          await page.evaluate(() => {
-            (document.activeElement as HTMLElement)?.blur();
-          });
-        }
+        await (c.state === "focus"
+          ? page.locator("[data-subject]").focus()
+          : page.evaluate(() => {
+              // SAFETY: The controlled Marker fixture focus belongs to its HTML body or interactive HTML component; retain the existing optional blur call, including null handling.
+              /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+              (document.activeElement as HTMLElement)
+                /* oxlint-enable typescript/no-unsafe-type-assertion */
+                ?.blur();
+            }));
 
         if (c.state.endsWith("hover")) {
           await page.locator("[data-subject]").hover({ force: true });
         }
 
-        await page.evaluate(
-          async () =>
-            new Promise((r) =>
-              requestAnimationFrame(() => requestAnimationFrame(r))
-            )
-        );
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers();
+
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion.resolve);
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          return await frameCompletion.promise;
+        });
 
         const bytes = readFileSync(
           pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)

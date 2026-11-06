@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -19,6 +20,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { MinecraftDisclosureText } from "@/components/ui/minecraft-disclosure-text";
 import { Textarea } from "@/components/ui/textarea";
+
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-blocks-form-1-gap": `${number}px`;
+  "--mc-intrinsic-registry-blocks-form-1-max-width": `${number}px`;
+}
 
 const schema = z.object({
   name: z
@@ -43,7 +49,10 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   const host = React.useRef<HTMLFormElement>(null);
   const id = React.useId();
   React.useLayoutEffect(() => {
-    const element = host.current!;
+    const element =
+      // SAFETY: React attaches this always-rendered <form> before its synchronous layout effect setup reads the owned host ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLFormElement result.
+      host.current as HTMLFormElement;
 
     const measure = () => {
       setWidth(Math.floor(element.clientWidth / scale));
@@ -57,6 +66,10 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
       observer.disconnect();
     };
   }, [scale]);
+
+  const actionSpacing: React.CSSProperties & {
+    "--mc-form-actions-gap": string;
+  } = { "--mc-form-actions-gap": `${8 * scale}px` };
 
   return (
     <>
@@ -73,13 +86,16 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
         ref={host}
         aria-label="Player and world settings"
         noValidate
+        // oxlint-disable-next-line typescript/no-misused-promises, typescript/strict-void-return -- React Hook Form documents handleSubmit as the native form handler; preserve its existing validation and Promise rejection ownership instead of adding a new error policy.
         onSubmit={form.handleSubmit(setSaved)}
-        style={{
-          display: "grid",
-          gap: 12 * scale,
-          maxWidth: 420 * scale,
-          minWidth: 0,
-        }}
+        className="grid max-w-(--mc-intrinsic-registry-blocks-form-1-max-width) min-w-0 gap-(--mc-intrinsic-registry-blocks-form-1-gap)"
+        style={
+          // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+          {
+            "--mc-intrinsic-registry-blocks-form-1-gap": `${12 * scale}px`,
+            "--mc-intrinsic-registry-blocks-form-1-max-width": `${420 * scale}px`,
+          } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+        }
       >
         <FieldSet disabled={disabled}>
           <FieldLegend scale={scale} maxWidth={width}>
@@ -103,7 +119,7 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
                       placeholder="Steve"
                       aria-invalid={fieldState.invalid}
                       aria-describedby={`${id}-name-hint${fieldState.invalid ? ` ${id}-name-error` : ""}`}
-                      style={{ width: "100%" }}
+                      className="w-full"
                     />
                     <FieldDescription
                       scale={scale}
@@ -141,7 +157,7 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
                       aria-describedby={
                         fieldState.invalid ? `${id}-world-error` : undefined
                       }
-                      style={{ width: "100%" }}
+                      className="w-full"
                     />
                     {fieldState.invalid && (
                       <FieldError
@@ -170,7 +186,7 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
                       disabled={disabled}
                       aria-describedby={`${id}-notes-hint`}
                       placeholder="What will you build?"
-                      style={{ height: 48 * scale, width: "100%" }}
+                      className="h-[calc(48px*var(--mc-scale))] w-full"
                     />
                     <FieldDescription
                       scale={scale}
@@ -185,7 +201,10 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
             />
           </FieldGroup>
         </FieldSet>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 * scale }}>
+        <div
+          className="flex flex-wrap gap-(--mc-form-actions-gap)"
+          style={actionSpacing}
+        >
           <Button scale={scale} type="submit" disabled={disabled}>
             Save player
           </Button>

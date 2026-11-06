@@ -3,7 +3,13 @@ import * as React from "react";
 
 export const ButtonCompositionFixture = () => {
   const p = new URLSearchParams(location.search);
-  const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
   const mode = p.get("composition") ?? "split";
   const label = p.get("label") ?? "Button";
   const [count, setCount] = React.useState(0);
@@ -18,10 +24,10 @@ export const ButtonCompositionFixture = () => {
     content = (
       <>
         {label.slice(0, 2)}
-        <React.Fragment>
+        <>
           {label.slice(2, 4)}
           <>{label.slice(4)}</>
-        </React.Fragment>
+        </>
       </>
     );
   } else if (mode === "empty") {
@@ -35,8 +41,9 @@ export const ButtonCompositionFixture = () => {
         width={8 * scale}
         height={8 * scale}
       >
-        <rect width="100%" height="100%" fill="white" />
+        <rect width="100%" height="100%" fill="var(--fixture-rich-icon-fill)" />
       </svg>,
+      // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- This nested rich span tests click-handler forwarding inside the real Button; it is not a separate activation target, and adding keyboard/button semantics changes that composition probe.
       <span
         key="rich"
         data-testid="consumer-rich"
@@ -57,11 +64,13 @@ export const ButtonCompositionFixture = () => {
         id="subject"
         scale={scale}
         disabled={p.get("state") === "disabled"}
+        className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
         style={{
-          left: Number(p.get("x") ?? 16) * scale,
-          position: "fixed",
-          top: Number(p.get("y") ?? 16) * scale,
-          width: Number(p.get("width") ?? 200) * scale,
+          "--fixture-width": `${Number(p.get("width") ?? 200) * scale}px`,
+
+          "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+
+          "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
         }}
         data-subject="true"
       >

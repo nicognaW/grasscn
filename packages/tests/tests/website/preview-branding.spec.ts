@@ -25,9 +25,11 @@ test("Header serves the preserved branding source at its actual production geome
   const logo = brand.locator("img");
   await expect(logo).toHaveAttribute(
     "src",
-    /grasscn-logo(?:-[A-Za-z0-9_-]+)?\.svg(?:\?.*)?$/
+    /grasscn-logo(?:-[A-Za-z0-9_-]+)?\.svg(?:\?.*)?$/u
   );
-  await logo.evaluate(async (node) => (node as HTMLImageElement).decode());
+  await logo.evaluate(async (node: HTMLImageElement) => {
+    await node.decode();
+  });
 
   const image = PNG.sync.read(
     await logo.screenshot({ path: info.outputPath("actual-header-logo.png") })
@@ -44,17 +46,21 @@ test("Header serves the preserved branding source at its actual production geome
   const originalSvg = await readFile(webFile("assets/grasscn-logo.svg"));
 
   expect(deliveredSvg.equals(originalSvg)).toBe(true);
+
   // The original SVG is served at its intrinsic176x64 geometry. Native
   // constituent coverage is independently tested at the actual header backdrop.
-  const iconBytes = await page.evaluate(async () => [
-    ...new Uint8Array(
-      await (
-        await fetch(
-          document.querySelector<HTMLLinkElement>('link[rel="icon"]')!.href
-        )
-      ).arrayBuffer()
-    ),
-  ]);
+  const iconBytes = await page.evaluate(async () => {
+    const requiredElement48 =
+      document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+
+    if (requiredElement48 === null) {
+      throw new Error("Missing required dom query");
+    }
+
+    const iconResponse = await fetch(requiredElement48.href);
+
+    return [...new Uint8Array(await iconResponse.arrayBuffer())];
+  });
 
   expect(
     Buffer.from(iconBytes).equals(
@@ -68,16 +74,22 @@ test("Grasscn logo stays crisp and contained on narrow preview screens", async (
   page,
 }) => {
   for (const width of [320, 390]) {
-    await page.setViewportSize({ width, height: 844 });
+    // oxlint-disable-next-line no-await-in-loop -- Changes this page viewport and route, then checks that rendered state before the next viewport replaces it.
+    await page.setViewportSize({ height: 844, width });
+    // oxlint-disable-next-line no-await-in-loop -- Changes this page viewport and route, then checks that rendered state before the next viewport replaces it.
     await page.goto(`${origin}docs`);
+
     const logo = page
       .getByRole("banner")
       .getByRole("link", { exact: true, name: "grasscn home" })
       .locator("img");
 
+    // oxlint-disable-next-line no-await-in-loop -- Changes this page viewport and route, then checks that rendered state before the next viewport replaces it.
     await expect(logo).toHaveCSS("width", "176px");
+    // oxlint-disable-next-line no-await-in-loop -- Changes this page viewport and route, then checks that rendered state before the next viewport replaces it.
     await expect(logo).toHaveCSS("height", "64px");
     expect(
+      // oxlint-disable-next-line no-await-in-loop -- Changes this page viewport and route, then checks that rendered state before the next viewport replaces it.
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth
       )

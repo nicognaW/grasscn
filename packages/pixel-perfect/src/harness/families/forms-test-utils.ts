@@ -5,7 +5,15 @@ import { test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-export function compare(expected: PNG, actual: PNG) {
+import type labelReference from "../../../tests/reference/label/manifest.json";
+
+interface FormsReference {
+  cases: ((typeof labelReference)["cases"][number] & {
+    text?: string | null;
+  })[];
+}
+
+export const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -23,9 +31,9 @@ export function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -33,15 +41,19 @@ export function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
-export function formsNativeTests(component: "form" | "field") {
+export const formsNativeTests = function formsNativeTests(
+  component: "form" | "field"
+) {
   test.describe.configure({ mode: "parallel" });
   const directories = ["tests/reference/label"];
   test(`${component} pixel comparator detects a changed pixel`, () => {
+    // SAFETY: the sole literal directory reads the retained label manifest, whose cases own a name.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact imported retained-artifact type at the comparator boundary.
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${directories[0]}/manifest.json`), "utf-8")
-    );
+    ) as typeof labelReference;
 
     const expected = PNG.sync.read(
       readFileSync(
@@ -51,14 +63,17 @@ export function formsNativeTests(component: "form" | "field") {
 
     const mutated = PNG.sync.read(PNG.sync.write(expected));
 
+    // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
     mutated.data[0] ^= 1;
     expect(compare(expected, mutated).mismatchedPixels).toBe(1);
   });
 
   for (const directory of directories) {
+    // SAFETY: The sole label manifest retains the Java Case optional text input; every runtime fallback remains unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-    );
+    ) as FormsReference;
 
     const parts =
       component === "form"
@@ -70,25 +85,28 @@ export function formsNativeTests(component: "form" | "field") {
         test(`${component} ${part} native pixels: ${c.name}`, async ({
           page,
         }, info) => {
-          await page.setViewportSize({ width: 1536, height: 900 });
+          await page.setViewportSize({ height: 900, width: 1536 });
 
           const params = new URLSearchParams({
+            align: c.alignment ?? "left",
+            background: c.background ?? "#202020",
             component,
+            height: String(c.height ?? 20),
+            label: c.label ?? c.text ?? "Button",
             native: "1",
             part,
-            label: c.label ?? c.text ?? "Button",
-            text: c.label ?? c.text ?? "Button",
             scale: String(c.scale),
             state: c.state,
+            text: c.label ?? c.text ?? "Button",
             width: String(c.width),
-            height: String(c.height ?? 20),
             x: String(c.x ?? 16),
             y: String(c.y ?? 16),
-            background: c.background ?? "#202020",
-            align: c.alignment ?? "left",
           });
 
-          if (c.wrapWidth != null) params.set("wrapWidth", String(c.wrapWidth));
+          if (c.wrapWidth !== undefined) {
+            params.set("wrapWidth", String(c.wrapWidth));
+          }
+
           await page.goto(`/?${params}`);
           const subject = page.locator("[data-subject]");
           await expect(subject).toBeVisible();
@@ -98,20 +116,45 @@ export function formsNativeTests(component: "form" | "field") {
             "true"
           );
 
-          for (const line of await subject
-            .locator("[data-mc-label-ready]")
-            .all())
-            await expect(line).toHaveAttribute("data-mc-label-ready", "true");
-          await page.evaluate(
-            async () =>
-              await new Promise<void>((resolve) =>
-                requestAnimationFrame(() =>
-                  requestAnimationFrame(() => {
-                    resolve();
-                  })
-                )
-              )
-          );
+          {
+            const readyElements = await subject
+              .locator("[data-mc-label-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (line) => {
+                await expect(line).toHaveAttribute(
+                  "data-mc-label-ready",
+                  "true"
+                );
+              })
+            );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
+          }
+
+          await page.evaluate(async () => {
+            const frameCompletion: PromiseWithResolvers<void> =
+              Promise.withResolvers();
+
+            try {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  frameCompletion.resolve();
+                });
+              });
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
+
+            await frameCompletion.promise;
+          });
 
           const bytes = readFileSync(
             pixelPerfectFile(`${directory}/captures/${c.name}`)
@@ -121,21 +164,22 @@ export function formsNativeTests(component: "form" | "field") {
             c.sha256
           );
 
-          const actualBytes = await subject.screenshot(),
-            { mismatchedPixels, diff } = compare(
-              PNG.sync.read(bytes),
-              PNG.sync.read(actualBytes)
-            );
+          const actualBytes = await subject.screenshot();
+
+          const { mismatchedPixels, diff } = compare(
+            PNG.sync.read(bytes),
+            PNG.sync.read(actualBytes)
+          );
 
           writeFileSync(info.outputPath("actual.png"), actualBytes);
           writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
           writeFileSync(
             info.outputPath("metrics.json"),
             JSON.stringify({
-              component,
-              part,
               case: c.name,
+              component,
               mismatchedPixels,
+              part,
               tolerance: 0,
             })
           );
@@ -144,4 +188,4 @@ export function formsNativeTests(component: "form" | "field") {
       }
     }
   }
-}
+};

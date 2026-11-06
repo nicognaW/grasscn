@@ -33,7 +33,6 @@ export interface ProductionIdentity {
   verifiedExitCode?: number;
 }
 
-// eslint-disable-next-line anti-slop/no-runtime-typeof -- Validate string fields at the persisted JSON protocol boundary.
 const isString = (value: unknown): value is string => typeof value === "string";
 
 // eslint-disable-next-line anti-slop/no-unsafe-dictionary-type -- Persisted JSON members remain unknown until the adjacent field guards validate them.
@@ -127,7 +126,6 @@ const isInstalled = (value: unknown): value is InstalledIdentity =>
     value.installedSha256,
     value.lockSha256,
   ].every(isString) &&
-  // eslint-disable-next-line anti-slop/no-runtime-typeof -- Installed receipts record the number of hashed files as a number.
   typeof value.files === "number";
 
 const isProductionPreparation = (
@@ -158,7 +156,6 @@ const isProduction = (value: unknown): value is ProductionIdentity =>
   (value.verifiedCommand === undefined ||
     (Array.isArray(value.verifiedCommand) &&
       value.verifiedCommand.every(isString))) &&
-  // eslint-disable-next-line anti-slop/no-runtime-typeof -- A completed command receipt records a numeric exit code.
   (value.verifiedExitCode === undefined ||
     typeof value.verifiedExitCode === "number") &&
   (value.preparation === undefined ||
@@ -190,7 +187,6 @@ const isSnapshot = (value: unknown): value is ConsumerSnapshot =>
   isWebsite(value.websiteIdentity) &&
   isEnvironment(value.environment);
 
-// eslint-disable-next-line anti-slop/no-unsafe-dictionary-type -- Journey-specific fields stay unknown until their existing verification stage consumes them.
 // eslint-disable-next-line anti-slop/no-unsafe-dictionary-type -- Only this parsed snapshot boundary retains unconsumed journey fields as unknown.
 type RawConsumerSnapshot = ConsumerSnapshot & Record<string, unknown>;
 
@@ -422,7 +418,7 @@ export interface DevelopmentReport {
   command: string[];
   finishedAt?: string;
   generatedInputsRestored?: boolean;
-  pages: { route: string; title: string }[];
+  pages: { route: string; title: string | null }[];
   passed: boolean;
   process?: { pid: number | undefined; runtime: string };
   source: SourceIdentity;
@@ -430,7 +426,6 @@ export interface DevelopmentReport {
   startedAt: string;
 }
 
-// eslint-disable-next-line anti-slop/no-runtime-typeof -- Validate numeric fields of persisted checkpoint summaries.
 const isNumber = (value: unknown): value is number => typeof value === "number";
 
 export interface CheckpointSummary {

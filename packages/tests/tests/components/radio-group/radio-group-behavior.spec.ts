@@ -1,8 +1,13 @@
 import { test, expect } from "@grasscn/tests/test";
 import type { Page, Locator } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { RecordedAudioPlayback } from "@tests/harness/audio-playback";
 
-async function arrow(page: Page, key: string, target: Locator) {
+interface RadioGroupAudioState {
+  radioSounds: RecordedAudioPlayback[];
+}
+
+const arrow = async function arrow(page: Page, key: string, target: Locator) {
   // Verify selection while the arrow-key interaction is active.
   await page.keyboard.down(key);
 
@@ -11,7 +16,7 @@ async function arrow(page: Page, key: string, target: Locator) {
   } finally {
     await page.keyboard.up(key);
   }
-}
+};
 
 test("Radio Group supports none/one selected and cannot uncheck the selected item", async ({
   page,
@@ -118,8 +123,18 @@ test("Radio Group keeps required form behavior and excludes disabled groups", as
   );
   await page.goto("/?component=radio-group&rootDisabled=1&form=1");
 
-  for (const radio of await page.getByRole("radio").all()) {
-    await expect(radio).toBeDisabled();
+  const readOnlyItems20 = await page.getByRole("radio").all();
+
+  const readOnlyResults20 = await Promise.allSettled(
+    readOnlyItems20.map(async (radio) => {
+      await expect(radio).toBeDisabled();
+    })
+  );
+
+  for (const readOnlyResult20 of readOnlyResults20) {
+    if (readOnlyResult20.status === "rejected") {
+      throw readOnlyResult20.reason;
+    }
   }
 
   await page.getByRole("button", { exact: true, name: "Save mode" }).click();
@@ -159,9 +174,14 @@ test("Radio Group uses original click audio per activation and respects preventD
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).radioSounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).radioSounds.push({
+    // SAFETY: This addInitScript owns radioSounds, creating its empty audio trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+    (window as typeof window & RadioGroupAudioState).radioSounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The init script creates radioSounds; this unchanged media play mock records only rate, source and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+      (window as typeof window & RadioGroupAudioState).radioSounds.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -170,7 +190,15 @@ test("Radio Group uses original click audio per activation and respects preventD
       return Promise.resolve();
     };
   });
-  const sounds = async () => page.evaluate(() => (window as any).radioSounds);
+
+  const sounds = async () =>
+    await page.evaluate(
+      () =>
+        // SAFETY: This paired reader runs after navigation's init script creates radioSounds with the recorded audio contract.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & RadioGroupAudioState).radioSounds
+    );
+
   await page.goto("/?component=radio-group");
   const survival = page.getByRole("radio", { exact: true, name: "survival" });
   await survival.hover();

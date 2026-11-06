@@ -22,3 +22,10 @@
   clip-path: inset(50%);
   white-space: pre;
 }
+
+@layer components {
+  .mc-owned-base-sign-1 {
+    height: var(--mc-z-sign-base-1-height);
+    width: var(--mc-z-sign-base-1-width);
+  }
+}

@@ -15,7 +15,6 @@ export interface NativeButtonManifest {
   sourceJarSha256: string;
 }
 
-// eslint-disable-next-line anti-slop/no-runtime-typeof -- Native JSON string fields are checked at the owned artifact boundary.
 const isString = (value: unknown): value is string => typeof value === "string";
 
 // eslint-disable-next-line anti-slop/no-unsafe-dictionary-type -- Raw native artifact members are checked by the adjacent case and catalogue guards.

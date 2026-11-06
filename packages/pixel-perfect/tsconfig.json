@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2023", "DOM"],
+    "lib": ["ES2022", "DOM", "ES2024.Promise"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
@@ -17,37 +17,14 @@
       "@ppt/*": ["../pixel-perfect/src/*"],
       "@tests/paths": ["../tests/src/paths.ts"],
       "@ppt/paths": ["../pixel-perfect/src/paths.ts"],
-      "@grasscn/tests/fixture": ["../tests/src/runtime/fixture.mjs"],
-      "@grasscn/tests/coordination": ["../tests/src/runtime/coordination.mjs"],
-      "@grasscn/tests/dependency-identity": [
-        "../tests/src/runtime/dependency-identity.mjs"
-      ],
-      "@grasscn/tests/installed-registry-file": [
-        "../tests/src/installed/registry-file.mjs"
-      ],
-      "@grasscn/tests/checkpoints": ["../tests/src/runtime/checkpoints.mjs"],
-      "@grasscn/tests/checkpoint-reporter": [
-        "../tests/src/runtime/checkpoint-reporter.mjs"
-      ],
-      "@grasscn/tests/guarded-entry": [
-        "../tests/src/runtime/guarded-entry.mjs"
-      ],
-      "@grasscn/tests/case-paths": ["../tests/src/runtime/case-paths.mjs"],
-      "@grasscn/tests/hosts": ["../tests/src/runtime/hosts.mjs"],
       "@grasscn/tests/next-production": [
-        "../tests/src/runtime/next-production.mjs"
-      ],
-      "@grasscn/tests/isolated-host-routing": [
-        "../tests/src/runtime/isolated-host-routing.mjs"
-      ],
-      "@grasscn/tests/consumer-boundary": [
-        "../tests/src/installed/consumer-boundary.mjs"
+        "../tests/src/runtime/next-production.ts"
       ],
       "@grasscn/tests/consumer-registry": [
-        "../tests/src/installed/consumer-registry.mjs"
+        "../tests/src/installed/consumer-registry.ts"
       ],
       "@grasscn/tests/prepared-consumers": [
-        "../tests/src/installed/prepared-consumers.mjs"
+        "../tests/src/installed/prepared-consumers.ts"
       ]
     },
     "types": ["bun", "node", "vite/client"],
@@ -55,6 +32,7 @@
   },
   "include": [
     "src/**/*.ts",
+    "cli/**/*.ts",
     "src/**/*.mts",
     "src/**/*.mjs",
     "cli/**/*.mjs",
@@ -63,14 +41,11 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "tests/unit/**/*.mjs",
-    "tests/reference/capture-header-branding.mjs",
-    "tests/reference/verify-header-branding.mjs",
     "*.config.ts"
   ],
   "exclude": [
     "node_modules",
     "tests/**/source-input/**",
-    "tests/**/native*/**",
     "../../test-results",
     "../../.pixel-perfect-test",
     "../../.native-reference"

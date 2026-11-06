@@ -1,6 +1,11 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { useConfirmationSnapshot } from "./minecraft-confirmation-snapshot";
+
+interface IntrinsicLayoutStyle2 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-ui-minecraft-confirmation-blur-2-visibility": string;
+}
 
 // Screen's post-effect is six alternating box passes, not a Gaussian blur.
 // This SVG path is still under native pixel verification.
@@ -12,14 +17,18 @@ export const MinecraftConfirmationBlur = ({
   identity: string;
 }) => {
   const ref = React.useRef<SVGSVGElement>(null);
-  const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/g, "");
+  const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/gu, "");
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
-  const ready = useConfirmationSnapshot(canvas, identity, radius);
+  const { attach, ready } = useConfirmationSnapshot(canvas, identity, radius);
 
   const size = 2 * Math.max(0, Math.round(radius)) + 1;
-  React.useLayoutEffect(() => {
-    const host = ref.current!.parentElement!;
+  React.useLayoutEffect((): (() => void) | undefined => {
+    const host = ref.current?.parentElement;
+
+    if (!host) {
+      return undefined;
+    }
 
     if (radius > 0 && !ready) {
       host.style.backdropFilter = `url(#${id})`;
@@ -42,7 +51,7 @@ export const MinecraftConfirmationBlur = ({
         width="0"
         height="0"
         aria-hidden="true"
-        style={{ pointerEvents: "none", position: "absolute" }}
+        className="pointer-events-none absolute"
       >
         <defs>
           <filter
@@ -57,7 +66,7 @@ export const MinecraftConfirmationBlur = ({
               <feConvolveMatrix
                 key={pass}
                 order={pass % 2 ? `1 ${size}` : `${size} 1`}
-                kernelMatrix={Array(size).fill(1).join(" ")}
+                kernelMatrix={Array.from({ length: size }, () => 1).join(" ")}
                 divisor={size}
                 edgeMode="duplicate"
                 preserveAlpha
@@ -67,16 +76,16 @@ export const MinecraftConfirmationBlur = ({
         </defs>
       </svg>
       <canvas
-        ref={canvas}
+        ref={attach}
         aria-hidden="true"
-        style={{
-          height: "100%",
-          inset: 0,
-          pointerEvents: "none",
-          position: "absolute",
-          visibility: ready && radius > 0 ? "visible" : "hidden",
-          width: "100%",
-        }}
+        className="pointer-events-none [visibility:var(--mc-intrinsic-registry-ui-minecraft-confirmation-blur-2-visibility)] absolute [inset:0] h-full w-full"
+        style={
+          // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+          {
+            "--mc-intrinsic-registry-ui-minecraft-confirmation-blur-2-visibility":
+              ready && radius > 0 ? "visible" : "hidden",
+          } satisfies IntrinsicLayoutStyle2 as IntrinsicLayoutStyle2
+        }
       />
     </>
   );

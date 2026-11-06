@@ -6,14 +6,20 @@ import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-export function nativeChatTests(component: "message" | "bubble") {
+import type messageReference from "../../../tests/reference/message/manifest.json";
+
+export const nativeChatTests = function nativeChatTests(
+  component: "message" | "bubble"
+) {
   test.describe.configure({ mode: "parallel" });
 
   const directory = "tests/reference/message";
 
+  // SAFETY: this fixed read consumes the retained message manifest represented by the exact type-only JSON import; its case-definition and capture-source hashes match the retained producers. Keep the existing fresh read and parse phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained-manifest contract at JSON.parse; no runtime loader, validation or generic caster.
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-  );
+  ) as typeof messageReference;
 
   test(`${component} comparator detects one changed pixel`, () => {
     const expected = PNG.sync.read(
@@ -24,6 +30,7 @@ export function nativeChatTests(component: "message" | "bubble") {
 
     const changed = PNG.sync.read(PNG.sync.write(expected));
 
+    // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
     changed.data[0] ^= 1;
     expect(compare(expected, changed).mismatchedPixels).toBe(1);
   });
@@ -58,22 +65,42 @@ export function nativeChatTests(component: "message" | "bubble") {
         subject.locator("[data-mc-label-layout-ready]")
       ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-      for (const glyph of await subject
-        .locator("[data-mc-label-ready]")
-        .all()) {
-        await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+      {
+        const readyElements = await subject
+          .locator("[data-mc-label-ready]")
+          .all();
+
+        const readinessResults = await Promise.allSettled(
+          readyElements.map(async (glyph) => {
+            await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+          })
+        );
+
+        const rejectedReadiness = readinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
 
-      await page.evaluate(
-        async () =>
-          new Promise<void>((resolve) =>
-            requestAnimationFrame(() =>
-              requestAnimationFrame(() => {
-                resolve();
-              })
-            )
-          )
-      );
+      await page.evaluate(async () => {
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
+
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        await frameCompletion.promise;
+      });
 
       const bytes = readFileSync(
         pixelPerfectFile(`${directory}/captures/${c.name}`)
@@ -96,7 +123,7 @@ export function nativeChatTests(component: "message" | "bubble") {
           alias: "base",
           case: c.name,
           component,
-          manifest: directory + "/manifest.json",
+          manifest: `${directory}/manifest.json`,
           mismatchedPixels,
           part:
             component === "message" || component === "bubble"
@@ -108,4 +135,4 @@ export function nativeChatTests(component: "message" | "bubble") {
       expect(mismatchedPixels).toBe(0);
     });
   }
-}
+};

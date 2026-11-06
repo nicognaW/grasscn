@@ -9,32 +9,39 @@ import react from "ultracite/oxlint/react";
 import shadcn from "ultracite/oxlint/shadcn";
 import vitest from "ultracite/oxlint/vitest";
 
-import { generatedCode } from "./tooling-scope.mjs";
+import {
+  generatedCode,
+  retainedSourceInputs,
+  vendoredSkills,
+} from "./tooling-scope";
 
-// All repository tests use Bun or Playwright. Retain test-quality rules without
-// requiring imports from a framework that this workspace does not install.
-const testRules = defineConfig({
-  ...vitest,
-  overrides: vitest.overrides?.map((override) => ({
-    ...override,
-    // Browser specs use Playwright's own preset and naming convention.
-    excludeFiles: ["**/*.spec.ts", "**/*.spec.tsx"],
-    rules: {
-      ...override.rules,
-      "vitest/prefer-importing-vitest-globals": "off",
-    },
-  })),
-});
+// Next-only rules target the application directories introduced by #23,
+// never reusable registry components or test fixtures.
 
 const jsPlugins = selectJsPlugins(["react-doctor"]);
 
 export default defineConfig({
   env: core.env,
-  extends: [core, playwright, react, testRules, shadcn, antiSlop, jsPlugins],
-  ignorePatterns: [...(core.ignorePatterns ?? []), ...generatedCode],
+  extends: [core, playwright, react, vitest, shadcn, antiSlop, jsPlugins],
+  ignorePatterns: [
+    ...(core.ignorePatterns ?? []),
+    ...generatedCode,
+    ...retainedSourceInputs,
+    ...vendoredSkills,
+  ],
   jsPlugins: [...jsPlugins.jsPlugins, ...shadcn.jsPlugins],
   options: { typeAware: true },
   overrides: [
+    {
+      // Recharts invokes this renderer directly; retain the default render* props.
+      files: ["**/apps/web/registry/blocks/chart-fps.tsx"],
+      rules: {
+        "react/no-unstable-nested-components": [
+          "error",
+          { propNamePattern: "{render*,shape}" },
+        ],
+      },
+    },
     {
       // Compile-only contracts test accepted public props, not rendered styles.
       files: ["**/packages/tests/tests/components/**/*-api.types.tsx"],
@@ -71,6 +78,7 @@ export default defineConfig({
     },
     {
       files: [
+        "**/apps/web/scripts/**/*.{test,spec}.{ts,tsx,js,mjs}",
         "**/packages/tests/tests/**/*.{test,spec}.{ts,tsx,js,mjs}",
         "**/packages/pixel-perfect/tests/**/*.{test,spec}.{ts,tsx,js,mjs}",
       ],
@@ -104,5 +112,25 @@ export default defineConfig({
       },
     },
   ],
-  settings: jsPluginSettings,
+  rules: {
+    // Safety rules reject unchecked casts and postfix assertions; this stylistic preference demands the forbidden postfix spelling.
+    "typescript/non-nullable-type-assertion-style": "off",
+  },
+  settings: {
+    // React delivers the real stylesheet through HomePage; exact owners preserve all other unknown-class checks.
+    ...jsPluginSettings,
+    shadcn: {
+      additionalCssSources: [
+        {
+          file: "components/home/homepage.css",
+          owners: [
+            "components/home/homepage.tsx",
+            "components/home/application-examples.tsx",
+            "components/home/showcase-panel.tsx",
+            "components/home/title-scene.tsx",
+          ],
+        },
+      ],
+    },
+  },
 });

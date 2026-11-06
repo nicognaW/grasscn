@@ -6,13 +6,19 @@ import * as React from "react";
 import { Button } from "./button";
 import { MinecraftCollapsibleText } from "./minecraft-collapsible-text";
 import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-collapsible.css";
+
+interface CollapsibleScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 
@@ -25,22 +31,19 @@ const Collapsible = ({
   className,
   style,
   ...props
-}: CollapsibleProps) => {
-  return (
-    <ScaleContext.Provider value={scale}>
-      <Primitive.Root
-        data-slot="collapsible"
-        className={cn("mc-collapsible", className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </ScaleContext.Provider>
-  );
-};
+}: CollapsibleProps) => (
+  <ScaleContext.Provider value={scale}>
+    <Primitive.Root
+      data-slot="collapsible"
+      className={cn("mc-collapsible", className)}
+      style={minecraftStyle(style, (__style): CollapsibleScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
+      {...props}
+    />
+  </ScaleContext.Provider>
+);
 
 const CollapsibleTrigger = ({
   children,
@@ -94,13 +97,13 @@ const CollapsibleContent = ({
   const [width, setWidth] = React.useState<number>();
 
   const forwarded = React.useCallback(
-    (node: HTMLDivElement | null) => {
+    (node: HTMLDivElement | null): (() => void) | undefined => {
       setElement(node);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(node);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setElement(null);
             cleanup();
@@ -109,36 +112,43 @@ const CollapsibleContent = ({
       } else if (ref) {
         ref.current = node;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {
+      // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
       const computed = getComputedStyle(element);
       const root = element.closest<HTMLElement>('[data-slot="collapsible"]');
 
       const physical =
         (element.clientWidth ||
           (computed.width.endsWith("px")
-            ? Number.parseFloat(computed.width)
+            ? // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+              Number.parseFloat(computed.width)
             : 0) ||
           root?.clientWidth) ??
         0;
 
       const logical = Math.floor(
         (physical -
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           Number.parseFloat(computed.paddingLeft) -
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           Number.parseFloat(computed.paddingRight)) /
           scale
       );
 
       if (logical > 0) {
         setWidth(logical);
+        // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect painter updates native DOM readiness/layout attributes; the stored state value is the element identity, not a mutable render model.
         element.dataset.mcDisclosureReady = "true";
       }
     };
@@ -151,18 +161,17 @@ const CollapsibleContent = ({
       resize.disconnect();
     };
   }, [element, scale]);
-  const scalar = typeof children === "string" || typeof children === "number";
+  const scalar = isMinecraftTextContent(children);
 
   return (
     <Primitive.Panel
       ref={forwarded}
       data-slot="collapsible-content"
       className={cn("mc-collapsible-content", className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): CollapsibleScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {scalar ? (
@@ -170,7 +179,7 @@ const CollapsibleContent = ({
           scale={scale}
           maxWidth={maxWidth ?? (wrap ? width : undefined)}
           align={align}
-          style={{ width: "100%" }}
+          className="mc-owned-paint-collapsible-1"
         >
           {children}
         </MinecraftCollapsibleText>

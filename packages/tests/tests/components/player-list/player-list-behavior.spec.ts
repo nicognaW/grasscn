@@ -1,23 +1,39 @@
 import { test, expect } from "@grasscn/tests/test";
 
+import type { AdventureFixtureSample } from "../../../fixtures/renderer/fixture-query-protocol";
+
+interface PlayerListPlaybackState extends Window {
+  played?: number;
+}
+
+type InitializedPlayerListPlaybackState = typeof window &
+  PlayerListPlaybackState & {
+    played: number;
+  };
+
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 
-const url = (sample: object) =>
+const url = (sample: AdventureFixtureSample) =>
   `${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify(sample))}`;
 
 test("player list supports pointer and keyboard selection without UI sound", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).played = 0;
-    (window as any).Audio = class {
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as PlayerListPlaybackState).played = 0;
+    const audioMockDescriptor: PropertyDescriptor = {};
+    audioMockDescriptor.value = class {
+      // oxlint-disable-next-line eslint/class-methods-use-this -- This method belongs to the browser Audio replacement serialized inside addInitScript; keep its prototype dispatch and recorder behavior.
       play() {
-        (window as any).played += 1;
-
-        return;
+        // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+        // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+        (window as InitializedPlayerListPlaybackState).played += 1;
+        // oxlint-enable typescript/no-unsafe-type-assertion
       }
     };
+    Object.defineProperty(window, "Audio", audioMockDescriptor);
   });
   await page.goto(
     url({
@@ -32,7 +48,14 @@ test("player list supports pointer and keyboard selection without UI sound", asy
   await kai.focus();
   await kai.press("Enter");
   await expect(page.getByLabel("Demo value")).toHaveText("0 / 2 / 0");
-  expect(await page.evaluate(() => (window as any).played)).toBe(0);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedPlayerListPlaybackState).played
+    )
+  ).toBe(0);
+  // oxlint-enable typescript/no-unsafe-type-assertion
 });
 
 test("player list uses at most eighty entries and twenty rows per column", async ({

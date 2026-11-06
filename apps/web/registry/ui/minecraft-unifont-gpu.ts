@@ -1,6 +1,8 @@
 import type { UnihexGlyph } from "./minecraft-unifont";
 import { nativeUnihexAtlas } from "./minecraft-unifont-atlas";
 
+const fallbackGlyphAtlas: Partial<typeof nativeUnihexAtlas> = nativeUnihexAtlas;
+
 interface Painter {
   canvas: HTMLCanvasElement;
   gl: WebGLRenderingContext;
@@ -23,7 +25,7 @@ export type UnihexAtlas = Record<
 
 const atlases = new WeakMap<CanvasRenderingContext2D, UnihexAtlas>();
 
-export function setUnihexAtlas(
+export const setUnihexAtlas = function setUnihexAtlas(
   context: CanvasRenderingContext2D,
   atlas?: UnihexAtlas
 ) {
@@ -32,16 +34,18 @@ export function setUnihexAtlas(
   } else {
     atlases.delete(context);
   }
-}
+};
 
-export function positionUnihex(
+export const positionUnihex = function positionUnihex(
   context: CanvasRenderingContext2D,
   bounds: DOMRect
 ) {
   origins.set(context, bounds);
-}
+};
 
-function releasePainter(painter: Painter | null | undefined) {
+const releasePainter = function releasePainter(
+  painter: Painter | null | undefined
+) {
   if (!painter) {
     return;
   }
@@ -51,9 +55,11 @@ function releasePainter(painter: Painter | null | undefined) {
   gl.deleteTexture(texture);
   gl.deleteProgram(program);
   gl.getExtension("WEBGL_lose_context")?.loseContext();
-}
+};
 
-export function disposeUnihex(context: CanvasRenderingContext2D) {
+export const disposeUnihex = function disposeUnihex(
+  context: CanvasRenderingContext2D
+) {
   origins.delete(context);
   atlases.delete(context);
 
@@ -67,9 +73,9 @@ export function disposeUnihex(context: CanvasRenderingContext2D) {
     releasePainter(sharedPainter);
     sharedPainter = undefined;
   }
-}
+};
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -85,11 +91,18 @@ function create(): Painter | null {
 
   try {
     const compile = (kind: number, source: string) => {
-      const shader = gl.createShader(kind)!;
+      const shader = gl.createShader(kind);
+
+      if (!shader) {
+        throw new Error(
+          "Minecraft unifont gpu WebGL shader could not be created"
+        );
+      }
+
       gl.shaderSource(shader, source);
       gl.compileShader(shader);
 
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      if (gl.getShaderParameter(shader, gl.COMPILE_STATUS) !== true) {
         throw new Error(
           gl.getShaderInfoLog(shader) ?? "Native font shader failed"
         );
@@ -157,9 +170,9 @@ function create(): Painter | null {
 
     throw error;
   }
-}
+};
 
-export function paintUnihexGPU(
+export const paintUnihexGPU = function paintUnihexGPU(
   context: CanvasRenderingContext2D,
   glyph: UnihexGlyph,
   x: number,
@@ -173,13 +186,15 @@ export function paintUnihexGPU(
 
   let painter = sharedPainter;
 
-  if (painter?.gl.isContextLost()) {
+  if (painter?.gl.isContextLost() === true) {
     releasePainter(painter);
-    sharedPainter = painter = undefined;
+    painter = undefined;
+    sharedPainter = painter;
   }
 
   if (painter === undefined) {
-    sharedPainter = painter = create();
+    painter = create();
+    sharedPainter = painter;
   }
 
   if (!painter) {
@@ -206,11 +221,12 @@ export function paintUnihexGPU(
     2 / canvas.width,
     -2 / canvas.height
   );
+  // oxlint-disable-next-line typescript/no-base-to-string -- The existing Canvas context API accepts string, CanvasGradient and CanvasPattern; retain its exact String coercion and downstream color-parse fallback without narrowing the context or changing custom coercion behavior.
   const fill = String(context.fillStyle);
 
   const ink = fill.startsWith("#")
     ? Number.parseInt(fill.slice(1, 3), 16)
-    : (fill.match(/[\d.]+/g)?.map(Number)?.[0] ?? 224);
+    : (fill.match(/[\d.]+/gu)?.map(Number)?.[0] ?? 224);
 
   gl.uniform1f(gl.getUniformLocation(program, "ink"), ink / 255);
   gl.clearColor(0, 0, 0, 0);
@@ -220,52 +236,60 @@ export function paintUnihexGPU(
   for (let row = 0; row < 16; row += 1) {
     for (let col = 0; col < glyph.width; col += 1) {
       const on =
+        // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
         (glyph.rows[row] >>> (glyph.bitWidth - 1 - col - glyph.left)) & 1;
 
       rgba.set([255, 255, 255, on ? 255 : 0], (row * glyph.width + col) * 4);
     }
   }
 
-  const observed = (atlases.get(context) ?? nativeUnihexAtlas)[
-    glyph.code.toString(16)
-  ];
+  const submitGlyphQuad = () => {
+    const observed = (atlases.get(context) ?? fallbackGlyphAtlas)[
+      glyph.code.toString(16)
+    ];
 
-  const atlasX = observed ? Math.round(observed.u0 * 256 - 0.01) : 0;
-  const atlasY = observed ? Math.round(observed.v0 * 256 - 0.01) : 0;
+    const atlasX = observed ? Math.round(observed.u0 * 256 - 0.01) : 0;
+    const atlasY = observed ? Math.round(observed.v0 * 256 - 0.01) : 0;
 
-  gl.texSubImage2D(
-    gl.TEXTURE_2D,
-    0,
-    atlasX,
-    atlasY,
-    glyph.width,
-    16,
-    gl.RGBA,
-    gl.UNSIGNED_BYTE,
-    rgba
-  );
+    gl.texSubImage2D(
+      gl.TEXTURE_2D,
+      0,
+      atlasX,
+      atlasY,
+      glyph.width,
+      16,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      rgba
+    );
 
-  const left = originX + x * scale;
-  const top = originY + y * scale;
-  const right = left + (glyph.width / 2) * scale;
-  const bottom = top + 8 * scale;
+    const left = originX + x * scale;
+    const top = originY + y * scale;
+    const right = left + (glyph.width / 2) * scale;
+    const bottom = top + 8 * scale;
 
-  const u0 = observed?.u0 ?? Math.fround(0.01) / 256;
-  const u1 = observed?.u1 ?? Math.fround(glyph.width - Math.fround(0.01)) / 256;
-  const v0 = observed?.v0 ?? u0;
-  const v1 = observed?.v1 ?? Math.fround(16 - Math.fround(0.01)) / 256;
+    const u0 = observed?.u0 ?? Math.fround(0.01) / 256;
 
-  const a = [left, top, u0, v0];
-  const b = [left, bottom, u0, v1];
-  const c = [right, bottom, u1, v1];
-  const d = [right, top, u1, v0];
+    const u1 =
+      observed?.u1 ?? Math.fround(glyph.width - Math.fround(0.01)) / 256;
 
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([...a, ...b, ...c, ...a, ...c, ...d]),
-    gl.STREAM_DRAW
-  );
-  gl.drawArrays(gl.TRIANGLES, 0, 6);
+    const v0 = observed?.v0 ?? u0;
+    const v1 = observed?.v1 ?? Math.fround(16 - Math.fround(0.01)) / 256;
+
+    const a = [left, top, u0, v0];
+    const b = [left, bottom, u0, v1];
+    const c = [right, bottom, u1, v1];
+    const d = [right, top, u1, v0];
+
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([...a, ...b, ...c, ...a, ...c, ...d]),
+      gl.STREAM_DRAW
+    );
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  };
+
+  submitGlyphQuad();
 
   if (gl.isContextLost()) {
     sharedPainter = undefined;
@@ -286,4 +310,4 @@ export function paintUnihexGPU(
   );
 
   return true;
-}
+};

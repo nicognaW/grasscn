@@ -29,19 +29,32 @@ const label = React.createRef<HTMLLabelElement>();
   <AttachmentTitle>
     <strong>Actual rich title</strong>
   </AttachmentTitle>
-  <AttachmentTrigger render={<a href="#preview" />}>
+  <AttachmentTrigger
+    render={<a href="#preview" aria-label="Preview attachment" />}
+  >
     {undefined}
   </AttachmentTrigger>
-  <AttachmentAction render={<a href="#remove" />}>X</AttachmentAction>
+  <AttachmentAction
+    render={
+      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- AttachmentAction supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+      <a href="#remove" />
+    }
+  >
+    X
+  </AttachmentAction>
 </Attachment>;
 
 <Questionnaire
   ref={form}
   items={[{ choices: [{ value: "one" }], name: "mode" }]}
   item="mode"
-  onItemChange={(name) => name.toUpperCase()}
+  onItemChange={(name) => {
+    name.toUpperCase();
+  }}
   shortcuts="numbers"
-  onSubmit={(event) => new FormData(event.currentTarget)}
+  onSubmit={(event) => {
+    event.currentTarget satisfies HTMLFormElement;
+  }}
 >
   <QuestionnaireProgress
     render={(props, state) => (
@@ -55,7 +68,9 @@ const label = React.createRef<HTMLLabelElement>();
     <QuestionnaireChoice
       ref={label}
       value="one"
-      onChange={(event) => event.currentTarget.checked}
+      onChange={(event) => {
+        event.currentTarget.checked satisfies boolean;
+      }}
     >
       One
     </QuestionnaireChoice>
@@ -64,7 +79,9 @@ const label = React.createRef<HTMLLabelElement>();
       type="password"
       spellCheck
       autoCorrect="on"
-      onChange={(event) => event.currentTarget.value}
+      onChange={(event) => {
+        event.currentTarget.value satisfies string;
+      }}
     />
   </QuestionnaireItem>
   <QuestionnairePrevious />

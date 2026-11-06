@@ -19,10 +19,7 @@ const CardExample = () => {
   const [saved, setSaved] = useState(false);
 
   return (
-    <Card /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ maxWidth: "100%", width: 472 }}
-      /* eslint-enable shadcn/no-inline-styles */
-    >
+    <Card className="w-118 max-w-full">
       <CardHeader>
         <CardTitle>World Settings</CardTitle>
         <CardDescription>Change your world options.</CardDescription>
@@ -36,9 +33,8 @@ const CardExample = () => {
             setName(event.target.value);
             setSaved(false);
           }}
-          /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-          style={{ width: "100%" }}
-          /* eslint-enable shadcn/no-inline-styles */
+
+          className="w-full"
         />
       </CardContent>
       <CardFooter>

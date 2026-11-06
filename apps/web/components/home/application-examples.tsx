@@ -9,8 +9,9 @@ import { Textarea } from "../../registry/ui/textarea";
 import { DocumentText } from "../document-text";
 import { Panel, Action } from "./showcase-panel";
 
-export function Savings() {
+export const Savings = () => {
   const [value, setValue] = React.useState(3250);
+
   return (
     <Panel
       title="Make room for your next idea."
@@ -40,7 +41,9 @@ export function Savings() {
       </div>
       <Action
         disabled={value === 5000}
-        onClick={() => setValue((v) => Math.min(5000, v + 250))}
+        onClick={() => {
+          setValue((v) => Math.min(5000, v + 250));
+        }}
       >
         {value === 5000 ? "Goal reached" : "Add $250"}
       </Action>
@@ -49,7 +52,7 @@ export function Savings() {
       </p>
     </Panel>
   );
-}
+};
 
 const ScheduleDay = (props: React.ComponentProps<typeof CalendarDayButton>) => (
   <CalendarDayButton
@@ -64,20 +67,16 @@ export const Schedule = () => {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(2026, 10, 2)
   );
+
   return (
     <Panel
       title="Find a day that works."
       tag="TEAM CALENDAR"
       description="Choose a date for the design review."
-      /* eslint-disable shadcn/no-unknown-classes -- Defined in the parent homepage.css composition stylesheet. */
+
       className="grass-schedule-panel"
-      /* eslint-enable shadcn/no-unknown-classes */
     >
-      <div
-        /* eslint-disable shadcn/no-unknown-classes -- Defined in the parent homepage.css composition stylesheet. */
-        className="grass-calendar-viewport"
-        /* eslint-enable shadcn/no-unknown-classes */
-      >
+      <div className="grass-calendar-viewport">
         <Calendar
           scale={2}
           components={{ DayButton: ScheduleDay }}
@@ -95,8 +94,8 @@ export const Schedule = () => {
         <DocumentText>
           {date
             ? date.toLocaleDateString("en-US", {
-                month: "long",
                 day: "numeric",
+                month: "long",
                 year: "numeric",
               })
             : "Choose a day"}
@@ -105,9 +104,11 @@ export const Schedule = () => {
     </Panel>
   );
 };
-export function Feedback() {
-  const [text, setText] = React.useState(""),
-    [sent, setSent] = React.useState(false);
+
+export const Feedback = () => {
+  const [text, setText] = React.useState("");
+  const [sent, setSent] = React.useState(false);
+
   return (
     <Panel
       title="Help shape what comes next."
@@ -133,7 +134,7 @@ export function Feedback() {
             setText(e.target.value);
             setSent(false);
           }}
-          style={{ height: 100 }}
+          className="h-[100px]"
         />
         <span className="grass-note">
           <DocumentText>{text.length}/240 characters</DocumentText>
@@ -153,10 +154,13 @@ export function Feedback() {
       </form>
     </Panel>
   );
-}
-export function Plan() {
-  const [plan, setPlan] = React.useState("monthly"),
-    [saved, setSaved] = React.useState(false);
+};
+
+export const Plan = () => {
+  const id = React.useId();
+  const [plan, setPlan] = React.useState("monthly");
+  const [saved, setSaved] = React.useState(false);
+
   return (
     <Panel
       title="A plan for your next chapter."
@@ -172,12 +176,20 @@ export function Plan() {
         }}
         aria-label="Billing cycle"
       >
-        <label className="grass-inline">
-          <RadioGroupItem value="monthly" aria-label="Monthly · $12 / month" />
+        <label className="grass-inline" htmlFor={`${id}-monthly`}>
+          <RadioGroupItem
+            id={`${id}-monthly`}
+            value="monthly"
+            aria-label="Monthly · $12 / month"
+          />
           <DocumentText>Monthly · $12 / month</DocumentText>
         </label>
-        <label className="grass-inline">
-          <RadioGroupItem value="annual" aria-label="Annual · $120 / year" />
+        <label className="grass-inline" htmlFor={`${id}-annual`}>
+          <RadioGroupItem
+            id={`${id}-annual`}
+            value="annual"
+            aria-label="Annual · $120 / year"
+          />
           <DocumentText>Annual · $120 / year</DocumentText>
         </label>
       </RadioGroup>
@@ -188,7 +200,13 @@ export function Plan() {
             : "Flexible monthly billing"}
         </DocumentText>
       </p>
-      <Action onClick={() => setSaved(true)}>Save plan</Action>
+      <Action
+        onClick={() => {
+          setSaved(true);
+        }}
+      >
+        Save plan
+      </Action>
       <output
         aria-label="Plan status"
         aria-live="polite"
@@ -202,4 +220,4 @@ export function Plan() {
       </output>
     </Panel>
   );
-}
+};

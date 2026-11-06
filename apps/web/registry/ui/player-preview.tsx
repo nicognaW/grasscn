@@ -6,9 +6,22 @@ import { minecraftAvatarSkins } from "./minecraft-avatar-assets";
 import type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
 import { playerMeshes } from "./minecraft-player-mesh";
 import { inferPlayerSkinModel } from "./minecraft-player-skin";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  useCanvasPaintConnection,
+} from "./minecraft-render";
 
 import "./minecraft-player-preview.css";
+
+interface OwnedPlayerPreviewDimensions1 extends React.CSSProperties {
+  "--mc-z-player-preview-base-1-height"?: string;
+  "--mc-z-player-preview-base-1-width"?: string;
+}
+
+interface PlayerPreviewLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-player-preview-1-visibility": string;
+}
 
 interface PlayerRotation {
   pitch: number;
@@ -29,10 +42,36 @@ type PlayerPreviewProps = React.ComponentProps<"div"> & {
   onLoadingStatusChange?: (status: "loading" | "loaded" | "error") => void;
 };
 
+const DEFAULT_PLAYER_ROTATION = { pitch: -5, yaw: 30 };
+
 const vs = `attribute vec3 position;attribute vec2 uv;attribute vec3 normal;uniform mat4 projection;uniform mat4 modelView;varying vec2 vUv;varying vec3 vNormal;void main(){gl_Position=projection*modelView*vec4(position,1.);vUv=uv;vNormal=normal;}`;
 const fs = `precision highp float;uniform sampler2D skin;varying vec2 vUv;varying vec3 vNormal;void main(){vec4 color=texture2D(skin,vUv);if(color.a<.1)discard;vec3 n=sign(vNormal)*floor(abs(vNormal)*127.)/127.;if(!gl_FrontFacing)n=-n;vec3 l0=normalize(vec3(.2,-1.,1.));vec3 l1=normalize(vec3(-.2,-1.,0.));float brightness=min(1.,(max(0.,dot(l0,n))+max(0.,dot(l1,n)))*.6+.4);gl_FragColor=vec4(color.rgb*brightness,color.a);}`;
 
-function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
+// Match JOML's float quaternion construction, including the exact half-turn.
+const nativeCosFromSin = function nativeCosFromSin(
+  sine: number,
+  angle: number
+) {
+  const f = Math.fround;
+  const pi = f(Math.PI);
+  const tau = f(Math.PI * 2);
+  const shifted = f(angle + f(Math.PI / 2));
+
+  let wrapped = f(shifted - f(Math.trunc(f(shifted / tau)) * tau));
+
+  if (wrapped < 0) {
+    wrapped = f(tau + wrapped);
+  }
+
+  const magnitude = f(Math.sqrt(f(1 - f(sine * sine))));
+
+  return wrapped >= pi ? -magnitude : magnitude;
+};
+
+const buildRenderer = function buildRenderer(
+  canvas: HTMLCanvasElement,
+  model: "wide" | "slim"
+) {
   const gl = canvas.getContext("webgl2", {
     alpha: true,
     antialias: false,
@@ -45,7 +84,14 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
   }
 
   const shader = (type: number, source: string) => {
-    const result = gl.createShader(type)!;
+    const result = gl.createShader(type);
+
+    if (!result) {
+      throw new Error(
+        "Minecraft player preview WebGL shader could not be created"
+      );
+    }
+
     gl.shaderSource(
       result,
       `#version 300 es\n${
@@ -62,7 +108,7 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
     );
     gl.compileShader(result);
 
-    if (!gl.getShaderParameter(result, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(result, gl.COMPILE_STATUS) !== true) {
       const message = gl.getShaderInfoLog(result);
       gl.deleteShader(result);
       throw new Error(message ?? "Player shader failed");
@@ -79,7 +125,7 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
   gl.attachShader(program, fragment);
   gl.linkProgram(program);
 
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+  if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
     throw new Error(
       gl.getProgramInfoLog(program) ?? "Player shader link failed"
     );
@@ -144,7 +190,7 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
     },
     load(image: HTMLImageElement) {
       if (image.naturalWidth !== 64 || image.naturalHeight !== 64) {
-        throw Error("Player skins must be64×64 PNG images");
+        throw new Error("Player skins must be64×64 PNG images");
       }
 
       gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -194,6 +240,7 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
       );
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.clearColor(0, 0, 0, 0);
+      // oxlint-disable-next-line no-bitwise -- WebGL combines independent color and depth buffer flags in its clear mask.
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.useProgram(program);
       gl.uniform2f(
@@ -226,10 +273,10 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
 
       for (let q = 0; q < source.length; q += 4) {
         for (const i of [0, 1, 2, 2, 3, 0]) {
-          const v = source[q + i],
-            tx = f(f(a * v[8]) + f(f(b * v[10]) + canvas.width * 0.5)),
-            ty = f(f(ys * v[9]) + baseY),
-            tz = f(f(c * v[8]) + f(d * v[10]));
+          const v = source[q + i];
+          const tx = f(f(a * v[8]) + f(f(b * v[10]) + canvas.width * 0.5));
+          const ty = f(f(ys * v[9]) + baseY);
+          const tz = f(f(c * v[8]) + f(d * v[10]));
 
           data.set(
             [
@@ -250,11 +297,25 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
 
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 
-      const order = Array.from({ length: source.length / 4 }, (_, i) => i).sort(
-        (a, b) =>
-          Math.fround(Math.fround(data[a * 48 + 2] + data[a * 48 + 18]) * 0.5) -
-          Math.fround(Math.fround(data[b * 48 + 2] + data[b * 48 + 18]) * 0.5)
+      const nativeSortValues = Array.from(
+        { length: source.length / 4 },
+        (_, i) => i
       );
+
+      nativeSortValues.sort(
+        (leftQuadIndex, rightQuadIndex) =>
+          Math.fround(
+            Math.fround(
+              data[leftQuadIndex * 48 + 2] + data[leftQuadIndex * 48 + 18]
+            ) * 0.5
+          ) -
+          Math.fround(
+            Math.fround(
+              data[rightQuadIndex * 48 + 2] + data[rightQuadIndex * 48 + 18]
+            ) * 0.5
+          )
+      );
+      const order = nativeSortValues;
 
       const sorted = new Float32Array(data.length);
 
@@ -333,25 +394,26 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
       );
     },
   };
-}
+};
 
-// Match JOML's float quaternion construction, including the exact half-turn.
-function nativeCosFromSin(sine: number, angle: number) {
-  const f = Math.fround;
-  const pi = f(Math.PI);
-  const tau = f(Math.PI * 2);
-  const shifted = f(angle + f(Math.PI / 2));
+const requestedPlayerModel = (
+  skin: MinecraftAvatarSkin,
+  src: PlayerPreviewProps["src"],
+  username: PlayerPreviewProps["username"],
+  model: PlayerPreviewProps["model"]
+) => {
+  let resolvedModel = model;
 
-  let wrapped = f(shifted - f(Math.trunc(f(shifted / tau)) * tau));
-
-  if (wrapped < 0) {
-    wrapped = f(tau + wrapped);
+  if (model === undefined || model === null) {
+    if (!(src ?? "") && !(username ?? "")) {
+      resolvedModel = skin.startsWith("slim/") ? "slim" : "wide";
+    } else {
+      resolvedModel = undefined;
+    }
   }
 
-  const magnitude = f(Math.sqrt(f(1 - f(sine * sine))));
-
-  return wrapped >= pi ? -magnitude : magnitude;
-}
+  return resolvedModel;
+};
 
 const PlayerPreview = ({
   skin = "wide/steve",
@@ -359,7 +421,7 @@ const PlayerPreview = ({
   username,
   model,
   rotation,
-  defaultRotation = { pitch: -5, yaw: 30 },
+  defaultRotation = DEFAULT_PLAYER_ROTATION,
   onRotationChange,
   width = 80,
   height = 120,
@@ -374,13 +436,7 @@ const PlayerPreview = ({
   onPointerCancel,
   ...props
 }: PlayerPreviewProps) => {
-  const requestedModel =
-    model ??
-    (!src && !username
-      ? skin.startsWith("slim/")
-        ? "slim"
-        : "wide"
-      : undefined);
+  const requestedModel = requestedPlayerModel(skin, src, username, model);
 
   const [resolvedModel, setResolvedModel] = React.useState<
     "wide" | "slim" | undefined
@@ -388,17 +444,26 @@ const PlayerPreview = ({
 
   const url =
     src ??
-    (username
+    (username !== undefined && username !== ""
       ? `https://mc-heads.net/skin/${encodeURIComponent(username)}`
       : minecraftAvatarSkins[skin].png);
 
   const [pose, setPose] = React.useState(defaultRotation);
 
-  const [status, setStatus] = React.useState<"loading" | "loaded" | "error">(
-    "loading"
+  const canvas = React.useRef<HTMLCanvasElement>(null);
+  const { attach, connection } = useCanvasPaintConnection(canvas);
+
+  const request = React.useMemo(
+    () => ({ connection, requestedModel, url }),
+    [url, requestedModel, connection]
   );
 
-  const canvas = React.useRef<HTMLCanvasElement>(null);
+  const [settled, setSettled] = React.useState<{
+    request: typeof request;
+    status: "loaded" | "error";
+  } | null>(null);
+
+  const status = settled?.request === request ? settled.status : "loading";
   const renderer = React.useRef<ReturnType<typeof buildRenderer> | null>(null);
 
   const drag = React.useRef<{
@@ -409,9 +474,11 @@ const PlayerPreview = ({
   } | null>(null);
 
   const current = rotation ?? pose;
-  const latest = React.useRef(current);
+  const latestFrame = React.useRef({ height, pose: current, scale, width });
 
-  latest.current = current;
+  React.useLayoutEffect(() => {
+    latestFrame.current = { height, pose: current, scale, width };
+  }, [width, height, scale, current]);
 
   const update = (next: PlayerRotation) => {
     const value = {
@@ -430,82 +497,108 @@ const PlayerPreview = ({
     const node = canvas.current;
 
     return () => {
-      if (renderer.current) {
+      if (renderer.current && node?.isConnected === false) {
         node
-          ?.getContext("webgl2")
+          .getContext("webgl2")
           ?.getExtension("WEBGL_lose_context")
           ?.loseContext();
       }
     };
   }, []);
   const loadingCallback = React.useRef(onLoadingStatusChange);
-  loadingCallback.current = onLoadingStatusChange;
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
+    loadingCallback.current = onLoadingStatusChange;
+  }, [onLoadingStatusChange]);
+  React.useEffect((): (() => void) | undefined => {
+    if (request.connection === null) {
+      return undefined;
+    }
+
+    const ownedCanvas = request.connection.canvas;
+
     let live = true;
     let instance: ReturnType<typeof buildRenderer> | undefined;
-    setStatus("loading");
     loadingCallback.current?.("loading");
     const image = new Image();
     image.crossOrigin = "anonymous";
-    image.onload = () => {
+
+    const handleImageLoad = () => {
       if (!live) {
         return;
       }
 
       try {
-        const actualModel = requestedModel ?? inferPlayerSkinModel(image);
-        instance = buildRenderer(canvas.current!, actualModel);
+        const actualModel =
+          request.requestedModel ?? inferPlayerSkinModel(image);
+
+        instance = buildRenderer(ownedCanvas, actualModel);
         renderer.current = instance;
         instance.load(image);
-        instance.paint(width, height, scale, latest.current);
+        const frame = latestFrame.current;
+        instance.paint(frame.width, frame.height, frame.scale, frame.pose);
         setResolvedModel(actualModel);
-        setStatus("loaded");
+        setSettled({ request, status: "loaded" });
         loadingCallback.current?.("loaded");
       } catch {
-        setStatus("error");
+        setSettled({ request, status: "error" });
         loadingCallback.current?.("error");
       }
     };
 
-    image.onerror = () => {
+    image.addEventListener("load", handleImageLoad);
+
+    const handleImageError = () => {
       if (live) {
-        setStatus("error");
+        setSettled({ request, status: "error" });
         loadingCallback.current?.("error");
       }
     };
 
-    image.src = url;
+    image.addEventListener("error", handleImageError);
+
+    image.src = request.url;
 
     return () => {
       live = false;
-      image.onload = null;
-      image.onerror = null;
+      image.removeEventListener("load", handleImageLoad);
+      image.removeEventListener("error", handleImageError);
       instance?.dispose();
       renderer.current = null;
     };
-  }, [url, requestedModel]);
+  }, [request]);
   React.useLayoutEffect(() => {
-    renderer.current?.paint(width, height, scale, current);
+    renderer.current?.paint(width, height, scale, {
+      pitch: current.pitch,
+      yaw: current.yaw,
+    });
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Image status commits a newly created renderer; repaint it even when size and pose are unchanged.
   }, [width, height, scale, current.pitch, current.yaw, status]);
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- The named preview group preserves its public role override and existing keyboard pose controls; the dynamic fallback is not an absent role.
     <div
       {...props}
       data-slot="player-preview"
       data-model={resolvedModel}
       data-ready={status === "loaded"}
-      className={cn(`mc-player-preview`, className)}
+      className={cn(
+        "mc-player-preview mc-owned-base-player-preview-1",
+        className
+      )}
       tabIndex={props.tabIndex ?? 0}
       role={props.role ?? "group"}
       aria-label={
         props["aria-label"] ??
         `${username ?? skin.split("/")[1]} player preview`
       }
-      style={minecraftStyle(style, (__style) => ({
-        height: height * scale,
-        width: width * scale,
-        ...__style,
-      }))}
+      style={minecraftStyle(
+        style,
+        (__style): OwnedPlayerPreviewDimensions1 => ({
+          "--mc-z-player-preview-base-1-height": `${height * scale}px`,
+          "--mc-z-player-preview-base-1-width": `${width * scale}px`,
+          ...__style,
+        })
+      )}
       onKeyDown={(event) => {
         onKeyDown?.(event);
 
@@ -584,21 +677,23 @@ const PlayerPreview = ({
       }}
     >
       <canvas
-        ref={canvas}
+        ref={attach}
         width={width * scale}
         height={height * scale}
         aria-hidden="true"
-        style={{
-          height: "100%",
-          transform: "scaleY(-1)",
-          visibility: status === "loaded" ? "visible" : "hidden",
-          width: "100%",
-        }}
+        className="mc-layout-player-preview-1 mc-dynamic-layout-player-preview-1"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-player-preview-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-player-preview-1-visibility":
+              status === "loaded" ? "visible" : "hidden",
+          } satisfies PlayerPreviewLayoutStyle1 as PlayerPreviewLayoutStyle1
+        }
       />
       {status !== "loaded" && (
-        <span role="status">
+        <output className="mc-player-preview-status">
           {status === "loading" ? "Loading skin..." : "3D preview unavailable"}
-        </span>
+        </output>
       )}
       <span className="mc-player-preview-accessible">
         Drag to rotate. Arrow keys rotate; Home resets.

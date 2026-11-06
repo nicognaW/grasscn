@@ -10,26 +10,10 @@ import {
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/progress/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    value: number;
-    color: string;
-    overlay: string;
-    sha256: string;
-  }[];
-};
+import type BoundaryReference1 from "../reference/progress/asset-provenance.json";
+import manifest from "../reference/progress/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -47,9 +31,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -57,7 +41,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Progress comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
@@ -69,6 +53,7 @@ test("Progress comparator catches a one-pixel change", async () => {
   );
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -130,12 +115,20 @@ test.describe("Progress native matrix", () => {
 });
 
 test("Progress retains every original boss-bar PNG", () => {
-  const provenance = JSON.parse(
-    readFileSync(
-      pixelPerfectFile("tests/reference/progress/asset-provenance.json"),
-      "utf-8"
-    )
-  );
+  const provenance =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/progress/asset-provenance.json"),
+        "utf-8"
+      )
+    ) as typeof BoundaryReference1 & {
+      sources: Record<
+        string,
+        (typeof BoundaryReference1)["sources"][keyof (typeof BoundaryReference1)["sources"]]
+      >;
+    };
 
   expect(Object.keys(minecraftProgressAssets)).toHaveLength(22);
 
@@ -151,7 +144,12 @@ test("Progress retains every original boss-bar PNG", () => {
     expect([image.width, image.height]).toEqual([182, 5]);
 
     const raw = Buffer.from(
-      minecraftProgressRgba[name as keyof typeof minecraftProgressRgba],
+      minecraftProgressRgba[
+        // SAFETY: The generated Progress PNG and RGBA records share the exact same 22 boss-bar sprite keys; this loop visits those original PNG keys and compares their paired decoded bytes.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+        name as keyof typeof minecraftProgressRgba
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
+      ],
       "base64"
     );
 
@@ -180,10 +178,10 @@ test("Progress notch painter preserves the background through transparent corner
   const rendered = PNG.sync.read(await progress.screenshot());
   await progress
     .locator("canvas, .mc-progress-fallback")
-    .evaluateAll((nodes) => {
-      nodes.forEach((node) => {
-        (node as HTMLElement).style.visibility = "hidden";
-      });
+    .evaluateAll((nodes: HTMLElement[]) => {
+      for (const node of nodes) {
+        node.style.visibility = "hidden";
+      }
     });
   const backdrop = PNG.sync.read(await progress.screenshot());
 
@@ -196,16 +194,17 @@ test("Progress notch painter preserves the background through transparent corner
   for (let y = 0; y < 5; y += 1) {
     for (let x = 0; x < 182; x += 1) {
       if (!original.data[(y * 182 + x) * 4 + 3]) {
-        for (let dy = 0; dy < 2; dy++)
-          for (let dx = 0; dx < 2; dx++) {
+        for (let dy = 0; dy < 2; dy += 1) {
+          for (let dx = 0; dx < 2; dx += 1) {
             const index = ((y * 2 + dy) * rendered.width + x * 2 + dx) * 4;
             expect(
               rendered.data
                 .subarray(index, index + 4)
                 .equals(backdrop.data.subarray(index, index + 4))
             ).toBe(true);
-            checked++;
+            checked += 1;
           }
+        }
       }
     }
   }
@@ -217,9 +216,13 @@ for (const scale of [1, 2, 3]) {
   test(`Progress asChild native pixels at scale ${scale}`, async ({
     page,
   }, testInfo) => {
-    const c = manifest.cases.find(
-      (c) => c.name === `progress-c18-s${scale}.png`
-    )!;
+    const c =
+      // SAFETY: The retained Progress producer includes exactly one progress-c18 capture at each of GUI scales 1, 2 and 3; preserve the original lookup and pixel assertions.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+      manifest.cases.find(
+        (progressCase) => progressCase.name === `progress-c18-s${scale}.png`
+      ) as (typeof manifest)["cases"][number];
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
 
     await page.goto(
       `/?component=progress&value=0.5&max=1&overlay=notched_6&asChild=1&scale=${scale}`

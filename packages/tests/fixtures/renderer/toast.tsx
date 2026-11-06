@@ -3,8 +3,58 @@ import { Toaster, toast as notify } from "@grasscn/web/ui/sonner";
 import * as React from "react";
 
 const p = new URLSearchParams(location.search);
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
 const count = Number(p.get("count") ?? 1);
+
+const createFixtureToasts = (
+  ids: React.RefObject<(string | number)[]>,
+  setActions: React.Dispatch<React.SetStateAction<number>>
+) => {
+  for (let i = 0; i < count; i += 1) {
+    const toastIds = ids.current;
+    const appendToastId = toastIds.push;
+    const createToast = notify;
+
+    const notificationContent = p.has("rich") ? (
+      <strong>{p.get("label") ?? "World saved"}</strong>
+    ) : (
+      (p.get("label") ?? "World saved")
+    );
+
+    const notificationOptions: NonNullable<Parameters<typeof notify>[1]> = {};
+
+    if (p.has("text")) {
+      notificationOptions.description = p.get("text");
+    }
+
+    if (p.has("actions")) {
+      notificationOptions.action = {
+        label: "Undo",
+        onClick: (event) => {
+          setActions((v) => v + 1);
+
+          if (p.has("cancelAction")) {
+            event.preventDefault();
+          }
+        },
+      };
+      notificationOptions.closeButton = true;
+    }
+
+    notificationOptions.dismissible = !p.has("disabled");
+    notificationOptions.duration = Number(p.get("duration") ?? 5000);
+    appendToastId.call(
+      toastIds,
+      createToast(notificationContent, notificationOptions)
+    );
+  }
+};
 
 const SonnerFixture = () => {
   const [actions, setActions] = React.useState(0);
@@ -12,42 +62,15 @@ const SonnerFixture = () => {
   const ids = React.useRef<(string | number)[]>([]);
 
   const show = () => {
-    for (let i = 0; i < count; i++) {
-      ids.current.push(
-        notify(
-          p.has("rich") ? (
-            <strong>{p.get("label") ?? "World saved"}</strong>
-          ) : (
-            (p.get("label") ?? "World saved")
-          ),
-          {
-            ...(p.has("text") ? { description: p.get("text")! } : {}),
-            ...(p.has("actions")
-              ? {
-                  action: {
-                    label: "Undo",
-                    onClick: (event) => {
-                      setActions((v) => v + 1);
-
-                      if (p.has("cancelAction")) event.preventDefault();
-                    },
-                  },
-                  closeButton: true,
-                }
-              : {}),
-            dismissible: !p.has("disabled"),
-            duration: Number(p.get("duration") ?? 5000),
-          }
-        )
-      );
-    }
-
+    createFixtureToasts(ids, setActions);
     setCreated((v) => v + count);
   };
 
   React.useEffect(() => {
     if (!p.has("closed")) {
-      show();
+      createFixtureToasts(ids, setActions);
+      // oxlint-disable-next-line react/set-state-in-effect -- Publish the existing successful mount-notification count after the external toast resource is created; initializing it during render or delaying it changes the fixture first-frame/resource-order contract.
+      setCreated((v) => v + count);
     }
   }, []);
 
@@ -65,42 +88,49 @@ const SonnerFixture = () => {
       />
       <div
         id="subject"
+        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width fixture-owned-inline-1"
         style={{
-          height,
-          left: x,
-          pointerEvents: "none",
-          position: "fixed",
-          top: y,
-          width,
+          "--fixture-height": `${height}px`,
+          "--fixture-width": `${width}px`,
+          "--fixture-x": `${x}px`,
+          "--fixture-y": `${y}px`,
         }}
         data-subject="true"
       />
-      <button id="open" onClick={show}>
+      <button type="button" id="open" onClick={show}>
         Open toast
       </button>
-      <button id="close" onClick={() => notify.dismiss()}>
+      <button
+        type="button"
+        id="close"
+        onClick={() => {
+          notify.dismiss();
+        }}
+      >
         Close toast
       </button>
       <button
+        type="button"
         id="update"
-        onClick={() =>
+        onClick={() => {
           notify("Updated 世界", {
             description: "こんにちは",
             id: ids.current[0],
-          })
-        }
+          });
+        }}
       >
         Update toast
       </button>
       <button
+        type="button"
         id="promise"
-        onClick={() =>
+        onClick={() => {
           notify.promise(Promise.resolve("Saved"), {
             error: "Save failed",
             loading: "Saving world",
             success: "World saved",
-          })
-        }
+          });
+        }}
       >
         Save promise
       </button>
@@ -117,10 +147,17 @@ const StrictFixture = () => {
   return (
     <>
       <Toaster ref={ref} />
-      <button id="show" onClick={() => notify("World saved")}>
+      <button
+        type="button"
+        id="show"
+        onClick={() => {
+          notify("World saved");
+        }}
+      >
         Show
       </button>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");
@@ -134,8 +171,12 @@ const StrictFixture = () => {
 };
 
 export const ToastFixture = () => {
-  document.documentElement.style.background = p.get("background") ?? "#202020";
-  document.body.style.background = p.get("background") ?? "#202020";
+  const background = p.get("background") ?? "#202020";
+
+  React.useLayoutEffect(() => {
+    document.documentElement.style.background = background;
+    document.body.style.background = background;
+  }, [background]);
 
   if (p.has("native")) {
     setMinecraftSoundVolume(0);

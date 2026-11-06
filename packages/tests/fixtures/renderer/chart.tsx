@@ -11,15 +11,42 @@ import {
 import * as React from "react";
 import { BarChart, Bar, XAxis, CartesianGrid } from "recharts";
 
+import type { ChartFixtureQuery } from "./fixture-query-protocol";
+
 const p = new URLSearchParams(location.search);
-const c = JSON.parse(p.get("case") ?? "{}");
+
+// SAFETY: owned chart callers serialize native FPS/Profiler cases or the ordinary metric/default query fields.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Chart fixture query producer boundary.
+const c = JSON.parse(p.get("case") ?? "{}") as ChartFixtureQuery;
+
 const scale = c.scale ?? 2;
 
 const style = {
-  left: (c.x ?? 16) * scale,
-  position: "fixed" as const,
-  top: (c.y ?? 16) * scale,
+  "--fixture-x": `${(c.x ?? 16) * scale}px`,
+  "--fixture-y": `${(c.y ?? 16) * scale}px`,
 };
+
+const DesktopFixtureIcon = () => (
+  <svg aria-label="Desktop icon" width="12" height="12">
+    <rect
+      width="12"
+      height="12"
+      fill="var(--fixture-chart-desktop-icon-fill)"
+    />
+  </svg>
+);
+
+const formatFixtureTooltip: NonNullable<
+  React.ComponentProps<typeof ChartTooltipContent>["formatter"]
+> = (value, name) => (
+  <span data-testid="formatted">{`${name}:${String(value)}`}</span>
+);
+
+const formatFixtureTooltipLabel: NonNullable<
+  React.ComponentProps<typeof ChartTooltipContent>["labelFormatter"]
+> = (value) => (
+  <strong data-testid="label-formatted">{`Season:${String(value)}`}</strong>
+);
 
 const ApiFixture = () => {
   let apiScale: 1 | 2 | 3 = 2;
@@ -45,11 +72,7 @@ const ApiFixture = () => {
 
   const config = {
     desktop: {
-      icon: () => (
-        <svg aria-label="Desktop icon" width="12" height="12">
-          <rect width="12" height="12" fill="green" />
-        </svg>
-      ),
+      icon: DesktopFixtureIcon,
       label: "世界",
       theme: { dark: "#00aa11", light: "#22dd44" },
     },
@@ -60,6 +83,14 @@ const ApiFixture = () => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
 
+  let selectedFixtureBranch1: "line" | "dashed" | "dot";
+
+  if (p.get("indicator") === "line") {
+    selectedFixtureBranch1 = "line";
+  } else {
+    selectedFixtureBranch1 = p.get("indicator") === "dashed" ? "dashed" : "dot";
+  }
+
   return (
     <>
       <ChartContainer
@@ -67,7 +98,8 @@ const ApiFixture = () => {
         config={config}
         scale={apiScale}
         initialDimension={{ height: 300, width: 480 }}
-        style={{ height: 300, width: wide ? 600 : 480 }}
+        className="fixture-height-300 fixture-geometry-width"
+        style={{ "--fixture-width": `${wide ? 600 : 480}px` }}
       >
         <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
@@ -80,27 +112,15 @@ const ApiFixture = () => {
               <ChartTooltipContent
                 hideLabel={p.has("hideLabel")}
                 hideIndicator={p.has("hideIndicator")}
-                indicator={
-                  p.get("indicator") === "line"
-                    ? "line"
-                    : p.get("indicator") === "dashed"
-                      ? "dashed"
-                      : "dot"
-                }
+                indicator={selectedFixtureBranch1}
                 nameKey={p.get("nameKey") ?? undefined}
                 labelKey={p.get("labelKey") ?? undefined}
                 formatter={
-                  p.has("formatter")
-                    ? (value, name) => (
-                        <span data-testid="formatted">{`${name}:${value}`}</span>
-                      )
-                    : undefined
+                  p.has("formatter") ? formatFixtureTooltip : undefined
                 }
                 labelFormatter={
                   p.has("labelFormatter")
-                    ? (value) => (
-                        <strong data-testid="label-formatted">{`Season:${String(value)}`}</strong>
-                      )
+                    ? formatFixtureTooltipLabel
                     : undefined
                 }
               />
@@ -130,7 +150,7 @@ const ApiFixture = () => {
         id="themed-pixels"
         config={config}
         scale={2}
-        style={{ height: 160, width: 320 }}
+        className="fixture-height-160 fixture-width-320"
       >
         <BarChart data={data}>
           <Bar
@@ -142,6 +162,7 @@ const ApiFixture = () => {
         </BarChart>
       </ChartContainer>
       <button
+        type="button"
         id="resize"
         onClick={() => {
           setWide((v) => !v);
@@ -150,6 +171,7 @@ const ApiFixture = () => {
         Resize
       </button>
       <button
+        type="button"
         id="theme"
         onClick={() => {
           setDark((v) => !v);
@@ -158,6 +180,7 @@ const ApiFixture = () => {
         Theme
       </button>
       <button
+        type="button"
         id="update"
         onClick={() => {
           setRevision((v) => v + 1);
@@ -166,6 +189,7 @@ const ApiFixture = () => {
         Update
       </button>
       <button
+        type="button"
         id="plot-update"
         onClick={() => {
           setRevision((v) => v + 1);
@@ -212,6 +236,7 @@ const MetricFixture = () => {
         ]}
       />
       <button
+        type="button"
         id="metric-update"
         onClick={() => {
           setChanged((value) => !value);
@@ -220,6 +245,7 @@ const MetricFixture = () => {
         Update metric
       </button>
       <button
+        type="button"
         id="metric-format"
         onClick={() => {
           setCustom((value) => !value);
@@ -246,37 +272,47 @@ export const ChartFixture = () => {
     };
   }, []);
 
-  return p.has("metric") ? (
-    <MetricFixture />
-  ) : c.element === "chart-fps" ? (
-    <FpsChartExample
-      dataKey="value"
-      id="subject"
-      scale={scale}
-      width={c.width}
-      data={c.samples
-        .slice(-240)
-        .slice(Math.max(0, 240 - ((c.width ?? 242) - 2)))
-        .map((value: number) => ({ value: value / 1e6 }))}
-      framerateLimit={c.value}
-      style={style}
-      data-subject="true"
-    />
-  ) : c.element === "chart-pie" ? (
-    <ProfilerChartExample
-      dataKey="percentage"
-      id="subject"
-      scale={scale}
-      rootName={c.rootName}
-      data={(c.labels ?? []).map((name: string, i: number) => ({
-        globalPercentage: c.globalPercentages[i],
-        name,
-        percentage: c.percentages[i],
-      }))}
-      style={style}
-      data-subject="true"
-    />
-  ) : (
-    <ApiFixture />
-  );
+  if (p.has("metric")) {
+    return <MetricFixture />;
+  }
+
+  if (c.element === "chart-fps") {
+    return (
+      <FpsChartExample
+        dataKey="value"
+        id="subject"
+        scale={scale}
+        width={c.width}
+        data={c.samples
+          .slice(-240)
+          .slice(Math.max(0, 240 - ((c.width ?? 242) - 2)))
+          .map((value: number) => ({ value: value / 1e6 }))}
+        framerateLimit={c.value}
+        className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
+        style={style}
+        data-subject="true"
+      />
+    );
+  }
+
+  if (c.element === "chart-pie") {
+    return (
+      <ProfilerChartExample
+        dataKey="percentage"
+        id="subject"
+        scale={scale}
+        rootName={c.rootName}
+        data={(c.labels ?? []).map((name: string, i: number) => ({
+          globalPercentage: c.globalPercentages[i],
+          name,
+          percentage: c.percentages[i],
+        }))}
+        className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
+        style={style}
+        data-subject="true"
+      />
+    );
+  }
+
+  return <ApiFixture />;
 };

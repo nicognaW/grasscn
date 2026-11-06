@@ -1,4 +1,72 @@
 import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@playwright/test";
+
+interface TextPlaybackState extends Window {
+  sounds?: string[];
+}
+
+type InitializedTextPlaybackState = typeof window &
+  TextPlaybackState & {
+    sounds: string[];
+  };
+
+const verifyTypographyElement = async (
+  page: Page,
+  part: string,
+  tag: string
+) => {
+  await page.goto(`/?component=typography&part=${part}&text=Hello%20世界`);
+  const subject = page.locator("[data-subject]");
+  await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
+  await expect(subject).toHaveText(/Hello 世界/u);
+  expect(await subject.evaluate((node) => node.tagName)).toBe(tag);
+};
+
+const verifyBadgeComposition = async (page: Page, suffix: string) => {
+  await page.goto(`/?component=badge&${suffix}`);
+  const subject = page.locator("[data-subject]");
+  await expect(subject).toBeVisible();
+
+  if (suffix.includes("rich")) {
+    await expect(subject.locator("strong")).toHaveText("Rich");
+  }
+
+  if (suffix.includes("asChild")) {
+    await expect(subject).toHaveAttribute("href", "#destination");
+    await subject.click();
+    await expect(page.locator("#events")).toHaveText("1");
+    await page.locator("#read-ref").click();
+    await expect(page.locator("#tag")).toHaveText("A");
+  } else if (suffix.includes("世界")) {
+    const readOnlyItems23 = await subject
+      .locator("[data-mc-label-ready]")
+      .all();
+
+    const readOnlyResults23 = await Promise.allSettled(
+      readOnlyItems23.map(async (line) => {
+        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+      })
+    );
+
+    for (const readOnlyResult23 of readOnlyResults23) {
+      if (readOnlyResult23.status === "rejected") {
+        throw readOnlyResult23.reason;
+      }
+    }
+  }
+};
+
+const verifySilentTextComponent = async (page: Page, component: string) => {
+  await page.goto(`/?component=${component}&native=1&asChild=1&text=Continue`);
+  await page.locator("[data-subject]").hover();
+  await page.locator("[data-subject]").click();
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(() => (window as InitializedTextPlaybackState).sounds)
+  ).toEqual([]);
+  // oxlint-enable typescript/no-unsafe-type-assertion
+};
 
 test("Typography retains native text inside semantic headings and prose elements", async ({
   page,
@@ -16,11 +84,8 @@ test("Typography retains native text inside semantic headings and prose elements
     p: "P",
     small: "SMALL",
   })) {
-    await page.goto(`/?component=typography&part=${part}&text=Hello%20世界`);
-    const subject = page.locator("[data-subject]");
-    await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
-    await expect(subject).toHaveText(/Hello 世界/);
-    expect(await subject.evaluate((node) => node.tagName)).toBe(tag);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyTypographyElement(page, part, tag);
   }
 });
 
@@ -92,7 +157,7 @@ test("Breadcrumb links preserve keyboard navigation, composed anchors and refs",
   await subject.focus();
   await expect(subject).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/#destination$/);
+  await expect(page).toHaveURL(/#destination$/u);
   await expect(page.locator("#events")).toHaveText("1");
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("A");
@@ -106,25 +171,8 @@ test("Badge supports native plain/CJK content, rich children and asChild links",
     "text=Rich&rich=1",
     "text=Continue&asChild=1",
   ]) {
-    await page.goto(`/?component=badge&${suffix}`);
-    const subject = page.locator("[data-subject]");
-    await expect(subject).toBeVisible();
-
-    if (suffix.includes("rich")) {
-      await expect(subject.locator("strong")).toHaveText("Rich");
-    }
-
-    if (suffix.includes("asChild")) {
-      await expect(subject).toHaveAttribute("href", "#destination");
-      await subject.click();
-      await expect(page.locator("#events")).toHaveText("1");
-      await page.locator("#read-ref").click();
-      await expect(page.locator("#tag")).toHaveText("A");
-    } else if (suffix.includes("世界")) {
-      for (const line of await subject.locator("[data-mc-label-ready]").all()) {
-        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
-      }
-    }
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyBadgeComposition(page, suffix);
   }
 });
 
@@ -147,20 +195,21 @@ test("Text and passive keyboard components remain silent on pointer and keyboard
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as TextPlaybackState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async, unicorn/consistent-function-scoping -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing. Keep play inside this initializer because Playwright serializes the callback without its Node lexical scope.
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push(this.src);
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedTextPlaybackState).sounds.push(this.src);
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
   });
 
   for (const component of ["badge", "typography", "breadcrumb", "kbd"]) {
-    await page.goto(
-      `/?component=${component}&native=1&asChild=1&text=Continue`
-    );
-    await page.locator("[data-subject]").hover();
-    await page.locator("[data-subject]").click();
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifySilentTextComponent(page, component);
   }
 });

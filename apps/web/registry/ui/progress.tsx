@@ -5,14 +5,22 @@ import * as React from "react";
 
 import { minecraftProgressAssets } from "./minecraft-progress-assets";
 import { MinecraftProgressPaint } from "./minecraft-progress-paint";
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-progress.css";
+
+interface OwnedProgressStyle extends React.CSSProperties {
+  "--mc-z-progress-paint-1-width"?: string;
+}
+
+interface ProgressStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+interface ProgressSurfaceStyle extends React.CSSProperties {
+  "--mc-progress-image": string;
+}
 
 type BossBarColor =
   | "pink"
@@ -39,10 +47,37 @@ type ProgressProps = Omit<
   scale?: 1 | 2 | 3;
 };
 
+/** Native determinate progress accepts only numeric values within its maximum. */
+const isDeterminateProgressValue = (
+  value: ProgressProps["value"],
+  maximum: number
+): value is number =>
+  typeof value === "number" &&
+  !Number.isNaN(value) &&
+  value >= 0 &&
+  value <= maximum;
+
+// Base UI supplies percentage/height defaults; this private artwork part owns native pixel geometry.
+const ProgressIndicatorArtwork = ({
+  style: _primitiveStyle,
+  ...props
+}: React.ComponentProps<"div">) => <div {...props} />;
+
+const ProgressTrack = ({
+  className,
+  ...props
+}: MinecraftProps<typeof ProgressPrimitive.Track>) => (
+  <ProgressPrimitive.Track
+    data-slot="progress-track"
+    className={cn(className)}
+    {...props}
+  />
+);
+
 const Progress = ({
   className,
   value,
-  max,
+  max = 100,
   color = "pink",
   overlay = "progress",
   scale = 2,
@@ -52,14 +87,9 @@ const Progress = ({
   ref,
   ...props
 }: ProgressProps) => {
-  const maximum =
-    typeof max === "number" && !Number.isNaN(max) && max > 0 ? max : 100;
+  const maximum = !Number.isNaN(max) && max > 0 ? max : 100;
 
-  const valid =
-    typeof value === "number" &&
-    !Number.isNaN(value) &&
-    value >= 0 &&
-    value <= maximum;
+  const valid = isDeterminateProgressValue(value, maximum);
 
   const ratio = valid ? value / maximum : 0;
   const fraction = Number.isFinite(ratio) ? Math.fround(ratio) : 0;
@@ -91,6 +121,26 @@ const Progress = ({
 
   const content = children;
 
+  const backgroundStyle: ProgressSurfaceStyle = {
+    "--mc-progress-image": `url("${background}")`,
+  };
+
+  const notchBackgroundStyle: ProgressSurfaceStyle | undefined = notchBackground
+    ? { "--mc-progress-image": `url("${notchBackground}")` }
+    : undefined;
+
+  const foregroundStyle: ProgressSurfaceStyle = {
+    "--mc-progress-image": `url("${foreground}")`,
+  };
+
+  const notchForegroundStyle: ProgressSurfaceStyle | undefined = notchForeground
+    ? { "--mc-progress-image": `url("${notchForeground}")` }
+    : undefined;
+
+  const ownedStyle1: OwnedProgressStyle = {
+    "--mc-z-progress-paint-1-width": `calc(${filled} * var(--mc-pixel))`,
+  };
+
   const artwork = (
     <>
       {overlay !== "progress" && (
@@ -102,33 +152,34 @@ const Progress = ({
           filled={filled}
         />
       )}
-      <ProgressTrack className="mc-progress-fallback" aria-hidden="true">
+      <ProgressTrack
+        className="mc-progress-fallback"
+        aria-hidden="true"
+        style={ownedStyle1}
+      >
         <span
           aria-hidden="true"
           className="mc-progress-surface"
-          style={{ backgroundImage: `url("${background}")` }}
+          style={backgroundStyle}
         />
         {notchBackground && (
           <span
             aria-hidden="true"
             className="mc-progress-surface"
-            style={{ backgroundImage: `url("${notchBackground}")` }}
+            style={notchBackgroundStyle}
           />
         )}
         <ProgressPrimitive.Indicator
           data-slot="progress-indicator"
           aria-hidden="true"
-          className="mc-progress-indicator"
-          style={{ height: "100%", width: `calc(${filled} * var(--mc-pixel))` }}
+          className="mc-progress-indicator mc-owned-paint-progress-1"
+          render={<ProgressIndicatorArtwork />}
         >
-          <span
-            className="mc-progress-surface"
-            style={{ backgroundImage: `url("${foreground}")` }}
-          />
+          <span className="mc-progress-surface" style={foregroundStyle} />
           {notchForeground && (
             <span
               className="mc-progress-surface"
-              style={{ backgroundImage: `url("${notchForeground}")` }}
+              style={notchForegroundStyle}
             />
           )}
         </ProgressPrimitive.Indicator>
@@ -147,11 +198,10 @@ const Progress = ({
       data-color={color}
       data-overlay={overlay}
       className={cn(`mc-progress`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): ProgressStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {artwork}
@@ -159,43 +209,24 @@ const Progress = ({
   );
 };
 
-const ProgressTrack = ({
-  className,
-  ...props
-}: MinecraftProps<typeof ProgressPrimitive.Track>) => {
-  return (
-    <ProgressPrimitive.Track
-      data-slot="progress-track"
-      className={cn(`mc-progress-track`, className)}
-      {...props}
-    />
-  );
-};
-
 const ProgressIndicator = ({
   className,
   ...props
-}: MinecraftProps<typeof ProgressPrimitive.Indicator>) => {
-  return (
-    <ProgressPrimitive.Indicator
-      data-slot="progress-indicator"
-      className={cn(`mc-progress-indicator`, className)}
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof ProgressPrimitive.Indicator>) => (
+  <ProgressPrimitive.Indicator
+    data-slot="progress-indicator"
+    className={cn(`mc-progress-indicator`, className)}
+    {...props}
+  />
+);
 
 const ProgressLabel = (
   props: MinecraftProps<typeof ProgressPrimitive.Label>
-) => {
-  return <ProgressPrimitive.Label data-slot="progress-label" {...props} />;
-};
+) => <ProgressPrimitive.Label data-slot="progress-label" {...props} />;
 
 const ProgressValue = (
   props: MinecraftProps<typeof ProgressPrimitive.Value>
-) => {
-  return <ProgressPrimitive.Value data-slot="progress-value" {...props} />;
-};
+) => <ProgressPrimitive.Value data-slot="progress-value" {...props} />;
 
 export {
   Progress,

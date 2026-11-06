@@ -2,20 +2,62 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
+/** Inputs read by the closed Item-row and ASCII/CJK Button-action routes. */
+interface AttachmentComparisonCase extends CapturedReferenceCase {
+  label: string;
+  background?: string;
+  x?: number;
+  y?: number;
+  text?: string;
+  placeholder?: string;
+  selected?: boolean;
+}
+
+interface AttachmentComparisonManifest {
+  background: string;
+  cases: AttachmentComparisonCase[];
+}
+
+const attachmentReferenceParameters = (
+  c: AttachmentComparisonCase,
+  manifest: AttachmentComparisonManifest,
+  part: string
+) =>
+  new URLSearchParams({
+    background: c.background ?? manifest.background ?? "#202020",
+    component: "attachment",
+    description: c.placeholder ?? "Survival Mode",
+    height: String(c.height ?? 20),
+    label: c.label,
+    native: "1",
+    part,
+    scale: String(c.scale),
+    selected: String(c.selected ?? false),
+    state: c.state,
+    text: c.text ?? "world-1",
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
 
 for (const [part, dir] of [
   ["row", "item"],
   ["action", "."],
   ["action", "button-cjk"],
 ]) {
+  // SAFETY: This closed row/item and action/ASCII-or-CJK-Button table reads retained manifests with the audited core fields, real variant optionals and string background headers.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact finite retained constituent-manifest boundary; runtime read/parse phase is preserved.
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
       "utf-8"
     )
-  );
+  ) as AttachmentComparisonManifest;
 
   test.describe(`Attachment actual native ${part} constituents ${dir}`, () => {
     test.describe.configure({ mode: "parallel" });
@@ -24,22 +66,7 @@ for (const [part, dir] of [
       test(c.name, async ({ page }, info) => {
         await page.setViewportSize({ height: 900, width: 1536 });
 
-        const q = new URLSearchParams({
-          background: c.background ?? manifest.background ?? "#202020",
-          component: "attachment",
-          description: c.placeholder ?? "Survival Mode",
-          height: String(c.height ?? 20),
-          label: c.label,
-          native: "1",
-          part,
-          scale: String(c.scale),
-          selected: String(c.selected ?? false),
-          state: c.state,
-          text: c.text ?? "world-1",
-          width: String(c.width),
-          x: String(c.x ?? 16),
-          y: String(c.y ?? 16),
-        });
+        const q = attachmentReferenceParameters(c, manifest, part);
 
         await page.goto(`/?${q}`);
         const subject = page.locator("[data-subject]");
@@ -51,13 +78,27 @@ for (const [part, dir] of [
             subject.locator("[data-slot=attachment-content]")
           ).toHaveAttribute("data-mc-item-content-ready", "true");
 
-          for (const label of await subject
-            .locator("[data-mc-label-layout-ready]")
-            .all()) {
-            await expect(label).toHaveAttribute(
-              "data-mc-label-layout-ready",
-              "true"
+          {
+            const readyElements = await subject
+              .locator("[data-mc-label-layout-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (label) => {
+                await expect(label).toHaveAttribute(
+                  "data-mc-label-layout-ready",
+                  "true"
+                );
+              })
             );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
           }
 
           await expect(
@@ -69,7 +110,8 @@ for (const [part, dir] of [
           }
 
           if (c.state === "icon-hover") {
-            const b = (await subject.boundingBox())!;
+            const b = await subject.boundingBox();
+            expectNotNull(b, "Missing required bounding box: b");
             await page.mouse.move(b.x + 18 * c.scale, b.y + 18 * c.scale);
           }
 
@@ -80,12 +122,19 @@ for (const [part, dir] of [
             await expect(subject).toBeFocused();
           }
 
+          let mediaStateSelection: string;
+
+          if (c.state === "hover") {
+            mediaStateSelection = "1";
+          } else if (c.state === "icon-hover") {
+            mediaStateSelection = "2";
+          } else {
+            mediaStateSelection = "0";
+          }
+
           await expect(
             subject.locator("[data-mc-item-media-ready]")
-          ).toHaveAttribute(
-            "data-mc-item-media-state",
-            c.state === "hover" ? "1" : c.state === "icon-hover" ? "2" : "0"
-          );
+          ).toHaveAttribute("data-mc-item-media-state", mediaStateSelection);
         } else {
           if (c.state === "hover") {
             await subject.hover();
@@ -96,18 +145,42 @@ for (const [part, dir] of [
           }
         }
 
-        for (const glyph of await subject
-          .locator("[data-mc-label-ready]")
-          .all()) {
-          await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+        {
+          const readyElements = await subject
+            .locator("[data-mc-label-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (glyph) => {
+              await expect(glyph).toHaveAttribute(
+                "data-mc-label-ready",
+                "true"
+              );
+            })
+          );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
-        await page.evaluate(
-          async () =>
-            new Promise((r) =>
-              requestAnimationFrame(() => requestAnimationFrame(r))
-            )
-        );
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers();
+
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion.resolve);
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          return await frameCompletion.promise;
+        });
 
         const bytes = readFileSync(
           pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)

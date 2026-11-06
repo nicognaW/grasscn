@@ -4,11 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
 
+import { isSliderValueList } from "@/lib/slider-value";
+
 import grass from "../../assets/grass-block-48.png";
-import {
-  AnalyticsChartExample,
-  type AnalyticsChartType,
-} from "../../registry/blocks/chart-analytics";
+import type { AnalyticsChartType } from "../../registry/blocks/chart-analytics";
+import { AnalyticsChartExample } from "../../registry/blocks/chart-analytics";
 import { FpsChartExample } from "../../registry/blocks/chart-fps";
 import { Avatar, AvatarImage } from "../../registry/ui/avatar";
 import { Button } from "../../registry/ui/button";
@@ -39,30 +39,70 @@ import { TitleScene } from "./title-scene";
 import "./homepage.css";
 
 const traffic = [
-  { name: "Jan", visitors: 186, returning: 80 },
-  { name: "Feb", visitors: 305, returning: 160 },
-  { name: "Mar", visitors: 237, returning: 120 },
-  { name: "Apr", visitors: 273, returning: 190 },
-  { name: "May", visitors: 309, returning: 210 },
-  { name: "Jun", visitors: 354, returning: 240 },
+  {
+    name: "Jan",
+    returning: 80,
+    visitors: 186,
+  },
+  {
+    name: "Feb",
+    returning: 160,
+    visitors: 305,
+  },
+  {
+    name: "Mar",
+    returning: 120,
+    visitors: 237,
+  },
+  {
+    name: "Apr",
+    returning: 190,
+    visitors: 273,
+  },
+  {
+    name: "May",
+    returning: 210,
+    visitors: 309,
+  },
+  {
+    name: "Jun",
+    returning: 240,
+    visitors: 354,
+  },
 ];
+
 const chartConfig = {
-  visitors: { label: "Visitors", color: "#55ff55" },
-  returning: { label: "Returning", color: "#55ffff" },
+  returning: {
+    color: "#55ffff",
+    label: "Returning",
+  },
+  visitors: {
+    color: "#55ff55",
+    label: "Visitors",
+  },
 };
+
 const team = [
   { name: "Alex Morgan", role: "Design engineer", skin: "slim/alex" },
   { name: "Jordan Lee", role: "Frontend developer", skin: "wide/steve" },
   { name: "Sam Rivera", role: "Product designer", skin: "wide/kai" },
 ] as const;
-function Controls() {
-  const [clicks, setClicks] = React.useState(0),
-    [checked, setChecked] = React.useState(true),
-    [enabled, setEnabled] = React.useState(true);
+
+const Controls = () => {
+  const [clicks, setClicks] = React.useState(0);
+  const [checked, setChecked] = React.useState(true);
+  const [enabled, setEnabled] = React.useState(true);
+
   return (
     <Panel title="Small pieces. Big possibilities." tag="THE ESSENTIALS">
       <div className="grass-inline">
-        <Action onClick={() => setClicks((v) => v + 1)}>Click me</Action>
+        <Action
+          onClick={() => {
+            setClicks((v) => v + 1);
+          }}
+        >
+          Click me
+        </Action>
         <Action disabled>Disabled</Action>
       </div>
       <Input scale={2} aria-label="Example name" placeholder="Your name" />
@@ -70,7 +110,7 @@ function Controls() {
         scale={2}
         aria-label="Example message"
         placeholder="Leave a little inspiration..."
-        style={{ height: 72 }}
+        className="h-[72px]"
       />
       <div className="grass-control-row">
         <div className="grass-inline">
@@ -78,7 +118,9 @@ function Controls() {
             id="home-remember"
             scale={2}
             checked={checked}
-            onCheckedChange={(v) => setChecked(v === true)}
+            onCheckedChange={(v) => {
+              setChecked(v);
+            }}
           />
           <Label htmlFor="home-remember" scale={2}>
             Remember me
@@ -89,7 +131,7 @@ function Controls() {
           scale={2}
           checked={enabled}
           onCheckedChange={setEnabled}
-          style={{ width: 64 }}
+          className="w-[64px]"
         />
       </div>
       <div className="grass-panel-foot">
@@ -104,9 +146,11 @@ function Controls() {
       </div>
     </Panel>
   );
-}
-function Analytics() {
+};
+
+const Analytics = () => {
   const [type, setType] = React.useState<AnalyticsChartType>("bar");
+
   return (
     <Panel
       title="A good month to grow."
@@ -134,9 +178,11 @@ function Analytics() {
             key={v}
             scale={1}
             aria-pressed={type === v}
-            onClick={() => setType(v)}
+            onClick={() => {
+              setType(v);
+            }}
           >
-            {(typeof v === "number" ? v : v[0]).toUpperCase() + v.slice(1)}
+            {v[0].toUpperCase() + v.slice(1)}
           </Button>
         ))}
       </div>
@@ -172,12 +218,14 @@ function Analytics() {
       </Link>
     </Panel>
   );
-}
-function Project() {
-  const [name, setName] = React.useState("Website redesign"),
-    [budget, setBudget] = React.useState("2400"),
-    [category, setCategory] = React.useState("design"),
-    [saved, setSaved] = React.useState("");
+};
+
+const Project = () => {
+  const [name, setName] = React.useState("Website redesign");
+  const [budget, setBudget] = React.useState("2400");
+  const [category, setCategory] = React.useState("design");
+  const [saved, setSaved] = React.useState("");
+
   return (
     <Panel
       title="Start something new."
@@ -198,7 +246,9 @@ function Project() {
             scale={2}
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
         </label>
         <div className="grass-form-row">
@@ -211,7 +261,9 @@ function Project() {
               min="1"
               required
               value={budget}
-              onChange={(e) => setBudget(e.target.value)}
+              onChange={(e) => {
+                setBudget(e.target.value);
+              }}
             />
           </label>
           <label>
@@ -224,7 +276,9 @@ function Project() {
               }}
               scale={2}
               value={category}
-              onValueChange={(value) => setCategory(value ?? "")}
+              onValueChange={(value) => {
+                setCategory(value ?? "");
+              }}
             >
               <SelectTrigger aria-label="Project category">
                 <SelectValue />
@@ -243,7 +297,7 @@ function Project() {
             aria-label="Project brief"
             scale={2}
             placeholder="What are we building?"
-            style={{ height: 80 }}
+            className="h-[80px]"
           />
         </label>
         <Action type="submit">Create project</Action>
@@ -259,9 +313,11 @@ function Project() {
       </form>
     </Panel>
   );
-}
-function Team() {
+};
+
+const Team = () => {
   const [invited, setInvited] = React.useState(false);
+
   return (
     <Panel
       title="Better, together."
@@ -285,25 +341,33 @@ function Team() {
           </div>
         ))}
       </div>
-      <Action onClick={() => setInvited(true)} disabled={invited}>
+      <Action
+        onClick={() => {
+          setInvited(true);
+        }}
+        disabled={invited}
+      >
         {invited ? "Invitation ready" : "Invite teammate"}
       </Action>
       {invited && (
-        <p role="status" className="grass-note">
+        <output className="grass-note block">
           <DocumentText>Demo invitation prepared. No email sent.</DocumentText>
-        </p>
+        </output>
       )}
     </Panel>
   );
-}
-function Tasks() {
+};
+
+const tasks = [
+  "Define the design tokens",
+  "Build the component library",
+  "Polish the onboarding flow",
+  "Ship something memorable",
+];
+
+const Tasks = () => {
   const [done, setDone] = React.useState([true, true, false, false]);
-  const tasks = [
-    "Define the design tokens",
-    "Build the component library",
-    "Polish the onboarding flow",
-    "Ship something memorable",
-  ];
+
   return (
     <Panel title="One step closer to shipped." tag="LAUNCH CHECKLIST">
       <div className="grass-task-list">
@@ -313,9 +377,9 @@ function Tasks() {
               scale={2}
               id={`home-task-${i}`}
               checked={done[i]}
-              onCheckedChange={(v) =>
-                setDone((old) => old.map((x, j) => (j === i ? v === true : x)))
-              }
+              onCheckedChange={(v) => {
+                setDone((old) => old.map((x, j) => (j === i ? v : x)));
+              }}
             />
             <label
               htmlFor={`home-task-${i}`}
@@ -338,67 +402,68 @@ function Tasks() {
       </div>
     </Panel>
   );
-}
-function Revenue() {
-  return (
-    <Panel title="Your work, paying off." tag="THIS MONTH">
-      <div className="grass-stat-line">
-        <strong>
+};
+
+const Revenue = () => (
+  <Panel title="Your work, paying off." tag="THIS MONTH">
+    <div className="grass-stat-line">
+      <strong>
+        <DocumentText>$8,420.00</DocumentText>
+      </strong>
+    </div>
+    <p className="grass-positive">
+      <DocumentText>+$1,284.50 from last month</DocumentText>
+    </p>
+    <dl className="grass-ledger">
+      <div>
+        <dt>
+          <DocumentText>Subscriptions</DocumentText>
+        </dt>
+        <dd>
+          <DocumentText>$6,240.00</DocumentText>
+        </dd>
+      </div>
+      <div>
+        <dt>
+          <DocumentText>One-time sales</DocumentText>
+        </dt>
+        <dd>
+          <DocumentText>$2,460.00</DocumentText>
+        </dd>
+      </div>
+      <div>
+        <dt>
+          <DocumentText>Refunds & fees</DocumentText>
+        </dt>
+        <dd>
+          <DocumentText>−$280.00</DocumentText>
+        </dd>
+      </div>
+      <div>
+        <dt>
+          <DocumentText>Net revenue</DocumentText>
+        </dt>
+        <dd>
           <DocumentText>$8,420.00</DocumentText>
-        </strong>
+        </dd>
       </div>
-      <p className="grass-positive">
-        <DocumentText>+$1,284.50 from last month</DocumentText>
-      </p>
-      <dl className="grass-ledger">
-        <div>
-          <dt>
-            <DocumentText>Subscriptions</DocumentText>
-          </dt>
-          <dd>
-            <DocumentText>$6,240.00</DocumentText>
-          </dd>
-        </div>
-        <div>
-          <dt>
-            <DocumentText>One-time sales</DocumentText>
-          </dt>
-          <dd>
-            <DocumentText>$2,460.00</DocumentText>
-          </dd>
-        </div>
-        <div>
-          <dt>
-            <DocumentText>Refunds & fees</DocumentText>
-          </dt>
-          <dd>
-            <DocumentText>−$280.00</DocumentText>
-          </dd>
-        </div>
-        <div>
-          <dt>
-            <DocumentText>Net revenue</DocumentText>
-          </dt>
-          <dd>
-            <DocumentText>$8,420.00</DocumentText>
-          </dd>
-        </div>
-      </dl>
-      <div className="grass-panel-foot">
-        <span>
-          <DocumentText>USD</DocumentText>
-        </span>
-        <Link href="/docs/components/table">
-          <DocumentText>View tables</DocumentText>
-        </Link>
-      </div>
-    </Panel>
-  );
-}
-function Preferences() {
-  const [email, setEmail] = React.useState(true),
-    [release, setRelease] = React.useState(false),
-    [saved, setSaved] = React.useState(false);
+    </dl>
+    <div className="grass-panel-foot">
+      <span>
+        <DocumentText>USD</DocumentText>
+      </span>
+      <Link href="/docs/components/table">
+        <DocumentText>View tables</DocumentText>
+      </Link>
+    </div>
+  </Panel>
+);
+
+const Preferences = () => {
+  const [email, setEmail] = React.useState(true);
+  const [release, setRelease] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
+
   return (
     <Panel title="Keep the good stuff coming." tag="NOTIFICATIONS">
       <div className="grass-preference">
@@ -419,7 +484,7 @@ function Preferences() {
             setEmail(v);
             setSaved(false);
           }}
-          style={{ width: 64 }}
+          className="w-[64px]"
         />
       </div>
       <div className="grass-preference">
@@ -440,10 +505,16 @@ function Preferences() {
             setRelease(v);
             setSaved(false);
           }}
-          style={{ width: 64 }}
+          className="w-[64px]"
         />
       </div>
-      <Action onClick={() => setSaved(true)}>Save preferences</Action>
+      <Action
+        onClick={() => {
+          setSaved(true);
+        }}
+      >
+        Save preferences
+      </Action>
       <output
         aria-live="polite"
         aria-label="Preferences status"
@@ -457,18 +528,26 @@ function Preferences() {
       </output>
     </Panel>
   );
-}
-function Chat() {
-  const [draft, setDraft] = React.useState(""),
-    [messages, setMessages] = React.useState([
-      { author: "Alex", text: "The new dashboard looks great!" },
-      { author: "Jordan", text: "Those pixel charts are so good." },
-    ]);
+};
+
+const Chat = () => {
+  const [draft, setDraft] = React.useState("");
+
+  const [messages, setMessages] = React.useState([
+    { author: "Alex", text: "The new dashboard looks great!" },
+    { author: "Jordan", text: "Those pixel charts are so good." },
+  ]);
+
   const list = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     const el = list.current;
-    if (el) el.scrollTop = el.scrollHeight;
+
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    }
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- New messages change committed scrollHeight; preserve the existing post-commit scroll-to-bottom trigger.
   }, [messages]);
+
   return (
     <Panel
       title="A little more human."
@@ -483,7 +562,12 @@ function Chat() {
       >
         <MessageGroup>
           {messages.map((message, i) => (
-            <Message scale={2} author={message.author} key={i}>
+            <Message
+              scale={2}
+              author={message.author}
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- This private chat list only appends at its tail; duplicate messages are allowed and existing message ordinals never reorder or shift. No separate message ID exists.
+              key={i}
+            >
               <MessageContent>{message.text}</MessageContent>
             </Message>
           ))}
@@ -493,6 +577,7 @@ function Chat() {
         className="grass-chat-compose"
         onSubmit={(e) => {
           e.preventDefault();
+
           if (draft.trim()) {
             setMessages((old) => [
               ...old,
@@ -507,7 +592,9 @@ function Chat() {
           aria-label="Team message"
           placeholder="Say something nice..."
           value={draft}
-          onChange={(e) => setDraft(e.target.value)}
+          onChange={(e) => {
+            setDraft(e.target.value);
+          }}
         />
         <Action type="submit" disabled={!draft.trim()}>
           Send
@@ -518,9 +605,11 @@ function Chat() {
       </p>
     </Panel>
   );
-}
-function Performance() {
+};
+
+const Performance = () => {
   const [sample, setSample] = React.useState(0);
+
   const data = React.useMemo(
     () =>
       Array.from(
@@ -530,17 +619,28 @@ function Performance() {
       ),
     [sample]
   );
-  const container = React.useRef<HTMLDivElement>(null),
-    [width, setWidth] = React.useState(140);
+
+  const container = React.useRef<HTMLDivElement>(null);
+  const [width, setWidth] = React.useState(140);
   React.useLayoutEffect(() => {
-    const el = container.current!;
-    const measure = () =>
+    const el =
+      // SAFETY: React attaches this always-rendered <div> before its synchronous layout effect setup reads the owned container ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLDivElement result.
+      container.current as HTMLDivElement;
+
+    const measure = () => {
       setWidth(Math.max(40, Math.min(242, Math.floor(el.clientWidth))));
+    };
+
     measure();
     const o = new ResizeObserver(measure);
     o.observe(el);
-    return () => o.disconnect();
+
+    return () => {
+      o.disconnect();
+    };
   }, []);
+
   return (
     <Panel
       title="Old-school pixels. Live insights."
@@ -555,8 +655,14 @@ function Performance() {
           domain={[0, 150]}
           formatValue={(v) => `${Math.round(v)} ms`}
           guides={[
-            { value: 150, label: "150 ms" },
-            { value: 75, label: "75 ms" },
+            {
+              label: "150 ms",
+              value: 150,
+            },
+            {
+              label: "75 ms",
+              value: 75,
+            },
           ]}
           width={width}
           scale={1}
@@ -567,18 +673,23 @@ function Performance() {
           <DocumentText>All systems operational</DocumentText>
         </span>
         <button
+          type="button"
           className="grass-text-link"
-          onClick={() => setSample((v) => v + 1)}
+          onClick={() => {
+            setSample((v) => v + 1);
+          }}
         >
           <DocumentText>Refresh sample</DocumentText>
         </button>
       </div>
     </Panel>
   );
-}
-function Payout() {
-  const [amount, setAmount] = React.useState(250),
-    [saved, setSaved] = React.useState(false);
+};
+
+const Payout = () => {
+  const [amount, setAmount] = React.useState(250);
+  const [saved, setSaved] = React.useState(false);
+
   return (
     <Panel
       title="Set your own pace."
@@ -603,7 +714,7 @@ function Payout() {
         value={[amount]}
         label={`$${amount}`}
         onValueChange={(v) => {
-          setAmount(typeof v === "number" ? v : v[0]);
+          setAmount(isSliderValueList(v) ? v[0] : v);
           setSaved(false);
         }}
       />
@@ -615,7 +726,13 @@ function Payout() {
           <DocumentText>$1,000 max</DocumentText>
         </span>
       </div>
-      <Action onClick={() => setSaved(true)}>Save threshold</Action>
+      <Action
+        onClick={() => {
+          setSaved(true);
+        }}
+      >
+        Save threshold
+      </Action>
       <output
         className="grass-note"
         aria-live="polite"
@@ -627,9 +744,11 @@ function Payout() {
       </output>
     </Panel>
   );
-}
-function Install() {
+};
+
+const Install = () => {
   const [item, setItem] = React.useState("button");
+
   return (
     <section
       className="grass-install"
@@ -676,7 +795,7 @@ function Install() {
       </p>
     </section>
   );
-}
+};
 
 // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Base UI's polymorphic Button needs its Next Link adapter to retain native link semantics.
 const installationLink = <Link href="/#install" role="link" />;
@@ -684,76 +803,76 @@ const installationLink = <Link href="/#install" role="link" />;
 // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Base UI's polymorphic Button needs its Next Link adapter to retain native link semantics.
 const documentationLink = <Link href="/docs" role="link" />;
 
-export default function HomePageShowcase() {
-  return (
-    <div className="grass-home" id="home">
-      <Link className="grass-skip" href="/#examples">
-        <DocumentText>Skip to examples</DocumentText>
-      </Link>
-      <main id="content">
-        <section className="grass-hero" aria-labelledby="grass-title">
-          <Link href="/#install" className="grass-announcement">
-            <DocumentText>grasscn </DocumentText>
-            <span>
-              <DocumentText>0.2</DocumentText>
-            </span>
-          </Link>
-          <TitleScene />
-          <p className="grass-title-tagline">
-            <DocumentText>Pixel-perfect Minecraft UI.</DocumentText>
-          </p>
-          <p>
-            <DocumentText>shadcn components. Yours to build.</DocumentText>
-          </p>
-          <div className="grass-hero-actions">
-            <Button nativeButton={false} render={installationLink} scale={2}>
-              {"Get started"}
-            </Button>
-            <Button nativeButton={false} render={documentationLink} scale={2}>
-              {"Browse components"}
-            </Button>
+const HomePageShowcase = () => (
+  <div className="grass-home" id="home">
+    <Link className="grass-skip" href="/#examples">
+      <DocumentText>Skip to examples</DocumentText>
+    </Link>
+    <main id="content">
+      <section className="grass-hero" aria-labelledby="grass-title">
+        <Link href="/#install" className="grass-announcement">
+          <DocumentText>grasscn </DocumentText>
+          <span>
+            <DocumentText>0.2</DocumentText>
+          </span>
+        </Link>
+        <TitleScene />
+        <p className="grass-title-tagline">
+          <DocumentText>Pixel-perfect Minecraft UI.</DocumentText>
+        </p>
+        <p>
+          <DocumentText>shadcn components. Yours to build.</DocumentText>
+        </p>
+        <div className="grass-hero-actions">
+          <Button nativeButton={false} render={installationLink} scale={2}>
+            Get started
+          </Button>
+          <Button nativeButton={false} render={documentationLink} scale={2}>
+            Browse components
+          </Button>
+        </div>
+      </section>
+      <section
+        className="grass-examples"
+        id="examples"
+        aria-label="Interactive application examples"
+      >
+        <div className="grass-examples-heading">
+          <span>
+            <DocumentText>BUILT WITH GRASSCN</DocumentText>
+          </span>
+          <span>
+            <DocumentText>Interactive examples</DocumentText>
+          </span>
+        </div>
+        <div className="grass-showcase-grid">
+          <div className="grass-showcase-column">
+            <Controls />
+            <Tasks />
+            <Performance />
+            <Feedback />
           </div>
-        </section>
-        <section
-          className="grass-examples"
-          id="examples"
-          aria-label="Interactive application examples"
-        >
-          <div className="grass-examples-heading">
-            <span>
-              <DocumentText>BUILT WITH GRASSCN</DocumentText>
-            </span>
-            <span>
-              <DocumentText>Interactive examples</DocumentText>
-            </span>
+          <div className="grass-showcase-column">
+            <Analytics />
+            <Revenue />
+            <Savings />
           </div>
-          <div className="grass-showcase-grid">
-            <div className="grass-showcase-column">
-              <Controls />
-              <Tasks />
-              <Performance />
-              <Feedback />
-            </div>
-            <div className="grass-showcase-column">
-              <Analytics />
-              <Revenue />
-              <Savings />
-            </div>
-            <div className="grass-showcase-column">
-              <Project />
-              <Payout />
-              <Schedule />
-            </div>
-            <div className="grass-showcase-column">
-              <Team />
-              <Chat />
-              <Preferences />
-              <Plan />
-            </div>
+          <div className="grass-showcase-column">
+            <Project />
+            <Payout />
+            <Schedule />
           </div>
-        </section>
-        <Install />
-      </main>
-    </div>
-  );
-}
+          <div className="grass-showcase-column">
+            <Team />
+            <Chat />
+            <Preferences />
+            <Plan />
+          </div>
+        </div>
+      </section>
+      <Install />
+    </main>
+  </div>
+);
+
+export { HomePageShowcase as default };

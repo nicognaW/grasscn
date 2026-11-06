@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@playwright/test";
 
 const errors = new WeakMap<object, string[]>();
 
@@ -12,31 +13,34 @@ test.afterEach(({ page }) => {
   expect(errors.get(page)).toEqual([]);
 });
 
+const verifyDefaultDialogFooter = async (page: Page, suffix: string) => {
+  await page.goto(`/?component=dialog-footer${suffix.replace("?", "&")}`);
+  await page.getByRole("button", { exact: true, name: "Open footer" }).click();
+  const footer = page.locator("[data-slot=dialog-footer]");
+  await expect(footer).toHaveAttribute("data-forwarded", "kept");
+  await expect(footer).toHaveClass(/custom-footer/u);
+  await expect(footer.getByRole("button")).toHaveCount(1);
+  await expect(
+    footer.getByRole("button", { exact: true, name: "Close" })
+  ).toHaveCount(0);
+  expect(await footer.evaluate((n) => n.hasAttribute("showclosebutton"))).toBe(
+    false
+  );
+  await page.locator("#inspect-footer").dispatchEvent("click");
+  await expect(page.locator("#footer-ref")).toHaveText("DIV");
+  await footer
+    .getByRole("button", { exact: true, name: "Existing action" })
+    .click();
+  await expect(page.locator("#footer-events")).toHaveText("1");
+  await expect(page.getByRole("dialog")).toBeVisible();
+};
+
 test("DialogFooter defaultfalse keeps children/ref/attributes and no DOM boolean leakage", async ({
   page,
 }) => {
   for (const suffix of ["", "?explicitFalse=1"]) {
-    await page.goto(`/?component=dialog-footer${suffix.replace("?", "&")}`);
-    await page
-      .getByRole("button", { exact: true, name: "Open footer" })
-      .click();
-    const footer = page.locator("[data-slot=dialog-footer]");
-    await expect(footer).toHaveAttribute("data-forwarded", "kept");
-    await expect(footer).toHaveClass(/custom-footer/);
-    await expect(footer.getByRole("button")).toHaveCount(1);
-    await expect(
-      footer.getByRole("button", { exact: true, name: "Close" })
-    ).toHaveCount(0);
-    expect(
-      await footer.evaluate((n) => n.hasAttribute("showclosebutton"))
-    ).toBe(false);
-    await page.locator("#inspect-footer").dispatchEvent("click");
-    await expect(page.locator("#footer-ref")).toHaveText("DIV");
-    await footer
-      .getByRole("button", { exact: true, name: "Existing action" })
-      .click();
-    await expect(page.locator("#footer-events")).toHaveText("1");
-    await expect(page.getByRole("dialog")).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyDefaultDialogFooter(page, suffix);
   }
 });
 

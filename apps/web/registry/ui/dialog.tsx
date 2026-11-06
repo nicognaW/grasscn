@@ -11,9 +11,11 @@ import {
   MinecraftDialogText,
 } from "./minecraft-dialog-text";
 import {
+  isMinecraftDocumentText,
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
@@ -22,33 +24,45 @@ import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 import "./minecraft-card.css";
 import "./minecraft-dialog.css";
 
+interface DialogPaintStyle extends React.CSSProperties {
+  "--mc-dialog-maximum": string;
+  "--mc-dialog-scroll-thumb": string;
+  "--mc-dialog-scroll-track": string;
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 
-function useElement<T extends HTMLElement>(ref: React.Ref<T> | undefined) {
+const useElement = function useElement<T extends HTMLElement>(
+  ref: React.Ref<T> | undefined
+) {
   const [element, setElement] = React.useState<T | null>(null);
 
   const callback = React.useCallback(
-    (node: T | null) => {
+    (node: T | null): (() => void) | undefined => {
       setElement(node);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(node);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setElement(null);
             cleanup();
           };
         }
       } else if (ref) {
+        // oxlint-disable-next-line react/immutability -- React commit forwards this mutable object ref outside render; preserve the existing callback and cleanup order.
         ref.current = node;
       }
+
+      return undefined;
     },
     [ref]
   );
 
   return [element, callback] as const;
-}
+};
 
 const Dialog = ({
   scale = 2,
@@ -107,8 +121,6 @@ const DialogOverlay = ({
   render,
   ...props
 }: MinecraftProps<typeof DialogPrimitive.Backdrop>) => {
-  const child = null;
-
   const content = (
     <>
       <MinecraftDialogBackdrop />
@@ -190,14 +202,15 @@ const DialogContent = ({
   const scale = explicitScale ?? inherited;
   const [element, forwarded] = useElement(ref);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
 
     const measure = () => {
+      // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
       const logicalWidth = element.offsetWidth / scale;
       const logicalHeight = element.offsetHeight / scale;
 
@@ -275,8 +288,8 @@ const DialogContent = ({
       element.removeEventListener("scroll", scroll);
       window.removeEventListener("resize", update);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- The rendered width prop changes measured popup bounds; preserve synchronous native centering after that commit.
   }, [element, scale, width]);
-  const child = null;
 
   const contents = (
     <>
@@ -287,29 +300,28 @@ const DialogContent = ({
     </>
   );
 
+  const dialogLayout = React.useMemo(
+    () => ({ contentWidth: Math.max(1, width - 36), scale }),
+    [width, scale]
+  );
+
   return (
     <DialogPortal>
       <DialogOverlay />
       <ScaleContext.Provider value={scale}>
-        <DialogLayoutContext.Provider
-          value={{ contentWidth: Math.max(1, width - 36), scale }}
-        >
+        <DialogLayoutContext.Provider value={dialogLayout}>
           <DialogPrimitive.Popup
             render={render}
             data-slot="dialog-content"
             ref={forwarded}
             className={cn(`mc-dialog-content`, className)}
-            style={minecraftStyle(
-              style,
-              (__style) =>
-                ({
-                  "--mc-dialog-maximum": `${width * scale}px`,
-                  "--mc-dialog-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
-                  "--mc-dialog-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
-                  "--mc-scale": scale,
-                  ...__style,
-                }) as React.CSSProperties
-            )}
+            style={minecraftStyle(style, (__style): DialogPaintStyle => ({
+              "--mc-dialog-maximum": `${width * scale}px`,
+              "--mc-dialog-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
+              "--mc-dialog-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {contents}
@@ -340,9 +352,9 @@ const DialogFooter = ({
   const { scale, contentWidth } = React.useContext(DialogLayoutContext);
   const [element, forwarded] = useElement(ref);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {
@@ -382,7 +394,6 @@ const DialogTitle = ({
   render,
   ...props
 }: MinecraftProps<typeof DialogPrimitive.Title>) => {
-  const child = null;
   const content = <MinecraftDialogText bold>{children}</MinecraftDialogText>;
 
   return (
@@ -404,19 +415,22 @@ const DialogDescription = ({
   render,
   ...props
 }: MinecraftProps<typeof DialogPrimitive.Description>) => {
-  const child = null;
   const text = children;
 
-  const content =
-    typeof text === "string" ? (
-      text.split("\n\n").map((part, index) => (
-        <MinecraftDialogText key={index} item>
-          {part}
-        </MinecraftDialogText>
-      ))
-    ) : (
-      <MinecraftDialogText item>{text}</MinecraftDialogText>
-    );
+  const content = isMinecraftDocumentText(text) ? (
+    text.split("\n\n").map((part, index) => (
+      <MinecraftDialogText
+        /* eslint-disable react-doctor/no-array-index-as-key -- These private paragraphs are ordinal slots from one string; repeated paragraphs are valid and native font readiness stays with its paragraph slot. */
+        key={index}
+        /* eslint-enable react-doctor/no-array-index-as-key */
+        item
+      >
+        {part}
+      </MinecraftDialogText>
+    ))
+  ) : (
+    <MinecraftDialogText item>{text}</MinecraftDialogText>
+  );
 
   return (
     <DialogPrimitive.Description

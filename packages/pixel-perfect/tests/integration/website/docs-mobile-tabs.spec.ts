@@ -48,13 +48,12 @@ test("mobile documentation Preview and Code remain visible and match compact nat
 
   await tabs.scrollIntoViewIfNeeded();
 
-  /* eslint-disable no-await-in-loop -- Apply each declared browser state and capture its evidence before changing that same page. */
   for (const name of ["Preview", "Code"]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
     await expect(tabs.getByRole("tab", { exact: true, name })).toBeInViewport({
       ratio: 1,
     });
   }
-  /* eslint-enable no-await-in-loop */
 
   const geometry = await tabs.evaluate((element) => {
     const parent = element.parentElement;
@@ -85,8 +84,7 @@ test("mobile documentation Preview and Code remain visible and match compact nat
     await readFile(new URL("manifest.json", family), "utf-8")
   );
 
-  /* eslint-disable no-await-in-loop -- Apply each declared browser state and capture its evidence before changing that same page. */
-  for (const state of ["preview", "code"]) {
+  const verifyMobileTabState = async (state: string) => {
     if (state === "code") {
       await tabs.getByRole("tab", { exact: true, name: "Code" }).click();
       await example.getByRole("button", { exact: true, name: "Copy" }).focus();
@@ -134,8 +132,12 @@ test("mobile documentation Preview and Code remain visible and match compact nat
       })
     );
     expect(result.count).toBe(0);
+  };
+
+  for (const state of ["preview", "code"]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
+    await verifyMobileTabState(state);
   }
-  /* eslint-enable no-await-in-loop */
 
   expect(
     await page.evaluate(

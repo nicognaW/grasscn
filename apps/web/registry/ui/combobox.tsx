@@ -7,34 +7,47 @@ import { Button } from "./button";
 import { Input } from "./input";
 import { minecraftCardSprite } from "./minecraft-card-sprite";
 import { MenuScaleContext, menuTextNodes } from "./minecraft-menu-text";
+import {
+  isMinecraftClassResolver,
+  isMinecraftRenderCallback,
+  minecraftStyle,
+} from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { Separator } from "./separator";
 
 import "./minecraft-menu.css";
 import "./minecraft-combobox.css";
 
+interface OwnedComboboxStyle extends React.CSSProperties {
+  "--mc-z-combobox-paint-1-width"?: string;
+}
+
+interface ComboboxLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-combobox-1-width": number;
+}
+
+interface ComboboxLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-combobox-2-width": number;
+}
+
+interface ComboboxLayoutStyle3 extends React.CSSProperties {
+  "--mc-dynamic-combobox-3-width": number;
+}
+
 type Scale = 1 | 2 | 3;
 
-function classes<S>(
+interface ComboboxScaleStyle extends React.CSSProperties {
+  "--mc-scale": Scale;
+}
+
+const classes = function classes<S>(
   base: string,
   value?: string | ((state: S) => string | undefined)
 ) {
-  return typeof value === "function"
+  return isMinecraftClassResolver(value)
     ? (state: S) => `${base} ${value(state) ?? ""}`
     : `${base} ${value ?? ""}`;
-}
-
-function scaled<S>(
-  scale: Scale,
-  style?: React.CSSProperties | ((state: S) => React.CSSProperties | undefined)
-) {
-  const merge = (value?: React.CSSProperties) =>
-    ({ "--mc-scale": scale, ...value }) as React.CSSProperties;
-
-  return typeof style === "function"
-    ? (state: S) => merge(style(state))
-    : merge(style);
-}
+};
 
 const Combobox = <
   Value,
@@ -43,26 +56,29 @@ const Combobox = <
 >({
   scale = 2,
   ...props
-}: Primitive.Root.Props<Value, Multiple, Item> & { scale?: Scale }) => {
-  return (
-    <MenuScaleContext.Provider value={scale}>
-      <Primitive.Root {...props} />
-    </MenuScaleContext.Provider>
-  );
-};
+}: Primitive.Root.Props<Value, Multiple, Item> & { scale?: Scale }) => (
+  <MenuScaleContext.Provider value={scale}>
+    <Primitive.Root {...props} />
+  </MenuScaleContext.Provider>
+);
 
 const ComboboxValue = ({
   children,
   placeholder,
   ...props
 }: Primitive.Value.Props) => {
+  const renderedPlaceholder = menuTextNodes(placeholder);
+  let content: Primitive.Value.Props["children"];
+
+  if (isMinecraftRenderCallback(children)) {
+    content = (value) => menuTextNodes(children(value));
+  } else if (children !== undefined && children !== null) {
+    content = menuTextNodes(children);
+  }
+
   return (
-    <Primitive.Value {...props} placeholder={menuTextNodes(placeholder)}>
-      {typeof children === "function"
-        ? (value) => menuTextNodes(children(value))
-        : children == null
-          ? undefined
-          : menuTextNodes(children)}
+    <Primitive.Value {...props} placeholder={renderedPlaceholder}>
+      {content}
     </Primitive.Value>
   );
 };
@@ -79,7 +95,20 @@ const ComboboxTrigger = ({
     <Primitive.Trigger
       data-slot="combobox-trigger"
       className={classes("mc-combobox-trigger", className)}
-      render={render ?? <Button scale={scale} style={{ width: 20 * scale }} />}
+      render={
+        render ?? (
+          <Button
+            scale={scale}
+            className="mc-dynamic-layout-combobox-1"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-combobox-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-combobox-1-width": 20 * scale,
+              } satisfies ComboboxLayoutStyle1 as ComboboxLayoutStyle1
+            }
+          />
+        )
+      }
       {...props}
     >
       {children ?? "..."}
@@ -100,7 +129,20 @@ const ComboboxClear = ({
       data-slot="combobox-clear"
       aria-label="Clear selection"
       className={classes("mc-combobox-clear", className)}
-      render={render ?? <Button scale={scale} style={{ width: 20 * scale }} />}
+      render={
+        render ?? (
+          <Button
+            scale={scale}
+            className="mc-dynamic-layout-combobox-2"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-combobox-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-combobox-2-width": 20 * scale,
+              } satisfies ComboboxLayoutStyle2 as ComboboxLayoutStyle2
+            }
+          />
+        )
+      }
       {...props}
     >
       {children ?? "X"}
@@ -132,7 +174,12 @@ const ComboboxInput = ({
       <div
         data-slot="combobox-input-group"
         className="mc-combobox-input-group"
-        style={{ "--mc-scale": scale } as React.CSSProperties}
+        style={
+          // SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
+          {
+            "--mc-scale": scale,
+          } satisfies ComboboxScaleStyle as ComboboxScaleStyle
+        }
       >
         <Primitive.Input
           data-slot="combobox-input"
@@ -186,7 +233,10 @@ const ComboboxContent = ({
           <Primitive.Popup
             data-slot="combobox-content"
             className={classes("mc-combobox-content", className)}
-            style={scaled(scale, style)}
+            style={minecraftStyle(style, (__style): ComboboxScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {children}
@@ -207,11 +257,34 @@ const ComboboxList = ({
 }: Primitive.List.Props & { surface?: "suggestions" | "popup" }) => {
   const scale = React.useContext(MenuScaleContext);
   const node = React.useRef<HTMLDivElement>(null);
+  const itemsRef = React.useRef<HTMLDivElement>(null);
 
-  React.useImperativeHandle(ref, () => node.current!, []);
-  React.useLayoutEffect(() => {
-    const element = node.current!;
-    const items = element.querySelector<HTMLElement>(".mc-menu-items")!;
+  const [attached, setAttached] = React.useState<HTMLDivElement | null>(null);
+
+  const captureNode = React.useCallback((element: HTMLDivElement | null) => {
+    node.current = element;
+
+    setAttached(element);
+  }, []);
+
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
+  React.useLayoutEffect((): (() => void) | undefined => {
+    // The committed attachment schedules this lifetime; the private ref retains its mutable DOM capability.
+    const element = node.current;
+
+    if (element === null) {
+      return undefined;
+    }
+
+    const items = itemsRef.current;
+
+    if (!items) {
+      return undefined;
+    }
 
     let frame = 0;
 
@@ -226,7 +299,9 @@ const ComboboxList = ({
       element.dataset.mcMenuBelow = String(element.scrollTop < max - 0.5);
 
       const padding =
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(getComputedStyle(element).paddingTop) +
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(getComputedStyle(element).paddingBottom);
 
       for (const [key, value] of Object.entries({
@@ -235,8 +310,9 @@ const ComboboxList = ({
         "--mc-menu-frame-height": `${element.clientHeight}px`,
         "--mc-menu-scroll-px": `${element.scrollTop}px`,
       })) {
-        if (element.style.getPropertyValue(key) !== value)
+        if (element.style.getPropertyValue(key) !== value) {
           element.style.setProperty(key, value);
+        }
       }
 
       cancelAnimationFrame(frame);
@@ -266,15 +342,19 @@ const ComboboxList = ({
       element.removeEventListener("scroll", measure);
       cancelAnimationFrame(frame);
     };
-  }, [scale, surface]);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Scale and surface alter the rendered menu geometry; synchronously refresh clipping/readiness before paint.
+  }, [attached, scale, surface]);
 
   return (
     <Primitive.List
       data-slot="combobox-list"
       data-surface={surface}
-      ref={node}
+      ref={captureNode}
       className={classes("mc-menu-content mc-combobox-list", className)}
-      style={scaled(scale, style)}
+      style={minecraftStyle(style, (__style): ComboboxScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {surface === "popup" && (
@@ -282,8 +362,8 @@ const ComboboxList = ({
           <MinecraftSurface sprite={minecraftCardSprite} />
         </span>
       )}
-      <div className="mc-menu-items">
-        {typeof children === "function" ? (
+      <div ref={itemsRef} className="mc-menu-items">
+        {isMinecraftRenderCallback(children) ? (
           <Primitive.Collection>{children}</Primitive.Collection>
         ) : (
           children
@@ -307,67 +387,59 @@ const ComboboxItem = ({
   className,
   children,
   ...props
-}: Primitive.Item.Props) => {
-  return (
-    <Primitive.Item
-      data-slot="combobox-item"
-      className={classes("mc-menu-item mc-combobox-item", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-      <Primitive.ItemIndicator
-        data-slot="combobox-item-indicator"
-        className="mc-combobox-item-indicator"
-      />
-    </Primitive.Item>
-  );
-};
-
-const ComboboxGroup = ({ className, ...props }: Primitive.Group.Props) => {
-  return (
-    <Primitive.Group
-      data-slot="combobox-group"
-      className={classes("mc-combobox-group", className)}
-      {...props}
+}: Primitive.Item.Props) => (
+  <Primitive.Item
+    data-slot="combobox-item"
+    className={classes("mc-menu-item mc-combobox-item", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+    <Primitive.ItemIndicator
+      data-slot="combobox-item-indicator"
+      className="mc-combobox-item-indicator"
     />
-  );
-};
+  </Primitive.Item>
+);
+
+const ComboboxGroup = ({ className, ...props }: Primitive.Group.Props) => (
+  <Primitive.Group
+    data-slot="combobox-group"
+    className={classes("mc-combobox-group", className)}
+    {...props}
+  />
+);
 
 const ComboboxLabel = ({
   className,
   children,
   ...props
-}: Primitive.GroupLabel.Props) => {
-  return (
-    <Primitive.GroupLabel
-      data-slot="combobox-label"
-      className={classes("mc-menu-label mc-combobox-label", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </Primitive.GroupLabel>
-  );
-};
+}: Primitive.GroupLabel.Props) => (
+  <Primitive.GroupLabel
+    data-slot="combobox-label"
+    className={classes("mc-menu-label mc-combobox-label", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </Primitive.GroupLabel>
+);
 
-const ComboboxCollection = (props: Primitive.Collection.Props) => {
-  return <Primitive.Collection {...props} />;
-};
+const ComboboxCollection = (props: Primitive.Collection.Props) => (
+  <Primitive.Collection {...props} />
+);
 
 const ComboboxEmpty = ({
   className,
   children,
   ...props
-}: Primitive.Empty.Props) => {
-  return (
-    <Primitive.Empty
-      data-slot="combobox-empty"
-      className={classes("mc-combobox-empty", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </Primitive.Empty>
-  );
-};
+}: Primitive.Empty.Props) => (
+  <Primitive.Empty
+    data-slot="combobox-empty"
+    className={classes("mc-combobox-empty", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </Primitive.Empty>
+);
 
 const ComboboxSeparator = ({
   className,
@@ -397,7 +469,10 @@ const ComboboxChips = ({
     <Primitive.Chips
       data-slot="combobox-chips"
       className={classes("mc-combobox-chips", className)}
-      style={scaled(scale, style)}
+      style={minecraftStyle(style, (__style): ComboboxScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   );
@@ -416,7 +491,20 @@ const ComboboxChipRemove = ({
       data-slot="combobox-chip-remove"
       aria-label="Remove selection"
       className={classes("mc-combobox-chip-remove", className)}
-      render={render ?? <Button scale={scale} style={{ width: 20 * scale }} />}
+      render={
+        render ?? (
+          <Button
+            scale={scale}
+            className="mc-dynamic-layout-combobox-3"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-combobox-3 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-combobox-3-width": 20 * scale,
+              } satisfies ComboboxLayoutStyle3 as ComboboxLayoutStyle3
+            }
+          />
+        )
+      }
       {...props}
     >
       {children ?? "X"}
@@ -429,18 +517,16 @@ const ComboboxChip = ({
   children,
   showRemove = true,
   ...props
-}: Primitive.Chip.Props & { showRemove?: boolean }) => {
-  return (
-    <Primitive.Chip
-      data-slot="combobox-chip"
-      className={classes("mc-combobox-chip", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-      {showRemove && <ComboboxChipRemove />}
-    </Primitive.Chip>
-  );
-};
+}: Primitive.Chip.Props & { showRemove?: boolean }) => (
+  <Primitive.Chip
+    data-slot="combobox-chip"
+    className={classes("mc-combobox-chip", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+    {showRemove && <ComboboxChipRemove />}
+  </Primitive.Chip>
+);
 
 const ComboboxChipsInput = ({
   className,
@@ -451,6 +537,10 @@ const ComboboxChipsInput = ({
 }: Primitive.Input.Props) => {
   const scale = React.useContext(MenuScaleContext);
 
+  const ownedStyle1: OwnedComboboxStyle = {
+    "--mc-z-combobox-paint-1-width": `${80 * scale}px`,
+  };
+
   return (
     <Primitive.Input
       data-slot="combobox-chip-input"
@@ -458,7 +548,8 @@ const ComboboxChipsInput = ({
         render ?? (
           <Input
             scale={scale}
-            style={{ background: "transparent", border: 0, width: 80 * scale }}
+            className="mc-owned-paint-combobox-1 [border:0]"
+            style={ownedStyle1}
           />
         )
       }
@@ -470,9 +561,9 @@ const ComboboxChipsInput = ({
   );
 };
 
-function useComboboxAnchor() {
+const useComboboxAnchor = function useComboboxAnchor() {
   return React.useRef<HTMLDivElement | null>(null);
-}
+};
 
 export {
   Combobox,

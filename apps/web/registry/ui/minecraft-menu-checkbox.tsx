@@ -11,15 +11,32 @@ export const MinecraftMenuCheckboxSprite = () => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const scale = React.useContext(MenuScaleContext);
 
-  React.useLayoutEffect(() => {
-    const canvas = ref.current!;
-    const parent = canvas.parentElement!;
+  React.useLayoutEffect((): (() => void) | undefined => {
+    const canvas =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement;
+
+    const parent =
+      // SAFETY: All three registered menu callers place this private canvas directly inside their fixed Base UI Indicator span, with no custom render/ref input; its layout setup follows that DOM commit.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The closed Indicator span producer proves this exact nonnull HTMLElement parent under the approved Q13 contract.
+      canvas.parentElement as HTMLElement;
 
     const item =
       parent.closest<HTMLElement>(".mc-menu-checkbox-item") ??
-      parent.parentElement!;
+      parent.parentElement;
 
-    const context = canvas.getContext("2d")!;
+    if (!item) {
+      return undefined;
+    }
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error(
+        "Minecraft menu checkbox 2D canvas context could not be created"
+      );
+    }
 
     let frame = 0;
     let signature = "";
@@ -28,16 +45,26 @@ export const MinecraftMenuCheckboxSprite = () => {
 
     const tick = () => {
       const bounds = parent.getBoundingClientRect();
-      const checked = item.hasAttribute("data-checked");
+      const checked = Object.hasOwn(item.dataset, "checked");
       const highlighted = Object.hasOwn(item.dataset, "highlighted");
 
-      const name = checked
-        ? highlighted
+      let _selectedName:
+        | "checkbox_selected_highlighted"
+        | "checkbox_selected"
+        | "checkbox_highlighted"
+        | "checkbox";
+
+      if (checked) {
+        _selectedName = highlighted
           ? "checkbox_selected_highlighted"
-          : "checkbox_selected"
-        : highlighted
-          ? "checkbox_highlighted"
-          : "checkbox";
+          : "checkbox_selected";
+      } else if (highlighted) {
+        _selectedName = "checkbox_highlighted";
+      } else {
+        _selectedName = "checkbox";
+      }
+
+      const name = _selectedName;
 
       const next = JSON.stringify([
         name,
@@ -50,7 +77,9 @@ export const MinecraftMenuCheckboxSprite = () => {
       if (next !== signature) {
         signature = next;
         const pixels = menuCheckboxPixels(name, scale, bounds.x, bounds.y);
-        canvas.width = canvas.height = 17 * scale;
+        const canvasSide = 17 * scale;
+        canvas.height = canvasSide;
+        canvas.width = canvasSide;
 
         if (pixels) {
           context.putImageData(
@@ -79,13 +108,7 @@ export const MinecraftMenuCheckboxSprite = () => {
       ref={ref}
       aria-hidden="true"
       data-mc-menu-sprite-ready="false"
-      style={{
-        height: "100%",
-        inset: 0,
-        pointerEvents: "none",
-        position: "absolute",
-        width: "100%",
-      }}
+      className="pointer-events-none absolute [inset:0] h-full w-full"
     />
   );
 };

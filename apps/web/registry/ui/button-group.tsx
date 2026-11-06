@@ -19,6 +19,10 @@ import { Separator } from "./separator";
 
 import "./minecraft-button-group.css";
 
+interface ButtonGroupScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const buttonGroupVariants = cva("mc-button-group", {
   defaultVariants: { orientation: "horizontal" },
   variants: {
@@ -38,22 +42,20 @@ const ButtonGroup = ({
 }: MinecraftProps<"div"> &
   VariantProps<typeof buttonGroupVariants> & {
     scale?: 1 | 2 | 3;
-  }) => {
-  return (
-    <div
-      role="group"
-      data-slot="button-group"
-      data-orientation={orientation}
-      className={cn(buttonGroupVariants({ orientation }), className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
-      {...props}
-    />
-  );
-};
+  }) => (
+  <div
+    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn ButtonGroup's div group and div props/ref contract.
+    role="group"
+    data-slot="button-group"
+    data-orientation={orientation}
+    className={cn(buttonGroupVariants({ orientation }), className)}
+    style={minecraftStyle(style, (__style): ButtonGroupScaleStyle => ({
+      "--mc-scale": scale,
+      ...__style,
+    }))}
+    {...props}
+  />
+);
 
 const ButtonGroupText = ({
   className,
@@ -105,34 +107,32 @@ const ButtonGroupSeparator = ({
   ...props
 }: Omit<MinecraftProps<typeof Separator>, "orientation"> & {
   orientation?: "horizontal" | "vertical";
-}) => {
-  return (
-    <SeparatorPrimitive
-      orientation={orientation}
-      role={role === "none" ? "none" : "separator"}
-      aria-orientation={role === "none" ? undefined : orientation}
-      data-slot="button-group-separator"
-      data-orientation={orientation}
-      className={cn(`mc-button-group-separator`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
-      {...props}
-    >
-      <Separator
-        scale={scale}
-        edge={edge}
-        className="mc-button-group-separator-art"
-      />
-    </SeparatorPrimitive>
-  );
-};
+}) => (
+  <SeparatorPrimitive
+    orientation={orientation}
+    role={role === "none" ? "none" : "separator"}
+    aria-orientation={role === "none" ? undefined : orientation}
+    data-slot="button-group-separator"
+    data-orientation={orientation}
+    className={cn(`mc-button-group-separator`, className)}
+    style={minecraftStyle(style, (__style): ButtonGroupScaleStyle => ({
+      "--mc-scale": scale,
+      ...__style,
+    }))}
+    {...props}
+  >
+    <Separator
+      scale={scale}
+      edge={edge}
+      className="mc-button-group-separator-art"
+    />
+  </SeparatorPrimitive>
+);
 
 export {
   ButtonGroup,
   ButtonGroupText,
   ButtonGroupSeparator,
+  // oxlint-disable-next-line react-doctor/only-export-components -- Preserve the upstream shadcn component-and-variant export API used by consumer styling composition.
   buttonGroupVariants,
 };

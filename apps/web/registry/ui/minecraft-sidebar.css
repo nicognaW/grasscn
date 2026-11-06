@@ -64,6 +64,9 @@
     gap: 0;
     padding: calc(6 * var(--mc-pixel)) calc(6 * var(--mc-pixel))
       calc(26 * var(--mc-pixel));
+  }
+  .mc-sidebar.mc-sidebar-mobile.mc-sheet-content {
+    position: fixed;
     width: var(--sidebar-width-mobile);
   }
   .mc-sidebar-accessible {
@@ -231,5 +234,18 @@
     .mc-sidebar:not(.mc-sidebar-mobile, .mc-sidebar-static) {
       display: none;
     }
+  }
+}
+
+@layer components {
+  .mc-owned-base-sidebar-1 {
+    position: absolute;
+    right: var(--mc-z-sidebar-base-1-right);
+    top: var(--mc-z-sidebar-base-1-top);
+  }
+  .mc-owned-base-sidebar-2 {
+    position: absolute;
+    right: var(--mc-z-sidebar-base-2-right);
+    top: var(--mc-z-sidebar-base-2-top);
   }
 }

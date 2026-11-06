@@ -4,7 +4,16 @@ import * as React from "react";
 
 import "./minecraft-message.css";
 import { MinecraftChatText } from "./minecraft-chat-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftEmptyChild,
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
+
+interface MessageScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const MessageScale = React.createContext<1 | 2 | 3>(2);
 const MessageAuthor = React.createContext<string | undefined>(undefined);
@@ -16,15 +25,13 @@ type MessageProps = React.ComponentProps<"div"> & {
   kind?: "chat" | "system";
 };
 
-const MessageGroup = ({ className, ...props }: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="message-group"
-      className={cn(`mc-message-group`, className)}
-      {...props}
-    />
-  );
-};
+const MessageGroup = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    data-slot="message-group"
+    className={cn(`mc-message-group`, className)}
+    {...props}
+  />
+);
 
 const Message = ({
   className,
@@ -46,16 +53,15 @@ const Message = ({
           data-align={align}
           data-author={author}
           data-kind={kind}
-          className={cn(`mc-message`, className)}
-          style={minecraftStyle(
-            style,
-            (__style) =>
-              ({
-                "--mc-scale": scale,
-                ...(kind === "system" ? { color: "#ffff55" } : {}),
-                ...__style,
-              }) as React.CSSProperties
+          className={cn(
+            "mc-message",
+            kind === "system" && "mc-message-system",
+            className
           )}
+          style={minecraftStyle(style, (__style): MessageScaleStyle => ({
+            "--mc-scale": scale,
+            ...__style,
+          }))}
           {...props}
         />
       </MessageAuthor>
@@ -66,24 +72,44 @@ const Message = ({
 const MessageAvatar = ({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="message-avatar"
-      className={cn(`mc-message-avatar`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="message-avatar"
+    className={cn(`mc-message-avatar`, className)}
+    {...props}
+  />
+);
 
-function isChatInline(value: React.ReactNode): boolean {
-  if (
-    value === null ||
-    value === undefined ||
-    typeof value === "boolean" ||
-    typeof value === "string" ||
-    typeof value === "number"
-  ) {
+type MinecraftChatInline =
+  | null
+  | undefined
+  | boolean
+  | string
+  | number
+  | readonly MinecraftChatInline[]
+  | React.ReactElement<
+      { children?: MinecraftChatInline },
+      | typeof React.Fragment
+      | "span"
+      | "a"
+      | "strong"
+      | "em"
+      | "b"
+      | "i"
+      | "u"
+      | "s"
+      | "small"
+      | "code"
+      | "mark"
+      | "abbr"
+      | "sub"
+      | "sup"
+    >;
+
+const isChatInline = function isChatInline(
+  value: React.ReactNode
+): value is MinecraftChatInline {
+  if (isMinecraftEmptyChild(value) || isMinecraftTextContent(value)) {
     return true;
   }
 
@@ -115,13 +141,15 @@ function isChatInline(value: React.ReactNode): boolean {
         ].includes(value.type))) &&
     isChatInline(value.props.children)
   );
-}
+};
 
-const ChatChildren = ({ children }: React.PropsWithChildren) => {
+const ChatChildren = ({
+  children,
+}: React.PropsWithChildren): React.ReactNode => {
   const scale = React.useContext(MessageScale);
 
   return isChatInline(children) ? (
-    <MinecraftChatText scale={scale} style={{ color: "inherit" }}>
+    <MinecraftChatText scale={scale} className="mc-owned-paint-message-1">
       {children}
     </MinecraftChatText>
   ) : (
@@ -139,11 +167,18 @@ const MessageContent = ({
   const author = React.useContext(MessageAuthor);
   const node = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState<number>();
-  const scalar = typeof children === "string" || typeof children === "number";
+  const scalar = isMinecraftTextContent(children);
 
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useLayoutEffect(() => {
-    const element = node.current!;
+    const element =
+      // SAFETY: React attaches this always-rendered <div> before layout effect setup. Its private ref has one attachment and no other writer; the public ref is removed from the trailing props spread.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit proves this exact HTMLDivElement capture.
+      node.current as HTMLDivElement;
 
     const update = () => {
       setWidth(Math.floor(element.clientWidth / scale) - 12);
@@ -163,17 +198,19 @@ const MessageContent = ({
       ref={node}
       data-slot="message-content"
       data-mc-chat-surface={scalar ? "true" : undefined}
-      data-mc-chat-ready={width == null ? "false" : "true"}
+      data-mc-chat-ready={width === undefined ? "false" : "true"}
       className={cn(`mc-message-content`, className)}
       {...props}
     >
       {scalar ? (
         <MinecraftChatText
           scale={scale}
-          maxWidth={width && width > 0 ? width : undefined}
-          style={{ color: "inherit" }}
+          maxWidth={(width ?? 0) > 0 ? width : undefined}
+          className="mc-owned-paint-message-2"
         >
-          {author ? `<${author}> ${children}` : children}
+          {author === undefined || author === ""
+            ? children
+            : `<${author}> ${children}`}
         </MinecraftChatText>
       ) : (
         children
@@ -186,33 +223,29 @@ const MessageHeader = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="message-header"
-      className={cn(`mc-message-header`, className)}
-      {...props}
-    >
-      <ChatChildren>{children}</ChatChildren>
-    </div>
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="message-header"
+    className={cn(`mc-message-header`, className)}
+    {...props}
+  >
+    <ChatChildren>{children}</ChatChildren>
+  </div>
+);
 
 const MessageFooter = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="message-footer"
-      className={cn(`mc-message-footer`, className)}
-      {...props}
-    >
-      <ChatChildren>{children}</ChatChildren>
-    </div>
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="message-footer"
+    className={cn(`mc-message-footer`, className)}
+    {...props}
+  >
+    <ChatChildren>{children}</ChatChildren>
+  </div>
+);
 
 export {
   MessageGroup,
@@ -224,6 +257,7 @@ export {
   MessageScale,
   MessageAuthor,
   ChatChildren,
+  // oxlint-disable-next-line react-doctor/only-export-components -- Preserve the existing chat child-classification API consumed by Bubble with Message renderers; accept mixed-module Fast Refresh state fallback.
   isChatInline,
 };
 

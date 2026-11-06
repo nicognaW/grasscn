@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2023", "DOM"],
+    "lib": ["ES2022", "DOM"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
@@ -49,10 +49,12 @@
     "registry/**/*.tsx",
     ".next/dev/types/**/*.ts",
     "examples/**/*.tsx",
-    "scripts/generate-component-symbols.mjs",
+    "demos/**/*.ts",
+    "demos/**/*.tsx",
+    "scripts/*.ts",
     "scripts/*.test.tsx",
     "scripts/*.test.ts",
-    "next.config.mjs",
+    "next.config.ts",
     "postcss.config.mjs"
   ],
   "exclude": ["node_modules"]

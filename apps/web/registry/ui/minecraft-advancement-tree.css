@@ -1,5 +1,10 @@
 @layer components {
   .mc-advancement-tree {
+    height: var(--mc-tree-height);
+    width: var(--mc-tree-width);
+    background-image: var(--mc-tree-image);
+    background-position: var(--mc-tree-position);
+    background-size: var(--mc-tree-size);
     position: relative;
     overflow: hidden;
     isolation: isolate;
@@ -68,5 +73,16 @@
     width: 100%;
     height: 100%;
     image-rendering: pixelated;
+  }
+}
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-advancement-tree-1 {
+    transform: var(--mc-dynamic-advancement-tree-1-transform);
+  }
+  .mc-dynamic-layout-advancement-tree-2 {
+    left: calc(var(--mc-dynamic-advancement-tree-2-left) * 1px);
+    top: calc(var(--mc-dynamic-advancement-tree-2-top) * 1px);
   }
 }

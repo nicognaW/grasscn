@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- The exported profiler composition renders Recharts synchronously; retain the existing chart contract instead of adding a suspension/loading phase.
 import { PieChart, Pie, Cell } from "recharts";
 
 import {
@@ -11,6 +12,12 @@ import {
   ChartTooltipContent,
   chartProfilerColor,
 } from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
+
+interface ProfilerRecipeStyle extends React.CSSProperties {
+  "--mc-profiler-chart-height": string;
+  "--mc-profiler-chart-width": string;
+}
 
 /** Ordinary counts, durations or revenue; Recharts calculates the shares. */
 export const ProfilerChartExample = ({
@@ -21,6 +28,7 @@ export const ProfilerChartExample = ({
   globalPercentage = 100,
   scale = 2,
   style,
+  className,
   "aria-label": ariaLabel,
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
@@ -31,19 +39,22 @@ export const ProfilerChartExample = ({
   globalPercentage?: number;
   scale?: 1 | 2 | 3;
 }) => {
+  const containerStyle: ProfilerRecipeStyle = {
+    "--mc-profiler-chart-height": `${(139 + data.length * 9) * scale}px`,
+    "--mc-profiler-chart-width": `${270 * scale}px`,
+    ...style,
+  };
+
   return (
     <ChartContainer
       {...props}
       config={{ [dataKey]: { label: dataKey } }}
       scale={scale}
-      style={{
-        aspectRatio: "auto",
-        background: "rgba(80,80,80,0.5647058823529412)",
-        height: (139 + data.length * 9) * scale,
-        position: "relative",
-        width: 270 * scale,
-        ...style,
-      }}
+      className={cn(
+        "mc-chart-profiler-recipe relative aspect-auto h-(--mc-profiler-chart-height) w-(--mc-profiler-chart-width)",
+        className
+      )}
+      style={containerStyle}
     >
       <PieChart
         accessibilityLayer
@@ -60,10 +71,16 @@ export const ProfilerChartExample = ({
           startAngle={-90}
           endAngle={270}
           isAnimationActive={false}
+          // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Recharts requires this renderer prop's spelling.
           shape={ChartProfilerSector}
         >
           {data.map((row, index) => (
-            <Cell key={index} fill={chartProfilerColor(String(row[nameKey]))} />
+            // oxlint-disable-next-line typescript/no-deprecated -- Retain the current Recharts 3 Cell configuration contract and per-row profiler-color precedence in sector/legend/tooltip payloads; migrating to shape/content requires a separately qualified rendering and payload change before Recharts 4 removes Cell.
+            <Cell
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- Recharts consumes this stateless Cell configuration by sector ordinal; the caller-selected name field may repeat and is not a guaranteed unique identity.
+              key={index}
+              fill={chartProfilerColor(String(row[nameKey]))}
+            />
           ))}
         </Pie>
         <ChartProfilerFrame

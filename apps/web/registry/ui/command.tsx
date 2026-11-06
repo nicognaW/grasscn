@@ -21,17 +21,17 @@ import {
   MinecraftMenuText,
   menuTextNodes,
 } from "./minecraft-menu-text";
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { Separator } from "./separator";
 
 import "./minecraft-menu.css";
 import "./minecraft-command.css";
+
+interface CommandScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 type Scale = 1 | 2 | 3;
 
@@ -42,22 +42,19 @@ const Command = ({
   ...props
 }: MinecraftProps<typeof CommandPrimitive> & {
   scale?: Scale;
-}) => {
-  return (
-    <MenuScaleContext.Provider value={scale}>
-      <CommandPrimitive
-        data-slot="command"
-        className={cn(`mc-command`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </MenuScaleContext.Provider>
-  );
-};
+}) => (
+  <MenuScaleContext.Provider value={scale}>
+    <CommandPrimitive
+      data-slot="command"
+      className={cn(`mc-command`, className)}
+      style={minecraftStyle(style, (__style): CommandScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
+      {...props}
+    />
+  </MenuScaleContext.Provider>
+);
 
 const CommandDialog = ({
   title = "Command Palette",
@@ -75,25 +72,36 @@ const CommandDialog = ({
   showCloseButton?: boolean;
   scale?: Scale;
 }) => {
-  const wasOpen = React.useRef(false);
-  const restoreFocus = React.useRef<HTMLElement | null>(null);
   const isOpen = Boolean(props.open ?? props.defaultOpen);
 
-  if (isOpen && !wasOpen.current && typeof document !== "undefined") {
-    restoreFocus.current = document.activeElement as HTMLElement;
+  const [focusCapture, setFocusCapture] = React.useState<{
+    element: Element | null;
+    open: boolean;
+  }>({ element: null, open: false });
+
+  // Keep the open-transition snapshot before descendant autofocus/layout effects.
+  // React retries this conditional state adjustment before committing children.
+  if (isOpen !== focusCapture.open) {
+    setFocusCapture({
+      element:
+        isOpen && typeof document !== "undefined"
+          ? document.activeElement
+          : focusCapture.element,
+      open: isOpen,
+    });
   }
 
-  wasOpen.current = isOpen;
-
+  // SAFETY: finalFocus adapts the installed SDK callback declaration only: its getFirstTabbableElement accepts Element roots, including SVG with HTML descendants, and its subsequent isHTMLElement guard protects focus. The capture remains Element|null, not a claimed HTML producer.
   return (
     <Dialog scale={scale} {...props}>
       <DialogContent
-        className={cn(`mc-command-dialog`, className)}
-        finalFocus={() => {
-          if (restoreFocus.current?.isConnected) {
-            return restoreFocus.current;
-          }
-        }}
+        className={cn(className)}
+        finalFocus={() =>
+          focusCapture.element?.isConnected === true
+            ? // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- SAFETY: The installed SDK accepts Element roots through getFirstTabbableElement and checks isHTMLElement on the selected target before focus; this bridges its narrower callback declaration without claiming the captured SVG is HTML.
+              (focusCapture.element as HTMLElement)
+            : undefined
+        }
       >
         <DialogHeader className="mc-command-dialog-heading">
           <DialogTitle>{title}</DialogTitle>
@@ -123,12 +131,19 @@ const CommandInput = ({
   const scale = explicit ?? inherited;
 
   const node = React.useRef<HTMLInputElement>(null);
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useEffect(
     () =>
       node.current ? attachMinecraftInput(node.current, scale) : undefined,
     [scale]
   );
+
+  const inputClassName = cn("mc-input mc-command-input", className);
+  const inputStyle: CommandScaleStyle = { "--mc-scale": scale, ...style };
 
   return (
     <CommandPrimitive.Input
@@ -136,8 +151,8 @@ const CommandInput = ({
       data-slot="command-input"
       spellCheck={false}
       autoCorrect="off"
-      className={cn("mc-input mc-command-input", className)}
-      style={{ "--mc-scale": scale, ...style } as React.CSSProperties}
+      className={inputClassName}
+      style={inputStyle}
       {...props}
     />
   );
@@ -156,14 +171,31 @@ const CommandList = ({
   const scale = React.useContext(MenuScaleContext);
   const node = React.useRef<HTMLDivElement>(null);
 
-  const child = null;
-  React.useImperativeHandle(ref, () => node.current!, []);
-  React.useLayoutEffect(() => {
-    const element = node.current!;
+  const [attached, setAttached] = React.useState<HTMLDivElement | null>(null);
+
+  const captureNode = React.useCallback((element: HTMLDivElement | null) => {
+    node.current = element;
+
+    setAttached(element);
+  }, []);
+
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
+  React.useLayoutEffect((): (() => void) | undefined => {
+    // The committed attachment schedules this lifetime; the private ref retains its mutable DOM capability.
+    const element = node.current;
+
+    if (element === null) {
+      return undefined;
+    }
+
     const items = element.querySelector<HTMLElement>("[data-mc-command-items]");
 
     if (!items) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
@@ -179,7 +211,9 @@ const CommandList = ({
       element.dataset.mcMenuBelow = String(element.scrollTop < maximum - 0.5);
 
       const padding =
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(getComputedStyle(element).paddingTop) +
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(getComputedStyle(element).paddingBottom);
 
       for (const [key, value] of Object.entries({
@@ -188,8 +222,9 @@ const CommandList = ({
         "--mc-menu-frame-height": `${element.clientHeight}px`,
         "--mc-menu-scroll-px": `${element.scrollTop}px`,
       })) {
-        if (element.style.getPropertyValue(key) !== value)
+        if (element.style.getPropertyValue(key) !== value) {
           element.style.setProperty(key, value);
+        }
       }
 
       cancelAnimationFrame(frame);
@@ -219,7 +254,8 @@ const CommandList = ({
       element.removeEventListener("scroll", measure);
       cancelAnimationFrame(frame);
     };
-  }, [scale, surface]);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Scale and surface alter the rendered menu geometry; synchronously refresh clipping/readiness before paint.
+  }, [attached, scale, surface]);
 
   const contents = (
     <>
@@ -244,13 +280,16 @@ const CommandList = ({
     </>
   );
 
+  const listClassName = cn(`mc-menu-content mc-command-list`, className);
+  const listStyle: CommandScaleStyle = { "--mc-scale": scale, ...style };
+
   return (
     <CommandPrimitive.List
       data-slot="command-list"
       data-surface={surface}
-      ref={node}
-      className={cn(`mc-menu-content mc-command-list`, className)}
-      style={{ "--mc-scale": scale, ...style } as React.CSSProperties}
+      ref={captureNode}
+      className={listClassName}
+      style={listStyle}
       {...props}
     >
       {contents}
@@ -262,52 +301,46 @@ const CommandEmpty = ({
   children,
   className,
   ...props
-}: MinecraftProps<typeof CommandPrimitive.Empty>) => {
-  return (
-    <CommandPrimitive.Empty
-      data-slot="command-empty"
-      className={cn(`mc-command-empty`, className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </CommandPrimitive.Empty>
-  );
-};
+}: MinecraftProps<typeof CommandPrimitive.Empty>) => (
+  <CommandPrimitive.Empty
+    data-slot="command-empty"
+    className={cn(`mc-command-empty`, className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </CommandPrimitive.Empty>
+);
 
 const CommandGroup = ({
   heading,
   className,
   ...props
-}: MinecraftProps<typeof CommandPrimitive.Group>) => {
-  return (
-    <CommandPrimitive.Group
-      data-slot="command-group"
-      className={cn(`mc-command-group`, className)}
-      heading={
-        heading == null ? undefined : (
-          <MinecraftMenuText>{heading}</MinecraftMenuText>
-        )
-      }
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof CommandPrimitive.Group>) => (
+  <CommandPrimitive.Group
+    data-slot="command-group"
+    className={cn(`mc-command-group`, className)}
+    heading={
+      heading === undefined || heading === null ? undefined : (
+        <MinecraftMenuText>{heading}</MinecraftMenuText>
+      )
+    }
+    {...props}
+  />
+);
 
 const CommandItem = ({
   children,
   className,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Item>) => {
-  return (
-    <CommandPrimitive.Item
-      data-slot="command-item"
-      className={cn("mc-command-item", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </CommandPrimitive.Item>
-  );
-};
+}: React.ComponentProps<typeof CommandPrimitive.Item>) => (
+  <CommandPrimitive.Item
+    data-slot="command-item"
+    className={cn("mc-command-item", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </CommandPrimitive.Item>
+);
 
 const CommandSeparator = ({
   className,
@@ -331,17 +364,15 @@ const CommandShortcut = ({
   children,
   className,
   ...props
-}: MinecraftProps<"span">) => {
-  return (
-    <span
-      data-slot="command-shortcut"
-      className={cn(`mc-command-shortcut`, className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </span>
-  );
-};
+}: MinecraftProps<"span">) => (
+  <span
+    data-slot="command-shortcut"
+    className={cn(`mc-command-shortcut`, className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </span>
+);
 
 export {
   Command,

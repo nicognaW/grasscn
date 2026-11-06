@@ -11,9 +11,11 @@ import {
   MinecraftPopoverText,
 } from "./minecraft-popover-text";
 import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
@@ -22,6 +24,12 @@ import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 import "./minecraft-card.css";
 import "./minecraft-popover.css";
 
+interface PopoverPaintStyle extends React.CSSProperties {
+  "--mc-popover-scroll-thumb": string;
+  "--mc-popover-scroll-track": string;
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 
 const Popover = ({
@@ -29,13 +37,11 @@ const Popover = ({
   ...props
 }: MinecraftProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <ScaleContext.Provider value={scale}>
-      <Primitive.Root {...props} />
-    </ScaleContext.Provider>
-  );
-};
+}) => (
+  <ScaleContext.Provider value={scale}>
+    <Primitive.Root {...props} />
+  </ScaleContext.Provider>
+);
 
 const PopoverTrigger = ({
   render,
@@ -92,19 +98,18 @@ const PopoverContent = ({
 }: PopoverContentProps) => {
   const inherited = React.useContext(ScaleContext);
   const scale = explicitScale ?? inherited;
-  const id = React.useId();
 
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
   const [width, setWidth] = React.useState(214);
 
   const forwarded = React.useCallback(
-    (element: HTMLDivElement | null) => {
+    (element: HTMLDivElement | null): (() => void) | undefined => {
       setNode(element);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(element);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setNode(null);
             cleanup();
@@ -113,13 +118,15 @@ const PopoverContent = ({
       } else if (ref) {
         ref.current = element;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
@@ -131,7 +138,9 @@ const PopoverContent = ({
           1,
           Math.floor(
             (node.clientWidth -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               Number.parseFloat(computed.paddingLeft) -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               Number.parseFloat(computed.paddingRight)) /
               scale
           )
@@ -139,6 +148,7 @@ const PopoverContent = ({
       );
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
+        // oxlint-disable-next-line react-doctor/no-direct-state-mutation -- This layout-effect-owned frame updates the committed DOM readiness attribute; the stored state value is the element identity, not a mutable render model.
         node.dataset.mcPopoverReady = "true";
       });
     };
@@ -161,15 +171,8 @@ const PopoverContent = ({
       mutation.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, [
-    node,
-    scale,
-    id,
-    props["aria-labelledby"],
-    props["aria-describedby"],
-    props["aria-label"],
-  ]);
-  const child = null;
+  }, [node, scale]);
+
   const text = children;
 
   const contents = (
@@ -177,7 +180,7 @@ const PopoverContent = ({
       <span className="mc-popover-background" aria-hidden="true">
         <MinecraftSurface sprite={minecraftCardSprite} />
       </span>
-      {typeof text === "string" || typeof text === "number" ? (
+      {isMinecraftTextContent(text) ? (
         <MinecraftPopoverText>{text}</MinecraftPopoverText>
       ) : (
         text
@@ -185,15 +188,17 @@ const PopoverContent = ({
     </>
   );
 
+  const popoverText = React.useMemo(() => ({ scale, width }), [scale, width]);
+
   return (
     <Primitive.Portal keepMounted={keepMounted}>
       <ScaleContext.Provider value={scale}>
         <CardScaleContext.Provider value={scale}>
-          <PopoverTextContext.Provider value={{ scale, width }}>
+          <PopoverTextContext.Provider value={popoverText}>
             <Primitive.Positioner
               anchor={anchor}
               data-mc-positioner=""
-              style={{ zIndex: 50 }}
+              className="z-50"
               side={side}
               align={align}
               sideOffset={sideOffset}
@@ -207,16 +212,12 @@ const PopoverContent = ({
                 data-slot="popover-content"
                 ref={forwarded}
                 className={cn(`mc-card mc-popover`, className)}
-                style={minecraftStyle(
-                  style,
-                  (__style) =>
-                    ({
-                      "--mc-popover-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
-                      "--mc-popover-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
-                      "--mc-scale": scale,
-                      ...__style,
-                    }) as React.CSSProperties
-                )}
+                style={minecraftStyle(style, (__style): PopoverPaintStyle => ({
+                  "--mc-popover-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
+                  "--mc-popover-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
+                  "--mc-scale": scale,
+                  ...__style,
+                }))}
                 {...props}
               >
                 {contents}
@@ -229,47 +230,41 @@ const PopoverContent = ({
   );
 };
 
-const PopoverHeader = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="popover-header"
-      className={cn(`mc-card-header`, className)}
-      {...props}
-    />
-  );
-};
+const PopoverHeader = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="popover-header"
+    className={cn(`mc-card-header`, className)}
+    {...props}
+  />
+);
 
 const PopoverTitle = ({
   className,
   children,
   ...props
-}: MinecraftProps<typeof Primitive.Title>) => {
-  return (
-    <Primitive.Title
-      data-slot="popover-title"
-      className={cn(`mc-card-title mc-popover-title`, className)}
-      {...props}
-    >
-      <MinecraftPopoverText bold>{children}</MinecraftPopoverText>
-    </Primitive.Title>
-  );
-};
+}: MinecraftProps<typeof Primitive.Title>) => (
+  <Primitive.Title
+    data-slot="popover-title"
+    className={cn(`mc-card-title mc-popover-title`, className)}
+    {...props}
+  >
+    <MinecraftPopoverText bold>{children}</MinecraftPopoverText>
+  </Primitive.Title>
+);
 
 const PopoverDescription = ({
   className,
   children,
   ...props
-}: MinecraftProps<typeof Primitive.Description>) => {
-  return (
-    <Primitive.Description
-      data-slot="popover-description"
-      className={cn(`mc-card-description mc-popover-description`, className)}
-      {...props}
-    >
-      <MinecraftPopoverText>{children}</MinecraftPopoverText>
-    </Primitive.Description>
-  );
-};
+}: MinecraftProps<typeof Primitive.Description>) => (
+  <Primitive.Description
+    data-slot="popover-description"
+    className={cn(`mc-card-description mc-popover-description`, className)}
+    {...props}
+  >
+    <MinecraftPopoverText>{children}</MinecraftPopoverText>
+  </Primitive.Description>
+);
 
 const PopoverClose = ({
   render,

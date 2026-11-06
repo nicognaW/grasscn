@@ -2,7 +2,13 @@ import { ToggleGroup, ToggleGroupItem } from "@grasscn/web/ui/toggle-group";
 import * as React from "react";
 
 const p = new URLSearchParams(location.search);
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
 const state = p.get("state") ?? "normal";
 
 export const ToggleGroupFixture = () => {
@@ -23,13 +29,13 @@ export const ToggleGroupFixture = () => {
     document.body.style.margin = "0";
   }, []);
 
-  function changed(next: string[]) {
+  const changed = function changed(next: string[]) {
     setEvents((v) => v + 1);
 
     if (!p.has("reject")) {
       setValue(next);
     }
-  }
+  };
 
   const singleProps = controlled
     ? { onValueChange: changed, value }
@@ -39,7 +45,12 @@ export const ToggleGroupFixture = () => {
 
   const items = (native ? ["one"] : ["one", "two", "three"]).map((v, index) => (
     <ToggleGroupItem
-      render={p.has("asChild") ? <a href={`#${v}`} /> : undefined}
+      render={
+        p.has("asChild") ? (
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/anchor-has-content -- ToggleGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href={`#${v}`} />
+        ) : undefined
+      }
       key={v}
       value={v}
       id={index === 0 ? "subject" : `item-${v}`}
@@ -64,6 +75,8 @@ export const ToggleGroupFixture = () => {
 
   const props = {
     "aria-label": "Recipe filters",
+    className:
+      "fixture-placement-absolute fixture-geometry-x fixture-geometry-y",
     dir: p.get("dir") === "rtl" ? ("rtl" as const) : ("ltr" as const),
     disabled: state.startsWith("disabled"),
     loopFocus: !p.has("noLoop"),
@@ -74,10 +87,9 @@ export const ToggleGroupFixture = () => {
     ref: root,
     scale,
     style: {
-      position: "absolute",
-      left: Number(p.get("x") ?? 16) * scale,
-      top: Number(p.get("y") ?? 16) * scale,
-    } as React.CSSProperties,
+      "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+      "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
+    },
   };
 
   return (
@@ -92,30 +104,32 @@ export const ToggleGroupFixture = () => {
         </ToggleGroup>
       )}
       <button
+        type="button"
         id="external"
         onClick={() => {
           setValue((v) => (v.length ? [] : ["two"]));
         }}
-        style={{ position: "absolute", top: 400 }}
+        className="fixture-toggle-external-control"
       >
         External
       </button>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setTag(`${root.current?.tagName}/${item.current?.tagName}`);
         }}
-        style={{ position: "absolute", top: 440 }}
+        className="fixture-toggle-read-control"
       >
         Read ref
       </button>
-      <output id="events" style={{ position: "absolute", top: 480 }}>
+      <output id="events" className="fixture-toggle-event-output">
         {events}
       </output>
-      <output id="tag" style={{ position: "absolute", top: 520 }}>
+      <output id="tag" className="fixture-toggle-ref-output">
         {tag}
       </output>
-      <output id="value" style={{ position: "absolute", top: 560 }}>
+      <output id="value" className="fixture-toggle-group-value-output">
         {value.join(",")}
       </output>
     </>

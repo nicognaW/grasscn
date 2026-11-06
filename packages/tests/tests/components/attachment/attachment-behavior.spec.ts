@@ -1,27 +1,20 @@
 import { test, expect } from "@grasscn/tests/test";
+import {
+  recordOriginalClick,
+  recordedOriginalClicks,
+} from "@tests/harness/audio-playback";
 
 test("Attachment preview, removal and original native click sounds remain distinct", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).voices.push({
-        original: this.src.startsWith("data:audio/ogg;base64,"),
-        rate: this.playbackRate,
-        volume: this.volume,
-      });
-
-      return Promise.resolve();
-    };
-  });
+  await recordOriginalClick(page);
   await page.goto("/?component=attachment");
   await page.getByRole("button", { name: "Preview file" }).click();
   await expect(page.locator("#opened")).toHaveText("1");
   await page.getByRole("button", { name: "Remove file" }).click();
   await expect(page.locator("#removed")).toHaveText("1");
   await expect(page.locator("#opened")).toHaveText("1");
-  expect(await page.evaluate(() => (window as any).voices)).toEqual([
+  expect(await recordedOriginalClicks(page)).toEqual([
     { original: true, rate: 1, volume: 0.25 },
     { original: true, rate: 1, volume: 0.25 },
   ]);
@@ -43,7 +36,7 @@ test("Attachment forwards refs and keeps custom image/rich content and asChild l
   );
   await page.getByRole("link", { name: "Open link" }).focus();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/#preview$/);
+  await expect(page).toHaveURL(/#preview$/u);
 });
 
 test("Disabled Attachment blocks actions and callbacks, including dispatched events", async ({
@@ -79,12 +72,22 @@ test("Attachment grouping, orientation, states and CJK text preserve the composi
     page.locator("[data-slot=attachment-title]").first()
   ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-  for (const line of await page
+  const readOnlyItems1 = await page
     .locator("[data-slot=attachment-title]")
     .first()
     .locator("[data-mc-label-ready]")
-    .all()) {
-    await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+    .all();
+
+  const readOnlyResults1 = await Promise.allSettled(
+    readOnlyItems1.map(async (line) => {
+      await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult1 of readOnlyResults1) {
+    if (readOnlyResult1.status === "rejected") {
+      throw readOnlyResult1.reason;
+    }
   }
 
   await expect(

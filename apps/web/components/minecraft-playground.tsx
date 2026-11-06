@@ -37,9 +37,7 @@ export const MinecraftPlayground = ({
 
   return (
     <section
-      /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
       className="documentation-playground minecraft-example"
-      /* eslint-enable shadcn/no-unknown-classes */
       aria-label={`${name} playground`}
     >
       <Demo scale={2} />

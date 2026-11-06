@@ -3,33 +3,55 @@ import { minecraftInputAssets } from "./minecraft-input-assets";
 import { toastGlyphAtlas } from "./minecraft-toast-atlas";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
-export type ToastGlyph = {
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
+
+const observedToastGlyphs: Partial<typeof toastGlyphAtlas> = toastGlyphAtlas;
+
+export interface ToastGlyph {
   code: number;
   pixels: Uint8Array;
   width: number;
   height: number;
   advance: number;
-};
+}
 
 let source: Promise<Uint8ClampedArray> | undefined;
 
-function alpha() {
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
+const alpha = function alpha() {
+  // oxlint-disable-next-line promise/avoid-new -- Preserve the cached Image load/error bridge and its onload alpha-extraction phase.
   return (source ??= new Promise((resolve, reject) => {
     const image = new Image();
-    image.onload = () => {
+    image.addEventListener("load", () => {
       const canvas = document.createElement("canvas");
-      canvas.width = canvas.height = 128;
-      const context = canvas.getContext("2d")!;
+      canvas.height = 128;
+      canvas.width = 128;
+      const context = canvas.getContext("2d");
+
+      if (!context) {
+        reject(
+          new Error(
+            "Minecraft toast layout 2D canvas context could not be created"
+          )
+        );
+
+        return;
+      }
+
       context.drawImage(image, 0, 0);
       resolve(context.getImageData(0, 0, 128, 128).data);
-    };
+    });
 
-    image.onerror = reject;
+    image.addEventListener("error", reject);
     image.src = minecraftInputAssets.atlas;
   }));
-}
+};
 
-export async function toastLayout(title: string, message: string | null) {
+export const toastLayout = async function toastLayout(
+  title: string,
+  message: string | null
+) {
   const [, bitmap] = await Promise.all([loadUnihex(), alpha()]);
   const cache = new Map<string, ToastGlyph>();
 
@@ -42,16 +64,26 @@ export async function toastLayout(title: string, message: string | null) {
       return result;
     }
 
-    const code = char.codePointAt(0)!;
-    const ascii = minecraftGlyphs[code - 32];
-    const uni = getUnihexGlyph(char);
-    const observed = toastGlyphAtlas[code.toString(16)];
+    const code =
+      // SAFETY: Private glyph callers supply nonempty iteration characters or guarded in-bounds code units. Its first code point therefore exists.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+      char.codePointAt(0) as number;
 
-    const width = observed
-      ? Math.round((observed.u1 - observed.u0) * 256 + 0.02)
-      : ascii
-        ? 8
-        : (uni?.width ?? 0);
+    const ascii = asciiGlyphs[code - 32];
+    const uni = getUnihexGlyph(char);
+    const observed = observedToastGlyphs[code.toString(16)];
+
+    let selectedWidth: number;
+
+    if (observed) {
+      selectedWidth = Math.round((observed.u1 - observed.u0) * 256 + 0.02);
+    } else if (ascii) {
+      selectedWidth = 8;
+    } else {
+      selectedWidth = uni?.width ?? 0;
+    }
+
+    const width = selectedWidth;
 
     const height = ascii ? 8 : 16;
     const pixels = new Uint8Array(width * height * 4);
@@ -62,11 +94,19 @@ export async function toastLayout(title: string, message: string | null) {
 
     for (let y = 0; y < height; y += 1) {
       for (let x = 0; x < width; x += 1) {
-        const on = ascii
-          ? bitmap[((ascii[1] + y) * 128 + ascii[0] + x) * 4 + 3]
-          : uni
-            ? ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) * 255
-            : 0;
+        let selectedOn: number;
+
+        if (ascii) {
+          selectedOn = bitmap[((ascii[1] + y) * 128 + ascii[0] + x) * 4 + 3];
+        } else if (uni) {
+          selectedOn =
+            // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
+            ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) * 255;
+        } else {
+          selectedOn = 0;
+        }
+
+        const on = selectedOn;
 
         pixels.set([255, 255, 255, on], (y * width + x) * 4);
       }
@@ -86,16 +126,30 @@ export async function toastLayout(title: string, message: string | null) {
 
   const advance = (char: string) => glyph(char).advance;
 
-  const wrap = (text: string | null) => {
+  const wrap = (text: string | null): string[] => {
     if (text === null || text === undefined || text === "") {
-      return [] as string[];
+      return [];
     }
 
     const lines: string[] = [];
 
     for (let remaining of text.split("\n")) {
-      while ([...remaining].reduce((n, char) => n + advance(char), 0) > 200) {
-        const chars = [...remaining];
+      const toastLineAdvance = function toastLineAdvance(glyphText: string) {
+        let accumulatedGlyphAdvance = 0;
+
+        for (const advanceCharacter of glyphText) {
+          accumulatedGlyphAdvance += advance(advanceCharacter);
+        }
+
+        return accumulatedGlyphAdvance;
+      };
+
+      while (toastLineAdvance(remaining) > 200) {
+        const chars: string[] = [];
+
+        for (const bufferCharacter of remaining) {
+          chars.push(bufferCharacter);
+        }
 
         let count = 0;
         let used = 0;
@@ -135,9 +189,15 @@ export async function toastLayout(title: string, message: string | null) {
       160,
       all.length
         ? Math.max(
-            ...all.map((line) =>
-              Math.ceil([...line].reduce((n, char) => n + advance(char), 0))
-            )
+            ...all.map((line) => {
+              let accumulatedGlyphAdvance2 = 0;
+
+              for (const advanceCharacter2 of line) {
+                accumulatedGlyphAdvance2 += advance(advanceCharacter2);
+              }
+
+              return Math.ceil(accumulatedGlyphAdvance2);
+            })
           )
         : 200
     ) + 30;
@@ -154,4 +214,4 @@ export async function toastLayout(title: string, message: string | null) {
     titleLines,
     width,
   };
-}
+};

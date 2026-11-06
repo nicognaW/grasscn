@@ -4,20 +4,28 @@ import { Avatar as AvatarPrimitive } from "@base-ui/react/avatar";
 import * as React from "react";
 
 import { Label } from "./label";
-import { minecraftAvatarSkins } from "./minecraft-avatar-assets";
 import type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
-
-export { type MinecraftAvatarSkin } from "./minecraft-avatar-assets";
-
+import { minecraftAvatarSkins } from "./minecraft-avatar-assets";
 import { paintMinecraftAvatar } from "./minecraft-avatar-paint";
+import type { MinecraftProps } from "./minecraft-render";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
-  type MinecraftProps,
 } from "./minecraft-render";
 
 import "./minecraft-avatar.css";
+
+export type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
+
+interface AvatarPaintStyle extends React.CSSProperties {
+  "--mc-avatar-size": number;
+  "--mc-scale": number;
+}
+
+interface AvatarScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const AvatarContext = React.createContext<1 | 2 | 3>(2);
 
@@ -26,18 +34,18 @@ type AvatarProps = MinecraftProps<typeof AvatarPrimitive.Root> & {
   scale?: 1 | 2 | 3;
 };
 
-function Avatar({
+const Avatar = ({
   size = "default",
   scale: providedScale,
   className,
   style,
   ...props
-}: AvatarProps) {
+}: AvatarProps) => {
   const inherited = React.useContext(AvatarContext);
   const scale = providedScale ?? inherited;
 
   if (!["default", "sm", "lg"].includes(size)) {
-    throw Error("Unsupported native avatar size");
+    throw new Error("Unsupported native avatar size");
   }
 
   return (
@@ -46,22 +54,18 @@ function Avatar({
         data-slot="avatar"
         data-size={size}
         className={cn(`mc-avatar`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({
-              "--mc-avatar-size": { sm: 12, default: 16, lg: 20 }[size],
-              "--mc-scale": scale,
-              ...__style,
-            }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): AvatarPaintStyle => ({
+          "--mc-avatar-size": { default: 16, lg: 20, sm: 12 }[size],
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       />
     </AvatarContext.Provider>
   );
-}
+};
 
-function MinecraftAvatarFace({
+const MinecraftAvatarFace = ({
   skin,
   hat,
   upsideDown,
@@ -69,12 +73,15 @@ function MinecraftAvatarFace({
   skin: MinecraftAvatarSkin;
   hat: boolean;
   upsideDown: boolean;
-}) {
+}) => {
   const scale = React.useContext(AvatarContext);
   const ref = React.useRef<HTMLCanvasElement>(null);
 
   React.useLayoutEffect(() => {
-    const canvas = ref.current!;
+    const canvas =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement;
 
     let frame = 0;
     let signature = "";
@@ -107,7 +114,7 @@ function MinecraftAvatarFace({
   }, [skin, hat, upsideDown, scale]);
 
   return <canvas ref={ref} data-mc-avatar-face="" aria-hidden="true" />;
-}
+};
 
 type AvatarImageProps = MinecraftProps<typeof AvatarPrimitive.Image> & {
   skin?: MinecraftAvatarSkin;
@@ -115,7 +122,7 @@ type AvatarImageProps = MinecraftProps<typeof AvatarPrimitive.Image> & {
   upsideDown?: boolean;
 };
 
-function AvatarImage({
+const AvatarImage = ({
   skin,
   hat = true,
   upsideDown = false,
@@ -124,7 +131,7 @@ function AvatarImage({
   onLoadingStatusChange,
   src,
   ...props
-}: AvatarImageProps) {
+}: AvatarImageProps) => {
   const [loaded, setLoaded] = React.useState(false);
 
   return (
@@ -148,9 +155,9 @@ function AvatarImage({
       )}
     </>
   );
-}
+};
 
-function AvatarFallback({
+const AvatarFallback = ({
   children,
   className,
   maxWidth,
@@ -159,8 +166,19 @@ function AvatarFallback({
 }: MinecraftProps<typeof AvatarPrimitive.Fallback> & {
   maxWidth?: number;
   align?: "left" | "center";
-}) {
+}) => {
   const scale = React.useContext(AvatarContext);
+  let fallback = children;
+
+  if (children === undefined || children === null) {
+    fallback = <MinecraftAvatarFace skin="wide/steve" hat upsideDown={false} />;
+  } else if (isMinecraftTextContent(children)) {
+    fallback = (
+      <Label scale={scale} maxWidth={maxWidth} align={align}>
+        {children}
+      </Label>
+    );
+  }
 
   return (
     <AvatarPrimitive.Fallback
@@ -168,30 +186,25 @@ function AvatarFallback({
       className={cn(`mc-avatar-fallback`, className)}
       {...props}
     >
-      {children == null ? (
-        <MinecraftAvatarFace skin="wide/steve" hat upsideDown={false} />
-      ) : typeof children === "string" || typeof children === "number" ? (
-        <Label scale={scale} maxWidth={maxWidth} align={align}>
-          {children}
-        </Label>
-      ) : (
-        children
-      )}
+      {fallback}
     </AvatarPrimitive.Fallback>
   );
-}
+};
 
-function AvatarBadge({ className, ...props }: MinecraftProps<"span">) {
-  return (
-    <span
-      data-slot="avatar-badge"
-      className={cn(`mc-avatar-badge`, className)}
-      {...props}
-    />
-  );
-}
+const AvatarBadge = ({ className, ...props }: MinecraftProps<"span">) => (
+  <span
+    data-slot="avatar-badge"
+    className={cn(`mc-avatar-badge`, className)}
+    {...props}
+  />
+);
 
-function groupScale(children: React.ReactNode): 1 | 2 | 3 | undefined {
+const groupScale = function groupScale(
+  children: React.ReactNode
+): 1 | 2 | 3 | undefined {
+  let selectedScale: 1 | 2 | 3 | undefined;
+
+  // oxlint-disable-next-line react/no-react-children -- AvatarGroup infers scale from the first owned Avatar across arbitrary caller ReactNode collections and Fragments; preserve existing React traversal and first-match order without imposing a new array-only API.
   for (const child of React.Children.toArray(children)) {
     if (
       !React.isValidElement<{
@@ -202,21 +215,25 @@ function groupScale(children: React.ReactNode): 1 | 2 | 3 | undefined {
       continue;
     }
 
-    if (child.type === Avatar && child.props.scale != null) {
-      return child.props.scale;
+    if (child.type === Avatar && child.props.scale !== undefined) {
+      selectedScale = child.props.scale;
+      break;
     }
 
     if (child.type === React.Fragment) {
       const scale = groupScale(child.props.children);
 
-      if (scale != null) {
-        return scale;
+      if (scale !== null && scale !== undefined) {
+        selectedScale = scale;
+        break;
       }
     }
   }
-}
 
-function AvatarGroup({
+  return selectedScale;
+};
+
+const AvatarGroup = ({
   className,
   scale: providedScale,
   style,
@@ -224,7 +241,7 @@ function AvatarGroup({
   ...props
 }: MinecraftProps<"div"> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   const inherited = React.useContext(AvatarContext);
   const scale = providedScale ?? groupScale(children) ?? inherited;
 
@@ -233,24 +250,23 @@ function AvatarGroup({
       <div
         data-slot="avatar-group"
         className={cn(`mc-avatar-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): AvatarScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       >
         {children}
       </div>
     </AvatarContext.Provider>
   );
-}
+};
 
-function AvatarGroupCount({
+const AvatarGroupCount = ({
   children,
   className,
   ...props
-}: MinecraftProps<"div">) {
+}: MinecraftProps<"div">) => {
   const scale = React.useContext(AvatarContext);
 
   return (
@@ -259,14 +275,14 @@ function AvatarGroupCount({
       className={cn(`mc-avatar-group-count`, className)}
       {...props}
     >
-      {typeof children === "string" || typeof children === "number" ? (
+      {isMinecraftTextContent(children) ? (
         <Label scale={scale}>{children}</Label>
       ) : (
         children
       )}
     </div>
   );
-}
+};
 
 export {
   Avatar,

@@ -1,7 +1,11 @@
 import type { MapMarker } from "./map";
 import { mapAtlas } from "./minecraft-map-atlas";
 
-export function mapGpuPixels(
+const markerSprites: Partial<
+  Record<string, (typeof mapAtlas.sprites)[keyof typeof mapAtlas.sprites]>
+> = mapAtlas.sprites;
+
+export const mapGpuPixels = function mapGpuPixels(
   terrain: ImageData,
   images: readonly HTMLImageElement[],
   markers: readonly MapMarker[],
@@ -37,11 +41,16 @@ export function mapGpuPixels(
   }
 
   const shader = (kind: number, text: string) => {
-    const s = gl.createShader(kind)!;
+    const s = gl.createShader(kind);
+
+    if (!s) {
+      throw new Error("Minecraft map gpu WebGL shader could not be created");
+    }
+
     gl.shaderSource(s, text);
     gl.compileShader(s);
 
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(s, gl.COMPILE_STATUS) !== true) {
       throw new Error(gl.getShaderInfoLog(s) ?? "Map shader failed");
     }
 
@@ -147,10 +156,9 @@ export function mapGpuPixels(
   );
 
   for (const [index, marker] of markers.entries()) {
-    const key =
-      `minecraft:${marker.decoration ?? "player"}` as keyof typeof mapAtlas.sprites;
+    const key = `minecraft:${marker.decoration ?? "player"}`;
 
-    const entry = mapAtlas.sprites[key];
+    const entry = markerSprites[key];
 
     if (!entry) {
       continue;
@@ -168,10 +176,7 @@ export function mapGpuPixels(
   }
 
   for (const marker of markers) {
-    const entry =
-      mapAtlas.sprites[
-        `minecraft:${marker.decoration ?? "player"}` as keyof typeof mapAtlas.sprites
-      ];
+    const entry = markerSprites[`minecraft:${marker.decoration ?? "player"}`];
 
     if (!entry) {
       continue;
@@ -233,5 +238,6 @@ export function mapGpuPixels(
   gl.deleteShader(fs);
   gl.getExtension("WEBGL_lose_context")?.loseContext();
 
+  // oxlint-disable-next-line typescript/consistent-return -- An unavailable native rendering resource intentionally returns undefined; explicit undefined conflicts with unicorn/no-useless-undefined, while successful rendering returns these original pixels or backdrop.
   return output;
-}
+};

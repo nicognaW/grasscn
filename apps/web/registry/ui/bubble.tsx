@@ -9,6 +9,7 @@ import { MinecraftChatText } from "./minecraft-chat-text";
 import { disclosureAdvance } from "./minecraft-disclosure-metrics";
 import { minecraftGlyphs } from "./minecraft-font";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -18,6 +19,10 @@ import type {
   MinecraftPolymorphicProps,
 } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
+
+interface BubbleScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const BubbleGroup = ({
   className,
@@ -35,11 +40,10 @@ const BubbleGroup = ({
       <div
         data-slot="bubble-group"
         className={cn(`mc-bubble-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): BubbleScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       />
     </MessageScale>
@@ -67,13 +71,15 @@ const Bubble = ({
   const inherited = React.useContext(MessageScale);
   const scale = providedScale ?? inherited;
 
-  const author =
-    providedAuthor ??
-    (from === "user"
-      ? "Player"
-      : from === "assistant"
-        ? "Assistant"
-        : undefined);
+  let defaultAuthor: string | undefined;
+
+  if (from === "user") {
+    defaultAuthor = "Player";
+  } else if (from === "assistant") {
+    defaultAuthor = "Assistant";
+  }
+
+  const author = providedAuthor ?? defaultAuthor;
 
   if (variant !== "default") {
     throw new Error("Minecraft chat supports the default backdrop only");
@@ -88,16 +94,15 @@ const Bubble = ({
           data-align={align}
           data-from={from}
           data-author={author}
-          className={cn(`mc-bubble`, className)}
-          style={minecraftStyle(
-            style,
-            (__style) =>
-              ({
-                "--mc-scale": scale,
-                ...(from === "system" ? { color: "#ffff55" } : {}),
-                ...__style,
-              }) as React.CSSProperties
+          className={cn(
+            "mc-bubble",
+            from === "system" && "mc-bubble-system",
+            className
           )}
+          style={minecraftStyle(style, (__style): BubbleScaleStyle => ({
+            "--mc-scale": scale,
+            ...__style,
+          }))}
           {...props}
         />
       </MessageAuthor>
@@ -111,35 +116,52 @@ const BubbleContent = ({
   children,
   ref,
   ...props
-}: MinecraftPolymorphicProps<"div"> & {}) => {
+}: MinecraftPolymorphicProps<"div">) => {
   const scale = React.useContext(MessageScale);
   const author = React.useContext(MessageAuthor);
-  const node = React.useRef<HTMLElement>(null);
-  const [available, setAvailable] = React.useState<number>();
-  const [fontReady, setFontReady] = React.useState(false);
 
-  React.useImperativeHandle(ref, () => node.current! as HTMLDivElement, []);
-  React.useLayoutEffect(() => {
-    const element = node.current!;
+  const [attached, setAttached] = React.useState<
+    (Element & ElementCSSInlineStyle) | null
+  >(null);
+
+  const [available, setAvailable] = React.useState<number>();
+  const [unihexReady, setUnihexReady] = React.useState(false);
+
+  React.useLayoutEffect((): (() => void) | undefined => {
+    const element = attached;
+
+    if (element === null) {
+      return undefined;
+    }
+
     const bubble = element.closest<HTMLElement>("[data-slot=bubble]");
-    const parent = bubble?.parentElement ?? element.parentElement!;
+    const parent = bubble?.parentElement ?? element.parentElement;
+
+    if (!parent) {
+      return undefined;
+    }
 
     const update = () => {
       const ownStyle = getComputedStyle(element);
       const parentStyle = getComputedStyle(parent);
-      const fixed = element.style.width && element.style.width !== "auto";
+
+      const fixed =
+        element.style.width !== "" && element.style.width !== "auto";
 
       let pixels = fixed
         ? element.clientWidth
         : parent.clientWidth -
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           Number.parseFloat(parentStyle.paddingLeft) -
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
           Number.parseFloat(parentStyle.paddingRight);
 
       if (bubble) {
         const maximum = getComputedStyle(bubble).maxWidth;
 
         if (maximum.endsWith("px")) {
-          pixels = Math.min(pixels, parseFloat(maximum));
+          // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+          pixels = Math.min(pixels, Number.parseFloat(maximum));
         }
 
         if (bubble.style.width && bubble.style.width !== "auto") {
@@ -152,7 +174,9 @@ const BubbleContent = ({
           1,
           Math.floor(
             (pixels -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               Number.parseFloat(ownStyle.paddingLeft) -
+              // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
               Number.parseFloat(ownStyle.paddingRight)) /
               scale
           )
@@ -168,62 +192,81 @@ const BubbleContent = ({
     return () => {
       observer.disconnect();
     };
-  }, [scale]);
+  }, [attached, scale]);
 
-  const child = null;
   const original = children;
 
   const content =
-    author && (typeof original === "string" || typeof original === "number")
+    (author ?? "") !== "" && isMinecraftTextContent(original)
       ? `<${author}> ${original}`
       : original;
 
-  const plainText = (value: React.ReactNode): string =>
-    typeof value === "string" || typeof value === "number"
-      ? String(value)
-      : Array.isArray(value)
-        ? value.map(plainText).join("")
-        : React.isValidElement<{
-              children?: React.ReactNode;
-            }>(value)
-          ? plainText(value.props.children)
-          : "";
+  const plainText = (value: React.ReactNode): string => {
+    if (isMinecraftTextContent(value)) {
+      return String(value);
+    }
+
+    if (Array.isArray(value)) {
+      return value.map(plainText).join("");
+    }
+
+    if (
+      React.isValidElement<{
+        children?: React.ReactNode;
+      }>(value)
+    ) {
+      return plainText(value.props.children);
+    }
+
+    return "";
+  };
 
   const text = plainText(content);
-  const unicode = /[^\x00-\x7F]/.test(text);
+  const unicode = /\P{ASCII}/u.test(text);
+  const fontReady = !unicode || unihexReady;
 
+  // Font readiness belongs to the shared Unihex resource, not individual text.
   React.useLayoutEffect(() => {
     let live = true;
-    setFontReady(!unicode);
 
     if (unicode) {
-      void loadUnihex().then(() => {
-        if (live) setFontReady(true);
-      });
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
+        if (live) {
+          setUnihexReady(true);
+        }
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {
       live = false;
     };
-  }, [text, unicode]);
+  }, [unicode]);
 
   const naturalWidth = Math.max(
     0,
-    ...text
-      .split("\n")
-      .map((line) =>
-        Math.ceil(
-          [...line].reduce(
-            (sum, char) =>
-              sum +
-              (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
-                getUnihexGlyph(char)?.advance ??
-                disclosureAdvance(char) ??
-                6),
-            0
-          )
-        )
-      )
+    ...text.split("\n").map((line) => {
+      let accumulatedGlyphAdvance = 0;
+
+      for (const advanceCharacter of line) {
+        accumulatedGlyphAdvance +=
+          minecraftGlyphs[
+            // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+            (advanceCharacter.codePointAt(0) as number) - 32
+          ]?.[2] ??
+          getUnihexGlyph(advanceCharacter)?.advance ??
+          disclosureAdvance(advanceCharacter) ??
+          6;
+      }
+
+      return Math.ceil(accumulatedGlyphAdvance);
+    })
   );
 
   const width = Math.min(naturalWidth, available ?? naturalWidth);
@@ -232,7 +275,7 @@ const BubbleContent = ({
     <MinecraftChatText
       scale={scale}
       maxWidth={width}
-      style={{ color: "inherit" }}
+      className="mc-owned-paint-bubble-1"
     >
       {content}
     </MinecraftChatText>
@@ -246,10 +289,10 @@ const BubbleContent = ({
     <Comp
       render={render}
       as="div"
-      ref={node as React.Ref<HTMLDivElement>}
+      ref={[setAttached, ref ?? null]}
       data-slot="bubble-content"
       data-mc-chat-ready={
-        available != null && (!unicode || fontReady) ? "true" : "false"
+        available !== undefined && fontReady ? "true" : "false"
       }
       className={cn(`mc-bubble-content`, className)}
       {...props}
@@ -267,17 +310,15 @@ const BubbleReactions = ({
 }: MinecraftProps<"div"> & {
   side?: "top" | "bottom";
   align?: "start" | "end";
-}) => {
-  return (
-    <div
-      data-slot="bubble-reactions"
-      data-side={side}
-      data-align={align}
-      className={cn(`mc-bubble-reactions`, className)}
-      {...props}
-    />
-  );
-};
+}) => (
+  <div
+    data-slot="bubble-reactions"
+    data-side={side}
+    data-align={align}
+    className={cn(`mc-bubble-reactions`, className)}
+    {...props}
+  />
+);
 
 export { BubbleGroup, Bubble, BubbleContent, BubbleReactions };
 

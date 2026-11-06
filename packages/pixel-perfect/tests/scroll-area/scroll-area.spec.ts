@@ -7,26 +7,10 @@ import { minecraftTextareaAssets } from "@grasscn/web/ui/minecraft-textarea-asse
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/scroll-area/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    contentHeight: number;
-    value: number;
-    state: string;
-    sha256: string;
-  }[];
-};
+import type CapturedData0 from "../reference/scroll-area/asset-provenance.json";
+import manifest from "../reference/scroll-area/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -44,9 +28,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -54,7 +38,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("ScrollArea comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
@@ -66,6 +50,7 @@ test("ScrollArea comparator catches a one-pixel change", async () => {
   );
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -88,7 +73,7 @@ for (const c of manifest.cases) {
     await expect(card).toHaveAttribute("data-mc-scroll-ready", "true");
     const viewport = card.locator('[data-slot="scroll-area-viewport"]');
     await expect
-      .poll(async () => viewport.evaluate((node) => node.scrollTop))
+      .poll(async () => await viewport.evaluate((node) => node.scrollTop))
       .toBe(c.value * c.scale);
 
     if (c.state === "focus") {
@@ -133,12 +118,14 @@ for (const c of manifest.cases) {
 }
 
 test("ScrollArea retains original scroller PNG bytes and nine-slice metadata", () => {
+  // SAFETY: This read consumes the same pinned tests/reference/scroll-area/asset-provenance.json producer data described by the type-only import; retain the runtime read and parse phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const provenance = JSON.parse(
     readFileSync(
       pixelPerfectFile("tests/reference/scroll-area/asset-provenance.json"),
       "utf-8"
     )
-  );
+  ) as typeof CapturedData0;
 
   for (const name of ["scroller", "scroller_background"] as const) {
     const bytes = Buffer.from(
@@ -167,9 +154,14 @@ for (const scale of [1, 2, 3]) {
   test(`ScrollArea asChild retains native pixels at scale ${scale}`, async ({
     page,
   }, testInfo) => {
-    const c = manifest.cases.find(
-      (c) => c.name === `scroll-area-c67-s${scale}.png`
-    )!;
+    const c =
+      // SAFETY: The retained Scroll Area producer includes exactly one scroll-area-c67 capture at each of GUI scales 1, 2 and 3; preserve the original lookup and pixel assertions.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+      manifest.cases.find(
+        (scrollAreaCase) =>
+          scrollAreaCase.name === `scroll-area-c67-s${scale}.png`
+      ) as (typeof manifest)["cases"][number];
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
 
     await page.goto(
       `/?component=scroll-area&width=${c.width}&height=${c.height}&contentHeight=${c.contentHeight}&scroll=${c.value}&scale=${scale}&asChild=1&defaults=1`
@@ -177,10 +169,11 @@ for (const scale of [1, 2, 3]) {
     const subject = page.locator("section[data-subject]");
     await expect(subject).toHaveAttribute("data-mc-scroll-ready", "true");
     await expect
-      .poll(async () =>
-        subject
-          .locator('[data-slot="scroll-area-viewport"]')
-          .evaluate((node) => node.scrollTop)
+      .poll(
+        async () =>
+          await subject
+            .locator('[data-slot="scroll-area-viewport"]')
+            .evaluate((node) => node.scrollTop)
       )
       .toBe(c.value * scale);
 

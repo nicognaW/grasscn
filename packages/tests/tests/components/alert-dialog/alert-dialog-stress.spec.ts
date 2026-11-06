@@ -11,11 +11,12 @@ for (const selection of ["alert-dialog"]) {
     }) => {
       const warnings: string[] = [];
       page.on("console", (m) => {
-        if (m.text().includes("Too many active WebGL contexts"))
+        if (m.text().includes("Too many active WebGL contexts")) {
           warnings.push(m.text());
+        }
       });
-      await page.setViewportSize({ width: 390, height: 844 });
-      await page.goto(origin + "docs/components/" + selection);
+      await page.setViewportSize({ height: 844, width: 390 });
+      await page.goto(`${origin}docs/components/${selection}`);
 
       const stage = page.locator('[data-stage="alert-dialog"]');
       await stage.scrollIntoViewIfNeeded();
@@ -25,32 +26,40 @@ for (const selection of ["alert-dialog"]) {
       await page
         .getByLabel("Alert dialog message", { exact: true })
         .fill(
-          Array(14)
-            .fill("这是一个很长的描述。请确认您是否删除世界。")
-            .join("\n")
+          Array.from(
+            { length: 14 },
+            () => "这是一个很长的描述。请确认您是否删除世界。"
+          ).join("\n")
         );
       await stage.getByRole("button", { name: "Open confirmation" }).click();
 
-      const overlay = page.locator('[data-slot="alert-dialog-overlay"]'),
-        dialog = page.getByRole("alertdialog");
+      const overlay = page.locator('[data-slot="alert-dialog-overlay"]');
+      const dialog = page.getByRole("alertdialog");
 
       await expect(overlay).toHaveAttribute(
         "data-mc-confirmation-frame",
-        /^[1-9]\d*$/
+        /^[1-9]\d*$/u
       );
       await expect(dialog.locator('[data-mc-label-ready="false"]')).toHaveCount(
         0
       );
 
-      const state = await overlay.locator("canvas").evaluate((node) => {
-        const canvas = node as HTMLCanvasElement,
-          gl = canvas.getContext("webgl")!,
-          pixel = new Uint8Array(4);
+      const state = await overlay
+        .locator("canvas")
+        .evaluate((node: HTMLCanvasElement) => {
+          const canvas = node;
+          const gl = canvas.getContext("webgl");
 
-        gl.readPixels(20, 20, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+          if (gl === null) {
+            throw new Error("Missing required canvas context: gl");
+          }
 
-        return { lost: gl.isContextLost(), pixel: [...pixel] };
-      });
+          const pixel = new Uint8Array(4);
+
+          gl.readPixels(20, 20, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+
+          return { lost: gl.isContextLost(), pixel: [...pixel] };
+        });
 
       expect(
         state.lost,
@@ -62,7 +71,7 @@ for (const selection of ["alert-dialog"]) {
         "Dark Minecraft page must not turn white"
       ).toBeLessThan(200);
       expect(warnings).toEqual([]);
-      await dialog.getByRole("button", { name: "No", exact: true }).click();
+      await dialog.getByRole("button", { exact: true, name: "No" }).click();
       await expect(dialog).toHaveCount(0);
       await expect(
         stage.getByRole("button", { name: "Open confirmation" })
@@ -75,13 +84,13 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
   test(`Scrolled confirmation preserves ${scene} viewport paint`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(origin + "docs/components/alert-dialog");
-    await page.evaluate((scene) => {
+    await page.setViewportSize({ height: 844, width: 390 });
+    await page.goto(`${origin}docs/components/alert-dialog`);
+    await page.evaluate((viewportScene) => {
       const owner = document.createElement("div");
       owner.id = "snapshot-viewport-proof";
 
-      if (scene === "fixed-pseudo") {
+      if (viewportScene === "fixed-pseudo") {
         owner.style.cssText =
           "position:absolute;top:100000px;left:0;width:10px;height:10px";
         const child = document.createElement("div");
@@ -109,26 +118,33 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
     const overlay = page.locator('[data-slot="alert-dialog-overlay"]');
     await expect(overlay).toHaveAttribute(
       "data-mc-confirmation-frame",
-      /^[1-9]\d*$/
+      /^[1-9]\d*$/u
     );
 
-    const pixel = await overlay.locator("canvas").evaluate((node, scene) => {
-      const canvas = node as HTMLCanvasElement;
-      const gl = canvas.getContext("webgl")!;
-      const rgba = new Uint8Array(4);
+    const pixel = await overlay
+      .locator("canvas")
+      .evaluate((node: HTMLCanvasElement, pixelScene) => {
+        const canvas = node;
+        const gl = canvas.getContext("webgl");
 
-      gl.readPixels(
-        scene === "fixed-pseudo" ? 30 : 315,
-        canvas.height - (scene === "fixed-pseudo" ? 30 : 75),
-        1,
-        1,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        rgba
-      );
+        if (gl === null) {
+          throw new Error("Missing required canvas context: gl");
+        }
 
-      return [...rgba];
-    }, scene);
+        const rgba = new Uint8Array(4);
+
+        gl.readPixels(
+          pixelScene === "fixed-pseudo" ? 30 : 315,
+          canvas.height - (pixelScene === "fixed-pseudo" ? 30 : 75),
+          1,
+          1,
+          gl.RGBA,
+          gl.UNSIGNED_BYTE,
+          rgba
+        );
+
+        return [...rgba];
+      }, scene);
 
     expect(pixel).toEqual(
       scene === "fixed-pseudo" ? [191, 0, 153, 255] : [191, 0, 0, 255]

@@ -52,4 +52,7 @@ const small = <SelectTrigger size="sm" />;
 // @ts-expect-error Native pixels require supported integer GUI scales.
 const fractional = <Select scale={1.5} />;
 
-void [valid, small, fractional];
+// @ts-expect-error Select's portal does not implement a keepMounted option.
+const unsupportedMount = <SelectContent keepMounted />;
+
+void [valid, small, fractional, unsupportedMount];

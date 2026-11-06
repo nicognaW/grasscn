@@ -4,7 +4,7 @@ import {
 } from "./minecraft-tooltip-sprites";
 
 /** Original atlas coordinates and nearest sampling, with native source-alpha blending. */
-export function gpuTooltipPixels(
+export const gpuTooltipPixels = function gpuTooltipPixels(
   width: number,
   height: number,
   scale: number,
@@ -31,11 +31,18 @@ export function gpuTooltipPixels(
   }
 
   const shader = (kind: number, source: string) => {
-    const value = gl.createShader(kind)!;
+    const value = gl.createShader(kind);
+
+    if (!value) {
+      throw new Error(
+        "Minecraft tooltip gpu WebGL shader could not be created"
+      );
+    }
+
     gl.shaderSource(value, source);
     gl.compileShader(value);
 
-    if (!gl.getShaderParameter(value, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(value, gl.COMPILE_STATUS) !== true) {
       throw new Error(gl.getShaderInfoLog(value) ?? "Tooltip shader failed");
     }
 
@@ -80,7 +87,11 @@ export function gpuTooltipPixels(
     const sprite = sprites[name];
     const location = atlas.locations[name];
 
-    const rgba = Uint8Array.from(atob(sprite.rgba), (c) => c.charCodeAt(0));
+    const rgba = Uint8Array.from(
+      atob(sprite.rgba),
+      (c) => c.codePointAt(0) ?? Number.NaN
+    );
+
     gl.texSubImage2D(
       gl.TEXTURE_2D,
       0,
@@ -130,13 +141,20 @@ export function gpuTooltipPixels(
     sw: number,
     sh: number
   ) => {
-    const x = originX + dx;
-    const y = originY + dy;
+    const quadX = originX + dx;
+    const quadY = originY + dy;
 
-    const a = [x, y, u / atlas.width, v / atlas.height];
-    const b = [x, y + h, u / atlas.width, (v + sh) / atlas.height];
-    const c = [x + w, y + h, (u + sw) / atlas.width, (v + sh) / atlas.height];
-    const d = [x + w, y, (u + sw) / atlas.width, v / atlas.height];
+    const a = [quadX, quadY, u / atlas.width, v / atlas.height];
+    const b = [quadX, quadY + h, u / atlas.width, (v + sh) / atlas.height];
+
+    const c = [
+      quadX + w,
+      quadY + h,
+      (u + sw) / atlas.width,
+      (v + sh) / atlas.height,
+    ];
+
+    const d = [quadX + w, quadY, (u + sw) / atlas.width, v / atlas.height];
 
     gl.bufferData(
       gl.ARRAY_BUFFER,
@@ -162,19 +180,19 @@ export function gpuTooltipPixels(
     ];
 
     for (
-      let row = 0, sy = 0, y = 0;
+      let row = 0, rowOffsetY = 0, sy = 0;
       row < 3;
-      y += heights[row], sy += sizes[row], row += 1
+      rowOffsetY += heights[row], sy += sizes[row], row += 1
     ) {
       for (
-        let col = 0, sx = 0, x = 0;
+        let col = 0, columnOffsetX = 0, sx = 0;
         col < 3;
-        x += widths[col], sx += sizes[col], col += 1
+        columnOffsetX += widths[col], sx += sizes[col], col += 1
       ) {
         if (sprite.stretch) {
           draw(
-            x,
-            y,
+            columnOffsetX,
+            rowOffsetY,
             widths[col],
             heights[row],
             sx + location.x,
@@ -183,14 +201,14 @@ export function gpuTooltipPixels(
             sizes[row]
           );
         } else {
-          for (let dy = 0; dy < heights[row]; dy += sizes[row] * scale)
+          for (let dy = 0; dy < heights[row]; dy += sizes[row] * scale) {
             for (let dx = 0; dx < widths[col]; dx += sizes[col] * scale) {
-              const w = Math.min(sizes[col] * scale, widths[col] - dx),
-                h = Math.min(sizes[row] * scale, heights[row] - dy);
+              const w = Math.min(sizes[col] * scale, widths[col] - dx);
+              const h = Math.min(sizes[row] * scale, heights[row] - dy);
 
               draw(
-                x + dx,
-                y + dy,
+                columnOffsetX + dx,
+                rowOffsetY + dy,
                 w,
                 h,
                 sx + location.x,
@@ -199,6 +217,7 @@ export function gpuTooltipPixels(
                 h / scale
               );
             }
+          }
         }
       }
     }
@@ -217,10 +236,13 @@ export function gpuTooltipPixels(
     raw
   );
 
-  for (let y = 0; y < height; y += 1) {
+  for (let pixelRow = 0; pixelRow < height; pixelRow += 1) {
     result.set(
-      raw.subarray((height - y - 1) * width * 4, (height - y) * width * 4),
-      y * width * 4
+      raw.subarray(
+        (height - pixelRow - 1) * width * 4,
+        (height - pixelRow) * width * 4
+      ),
+      pixelRow * width * 4
     );
   }
 
@@ -231,5 +253,6 @@ export function gpuTooltipPixels(
   gl.deleteShader(fragment);
   gl.getExtension("WEBGL_lose_context")?.loseContext();
 
+  // oxlint-disable-next-line typescript/consistent-return -- An unavailable native rendering resource intentionally returns undefined; explicit undefined conflicts with unicorn/no-useless-undefined, while successful rendering returns these original pixels or backdrop.
   return result;
-}
+};

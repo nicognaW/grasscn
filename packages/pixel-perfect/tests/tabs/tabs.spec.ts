@@ -1,36 +1,13 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile("tests/reference/tabs/manifest.json"), "utf-8")
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    element: string;
-    label?: string;
-    labels?: string[];
-    selected?: boolean;
-    selectedIndex?: number;
-    targetIndex?: number;
-    disabledIndex?: number;
-    timeMs: number;
-    state: string;
-    x: number;
-    y: number;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/tabs/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -48,9 +25,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -58,7 +35,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Tabs comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
@@ -70,6 +47,7 @@ test("Tabs comparator catches a one-pixel change", async () => {
   );
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -100,7 +78,9 @@ test.describe("Tabs native matrix", () => {
         "targetIndex",
         "disabledIndex",
       ] as const) {
-        if (c[key] != null) query.set(key, String(c[key]));
+        if (c[key] !== undefined) {
+          query.set(key, String(c[key]));
+        }
       }
 
       if (c.labels) {
@@ -113,11 +93,11 @@ test.describe("Tabs native matrix", () => {
       await card.evaluate(
         (node, p) =>
           Object.assign(node.style, {
-            left: p.x + "px",
+            left: `${p.x}px`,
             position: "fixed",
-            top: p.y + "px",
+            top: `${p.y}px`,
             visibility: "visible",
-            width: p.width + "px",
+            width: `${p.width}px`,
           }),
         { width: c.width * c.scale, x: c.x * c.scale, y: c.y * c.scale }
       );

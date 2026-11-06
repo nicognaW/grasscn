@@ -5,32 +5,47 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { referenceFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const corpora = process.env.GRASSCN_EXPANSION_REFERENCE
-  ? [path.resolve(process.env.GRASSCN_EXPANSION_REFERENCE)]
-  : [
-      "book",
-      "hotbar",
-      "hud",
-      "hud/meters",
-      "sign",
-      "player-preview",
-      "player-preview/custom-skins",
-      "map",
-      "map/locator",
-      "map/demo-world",
-      "trading",
-      "trading/scrollbar",
-      "player-list",
-    ].map((name) => referenceFile(name));
+interface NativeExpansionManifest {
+  cases: {
+    name: string;
+    scale: number;
+    element: string;
+  }[];
+}
 
-const specimens = corpora.flatMap((reference) =>
-  JSON.parse(
+const expansionReference = process.env.GRASSCN_EXPANSION_REFERENCE ?? "";
+
+const corpora =
+  expansionReference === ""
+    ? [
+        "book",
+        "hotbar",
+        "hud",
+        "hud/meters",
+        "sign",
+        "player-preview",
+        "player-preview/custom-skins",
+        "map",
+        "map/locator",
+        "map/demo-world",
+        "trading",
+        "trading/scrollbar",
+        "player-list",
+      ].map((name) => referenceFile(name))
+    : [path.resolve(expansionReference)];
+
+const specimens = corpora.flatMap((reference) => {
+  // SAFETY: All489cases in the13retained native-expansion manifests emit name, numeric scale and element; an override supplies the same capture-consumer contract at this original read boundary.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact native capture manifest consumer projection; no new validation or generic JSON caster.
+  const capturedManifest = JSON.parse(
     readFileSync(
       pixelPerfectFile(path.join(reference, "manifest.json")),
       "utf-8"
     )
-  ).cases.map((sample: any) => ({ reference, sample }))
-);
+  ) as NativeExpansionManifest;
+
+  return capturedManifest.cases.map((sample) => ({ reference, sample }));
+});
 
 for (const { reference, sample } of specimens) {
   test(`native expansion pixels ${sample.name}`, async ({ page }, info) => {
@@ -55,19 +70,16 @@ for (const { reference, sample } of specimens) {
     }
 
     await expect
-      .poll(async () =>
-        subject
-          .locator("img")
-          .evaluateAll((images) =>
-            images.every(
-              (image) =>
-                (image as HTMLImageElement).complete &&
-                (image as HTMLImageElement).naturalWidth > 0
+      .poll(
+        async () =>
+          await subject
+            .locator("img")
+            .evaluateAll((images: HTMLImageElement[]) =>
+              images.every((image) => image.complete && image.naturalWidth > 0)
             )
-          )
       )
       .toBe(true);
-    await page.evaluate(async () => document.fonts.ready);
+    await page.evaluate(async () => await document.fonts.ready);
     await page.waitForTimeout(100);
 
     const actual = await subject.screenshot();

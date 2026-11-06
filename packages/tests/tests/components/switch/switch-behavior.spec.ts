@@ -1,5 +1,10 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { RecordedAudioPlayback } from "@tests/harness/audio-playback";
+
+interface SwitchAudioState {
+  switchSounds: RecordedAudioPlayback[];
+}
 
 test("Switch toggles with pointer, Space and Enter, preserving role and native words", async ({
   page,
@@ -96,9 +101,14 @@ test("Switch uses original click audio once per activation, and respects cancell
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).switchSounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).switchSounds.push({
+    // SAFETY: This addInitScript owns switchSounds, creating its empty audio trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+    (window as typeof window & SwitchAudioState).switchSounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The init script creates switchSounds; this unchanged media play mock records only rate, source and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+      (window as typeof window & SwitchAudioState).switchSounds.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -107,7 +117,15 @@ test("Switch uses original click audio once per activation, and respects cancell
       return Promise.resolve();
     };
   });
-  const sounds = async () => page.evaluate(() => (window as any).switchSounds);
+
+  const sounds = async () =>
+    await page.evaluate(
+      () =>
+        // SAFETY: This paired reader runs after navigation's init script creates switchSounds with the recorded audio contract.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & SwitchAudioState).switchSounds
+    );
+
   await page.goto("/?component=switch");
   const control = page.getByRole("switch");
   await control.hover();

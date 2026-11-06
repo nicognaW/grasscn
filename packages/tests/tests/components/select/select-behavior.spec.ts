@@ -1,13 +1,36 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
+interface SelectClickPlaybackState extends Window {
+  selectVoices?: { rate: number; source: string; volume: number }[];
+}
+
+type InitializedSelectClickPlaybackState = typeof window &
+  SelectClickPlaybackState & {
+    selectVoices: { rate: number; source: string; volume: number }[];
+  };
+
+interface SelectPlaybackState extends Window {
+  __selectVoices?: number;
+}
+
+type InitializedSelectPlaybackState = typeof window &
+  SelectPlaybackState & {
+    __selectVoices: number;
+  };
+
 test("Select respects cancelled opening and closing in uncontrolled mode", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).__selectVoices = 0;
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as SelectPlaybackState).__selectVoices = 0;
+    // oxlint-disable-next-line typescript/promise-function-async, unicorn/consistent-function-scoping -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing. Keep play inside this initializer because Playwright serializes the callback without its Node lexical scope.
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).__selectVoices += 1;
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedSelectPlaybackState).__selectVoices += 1;
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
@@ -18,14 +41,28 @@ test("Select respects cancelled opening and closing in uncontrolled mode", async
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
   await trigger.press("ArrowDown");
   await expect(page.getByRole("listbox")).toHaveCount(0);
-  expect(await page.evaluate(() => (window as any).__selectVoices)).toBe(0);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedSelectPlaybackState).__selectVoices
+    )
+  ).toBe(0);
+  // oxlint-enable typescript/no-unsafe-type-assertion
   await page.goto("/?component=select&cancelClose=1");
   await trigger.click();
   await expect(page.getByRole("listbox")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("listbox")).toBeVisible();
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
-  expect(await page.evaluate(() => (window as any).__selectVoices)).toBe(1);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedSelectPlaybackState).__selectVoices
+    )
+  ).toBe(1);
+  // oxlint-enable typescript/no-unsafe-type-assertion
 });
 
 test("Select keyboard navigation visits disabled options without committing them", async ({
@@ -172,18 +209,31 @@ test("Select uses the original cycle-button click for opening, while list select
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).selectVoices = [];
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as SelectClickPlaybackState).selectVoices = [];
+    // oxlint-disable-next-line typescript/promise-function-async, unicorn/consistent-function-scoping -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing. Keep play inside this initializer because Playwright serializes the callback without its Node lexical scope.
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).selectVoices.push({
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedSelectClickPlaybackState).selectVoices.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
       });
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
   });
-  const voices = async () => page.evaluate(() => (window as any).selectVoices);
+
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  const voices = async () =>
+    await page.evaluate(
+      () => (window as InitializedSelectClickPlaybackState).selectVoices
+    );
+  // oxlint-enable typescript/no-unsafe-type-assertion
+
   await page.goto("/?component=select");
   await page.getByRole("combobox").hover();
   expect(await voices()).toEqual([]);
@@ -204,7 +254,7 @@ test("Select uses the original cycle-button click for opening, while list select
   await viewport.hover();
   await page.mouse.wheel(0, 120);
   await expect
-    .poll(async () => viewport.evaluate((node) => node.scrollTop))
+    .poll(async () => await viewport.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
   expect(await voices()).toEqual([]);
   await page.keyboard.press("End");

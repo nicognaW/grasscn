@@ -7,15 +7,25 @@ test("Card keeps its ref, div attributes, content and interactive actions", asyn
   const card = page.getByLabel("Test card", { exact: true });
   await expect(card).toHaveAttribute("id", "subject");
 
-  for (const slot of [
+  const readOnlyItems2 = [
     "card-header",
     "card-title",
     "card-description",
     "card-content",
     "card-action",
     "card-footer",
-  ]) {
-    await expect(card.locator(`[data-slot="${slot}"]`)).toBeVisible();
+  ];
+
+  const readOnlyResults2 = await Promise.allSettled(
+    readOnlyItems2.map(async (slot) => {
+      await expect(card.locator(`[data-slot="${slot}"]`)).toBeVisible();
+    })
+  );
+
+  for (const readOnlyResult2 of readOnlyResults2) {
+    if (readOnlyResult2.status === "rejected") {
+      throw readOnlyResult2.reason;
+    }
   }
 
   await page.getByLabel("Name", { exact: true }).fill("New world");

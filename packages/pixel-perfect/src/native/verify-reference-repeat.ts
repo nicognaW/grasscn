@@ -1,0 +1,150 @@
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+
+import type { NativeCaptureManifest } from "@ppt/runtime/map-evidence";
+import { PNG } from "pngjs";
+
+const [firstDir, secondDir] = process.argv.slice(2);
+
+if (!firstDir || !secondDir) {
+  throw new Error(
+    "Pass the original and separately launched repeat capture directories"
+  );
+}
+
+const read = async (dir: string): Promise<NativeCaptureManifest> =>
+  // SAFETY: both native reference directories use the retained capture-manifest producer; original identity/case/digest/pixel checks remain below.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  JSON.parse(
+    await readFile(path.join(dir, "manifest.json"), "utf-8")
+  ) as NativeCaptureManifest;
+
+const [firstRead, secondRead] = await Promise.allSettled([
+  read(firstDir),
+  read(secondDir),
+]);
+
+if (firstRead.status === "rejected") {
+  throw firstRead.reason;
+}
+
+if (secondRead.status === "rejected") {
+  throw secondRead.reason;
+}
+
+const first = firstRead.value;
+const second = secondRead.value;
+
+const hash = (data: Uint8Array) =>
+  createHash("sha256").update(data).digest("hex");
+
+for (const key of [
+  "sourceJarSha256",
+  "captureSourceSha256",
+  "caseDefinitionSha256",
+] as const) {
+  assert.equal(first[key], second[key], `Capture identity differs: ${key}`);
+}
+
+const firstCaseNames = first.cases.map((c) => c.name);
+
+firstCaseNames.sort();
+
+const secondCaseNames = second.cases.map((c) => c.name);
+
+secondCaseNames.sort();
+
+assert.deepEqual(firstCaseNames, secondCaseNames);
+
+const repeatedByName = new Map<
+  string,
+  NativeCaptureManifest["cases"][number]
+>();
+
+for (const repeated of second.cases) {
+  if (!repeatedByName.has(repeated.name)) {
+    repeatedByName.set(repeated.name, repeated);
+  }
+}
+
+const captureReads = await Promise.allSettled(
+  first.cases.map(async (reference) => {
+    const [originalRead, repeatedRead] = await Promise.allSettled([
+      readFile(path.join(firstDir, "captures", reference.name)),
+      readFile(path.join(secondDir, "captures", reference.name)),
+    ]);
+
+    if (originalRead.status === "rejected") {
+      throw originalRead.reason;
+    }
+
+    if (repeatedRead.status === "rejected") {
+      throw repeatedRead.reason;
+    }
+
+    return { a: originalRead.value, b: repeatedRead.value };
+  })
+);
+
+const cases = first.cases.map((reference, index) => {
+  const repeated =
+    // SAFETY: The existing sorted case-name equality assertion proves each first-capture case has a second-capture name; this Map preserves the original first matching record.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+    repeatedByName.get(
+      reference.name
+    ) as NativeCaptureManifest["cases"][number];
+  /* oxlint-enable typescript/no-unsafe-type-assertion */
+
+  const captureRead = captureReads[index];
+
+  if (captureRead.status === "rejected") {
+    throw captureRead.reason;
+  }
+
+  const { a, b } = captureRead.value;
+  assert.equal(hash(a), reference.sha256);
+  assert.equal(hash(b), repeated.sha256);
+
+  const actual = PNG.sync.read(a);
+  const other = PNG.sync.read(b);
+
+  assert.deepEqual([actual.width, actual.height], [other.width, other.height]);
+  assert.ok(
+    actual.data.equals(other.data),
+    `Non-repeatable native pixels: ${reference.name}`
+  );
+
+  return {
+    decodedRgbaSha256: hash(actual.data),
+    mismatchedPixels: 0,
+    name: reference.name,
+    runOnePngSha256: hash(a),
+    runTwoPngSha256: hash(b),
+  };
+});
+
+await writeFile(
+  path.join(firstDir, "repeatability.json"),
+  `${JSON.stringify(
+    {
+      captureSourceSha256: first.captureSourceSha256,
+      caseDefinitionSha256: first.caseDefinitionSha256,
+      cases,
+      glyphObservationEnabled: {
+        runOne: first.glyphObservationEnabled ?? null,
+        runTwo: second.glyphObservationEnabled ?? null,
+      },
+      method:
+        "Two separate isolated vanilla launches; decoded RGBA compared exactly per case",
+      sourceJarSha256: first.sourceJarSha256,
+    },
+    null,
+    2
+  )}\n`
+);
+
+console.log(
+  `${cases.length}/${cases.length} native cases repeat with identical decoded RGBA pixels`
+);

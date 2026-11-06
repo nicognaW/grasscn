@@ -11,6 +11,10 @@ import "./minecraft-pagination.css";
 import "./minecraft-pagination-assets.css";
 import "./minecraft-carousel.css";
 
+interface CarouselScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type CarouselApi = UseEmblaCarouselType[1];
 
 type CarouselOptions = Parameters<typeof useEmblaCarousel>[0];
@@ -26,6 +30,7 @@ interface CarouselProps {
 }
 
 type CarouselContextProps = CarouselProps & {
+  scale: 1 | 2 | 3;
   carouselRef: UseEmblaCarouselType[0];
   api: CarouselApi;
   scrollPrev: () => void;
@@ -36,7 +41,7 @@ type CarouselContextProps = CarouselProps & {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
-function useCarousel() {
+const useCarousel = function useCarousel() {
   const value = React.useContext(CarouselContext);
 
   if (!value) {
@@ -44,7 +49,7 @@ function useCarousel() {
   }
 
   return value;
-}
+};
 
 const Carousel = ({
   orientation = "horizontal",
@@ -63,8 +68,8 @@ const Carousel = ({
     plugins
   );
 
-  const [canScrollPrev, setPrev] = React.useState(false);
-  const [canScrollNext, setNext] = React.useState(false);
+  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
+  const [canScrollNext, setCanScrollNext] = React.useState(false);
 
   const scrollPrev = React.useCallback(() => {
     api?.scrollPrev();
@@ -76,79 +81,109 @@ const Carousel = ({
 
   React.useEffect(() => {
     if (api) {
+      // oxlint-disable-next-line react-doctor/no-prop-callback-in-effect, react-doctor/no-pass-live-state-to-parent, react-doctor/no-pass-data-to-parent -- Preserve the public setApi contract: publish the committed Embla instance after api or caller callback changes. This is an imperative SDK handle, not mirrored parent data; moving publication into render or dropping it changes lifecycle/callback behavior.
       setApi?.(api);
     }
   }, [api, setApi]);
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
     if (!api) {
-      return;
+      return undefined;
     }
 
     const update = () => {
-      setPrev(api.canScrollPrev());
-      setNext(api.canScrollNext());
+      setCanScrollPrev(api.canScrollPrev());
+      setCanScrollNext(api.canScrollNext());
     };
 
     update();
-    api.on("select", update).on("reInit", update);
+    api.on("select", update);
+    api.on("reInit", update);
 
     return () => {
-      api.off("select", update).off("reInit", update);
+      api.off("select", update);
+      api.off("reInit", update);
     };
   }, [api]);
 
+  const carouselContext = React.useMemo(
+    () => ({
+      api,
+      canScrollNext,
+      canScrollPrev,
+      carouselRef,
+      opts,
+      orientation,
+      plugins,
+      scale,
+      scrollNext,
+      scrollPrev,
+    }),
+    [
+      api,
+      canScrollNext,
+      canScrollPrev,
+      carouselRef,
+      opts,
+      orientation,
+      plugins,
+      scale,
+      scrollNext,
+      scrollPrev,
+    ]
+  );
+
   return (
-    <CarouselContext.Provider
-      value={{
-        api,
-        canScrollNext,
-        canScrollPrev,
-        carouselRef,
-        opts,
-        orientation,
-        plugins,
-        scale,
-        scrollNext,
-        scrollPrev,
-      }}
-    >
+    <CarouselContext.Provider value={carouselContext}>
       <div
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn Carousel's div region and div props/ref contract.
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"
         data-orientation={orientation}
         className={cn(`mc-carousel`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): CarouselScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
         onKeyDownCapture={(event) => {
           onKeyDownCapture?.(event);
 
+          // SAFETY: This DOM-forwarded React handler receives ReactDOM-normalized targets; Text dispatch is normalized to its parent Element, including SVG. Only Element.closest is consumed.
+          /* oxlint-disable typescript/no-unsafe-type-assertion -- ReactDOM synthetic-event production and standard DOM prop forwarding prove this exact Element target; native/manual event inputs are not projected. */
           if (
             event.defaultPrevented ||
-            (event.target as HTMLElement).closest(
+            (event.target as Element).closest(
               "input,textarea,select,[contenteditable=true]"
             )
           ) {
             return;
           }
+          /* oxlint-enable typescript/no-unsafe-type-assertion */
 
-          const prev =
-            orientation === "vertical"
-              ? "ArrowUp"
-              : opts?.direction === "rtl"
-                ? "ArrowRight"
-                : "ArrowLeft";
+          let selectedPrev: "ArrowUp" | "ArrowRight" | "ArrowLeft";
 
-          const next =
-            orientation === "vertical"
-              ? "ArrowDown"
-              : opts?.direction === "rtl"
-                ? "ArrowLeft"
-                : "ArrowRight";
+          if (orientation === "vertical") {
+            selectedPrev = "ArrowUp";
+          } else if (opts?.direction === "rtl") {
+            selectedPrev = "ArrowRight";
+          } else {
+            selectedPrev = "ArrowLeft";
+          }
+
+          const prev = selectedPrev;
+
+          let selectedNext: "ArrowDown" | "ArrowLeft" | "ArrowRight";
+
+          if (orientation === "vertical") {
+            selectedNext = "ArrowDown";
+          } else if (opts?.direction === "rtl") {
+            selectedNext = "ArrowLeft";
+          } else {
+            selectedNext = "ArrowRight";
+          }
+
+          const next = selectedNext;
 
           if (event.key === prev) {
             event.preventDefault();
@@ -186,17 +221,16 @@ const CarouselContent = ({
   );
 };
 
-const CarouselItem = ({ className, ...props }: React.ComponentProps<"div">) => {
-  return (
-    <div
-      role="group"
-      aria-roledescription="slide"
-      data-slot="carousel-item"
-      className={cn(`mc-carousel-item`, className)}
-      {...props}
-    />
-  );
-};
+const CarouselItem = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn CarouselItem's div slide grouping contract.
+    role="group"
+    aria-roledescription="slide"
+    data-slot="carousel-item"
+    className={cn(`mc-carousel-item`, className)}
+    {...props}
+  />
+);
 
 type CarouselArrowProps = React.ComponentProps<"button"> & {
   scale?: 1 | 2 | 3;
@@ -238,14 +272,10 @@ const CarouselArrow = ({
       aria-disabled={inactive || undefined}
       disabled={inactive}
       className={cn(`mc-pagination-arrow mc-carousel-arrow`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-scale": ownScale ?? context.scale,
-            ...__style,
-          }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): CarouselScaleStyle => ({
+        "--mc-scale": ownScale ?? context.scale,
+        ...__style,
+      }))}
       {...props}
       onClick={(event) => {
         if (inactive) {
@@ -257,7 +287,12 @@ const CarouselArrow = ({
         onClick?.(event);
 
         if (!event.defaultPrevented) {
-          forward ? context.scrollNext() : context.scrollPrev();
+          if (forward) {
+            context.scrollNext();
+          } else {
+            context.scrollPrev();
+          }
+
           playMinecraftClick();
         }
       }}
@@ -265,13 +300,13 @@ const CarouselArrow = ({
   );
 };
 
-const CarouselPrevious = (props: CarouselArrowProps) => {
-  return <CarouselArrow direction="backward" {...props} />;
-};
+const CarouselPrevious = (props: CarouselArrowProps) => (
+  <CarouselArrow direction="backward" {...props} />
+);
 
-const CarouselNext = (props: CarouselArrowProps) => {
-  return <CarouselArrow direction="forward" {...props} />;
-};
+const CarouselNext = (props: CarouselArrowProps) => (
+  <CarouselArrow direction="forward" {...props} />
+);
 
 export {
   Carousel,

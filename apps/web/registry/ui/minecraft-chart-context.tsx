@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- Recharts geometry components and context hooks participate in the same synchronous chart render; introducing lazy loading changes its current readiness/context contract.
 import {
   Rectangle,
   Sector,
@@ -8,6 +9,7 @@ import {
   useChartHeight,
   usePlotArea,
 } from "recharts";
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- These are Recharts' published renderer-prop type names.
 import type { BarShapeProps, PieSectorShapeProps } from "recharts";
 
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
@@ -40,23 +42,107 @@ type Geometry =
       fill: string;
     };
 
-interface GeometryStore {
-  entries: Map<string, Geometry>;
-  version: number;
-  listeners: Set<() => void>;
+interface ProfilerRow {
+  fill: string;
+  globalPercentage: number | undefined;
+  name: string;
+  percentage: number;
+  start: number;
+  sweep: number;
+}
+
+interface GeometrySnapshot {
+  entries: Geometry[];
+  profilerData: ProfilerRow[];
+  revision: number;
+}
+
+const createGeometryStore = () => {
+  const entries = new Map<string, Geometry>();
+  const listeners = new Set<() => void>();
+
+  const initialSnapshot: GeometrySnapshot = {
+    entries: [],
+    profilerData: [],
+    revision: 0,
+  };
+
+  let snapshot = initialSnapshot;
+  let profilerKey = "[]";
+
+  const invalidate = () => {
+    const nextEntries = [...entries.values()];
+    nextEntries.sort((a, b) => a.index - b.index);
+    const sectors = nextEntries.filter((item) => item.kind === "sector");
+    const nextProfilerKey = JSON.stringify(sectors);
+
+    const profilerData =
+      nextProfilerKey === profilerKey
+        ? snapshot.profilerData
+        : sectors.map((item) => ({
+            fill: item.fill,
+            globalPercentage: item.globalPercentage,
+            name: item.name,
+            percentage: item.percent * 100,
+            start: ((item.startAngle + 90) / 360) * 100,
+            sweep: ((item.endAngle - item.startAngle) / 360) * 100,
+          }));
+
+    profilerKey = nextProfilerKey;
+    snapshot = {
+      entries: nextEntries,
+      profilerData,
+      revision: snapshot.revision + 1,
+    };
+
+    for (const listener of listeners) {
+      listener();
+    }
+  };
+
+  return {
+    getServerSnapshot: () => initialSnapshot,
+    getSnapshot: () => snapshot,
+    invalidate,
+    remove: (id: string) => {
+      entries.delete(id);
+      invalidate();
+    },
+    set: (id: string, geometry: Geometry) => {
+      entries.set(id, geometry);
+      invalidate();
+    },
+    subscribe: (listener: () => void) => {
+      listeners.add(listener);
+
+      return () => {
+        listeners.delete(listener);
+      };
+    },
+  };
+};
+
+interface GeometryContext {
+  store: ReturnType<typeof createGeometryStore>;
   scale: 1 | 2 | 3;
 }
 
-const Context = React.createContext<GeometryStore | null>(null);
+const Context = React.createContext<GeometryContext | null>(null);
 
-export function chartColorChannels(
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the existing CSS color-channel resolution API consumed by the native Chart renderer and its geometry owner; accept mixed-module Fast Refresh state fallback.
+export const chartColorChannels = function chartColorChannels(
   color: string,
   element?: Element | null
 ): number[] {
-  const variable = /^var\(\s*(--[^,)]+)(?:,\s*([^)]*))?\)/.exec(color);
+  let resolvedColor = color;
+
+  const variable =
+    /^var\(\s*(?<customProperty>--[^,)]+)(?:,\s*(?<fallback>[^)]*))?\)/u.exec(
+      resolvedColor
+    );
 
   if (variable) {
-    color =
+    resolvedColor =
       (element
         ? getComputedStyle(element).getPropertyValue(variable[1]).trim()
         : "") ||
@@ -64,30 +150,36 @@ export function chartColorChannels(
       "#55ff55";
   }
 
-  if (/^#[\da-f]{6}$/i.test(color)) {
+  if (/^#[\da-f]{6}$/iu.test(resolvedColor)) {
     return [1, 3, 5].map((index) =>
-      Number.parseInt(color.slice(index, index + 2), 16)
+      Number.parseInt(resolvedColor.slice(index, index + 2), 16)
     );
   }
 
-  if (/^#[\da-f]{3}$/i.test(color)) {
+  if (/^#[\da-f]{3}$/iu.test(resolvedColor)) {
     return [1, 2, 3].map((index) =>
-      Number.parseInt(color[index] + color[index], 16)
+      Number.parseInt(resolvedColor[index] + resolvedColor[index], 16)
     );
   }
 
-  if (color.startsWith("rgb")) {
-    return (color.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number);
+  if (resolvedColor.startsWith("rgb")) {
+    return (resolvedColor.match(/[\d.]+/gu) ?? []).slice(0, 3).map(Number);
   }
 
   const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d")!;
+  const context = canvas.getContext("2d");
 
-  context.fillStyle = color;
+  if (!context) {
+    throw new Error(
+      "Minecraft chart context 2D canvas context could not be created"
+    );
+  }
+
+  context.fillStyle = resolvedColor;
   context.fillRect(0, 0, 1, 1);
 
   return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
-}
+};
 
 export const ChartGeometryProvider = ({
   scale,
@@ -100,26 +192,17 @@ export const ChartGeometryProvider = ({
   host: React.RefObject<HTMLDivElement | null>;
   colors: unknown;
 }) => {
-  const [store] = React.useState<GeometryStore>(() => ({
-    entries: new Map(),
-    listeners: new Set(),
-    scale,
-    version: 0,
-  }));
+  // oxlint-disable-next-line react/hook-use-state -- Lazy state owns one geometry store for this mounted provider; the store itself owns external subscriptions and mutable snapshots. No setter is needed, and useMemo would not supply the same semantic lifetime guarantee.
+  const [store] = React.useState(createGeometryStore);
+  const context = React.useMemo(() => ({ scale, store }), [scale, store]);
 
-  store.scale = scale;
   React.useLayoutEffect(() => {
-    store.version++;
-    store.listeners.forEach((listener) => {
-      listener();
-    });
+    store.invalidate();
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Colors and scale change rendered geometry/style ownership; invalidate the existing shared geometry store after their commit.
   }, [store, colors, scale]);
   React.useLayoutEffect(() => {
     const observer = new MutationObserver(() => {
-      store.version++;
-      store.listeners.forEach((listener) => {
-        listener();
-      });
+      store.invalidate();
     });
 
     for (
@@ -128,8 +211,8 @@ export const ChartGeometryProvider = ({
       node = node.parentElement
     ) {
       observer.observe(node, {
-        attributes: true,
         attributeFilter: ["class", "style", "data-theme"],
+        attributes: true,
       });
     }
 
@@ -138,10 +221,10 @@ export const ChartGeometryProvider = ({
     };
   }, [store, host]);
 
-  return <Context.Provider value={store}>{children}</Context.Provider>;
+  return <Context.Provider value={context}>{children}</Context.Provider>;
 };
 
-function useStore() {
+const useStore = function useStore() {
   const store = React.useContext(Context);
 
   if (!store) {
@@ -149,7 +232,22 @@ function useStore() {
   }
 
   return store;
-}
+};
+
+export const useChartGeometry = function useChartGeometry() {
+  const { scale, store } = useStore();
+
+  const snapshot = React.useSyncExternalStore(
+    store.subscribe,
+    store.getSnapshot,
+    store.getServerSnapshot
+  );
+
+  return {
+    ...snapshot,
+    scale,
+  };
+};
 
 export const ChartAxisTick = ({
   x = 0,
@@ -173,10 +271,18 @@ export const ChartAxisTick = ({
   React.useEffect(() => {
     let live = true;
 
-    if (/[^\x20-\x7E]/.test(text)) {
-      void loadUnihex().then(() => {
-        if (live) refresh();
-      });
+    if (/[^\u0020-\u007E]/u.test(text)) {
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
+        if (live) {
+          refresh();
+        }
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {
@@ -184,22 +290,30 @@ export const ChartAxisTick = ({
     };
   }, [text]);
 
-  const width = [...text].reduce(
-    (sum, char) =>
-      sum +
-      (minecraftGlyphs[char.charCodeAt(0) - 32]?.[2] ??
-        getUnihexGlyph(char)?.advance ??
-        10),
-    0
-  );
+  let accumulatedGlyphAdvance = 0;
 
-  const left =
-    Math.round(Number(x) / scale) -
-    (textAnchor === "end"
-      ? width
-      : textAnchor === "middle"
-        ? Math.floor(width / 2)
-        : 0);
+  for (const advanceCharacter of text) {
+    // SAFETY: for-of yields a nonempty code-point string; the owned bitmap has only ASCII 32..126 entries, so supplementary characters miss it under both index forms and retain the same Unihex fallback.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this exact codePointAt(0) result. */
+    accumulatedGlyphAdvance +=
+      minecraftGlyphs[(advanceCharacter.codePointAt(0) as number) - 32]?.[2] ??
+      getUnihexGlyph(advanceCharacter)?.advance ??
+      10;
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
+  }
+
+  const width = accumulatedGlyphAdvance;
+
+  const position = Math.round(Number(x) / scale);
+  let anchorOffset = 0;
+
+  if (textAnchor === "end") {
+    anchorOffset = width;
+  } else if (textAnchor === "middle") {
+    anchorOffset = Math.floor(width / 2);
+  }
+
+  const left = position - anchorOffset;
 
   return (
     <foreignObject
@@ -214,57 +328,23 @@ export const ChartAxisTick = ({
   );
 };
 
-export function useChartGeometry() {
-  const store = useStore();
-  React.useSyncExternalStore(
-    React.useCallback(
-      (listener) => {
-        store.listeners.add(listener);
-
-        return () => {
-          store.listeners.delete(listener);
-        };
-      },
-      [store]
-    ),
-    () => store.version,
-    () => 0
-  );
-
-  return {
-    entries: [...store.entries.values()].sort((a, b) => a.index - b.index),
-    revision: store.version,
-    scale: store.scale,
-  };
-}
-
-function useRegister(geometry: Geometry) {
-  const store = useStore();
+const useRegister = function useRegister(geometry: Geometry) {
+  const { store } = useStore();
   const id = React.useId();
   const serialized = JSON.stringify(geometry);
 
   React.useLayoutEffect(() => {
-    store.entries.set(id, JSON.parse(serialized) as Geometry);
-    store.version += 1;
-    store.listeners.forEach((listener) => {
-      listener();
-    });
+    // SAFETY: serialized was produced immediately above from this hook's Geometry input.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Only this hook serializes the typed Geometry above; retain the existing JSON normalization rather than pretending externally supplied JSON was validated.
+    store.set(id, JSON.parse(serialized) as Geometry);
 
     return () => {
-      store.entries.delete(id);
-      store.version += 1;
-      store.listeners.forEach((listener) => {
-        listener();
-      });
+      store.remove(id);
     };
   }, [store, id, serialized]);
-}
-
-/** Recharts owns the coordinates, scales, stacking, hit testing and tooltip state. */
-export const ChartPixelBar = (props: BarShapeProps) => {
-  return <PixelBarGeometry {...props} />;
 };
 
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts renderer-prop contract.
 const PixelBarGeometry = (props: BarShapeProps) => {
   useRegister({
     fill: props.fill ?? "#55ff55",
@@ -280,17 +360,20 @@ const PixelBarGeometry = (props: BarShapeProps) => {
   return <Rectangle {...props} fill="transparent" stroke="none" />;
 };
 
-/** A Pie shape adapter, not a second Pie implementation or data API. */
-export const ChartProfilerSector = (props: PieSectorShapeProps) => {
-  return <ProfilerSectorGeometry {...props} />;
-};
+/** Recharts owns the coordinates, scales, stacking, hit testing and tooltip state. */
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts renderer-prop contract.
+export const ChartPixelBar = (props: BarShapeProps) => (
+  <PixelBarGeometry {...props} />
+);
 
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts sector renderer-prop contract.
 const ProfilerSectorGeometry = (props: PieSectorShapeProps) => {
   useRegister({
     cx: props.cx,
     cy: props.cy,
     endAngle: props.endAngle,
     fill: props.fill ?? "#55ff55",
+    // oxlint-disable-next-line typescript/no-unsafe-assignment, typescript/no-unsafe-member-access -- Recharts declares the original datum payload as any; preserve its optional profiler value without fabricating a narrower row schema or changing coercion.
     globalPercentage: props.payload?.globalPercentage,
     index: props.index,
     innerRadius: props.innerRadius,
@@ -309,6 +392,44 @@ const ProfilerSectorGeometry = (props: PieSectorShapeProps) => {
       stroke="none"
     />
   );
+};
+
+/** A Pie shape adapter, not a second Pie implementation or data API. */
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts sector renderer-prop contract.
+export const ChartProfilerSector = (props: PieSectorShapeProps) => (
+  <ProfilerSectorGeometry {...props} />
+);
+
+/** Own the mask and one-pixel color planes for one target chart canvas. */
+const createChartRasterSurfaces = function createChartRasterSurfaces(
+  node: HTMLCanvasElement
+) {
+  const scratch = document.createElement("canvas");
+  scratch.width = node.width;
+  scratch.height = node.height;
+
+  const mask = scratch.getContext("2d");
+
+  if (!mask) {
+    throw new Error(
+      "Minecraft chart context 2D canvas context could not be created"
+    );
+  }
+
+  const colorCanvas = document.createElement("canvas");
+
+  colorCanvas.height = 1;
+  colorCanvas.width = 1;
+
+  const colorContext = colorCanvas.getContext("2d");
+
+  if (!colorContext) {
+    throw new Error(
+      "Minecraft chart context 2D canvas context could not be created"
+    );
+  }
+
+  return { colorContext, mask, scratch };
 };
 
 /** Quantize Recharts' rendered SVG geometry; Recharts retains every data and layout API. */
@@ -331,11 +452,24 @@ export const ChartPixelSurface = ({
   const [paint, setPaint] = React.useState(0);
   const [ready, setReady] = React.useState(false);
 
-  React.useLayoutEffect(() => {
+  const backgroundStyle: React.CSSProperties & {
+    "--mc-chart-surface-background": string;
+  } = { "--mc-chart-surface-background": background };
+
+  const canvasStyle: React.CSSProperties & {
+    "--mc-chart-surface-height": number;
+    "--mc-chart-surface-width": number;
+  } = {
+    "--mc-chart-surface-height":
+      Math.max(1, Math.floor(height / scale)) * scale,
+    "--mc-chart-surface-width": Math.max(1, Math.floor(width / scale)) * scale,
+  };
+
+  React.useLayoutEffect((): (() => void) | undefined => {
     const svg = canvas.current?.closest("svg.recharts-surface");
 
     if (!svg) {
-      return;
+      return undefined;
     }
 
     const observer = new MutationObserver((records) => {
@@ -354,9 +488,11 @@ export const ChartPixelSurface = ({
 
     return () => {
       observer.disconnect();
-      svg.querySelectorAll("[data-mc-pixel-source]").forEach((element) => {
+
+      for (const element of svg.querySelectorAll("[data-mc-pixel-source]")) {
+        // oxlint-disable-next-line unicorn/prefer-dom-node-dataset -- The public SVG subtree query returns namespace-generic Element, including foreign descendants; removeAttribute does not require an unsupported dataset projection.
         element.removeAttribute("data-mc-pixel-source");
-      });
+      }
     };
   }, []);
   React.useLayoutEffect(() => {
@@ -372,16 +508,8 @@ export const ChartPixelSurface = ({
     node.height = Math.max(1, Math.floor(height / scale));
     ctx.fillStyle = background;
     ctx.fillRect(0, 0, node.width, node.height);
-    const scratch = document.createElement("canvas");
-    scratch.width = node.width;
-    scratch.height = node.height;
+    const { colorContext, mask, scratch } = createChartRasterSurfaces(node);
 
-    const mask = scratch.getContext("2d")!;
-    const colorCanvas = document.createElement("canvas");
-
-    colorCanvas.width = colorCanvas.height = 1;
-
-    const colorContext = colorCanvas.getContext("2d")!;
     const colors = new Map<string, { ink: string; alpha: number }>();
 
     const color = (value: string) => {
@@ -389,18 +517,25 @@ export const ChartPixelSurface = ({
         return null;
       }
 
-      if (!colors.has(value)) {
-        colorContext.clearRect(0, 0, 1, 1);
-        colorContext.fillStyle = value;
-        colorContext.fillRect(0, 0, 1, 1);
-        const c = colorContext.getImageData(0, 0, 1, 1).data;
-        colors.set(value, {
-          alpha: c[3] / 255,
-          ink: `rgb(${c[0]},${c[1]},${c[2]})`,
-        });
+      const cached = colors.get(value);
+
+      if (cached) {
+        return cached;
       }
 
-      return colors.get(value)!;
+      colorContext.clearRect(0, 0, 1, 1);
+      colorContext.fillStyle = value;
+      colorContext.fillRect(0, 0, 1, 1);
+      const c = colorContext.getImageData(0, 0, 1, 1).data;
+
+      const parsed = {
+        alpha: c[3] / 255,
+        ink: `rgb(${c[0]},${c[1]},${c[2]})`,
+      };
+
+      colors.set(value, parsed);
+
+      return parsed;
     };
 
     const selector =
@@ -408,16 +543,7 @@ export const ChartPixelSurface = ({
 
     let count = 0;
 
-    for (const element of svg.querySelectorAll<SVGGraphicsElement>(selector)) {
-      if (element.closest("foreignObject,defs")) {
-        continue;
-      }
-
-      // Keep the real SVG shapes for Recharts interaction; only the pixel surface paints them.
-      if (!Object.hasOwn(element.dataset, "mcPixelSource"))
-        element.dataset.mcPixelSource = "";
-      const style = getComputedStyle(element);
-
+    const readInheritedVisibility = (element: SVGGraphicsElement) => {
       let opacity = 1;
       let visible = true;
 
@@ -436,8 +562,25 @@ export const ChartPixelSurface = ({
         opacity *= Number(s.opacity);
       }
 
+      return { opacity, visible };
+    };
+
+    const rasterizeElement = (element: SVGGraphicsElement) => {
+      if (element.closest("foreignObject,defs")) {
+        return;
+      }
+
+      // Keep the real SVG shapes for Recharts interaction; only the pixel surface paints them.
+      if (!Object.hasOwn(element.dataset, "mcPixelSource")) {
+        element.dataset.mcPixelSource = "";
+      }
+
+      const style = getComputedStyle(element);
+
+      const { opacity, visible } = readInheritedVisibility(element);
+
       if (!visible || opacity === 0) {
-        continue;
+        return;
       }
 
       const path = new Path2D();
@@ -447,8 +590,8 @@ export const ChartPixelSurface = ({
       if (tag === "path") {
         const d = element.getAttribute("d");
 
-        if (!d) {
-          continue;
+        if (d === null || d === "") {
+          return;
         }
 
         path.addPath(new Path2D(d));
@@ -457,7 +600,7 @@ export const ChartPixelSurface = ({
         path.lineTo(n("x2"), n("y2"));
       } else if (tag === "circle") {
         if (![n("cx"), n("cy"), n("r")].every(Number.isFinite)) {
-          continue;
+          return;
         }
 
         path.arc(n("cx"), n("cy"), Math.max(0, n("r")), 0, Math.PI * 2);
@@ -467,7 +610,7 @@ export const ChartPixelSurface = ({
         const points = (
           element
             .getAttribute("points")
-            ?.match(/[-+]?(?:\d*\.)?\d+(?:e[-+]?\d+)?/gi) ?? []
+            ?.match(/[-+]?(?:\d*\.)?\d+(?:[eE][-+]?\d+)?/gu) ?? []
         ).map(Number);
 
         for (let i = 0; i + 1 < points.length; i += 2) {
@@ -482,7 +625,7 @@ export const ChartPixelSurface = ({
           path.closePath();
         }
       } else {
-        continue;
+        return;
       }
 
       const rootMatrix = svg.getCTM();
@@ -522,18 +665,21 @@ export const ChartPixelSurface = ({
           mask.strokeStyle = ink.ink;
           mask.lineWidth = Math.max(
             scale,
+            // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
             Math.round(Number.parseFloat(style.strokeWidth) / scale) * scale
           );
           mask.setLineDash(
             style.strokeDasharray === "none"
               ? []
               : style.strokeDasharray
-                  .split(/[ ,]+/)
-                  .map((value) => Number.parseFloat(value))
+                  .split(/[ ,]+/u)
+                  // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+                  .map((dashToken) => Number.parseFloat(dashToken))
           );
           mask.stroke(path);
         } else {
           mask.fillStyle = ink.ink;
+          // oxlint-disable-next-line unicorn/no-array-fill-with-reference-type -- Canvas fills a Path2D; this is not Array.fill.
           mask.fill(path, style.fillRule === "evenodd" ? "evenodd" : "nonzero");
         }
 
@@ -551,10 +697,15 @@ export const ChartPixelSurface = ({
 
       stamp(style.fill, Number(style.fillOpacity), false);
       stamp(style.stroke, Number(style.strokeOpacity), true);
-      count++;
+      count += 1;
+    };
+
+    for (const element of svg.querySelectorAll<SVGGraphicsElement>(selector)) {
+      rasterizeElement(element);
     }
 
     setReady(count > 0);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- SVG mutation and geometry revisions are existing native repaint signals; retain them even when canvas bounds stay equal.
   }, [paint, revision, scale, width, height, x, y, background]);
 
   return (
@@ -565,21 +716,13 @@ export const ChartPixelSurface = ({
       height={height}
       pointerEvents="none"
     >
-      <div style={{ background, height: "100%", width: "100%" }}>
-        <style>
-          {".mc-chart [data-mc-pixel-source]{filter:opacity(0)!important}"}
-        </style>
+      <div className="mc-chart-pixel-background" style={backgroundStyle}>
         <canvas
           ref={canvas}
           aria-hidden="true"
           data-mc-ready={ready}
-          style={{
-            display: "block",
-            height: Math.max(1, Math.floor(height / scale)) * scale,
-            imageRendering: "pixelated",
-            pointerEvents: "none",
-            width: Math.max(1, Math.floor(width / scale)) * scale,
-          }}
+          className="mc-chart-pixel-canvas"
+          style={canvasStyle}
         />
       </div>
     </foreignObject>

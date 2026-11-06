@@ -1,5 +1,8 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@playwright/test";
 import { PNG } from "pngjs";
+
 const types = [
   ["bar", "Bar"],
   ["stacked-bar", "Stacked bar"],
@@ -10,11 +13,13 @@ const types = [
   ["radar", "Radar"],
   ["radial", "Radial"],
 ] as const;
-async function select(page: any, label: string, value: string) {
+
+const select = async function select(page: Page, label: string, value: string) {
   await page.getByRole("combobox", { exact: true, name: label }).click();
   await page.getByRole("option", { exact: true, name: value }).click();
-}
-async function open(page: any, scale: number, mobile = false) {
+};
+
+const open = async function open(page: Page, scale: number, mobile = false) {
   await page.setViewportSize({ height: 1000, width: mobile ? 390 : 1440 });
   await page.goto(
     `${process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"}docs/components/chart`
@@ -23,9 +28,10 @@ async function open(page: any, scale: number, mobile = false) {
   await expect(
     page.locator('[data-stage="chart"] [data-slot="chart-example"] canvas')
   ).toHaveAttribute("data-mc-ready", "true");
-}
-for (const scale of [2])
-  for (const mobile of [false, true])
+};
+
+for (const scale of [2]) {
+  for (const mobile of [false, true]) {
     test(`Analytics types preserve integer pixels and fit ${mobile ? "mobile" : "desktop"} GUI${scale}`, async ({
       page,
     }, info) => {
@@ -33,27 +39,47 @@ for (const scale of [2])
       page.on("pageerror", (e) => errors.push(e.message));
       await open(page, scale, mobile);
 
-      const stage = page.locator('[data-stage="chart"]'),
-        chart = stage.locator('[data-slot="chart-example"]');
+      const stage = page.locator('[data-stage="chart"]');
+      const chart = stage.locator('[data-slot="chart-example"]');
 
       for (const [type, label] of types) {
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         await select(page, "Chart type", label);
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         await expect(chart).toHaveAttribute("data-chart-type", type);
 
-        for (const control of await stage.getByRole("combobox").all()) {
-          const b = await control.boundingBox();
-          expect(b!.x).toBeGreaterThanOrEqual(0);
-          expect(b!.x + b!.width).toBeLessThanOrEqual(mobile ? 390 : 1440);
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
+        const readOnlyItems3 = await stage.getByRole("combobox").all();
+
+        // oxlint-disable-next-line no-await-in-loop -- Advances the same focus/pointer/widget state; the next transition depends on completion and observation of the current one.
+        const readOnlyResults3 = await Promise.allSettled(
+          readOnlyItems3.map(async (control) => {
+            const b = await control.boundingBox();
+            expectNotNull(b, "Missing required bounding box: b");
+            expect(b.x).toBeGreaterThanOrEqual(0);
+            expect(b.x + b.width).toBeLessThanOrEqual(mobile ? 390 : 1440);
+          })
+        );
+
+        for (const readOnlyResult3 of readOnlyResults3) {
+          if (readOnlyResult3.status === "rejected") {
+            throw readOnlyResult3.reason;
+          }
         }
 
         const canvas = chart.locator("canvas");
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         await expect(canvas).toBeVisible();
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         const bounds = await canvas.boundingBox();
-        expect(bounds!.x).toBeGreaterThanOrEqual(0);
-        expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(
+        expectNotNull(bounds, "Missing required bounding box: bounds");
+        expect(bounds.x).toBeGreaterThanOrEqual(0);
+        expect(bounds.x + bounds.width).toBeLessThanOrEqual(
           mobile ? 390 : 1440
         );
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         const buffer = await canvas.screenshot();
+        // oxlint-disable-next-line no-await-in-loop -- Each chart type mutates shared current page/control state and inspects the corresponding plot/raster before next type.
         await info.attach(`${type}.png`, {
           body: buffer,
           contentType: "image/png",
@@ -62,26 +88,33 @@ for (const scale of [2])
         expect(image.width % scale).toBe(0);
         expect(image.height % scale).toBe(0);
 
-        for (let y = 0; y < image.height; y += scale)
-          for (let x = 0; x < image.width; x += scale)
-            for (let sy = 0; sy < scale; sy++)
-              for (let sx = 0; sx < scale; sx++) {
-                const a = (y * image.width + x) * 4,
-                  b = ((y + sy) * image.width + x + sx) * 4;
+        for (let y = 0; y < image.height; y += scale) {
+          for (let x = 0; x < image.width; x += scale) {
+            for (let sy = 0; sy < scale; sy += 1) {
+              for (let sx = 0; sx < scale; sx += 1) {
+                const a = (y * image.width + x) * 4;
+                const b = ((y + sy) * image.width + x + sx) * 4;
 
                 if (
                   !image.data
                     .subarray(a, a + 4)
                     .equals(image.data.subarray(b, b + 4))
-                )
+                ) {
                   throw new Error(
                     `${type}: noninteger pixel block at${x},${y}`
                   );
+                }
               }
+            }
+          }
+        }
       }
 
       expect(errors).toEqual([]);
     });
+  }
+}
+
 test("Website analytics filters update real data and accessible table", async ({
   page,
 }) => {
@@ -98,9 +131,8 @@ test("Website analytics filters update real data and accessible table", async ({
   await expect(page.locator("[data-stage=chart]")).toContainText(
     "Apr to Jun 2024"
   );
-  expect((await chart.locator("canvas").screenshot()).equals(before)).toBe(
-    false
-  );
+  const awaitedScreenshot1 = await chart.locator("canvas").screenshot();
+  expect(awaitedScreenshot1.equals(before)).toBe(false);
   await select(page, "Chart devices", "Desktop");
   await expect(chart.getByRole("columnheader")).toHaveCount(2);
   const plot = chart.getByRole("application");
@@ -114,6 +146,7 @@ test("Website analytics filters update real data and accessible table", async ({
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("May");
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("209");
 });
+
 test("Analytics chart rerasterizes when available width changes", async ({
   page,
 }) => {
@@ -124,7 +157,9 @@ test("Analytics chart rerasterizes when available width changes", async ({
 
   const width = await canvas.getAttribute("width");
   await page.setViewportSize({ height: 1000, width: 540 });
-  await expect.poll(async () => canvas.getAttribute("width")).not.toBe(width);
+  await expect
+    .poll(async () => await canvas.getAttribute("width"))
+    .not.toBe(width);
   await expect(chart.locator("canvas")).toHaveAttribute(
     "data-mc-ready",
     "true"
@@ -139,7 +174,7 @@ test("Hover inspection reports the plotted datum and leaving clears the readout"
   const chart = page.locator('[data-slot="chart-example"]');
   const canvas = chart.locator("canvas");
 
-  const b = (await canvas.boundingBox())!;
+  await canvas.boundingBox();
   await chart.getByRole("application").hover({ position: { x: 80, y: 40 } });
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("January");
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("186");

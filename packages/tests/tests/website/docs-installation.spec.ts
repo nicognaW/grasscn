@@ -1,7 +1,8 @@
 import { readFile, writeFile } from "node:fs/promises";
 
+import { expectDefined } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
-import { documentationRegistry } from "@tests/checks/documentation-inventory.mjs";
+import { documentationRegistry } from "@tests/checks/documentation-inventory";
 
 // These properties capture clipboard writes performed by this test page.
 declare global {
@@ -95,16 +96,18 @@ test("Button installation copies and remembers the visitor package manager", asy
     pnpm: `pnpm dlx shadcn@latest add ${origin}/r/button.json`,
   };
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const [manager, command] of Object.entries(commands)) {
+    // oxlint-disable-next-line no-await-in-loop -- Selects a package-manager tab, copies its command, and verifies the shared clipboard before another tab can replace it.
     await installation.getByRole("tab", { exact: true, name: manager }).click();
+    // oxlint-disable-next-line no-await-in-loop -- Selects a package-manager tab, copies its command, and verifies the shared clipboard before another tab can replace it.
     await installation
       .getByRole("button", { exact: true, name: "Copy" })
       .click();
+    // oxlint-disable-next-line no-await-in-loop -- Selects a package-manager tab, copies its command, and verifies the shared clipboard before another tab can replace it.
     await expect(installation.getByRole("status")).toHaveText("Copied");
+    // oxlint-disable-next-line no-await-in-loop -- Selects a package-manager tab, copies its command, and verifies the shared clipboard before another tab can replace it.
     expect(await page.evaluate(() => window.copied)).toBe(command);
   }
-  /* eslint-enable no-await-in-loop */
 
   await installation.getByRole("tab", { exact: true, name: "Bun" }).focus();
   await page.keyboard.press("ArrowLeft");
@@ -145,7 +148,7 @@ test("Button manual installation exposes complete files and defers large resourc
 
   const registry = documentationRegistry();
   const item = registry.find((entry) => entry.name === "button");
-  expect(item).toBeDefined();
+  expectDefined(item);
 
   if (item?.files === undefined) {
     throw new Error("Button manual source files required");
@@ -158,16 +161,24 @@ test("Button manual installation exposes complete files and defers large resourc
 
   await expect(files.getByRole("button")).toHaveCount(item.files.length);
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
-  for (const file of item.files) {
-    await expect(
-      files.getByRole("button", {
-        exact: true,
-        name: file.path.split("/").at(-1),
-      })
-    ).toBeAttached();
+  const readOnlyItems25 = item.files;
+
+  const readOnlyResults25 = await Promise.allSettled(
+    readOnlyItems25.map(async (file) => {
+      await expect(
+        files.getByRole("button", {
+          exact: true,
+          name: file.path.split("/").at(-1),
+        })
+      ).toBeAttached();
+    })
+  );
+
+  for (const readOnlyResult25 of readOnlyResults25) {
+    if (readOnlyResult25.status === "rejected") {
+      throw readOnlyResult25.reason;
+    }
   }
-  /* eslint-enable no-await-in-loop */
 
   await page.evaluate(() => {
     Object.defineProperty(navigator, "clipboard", {
@@ -191,8 +202,22 @@ test("Button manual installation exposes complete files and defers large resourc
     .click();
   await expect(dependencyCommand.getByRole("status")).toHaveText("Copied");
   expect(await page.evaluate(() => window.copied)).toBe(
-    "npm install class-variance-authority @base-ui/react"
+    "npm install class-variance-authority @base-ui/react react-is"
   );
+
+  const developmentCommand = installation.getByRole("region", {
+    exact: true,
+    name: "Development dependencies: Terminal",
+  });
+
+  await developmentCommand
+    .getByRole("button", { exact: true, name: "Copy" })
+    .click();
+  await expect(developmentCommand.getByRole("status")).toHaveText("Copied");
+  expect(await page.evaluate(() => window.copied)).toBe(
+    "npm install --save-dev @types/react-is"
+  );
+
   await files
     .getByRole("button", { exact: true, name: "minecraft-unifont-data.ts" })
     .click();

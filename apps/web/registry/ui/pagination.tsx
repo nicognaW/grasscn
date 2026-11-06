@@ -10,34 +10,38 @@ import { MinecraftText } from "./minecraft-text";
 import "./minecraft-pagination.css";
 import "./minecraft-pagination-assets.css";
 
-const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => {
-  return (
-    <nav
-      role="navigation"
-      aria-label="pagination"
-      data-slot="pagination"
-      className={cn(`mc-pagination`, className)}
-      {...props}
-    />
-  );
-};
+interface OwnedPaginationDimensions1 extends React.CSSProperties {
+  "--mc-z-pagination-base-1-width"?: string;
+}
+
+interface PaginationScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
+  <nav
+    role="navigation"
+    aria-label="pagination"
+    data-slot="pagination"
+    className={cn(`mc-pagination`, className)}
+    {...props}
+  />
+);
 
 const PaginationContent = ({
   className,
   ...props
-}: React.ComponentProps<"ul">) => {
-  return (
-    <ul
-      data-slot="pagination-content"
-      className={cn(`mc-pagination-content`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"ul">) => (
+  <ul
+    data-slot="pagination-content"
+    className={cn(`mc-pagination-content`, className)}
+    {...props}
+  />
+);
 
-const PaginationItem = (props: React.ComponentProps<"li">) => {
-  return <li data-slot="pagination-item" {...props} />;
-};
+const PaginationItem = (props: React.ComponentProps<"li">) => (
+  <li data-slot="pagination-item" {...props} />
+);
 
 type PaginationLinkProps = React.ComponentProps<"a"> & {
   isActive?: boolean;
@@ -64,8 +68,9 @@ const PaginationLink = ({
   return (
     <Button
       render={
+        // oxlint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- Preserve the upstream anchor-prop render API: the caller forwards href through props and Button supplies composition. Href-less custom actions remain caller accessibility responsibility.
         <a
-          aria-current={isActive ? "page" : undefined}
+          aria-current={(isActive ?? false) ? "page" : undefined}
           data-slot="pagination-link"
           data-active={isActive ?? undefined}
           {...props}
@@ -85,9 +90,9 @@ const PaginationLink = ({
       }
       scale={scale}
       size={size}
-      className={cn(`mc-pagination-link`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        width: 40 * scale,
+      className={cn("mc-pagination-link mc-owned-base-pagination-1", className)}
+      style={minecraftStyle(style, (__style): OwnedPaginationDimensions1 => ({
+        "--mc-z-pagination-base-1-width": `${40 * scale}px`,
         ...__style,
       }))}
     >
@@ -116,18 +121,18 @@ const PaginationArrow = ({
   }
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- This anchor preserves caller href/ref/navigation semantics and native Enter activation when href is supplied; href-less action use remains explicit compatibility debt.
     <a
       data-slot={
         direction === "forward" ? "pagination-next" : "pagination-previous"
       }
       data-direction={direction}
       className={cn(`mc-pagination-arrow`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
-      aria-current={isActive ? "page" : undefined}
+      style={minecraftStyle(style, (__style): PaginationScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
+      aria-current={(isActive ?? false) ? "page" : undefined}
       {...props}
       onClick={(event) => {
         if (
@@ -151,25 +156,21 @@ const PaginationArrow = ({
   );
 };
 
-const PaginationPrevious = (props: PaginationLinkProps) => {
-  return (
-    <PaginationArrow
-      direction="backward"
-      aria-label="Go to previous page"
-      {...props}
-    />
-  );
-};
+const PaginationPrevious = (props: PaginationLinkProps) => (
+  <PaginationArrow
+    direction="backward"
+    aria-label="Go to previous page"
+    {...props}
+  />
+);
 
-const PaginationNext = (props: PaginationLinkProps) => {
-  return (
-    <PaginationArrow
-      direction="forward"
-      aria-label="Go to next page"
-      {...props}
-    />
-  );
-};
+const PaginationNext = (props: PaginationLinkProps) => (
+  <PaginationArrow
+    direction="forward"
+    aria-label="Go to next page"
+    {...props}
+  />
+);
 
 const PaginationEllipsis = ({
   className,
@@ -178,23 +179,20 @@ const PaginationEllipsis = ({
   ...props
 }: React.ComponentProps<"span"> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <span
-      aria-hidden="true"
-      data-slot="pagination-ellipsis"
-      className={cn(`mc-pagination-ellipsis`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
-      {...props}
-    >
-      <MinecraftText>...</MinecraftText>
-    </span>
-  );
-};
+}) => (
+  <span
+    aria-hidden="true"
+    data-slot="pagination-ellipsis"
+    className={cn(`mc-pagination-ellipsis`, className)}
+    style={minecraftStyle(style, (__style): PaginationScaleStyle => ({
+      "--mc-scale": scale,
+      ...__style,
+    }))}
+    {...props}
+  >
+    <MinecraftText>...</MinecraftText>
+  </span>
+);
 
 export {
   Pagination,

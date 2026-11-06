@@ -10,10 +10,88 @@ import {
 } from "./minecraft-document-text";
 import { MinecraftMenuText, MenuScaleContext } from "./minecraft-menu-text";
 import { playerListAssets } from "./minecraft-player-list-assets";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftDocumentText,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-player-list.css";
+
+interface PlayerListLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-player-list-1-height": number;
+  "--mc-dynamic-player-list-1-top": number;
+}
+
+interface PlayerListLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-player-list-2-height": number;
+}
+
+interface PlayerListLayoutStyle3 extends React.CSSProperties {
+  "--mc-dynamic-player-list-3-grid-auto-columns": number;
+  "--mc-dynamic-player-list-3-grid-template-rows": string;
+  "--mc-dynamic-player-list-3-left": number;
+  "--mc-dynamic-player-list-3-top": number;
+}
+
+interface PlayerListLayoutStyle5 extends React.CSSProperties {
+  "--mc-dynamic-player-list-5-right": number;
+}
+
+interface PlayerListLayoutStyle6 extends React.CSSProperties {
+  "--mc-dynamic-player-list-6-right": number;
+}
+
+interface PlayerListLayoutStyle7 extends React.CSSProperties {
+  "--mc-dynamic-player-list-7-height": number;
+  "--mc-dynamic-player-list-7-top": number;
+}
+
+interface PlayerListLayoutStyle8 extends React.CSSProperties {
+  "--mc-dynamic-player-list-8-height": number;
+}
+
+interface PlayerListLayoutStyle9 extends React.CSSProperties {
+  "--mc-dynamic-player-list-9-height": number;
+}
+
+interface PlayerListLayoutStyle10 extends React.CSSProperties {
+  "--mc-dynamic-player-list-10-left": number;
+  "--mc-dynamic-player-list-10-top": number;
+}
+
+interface PlayerListLayoutStyle11 extends React.CSSProperties {
+  "--mc-dynamic-player-list-11-height": number;
+  "--mc-dynamic-player-list-11-top": number;
+}
+
+interface PlayerListLayoutStyle12 extends React.CSSProperties {
+  "--mc-dynamic-player-list-12-height": number;
+  "--mc-dynamic-player-list-12-top": number;
+}
+
+interface PlayerListLayoutStyle13 extends React.CSSProperties {
+  "--mc-dynamic-player-list-13-left": number;
+}
+
+interface PlayerListAvatarStyle extends React.CSSProperties {
+  "--mc-roster-avatar-height": string;
+  "--mc-roster-avatar-width": string;
+}
+
+interface PlayerListNameStyle extends React.CSSProperties {
+  "--mc-roster-font-style": React.CSSProperties["fontStyle"];
+  "--mc-roster-left": string;
+  "--mc-roster-max-width": string;
+  "--mc-roster-opacity": number;
+}
+
+interface PlayerListScaleStyle extends React.CSSProperties {
+  "--mc-roster-height": string;
+  "--mc-roster-width": string;
+  "--mc-scale": number;
+}
 
 interface PlayerListEntry {
   id: string;
@@ -35,6 +113,135 @@ type PlayerListProps = React.ComponentProps<"div"> & {
   onPlayerSelect?: (id: string) => void;
 };
 
+const rosterAvatarSource = function rosterAvatarSource(
+  player: PlayerListEntry
+): Pick<React.ComponentProps<typeof AvatarImage>, "skin" | "src"> {
+  return {
+    skin:
+      (player.src ?? "") || (player.username ?? "")
+        ? undefined
+        : (player.skin ?? "wide/steve"),
+    src:
+      player.src ??
+      ((player.username ?? "")
+        ? `https://mc-heads.net/avatar/${encodeURIComponent(player.username ?? "")}/8`
+        : undefined),
+  };
+};
+
+const renderRosterEntry = (
+  player: PlayerListEntry,
+  scale: 1 | 2 | 3,
+  columnWidth: number,
+  scoreWidth: number,
+  onPlayerSelect: PlayerListProps["onPlayerSelect"]
+): React.ReactElement => {
+  const latency = player.latency ?? 0;
+
+  let selectedBars: "unknown" | "5" | "4" | "3" | "2" | "1";
+
+  if (latency < 0) {
+    selectedBars = "unknown";
+  } else if (latency < 150) {
+    selectedBars = "5";
+  } else if (latency < 300) {
+    selectedBars = "4";
+  } else if (latency < 600) {
+    selectedBars = "3";
+  } else if (latency < 1000) {
+    selectedBars = "2";
+  } else {
+    selectedBars = "1";
+  }
+
+  const bars = selectedBars;
+
+  const key: keyof typeof playerListAssets = `gui/sprites/icon/ping_${bars}`;
+
+  const avatarStyle: PlayerListAvatarStyle = {
+    "--mc-roster-avatar-height": `${8 * scale}px`,
+    "--mc-roster-avatar-width": `${8 * scale}px`,
+  };
+
+  const nameStyle: PlayerListNameStyle = {
+    "--mc-roster-font-style":
+      (player.spectator ?? false) ? "italic" : undefined,
+    "--mc-roster-left": `${9 * scale}px`,
+    "--mc-roster-max-width": `${(columnWidth - 9 - scoreWidth - 13) * scale}px`,
+    "--mc-roster-opacity": (player.spectator ?? false) ? 144 / 255 : 1,
+  };
+
+  const content = (
+    <>
+      <Avatar scale={scale} className="mc-roster-avatar" style={avatarStyle}>
+        <AvatarImage {...rosterAvatarSource(player)} alt="" />
+      </Avatar>
+      <span
+        className="mc-roster-name mc-layout-player-list-4"
+        style={nameStyle}
+      >
+        <MinecraftMenuText>{player.name}</MinecraftMenuText>
+      </span>
+      {player.score !== undefined && (
+        <span
+          className="mc-roster-score mc-layout-player-list-5 mc-dynamic-layout-player-list-5"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-player-list-5 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-player-list-5-right": 12 * scale,
+            } satisfies PlayerListLayoutStyle5 as PlayerListLayoutStyle5
+          }
+        >
+          <MinecraftMenuText>{player.score}</MinecraftMenuText>
+        </span>
+      )}
+      <img
+        className="mc-roster-ping mc-layout-player-list-6 mc-dynamic-layout-player-list-6"
+        alt={latency < 0 ? "Connection unknown" : `${latency} ms latency`}
+        src={playerListAssets[key]}
+        width={10 * scale}
+        height={8 * scale}
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-player-list-6 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-player-list-6-right": scale,
+          } satisfies PlayerListLayoutStyle6 as PlayerListLayoutStyle6
+        }
+      />
+    </>
+  );
+
+  return (
+    <li key={player.id} className="mc-roster-row">
+      {onPlayerSelect ? (
+        <button
+          type="button"
+          onClick={(event) => {
+            if (!event.defaultPrevented) {
+              onPlayerSelect(player.id);
+            }
+          }}
+          aria-label={player.name}
+        >
+          {content}
+        </button>
+      ) : (
+        content
+      )}
+    </li>
+  );
+};
+
+type RosterHeading =
+  | { kind: "text"; content: string }
+  | { kind: "rich"; content: Exclude<React.ReactNode, string> };
+
+/** A roster heading owns either native document lines or one opaque rich child. */
+const rosterHeading = (content: React.ReactNode): RosterHeading =>
+  isMinecraftDocumentText(content)
+    ? { content, kind: "text" }
+    : { content, kind: "rich" };
+
 const PlayerList = ({
   players,
   header,
@@ -51,18 +258,29 @@ const PlayerList = ({
   const rows = Math.ceil(visible.length / columns);
   const [, refresh] = React.useReducer((v) => v + 1, 0);
 
+  const headerHeading = rosterHeading(header);
+  const footerHeading = rosterHeading(footer);
+
   const text =
     visible.map((p) => p.name).join("") +
-    (typeof header === "string" ? header : "") +
-    (typeof footer === "string" ? footer : "");
+    (headerHeading.kind === "text" ? headerHeading.content : "") +
+    (footerHeading.kind === "text" ? footerHeading.content : "");
 
   React.useEffect(() => {
     let live = true;
 
-    if (/[^\x20-\x7E\n]/.test(text)) {
-      void loadUnihex().then(() => {
-        if (live) refresh();
-      });
+    if (/[^\u0020-\u007E\n]/u.test(text)) {
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
+        if (live) {
+          refresh();
+        }
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {
@@ -78,7 +296,7 @@ const PlayerList = ({
   const scoreWidth = Math.max(
     0,
     ...visible.map((p) =>
-      p.score == null
+      p.score === undefined
         ? 0
         : documentTextWidth(" ") + documentTextWidth(String(p.score))
     )
@@ -87,22 +305,49 @@ const PlayerList = ({
   const columnWidth = Math.max(22, rowWidth ?? 9 + nameWidth + scoreWidth + 13);
   const bodyWidth = columns * columnWidth + (columns - 1) * 5;
 
-  const head =
-    typeof header === "string" ? header.split("\n") : header ? [header] : [];
+  const hasHeader = Boolean(header);
+  const hasFooter = Boolean(footer);
 
-  const foot =
-    typeof footer === "string" ? footer.split("\n") : footer ? [footer] : [];
+  let _selectedHead: RosterHeading[];
+
+  if (headerHeading.kind === "text") {
+    _selectedHead = headerHeading.content.split("\n").map((content) => ({
+      content,
+      kind: "text",
+    }));
+  } else if (hasHeader) {
+    _selectedHead = [headerHeading];
+  } else {
+    _selectedHead = [];
+  }
+
+  const head = _selectedHead;
+
+  let _selectedFoot: RosterHeading[];
+
+  if (footerHeading.kind === "text") {
+    _selectedFoot = footerHeading.content.split("\n").map((content) => ({
+      content,
+      kind: "text",
+    }));
+  } else if (hasFooter) {
+    _selectedFoot = [footerHeading];
+  } else {
+    _selectedFoot = [];
+  }
+
+  const foot = _selectedFoot;
 
   const fullWidth = Math.max(
     bodyWidth,
     ...[...head, ...foot].map((line) =>
-      typeof line === "string" ? documentTextWidth(line) : 0
+      line.kind === "text" ? documentTextWidth(line.content) : 0
     )
   );
 
   const width = Math.floor(fullWidth / 2) * 2 + 2;
-  const headHeight = header ? head.length * 9 + 1 : 0;
-  const footHeight = footer ? foot.length * 9 + 1 : 0;
+  const headHeight = hasHeader ? head.length * 9 + 1 : 0;
+  const footHeight = hasFooter ? foot.length * 9 + 1 : 0;
   const bodyLeft = 1 + Math.floor(fullWidth / 2) - Math.floor(bodyWidth / 2);
 
   return (
@@ -113,185 +358,153 @@ const PlayerList = ({
         role={props.role ?? "group"}
         aria-label={props["aria-label"] ?? "Player list"}
         className={cn(`mc-player-list`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({
-              "--mc-scale": scale,
-              height: (1 + headHeight + rows * 9 + footHeight) * scale,
-              position: "relative",
-              width: width * scale,
-              ...__style,
-            }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): PlayerListScaleStyle => ({
+          "--mc-roster-height": `${(1 + headHeight + rows * 9 + footHeight) * scale}px`,
+          "--mc-roster-width": `${width * scale}px`,
+          "--mc-scale": scale,
+          ...__style,
+        }))}
       >
-        {header && (
+        {hasHeader ? (
           <div
-            className="mc-roster-heading"
-            style={{ height: head.length * 9 * scale, top: scale }}
+            className="mc-roster-heading mc-dynamic-layout-player-list-1"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-player-list-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-player-list-1-height": head.length * 9 * scale,
+                "--mc-dynamic-player-list-1-top": scale,
+              } satisfies PlayerListLayoutStyle1 as PlayerListLayoutStyle1
+            }
           >
-            {head.map((line, i) => (
-              <div key={i} style={{ height: 9 * scale, position: "relative" }}>
-                <span
+            {head.map((line, i) => {
+              const isHeadingText = line.kind === "text";
+
+              const headingPosition:
+                | (React.CSSProperties & { "--mc-roster-line-left": string })
+                | undefined = isHeadingText
+                ? {
+                    "--mc-roster-line-left": `${
+                      (1 +
+                        Math.floor(fullWidth / 2) -
+                        Math.floor(documentTextWidth(line.content) / 2)) *
+                      scale
+                    }px`,
+                  }
+                : undefined;
+
+              return (
+                <div
+                  /* eslint-disable react-doctor/no-array-index-as-key -- Heading rows are newline layout positions or one fixed rich-content slot; repeated lines are valid and public player rows retain their actual player ids. */
+                  key={i}
+                  /* eslint-enable react-doctor/no-array-index-as-key */
+                  className="mc-layout-player-list-2 mc-dynamic-layout-player-list-2"
                   style={
-                    typeof line === "string"
-                      ? {
-                          left:
-                            (1 +
-                              Math.floor(fullWidth / 2) -
-                              Math.floor(documentTextWidth(line) / 2)) *
-                            scale,
-                          position: "absolute",
-                        }
-                      : undefined
+                    /* SAFETY: The owned mc-dynamic-layout-player-list-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                    {
+                      "--mc-dynamic-player-list-2-height": 9 * scale,
+                    } satisfies PlayerListLayoutStyle2 as PlayerListLayoutStyle2
                   }
                 >
-                  <MinecraftMenuText>{line}</MinecraftMenuText>
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-        <div
-          role="list"
-          aria-label="Players"
-          className="mc-roster-grid"
-          style={{
-            gridAutoColumns: columnWidth * scale,
-            gridTemplateRows: rows ? `repeat(${rows},${9 * scale}px)` : "none",
-            left: bodyLeft * scale,
-            top: (headHeight + 1) * scale,
-          }}
-        >
-          {visible.map((player) => {
-            const latency = player.latency ?? 0;
-
-            const bars =
-              latency < 0
-                ? "unknown"
-                : latency < 150
-                  ? "5"
-                  : latency < 300
-                    ? "4"
-                    : latency < 600
-                      ? "3"
-                      : latency < 1000
-                        ? "2"
-                        : "1";
-
-            const key =
-              `gui/sprites/icon/ping_${bars}` as keyof typeof playerListAssets;
-
-            const content = (
-              <>
-                <Avatar
-                  scale={scale}
-                  style={{
-                    height: 8 * scale,
-                    left: 0,
-                    position: "absolute",
-                    top: 0,
-                    width: 8 * scale,
-                  }}
-                >
-                  <AvatarImage
-                    skin={
-                      player.src || player.username
-                        ? undefined
-                        : (player.skin ?? "wide/steve")
-                    }
-                    src={
-                      player.src ??
-                      (player.username
-                        ? `https://mc-heads.net/avatar/${encodeURIComponent(player.username)}/8`
-                        : undefined)
-                    }
-                    alt=""
-                  />
-                </Avatar>
-                <span
-                  className="mc-roster-name"
-                  style={{
-                    fontStyle: player.spectator ? "italic" : undefined,
-                    left: 9 * scale,
-                    maxWidth: (columnWidth - 9 - scoreWidth - 13) * scale,
-                    opacity: player.spectator ? 144 / 255 : 1,
-                    top: 0,
-                  }}
-                >
-                  <MinecraftMenuText>{player.name}</MinecraftMenuText>
-                </span>
-                {player.score != null && (
                   <span
-                    className="mc-roster-score"
-                    style={{ right: 12 * scale, top: 0 }}
+                    style={headingPosition}
+                    className={
+                      isHeadingText
+                        ? "absolute left-(--mc-roster-line-left)"
+                        : undefined
+                    }
                   >
-                    <MinecraftMenuText>{player.score}</MinecraftMenuText>
+                    <MinecraftMenuText>{line.content}</MinecraftMenuText>
                   </span>
-                )}
-                <img
-                  className="mc-roster-ping"
-                  alt={
-                    latency < 0 ? "Connection unknown" : `${latency} ms latency`
-                  }
-                  src={playerListAssets[key]}
-                  width={10 * scale}
-                  height={8 * scale}
-                  style={{ right: scale, top: 0 }}
-                />
-              </>
-            );
-
-            return (
-              <div role="listitem" key={player.id} className="mc-roster-row">
-                {onPlayerSelect ? (
-                  <button
-                    type="button"
-                    onClick={(event) => {
-                      if (!event.defaultPrevented) {
-                        onPlayerSelect(player.id);
-                      }
-                    }}
-                    aria-label={player.name}
-                  >
-                    {content}
-                  </button>
-                ) : (
-                  content
-                )}
-              </div>
-            );
-          })}
-        </div>
-        {footer && (
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          header
+        )}
+        <ul
+          aria-label="Players"
+          className="mc-roster-grid mc-dynamic-layout-player-list-3"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-player-list-3 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-player-list-3-grid-auto-columns":
+                columnWidth * scale,
+              "--mc-dynamic-player-list-3-grid-template-rows": rows
+                ? `repeat(${rows},${9 * scale}px)`
+                : "none",
+              "--mc-dynamic-player-list-3-left": bodyLeft * scale,
+              "--mc-dynamic-player-list-3-top": (headHeight + 1) * scale,
+            } satisfies PlayerListLayoutStyle3 as PlayerListLayoutStyle3
+          }
+        >
+          {visible.map((player) =>
+            renderRosterEntry(
+              player,
+              scale,
+              columnWidth,
+              scoreWidth,
+              onPlayerSelect
+            )
+          )}
+        </ul>
+        {hasFooter ? (
           <div
-            className="mc-roster-heading"
-            style={{
-              height: foot.length * 9 * scale,
-              top: (headHeight + rows * 9 + 2) * scale,
-            }}
+            className="mc-roster-heading mc-dynamic-layout-player-list-7"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-player-list-7 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-player-list-7-height": foot.length * 9 * scale,
+                "--mc-dynamic-player-list-7-top":
+                  (headHeight + rows * 9 + 2) * scale,
+              } satisfies PlayerListLayoutStyle7 as PlayerListLayoutStyle7
+            }
           >
-            {foot.map((line, i) => (
-              <div key={i} style={{ height: 9 * scale, position: "relative" }}>
-                <span
+            {foot.map((line, i) => {
+              const isHeadingText = line.kind === "text";
+
+              const headingPosition:
+                | (React.CSSProperties & { "--mc-roster-line-left": string })
+                | undefined = isHeadingText
+                ? {
+                    "--mc-roster-line-left": `${
+                      (1 +
+                        Math.floor(fullWidth / 2) -
+                        Math.floor(documentTextWidth(line.content) / 2)) *
+                      scale
+                    }px`,
+                  }
+                : undefined;
+
+              return (
+                <div
+                  /* eslint-disable react-doctor/no-array-index-as-key -- Heading rows are newline layout positions or one fixed rich-content slot; repeated lines are valid and public player rows retain their actual player ids. */
+                  key={i}
+                  /* eslint-enable react-doctor/no-array-index-as-key */
+                  className="mc-layout-player-list-8 mc-dynamic-layout-player-list-8"
                   style={
-                    typeof line === "string"
-                      ? {
-                          left:
-                            (1 +
-                              Math.floor(fullWidth / 2) -
-                              Math.floor(documentTextWidth(line) / 2)) *
-                            scale,
-                          position: "absolute",
-                        }
-                      : undefined
+                    /* SAFETY: The owned mc-dynamic-layout-player-list-8 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                    {
+                      "--mc-dynamic-player-list-8-height": 9 * scale,
+                    } satisfies PlayerListLayoutStyle8 as PlayerListLayoutStyle8
                   }
                 >
-                  <MinecraftMenuText>{line}</MinecraftMenuText>
-                </span>
-              </div>
-            ))}
+                  <span
+                    style={headingPosition}
+                    className={
+                      isHeadingText
+                        ? "absolute left-(--mc-roster-line-left)"
+                        : undefined
+                    }
+                  >
+                    <MinecraftMenuText>{line.content}</MinecraftMenuText>
+                  </span>
+                </div>
+              );
+            })}
           </div>
+        ) : (
+          footer
         )}
       </div>
     </MenuScaleContext.Provider>
@@ -324,10 +537,18 @@ const Scoreboard = ({
   React.useEffect(() => {
     let live = true;
 
-    if (/[^\x20-\x7E\n]/.test(text)) {
-      void loadUnihex().then(() => {
-        if (live) refresh();
-      });
+    if (/[^\u0020-\u007E\n]/u.test(text)) {
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
+        if (live) {
+          refresh();
+        }
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {
@@ -335,17 +556,26 @@ const Scoreboard = ({
     };
   }, [text]);
 
-  const visible = [...entries.filter((e) => !e.name.startsWith("#"))]
-    .sort(
-      (a, b) =>
-        b.score - a.score ||
-        (a.name.toLowerCase() < b.name.toLowerCase()
-          ? -1
-          : a.name.toLowerCase() > b.name.toLowerCase()
-            ? 1
-            : 0)
-    )
-    .slice(0, 15);
+  // oxlint-disable-next-line unicorn/no-useless-spread -- Normalize the public array filter result before private sorting; an Array subclass or custom filter can return a shared/species array whose mutation must not escape.
+  const rankedEntries = [...entries.filter((e) => !e.name.startsWith("#"))];
+  rankedEntries.sort((a, b) => {
+    const scoreDifference = b.score - a.score;
+
+    if (scoreDifference) {
+      return scoreDifference;
+    }
+
+    if (a.name.toLowerCase() < b.name.toLowerCase()) {
+      return -1;
+    }
+
+    if (a.name.toLowerCase() > b.name.toLowerCase()) {
+      return 1;
+    }
+
+    return 0;
+  });
+  const visible = rankedEntries.slice(0, 15);
 
   const contentWidth = Math.max(
     documentTextWidth(title),
@@ -361,29 +591,40 @@ const Scoreboard = ({
     <div
       {...props}
       data-slot="scoreboard"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
       role="table"
       aria-label={title}
       className={cn(`mc-scoreboard`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-scale": scale,
-            height: (visible.length * 9 + 10) * scale,
-            width: (contentWidth + 4) * scale,
-            ...__style,
-          }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): PlayerListScaleStyle => ({
+        "--mc-roster-height": `${(visible.length * 9 + 10) * scale}px`,
+        "--mc-roster-width": `${(contentWidth + 4) * scale}px`,
+        "--mc-scale": scale,
+        ...__style,
+      }))}
     >
       <div
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
         role="row"
-        className="mc-scoreboard-title"
-        style={{ height: 9 * scale }}
+        className="mc-scoreboard-title mc-dynamic-layout-player-list-9"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-player-list-9 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-player-list-9-height": 9 * scale,
+          } satisfies PlayerListLayoutStyle9 as PlayerListLayoutStyle9
+        }
       >
         <span
+          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
           role="columnheader"
           aria-colspan={2}
-          style={{ left: 2 * scale, position: "absolute", top: scale }}
+          className="mc-layout-player-list-10 mc-dynamic-layout-player-list-10"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-player-list-10 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-player-list-10-left": 2 * scale,
+              "--mc-dynamic-player-list-10-top": scale,
+            } satisfies PlayerListLayoutStyle10 as PlayerListLayoutStyle10
+          }
         >
           <MinecraftDocumentText
             text={title}
@@ -395,29 +636,41 @@ const Scoreboard = ({
         </span>
       </div>
       <div
-        className="mc-scoreboard-body"
-        style={{
-          height: (visible.length * 9 + 1) * scale,
-          left: 0,
-          position: "absolute",
-          right: 0,
-          top: 9 * scale,
-        }}
+        className="mc-scoreboard-body mc-layout-player-list-11 mc-dynamic-layout-player-list-11"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-player-list-11 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-player-list-11-height":
+              (visible.length * 9 + 1) * scale,
+            "--mc-dynamic-player-list-11-top": 9 * scale,
+          } satisfies PlayerListLayoutStyle11 as PlayerListLayoutStyle11
+        }
       />
       {visible.map((entry, i) => (
         <div
+          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
           role="row"
           key={entry.id}
-          className="mc-scoreboard-row"
-          style={{
-            height: 9 * scale,
-            left: 0,
-            position: "absolute",
-            top: (10 + i * 9) * scale,
-            width: "100%",
-          }}
+          className="mc-scoreboard-row mc-dynamic-layout-player-list-12"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-player-list-12 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-player-list-12-height": 9 * scale,
+              "--mc-dynamic-player-list-12-top": (10 + i * 9) * scale,
+            } satisfies PlayerListLayoutStyle12 as PlayerListLayoutStyle12
+          }
         >
-          <span role="cell" style={{ left: 2 * scale, position: "absolute" }}>
+          <span
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
+            role="cell"
+            className="mc-layout-player-list-13 mc-dynamic-layout-player-list-13"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-player-list-13 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-player-list-13-left": 2 * scale,
+              } satisfies PlayerListLayoutStyle13 as PlayerListLayoutStyle13
+            }
+          >
             <MinecraftDocumentText
               text={entry.name}
               width={documentTextWidth(entry.name)}
@@ -425,7 +678,11 @@ const Scoreboard = ({
               color="#ffffff"
             />
           </span>
-          <span role="cell" style={{ position: "absolute", right: 0 }}>
+          <span
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve the public div scoreboard and its positioned div/span ARIA table tree; native table content requires a different DOM and layout.
+            role="cell"
+            className="mc-layout-player-list-14"
+          >
             <MinecraftDocumentText
               text={String(entry.score)}
               width={documentTextWidth(String(entry.score))}

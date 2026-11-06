@@ -2,10 +2,13 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-function compare(expected: PNG, actual: PNG) {
+import type nativeReference from "../reference/suggestions/manifest.json";
+
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -23,9 +26,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -33,13 +36,15 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 const directory = "tests/reference/suggestions";
 
+// SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as typeof nativeReference;
 
 test("Menu comparator catches one changed pixel", () => {
   const expected = PNG.sync.read(
@@ -50,6 +55,7 @@ test("Menu comparator catches one changed pixel", () => {
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -80,19 +86,24 @@ for (const c of manifest.cases) {
     const subject = page.locator('[data-slot="context-menu-content"]');
     await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
     await page.mouse.move(0, 0);
-    await subject.evaluate((node) => {
-      (node as HTMLElement).focus();
+    await subject.evaluate((node: HTMLElement) => {
+      node.focus();
     });
 
     if (c.selectedIndex >= 0) {
       await subject.getByRole("menuitem").nth(c.selectedIndex).focus();
     }
 
-    if (c.state.endsWith("hover")) {
-      await subject.getByRole("menuitem").nth(c.targetIndex).hover();
-    } else {
-      await page.mouse.move(0, 0);
-    }
+    await (c.state.endsWith("hover")
+      ? subject
+          .getByRole("menuitem")
+          .nth(
+            // SAFETY: all 24 pinned hover cases have numeric targets; ReferenceSuggestions unboxes targetIndex only when state ends with hover.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+            (c as typeof c & { targetIndex: number }).targetIndex
+          )
+          .hover()
+      : page.mouse.move(0, 0));
 
     await subject.evaluate(
       (node, value) => {
@@ -104,23 +115,47 @@ for (const c of manifest.cases) {
       subject.locator('[data-mc-menu-text-ready="false"]')
     ).toHaveCount(0);
 
-    for (const line of await subject
-      .locator("[data-mc-menu-unicode-ready]")
-      .all()) {
-      await expect(line).toHaveAttribute("data-mc-menu-unicode-ready", "true");
+    {
+      const readyElements = await subject
+        .locator("[data-mc-menu-unicode-ready]")
+        .all();
+
+      const readinessResults = await Promise.allSettled(
+        readyElements.map(async (line) => {
+          await expect(line).toHaveAttribute(
+            "data-mc-menu-unicode-ready",
+            "true"
+          );
+        })
+      );
+
+      const rejectedReadiness = readinessResults.find(
+        (result) => result.status === "rejected"
+      );
+
+      if (rejectedReadiness) {
+        throw rejectedReadiness.reason;
+      }
     }
 
-    await page.evaluate(
-      async () =>
-        new Promise<void>((resolve) =>
-          requestAnimationFrame(() =>
-            requestAnimationFrame(() => {
-              resolve();
-            })
-          )
-        )
-    );
-    const bounds = (await subject.boundingBox())!;
+    await page.evaluate(async () => {
+      const frameCompletion: PromiseWithResolvers<void> =
+        Promise.withResolvers();
+
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            frameCompletion.resolve();
+          });
+        });
+      } catch (error) {
+        frameCompletion.reject(error);
+      }
+
+      await frameCompletion.promise;
+    });
+    const bounds = await subject.boundingBox();
+    expectNotNull(bounds, "Missing required bounding box: bounds");
     expect(bounds.x).toBe(c.x * c.scale);
     expect(bounds.y).toBe(c.y * c.scale);
 

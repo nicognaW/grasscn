@@ -18,9 +18,14 @@ interface Painter {
   font: WebGLTexture;
 }
 
+const uv = (start: number, end: number, v: number, size: number) =>
+  Math.fround(
+    start + Math.fround(Math.fround(v / size) * Math.fround(end - start))
+  );
+
 let shared: Painter | null | undefined;
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -35,11 +40,16 @@ function create(): Painter | null {
   }
 
   const compile = (type: number, code: string) => {
-    const s = gl.createShader(type)!;
+    const s = gl.createShader(type);
+
+    if (!s) {
+      throw new Error("Minecraft toast gpu WebGL shader could not be created");
+    }
+
     gl.shaderSource(s, code);
     gl.compileShader(s);
 
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(s, gl.COMPILE_STATUS) !== true) {
       throw new Error(gl.getShaderInfoLog(s) ?? "Toast shader failed");
     }
 
@@ -112,7 +122,10 @@ function create(): Painter | null {
     minecraftToastSprite.height,
     gl.RGBA,
     gl.UNSIGNED_BYTE,
-    Uint8Array.from(atob(minecraftToastSprite.rgba), (c) => c.charCodeAt(0))
+    Uint8Array.from(
+      atob(minecraftToastSprite.rgba),
+      (c) => c.codePointAt(0) ?? Number.NaN
+    )
   );
   const font = texture(256, 256);
   gl.disable(gl.DITHER);
@@ -125,9 +138,9 @@ function create(): Painter | null {
   );
 
   return { buffer, canvas, font, gl, program, sprite };
-}
+};
 
-export function paintToast(
+export const paintToast = function paintToast(
   canvas: HTMLCanvasElement,
   bounds: DOMRect,
   width: number,
@@ -137,7 +150,7 @@ export function paintToast(
   title: Glyph[][],
   message: Glyph[][]
 ) {
-  if (shared?.gl.isContextLost()) {
+  if (shared?.gl.isContextLost() ?? false) {
     shared = undefined;
   }
 
@@ -236,11 +249,11 @@ export function paintToast(
       const e = [edgeLeft, top, u0, v0];
       const f = [edgeLeft, bottom, u0, v1];
       const g = [edgeRight, bottom, u0, v1];
-      const h = [edgeRight, top, u0, v0];
+      const edgeTopRightVertex = [edgeRight, top, u0, v0];
 
       gl.bufferData(
         gl.ARRAY_BUFFER,
-        new Float32Array([...e, ...f, ...g, ...g, ...h, ...e]),
+        new Float32Array([...e, ...f, ...g, ...g, ...edgeTopRightVertex, ...e]),
         gl.STREAM_DRAW
       );
       gl.drawArrays(gl.TRIANGLES, 0, 6);
@@ -249,11 +262,6 @@ export function paintToast(
 
   gl.bindTexture(gl.TEXTURE_2D, p.sprite);
   gl.uniform4f(gl.getUniformLocation(program, "ink"), 1, 1, 1, 1);
-
-  const uv = (start: number, end: number, v: number, size: number) =>
-    Math.fround(
-      start + Math.fround(Math.fround(v / size) * Math.fround(end - start))
-    );
 
   const region = (
     x: number,
@@ -416,7 +424,14 @@ export function paintToast(
     canvas.height = height * scale;
   }
 
-  const context = canvas.getContext("2d")!;
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    throw new Error(
+      "Minecraft toast gpu 2D canvas context could not be created"
+    );
+  }
+
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.imageSmoothingEnabled = false;
   context.drawImage(
@@ -432,4 +447,4 @@ export function paintToast(
   );
 
   return true;
-}
+};

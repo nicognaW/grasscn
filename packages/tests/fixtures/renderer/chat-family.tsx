@@ -15,31 +15,80 @@ import {
 } from "@grasscn/web/ui/message";
 import * as React from "react";
 
+import { cn } from "./utils";
+
+interface ChatFamilyReferenceStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-pixel": string;
+}
+
+const readChatReferenceGeometry = (
+  q: URLSearchParams,
+  scale: 1 | 2 | 3,
+  native: boolean
+) => {
+  const width = Number(q.get("width") ?? 172);
+
+  const scaledWidth = width * scale;
+
+  const chatFixtureX = `${Number(q.get("x") ?? 16) * scale}px`;
+  const chatFixtureY = `${Number(q.get("y") ?? 16) * scale}px`;
+  const chatFixtureWidth = `${scaledWidth}px`;
+
+  const chatFixtureHeight = native
+    ? `${Number(q.get("height") ?? 9) * scale}px`
+    : undefined;
+
+  return {
+    chatFixtureHeight,
+    chatFixtureWidth,
+    chatFixtureX,
+    chatFixtureY,
+    scaledWidth,
+  };
+};
+
 export const ChatFamilyFixture = () => {
   const q = new URLSearchParams(location.search);
   const component = q.get("component") ?? q.get("part") ?? "message";
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const native = q.has("native");
   const label = q.get("label") ?? "Hello Minecraft!";
   const [text, setText] = React.useState(label);
   const [events, setEvents] = React.useState(0);
   const [tag, setTag] = React.useState("");
   const ref = React.useRef<HTMLDivElement>(null);
-  const width = Number(q.get("width") ?? 172);
 
-  const common = {
-    position: "fixed",
-    left: Number(q.get("x") ?? 16) * scale,
-    top: Number(q.get("y") ?? 16) * scale,
-    width: width * scale,
-    ...(native ? { height: Number(q.get("height") ?? 9) * scale } : {}),
-    color: q.get("color") ?? "#ffffff",
-    "--mc-scale": scale,
+  const {
+    chatFixtureWidth,
+    chatFixtureX,
+    chatFixtureY,
+    chatFixtureHeight,
+    scaledWidth,
+  } = readChatReferenceGeometry(q, scale, native);
+
+  const common: ChatFamilyReferenceStyle = {
+    "--fixture-chat-color": q.get("color") ?? undefined,
+    "--fixture-height": chatFixtureHeight,
+    "--fixture-width": chatFixtureWidth,
+    "--fixture-x": chatFixtureX,
+    "--fixture-y": chatFixtureY,
     "--mc-pixel": `${scale}px`,
-  } as React.CSSProperties;
+    "--mc-scale": scale,
+  };
 
-  document.documentElement.style.background = q.get("background") ?? "#202020";
-  document.body.style.background = q.get("background") ?? "#202020";
+  const background = q.get("background") ?? "#202020";
+
+  React.useLayoutEffect(() => {
+    document.documentElement.style.background = background;
+    document.body.style.background = background;
+  }, [background]);
 
   const rich = q.has("rich");
   const content = rich ? <strong data-testid="rich-text">{text}</strong> : text;
@@ -48,6 +97,10 @@ export const ChatFamilyFixture = () => {
     component === "bubble" ? (
       <BubbleGroup
         data-testid="bubble-group"
+        className={cn({
+          "fixture-chat-foreground fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width":
+            !native,
+        })}
         style={native ? undefined : common}
       >
         <Bubble
@@ -69,7 +122,19 @@ export const ChatFamilyFixture = () => {
             }
             id="subject"
             ref={ref}
-            style={native ? common : { color: common.color }}
+            className={cn("fixture-chat-foreground", {
+              "fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-height":
+                native,
+            })}
+            style={
+              native
+                ? {
+                    ...common,
+                    // oxlint-disable-next-line shadcn/no-inline-styles -- Approved native Bubble fixture input: BubbleContent reads element.style.width to select fixed sizing; a class changes that algorithm input.
+                    width: scaledWidth,
+                  }
+                : { "--fixture-chat-color": common["--fixture-chat-color"] }
+            }
             onClick={(event) => {
               setEvents((n) => n + 1);
 
@@ -117,6 +182,10 @@ export const ChatFamilyFixture = () => {
           <MessageContent
             id="subject"
             ref={ref}
+            className={cn(
+              "fixture-chat-foreground fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width",
+              { "fixture-geometry-height": native }
+            )}
             style={common}
             data-subject="true"
           >
@@ -132,7 +201,7 @@ export const ChatFamilyFixture = () => {
   return (
     <MessageScale value={scale}>
       {subject}
-      <div style={{ left: 1000, position: "fixed", top: 800 }}>
+      <div className="fixture-chat-controls">
         <input
           aria-label="Chat text"
           spellCheck={false}
@@ -143,6 +212,7 @@ export const ChatFamilyFixture = () => {
           }}
         />
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setTag(ref.current?.tagName ?? "missing");

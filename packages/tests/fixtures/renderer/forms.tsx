@@ -16,12 +16,20 @@ import { MinecraftProse } from "@grasscn/web/ui/minecraft-prose";
 import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
 export const FormsFixture = () => {
-  const q = new URLSearchParams(location.search);
   const component = q.get("component") ?? "form";
   const native = q.has("native");
   const part = q.get("part") ?? "label";
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const text = q.get("label") ?? "Player name";
   const [saved, setSaved] = React.useState("");
   const [disabled, setDisabled] = React.useState(false);
@@ -33,22 +41,28 @@ export const FormsFixture = () => {
   const common = {
     align:
       q.get("align") === "center" ? ("center" as const) : ("left" as const),
+    className:
+      "fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y",
     "data-subject": "true",
     id: "subject",
     maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
     scale,
     style: {
-      height: Number(q.get("height") ?? 9) * scale,
-      left: Number(q.get("x") ?? 16) * scale,
-      position: "fixed" as const,
-      top: Number(q.get("y") ?? 16) * scale,
+      "--fixture-height": `${Number(q.get("height") ?? 9) * scale}px`,
+      "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
+
+      "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
+      // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the numeric caller-width fallback contract: invalid widths are rejected by CSS and retain the wrapped text component default; var()-based classes changed the measured result.
       width: Number(q.get("width") ?? 200) * scale,
     },
   };
 
   React.useLayoutEffect(() => {
-    document.documentElement.style.background = document.body.style.background =
-      q.get("background") ?? "#202020";
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = q.get("background") ?? "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
   if (native) {
@@ -81,6 +95,7 @@ export const FormsFixture = () => {
     return (
       <form
         noValidate
+        // oxlint-disable-next-line typescript/no-misused-promises, typescript/strict-void-return -- React Hook Form documents its Promise-returning handleSubmit as the native form handler; preserve validation/callback ordering and existing rejection ownership rather than inventing a discarded Promise or error policy.
         onSubmit={form.handleSubmit((v) => {
           setSaved(v.name);
         })}
@@ -89,8 +104,8 @@ export const FormsFixture = () => {
           name="name"
           control={form.control}
           rules={{
+            minLength: { message: "Use at least two characters", value: 2 },
             required: "Enter a player name",
-            minLength: { value: 2, message: "Use at least two characters" },
           }}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
@@ -157,6 +172,8 @@ export const FormsFixture = () => {
       <FieldGroup>
         <Field
           orientation={
+            // SAFETY: owned fixture callers serialize the orientation option from the actual component protocol (| "vertical" | "horizontal" | "responsive"); preserve this URL read, original default and component handling.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
             (q.get("orientation") ?? "vertical") as
               | "vertical"
               | "horizontal"

@@ -11,9 +11,16 @@ import {
 } from "@grasscn/web/ui/attachment";
 import * as React from "react";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
 export const AttachmentFixture = () => {
-  const q = new URLSearchParams(location.search);
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const state = q.get("state") ?? "normal";
   const [opened, setOpened] = React.useState(0);
   const [removed, setRemoved] = React.useState(0);
@@ -21,17 +28,19 @@ export const AttachmentFixture = () => {
   const ref = React.useRef<HTMLDivElement>(null);
 
   React.useLayoutEffect(() => {
-    document.documentElement.style.background = document.body.style.background =
-      q.get("background") ?? "#202020";
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = q.get("background") ?? "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
   const bounds = {
-    height: Number(q.get("height") ?? 36) * scale,
-    left: Number(q.get("x") ?? 16) * scale,
-    position: "fixed",
-    top: Number(q.get("y") ?? 16) * scale,
-    width: Number(q.get("width") ?? 270) * scale,
-  } as React.CSSProperties;
+    "--fixture-height": `${Number(q.get("height") ?? 36) * scale}px`,
+    "--fixture-width": `${Number(q.get("width") ?? 270) * scale}px`,
+    "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
+    "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
+  } satisfies React.CSSProperties;
 
   if (q.has("native")) {
     if (q.get("part") === "action") {
@@ -40,6 +49,7 @@ export const AttachmentFixture = () => {
           id="subject"
           scale={scale}
           disabled={state.startsWith("disabled")}
+          className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
           style={bounds}
           data-subject="true"
         >
@@ -54,6 +64,7 @@ export const AttachmentFixture = () => {
         scale={scale}
         selected={q.get("selected") === "true"}
         tabIndex={state === "focus" ? 0 : undefined}
+        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
         style={bounds}
         data-subject="true"
       >
@@ -129,6 +140,7 @@ export const AttachmentFixture = () => {
         </Attachment>
       </AttachmentGroup>
       <button
+        type="button"
         id="read-attachment-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");

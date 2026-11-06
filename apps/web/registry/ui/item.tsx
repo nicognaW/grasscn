@@ -10,6 +10,8 @@ import { MinecraftItemText } from "./minecraft-item-text";
 import type { MinecraftItemTextProps } from "./minecraft-item-text";
 import { MinecraftProse } from "./minecraft-prose";
 import {
+  isMinecraftNativeActivationElement,
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -20,6 +22,10 @@ import type {
 } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { Separator } from "./separator";
+
+interface ItemScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const ItemScale = React.createContext<1 | 2 | 3>(2);
 const ItemClipWidth = React.createContext<number | undefined>(undefined);
@@ -59,23 +65,17 @@ const Item = ({
 
   const inherited = React.useContext(ItemScale);
   const scale = providedScale ?? inherited;
-  const node = React.useRef<HTMLElement>(null);
-
-  React.useImperativeHandle(ref, () => node.current! as HTMLDivElement, []);
-
   const child = React.isValidElement(render) ? render : null;
 
   const interactive =
-    (render ?? props.role === "button") || props.role === "link";
+    Boolean(render ?? props.role === "button") || props.role === "link";
 
   const inactive =
     props["aria-disabled"] === true || props["aria-disabled"] === "true";
 
   // Custom render components retain their own activation audio, avoiding duplicate voices.
   const nativeActivation =
-    ((child &&
-      typeof child.type === "string" &&
-      ["a", "button"].includes(child.type)) ??
+    ((child && isMinecraftNativeActivationElement(child)) ??
       props.role === "button") ||
     props.role === "link";
 
@@ -87,18 +87,17 @@ const Item = ({
         <Component
           render={render}
           as="div"
-          ref={node as React.Ref<HTMLDivElement>}
+          ref={ref}
           data-slot="item"
           data-variant={variant}
           data-size={size}
           data-selected={selected ? "true" : undefined}
           data-mc-item-interactive={interactive && !inactive ? "true" : "false"}
           className={cn(itemVariants({ size, variant }), className)}
-          style={minecraftStyle(
-            style,
-            (__style) =>
-              ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-          )}
+          style={minecraftStyle(style, (__style): ItemScaleStyle => ({
+            "--mc-scale": scale,
+            ...__style,
+          }))}
           {...props}
           onClickCapture={(event) => {
             if (inactive) {
@@ -155,13 +154,13 @@ const ItemGroup = ({
     <ItemScale value={scale}>
       <div
         data-slot="item-group"
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn ItemGroup's div list, div props/ref and Item composition contract.
         role="list"
         className={cn(`mc-item-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): ItemScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       />
     </ItemScale>
@@ -178,7 +177,7 @@ const ItemSeparator = ({
   return (
     <Separator
       data-slot="item-separator"
-      className={cn(`mc-item-separator`, className)}
+      className={cn(className)}
       scale={providedScale ?? inherited}
       {...props}
     />
@@ -223,9 +222,16 @@ const ItemContent = ({
   const scale = React.useContext(ItemScale);
   const [width, setWidth] = React.useState<number>();
 
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useLayoutEffect(() => {
-    const root = node.current!;
+    const root =
+      // SAFETY: React attaches this always-rendered <div> before layout effect setup. Its private ref has one attachment and no other writer; the public ref is removed from the trailing props spread.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit proves this exact HTMLDivElement capture.
+      node.current as HTMLDivElement;
 
     const measure = () => {
       setWidth(Math.floor(root.clientWidth / scale));
@@ -245,7 +251,7 @@ const ItemContent = ({
       <div
         ref={node}
         data-slot="item-content"
-        data-mc-item-content-ready={width != null}
+        data-mc-item-content-ready={width !== undefined}
         className={cn(`mc-item-content`, className)}
         {...props}
       >
@@ -285,12 +291,18 @@ const ItemTitle = ({
     ...props,
   };
 
-  return inside ||
-    providedClip != null ||
-    props.style?.color != null ||
-    Boolean(className) ||
-    (typeof props.children !== "string" &&
-      typeof props.children !== "number") ? (
+  let needsItemText =
+    inside || (providedClip !== undefined && providedClip !== null);
+
+  if (!needsItemText) {
+    const color = props.style?.color;
+    needsItemText =
+      (color !== undefined && color !== null) ||
+      Boolean(className) ||
+      !isMinecraftTextContent(props.children);
+  }
+
+  return needsItemText ? (
     <MinecraftItemText {...common} clipWidth={providedClip ?? clipWidth} />
   ) : (
     <MinecraftProse {...common} />
@@ -318,15 +330,13 @@ const ItemDescription = ({
   );
 };
 
-const ItemActions = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="item-actions"
-      className={cn(`mc-item-actions`, className)}
-      {...props}
-    />
-  );
-};
+const ItemActions = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="item-actions"
+    className={cn(`mc-item-actions`, className)}
+    {...props}
+  />
+);
 
 const ItemHeader = ({
   className,
@@ -341,7 +351,7 @@ const ItemHeader = ({
       className={cn(`mc-item-header`, className)}
       {...props}
     >
-      {typeof children === "string" || typeof children === "number" ? (
+      {isMinecraftTextContent(children) ? (
         <MinecraftItemText scale={scale}>{children}</MinecraftItemText>
       ) : (
         children
@@ -363,7 +373,7 @@ const ItemFooter = ({
       className={cn(`mc-item-footer`, className)}
       {...props}
     >
-      {typeof children === "string" || typeof children === "number" ? (
+      {isMinecraftTextContent(children) ? (
         <MinecraftItemText scale={scale}>{children}</MinecraftItemText>
       ) : (
         children

@@ -6,16 +6,23 @@ import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-export function nativeTextCompositionTests(
+import type messageReference from "../../../tests/reference/message/manifest.json";
+import type spinnerReference from "../../../tests/reference/spinner/manifest.json";
+
+type CompositionReference = typeof messageReference | typeof spinnerReference;
+
+export const nativeTextCompositionTests = function nativeTextCompositionTests(
   component: "code-block" | "trace" | "message-scroller" | "spinner"
 ) {
   test.describe.configure({ mode: "parallel" });
 
   const directory = `tests/reference/${component === "spinner" ? component : "message"}`;
 
+  // SAFETY: The directory expression selects only the retained message or spinner manifest represented by these exact imported types.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-  );
+  ) as CompositionReference;
 
   test(`${component} comparator catches one changed pixel`, () => {
     const expected = PNG.sync.read(
@@ -26,6 +33,7 @@ export function nativeTextCompositionTests(
 
     const changed = PNG.sync.read(PNG.sync.write(expected));
 
+    // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
     changed.data[0] ^= 1;
     expect(compare(expected, changed).mismatchedPixels).toBe(1);
   });
@@ -37,24 +45,29 @@ export function nativeTextCompositionTests(
       await page.setViewportSize({ height: 900, width: 1536 });
       const q = new URLSearchParams({ component, native: "1" });
 
+      // Captured renderedLines describes native output, not fixture input.
       for (const [key, value] of Object.entries(c)) {
-        if (typeof value === "string" || typeof value === "number")
+        if (key !== "renderedLines") {
           q.set(key, String(value));
+        }
       }
 
       await page.goto(`/?${q}`);
       const subject = page.locator("[data-subject]");
       await expect(subject).toBeVisible();
-      await expect(subject).toHaveAttribute(
-        "data-slot",
-        component === "code-block"
-          ? "code-block-content"
-          : component === "trace"
-            ? "trace-line"
-            : component === "message-scroller"
-              ? "message-scroller-item"
-              : component
-      );
+      let slotSelection: string;
+
+      if (component === "code-block") {
+        slotSelection = "code-block-content";
+      } else if (component === "trace") {
+        slotSelection = "trace-line";
+      } else if (component === "message-scroller") {
+        slotSelection = "message-scroller-item";
+      } else {
+        slotSelection = component;
+      }
+
+      await expect(subject).toHaveAttribute("data-slot", slotSelection);
 
       if (component === "code-block") {
         await expect(
@@ -69,29 +82,63 @@ export function nativeTextCompositionTests(
         );
       }
 
-      for (const node of await subject
-        .locator("[data-mc-label-layout-ready]")
-        .all()) {
-        await expect(node).toHaveAttribute(
-          "data-mc-label-layout-ready",
-          "true"
+      {
+        const readyElements = await subject
+          .locator("[data-mc-label-layout-ready]")
+          .all();
+
+        const readinessResults = await Promise.allSettled(
+          readyElements.map(async (node) => {
+            await expect(node).toHaveAttribute(
+              "data-mc-label-layout-ready",
+              "true"
+            );
+          })
         );
+
+        const rejectedReadiness = readinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
 
-      for (const node of await subject.locator("[data-mc-label-ready]").all()) {
-        await expect(node).toHaveAttribute("data-mc-label-ready", "true");
+      {
+        const glyphs = await subject.locator("[data-mc-label-ready]").all();
+
+        const glyphReadinessResults = await Promise.allSettled(
+          glyphs.map(async (node) => {
+            await expect(node).toHaveAttribute("data-mc-label-ready", "true");
+          })
+        );
+
+        const rejectedReadiness = glyphReadinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
 
-      await page.evaluate(
-        async () =>
-          new Promise<void>((resolve) =>
-            requestAnimationFrame(() =>
-              requestAnimationFrame(() => {
-                resolve();
-              })
-            )
-          )
-      );
+      await page.evaluate(async () => {
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
+
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        await frameCompletion.promise;
+      });
 
       const bytes = readFileSync(
         pixelPerfectFile(`${directory}/captures/${c.name}`)
@@ -108,26 +155,31 @@ export function nativeTextCompositionTests(
 
       writeFileSync(info.outputPath("actual.png"), actualBytes);
       writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
+      let metricPartSelection: string;
+
+      if (component === "code-block") {
+        metricPartSelection = "content";
+      } else if (component === "trace") {
+        metricPartSelection = "line";
+      } else if (component === "message-scroller") {
+        metricPartSelection = "item";
+      } else {
+        metricPartSelection = "default";
+      }
+
       writeFileSync(
         info.outputPath("metrics.json"),
         JSON.stringify({
           alias: "base",
           case: c.name,
           component,
-          manifest: directory + "/manifest.json",
+          manifest: `${directory}/manifest.json`,
           mismatchedPixels,
-          part:
-            component === "code-block"
-              ? "content"
-              : component === "trace"
-                ? "line"
-                : component === "message-scroller"
-                  ? "item"
-                  : "default",
+          part: metricPartSelection,
           tolerance: 0,
         })
       );
       expect(mismatchedPixels).toBe(0);
     });
   }
-}
+};

@@ -1,5 +1,6 @@
 import { paintUnihexGPU } from "./minecraft-unifont-gpu";
 
+// oxlint-disable-next-line typescript/consistent-type-definitions -- This public alias preserves implicit index-signature compatibility for glyph consumers.
 export type UnihexGlyph = {
   code: number;
   rows: number[];
@@ -28,13 +29,15 @@ export const getUnihexGlyph = (char: string) => {
   return codepoint === undefined ? undefined : font?.get(codepoint);
 };
 
-export function loadUnihex() {
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached Unihex initialization Promise itself, including rejection; async would wrap it.
+export const loadUnihex = function loadUnihex() {
   return (pending ??= (async () => {
     const { unifontZip, unifontOverrides } =
       await import("./minecraft-unifont-data");
 
-    const bytes = Uint8Array.from(atob(unifontZip), (char) =>
-      char.charCodeAt(0)
+    const bytes = Uint8Array.from(
+      atob(unifontZip),
+      (char) => char.codePointAt(0) ?? Number.NaN
     );
 
     const view = new DataView(bytes.buffer);
@@ -76,6 +79,7 @@ export function loadUnihex() {
           view.getUint16(local + 26, true) +
           view.getUint16(local + 28, true);
 
+        // oxlint-disable-next-line eslint/no-await-in-loop -- ZIP members append in directory order, preserving duplicate-glyph precedence and the first decompression/next-header failure; parallel decoding changes that protocol.
         contents += await new Response(
           new Blob([bytes.slice(start, start + length)])
             .stream()
@@ -112,6 +116,7 @@ export function loadUnihex() {
       let right = -1;
 
       for (let x = 0; x < bitWidth; x += 1) {
+        // oxlint-disable-next-line no-bitwise -- Locate occupied Unihex columns by testing their encoded bit across all glyph rows.
         if (rows.some((row) => (row >>> (bitWidth - 1 - x)) & 1)) {
           left = Math.min(left, x);
           right = Math.max(right, x);
@@ -128,8 +133,7 @@ export function loadUnihex() {
       );
 
       if (fixed) {
-        left = fixed[2];
-        right = fixed[3];
+        ({ 2: left, 3: right } = fixed);
       }
 
       const width = right - left + 1;
@@ -143,9 +147,9 @@ export function loadUnihex() {
       });
     }
   })());
-}
+};
 
-export function paintUnihex(
+export const paintUnihex = function paintUnihex(
   context: CanvasRenderingContext2D,
   glyph: UnihexGlyph,
   x: number,
@@ -187,10 +191,11 @@ export function paintUnihex(
       if (
         sx >= 0 &&
         sx < glyph.bitWidth &&
+        // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
         (glyph.rows[sy] >>> (glyph.bitWidth - 1 - sx)) & 1
       ) {
         context.fillRect(px, py, 1, 1);
       }
     }
   }
-}
+};

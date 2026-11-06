@@ -18,7 +18,7 @@ sonner.success("Success");
 sonner.promise(Promise.resolve(1), {
   error: "Failed",
   loading: "Loading",
-  success: (value) => String(value),
+  success: String,
 });
 
 const toaster = (

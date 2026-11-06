@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { minecraftItemAssets } from "./minecraft-item-assets";
 import {
@@ -7,6 +8,14 @@ import {
   releaseItemMedia,
 } from "./minecraft-item-media-gpu";
 
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-ui-minecraft-item-media-1-visibility": string;
+}
+
+interface IntrinsicLayoutStyle2 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-ui-minecraft-item-media-2-visibility": string;
+}
+
 export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const [painted, setPainted] = React.useState(false);
@@ -14,8 +23,14 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
   React.useLayoutEffect(() => {
     retainItemMedia();
 
-    const node = canvas.current!;
-    const media = node.parentElement!;
+    const node =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned canvas ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      canvas.current as HTMLCanvasElement;
+
+    // SAFETY: The default artwork is mounted directly inside the owned intrinsic div in ItemMedia or AttachmentMedia; its private canvas commits before layout setup.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Both registered composition producers guarantee this exact HTMLDivElement parent while the artwork is mounted.
+    const media = node.parentElement as HTMLDivElement;
     const root = node.closest<HTMLElement>(".mc-item") ?? media;
 
     let signature = "";
@@ -34,7 +49,15 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
           pointer.y < mediaBounds.bottom
         : media.matches(":hover");
 
-      const state: 0 | 1 | 2 = hovered ? (overIcon ? 2 : 1) : 0;
+      let _selectedState: 0 | 1 | 2;
+
+      if (hovered) {
+        _selectedState = overIcon ? 2 : 1;
+      } else {
+        _selectedState = 0;
+      }
+
+      const state: 0 | 1 | 2 = _selectedState;
 
       const key = [rect.x, rect.y, innerWidth, innerHeight, state, scale].join(
         ":"
@@ -53,17 +76,25 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
         return;
       }
 
-      node.width = node.height = 32 * scale;
-      node
-        .getContext("2d")!
-        .putImageData(new ImageData(pixels, 32 * scale, 32 * scale), 0, 0);
+      const canvasSide = 32 * scale;
+      node.height = canvasSide;
+      node.width = canvasSide;
+      const context = node.getContext("2d");
+
+      if (!context) {
+        throw new Error(
+          "Minecraft item media 2D canvas context could not be created"
+        );
+      }
+
+      context.putImageData(new ImageData(pixels, 32 * scale, 32 * scale), 0, 0);
       node.dataset.mcItemMediaState = String(state);
       setPainted(true);
     };
 
-    const enter = (event: Event) => {
+    const enter = (event: PointerEvent) => {
       inside = true;
-      const pointerEvent = event as PointerEvent;
+      const pointerEvent = event;
       pointer = { x: pointerEvent.clientX, y: pointerEvent.clientY };
       paint();
     };
@@ -74,8 +105,8 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
       paint();
     };
 
-    const move = (event: Event) => {
-      const pointerEvent = event as PointerEvent;
+    const move = (event: PointerEvent) => {
+      const pointerEvent = event;
       pointer = { x: pointerEvent.clientX, y: pointerEvent.clientY };
       paint();
     };
@@ -113,15 +144,27 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
         aria-hidden="true"
         draggable={false}
         src={minecraftItemAssets.thumbnail.image}
-        className="mc-item-thumbnail"
-        style={{ visibility: painted ? "hidden" : "visible" }}
+        className="mc-item-thumbnail [visibility:var(--mc-intrinsic-registry-ui-minecraft-item-media-1-visibility)]"
+        style={
+          // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+          {
+            "--mc-intrinsic-registry-ui-minecraft-item-media-1-visibility":
+              painted ? "hidden" : "visible",
+          } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+        }
       />
       <canvas
         ref={canvas}
         aria-hidden="true"
         data-mc-item-media-ready={painted}
-        className="mc-item-thumbnail"
-        style={{ visibility: painted ? "visible" : "hidden" }}
+        className="mc-item-thumbnail [visibility:var(--mc-intrinsic-registry-ui-minecraft-item-media-2-visibility)]"
+        style={
+          // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+          {
+            "--mc-intrinsic-registry-ui-minecraft-item-media-2-visibility":
+              painted ? "visible" : "hidden",
+          } satisfies IntrinsicLayoutStyle2 as IntrinsicLayoutStyle2
+        }
       />
     </>
   );

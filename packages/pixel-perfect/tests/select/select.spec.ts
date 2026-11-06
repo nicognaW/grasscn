@@ -6,31 +6,9 @@ import { compareSelectPixels } from "@ppt/harness/families/select-pixel-compare"
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const directory = "tests/reference/select";
+import manifest from "../reference/select/manifest.json";
 
-const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-) as {
-  cases: {
-    name: string;
-    element: string;
-    label?: string;
-    labels?: string[];
-    width: number;
-    height: number;
-    x: number;
-    y: number;
-    scale: number;
-    state: string;
-    selectedIndex?: number;
-    value?: number;
-    timeMs?: number;
-    background: string;
-    targetIndex?: number;
-    disabledIndex?: number;
-    sha256: string;
-  }[];
-};
+const directory = "tests/reference/select";
 
 test("Select comparator catches a one-pixel change", () => {
   const expected = PNG.sync.read(
@@ -40,6 +18,7 @@ test("Select comparator catches a one-pixel change", () => {
   );
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compareSelectPixels(expected, actual).mismatches).toBe(1);
 });
@@ -95,11 +74,11 @@ test.describe("Select native matrix", () => {
       await subject.evaluate(
         (node, p) =>
           Object.assign(node.style, {
-            height: p.height + "px",
-            left: p.x + "px",
+            height: `${p.height}px`,
+            left: `${p.x}px`,
             position: "fixed",
-            top: p.y + "px",
-            width: p.width + "px",
+            top: `${p.y}px`,
+            width: `${p.width}px`,
           }),
         {
           height: c.height * c.scale,
@@ -111,13 +90,15 @@ test.describe("Select native matrix", () => {
       await expect(subject).toHaveAttribute("data-mc-select-ready", "true");
       await page.mouse.move(0, 0);
 
-      if (c.state === "focus") {
-        await subject.focus();
-      } else {
-        await page.evaluate(() => {
-          (document.activeElement as HTMLElement)?.blur();
-        });
-      }
+      await (c.state === "focus"
+        ? subject.focus()
+        : page.evaluate(() => {
+            // SAFETY: The controlled Select fixture focus belongs to its HTML body, HTML button, or HTML option; retain the existing optional blur call, including null handling.
+            /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+            (document.activeElement as HTMLElement)
+              /* oxlint-enable typescript/no-unsafe-type-assertion */
+              ?.blur();
+          }));
 
       if (c.state.endsWith("hover")) {
         await (
@@ -130,7 +111,11 @@ test.describe("Select native matrix", () => {
       // Minecraft hover probes keep the list unfocused; Base UI pointer focus is tested separately.
       if (c.element === "select-list" && c.state !== "focus") {
         await page.evaluate(() => {
-          (document.activeElement as HTMLElement)?.blur();
+          // SAFETY: The controlled Select fixture focus belongs to its HTML body, HTML button, or HTML option; retain the existing optional blur call, including null handling.
+          /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+          (document.activeElement as HTMLElement)
+            /* oxlint-enable typescript/no-unsafe-type-assertion */
+            ?.blur();
         });
       }
 
@@ -143,21 +128,41 @@ test.describe("Select native matrix", () => {
         );
       }
 
-      await page.evaluate(
-        async () =>
-          new Promise<void>((resolve) =>
-            requestAnimationFrame(() =>
-              requestAnimationFrame(() => {
-                resolve();
-              })
-            )
-          )
-      );
+      await page.evaluate(async () => {
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
 
-      for (const label of await subject
-        .locator("[data-mc-label-ready]")
-        .all()) {
-        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        await frameCompletion.promise;
+      });
+
+      {
+        const readyElements = await subject
+          .locator("[data-mc-label-ready]")
+          .all();
+
+        const readinessResults = await Promise.allSettled(
+          readyElements.map(async (label) => {
+            await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+          })
+        );
+
+        const rejectedReadiness = readinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
 
       const actualBytes = await subject.screenshot();

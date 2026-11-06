@@ -3,17 +3,17 @@
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftText } from "./minecraft-text";
 
 import "./minecraft-button.css";
 import "./minecraft-switch.css";
+
+interface SwitchScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 type SwitchProps = MinecraftProps<typeof SwitchPrimitive.Root> & {
   scale?: 1 | 2 | 3;
@@ -37,8 +37,6 @@ const Switch = ({
       "Minecraft on/off buttons support the default visual size only"
     );
   }
-
-  const child = null;
 
   const artwork = (
     <>
@@ -70,15 +68,14 @@ const Switch = ({
       data-size={size}
       disabled={disabled}
       className={cn(`mc-button mc-switch`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): SwitchScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
-      aria-disabled={disabled ? true : props["aria-disabled"]}
+      aria-disabled={(disabled ?? false) ? true : props["aria-disabled"]}
       onPointerDown={(event) => {
-        if (disabled) {
+        if (disabled ?? false) {
           event.preventDefault();
 
           return;
@@ -88,7 +85,7 @@ const Switch = ({
       }}
       onClick={(event) => {
         if (
-          disabled ||
+          (disabled ?? false) ||
           Object.hasOwn(event.currentTarget.dataset, "disabled") ||
           event.currentTarget.getAttribute("aria-disabled") === "true"
         ) {
@@ -99,7 +96,10 @@ const Switch = ({
 
         onClick?.(event);
 
-        if (!event.defaultPrevented && !event.baseUIHandlerPrevented) {
+        if (
+          !event.defaultPrevented &&
+          !(event.baseUIHandlerPrevented ?? false)
+        ) {
           playMinecraftClick();
         }
       }}

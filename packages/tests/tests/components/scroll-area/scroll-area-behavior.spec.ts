@@ -1,4 +1,11 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
+
+declare global {
+  interface Window {
+    scrollAudioPlays?: number;
+  }
+}
 
 const viewport = '[data-slot="scroll-area-viewport"]';
 const bar = '[data-slot="scroll-area-scrollbar"]';
@@ -15,20 +22,32 @@ test("ScrollArea wheel and keyboard scrolling use the browser viewport", async (
   await page.locator(viewport).hover();
   await page.mouse.wheel(0, 120);
   await expect
-    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(
+      async () =>
+        await page.locator(viewport).evaluate((node) => node.scrollTop)
+    )
     .toBeGreaterThan(0);
   await page.locator(viewport).focus();
   await page.keyboard.press("End");
   await expect
-    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(
+      async () =>
+        await page.locator(viewport).evaluate((node) => node.scrollTop)
+    )
     .toBe(800);
   await page.keyboard.press("Home");
   await expect
-    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(
+      async () =>
+        await page.locator(viewport).evaluate((node) => node.scrollTop)
+    )
     .toBe(0);
   await page.keyboard.press("ArrowDown");
   await expect
-    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(
+      async () =>
+        await page.locator(viewport).evaluate((node) => node.scrollTop)
+    )
     .toBeGreaterThan(0);
 });
 
@@ -36,13 +55,10 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    const state = window as Window & {
-      scrollAudioPlays?: number;
-    };
-
-    state.scrollAudioPlays = 0;
+    const state = Object.assign(window, { scrollAudioPlays: 0 });
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play() {
-      state.scrollAudioPlays!++;
+      state.scrollAudioPlays += 1;
 
       return Promise.resolve();
     };
@@ -56,46 +72,36 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
   const handle = await page.locator(thumb).boundingBox();
   const track = await page.locator(bar).boundingBox();
 
+  expectNotNull(handle, "Missing required bounding box: handle");
   await page.mouse.move(
-    handle!.x + handle!.width / 2,
-    handle!.y + handle!.height / 2
+    handle.x + handle.width / 2,
+    handle.y + handle.height / 2
   );
   await page.mouse.down();
-  await page.mouse.move(track!.x + track!.width / 2, track!.y + track!.height, {
+  expectNotNull(track, "Missing required bounding box: track");
+  await page.mouse.move(track.x + track.width / 2, track.y + track.height, {
     steps: 12,
   });
   await page.mouse.up();
   await expect
-    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(
+      async () =>
+        await page.locator(viewport).evaluate((node) => node.scrollTop)
+    )
     .toBe(800);
-  await page.mouse.click(track!.x + track!.width / 2, track!.y + 1);
+  await page.mouse.click(track.x + track.width / 2, track.y + 1);
   await expect
-    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(
+      async () =>
+        await page.locator(viewport).evaluate((node) => node.scrollTop)
+    )
     .toBe(0);
   await expect(page.getByLabel("Pointer events", { exact: true })).toHaveText(
     "2"
   );
-  expect(
-    await page.evaluate(
-      () =>
-        (
-          window as Window & {
-            scrollAudioPlays?: number;
-          }
-        ).scrollAudioPlays
-    )
-  ).toBe(0);
+  expect(await page.evaluate(() => window.scrollAudioPlays)).toBe(0);
   await page.getByRole("button", { exact: true, name: "Row 1" }).click();
-  expect(
-    await page.evaluate(
-      () =>
-        (
-          window as Window & {
-            scrollAudioPlays?: number;
-          }
-        ).scrollAudioPlays
-    )
-  ).toBe(1);
+  expect(await page.evaluate(() => window.scrollAudioPlays)).toBe(1);
 });
 
 test("ScrollArea disables scrolling without changing child controls", async ({
@@ -112,7 +118,10 @@ test("ScrollArea disables scrolling without changing child controls", async ({
   await page.mouse.wheel(0, 120);
   await page.locator(bar).click({ force: true, position: { x: 3, y: 100 } });
   await expect
-    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(
+      async () =>
+        await page.locator(viewport).evaluate((node) => node.scrollTop)
+    )
     .toBe(0);
   await page.getByRole("button", { exact: true, name: "Row 1" }).click();
   await expect(page.getByLabel("Activations", { exact: true })).toHaveText("1");
@@ -131,7 +140,10 @@ test("ScrollArea reacts to fitting, overflowing and resized content", async ({
   await page.locator("#shrink-content").click();
   await expect(page.locator(bar)).not.toBeVisible();
   await expect
-    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(
+      async () =>
+        await page.locator(viewport).evaluate((node) => node.scrollTop)
+    )
     .toBe(0);
   await page.locator("[data-subject]").evaluate((node) => {
     node.style.height = "20px";
@@ -163,7 +175,10 @@ test("ScrollArea keeps clipped child controls keyboard reachable", async ({
   await page.goto("/?component=scroll-area&height=80&contentHeight=480");
   await page.getByRole("button", { exact: true, name: "Row 20" }).focus();
   await expect
-    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(
+      async () =>
+        await page.locator(viewport).evaluate((node) => node.scrollTop)
+    )
     .toBeGreaterThan(700);
   await page.keyboard.press("Enter");
   await expect(page.getByLabel("Activations", { exact: true })).toHaveText("1");

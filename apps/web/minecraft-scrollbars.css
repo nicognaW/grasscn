@@ -14,7 +14,8 @@
   background: #000;
   border: 0 solid transparent;
   border-radius: 0;
-  border-image: var(--preview-scroll-track) 1 fill / calc(1px * var(--mc-scale, var(--preview-scroll-scale, 2))) / 0 stretch;
+  border-image: var(--preview-scroll-track) 1 fill /
+    calc(1px * var(--mc-scale, var(--preview-scroll-scale, 2))) / 0 stretch;
   image-rendering: pixelated;
 }
 *::-webkit-scrollbar-thumb {
@@ -23,12 +24,25 @@
   background: transparent;
   border: 0 solid transparent;
   border-radius: 0;
-  border-image: var(--preview-scroll-thumb) 1 fill / calc(1px * var(--mc-scale, var(--preview-scroll-scale, 2))) / 0 stretch;
+  border-image: var(--preview-scroll-thumb) 1 fill /
+    calc(1px * var(--mc-scale, var(--preview-scroll-scale, 2))) / 0 stretch;
   image-rendering: pixelated;
 }
-*::-webkit-scrollbar-corner { background: #000; }
-*::-webkit-scrollbar-button { display: none; }
+*::-webkit-scrollbar-corner {
+  background: #000;
+}
+*::-webkit-scrollbar-button {
+  display: none;
+}
 /* A non-auto standard color overrides Chromium's textured pseudo-elements. */
-@supports selector(::-webkit-scrollbar) { * { scrollbar-color: auto; } }
-@supports not selector(::-webkit-scrollbar) { * { scrollbar-color: #c0c0c0 #000; scrollbar-width: thin; } }
-
+@supports selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-color: auto;
+  }
+}
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-color: #c0c0c0 #000;
+    scrollbar-width: thin;
+  }
+}

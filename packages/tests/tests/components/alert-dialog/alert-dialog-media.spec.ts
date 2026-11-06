@@ -11,7 +11,7 @@ test("AlertDialogMedia preserves semantic div/ref, caller attributes, rich child
   await expect(dialog).toBeVisible();
   await expect(media).toHaveAttribute("data-slot", "alert-dialog-media");
   await expect(media).toHaveAttribute("data-user", "kept");
-  await expect(media).toHaveClass(/caller-media/);
+  await expect(media).toHaveClass(/caller-media/u);
   await expect(media).toHaveCSS("gap", "8px");
   await expect(media.locator("strong")).toHaveText("World thumbnail");
   await expect(media.locator("small")).toHaveText("世界");

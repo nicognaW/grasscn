@@ -2,9 +2,28 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
+/** Inputs read by this file's closed Item-row, Label-title and Separator routes. */
+interface ItemComparisonCase extends CapturedReferenceCase {
+  background: string;
+  x: number;
+  y: number;
+  label?: string;
+  text?: string;
+  placeholder?: string;
+  selected?: boolean;
+  alignment?: string;
+  wrapWidth?: number;
+}
+
+interface ItemComparisonManifest {
+  cases: ItemComparisonCase[];
+}
 
 test.describe.configure({ mode: "parallel" });
 
@@ -15,9 +34,11 @@ for (const [part, directory] of [
 ]) {
   const base = `tests/reference/${directory}`;
 
+  // SAFETY: This closed row/item, title/label and separator/separator table reads only the retained manifests whose real shared and variant fields define this local projection.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact finite retained constituent-manifest boundary; runtime read/parse phase is preserved.
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${base}/manifest.json`), "utf-8")
-  );
+  ) as ItemComparisonManifest;
 
   test(`Item ${part} comparator detects one changed pixel`, () => {
     const expected = PNG.sync.read(
@@ -28,6 +49,7 @@ for (const [part, directory] of [
 
     const changed = PNG.sync.read(PNG.sync.write(expected));
 
+    // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
     changed.data[0] ^= 1;
     expect(compare(expected, changed).mismatchedPixels).toBe(1);
   });
@@ -39,30 +61,37 @@ for (const [part, directory] of [
       test(`Item ${part} ${mode} native pixels: ${c.name}`, async ({
         page,
       }, info) => {
-        await page.setViewportSize({ width: 1536, height: 900 });
+        await page.setViewportSize({ height: 900, width: 1536 });
 
         const q = new URLSearchParams({
+          align: c.alignment ?? "left",
+          background: c.background,
           component: "item",
-          part,
-          label: c.label ?? "New World",
-          text: c.text ?? "world-1",
           description: c.placeholder ?? "Survival Mode",
-          scale: String(c.scale),
-          state: c.state,
-          selected: String(c.selected ?? false),
-          width: String(c.width),
           height: String(c.height),
+          label: c.label ?? "New World",
+          part,
+          scale: String(c.scale),
+          selected: String(c.selected ?? false),
+          state: c.state,
+          text: c.text ?? "world-1",
+          width: String(c.width),
           x: String(c.x),
           y: String(c.y),
-          background: c.background,
-          align: c.alignment ?? "left",
         });
 
-        if (c.wrapWidth != null) q.set("wrapWidth", String(c.wrapWidth));
+        if (c.wrapWidth !== undefined) {
+          q.set("wrapWidth", String(c.wrapWidth));
+        }
 
-        if (mode === "plain") q.set("plain", "1");
+        if (mode === "plain") {
+          q.set("plain", "1");
+        }
 
-        if (mode === "button") q.set("button", "1");
+        if (mode === "button") {
+          q.set("button", "1");
+        }
+
         await page.goto(`/?${q}`);
         const subject = page.locator("[data-subject]");
         await expect(subject).toHaveAttribute(
@@ -77,23 +106,42 @@ for (const [part, directory] of [
             subject.locator('[data-slot="item-content"]')
           ).toHaveAttribute("data-mc-item-content-ready", "true");
 
-          for (const text of await subject
-            .locator("[data-mc-label-layout-ready]")
-            .all())
-            await expect(text).toHaveAttribute(
-              "data-mc-label-layout-ready",
-              "true"
+          {
+            const readyElements = await subject
+              .locator("[data-mc-label-layout-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (text) => {
+                await expect(text).toHaveAttribute(
+                  "data-mc-label-layout-ready",
+                  "true"
+                );
+              })
             );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
+          }
+
           const media = subject.locator("[data-mc-item-media-ready]");
           await expect(media).toHaveAttribute(
             "data-mc-item-media-ready",
             "true"
           );
 
-          if (c.state === "hover") await subject.hover();
+          if (c.state === "hover") {
+            await subject.hover();
+          }
 
           if (c.state === "icon-hover") {
-            const box = (await subject.boundingBox())!;
+            const box = await subject.boundingBox();
+            expectNotNull(box, "Missing required bounding box: box");
             await page.mouse.move(box.x + 18 * c.scale, box.y + 18 * c.scale);
           }
 
@@ -104,35 +152,73 @@ for (const [part, directory] of [
             await expect(subject).toBeFocused();
           }
 
+          let mediaStateSelection: string;
+
+          if (c.state === "hover") {
+            mediaStateSelection = "1";
+          } else if (c.state === "icon-hover") {
+            mediaStateSelection = "2";
+          } else {
+            mediaStateSelection = "0";
+          }
+
           await expect(media).toHaveAttribute(
             "data-mc-item-media-state",
-            c.state === "hover" ? "1" : c.state === "icon-hover" ? "2" : "0"
+            mediaStateSelection
           );
-        } else if (part === "title")
+        } else if (part === "title") {
           await expect(subject).toHaveAttribute(
             "data-mc-label-layout-ready",
             "true"
           );
+        }
+
         await page.addStyleTag({
           content:
             "#read-ref,#resize,#tag,#events,#actions{visibility:hidden!important}",
         });
 
-        for (const glyph of await subject
-          .locator("[data-mc-label-ready]")
-          .all())
-          await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
-        await page.evaluate(
-          async () =>
-            await new Promise<void>((resolve) =>
-              requestAnimationFrame(() =>
-                requestAnimationFrame(() => {
-                  resolve();
-                })
-              )
-            )
-        );
-        const box = (await subject.boundingBox())!;
+        {
+          const readyElements = await subject
+            .locator("[data-mc-label-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (glyph) => {
+              await expect(glyph).toHaveAttribute(
+                "data-mc-label-ready",
+                "true"
+              );
+            })
+          );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
+        }
+
+        await page.evaluate(async () => {
+          const frameCompletion: PromiseWithResolvers<void> =
+            Promise.withResolvers();
+
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          await frameCompletion.promise;
+        });
+        const box = await subject.boundingBox();
+        expectNotNull(box, "Missing required bounding box: box");
         expect([box.x, box.y]).toEqual([c.x * c.scale, c.y * c.scale]);
 
         const bytes = readFileSync(
@@ -141,21 +227,22 @@ for (const [part, directory] of [
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
 
-        const actualBytes = await subject.screenshot(),
-          { mismatchedPixels, diff } = compare(
-            PNG.sync.read(bytes),
-            PNG.sync.read(actualBytes)
-          );
+        const actualBytes = await subject.screenshot();
+
+        const { mismatchedPixels, diff } = compare(
+          PNG.sync.read(bytes),
+          PNG.sync.read(actualBytes)
+        );
 
         writeFileSync(info.outputPath("actual.png"), actualBytes);
         writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
         writeFileSync(
           info.outputPath("metrics.json"),
           JSON.stringify({
-            part,
-            mode,
             case: c.name,
             mismatchedPixels,
+            mode,
+            part,
             tolerance: 0,
           })
         );

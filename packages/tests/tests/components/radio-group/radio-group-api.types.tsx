@@ -23,7 +23,10 @@ const valid = (
 
 const composition = (
   <RadioGroup render={<fieldset />}>
-    <RadioGroupItem value="survival" render={<button />}>
+    <RadioGroupItem
+      value="survival"
+      render={<button type="button" aria-label="Survival game mode" />}
+    >
       {undefined}
     </RadioGroupItem>
   </RadioGroup>

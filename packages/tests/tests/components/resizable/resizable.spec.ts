@@ -1,38 +1,67 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
+import type { Layout } from "react-resizable-panels";
 
-async function layoutLeft(page: Page) {
+interface ResizablePlaybackState extends Window {
+  sounds?: number;
+}
+
+type InitializedResizablePlaybackState = typeof window &
+  ResizablePlaybackState & {
+    sounds: number;
+  };
+
+const layoutLeft = async function layoutLeft(page: Page) {
   const text = await page.locator("#layout").textContent();
 
   if (text === null) {
     throw new Error("Resizable layout text is missing");
   }
 
-  return JSON.parse(text).left;
-}
+  // SAFETY: the fixture serializes the actual panel-group layout for the authored left/right panel IDs.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Real resizable-panel Layout producer.
+  return (JSON.parse(text) as Layout).left;
+};
+
+const verifyResizableOrientation = async (page: Page, orientation: string) => {
+  await page.goto(`/?component=resizable&orientation=${orientation}`);
+
+  const group = page.locator("#group");
+  const handle = page.getByRole("separator", { name: "Resize panels" });
+
+  await expect(group).toHaveAttribute("data-slot", "resizable-panel-group");
+  await expect(handle).toHaveAttribute(
+    "aria-orientation",
+    orientation === "horizontal" ? "vertical" : "horizontal"
+  );
+  await expect(handle).toHaveAttribute("aria-valuenow", "50");
+
+  const left = await page.locator("#left").boundingBox();
+  expectNotNull(left, "Missing required bounding box: left");
+  const right = await page.locator("#right").boundingBox();
+  expectNotNull(right, "Missing required bounding box: right");
+
+  expect(
+    orientation === "horizontal" ? right.x > left.x : right.y > left.y
+  ).toBe(true);
+};
+
+const verifyDisabledResizable = async (page: Page, disabled: string) => {
+  await page.goto(`/?component=resizable&${disabled}=1`);
+  const handle = page.getByRole("separator", { name: "Resize panels" });
+  const before = await handle.getAttribute("aria-valuenow");
+  await handle.focus();
+  await page.keyboard.press("ArrowRight");
+  expect(await handle.getAttribute("aria-valuenow")).toBe(before);
+};
 
 test("Resizable preserves horizontal and vertical geometry and standard separator semantics", async ({
   page,
 }) => {
   for (const orientation of ["horizontal", "vertical"]) {
-    await page.goto(`/?component=resizable&orientation=${orientation}`);
-
-    const group = page.locator("#group");
-    const handle = page.getByRole("separator", { name: "Resize panels" });
-
-    await expect(group).toHaveAttribute("data-slot", "resizable-panel-group");
-    await expect(handle).toHaveAttribute(
-      "aria-orientation",
-      orientation === "horizontal" ? "vertical" : "horizontal"
-    );
-    await expect(handle).toHaveAttribute("aria-valuenow", "50");
-
-    const left = (await page.locator("#left").boundingBox())!;
-    const right = (await page.locator("#right").boundingBox())!;
-
-    expect(
-      orientation === "horizontal" ? right.x > left.x : right.y > left.y
-    ).toBe(true);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyResizableOrientation(page, orientation);
   }
 });
 
@@ -41,7 +70,8 @@ test("Resizable responds to pointer dragging and reports layouts", async ({
 }) => {
   await page.goto("/?component=resizable");
   const handle = page.getByRole("separator", { name: "Resize panels" });
-  const box = (await handle.boundingBox())!;
+  const box = await handle.boundingBox();
+  expectNotNull(box, "Missing required bounding box: box");
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2 + 80, box.y + box.height / 2, {
@@ -51,7 +81,7 @@ test("Resizable responds to pointer dragging and reports layouts", async ({
   await expect
     .poll(async () => Number(await handle.getAttribute("aria-valuenow")))
     .toBeGreaterThan(50);
-  await expect.poll(() => layoutLeft(page)).toBeGreaterThan(50);
+  await expect.poll(async () => await layoutLeft(page)).toBeGreaterThan(50);
 });
 
 test("Resizable supports keyboard arrows and Home/End constraints", async ({
@@ -91,25 +121,21 @@ test("Resizable forwards imperative panel/group refs and element refs", async ({
   await page.locator("#read-ref").click();
   await expect(page.locator("#refs")).toHaveText("DIV/DIV/left,right");
   await page.locator("#set-layout").click();
-  await expect.poll(() => layoutLeft(page)).toBeCloseTo(25, 0);
+  await expect.poll(async () => await layoutLeft(page)).toBeCloseTo(25, 0);
   await page.locator("#resize").click();
-  await expect.poll(() => layoutLeft(page)).toBeCloseTo(35, 0);
+  await expect.poll(async () => await layoutLeft(page)).toBeCloseTo(35, 0);
   await page.locator("#collapse").click();
-  await expect.poll(() => layoutLeft(page)).toBe(0);
+  await expect.poll(async () => await layoutLeft(page)).toBe(0);
   await page.locator("#expand").click();
-  await expect.poll(() => layoutLeft(page)).toBeGreaterThan(0);
+  await expect.poll(async () => await layoutLeft(page)).toBeGreaterThan(0);
 });
 
 test("Resizable honors disabled separators and disabled groups", async ({
   page,
 }) => {
   for (const disabled of ["disabled", "groupDisabled"]) {
-    await page.goto(`/?component=resizable&${disabled}=1`);
-    const handle = page.getByRole("separator", { name: "Resize panels" });
-    const before = await handle.getAttribute("aria-valuenow");
-    await handle.focus();
-    await page.keyboard.press("ArrowRight");
-    expect(await handle.getAttribute("aria-valuenow")).toBe(before);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyDisabledResizable(page, disabled);
   }
 });
 
@@ -117,9 +143,14 @@ test("Resizable preserves optional grip and never synthesizes interaction audio"
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = 0;
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as ResizablePlaybackState).sounds = 0;
+    // oxlint-disable-next-line typescript/promise-function-async, unicorn/consistent-function-scoping -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing. Keep play inside this initializer because Playwright serializes the callback without its Node lexical scope.
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds += 1;
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedResizablePlaybackState).sounds += 1;
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
@@ -129,7 +160,14 @@ test("Resizable preserves optional grip and never synthesizes interaction audio"
   const handle = page.getByRole("separator", { name: "Resize panels" });
   await handle.focus();
   await page.keyboard.press("ArrowRight");
-  expect(await page.evaluate(() => (window as any).sounds)).toBe(0);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(
+      () => (window as InitializedResizablePlaybackState).sounds
+    )
+  ).toBe(0);
+  // oxlint-enable typescript/no-unsafe-type-assertion
 });
 
 for (const orientation of ["horizontal", "vertical"]) {
@@ -140,7 +178,8 @@ for (const orientation of ["horizontal", "vertical"]) {
 
     const handle = page.getByRole("separator", { name: "Resize panels" });
     const arrow = handle.locator("[data-slot=resizable-arrow]").first();
-    const bounds = (await arrow.boundingBox())!;
+    const bounds = await arrow.boundingBox();
+    expectNotNull(bounds, "Missing required bounding box: bounds");
 
     expect(bounds.width < bounds.height).toBe(orientation === "horizontal");
     expect(await handle.evaluate((node) => getComputedStyle(node).cursor)).toBe(

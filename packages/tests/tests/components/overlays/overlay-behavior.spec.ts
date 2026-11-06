@@ -1,5 +1,11 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { RecordedAudioPlayback } from "@tests/harness/audio-playback";
+
+interface OverlayPlaybackState {
+  sounds: RecordedAudioPlayback[];
+}
 
 for (const component of ["sheet", "drawer"]) {
   test(`${component} preserves keyboard dismissal, accessible text, CJK input and close focus`, async ({
@@ -23,10 +29,23 @@ for (const component of ["sheet", "drawer"]) {
     await expect(panel).toBeVisible();
     await expect(panel).toHaveAccessibleDescription("Settings 第二行");
 
-    for (const text of await panel
+    const readOnlyItems18 = await panel
       .locator("[data-mc-label-layout-ready]")
-      .all()) {
-      await expect(text).toHaveAttribute("data-mc-label-layout-ready", "true");
+      .all();
+
+    const readOnlyResults18 = await Promise.allSettled(
+      readOnlyItems18.map(async (text) => {
+        await expect(text).toHaveAttribute(
+          "data-mc-label-layout-ready",
+          "true"
+        );
+      })
+    );
+
+    for (const readOnlyResult18 of readOnlyResults18) {
+      if (readOnlyResult18.status === "rejected") {
+        throw readOnlyResult18.reason;
+      }
     }
 
     const input = panel.getByRole("textbox", {
@@ -51,24 +70,38 @@ for (const component of ["sheet", "drawer"]) {
     await page.setViewportSize({ height: 900, width: 1280 });
 
     for (const side of ["top", "right", "bottom", "left"]) {
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await page.goto(`/?component=${component}&side=${side}&open=1`);
       const panel = page.getByRole("dialog");
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await expect(panel).toBeVisible();
+      let selectedFixtureBranch2: 900 | 1280 | 0;
+
+      if (side === "bottom") {
+        selectedFixtureBranch2 = 900;
+      } else {
+        selectedFixtureBranch2 = side === "right" ? 1280 : 0;
+      }
+
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
       await expect
         .poll(async () => {
-          const r = (await panel.boundingBox())!;
+          const r = await panel.boundingBox();
+          expectNotNull(r, "Missing required bounding box: r");
 
-          return Math.round(
-            side === "top"
-              ? r.y
-              : side === "bottom"
-                ? r.y + r.height
-                : side === "left"
-                  ? r.x
-                  : r.x + r.width
-          );
+          let selectedFixtureBranch1: number | undefined;
+
+          if (side === "top") {
+            selectedFixtureBranch1 = r.y;
+          } else if (side === "bottom") {
+            selectedFixtureBranch1 = r.y + r.height;
+          } else {
+            selectedFixtureBranch1 = side === "left" ? r.x : r.x + r.width;
+          }
+
+          return Math.round(selectedFixtureBranch1);
         })
-        .toBe(side === "bottom" ? 900 : side === "right" ? 1280 : 0);
+        .toBe(selectedFixtureBranch2);
     }
   });
   test(`${component} retains controlled state, disabled trigger and forwarded ref`, async ({
@@ -100,9 +133,10 @@ for (const component of ["sheet", "drawer"]) {
     await panel.getByRole("textbox").focus();
 
     for (let i = 0; i < 8; i += 1) {
+      // oxlint-disable-next-line no-await-in-loop -- Advances the same focus/pointer/widget state; the next transition depends on completion and observation of the current one.
       await page.keyboard.press("Tab");
       // Base UI wraps through an external focus guard, then queues the internal target on the next animation frame.
-      // eslint-disable-next-line no-await-in-loop -- Wait for each queued focus-guard handoff before issuing the next Tab.
+      // oxlint-disable-next-line no-await-in-loop -- Advances the same focus/pointer/widget state; the next transition depends on completion and observation of the current one.
       await expect
         .poll(
           async () =>
@@ -121,9 +155,14 @@ for (const component of ["sheet", "drawer"]) {
     page,
   }) => {
     await page.addInitScript(() => {
-      (window as any).sounds = [];
-      HTMLMediaElement.prototype.play = function play() {
-        (window as any).sounds.push({
+      // SAFETY: This Overlay initScript creates sounds as an empty playback trace before navigation and playback.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & OverlayPlaybackState).sounds = [];
+      // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+      HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+        // SAFETY: The paired Overlay initializer owns sounds; this unchanged native play mock appends only rate, source and volume.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & OverlayPlaybackState).sounds.push({
           rate: this.playbackRate,
           source: this.src,
           volume: this.volume,
@@ -140,13 +179,27 @@ for (const component of ["sheet", "drawer"]) {
     });
 
     await trigger.hover();
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: This Overlay reader follows navigation initialized with the exact paired sounds producer.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+          (window as typeof window & OverlayPlaybackState).sounds
+      )
+    ).toEqual([]);
     await trigger.click();
     await page
       .getByRole("dialog")
       .getByRole("button", { exact: true, name: "Cancel" })
       .click();
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual(
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: This Overlay reader follows navigation initialized with the exact paired sounds producer.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+          (window as typeof window & OverlayPlaybackState).sounds
+      )
+    ).toEqual(
       Array.from({ length: 2 }, () => ({
         rate: 1,
         source: minecraftClickSound,
@@ -161,7 +214,8 @@ test("Drawer dismisses through Base UI swipe details", async ({ page }) => {
   const panel = page.getByRole("dialog");
   await expect(panel).toBeVisible();
 
-  const bounds = (await panel.boundingBox())!;
+  const bounds = await panel.boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.move(bounds.x + 8, bounds.y + 8);
   await page.mouse.down();
   await page.mouse.move(bounds.x + 8, bounds.y + bounds.height * 0.8, {
@@ -183,13 +237,23 @@ test("Drawer supports controlled Base UI snap points", async ({ page }) => {
   await expect(panel).toBeVisible();
   await expect(page.locator("#snap")).toHaveText("0.5");
   await expect
-    .poll(async () => Math.round((await panel.boundingBox())!.y))
+    .poll(async () => {
+      const requiredBounds23 = await panel.boundingBox();
+      expectNotNull(requiredBounds23, "Missing required bounding box");
+
+      return Math.round(requiredBounds23.y);
+    })
     .toBe(450);
   await panel.locator("#snap-next").evaluate((node: HTMLButtonElement) => {
     node.click();
   });
   await expect(page.locator("#snap")).toHaveText("1");
   await expect
-    .poll(async () => Math.round((await panel.boundingBox())!.y))
+    .poll(async () => {
+      const requiredBounds24 = await panel.boundingBox();
+      expectNotNull(requiredBounds24, "Missing required bounding box");
+
+      return Math.round(requiredBounds24.y);
+    })
     .toBe(0);
 });

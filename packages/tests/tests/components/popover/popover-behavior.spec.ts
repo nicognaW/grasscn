@@ -1,5 +1,12 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+
+declare global {
+  interface Window {
+    __popoverSounds?: { rate: number; source: string; volume: number }[];
+  }
+}
 
 test("Popover opens from the keyboard, names its dialog and restores focus", async ({
   page,
@@ -154,12 +161,23 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
       await expect(content).toHaveAttribute("data-mc-popover-ready", "true");
       await expect(content).toHaveAttribute("data-side", side);
       await expect(content).toHaveAttribute("data-align", align);
-      const bounds = (await content.boundingBox())!;
+      const bounds = await content.boundingBox();
+      expectNotNull(bounds, "Missing required bounding box: bounds");
 
       const anchorX = 400;
       const anchorY = 300;
 
-      const offset = align === "start" ? 0 : align === "center" ? 0.5 : 1;
+      let selectedOffset: 0 | 0.5 | 1;
+
+      if (align === "start") {
+        selectedOffset = 0;
+      } else if (align === "center") {
+        selectedOffset = 0.5;
+      } else {
+        selectedOffset = 1;
+      }
+
+      const offset = selectedOffset;
 
       if (side === "top" || side === "bottom") {
         expect(bounds.x + bounds.width * offset).toBeCloseTo(anchorX, 0);
@@ -190,7 +208,8 @@ test("Popover collision handling keeps its surface inside a narrow viewport", as
   });
 
   await expect(content).toHaveAttribute("data-mc-popover-ready", "true");
-  const bounds = (await content.boundingBox())!;
+  const bounds = await content.boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   expect(bounds.x).toBeGreaterThanOrEqual(0);
   expect(bounds.y).toBeGreaterThanOrEqual(0);
   expect(bounds.x + bounds.width).toBeLessThanOrEqual(480);
@@ -218,7 +237,8 @@ test("Popover asChild preserves the trigger, content, anchor, refs and form", as
   await expect(dialog).toHaveAccessibleDescription("Configure the world.");
   await expect(dialog).toHaveAttribute("id", "composed-popover");
   await expect(dialog).toHaveAttribute("data-side", "bottom");
-  const bounds = (await dialog.boundingBox())!;
+  const bounds = await dialog.boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   expect(bounds.x).toBe(240);
   expect(bounds.y).toBe(204);
   expect(await page.locator('[data-slot="popover-trigger"]').count()).toBe(1);
@@ -245,9 +265,13 @@ test("Popover buttons play the original click once; hover, focus and Escape stay
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).__popoverSounds = [];
+    const recordedSounds: { rate: number; source: string; volume: number }[] =
+      [];
+
+    window.__popoverSounds = recordedSounds;
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).__popoverSounds.push({
+      recordedSounds.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -257,8 +281,7 @@ test("Popover buttons play the original click once; hover, focus and Escape stay
     };
   });
 
-  const voices = async () =>
-    page.evaluate(() => (window as any).__popoverSounds);
+  const voices = async () => await page.evaluate(() => window.__popoverSounds);
 
   await page.goto("/?component=popover");
 

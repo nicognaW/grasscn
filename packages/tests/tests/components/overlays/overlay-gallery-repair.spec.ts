@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const origin = (
@@ -19,9 +20,11 @@ for (const scale of [2]) {
     const panel = page.locator("[data-slot=drawer-content]");
     await expect(panel).toBeVisible();
     await expect
-      .poll(async () => panel.evaluate((e) => e.scrollHeight - e.clientHeight))
+      .poll(
+        async () => await panel.evaluate((e) => e.scrollHeight - e.clientHeight)
+      )
       .toBeLessThanOrEqual(2);
-    await page.getByRole("button", { name: "Done", exact: true }).click();
+    await page.getByRole("button", { exact: true, name: "Done" }).click();
     await expect(trigger).toBeFocused();
   });
   test(`Avatar group count follows native face size and GUI${scale}`, async ({
@@ -36,20 +39,24 @@ for (const scale of [2]) {
     await group.scrollIntoViewIfNeeded();
     await expect
       .poll(async () => {
-        const face = (await group
+        const face = await group
           .locator("[data-slot=avatar]")
           .first()
-          .boundingBox())!;
+          .boundingBox();
 
-        const count = (await group
+        expectNotNull(face, "Missing required bounding box: face");
+
+        const count = await group
           .locator("[data-slot=avatar-group-count]")
-          .boundingBox())!;
+          .boundingBox();
+
+        expectNotNull(count, "Missing required bounding box: count");
 
         return Math.abs(face.height - count.height);
       })
       .toBe(0);
     await expect(stage).toContainText("6 people in this workspace");
-    await expect(stage.getByRole("button", { name: /Hat:/ })).toHaveCount(0);
+    await expect(stage.getByRole("button", { name: /Hat:/u })).toHaveCount(0);
     await expect(
       stage.getByRole("button", { exact: true, name: "Load player" })
     ).toBeVisible();
@@ -68,7 +75,10 @@ for (const scale of [2]) {
       .getByLabel("Alert dialog message", { exact: true })
       .fill(
         [
-          ...Array(14).fill("这是一个很长的描述。请确认您是否删除世界。"),
+          ...Array.from(
+            { length: 14 },
+            () => "这是一个很长的描述。请确认您是否删除世界。"
+          ),
           "LAST世界",
         ].join("\n")
       );
@@ -78,7 +88,8 @@ for (const scale of [2]) {
     await expect(dialog).toHaveAttribute("data-mc-confirmation-ready", "true");
     await expect
       .poll(async () => {
-        const r = (await dialog.boundingBox())!;
+        const r = await dialog.boundingBox();
+        expectNotNull(r, "Missing required bounding box: r");
 
         return (
           r.x >= 0 && r.y >= 0 && r.x + r.width <= 390 && r.y + r.height <= 844
@@ -86,14 +97,26 @@ for (const scale of [2]) {
       })
       .toBe(true);
 
-    for (const name of ["Yes", "No"]) {
-      const r = (await dialog
-        .getByRole("button", { exact: true, name })
-        .boundingBox())!;
+    const readOnlyItems19 = ["Yes", "No"];
 
-      expect(r.x).toBeGreaterThanOrEqual(0);
-      expect(r.x + r.width).toBeLessThanOrEqual(390);
-      expect(r.y + r.height).toBeLessThanOrEqual(844);
+    const readOnlyResults19 = await Promise.allSettled(
+      readOnlyItems19.map(async (name) => {
+        const r = await dialog
+          .getByRole("button", { exact: true, name })
+          .boundingBox();
+
+        expectNotNull(r, "Missing required bounding box: r");
+
+        expect(r.x).toBeGreaterThanOrEqual(0);
+        expect(r.x + r.width).toBeLessThanOrEqual(390);
+        expect(r.y + r.height).toBeLessThanOrEqual(844);
+      })
+    );
+
+    for (const readOnlyResult19 of readOnlyResults19) {
+      if (readOnlyResult19.status === "rejected") {
+        throw readOnlyResult19.reason;
+      }
     }
 
     if (scale > 1) {
@@ -103,12 +126,15 @@ for (const scale of [2]) {
       });
       await expect
         .poll(async () => {
-          const a = (await header.boundingBox())!;
+          const a = await header.boundingBox();
+          expectNotNull(a, "Missing required bounding box: a");
 
-          const b = (await dialog
+          const b = await dialog
             .locator(".mc-alert-dialog-description .mc-card-text-line")
             .last()
-            .boundingBox())!;
+            .boundingBox();
+
+          expectNotNull(b, "Missing required bounding box: b");
 
           return b.y >= a.y && b.y + b.height <= a.y + a.height + 1;
         })
@@ -130,13 +156,14 @@ test("Short viewport AlertDialog layout remains stable while resizing", async ({
   await page.goto(`${origin}docs/components/alert-dialog`);
   await page
     .getByLabel("Alert dialog message", { exact: true })
-    .fill(Array(14).fill("Long description 世界").join("\n"));
+    .fill(Array.from({ length: 14 }, () => "Long description 世界").join("\n"));
   await page.getByRole("button", { name: "Open confirmation" }).click();
   const dialog = page.getByRole("alertdialog");
   await expect(dialog).toHaveAttribute("data-mc-confirmation-compact", "true");
   await expect
     .poll(async () => {
-      const b = (await dialog.boundingBox())!;
+      const b = await dialog.boundingBox();
+      expectNotNull(b, "Missing required bounding box: b");
 
       return b.y >= 0 && b.y + b.height <= 240;
     })

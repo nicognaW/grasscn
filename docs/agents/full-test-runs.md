@@ -28,7 +28,7 @@ An executor crash can leave a claim. Inspect the recorded PID and process-start 
 
 Full test failures are collected across the remaining files before repairs. An interrupted journal, global Playwright error, failed precheck or changed source/environment remains incomplete. Only complete collection produces a completed passed/failed result. Finding review and repair handoffs follow the reporting workflow; Full failures are never a merge gate. An execution session can hand repair work to whichever existing or new session fits the problem, carrying the run issue and evidence.
 
-For reporting integrations, `packages/pixel-perfect/src/full-runs/run.mjs` exports read-only `readRunIssue`, `readRunPlan`, `readRunState`, `readRunAttempts` and `parseStateComment`. These readers inspect historical runs without granting execution authorization.
+For reporting integrations, `packages/pixel-perfect/src/full-runs/run.ts` exports read-only `readRunIssue`, `readRunPlan`, `readRunState`, `readRunAttempts` and `parseStateComment`. These readers inspect historical runs without granting execution authorization.
 
 ## Completed findings and repairs
 

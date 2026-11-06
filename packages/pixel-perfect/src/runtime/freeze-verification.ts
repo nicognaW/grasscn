@@ -1,0 +1,99 @@
+import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { readFile, writeFile, mkdir } from "node:fs/promises";
+import path from "node:path";
+
+import { repoRoot } from "@ppt/paths";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
+import {
+  validateHistoricalEvidence,
+  historicalMapComponents,
+} from "@ppt/runtime/historical-evidence";
+import type { ComponentEvidenceMap } from "@ppt/runtime/map-evidence";
+
+assert.ok(process.argv[2], "Pass a new snapshot directory");
+
+const output = path.resolve(process.argv[2]);
+
+await mkdir(output, { recursive: false });
+
+const names = execFileSync(
+  "git",
+  ["ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+  { cwd: repoRoot, encoding: "utf-8" }
+)
+  .split("\0")
+  .filter(Boolean);
+
+const records: { bytes: number; path: string; sha256: string }[] = [];
+
+const verificationNames = [...new Set(names)];
+
+verificationNames.sort();
+
+for (const name of verificationNames) {
+  if (
+    name.startsWith("packages/pixel-perfect/tests/reference/") &&
+    !/\.(?:json|java|mjs)$/u.test(name)
+  ) {
+    continue;
+  }
+
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Keep each ordered snapshot read/mkdir/write phase and its original failure/partial-output boundary before the next retained file.
+  const bytes = await readFile(path.join(repoRoot, name));
+  const target = path.join(output, "sources", name);
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Keep each ordered snapshot read/mkdir/write phase and its original failure/partial-output boundary before the next retained file.
+  await mkdir(path.dirname(target), { recursive: true });
+  // oxlint-disable-next-line eslint/no-await-in-loop -- Keep each ordered snapshot read/mkdir/write phase and its original failure/partial-output boundary before the next retained file.
+  await writeFile(target, bytes);
+  records.push({
+    bytes: bytes.length,
+    path: name,
+    sha256: createHash("sha256").update(bytes).digest("hex"),
+  });
+}
+
+// SAFETY: the authored component map supplies its existing identity/status snapshot fields.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const map = JSON.parse(
+  await readFile(evidenceFile("registry/minecraft-map.json"), "utf-8")
+) as ComponentEvidenceMap;
+
+const registry: unknown = JSON.parse(
+  await readFile(evidenceFile("registry.json"), "utf-8")
+);
+
+const historicalEvidence = await validateHistoricalEvidence({
+  archiveDirectory: path.join(
+    repoRoot,
+    "packages/pixel-perfect/evidence/historical-installed-977f538"
+  ),
+  map,
+  registry,
+  resolvePath: evidenceFile,
+});
+
+await writeFile(
+  path.join(output, "source-manifest.json"),
+  `${JSON.stringify(
+    {
+      bun: Bun.version,
+      capturedAt: new Date().toISOString(),
+      components: historicalMapComponents(
+        JSON.stringify(map),
+        historicalEvidence
+      ),
+      files: records,
+      historicalEvidence,
+      minecraftVersion: map.minecraftVersion,
+      sourceJarSha256: map.sourceJarSha256,
+    },
+    null,
+    2
+  )}\n`
+);
+
+console.log(
+  `Retained ${records.length} exact source/provenance files in ${output}`
+);

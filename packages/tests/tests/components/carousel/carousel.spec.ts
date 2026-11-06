@@ -1,7 +1,12 @@
 import { writeFileSync } from "node:fs";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import {
+  recordPitchedPlayback,
+  recordedPitchedPlayback,
+} from "@tests/harness/audio-playback";
 
 const runtimeErrors = new WeakMap<object, string[]>();
 
@@ -91,7 +96,8 @@ test("Carousel supports pointer dragging and reinitialization after dynamic slid
   page,
 }) => {
   await page.goto("/?component=carousel");
-  const b = (await page.locator("[data-slot=carousel-content]").boundingBox())!;
+  const b = await page.locator("[data-slot=carousel-content]").boundingBox();
+  expectNotNull(b, "Missing required bounding box: b");
   await page.mouse.move(b.x + b.width - 20, b.y + 30);
   await page.mouse.down();
   await page.mouse.move(b.x + 20, b.y + 30, { steps: 20 });
@@ -108,26 +114,15 @@ test("Carousel supports pointer dragging and reinitialization after dynamic slid
 test("Carousel native arrow activations play original asset once and canceled actions remain silent", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
-        pitch: this.playbackRate,
-        source: this.src,
-        volume: this.volume,
-      });
-
-      return Promise.resolve();
-    };
-  });
+  await recordPitchedPlayback(page);
   await page.goto("/?component=carousel");
   await page.locator("#next").hover();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  expect(await recordedPitchedPlayback(page)).toEqual([]);
   await page.locator("#next").click();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([
+  expect(await recordedPitchedPlayback(page)).toEqual([
     { pitch: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
   await page.goto("/?component=carousel&cancel=1");
   await page.locator("#next").click();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  expect(await recordedPitchedPlayback(page)).toEqual([]);
 });

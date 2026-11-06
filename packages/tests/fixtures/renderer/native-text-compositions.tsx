@@ -12,23 +12,41 @@ import * as React from "react";
 
 import "./native-reference.css";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
+interface NativeCompositionReferenceStyle extends React.CSSProperties {
+  "--mc-pixel": string;
+  "--mc-scale": number;
+  "--reference-color": string | undefined;
+  "--reference-height": string;
+  "--reference-width": string;
+  "--reference-x": string;
+  "--reference-y": string;
+}
+
 export const NativeTextCompositionsFixture = () => {
-  const q = new URLSearchParams(location.search);
   const component = q.get("component") ?? q.get("part") ?? "code-block";
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const label = q.get("label") ?? "Hello Minecraft!";
   const width = Number(q.get("width") ?? 172);
   const height = Number(q.get("height") ?? 9);
 
-  const style = {
-    "--mc-pixel": scale + "px",
+  const style: NativeCompositionReferenceStyle = {
+    "--mc-pixel": `${scale}px`,
     "--mc-scale": scale,
     "--reference-color": q.get("color") ?? undefined,
-    "--reference-height": height * scale + "px",
-    "--reference-width": width * scale + "px",
-    "--reference-x": Number(q.get("x") ?? 16) * scale + "px",
-    "--reference-y": Number(q.get("y") ?? 16) * scale + "px",
-  } as React.CSSProperties;
+    "--reference-height": `${height * scale}px`,
+    "--reference-width": `${width * scale}px`,
+    "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
+    "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
+  };
 
   React.useLayoutEffect(() => {
     document.documentElement.style.background =

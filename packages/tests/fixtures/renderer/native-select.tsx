@@ -5,17 +5,27 @@ import {
 } from "@grasscn/web/ui/native-select";
 import * as React from "react";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
 export const NativeSelectFixture = () => {
-  const q = new URLSearchParams(location.search);
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const [value, setValue] = React.useState("one");
   const [selected, setSelected] = React.useState("");
   const [tag, setTag] = React.useState("");
   const ref = React.useRef<HTMLSelectElement>(null);
 
   React.useLayoutEffect(() => {
-    document.documentElement.style.background = document.body.style.background =
-      q.get("background") ?? "#202020";
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = q.get("background") ?? "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
   if (q.has("native")) {
@@ -26,14 +36,15 @@ export const NativeSelectFixture = () => {
         disabled={q.get("state")?.startsWith("disabled")}
         wrapperProps={{
           style: {
-            position: "fixed",
             left: Number(q.get("x") ?? 16) * scale,
+            position: "fixed",
             top: Number(q.get("y") ?? 16) * scale,
           },
         }}
+        className="fixture-geometry-width fixture-geometry-height"
         style={{
-          width: Number(q.get("width") ?? 200) * scale,
-          height: Number(q.get("height") ?? 20) * scale,
+          "--fixture-height": `${Number(q.get("height") ?? 20) * scale}px`,
+          "--fixture-width": `${Number(q.get("width") ?? 200) * scale}px`,
         }}
         data-subject="true"
       >

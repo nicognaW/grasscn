@@ -5,17 +5,17 @@ import { cva } from "class-variance-authority";
 import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-toggle-assets.css";
 import { playMinecraftClick } from "./minecraft-sound";
 
 import "./minecraft-toggle.css";
+
+interface ToggleScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const toggleVariants = cva("mc-toggle", {
   defaultVariants: { size: "default", variant: "default" },
@@ -46,23 +46,20 @@ const Toggle = ({
     );
   }
 
-  const child = null;
-
   return (
     <TogglePrimitive
       render={render}
       data-slot="toggle"
       disabled={disabled}
       className={cn(toggleVariants({ size, variant }), className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): ToggleScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
-      aria-disabled={disabled ? true : props["aria-disabled"]}
+      aria-disabled={(disabled ?? false) ? true : props["aria-disabled"]}
       onPointerDown={(event) => {
-        if (disabled) {
+        if (disabled ?? false) {
           event.preventDefault();
 
           return;
@@ -72,7 +69,7 @@ const Toggle = ({
       }}
       onClick={(event) => {
         if (
-          disabled ||
+          (disabled ?? false) ||
           Object.hasOwn(event.currentTarget.dataset, "disabled") ||
           event.currentTarget.getAttribute("aria-disabled") === "true"
         ) {
@@ -83,7 +80,10 @@ const Toggle = ({
 
         onClick?.(event);
 
-        if (!event.defaultPrevented && !event.baseUIHandlerPrevented) {
+        if (
+          !event.defaultPrevented &&
+          !(event.baseUIHandlerPrevented ?? false)
+        ) {
           playMinecraftClick();
         }
       }}
@@ -93,6 +93,7 @@ const Toggle = ({
   );
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the upstream shadcn component-and-variant export API used by consumer styling composition.
 export { Toggle, toggleVariants };
 
 export type { ToggleProps };

@@ -8,6 +8,10 @@ import { attachMinecraftTextarea } from "./minecraft-textarea-paint";
 import "./minecraft-unifont-metrics.css";
 import "./minecraft-textarea.css";
 
+interface TextareaStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const Textarea = ({
   className,
   scale = 2,
@@ -18,7 +22,11 @@ const Textarea = ({
   scale?: 1 | 2 | 3;
 }) => {
   const node = React.useRef<HTMLTextAreaElement>(null);
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useEffect(
     () =>
       node.current ? attachMinecraftTextarea(node.current, scale) : undefined,
@@ -32,11 +40,10 @@ const Textarea = ({
       spellCheck={false}
       autoCorrect="off"
       className={cn("mc-textarea", className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): TextareaStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   );

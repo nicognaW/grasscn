@@ -1,3 +1,256 @@
+diff --git a/dist/index.js b/dist/index.js
+index 44bc4da28c5f8c0523fbd97dffd585c0561f863c..4211d43a5feef3cdebdf51c6dfe4dccb043c35fa 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1,4 +1,4 @@
+-import { A as isNamedColor, B as formatPx, C as resolveAlias, D as resolveFile, E as packageRoot, F as dirOf, G as isMarkerClass, H as COLOR_PREFIX, I as isFile, J as replaceClass, K as isPaletteClass, L as memoize, M as withoutVariableChannelColors, N as NODE_MODULES, O as PALETTE, P as TTL, R as mtimeOf, S as projectFor, T as warnOnce, U as OPACITY_MODIFIER, V as lengthInPx, W as isArbitraryValue$1, X as splitVariants, Y as splitClasses, Z as withBase, _ as themeFileFor, a as declaresClass, b as utilityPrefixesOf, c as moduleThemeEntryFor, d as scaleFor, f as scopedColorTokensFor, g as tailwindPrefixFor, h as tailwindEntryFor, i as colorValuesFor, j as parseColor, k as colorDistance, l as parseClassSelectors, m as spacingBaseFor, n as editDistance, o as declaresUtility, p as setThemeImports, q as normalizeClass, r as colorTokensFor, s as knownClassesFor, t as didYouMean, v as themeScalesFor, w as uiDirectory, x as utilityPropertiesOf, y as themeVocabularyFor, z as realpath } from "./similar.js";
++import { A as isNamedColor, B as formatPx, C as resolveAlias, D as resolveFile, E as packageRoot, F as dirOf, G as isMarkerClass, H as COLOR_PREFIX, I as isFile, J as replaceClass, K as isPaletteClass, L as memoize, M as withoutVariableChannelColors, N as NODE_MODULES, O as PALETTE, P as TTL, R as mtimeOf, S as projectFor, T as warnOnce, U as OPACITY_MODIFIER, V as lengthInPx, W as isArbitraryValue$1, X as splitVariants, Y as splitClasses, Z as withBase, _ as themeFileFor, a as declaresClass, b as utilityPrefixesOf, c as moduleThemeEntryFor, d as scaleFor, f as scopedColorTokensFor, g as tailwindPrefixFor, h as tailwindEntryFor, i as colorValuesFor, j as parseColor, k as colorDistance, l as parseClassSelectors, m as spacingBaseFor, n as editDistance, o as declaresUtility, p as setThemeImports, q as normalizeClass, r as colorTokensFor, s as knownClassesFor, t as didYouMean, u as parseImports, v as themeScalesFor, w as uiDirectory, x as utilityPropertiesOf, y as themeVocabularyFor, z as realpath } from "./similar.js";
+ import { createRequire } from "node:module";
+ import * as fs from "node:fs";
+ import { readFileSync } from "node:fs";
+@@ -3448,7 +3448,7 @@ function classSiteVisitors(context, options, onSite) {
+ 	const siteFor = (node, value, attribute, resolved, element = null) => {
+ 		const keyed = reader.classObjects === true && attribute === "class";
+ 		return {
+-			...value && !keyed ? collectFromValue(value, context, collectOptions) : collectClassStrings(value ?? node, context, collectOptions),
++			...value && !keyed ? collectFromValue(value, context, attribute === "classNames" ? { ...collectOptions, valuesMode: true } : collectOptions) : collectClassStrings(value ?? node, context, collectOptions),
+ 			component: resolved?.component ?? null,
+ 			componentFile: resolved?.file ?? null,
+ 			wrapper: resolved?.wrapper ?? null,
+@@ -4300,6 +4300,76 @@ const MESSAGES$4 = {
+ 	customPropColor: "Custom property {{property}} hardcodes a color. Define it as a theme token instead of injecting a raw value.",
+ 	styleElement: "A <style> element injects CSS outside the design system. Use classes, or declare the rule in your theme CSS."
+ };
++// Conservative analysis of a real imported style resolver, not a name allowlist.
++function styleFactoryPaint(call, context, cache) {
++  if (call.type !== "CallExpression" || call.optional || call.callee.type !== "Identifier" || call.arguments.length !== 2) return null;
++  const variable = variableOf(call.callee, context);
++  if (!variable || isWritten(variable)) return null;
++  const imports = context.sourceCode.ast.body.filter(node => node.type === "ImportDeclaration");
++  let source, exported;
++  for (const declaration of imports) for (const spec of declaration.specifiers) {
++    if (spec.type !== "ImportSpecifier" || !(variable.defs ?? []).some(def => def.node === spec || def.name === spec.local)) continue;
++    source = declaration.source.value;
++    exported = spec.imported.name ?? spec.imported.value;
++  }
++  if (!source || !exported) return null;
++  const binding = definingExportOf(source, exported, context.filename ?? context.getFilename());
++  if (!binding) return null;
++  const key = binding.file + "\0" + binding.name;
++  let verified = cache.get(key);
++  if (verified === undefined) {
++    verified = false;
++    try {
++      const ast = parseSource(fs.readFileSync(binding.file, "utf8"), binding.file);
++      const declarations = ast.body.map(node => node.type === "ExportNamedDeclaration" ? node.declaration : node).filter(Boolean);
++      const fn = declarations.find(node => node.type === "FunctionDeclaration" && node.id?.name === binding.name && node.body);
++      const exportedFunction = fn && ast.body.some(node => node.type === "ExportNamedDeclaration" && (node.declaration === fn || node.specifiers?.some(spec => spec.local?.name === fn.id.name)));
++      const ident = (node, name) => node?.type === "Identifier" && node.name === name;
++      const invocation = (node, name, argument) => node?.type === "CallExpression" && !node.optional && ident(node.callee, name) && node.arguments.length === 1 && argument(node.arguments[0]);
++      if (exportedFunction && fn.params.length === 2 && !fn.async && !fn.generator && fn.params.every(node => node.type === "Identifier") && fn.params[0].name !== fn.params[1].name && fn.body.body.length === 1 && fn.body.body[0].type === "ReturnStatement") {
++        const [input, paint] = fn.params.map(node => node.name);
++        const result = unwrap(fn.body.body[0].argument);
++        const test = result?.type === "ConditionalExpression" ? result.test : null;
++        const predicateName = test?.callee?.type === "Identifier" ? test.callee.name : null;
++        const predicate = declarations.filter(node => node.type === "VariableDeclaration" && node.kind === "const").flatMap(node => node.declarations).find(node => ident(node.id, predicateName))?.init;
++        const check = predicate?.type === "ArrowFunctionExpression" && !predicate.async && predicate.params.length === 1 && predicate.params[0].type === "Identifier" ? unwrap(predicate.body) : null;
++        const testsFunction = check?.type === "BinaryExpression" && check.operator === "===" && check.left.type === "UnaryExpression" && check.left.operator === "typeof" && ident(check.left.argument, predicate.params[0].name) && check.right.type === "Literal" && check.right.value === "function";
++        const resolved = result?.consequent;
++        const state = resolved?.type === "ArrowFunctionExpression" && !resolved.async && resolved.params.length === 1 && resolved.params[0].type === "Identifier" ? resolved.params[0].name : null;
++        const shape = testsFunction && invocation(test, predicateName, node => ident(node, input)) && state && ![input, paint].includes(state) && invocation(resolved.body, paint, node => invocation(node, input, value => ident(value, state))) && invocation(result.alternate, paint, node => ident(node, input));
++        let unsafeWrite = false;
++        const scan = node => {
++          if (!node || typeof node !== "object") return;
++          if (node.type === "AssignmentExpression" && [binding.name, predicateName].some(name => ident(node.left, name)) || node.type === "UpdateExpression" && [binding.name, predicateName].some(name => ident(node.argument, name)) || node.type === "CallExpression" && ident(node.callee, "eval")) unsafeWrite = true;
++          for (const [name, value] of Object.entries(node)) if (name !== "parent") {
++            if (Array.isArray(value)) value.forEach(scan);
++            else if (value && typeof value === "object") scan(value);
++          }
++        };
++        scan(ast);
++        verified = Boolean(shape && !unsafeWrite);
++      }
++    } catch { /* Keep the existing unreadable-style diagnostic on every unresolved source. */ }
++    cache.set(key, verified);
++  }
++  if (!verified || !isForwardedProp(unwrap(call.arguments[0]), context, "style")) return null;
++  const paint = unwrap(call.arguments[1]);
++  if (paint?.type !== "ArrowFunctionExpression" || paint.async || paint.params.length !== 1 || paint.params[0].type !== "Identifier" || paint.body.type !== "ObjectExpression") return null;
++  const parameter = variableOf(paint.params[0], context);
++  if (!parameter || isWritten(parameter)) return null;
++  let unsupportedRead = false;
++  const inspect = (node, parent) => {
++    if (!node || typeof node !== "object") return;
++    if (node.type === "Identifier" && node.name === paint.params[0].name && !(parent?.type === "SpreadElement" && parent.argument === node)) unsupportedRead = true;
++    for (const [name, value] of Object.entries(node)) if (!["parent", "typeAnnotation"].includes(name)) {
++      if (Array.isArray(value)) value.forEach(child => inspect(child, node));
++      else if (value && typeof value === "object") inspect(value, node);
++    }
++  };
++  inspect(paint.body, null);
++  return unsupportedRead ? null : { body: paint.body, parameter, input: call.arguments[0] };
++}
++
+ const noInlineStyles = {
+ 	meta: {
+ 		type: "problem",
+@@ -4332,6 +4402,7 @@ const noInlineStyles = {
+ 			return configErrorVisitors(context, error);
+ 		}
+ 		const reader = readerFor(context);
++		const styleFactoryCache = new Map();
+ 		const elementName = (attribute) => {
+ 			const name = reader.nameOf(reader.elementOf(attribute));
+ 			return name?.component ? name.text : "";
+@@ -4359,9 +4430,12 @@ const noInlineStyles = {
+ 				judge(property, reportAt, component, declaration.slice(colon + 1));
+ 			}
+ 		};
+-		const check = (expr, reportAt, seen = /* @__PURE__ */ new Set(), component = "") => {
++		const check = (expr, reportAt, seen = /* @__PURE__ */ new Set(), component = "", bindings = new Map()) => {
+ 			expr = unwrap(expr);
+ 			if (!expr) return;
++			if (expr.type === "Identifier" && bindings.has(variableOf(expr, context))) return check(bindings.get(variableOf(expr, context)), reportAt, seen, component);
++			const factory = styleFactoryPaint(expr, context, styleFactoryCache);
++			if (factory) return check(factory.body, reportAt, seen, component, new Map(bindings).set(factory.parameter, factory.input));
+ 			const forwarded = forwardedValuesOf(expr, context, "style", seen);
+ 			if (forwarded && !seen.has(forwarded.variable)) {
+ 				seen.add(forwarded.variable);
+@@ -4370,7 +4444,7 @@ const noInlineStyles = {
+ 					messageId: "dynamicStyle",
+ 					data: { component }
+ 				}, policy.wordsFor(component));
+-				else check(alternative.value, reportAt, seen, component);
++				else check(alternative.value, reportAt, seen, component, bindings);
+ 				seen.delete(forwarded.variable);
+ 				return;
+ 			}
+@@ -4380,19 +4454,19 @@ const noInlineStyles = {
+ 				if (css !== null) return judgeDeclarations(css, reportAt, component);
+ 			}
+ 			if (expr.type === "ConditionalExpression") {
+-				check(expr.consequent, expr.consequent, seen, component);
+-				check(expr.alternate, expr.alternate, seen, component);
++				check(expr.consequent, expr.consequent, seen, component, bindings);
++				check(expr.alternate, expr.alternate, seen, component, bindings);
+ 				return;
+ 			}
+ 			if (expr.type === "LogicalExpression") {
+-				if (expr.operator !== "&&") check(expr.left, expr.left, seen, component);
+-				check(expr.right, expr.right, seen, component);
++				if (expr.operator !== "&&") check(expr.left, expr.left, seen, component, bindings);
++				check(expr.right, expr.right, seen, component, bindings);
+ 				return;
+ 			}
+ 			if (expr.type === "Identifier") {
+ 				const init = resolveIdentifier(expr, context, seen)?.init;
+ 				if (isAllowedDynamic(expr) && init?.type !== "ObjectExpression") return;
+-				if (init) return check(init, reportAt, seen, component);
++				if (init) return check(init, reportAt, seen, component, bindings);
+ 				emit({
+ 					node: reportAt,
+ 					messageId: "dynamicStyle",
+@@ -4404,7 +4478,7 @@ const noInlineStyles = {
+ 				const found = resolveMemberValue(expr, context, seen);
+ 				const value = "unresolved" in found ? null : found.value;
+ 				if (isAllowedDynamic(expr) && value?.type !== "ObjectExpression") return;
+-				if (value) return check(value, reportAt, seen, component);
++				if (value) return check(value, reportAt, seen, component, bindings);
+ 			}
+ 			if (expr.type !== "ObjectExpression") {
+ 				emit({
+@@ -4418,8 +4492,12 @@ const noInlineStyles = {
+ 			for (const entry of objectEntries(expr, context, seen)) {
+ 				if ("unknown" in entry) {
+ 					const prop = entry.unknown;
++					if (prop.type === "SpreadElement" && unwrap(prop.argument)?.type === "Identifier" && bindings.has(variableOf(unwrap(prop.argument), context))) {
++						check(bindings.get(variableOf(unwrap(prop.argument), context)), prop, seen, component, bindings);
++						continue;
++					}
+ 					if (prop.type === "SpreadElement" && isForwardedProp(unwrap(prop.argument), context, "style")) {
+-						check(prop.argument, prop, seen, component);
++						check(prop.argument, prop, seen, component, bindings);
+ 						continue;
+ 					}
+ 					if (prop.type === "SpreadElement" && isAllowedDynamic(unwrap(prop.argument))) continue;
+@@ -4443,7 +4521,12 @@ const noInlineStyles = {
+ 		for (const type of reader.attributes) addVisitor(visitors, type, (node) => {
+ 			if (reader.attributeName(node) !== "style") return;
+ 			const value = reader.attributeValue(node);
+-			if (isContainer(value)) check(value.expression, value.expression, /* @__PURE__ */ new Set(), elementName(node));
++			if (isContainer(value)) {
++				const callback = node.type === "JSXAttribute" && elementName(node) ? unwrap(value.expression) : null;
++				const body = callback?.type === "ArrowFunctionExpression" && !callback.async && callback.params.length <= 1 && callback.params.every((parameter) => parameter.type === "Identifier") ? unwrap(callback.body) : null;
++				const readable = body?.type === "ObjectExpression" && body.properties.every((property) => property.type === "Property" && !property.computed && !property.method && property.kind === "init");
++				check(readable ? body : value.expression, value.expression, /* @__PURE__ */ new Set(), elementName(node));
++			}
+ 			else if (reader.staticStyles && value) check(value, value, /* @__PURE__ */ new Set(), elementName(node));
+ 		});
+ 		for (const [type, read] of Object.entries(reader.styleProperties ?? {})) addVisitor(visitors, type, (node) => {
+@@ -5194,6 +5277,44 @@ const MESSAGES$1 = {
+ 	unknownVariant: "\"{{className}}\" uses a variant this project's Tailwind does not know, so no CSS is generated for it. Use an existing variant, or declare it with @custom-variant in {{file}}.",
+ 	useSuggestion: "Replace with \"{{suggestion}}\"."
+ };
++function additionalCssClassesFor(fromFile, configured) {
++	const classes = new Set();
++	if (configured === void 0) return classes;
++	if (!Array.isArray(configured) || configured.some((source) =>
++		!source || typeof source !== "object" || typeof source.file !== "string" || source.file.trim() === "" ||
++		!Array.isArray(source.owners) || source.owners.length === 0 ||
++		source.owners.some((owner) => typeof owner !== "string" || owner.trim() === ""))) {
++		throw new ContractConfigError("settings.shadcn.additionalCssSources must be an array of { file: CSS path, owners: nonempty source file paths[] }.");
++	}
++	const project = projectFor(fromFile);
++	if (!project) throw new ContractConfigError("Cannot resolve the project root for settings.shadcn.additionalCssSources.");
++	const identity = (file) => process.platform === "win32" ? path.resolve(file).toLowerCase() : path.resolve(file);
++	const current = identity(fromFile);
++	const seen = new Set();
++	const read = (file) => {
++		if (seen.has(file)) return;
++		if (path.extname(file).toLowerCase() !== ".css" || !isFile(file)) {
++			throw new ContractConfigError("Additional CSS source does not exist or is not a CSS file: " + file);
++		}
++		seen.add(file);
++		let css;
++		try { css = fs.readFileSync(file, "utf8"); }
++		catch (error) { throw new ContractConfigError("Cannot read additional CSS source " + file + ": " + String(error)); }
++		for (const name of parseClassSelectors(css)) classes.add(name);
++		for (const spec of parseImports(css)) {
++			if (/^(?:https?:|data:|\/\/)/i.test(spec)) continue;
++			const target = resolveFile(spec, path.dirname(file), project.root, [".css"]);
++			if (!target) throw new ContractConfigError("Cannot resolve CSS import " + spec + " from additional CSS source " + file);
++			read(target);
++		}
++	};
++	for (const source of configured) {
++		if (source.owners.some((owner) => identity(path.resolve(project.root, owner)) === current)) {
++			read(path.resolve(project.root, source.file));
++		}
++	}
++	return classes;
++}
+ const noUnknownClasses = {
+ 	meta: {
+ 		type: "problem",
+@@ -5230,6 +5351,9 @@ const noUnknownClasses = {
+ 			return configErrorVisitors(context, error);
+ 		}
+ 		const { groupOf } = projectClassifierFor(filename);
++		let additionalClasses;
++		try { additionalClasses = additionalCssClassesFor(filename, context.settings?.shadcn?.additionalCssSources); }
++		catch (error) { return configErrorVisitors(context, error); }
+ 		const known = knownClassesFor(filename);
+ 		const ownClasses = isSfc(filename) ? styleClassesOf(context.sourceCode?.text ?? "") : /* @__PURE__ */ new Set();
+ 		const themeFile = themeFileFor(filename);
+@@ -5244,7 +5368,7 @@ const noUnknownClasses = {
+ 			if (base.startsWith("[")) return true;
+ 			if (isMarkerClass(token)) return true;
+ 			const bare = base.replace(/\/[\w.%]+$/, "");
+-			return known.classes.has(bare) || ownClasses.has(bare);
++			return known.classes.has(bare) || additionalClasses.has(bare) || ownClasses.has(bare);
+ 		};
+ 		const knownByGrammar = (token) => {
+ 			if (groupOf(token)) return true;
 diff --git a/dist/similar.js b/dist/similar.js
 index 44b944892aa92f07a74436fd794619614fada69f..bd10b0973c481ed488a99c358b08d8b8f6abb1ea 100644
 --- a/dist/similar.js
@@ -11,15 +264,3 @@ index 44b944892aa92f07a74436fd794619614fada69f..bd10b0973c481ed488a99c358b08d8b8
  	seen.add(cssFile);
  	read.files.push(cssFile);
  	let css;
-diff --git a/dist/index.js b/dist/index.js
---- a/dist/index.js
-+++ b/dist/index.js
-@@ -3448,7 +3448,7 @@
- 	const siteFor = (node, value, attribute, resolved, element = null) => {
- 		const keyed = reader.classObjects === true && attribute === "class";
- 		return {
--			...value && !keyed ? collectFromValue(value, context, collectOptions) : collectClassStrings(value ?? node, context, collectOptions),
-+			...value && !keyed ? collectFromValue(value, context, attribute === "classNames" ? { ...collectOptions, valuesMode: true } : collectOptions) : collectClassStrings(value ?? node, context, collectOptions),
- 			component: resolved?.component ?? null,
- 			componentFile: resolved?.file ?? null,
- 			wrapper: resolved?.wrapper ?? null,

@@ -1,5 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
-import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
+import { documentationInventory } from "@tests/checks/documentation-inventory";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
@@ -27,33 +27,37 @@ for (const viewport of [
     await page.setViewportSize(viewport);
 
     for (const name of names) {
-      await page.goto(origin + "docs/components/" + name);
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+      await page.goto(`${origin}docs/components/${name}`);
       const card = page.locator(".documentation-playground");
-      for (const scale of [2]) {
-        await expect(card).toBeVisible();
-        await expect
-          .poll(async () =>
-            page.evaluate(
+
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+      await expect(card).toBeVisible();
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+      await expect
+        .poll(
+          async () =>
+            await page.evaluate(
               () => document.documentElement.scrollWidth <= innerWidth
             )
-          )
-          .toBe(true);
-        expect(
-          await page.locator("[id]").evaluateAll((nodes) => {
-            const seen = new Set<string>();
+        )
+        .toBe(true);
+      expect(
+        // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+        await page.locator("[id]").evaluateAll((nodes) => {
+          const seen = new Set<string>();
 
-            return nodes.flatMap((n) => {
-              if (seen.has(n.id)) {
-                return [n.id];
-              }
+          return nodes.flatMap((n) => {
+            if (seen.has(n.id)) {
+              return [n.id];
+            }
 
-              seen.add(n.id);
+            seen.add(n.id);
 
-              return [];
-            });
-          })
-        ).toEqual([]);
-      }
+            return [];
+          });
+        })
+      ).toEqual([]);
     }
 
     expect(errors).toEqual([]);

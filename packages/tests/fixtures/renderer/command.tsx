@@ -12,14 +12,52 @@ import {
 } from "@grasscn/web/ui/command";
 import * as React from "react";
 
+import type { FixtureLabels } from "./fixture-query-protocol";
+import { cn } from "./utils";
+
 const p = new URLSearchParams(location.search);
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
 const native = p.has("native");
 const part = p.get("part") ?? "list";
 
+// SAFETY: the owned native case callers serialize their actual string-label arrays, or this unchanged literal default; retain the original URL read and JSON parse.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned menu-label JSON producer boundary; all reads and existing filters remain unchanged.
 const labels = JSON.parse(
   p.get("labels") ?? '["Stone","Stick","世界"]'
-) as string[];
+) as FixtureLabels;
+
+const readCommandReferenceLayout = () => {
+  const commandFixtureWidth = `${Number(p.get("width") ?? 200) * scale}px`;
+  const commandFixtureX = `${Number(p.get("x") ?? 16) * scale}px`;
+  const commandFixtureY = `${Number(p.get("y") ?? 16) * scale}px`;
+
+  const commandNativeDimensions: Pick<
+    React.CSSProperties,
+    "height" | "maxHeight"
+  > = {};
+
+  if (part === "list" && native) {
+    commandNativeDimensions.height = Number(p.get("height") ?? 36) * scale;
+    commandNativeDimensions.maxHeight = Number(p.get("height") ?? 36) * scale;
+  }
+
+  const position: React.CSSProperties = {
+    "--fixture-width": commandFixtureWidth,
+
+    "--fixture-x": commandFixtureX,
+
+    "--fixture-y": commandFixtureY,
+    ...commandNativeDimensions,
+  };
+
+  return position;
+};
 
 export const CommandFixture = () => {
   React.useLayoutEffect(() => {
@@ -41,18 +79,9 @@ export const CommandFixture = () => {
   const [output, setOutput] = React.useState("");
   const [open, setOpen] = React.useState(p.has("open"));
 
-  const position: React.CSSProperties = {
-    left: Number(p.get("x") ?? 16) * scale,
-    position: "absolute",
-    top: Number(p.get("y") ?? 16) * scale,
-    width: Number(p.get("width") ?? 200) * scale,
-    ...(part === "list" && native
-      ? {
-          height: Number(p.get("height") ?? 36) * scale,
-          maxHeight: Number(p.get("height") ?? 36) * scale,
-        }
-      : {}),
-  };
+  const position = readCommandReferenceLayout();
+
+  const nativeInput = native && part === "input";
 
   const inputControl = (
     <CommandInput
@@ -65,7 +94,19 @@ export const CommandFixture = () => {
       disabled={p.get("state")?.startsWith("disabled")}
       readOnly={p.get("state")?.includes("readonly")}
       maxLength={p.has("maxLength") ? Number(p.get("maxLength")) : undefined}
-      style={native && part === "input" ? position : undefined}
+      className={cn({
+        "fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width":
+          nativeInput,
+      })}
+      style={
+        nativeInput
+          ? {
+              "--fixture-width": position["--fixture-width"],
+              "--fixture-x": position["--fixture-x"],
+              "--fixture-y": position["--fixture-y"],
+            }
+          : undefined
+      }
       data-subject={
         (native && part === "input" ? "subject" : undefined) === "subject"
           ? "true"
@@ -135,7 +176,9 @@ export const CommandFixture = () => {
         shouldFilter={false}
         value={selected}
         onValueChange={(next) => {
-          if (root.current?.contains(document.activeElement)) setSelected(next);
+          if (root.current?.contains(document.activeElement) ?? false) {
+            setSelected(next);
+          }
         }}
       >
         {part === "input" ? (
@@ -146,11 +189,17 @@ export const CommandFixture = () => {
             tabIndex={-1}
             label="Native command rows"
             surface={p.get("surface") === "popup" ? "popup" : "suggestions"}
+            className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width"
+            // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve this list map's existing numeric height/maxHeight rejection and CSS cap fallback; CSS-variable substitution or new URL validation would change that contract.
             style={position}
             data-subject="true"
           >
             {labels.map((label, i) => (
-              <CommandItem key={i} value={`row-${i}`}>
+              <CommandItem
+                // oxlint-disable-next-line react-doctor/no-array-index-as-key -- This document-owned immutable query list permits duplicate labels; the ordinal also owns its existing row-i command value and native case position.
+                key={i}
+                value={`row-${i}`}
+              >
                 {label}
               </CommandItem>
             ))}
@@ -186,6 +235,7 @@ export const CommandFixture = () => {
       )}
       <output aria-label="Selected command">{output}</output>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setOutput(input.current?.tagName ?? "");

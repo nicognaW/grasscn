@@ -20,17 +20,53 @@ import {
 import { Input } from "@grasscn/web/ui/input";
 import * as React from "react";
 
+import type { FixtureLabels } from "./fixture-query-protocol";
+
 const p = new URLSearchParams(location.search);
 const native = p.has("native");
 const part = p.get("part") ?? "list";
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
 
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: the owned native case callers serialize their actual string-label arrays, or this unchanged literal default; retain the original URL read and JSON parse.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned menu-label JSON producer boundary; all reads and existing filters remain unchanged.
 const labels = JSON.parse(
   p.get("labels") ?? '["Stone","Stick","世界"]'
-) as string[];
+) as FixtureLabels;
 
 const nativeItems = labels.map((label, i) => ({ id: `row-${i}`, label }));
 const blocks = ["Stone", "Stick", "世界", "Bedrock"];
+
+const readComboboxReferenceLayout = () => {
+  const comboboxFixtureWidth = `${Number(p.get("width") ?? 200) * scale}px`;
+  const comboboxFixtureX = `${Number(p.get("x") ?? 16) * scale}px`;
+  const comboboxFixtureY = `${Number(p.get("y") ?? 16) * scale}px`;
+
+  const comboboxNativeDimensions: Pick<
+    React.CSSProperties,
+    "height" | "maxHeight"
+  > = {};
+
+  if (part === "list") {
+    comboboxNativeDimensions.height = Number(p.get("height") ?? 36) * scale;
+    comboboxNativeDimensions.maxHeight = Number(p.get("height") ?? 36) * scale;
+  }
+
+  const pos = {
+    "--fixture-width": comboboxFixtureWidth,
+
+    "--fixture-x": comboboxFixtureX,
+
+    "--fixture-y": comboboxFixtureY,
+    ...comboboxNativeDimensions,
+  };
+
+  return pos;
+};
 
 export const ComboboxFixture = () => {
   React.useLayoutEffect(() => {
@@ -59,18 +95,7 @@ export const ComboboxFixture = () => {
   const list = React.useRef<HTMLDivElement>(null);
   const anchor = useComboboxAnchor();
 
-  const pos = {
-    left: Number(p.get("x") ?? 16) * scale,
-    position: "fixed" as const,
-    top: Number(p.get("y") ?? 16) * scale,
-    width: Number(p.get("width") ?? 200) * scale,
-    ...(part === "list"
-      ? {
-          height: Number(p.get("height") ?? 36) * scale,
-          maxHeight: Number(p.get("height") ?? 36) * scale,
-        }
-      : {}),
-  };
+  const pos = readComboboxReferenceLayout();
 
   if (native) {
     return part === "input" ? (
@@ -90,7 +115,12 @@ export const ComboboxFixture = () => {
           maxLength={
             p.has("maxLength") ? Number(p.get("maxLength")) : undefined
           }
-          style={pos}
+          className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
+          style={{
+            "--fixture-width": pos["--fixture-width"],
+            "--fixture-x": pos["--fixture-x"],
+            "--fixture-y": pos["--fixture-y"],
+          }}
           data-subject="true"
         />
       </Combobox>
@@ -106,14 +136,7 @@ export const ComboboxFixture = () => {
       >
         <ComboboxInput
           showTrigger={false}
-          style={{
-            position: "fixed",
-            left: 0,
-            top: 0,
-            width: 1,
-            height: 1,
-            opacity: 0,
-          }}
+          className="fixture-placement-fixed fixture-left-0 fixture-top-0 fixture-width-1 fixture-height-1 fixture-combobox-native-anchor"
         />
         <ComboboxList
           id="subject"
@@ -121,6 +144,8 @@ export const ComboboxFixture = () => {
           tabIndex={-1}
           aria-label="Native options"
           surface={p.get("surface") === "popup" ? "popup" : "suggestions"}
+          className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve this list map's existing numeric height/maxHeight rejection and CSS cap fallback; CSS-variable substitution or new URL validation would change that contract.
           style={pos}
           data-subject="true"
         >
@@ -182,7 +207,12 @@ export const ComboboxFixture = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setAttempt(String(new FormData(e.currentTarget).get("block")));
+        setAttempt(
+          // SAFETY: this owned form produces only the string-valued text/hidden control named block, never a file. Preserve String's exact string results and absent-null result "null".
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer snapshot consumed as a string; no runtime validation.
+          (new FormData(e.currentTarget).get("block") as string | null) ??
+            "null"
+        );
       }}
     >
       <Combobox

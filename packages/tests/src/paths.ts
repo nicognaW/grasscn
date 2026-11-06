@@ -16,8 +16,8 @@ export const repositoryFile = (name: string, root = repoRoot) =>
 
 export const webFile = (name: string) => path.resolve(webRoot, name);
 
-function ownedFile(root: string, name: string) {
-  if (typeof name !== "string" || path.isAbsolute(name)) {
+const ownedFile = function ownedFile(root: string, name: string) {
+  if (path.isAbsolute(name)) {
     throw new Error("Expected an owner-relative file name");
   }
 
@@ -33,7 +33,7 @@ function ownedFile(root: string, name: string) {
   }
 
   return target;
-}
+};
 
 export const fixtureFile = (name: string, root = fixtureRoot) =>
   ownedFile(root, name);

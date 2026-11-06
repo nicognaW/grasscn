@@ -3,12 +3,13 @@ import { PNG } from "pngjs";
 
 // Explicit preview origin: the main suite's baseURL is the installed fixture.
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
+
 for (const scale of [2] as const) {
   for (const container of ["narrow", "padded"] as const) {
     test(`Chart retains its integer pixel grid in ${container} container at GUI${scale}`, async ({
       page,
     }, info) => {
-      await page.setViewportSize({ width: 1280, height: 1000 });
+      await page.setViewportSize({ height: 1000, width: 1280 });
       await page.goto(`${preview.replace(/\/$/u, "")}/docs/components/chart`);
 
       const chart = page.locator('[data-slot="chart-example"]');
@@ -18,17 +19,17 @@ for (const scale of [2] as const) {
       );
       // Isolate a real narrow/padded consumer container from unrelated page-header overflow.
       await chart.evaluate(
-        (node, { scale, container }) => {
+        (node, { scale: renderScale, container: containerKind }) => {
           const wrapper = document.createElement("div");
-          wrapper.style.width = `${(container === "narrow" ? 72 : 100) * scale}px`;
+          wrapper.style.width = `${(containerKind === "narrow" ? 72 : 100) * renderScale}px`;
           wrapper.style.overflow = "auto";
-          wrapper.dataset.integerChartContainer = container;
+          wrapper.dataset.integerChartContainer = containerKind;
           node.before(wrapper);
           wrapper.append(node);
           node.style.width = "100%";
 
-          if (container === "padded") {
-            node.style.padding = `${7 * scale}px`;
+          if (containerKind === "padded") {
+            node.style.padding = `${7 * renderScale}px`;
           }
         },
         { container, scale }
@@ -70,17 +71,19 @@ for (const scale of [2] as const) {
         for (let x = 0; x + scale <= image.width; x += scale) {
           const start = (y * image.width + x) * 4;
 
-          for (let dy = 0; dy < scale; dy++)
-            for (let dx = 0; dx < scale; dx++) {
+          for (let dy = 0; dy < scale; dy += 1) {
+            for (let dx = 0; dx < scale; dx += 1) {
               const offset = ((y + dy) * image.width + x + dx) * 4;
 
               if (
                 !image.data
                   .subarray(start, start + 4)
                   .equals(image.data.subarray(offset, offset + 4))
-              )
-                differing++;
+              ) {
+                differing += 1;
+              }
             }
+          }
         }
       }
 

@@ -3,27 +3,72 @@ import * as React from "react";
 import { MinecraftCardText } from "./minecraft-card-text";
 import { minecraftGlyphs } from "./minecraft-font";
 import { PopoverUnicodeLine } from "./minecraft-popover-unicode";
+import { isMinecraftTextContent } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-popover-text-padding-left"?: string;
+}
+
+const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
+  text: string
+) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E\n]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
+
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the shared Popover text-layout context identity used by its provider and native text receiver; accept mixed-module Fast Refresh state fallback.
 export const PopoverTextContext = React.createContext({ scale: 2, width: 214 });
 
 const advance = (char: string, bold: boolean) => {
-  const ascii = minecraftGlyphs[char.codePointAt(0)! - 32];
+  const ascii =
+    asciiGlyphs[
+      // SAFETY: Private glyph callers supply nonempty iteration characters or guarded in-bounds code units. Its first code point therefore exists.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+      (char.codePointAt(0) as number) - 32
+    ];
 
-  return (
-    (ascii?.[2] ?? getUnihexGlyph(char)?.advance ?? 0) +
-    (bold ? (ascii ? 1 : 0.5) : 0)
-  );
+  let boldAdvance = 0;
+
+  if (bold) {
+    boldAdvance = ascii ? 1 : 0.5;
+  }
+
+  return (ascii?.[2] ?? getUnihexGlyph(char)?.advance ?? 0) + boldAdvance;
 };
 
-const textWidth = (text: string, bold: boolean) =>
-  Math.ceil([...text].reduce((sum, char) => sum + advance(char, bold), 0));
+const textWidth = (text: string, bold: boolean) => {
+  let measuredGlyphWidth = 0;
 
-function wrap(text: string, maximum: number, bold: boolean) {
+  for (const glyphCharacter of text) {
+    measuredGlyphWidth += advance(glyphCharacter, bold);
+  }
+
+  return Math.ceil(measuredGlyphWidth);
+};
+
+const wrap = function wrap(text: string, maximum: number, bold: boolean) {
   const lines: string[] = [];
 
   for (const paragraph of text.split("\n")) {
-    let remaining = [...paragraph];
+    let remaining: string[] = [];
+
+    for (const bufferCharacter of paragraph) {
+      remaining.push(bufferCharacter);
+    }
 
     while (textWidth(remaining.join(""), bold) > maximum) {
       let count = 0;
@@ -54,7 +99,7 @@ function wrap(text: string, maximum: number, bold: boolean) {
   }
 
   return lines;
-}
+};
 
 export const MinecraftPopoverText = ({
   children,
@@ -66,17 +111,25 @@ export const MinecraftPopoverText = ({
   const { scale, width } = React.useContext(PopoverTextContext);
   const [, loaded] = React.useReducer((n) => n + 1, 0);
 
-  const scalar = typeof children === "string" || typeof children === "number";
+  const scalar = isMinecraftTextContent(children);
   const text = scalar ? String(children) : "";
-  const unicode = /[^\x20-\x7E\n]/.test(text);
+  const unicode = /[^\u0020-\u007E\n]/u.test(text);
 
   React.useEffect(() => {
     let active = true;
 
     if (unicode) {
-      void loadUnihex().then(() => {
-        if (active) loaded();
-      });
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
+        if (active) {
+          loaded();
+        }
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {
@@ -85,6 +138,7 @@ export const MinecraftPopoverText = ({
   }, [unicode]);
 
   if (!scalar) {
+    // oxlint-disable-next-line react/jsx-no-useless-fragment -- This opaque ReactNode fallback retains the existing ReactElement return and fragment boundary; directly returning arbitrary children changes the public return and reconciliation contract.
     return <>{children}</>;
   }
 
@@ -95,7 +149,7 @@ export const MinecraftPopoverText = ({
   if (!unicode) {
     return (
       <span className="mc-popover-text" data-mc-popover-text-ready="true">
-        <span aria-hidden="true" style={{ display: "block" }}>
+        <span aria-hidden="true" className="block">
           <MinecraftCardText bold={bold}>{text}</MinecraftCardText>
         </span>
         <span className="mc-card-accessible">{text}</span>
@@ -103,11 +157,7 @@ export const MinecraftPopoverText = ({
     );
   }
 
-  if (
-    ![...text].every(
-      (char) => /^[\x20-\x7E\n]$/.test(char) || getUnihexGlyph(char)
-    )
-  ) {
+  if (!hasSupportedParagraphGlyphs(text)) {
     return <span data-mc-popover-text-ready="false">{text}</span>;
   }
 
@@ -118,26 +168,31 @@ export const MinecraftPopoverText = ({
   return (
     <span className="mc-popover-text" data-mc-popover-text-ready="true">
       <span aria-hidden="true">
-        {lines.map((line, index) => (
-          <span
-            key={index}
-            className="mc-card-text-line"
-            style={{
-              paddingLeft:
-                (Math.floor((width - widest) / 2) +
-                  Math.floor(widest / 2) -
-                  Math.floor(widths[index] / 2)) *
-                scale,
-            }}
-          >
-            <PopoverUnicodeLine
-              text={line}
-              bold={bold}
-              scale={scale as 1 | 2 | 3}
-              width={widths[index]}
-            />
-          </span>
-        ))}
+        {lines.map((line, index) => {
+          const nativeTextLayout1: NativeTextLayoutStyle = {
+            "--mc-popover-text-padding-left": `${
+              (Math.floor((width - widest) / 2) +
+                Math.floor(widest / 2) -
+                Math.floor(widths[index] / 2)) *
+              scale
+            }px`,
+          };
+
+          return (
+            <span
+              key={index}
+              className="mc-card-text-line pl-(--mc-popover-text-padding-left)"
+              style={nativeTextLayout1}
+            >
+              <PopoverUnicodeLine
+                text={line}
+                bold={bold}
+                scale={scale}
+                width={widths[index]}
+              />
+            </span>
+          );
+        })}
       </span>
       <span className="mc-card-accessible">{text}</span>
     </span>

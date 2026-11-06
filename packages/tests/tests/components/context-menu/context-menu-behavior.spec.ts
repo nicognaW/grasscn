@@ -1,13 +1,18 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import {
+  recordAudioPlayback,
+  recordedAudioPlayback,
+} from "@tests/harness/audio-playback";
 
-async function openMenu(page: Page, query = "") {
+const openMenu = async function openMenu(page: Page, query = "") {
   await page.goto(`/?component=context-menu&${query}`);
   await page
     .locator("#context-hit")
     .click({ button: "right", position: { x: 24, y: 24 } });
-}
+};
 
 test("Context Menu uses pointer anchoring and skips disabled items with the keyboard", async ({
   page,
@@ -15,25 +20,29 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
   await openMenu(page);
   const menu = page.getByRole("menu");
   await expect(menu).toBeVisible();
-  const trigger = (await page.locator("#context-hit").boundingBox())!;
+  const trigger = await page.locator("#context-hit").boundingBox();
+  expectNotNull(trigger, "Missing required bounding box: trigger");
 
   const border = await page.locator("#context-hit").evaluate((node) => {
     const style = getComputedStyle(node);
 
     return [
+      // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
       Number.parseFloat(style.borderLeftWidth),
+      // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
       Number.parseFloat(style.borderTopWidth),
     ];
   });
 
-  const bounds = (await menu.boundingBox())!;
+  const bounds = await menu.boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   expect([bounds.x, bounds.y]).toEqual([
     trigger.x + border[0] + 24 + 4,
     trigger.y + border[1] + 24,
   ]);
   await page.keyboard.press("Home");
   await expect(
-    page.getByRole("menuitem", { name: /Resume game/ })
+    page.getByRole("menuitem", { name: /Resume game/u })
   ).toBeFocused();
   await page.keyboard.press("ArrowDown");
   await expect(
@@ -61,7 +70,7 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
 
 test("Context Menu invokes an action once and closes", async ({ page }) => {
   await openMenu(page);
-  await page.getByRole("menuitem", { name: /Resume game/ }).click();
+  await page.getByRole("menuitem", { name: /Resume game/u }).click();
   await expect(page.getByLabel("Menu actions", { exact: true })).toHaveText(
     "1"
   );
@@ -175,27 +184,14 @@ test("Context Menu follows RTL submenu navigation", async ({ page }) => {
 test("Context Menu opening and hovering stay silent; checkbox activation plays the original click once", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).__contextVoices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).__contextVoices.push({
-        rate: this.playbackRate,
-        source: this.src,
-        volume: this.volume,
-      });
-
-      return Promise.resolve();
-    };
-  });
+  await recordAudioPlayback(page);
   await openMenu(page, "keepOpen");
-  await page.getByRole("menuitem", { name: /Resume game/ }).hover();
-  expect(await page.evaluate(() => (window as any).__contextVoices)).toEqual(
-    []
-  );
+  await page.getByRole("menuitem", { name: /Resume game/u }).hover();
+  expect(await recordedAudioPlayback(page)).toEqual([]);
   await page
     .getByRole("menuitemcheckbox", { exact: true, name: "Show coordinates" })
     .click();
-  expect(await page.evaluate(() => (window as any).__contextVoices)).toEqual([
+  expect(await recordedAudioPlayback(page)).toEqual([
     { rate: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
 });

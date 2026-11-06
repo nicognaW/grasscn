@@ -15,32 +15,37 @@ export default defineConfig({
     browserName: "chromium",
     channel: "msedge",
     deviceScaleFactor: 1,
-    launchOptions: process.env.GRASSCN_BROWSER_PROXY_PORT
-      ? {
-          args: [
-            `--proxy-server=http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}`,
-            "--proxy-bypass-list=<-loopback>",
-          ],
-        }
-      : undefined,
-    proxy: process.env.GRASSCN_BROWSER_PROXY_PORT
-      ? { server: `http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}` }
-      : undefined,
+    launchOptions:
+      (process.env.GRASSCN_BROWSER_PROXY_PORT?.length ?? 0) > 0
+        ? {
+            args: [
+              `--proxy-server=http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}`,
+              "--proxy-bypass-list=<-loopback>",
+            ],
+          }
+        : undefined,
+    proxy:
+      (process.env.GRASSCN_BROWSER_PROXY_PORT?.length ?? 0) > 0
+        ? {
+            server: `http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}`,
+          }
+        : undefined,
     viewport: { height: 900, width: 1280 },
   },
-  webServer: process.env.GRASSCN_FIXTURE_URL
-    ? undefined
-    : [
-        {
-          command: "bun run dev",
-          url: "http://127.0.0.1:5174",
-          reuseExistingServer: !process.env.CI,
-        },
-        {
-          command: "bun run --cwd ../../apps/web dev",
-          url: "http://127.0.0.1:5176",
-          reuseExistingServer: !process.env.CI,
-        },
-      ],
+  webServer:
+    (process.env.GRASSCN_FIXTURE_URL ?? "")
+      ? undefined
+      : [
+          {
+            command: "bun run dev",
+            reuseExistingServer: !(process.env.CI ?? ""),
+            url: "http://127.0.0.1:5174",
+          },
+          {
+            command: "bun run --cwd ../../apps/web dev",
+            reuseExistingServer: !(process.env.CI ?? ""),
+            url: "http://127.0.0.1:5176",
+          },
+        ],
   workers: 1,
 });

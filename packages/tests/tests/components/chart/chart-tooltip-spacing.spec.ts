@@ -14,6 +14,20 @@ for (const scale of [1, 2, 3]) {
     await page.goto(`/?${params}`);
     const tooltip = page.locator(".mc-chart-tooltip");
     await expect(tooltip).toBeVisible();
+    await tooltip.locator("..").evaluate(async (wrapper) => {
+      await Promise.all(
+        wrapper
+          .getAnimations()
+          .filter(
+            (animation) =>
+              animation instanceof CSSTransition &&
+              animation.transitionProperty === "transform"
+          )
+          .map(async (animation) => {
+            await animation.finished;
+          })
+      );
+    });
     const tooltipScale = Math.max(2, scale);
     expect(
       await tooltip.evaluate((element) =>

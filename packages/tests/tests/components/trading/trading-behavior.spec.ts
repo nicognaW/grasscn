@@ -1,23 +1,40 @@
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { tradingSounds as clips } from "@grasscn/web/ui/minecraft-trading-sound-assets";
 import { referenceFile } from "@tests/paths";
 
+import type TradingSoundReference from "../../../fixtures/reference/native-expansion/trading-sound-provenance.json";
+import type { AdventureFixtureSample } from "../../../fixtures/renderer/fixture-query-protocol";
+
+interface TradingAudioPlayback {
+  pitch: number;
+  src: string;
+  volume: number;
+}
+
+interface TradingAudioWindow extends Window {
+  tradeAudio: TradingAudioPlayback[];
+}
+
 const base =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 
-const url = (sample: object = {}) =>
+const url = (sample: Partial<AdventureFixtureSample> = {}) =>
   `${base}?scale=2&case=${encodeURIComponent(JSON.stringify({ element: "trading", value: 0, ...sample }))}`;
 
 test("trading original sound bytes decode in the browser", async ({ page }) => {
+  // SAFETY: this exact retained producer file defines the parsed sound provenance; keep its fresh read and all existing asset checks.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact sound-provenance JSON producer boundary.
   const provenance = JSON.parse(
     readFileSync(
       referenceFile("native-expansion/trading-sound-provenance.json"),
       "utf-8"
     )
-  );
+  ) as typeof TradingSoundReference;
+  // oxlint-enable typescript/no-unsafe-type-assertion
 
   expect(clips).toHaveLength(3);
 
@@ -33,19 +50,21 @@ test("trading original sound bytes decode in the browser", async ({ page }) => {
 
   await page.goto(url());
 
-  const durations = await page.evaluate(async (clips) => {
+  const durations = await page.evaluate(async (audioClips) => {
     const context = new AudioContext();
 
     try {
       return await Promise.all(
-        clips.map(
-          async (clip) =>
-            (
-              await context.decodeAudioData(
-                await (await fetch(clip.src)).arrayBuffer()
-              )
-            ).duration
-        )
+        audioClips.map(async (clip) => {
+          const decodeAudioData = context.decodeAudioData.bind(context);
+          const response = await fetch(clip.src);
+
+          const awaitedDecodeAudioData1 = await decodeAudioData(
+            await response.arrayBuffer()
+          );
+
+          return awaitedDecodeAudioData1.duration;
+        })
       );
     } finally {
       await context.close();
@@ -59,7 +78,9 @@ test("trading selection, result feedback and native scrollbar controls", async (
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).tradeAudio = [];
+    // SAFETY: this initScript initializes the exact test-owned pitch/source/volume log here.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    (window as typeof window & TradingAudioWindow).tradeAudio = [];
 
     class RecordedAudio {
       src: string;
@@ -69,22 +90,23 @@ test("trading selection, result feedback and native scrollbar controls", async (
         this.src = src;
       }
       play() {
-        (window as any).tradeAudio.push({
+        // SAFETY: this class method writes its own playbackRate, src and volume to the log initialized above.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        (window as typeof window & TradingAudioWindow).tradeAudio.push({
           pitch: this.playbackRate,
           src: this.src,
           volume: this.volume,
         });
-
-        return;
       }
     }
 
-    (window as any).Audio = RecordedAudio;
+    Object.defineProperty(window, "Audio", { value: RecordedAudio });
   });
   await page.goto(url());
   await expect
-    .poll(async () =>
-      page.evaluate(() => document.documentElement.dataset.tradingRef)
+    .poll(
+      async () =>
+        await page.evaluate(() => document.documentElement.dataset.tradingRef)
     )
     .toBe("trading");
   await page.getByRole("button", { exact: true, name: "Offer 2" }).click();
@@ -94,8 +116,15 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await page
     .getByRole("button", { exact: true, name: "Trade for Reward 2" })
     .click();
-  let calls = await page.evaluate(() => (window as any).tradeAudio);
-  expect(calls.map((c: any) => c.volume)).toEqual([0.25, 1]);
+
+  let calls = await page.evaluate(
+    () =>
+      // SAFETY: this test's initScript initializes this precise playback log before navigation.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      (window as typeof window & TradingAudioWindow).tradeAudio
+  );
+
+  expect(calls.map((c) => c.volume)).toEqual([0.25, 1]);
   expect(calls[1].pitch).toBe(1);
   expect(clips.some((c) => c.src === calls[1].src)).toBe(true);
   const scroll = page.getByRole("scrollbar", { name: "Trade offers scroll" });
@@ -113,17 +142,30 @@ test("trading selection, result feedback and native scrollbar controls", async (
   });
 
   await expect(disabled).toBeDisabled();
-  calls = await page.evaluate(() => (window as any).tradeAudio);
+  calls = await page.evaluate(
+    () =>
+      // SAFETY: this test's initScript initializes this precise playback log before navigation.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      (window as typeof window & TradingAudioWindow).tradeAudio
+  );
   expect(calls).toHaveLength(3);
   await disabled.hover({ force: true });
-  expect(await page.evaluate(() => (window as any).tradeAudio.length)).toBe(3);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: this test's initScript initializes this precise playback log before navigation.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        (window as typeof window & TradingAudioWindow).tradeAudio.length
+    )
+  ).toBe(3);
   await scroll.focus();
   await scroll.press("Home");
   await expect(scroll).toHaveAttribute("aria-valuenow", "0");
   await scroll.hover();
   await page.mouse.wheel(0, 100);
   await expect(scroll).toHaveAttribute("aria-valuenow", "1");
-  const box = (await scroll.boundingBox())!;
+  const box = await scroll.boundingBox();
+  expectNotNull(box, "Missing required bounding box: box");
   await page.mouse.move(box.x + 3, box.y + box.height - 8);
   await page.mouse.down();
   await page.mouse.move(box.x + 3, box.y + box.height - 2);
@@ -134,5 +176,12 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await page
     .getByRole("button", { exact: true, name: "Trade for Reward 2" })
     .click();
-  expect(await page.evaluate(() => (window as any).tradeAudio)).toEqual([]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: this test's initScript initializes this precise playback log before navigation.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        (window as typeof window & TradingAudioWindow).tradeAudio
+    )
+  ).toEqual([]);
 });

@@ -3,12 +3,21 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { TestInfo } from "@playwright/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type BoundaryReference1 from "../reference/pagination-arrow/manifest.json";
+
 const repo = path.resolve(".");
 
-function compare(actual: PNG, expected: PNG, info: any, c: any, part: string) {
+const compare = function compare(
+  actual: PNG,
+  expected: PNG,
+  info: TestInfo,
+  c: { name: string },
+  part: string
+) {
   let mismatchedPixels = 0;
   const diff = new PNG({ height: actual.height, width: actual.width });
 
@@ -36,7 +45,7 @@ function compare(actual: PNG, expected: PNG, info: any, c: any, part: string) {
     })
   );
   expect(mismatchedPixels).toBe(0);
-}
+};
 
 const runtimeErrors = new WeakMap<object, string[]>();
 
@@ -57,14 +66,17 @@ test.afterEach(({ page, browser }, info) => {
   expect(runtimeErrors.get(page)).toEqual([]);
 });
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile(
-      path.join(repo, "tests/reference/pagination-arrow/manifest.json")
-    ),
-    "utf-8"
-  )
-);
+const manifest =
+  // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+  JSON.parse(
+    readFileSync(
+      pixelPerfectFile(
+        path.join(repo, "tests/reference/pagination-arrow/manifest.json")
+      ),
+      "utf-8"
+    )
+  ) as typeof BoundaryReference1;
 
 for (const c of manifest.cases) {
   test(`Carousel original native recipe arrow:${c.name}`, async ({

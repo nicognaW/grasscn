@@ -17,7 +17,7 @@
     display: block;
     image-rendering: pixelated;
   }
-  .mc-player-preview > span[role="status"] {
+  .mc-player-preview > output.mc-player-preview-status {
     position: absolute;
     inset: 0;
     display: grid;
@@ -33,5 +33,28 @@
     height: 1px;
     clip-path: inset(50%);
     overflow: hidden;
+  }
+}
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-player-preview-1 {
+    height: 100%;
+    transform: scaleY(-1);
+    width: 100%;
+  }
+}
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-player-preview-1 {
+    visibility: var(--mc-dynamic-player-preview-1-visibility);
+  }
+}
+
+@layer components {
+  .mc-owned-base-player-preview-1 {
+    height: var(--mc-z-player-preview-base-1-height);
+    width: var(--mc-z-player-preview-base-1-width);
   }
 }

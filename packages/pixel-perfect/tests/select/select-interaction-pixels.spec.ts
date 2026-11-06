@@ -1,16 +1,34 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectTruthy } from "@grasscn/tests/assertions";
 import { compareSelectPixels } from "@ppt/harness/families/select-pixel-compare";
+import type { SelectReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+type SelectInteractionCase =
+  | (Omit<SelectReferenceCase, "element" | "labels"> & {
+      element: "select-trigger";
+      labels?: string[];
+    })
+  | (Omit<SelectReferenceCase, "element" | "labels"> & {
+      element: "select-list";
+      labels: string[];
+    });
+
+interface SelectInteractionManifest {
+  cases: SelectInteractionCase[];
+}
+
+// SAFETY: The retained Select producer emits432trigger cases and366list cases; every list supplies its labels, and the source renderer reads labels only for select-list.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact fixed retained Select producer; preserve this original fresh read and parse.
 const manifest = JSON.parse(
   readFileSync(
     pixelPerfectFile("tests/reference/select/manifest.json"),
     "utf-8"
   )
-);
+) as SelectInteractionManifest;
 
 for (const scale of [1, 2, 3]) {
   for (const mode of ["pointer", "keyboard"]) {
@@ -18,25 +36,26 @@ for (const scale of [1, 2, 3]) {
       page,
     }, testInfo) => {
       const c = manifest.cases.find(
-        (c: any) =>
-          c.element === "select-list" &&
-          c.width === 300 &&
-          c.height === 80 &&
-          c.labels.length === 3 &&
-          c.selectedIndex === 1 &&
-          c.state === "focus" &&
-          c.background === "#202020" &&
-          c.disabledIndex == null &&
-          c.scale === scale
+        (selectListCase) =>
+          selectListCase.element === "select-list" &&
+          selectListCase.width === 300 &&
+          selectListCase.height === 80 &&
+          selectListCase.labels.length === 3 &&
+          selectListCase.selectedIndex === 1 &&
+          selectListCase.state === "focus" &&
+          selectListCase.background === "#202020" &&
+          selectListCase.disabledIndex === undefined &&
+          selectListCase.scale === scale
       );
 
-      expect(c).toBeTruthy();
-      await page.setViewportSize({ width: 1536, height: 900 });
+      expectTruthy(c);
+      await page.setViewportSize({ height: 900, width: 1536 });
       await page.goto(`/?component=select&popper=1&scale=${scale}`);
       const trigger = page.getByRole("combobox");
 
-      if (mode === "pointer") await trigger.click();
-      else {
+      if (mode === "pointer") {
+        await trigger.click();
+      } else {
         await trigger.focus();
         await page.keyboard.press("ArrowDown");
       }
@@ -46,9 +65,9 @@ for (const scale of [1, 2, 3]) {
       await popup.evaluate(
         (node, p) =>
           Object.assign(node.style, {
+            left: `${p.x}px`,
             position: "fixed",
-            left: p.x + "px",
-            top: p.y + "px",
+            top: `${p.y}px`,
           }),
         { x: c.x * scale, y: c.y * scale }
       );
@@ -59,19 +78,23 @@ for (const scale of [1, 2, 3]) {
       await page.mouse.move(0, 0);
 
       const creative = page.getByRole("option", {
-        name: "Creative",
         exact: true,
+        name: "Creative",
       });
 
-      if (mode === "pointer") await creative.hover();
-      else {
+      if (mode === "pointer") {
+        await creative.hover();
+      } else {
         await expect(
-          page.getByRole("option", { name: "Survival", exact: true })
+          page.getByRole("option", { exact: true, name: "Survival" })
         ).toBeFocused();
         await page.keyboard.press("ArrowDown");
       }
 
-      if (mode === "keyboard") await expect(creative).toBeFocused();
+      if (mode === "keyboard") {
+        await expect(creative).toBeFocused();
+      }
+
       await expect(creative).toHaveAttribute("data-highlighted", "");
       await expect(
         page.getByLabel("Select changes", { exact: true })
@@ -88,11 +111,11 @@ for (const scale of [1, 2, 3]) {
       writeFileSync(
         testInfo.outputPath("metrics.json"),
         JSON.stringify({
+          alias: mode,
+          case: c.name,
           component: "select",
           manifest: "tests/reference/select/manifest.json",
-          case: c.name,
           part: "list",
-          alias: mode,
         })
       );
       await testInfo.attach("actual", {

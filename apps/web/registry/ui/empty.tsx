@@ -6,9 +6,17 @@ import * as React from "react";
 
 import { MinecraftProse } from "./minecraft-prose";
 import type { MinecraftProseProps } from "./minecraft-prose";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 
 import "./minecraft-empty.css";
+
+interface EmptyScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const EmptyScale = React.createContext<1 | 2 | 3>(2);
 
@@ -28,11 +36,15 @@ const Empty = ({
   const textNode = React.useRef<HTMLElement>(null);
   const [position, setPosition] = React.useState({ x: 0, y: 0 });
 
-  React.useImperativeHandle(ref, () => node.current!, []);
-  const plain = typeof children === "string" || typeof children === "number";
-  React.useLayoutEffect(() => {
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
+  const plain = isMinecraftTextContent(children);
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!plain || !node.current || !textNode.current) {
-      return;
+      return undefined;
     }
 
     const root = node.current;
@@ -57,7 +69,16 @@ const Empty = ({
     return () => {
       observer.disconnect();
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Children change the committed text node and its measured size; preserve immediate centering and observer rebinding.
   }, [plain, children, scale]);
+
+  const textPosition: React.CSSProperties & {
+    "--mc-empty-left": string;
+    "--mc-empty-top": string;
+  } = {
+    "--mc-empty-left": `${position.x}px`,
+    "--mc-empty-top": `${position.y}px`,
+  };
 
   return (
     <EmptyScale value={scale}>
@@ -66,11 +87,10 @@ const Empty = ({
         data-slot="empty"
         data-mc-empty-native={plain ? "true" : undefined}
         className={cn(`mc-empty`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): EmptyScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       >
         {plain ? (
@@ -78,8 +98,8 @@ const Empty = ({
             ref={textNode}
             scale={scale}
             as="div"
-            className="mc-empty-native-text"
-            style={{ left: position.x, top: position.y }}
+            className="mc-empty-native-text top-(--mc-empty-top) left-(--mc-empty-left)"
+            style={textPosition}
           >
             {children}
           </MinecraftProse>
@@ -91,15 +111,13 @@ const Empty = ({
   );
 };
 
-const EmptyHeader = ({ className, ...props }: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="empty-header"
-      className={cn(`mc-empty-header`, className)}
-      {...props}
-    />
-  );
-};
+const EmptyHeader = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    data-slot="empty-header"
+    className={cn(`mc-empty-header`, className)}
+    {...props}
+  />
+);
 
 const emptyMediaVariants = cva("mc-empty-media", {
   defaultVariants: { variant: "default" },
@@ -158,15 +176,13 @@ const EmptyDescription = ({
   );
 };
 
-const EmptyContent = ({ className, ...props }: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="empty-content"
-      className={cn(`mc-empty-content`, className)}
-      {...props}
-    />
-  );
-};
+const EmptyContent = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    data-slot="empty-content"
+    className={cn(`mc-empty-content`, className)}
+    {...props}
+  />
+);
 
 export {
   Empty,

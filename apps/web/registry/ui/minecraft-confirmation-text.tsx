@@ -2,10 +2,34 @@ import * as React from "react";
 
 import { confirmationUnihexAtlas } from "./minecraft-confirmation-atlas";
 import { minecraftGlyphs } from "./minecraft-font";
+import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-confirmation-text-padding-left"?: string;
+  "--mc-confirmation-text-width"?: string;
+}
+
+const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
+  text: string
+) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E\n]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the shared Confirmation text context identity consumed by AlertDialog layout and its text renderer; accept mixed-module Fast Refresh state fallback.
 export const ConfirmationTextContext = React.createContext<{
   scale: number;
   contentWidth: number;
@@ -14,14 +38,25 @@ export const ConfirmationTextContext = React.createContext<{
 }>({ contentWidth: 462, scale: 2 });
 
 const advance = (char: string) =>
-  minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
+  minecraftGlyphs[
+    // SAFETY: Private glyph callers supply nonempty iteration characters or guarded in-bounds code units. Its first code point therefore exists.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+    (char.codePointAt(0) as number) - 32
+  ]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   0;
 
-const widthOf = (text: string) =>
-  Math.ceil([...text].reduce((sum, char) => sum + advance(char), 0));
+const widthOf = (text: string) => {
+  let measuredGlyphWidth = 0;
 
-function wrap(text: string, maximum: number) {
+  for (const glyphCharacter of text) {
+    measuredGlyphWidth += advance(glyphCharacter);
+  }
+
+  return Math.ceil(measuredGlyphWidth);
+};
+
+const wrap = function wrap(text: string, maximum: number) {
   const lines: string[] = [];
 
   for (let remaining of text.split("\n")) {
@@ -54,11 +89,14 @@ function wrap(text: string, maximum: number) {
   }
 
   return lines;
-}
+};
 
-export function confirmationButtonText(children: React.ReactNode) {
-  return (typeof children === "string" || typeof children === "number") &&
-    /[^\u0020-\u007E]/.test(String(children)) ? (
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the existing AlertDialog button-text adapter import path shared with its native text renderer; accept mixed-module Fast Refresh state fallback.
+export const confirmationButtonText = function confirmationButtonText(
+  children: React.ReactNode
+): React.ReactNode {
+  return isMinecraftTextContent(children) &&
+    /[^\u0020-\u007E]/u.test(String(children)) ? (
     <MinecraftUnicodeLabel
       text={String(children)}
       atlas={confirmationUnihexAtlas}
@@ -66,7 +104,7 @@ export function confirmationButtonText(children: React.ReactNode) {
   ) : (
     children
   );
-}
+};
 
 export const MinecraftConfirmationText = ({
   children,
@@ -85,15 +123,24 @@ export const MinecraftConfirmationText = ({
   const [, loaded] = React.useReducer((n) => n + 1, 0);
 
   const unicode =
-    typeof children === "string" && /[^\x20-\x7E\n]/.test(children);
+    isMinecraftTextContent(children) &&
+    /[^\u0020-\u007E\n]/u.test(String(children));
 
   React.useEffect(() => {
     let active = true;
 
     if (unicode) {
-      void loadUnihex().then(() => {
-        if (active) loaded();
-      });
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
+        if (active) {
+          loaded();
+        }
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {
@@ -102,23 +149,30 @@ export const MinecraftConfirmationText = ({
   }, [unicode]);
 
   if (
-    (typeof children !== "string" && typeof children !== "number") ||
-    ![...String(children)].every(
-      (char) => /^[\x20-\x7E\n]$/.test(char) || getUnihexGlyph(char)
-    )
+    !isMinecraftTextContent(children) ||
+    !hasSupportedParagraphGlyphs(String(children))
   ) {
     return <span>{children}</span>;
   }
 
   const text = String(children);
 
-  const allLines =
-    text === "" ? [] : title && !compact ? [text] : wrap(text, contentWidth);
+  let selectedAllLines: string[];
+
+  if (text === "") {
+    selectedAllLines = [];
+  } else if (title && !compact) {
+    selectedAllLines = [text];
+  } else {
+    selectedAllLines = wrap(text, contentWidth);
+  }
+
+  const allLines = selectedAllLines;
 
   const lines = compact ? allLines : allLines.slice(0, title ? 1 : 15);
 
   if (!compact && !title && allLines.length > 15) {
-    let last = lines[14];
+    let { 14: last } = lines;
     const limit = widthOf(last) - widthOf("...");
 
     while (last.length && widthOf(last) > limit) {
@@ -131,18 +185,33 @@ export const MinecraftConfirmationText = ({
   const widths = lines.map(widthOf);
   const widest = Math.max(0, ...widths);
 
-  const nativeLines =
-    text === ""
-      ? []
-      : title
-        ? [text]
-        : compact
-          ? wrap(text, nativeContentWidth)
-          : allLines;
+  const planNativeLines = () => {
+    let selectedNativeLines: string[];
+
+    if (text === "") {
+      selectedNativeLines = [];
+    } else if (title) {
+      selectedNativeLines = [text];
+    } else if (compact) {
+      selectedNativeLines = wrap(text, nativeContentWidth);
+    } else {
+      selectedNativeLines = allLines;
+    }
+
+    const nativeLines = selectedNativeLines;
+
+    return nativeLines;
+  };
+
+  const nativeLines = planNativeLines();
+
+  const nativeTextLayout1: NativeTextLayoutStyle = {
+    "--mc-confirmation-text-width": `${widest * scale}px`,
+  };
 
   return (
     <span
-      className="mc-confirmation-text"
+      className="mc-confirmation-text block w-(--mc-confirmation-text-width)"
       data-mc-confirmation-native-height={
         Math.min(title ? 1 : 15, nativeLines.length) * 9 * scale
       }
@@ -151,29 +220,33 @@ export const MinecraftConfirmationText = ({
           ? Math.max(0, ...text.split("\n").map(widthOf)) * scale
           : undefined
       }
-      style={{ display: "block", width: widest * scale }}
+      style={nativeTextLayout1}
     >
       <span aria-hidden="true">
-        {lines.map((line, index) => (
-          <span
-            key={index}
-            className="mc-card-text-line"
-            style={{
-              paddingLeft:
-                (Math.floor(widest / 2) - Math.floor(widths[index] / 2)) *
-                scale,
-            }}
-          >
-            {/[^\x20-\x7E]/.test(line) ? (
-              <MinecraftUnicodeLabel
-                text={line}
-                atlas={confirmationUnihexAtlas}
-              />
-            ) : (
-              <MinecraftText>{line}</MinecraftText>
-            )}
-          </span>
-        ))}
+        {lines.map((line, index) => {
+          const nativeTextLayout2: NativeTextLayoutStyle = {
+            "--mc-confirmation-text-padding-left": `${
+              (Math.floor(widest / 2) - Math.floor(widths[index] / 2)) * scale
+            }px`,
+          };
+
+          return (
+            <span
+              key={index}
+              className="mc-card-text-line pl-(--mc-confirmation-text-padding-left)"
+              style={nativeTextLayout2}
+            >
+              {/[^\u0020-\u007E]/u.test(line) ? (
+                <MinecraftUnicodeLabel
+                  text={line}
+                  atlas={confirmationUnihexAtlas}
+                />
+              ) : (
+                <MinecraftText>{line}</MinecraftText>
+              )}
+            </span>
+          );
+        })}
       </span>
       <span className="mc-dialog-accessible">{text}</span>
     </span>

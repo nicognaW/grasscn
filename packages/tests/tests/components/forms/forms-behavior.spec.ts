@@ -69,14 +69,19 @@ test("Field horizontal and vertical orientations change geometry and preserve ke
   page,
 }) => {
   for (const direction of ["horizontal", "vertical"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(`/?component=field&orientation=${direction}`);
     const field = page.locator("[data-slot=field]");
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     expect(await field.evaluate((n) => getComputedStyle(n).flexDirection)).toBe(
       direction === "horizontal" ? "row" : "column"
     );
     const input = page.getByRole("textbox", { name: "World name" });
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await input.focus();
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await input.press("Tab");
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(
       page.getByRole("button", { exact: true, name: "Disable fields" })
     ).toBeFocused();

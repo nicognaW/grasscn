@@ -33,7 +33,6 @@ const rgbaDifferences = (actual: PNG, expected: PNG) => {
 pixelPerfectTest(
   "default layout documentation Separator and Progress match retained native cases",
   async ({ page }, info) => {
-    /* eslint-disable no-await-in-loop -- Apply each declared browser state and capture its evidence before changing that same page. */
     for (const [slug, slot, names] of [
       [
         "separator",
@@ -42,7 +41,9 @@ pixelPerfectTest(
       ],
       ["progress", "progress", ["progress-c6-s2.png"]],
     ] as const) {
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await page.goto(`${origin}/docs/components/${slug}`);
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await page.mouse.move(0, 0);
 
       const elements = page
@@ -52,6 +53,7 @@ pixelPerfectTest(
 
       for (let index = 0; index < names.length; index += 1) {
         const manifest = parseNativeManifest(
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
           await readFile(
             new URL(`../../reference/${slug}/manifest.json`, import.meta.url),
             "utf-8"
@@ -60,6 +62,7 @@ pixelPerfectTest(
 
         const name = names[index];
 
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
         const bytes = await readFile(
           new URL(`../../reference/${slug}/captures/${name}`, import.meta.url)
         );
@@ -69,6 +72,7 @@ pixelPerfectTest(
         );
 
         const expected = PNG.sync.read(bytes);
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
         const actualBytes = await elements.nth(index).screenshot();
         const actual = PNG.sync.read(actualBytes);
 
@@ -77,10 +81,12 @@ pixelPerfectTest(
         corrupt.data[0] ^= 1;
         expect(rgbaDifferences(corrupt, expected)).toBe(1);
         const differentPixels = rgbaDifferences(actual, expected);
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
         await writeFile(
           info.outputPath(`${slug}-${index}-actual.png`),
           actualBytes
         );
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
         await writeFile(
           info.outputPath(`${slug}-${index}-metrics.json`),
           JSON.stringify({
@@ -90,10 +96,12 @@ pixelPerfectTest(
             totalPixels: actual.width * actual.height,
           })
         );
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
         await info.attach(`${slug}-${index}-actual.png`, {
           body: actualBytes,
           contentType: "image/png",
         });
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
         await info.attach(`${slug}-${index}-metrics.json`, {
           body: Buffer.from(
             JSON.stringify({
@@ -107,6 +115,5 @@ pixelPerfectTest(
         expect(differentPixels, name).toBe(0);
       }
     }
-    /* eslint-enable no-await-in-loop */
   }
 );

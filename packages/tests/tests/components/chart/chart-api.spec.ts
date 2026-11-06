@@ -1,15 +1,21 @@
 import { writeFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@grasscn/tests/test";
 import { PNG } from "pngjs";
 
+const pageErrors = new WeakMap<Page, string[]>();
+
 test.beforeEach(({ page }) => {
-  (page as any).__errors = [];
-  page.on("pageerror", (e) => (page as any).__errors.push(e.message));
+  const errors: string[] = [];
+  pageErrors.set(page, errors);
+  page.on("pageerror", (error) => {
+    errors.push(error.message);
+  });
 });
 
 test.afterEach(({ page, browser }, info) => {
-  const errors = (page as any).__errors;
+  const errors = pageErrors.get(page);
   writeFileSync(
     info.outputPath("runtime.json"),
     JSON.stringify({ browser: browser.version(), pageErrors: errors })
@@ -61,8 +67,18 @@ test("ChartLegendContent preserves labels, custom icons and CJK bitmap readiness
     legend.locator("[data-mc-label-layout-ready]").first()
   ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-  for (const text of await legend.locator("[data-mc-label-ready]").all()) {
-    await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems4 = await legend.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults4 = await Promise.allSettled(
+    readOnlyItems4.map(async (text) => {
+      await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult4 of readOnlyResults4) {
+    if (readOnlyResult4.status === "rejected") {
+      throw readOnlyResult4.reason;
+    }
   }
 
   await page.goto("/?component=chart&hideIcon=1");
@@ -123,7 +139,7 @@ test("Profiler WebGL rerenders changed data without losing its context", async (
   expect(
     await plot
       .locator("canvas")
-      .evaluate((n) => (n as HTMLCanvasElement).getContext("2d") !== null)
+      .evaluate((n: HTMLCanvasElement) => n.getContext("2d") !== null)
   ).toBe(true);
 });
 
@@ -131,12 +147,15 @@ test("Profiler recovers transient GPU creation failures without unmounting its c
   page,
 }) => {
   await page.addInitScript(() => {
+    // oxlint-disable-next-line typescript/unbound-method -- Capture the original browser method before the test stub replaces it; every delegated call uses original.apply(this, args) with the same canvas receiver.
     const original = HTMLCanvasElement.prototype.getContext;
     let attempts = 0;
+    // SAFETY: every original getContext overload delegates to the captured browser method with the same receiver/arguments; the first two webgl2 attempts return null, a permitted result for that overload.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact captured Canvas getContext overload-preserving test stub.
     HTMLCanvasElement.prototype.getContext = function getContext(
       this: HTMLCanvasElement,
-      kind: any,
-      ...args: any[]
+      kind: Parameters<typeof original>[0],
+      ...args: [options?: Parameters<typeof original>[1]]
     ) {
       if (kind === "webgl2") {
         const previousAttempts = attempts;
@@ -147,8 +166,10 @@ test("Profiler recovers transient GPU creation failures without unmounting its c
         }
       }
 
-      return original.apply(this, [kind, ...args] as any);
-    } as any;
+      return original.apply(this, [kind, ...args] satisfies Parameters<
+        typeof original
+      >);
+    } as typeof original;
   });
   await page.goto("/?component=chart");
   const plot = page.locator("#reactive-pie");
@@ -169,16 +190,25 @@ test("pixel shapes follow the same ChartConfig theme variables as Recharts SVG s
   const canvas = page.locator("#themed-pixels canvas");
 
   const hasColor = async (color: number[]) =>
-    canvas.evaluate((element: HTMLCanvasElement, color) => {
-      const pixels = element
-        .getContext("2d")!
-        .getImageData(0, 0, element.width, element.height).data;
+    await canvas.evaluate((element: HTMLCanvasElement, expectedColor) => {
+      const requiredContext50 = element.getContext("2d");
+
+      if (requiredContext50 === null) {
+        throw new Error("Missing required canvas context");
+      }
+
+      const pixels = requiredContext50.getImageData(
+        0,
+        0,
+        element.width,
+        element.height
+      ).data;
 
       for (let i = 0; i < pixels.length; i += 4) {
         if (
-          pixels[i] === color[0] &&
-          pixels[i + 1] === color[1] &&
-          pixels[i + 2] === color[2]
+          pixels[i] === expectedColor[0] &&
+          pixels[i + 1] === expectedColor[1] &&
+          pixels[i + 2] === expectedColor[2]
         ) {
           return true;
         }
@@ -187,8 +217,8 @@ test("pixel shapes follow the same ChartConfig theme variables as Recharts SVG s
       return false;
     }, color);
 
-  await expect.poll(async () => hasColor([34, 221, 68])).toBe(true);
+  await expect.poll(async () => await hasColor([34, 221, 68])).toBe(true);
   await page.locator("#theme").click();
-  await expect.poll(async () => hasColor([0, 170, 17])).toBe(true);
+  await expect.poll(async () => await hasColor([0, 170, 17])).toBe(true);
   expect(await hasColor([34, 221, 68])).toBe(false);
 });

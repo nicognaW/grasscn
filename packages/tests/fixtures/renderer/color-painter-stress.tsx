@@ -5,21 +5,38 @@ import { MinecraftColorUnicodeLabel } from "@grasscn/web/ui/minecraft-color-unic
 import { minecraftItemAtlas } from "@grasscn/web/ui/minecraft-item-atlas";
 import * as React from "react";
 
+interface ColorPainterReferenceStyle extends React.CSSProperties {
+  "--mc-pixel": string;
+  "--mc-scale": 1 | 2 | 3;
+}
+
+const painterInkClasses = [
+  "fixture-painter-ink-lime",
+  "fixture-painter-ink-magenta",
+  "fixture-painter-ink-gold",
+  "fixture-painter-ink-cyan",
+] as const;
+
 export const ColorPainterStressFixture = () => {
   const [scale, setScale] = React.useState<1 | 2 | 3>(3);
   const [noise, setNoise] = React.useState(true);
   const [mounted, setMounted] = React.useState(true);
 
   React.useLayoutEffect(() => {
-    document.body.style.background = document.documentElement.style.background =
-      "#202020";
+    const chainedBackgroundOuter = document.body.style;
+    const chainedBackgroundInner = document.documentElement.style;
+    const chainedBackgroundValue = "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
 
+  // SAFETY: Minecraft component styles consume this exact pixel/scale map from the fixture's 1/2/3 state; satisfies checks it before the CSSProperties view is passed to React.
   return (
     <>
-      <div style={{ bottom: 0, position: "fixed", right: 0 }}>
+      <div className="fixture-painter-stress-controls">
         {([1, 2, 3] as const).map((value) => (
           <button
+            type="button"
             key={value}
             onClick={() => {
               setScale(value);
@@ -29,6 +46,7 @@ export const ColorPainterStressFixture = () => {
           </button>
         ))}
         <button
+          type="button"
           onClick={() => {
             setNoise((value) => !value);
           }}
@@ -36,6 +54,7 @@ export const ColorPainterStressFixture = () => {
           Toggle siblings
         </button>
         <button
+          type="button"
           onClick={() => {
             setMounted((value) => !value);
           }}
@@ -48,19 +67,19 @@ export const ColorPainterStressFixture = () => {
           <div
             style={
               {
-                "--mc-pixel": scale + "px",
+                "--mc-pixel": `${scale}px`,
                 "--mc-scale": scale,
-              } as React.CSSProperties
+              } satisfies ColorPainterReferenceStyle as ColorPainterReferenceStyle
             }
           >
             <BubbleContent
               id="subject"
+              className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-painter-ink-red"
               style={{
-                color: "#ff5555",
-                height: 9 * scale,
-                left: 16 * scale,
-                position: "fixed",
-                top: 16 * scale,
+                "--fixture-height": `${9 * scale}px`,
+                "--fixture-x": `${16 * scale}px`,
+                "--fixture-y": `${16 * scale}px`,
+                // oxlint-disable-next-line shadcn/no-inline-styles -- Approved painter stress input: BubbleContent reads inline width before the existing scale-transition pixel assertions.
                 width: 252 * scale,
               }}
               data-subject="true"
@@ -72,14 +91,10 @@ export const ColorPainterStressFixture = () => {
                   <span
                     data-stress-label
                     key={index}
+                    className={`fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-owner-layout-43 ${painterInkClasses[index % 4]}`}
                     style={{
-                      color: ["#55ff55", "#ff55ff", "#ffaa00", "#55ffff"][
-                        index % 4
-                      ],
-                      left: 700 + index,
-                      opacity: 0,
-                      position: "fixed",
-                      top: 300 + index,
+                      "--fixture-x": `${700 + index}px`,
+                      "--fixture-y": `${300 + index}px`,
                     }}
                   >
                     <MinecraftColorUnicodeLabel

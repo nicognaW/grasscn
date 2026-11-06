@@ -4,16 +4,21 @@ import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { toggleVariants } from "./toggle";
 
 import "./minecraft-toggle-group.css";
+
+interface ToggleGroupSpacingStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-toggle-spacing": number;
+}
+
+interface ToggleGroupScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 interface Appearance {
   scale?: 1 | 2 | 3;
@@ -30,6 +35,7 @@ type ToggleGroupItemProps = MinecraftProps<typeof TogglePrimitive> & Appearance;
 
 const AppearanceContext = React.createContext<
   Appearance & {
+    scale: 1 | 2 | 3;
     disabled?: boolean;
   }
 >({ scale: 2, size: "default", variant: "default" });
@@ -51,21 +57,22 @@ const ToggleGroup = ({
     );
   }
 
+  const appearance = React.useMemo(
+    () => ({ disabled, scale, size, variant }),
+    [disabled, scale, size, variant]
+  );
+
   return (
-    <AppearanceContext.Provider value={{ disabled, scale, size, variant }}>
+    <AppearanceContext.Provider value={appearance}>
       <ToggleGroupPrimitive
         data-slot="toggle-group"
         disabled={disabled}
         className={cn(`mc-toggle-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({
-              "--mc-scale": scale,
-              "--mc-toggle-spacing": spacing,
-              ...__style,
-            }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): ToggleGroupSpacingStyle => ({
+          "--mc-scale": scale,
+          "--mc-toggle-spacing": spacing,
+          ...__style,
+        }))}
         {...props}
       >
         {children}
@@ -105,16 +112,17 @@ const ToggleGroupItem = ({
         toggleVariants({ size: resolvedSize, variant: resolvedVariant }),
         className
       )}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": resolvedScale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): ToggleGroupScaleStyle => ({
+        "--mc-scale": resolvedScale,
+        ...__style,
+      }))}
       {...props}
-      aria-disabled={resolvedDisabled ? true : props["aria-disabled"]}
+      aria-disabled={
+        (resolvedDisabled ?? false) ? true : props["aria-disabled"]
+      }
       onPointerDown={(event) => {
         if (
-          resolvedDisabled ||
+          (resolvedDisabled ?? false) ||
           Object.hasOwn(event.currentTarget.dataset, "disabled")
         ) {
           event.preventDefault();
@@ -126,7 +134,7 @@ const ToggleGroupItem = ({
       }}
       onClick={(event) => {
         if (
-          resolvedDisabled ||
+          (resolvedDisabled ?? false) ||
           Object.hasOwn(event.currentTarget.dataset, "disabled") ||
           event.currentTarget.getAttribute("aria-disabled") === "true"
         ) {
@@ -137,7 +145,10 @@ const ToggleGroupItem = ({
 
         onClick?.(event);
 
-        if (!event.defaultPrevented && !event.baseUIHandlerPrevented) {
+        if (
+          !event.defaultPrevented &&
+          !(event.baseUIHandlerPrevented ?? false)
+        ) {
           playMinecraftClick();
         }
       }}

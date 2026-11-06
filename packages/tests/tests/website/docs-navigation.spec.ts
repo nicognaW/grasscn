@@ -1,3 +1,4 @@
+import { expectTruthy } from "@grasscn/tests/assertions";
 import { expect, test } from "@grasscn/tests/test";
 
 const website = (
@@ -28,7 +29,7 @@ test("search announces its collapsed state after Escape and blur", async ({
     page.getByRole("option", { exact: true, name: "Button" })
   ).toBeVisible();
   const controls = await search.getAttribute("aria-controls");
-  expect(controls).toBeTruthy();
+  expectTruthy(controls);
   await expect(
     page.getByRole("listbox", { name: "Search results" })
   ).toHaveAttribute("id", controls ?? "");

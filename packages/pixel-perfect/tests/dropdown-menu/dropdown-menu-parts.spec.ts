@@ -2,10 +2,13 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-function compare(expected: PNG, actual: PNG) {
+import type nativeReference from "../reference/menu-parts/manifest.json";
+
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -23,9 +26,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -33,13 +36,15 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 const directory = "tests/reference/menu-parts";
 
+// SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as typeof nativeReference;
 
 for (const c of manifest.cases) {
   for (const kind of c.element === "menu-checkbox"
@@ -48,22 +53,22 @@ for (const c of manifest.cases) {
     test(`Dropdown Menu slot pixels: ${c.name} ${kind}`, async ({
       page,
     }, info) => {
-      await page.setViewportSize({ width: 1536, height: 900 });
+      await page.setViewportSize({ height: 900, width: 1536 });
 
       const query = new URLSearchParams({
+        checked: String(c.checked ?? false),
         component: "dropdown-menu",
-        native: "1",
-        part: kind,
+        height: String(c.height),
         label: c.label ?? "",
         labels: JSON.stringify(c.labels ?? []),
-        checked: String(c.checked ?? false),
-        state: c.state,
+        native: "1",
+        part: kind,
         scale: String(c.scale),
+        state: c.state,
+        surface: c.element === "suggestion-list" ? "suggestions" : "popup",
         width: String(c.width),
-        height: String(c.height),
         x: String(c.x),
         y: String(c.y),
-        surface: c.element === "suggestion-list" ? "suggestions" : "popup",
       });
 
       await page.goto(`/?${query}`);
@@ -72,40 +77,65 @@ for (const c of manifest.cases) {
       });
       const subject = page.locator('[data-slot="dropdown-menu-content"]');
       await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
-      await subject.evaluate((node) => {
-        (node as HTMLElement).focus();
+      await subject.evaluate((node: HTMLElement) => {
+        node.focus();
       });
 
-      if (c.state === "focus")
+      if (c.state === "focus") {
         await subject
           .locator(
             '[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"]'
           )
           .first()
           .focus();
+      }
+
       await page.mouse.move(0, 0);
       await expect(
         subject.locator('[data-mc-menu-text-ready="false"]')
       ).toHaveCount(0);
 
-      for (const line of await subject
-        .locator("[data-mc-menu-unicode-ready]")
-        .all())
-        await expect(line).toHaveAttribute(
-          "data-mc-menu-unicode-ready",
-          "true"
+      {
+        const readyElements = await subject
+          .locator("[data-mc-menu-unicode-ready]")
+          .all();
+
+        const readinessResults = await Promise.allSettled(
+          readyElements.map(async (line) => {
+            await expect(line).toHaveAttribute(
+              "data-mc-menu-unicode-ready",
+              "true"
+            );
+          })
         );
-      await page.evaluate(
-        async () =>
-          await new Promise<void>((resolve) =>
-            requestAnimationFrame(() =>
-              requestAnimationFrame(() => {
-                resolve();
-              })
-            )
-          )
-      );
-      const bounds = (await subject.boundingBox())!;
+
+        const rejectedReadiness = readinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
+      }
+
+      await page.evaluate(async () => {
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
+
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        await frameCompletion.promise;
+      });
+      const bounds = await subject.boundingBox();
+      expectNotNull(bounds, "Missing required bounding box: bounds");
       expect(bounds.x).toBe(c.x * c.scale);
       expect(bounds.y).toBe(c.y * c.scale);
 
@@ -115,11 +145,12 @@ for (const c of manifest.cases) {
 
       expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
 
-      const actual = await subject.screenshot(),
-        { mismatchedPixels, diff } = compare(
-          PNG.sync.read(bytes),
-          PNG.sync.read(actual)
-        );
+      const actual = await subject.screenshot();
+
+      const { mismatchedPixels, diff } = compare(
+        PNG.sync.read(bytes),
+        PNG.sync.read(actual)
+      );
 
       writeFileSync(info.outputPath("actual.png"), actual);
       writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));

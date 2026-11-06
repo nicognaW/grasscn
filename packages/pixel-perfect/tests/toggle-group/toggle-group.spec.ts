@@ -2,18 +2,30 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
+import type { ToggleReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type ToggleAssetData from "../reference/toggle/asset-provenance.json";
+
+type ToggleAssetPins = Pick<typeof ToggleAssetData, "assets">;
+
+interface ToggleGroupCaptureManifest {
+  cases: ToggleReferenceCase[];
+}
+
 const directory = "tests/reference/toggle";
 
+// SAFETY: The fixed retained Toggle manifest supplies every consumed shared capture field, numeric x/y, string background and boolean checked required by ToggleReferenceCase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve this original runtime read/parse phase.
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as ToggleGroupCaptureManifest;
 
 const sha = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -31,9 +43,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -41,7 +53,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Toggle Group comparator rejects one altered pixel", () => {
   const expected = PNG.sync.read(
@@ -52,17 +64,20 @@ test("Toggle Group comparator rejects one altered pixel", () => {
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
 test("Toggle Group embeds the original four opaque recipe-filter PNGs", () => {
+  // SAFETY: The retained Toggle asset-provenance artifact has the four actual recipe-filter asset keys, each with a string sha256; its type-only import describes this exact assets projection.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve this original runtime read/parse phase.
   const pins = JSON.parse(
     readFileSync(
       pixelPerfectFile(`${directory}/asset-provenance.json`),
       "utf-8"
     )
-  );
+  ) as ToggleAssetPins;
 
   const css = readFileSync(
     webFile("registry/ui/minecraft-toggle-assets.css"),
@@ -70,15 +85,21 @@ test("Toggle Group embeds the original four opaque recipe-filter PNGs", () => {
   );
 
   const images = [
-    ...css.matchAll(/data:image\/png;base64,([A-Za-z0-9+/=]+)/g),
+    ...css.matchAll(/data:image\/png;base64,(?<pngBase64>[A-Za-z0-9+/=]+)/gu),
   ].map((m) => Buffer.from(m[1], "base64"));
 
   expect(images).toHaveLength(4);
-  expect(images.map(sha).sort()).toEqual(
-    Object.values(pins.assets)
-      .map((pin: any) => pin.sha256)
-      .sort()
-  );
+  const imageHashes = images.map(sha);
+
+  imageHashes.sort();
+
+  const hashComparison = expect(imageHashes);
+
+  const provenanceHashes = Object.values(pins.assets).map((pin) => pin.sha256);
+
+  provenanceHashes.sort();
+
+  hashComparison.toEqual(provenanceHashes);
 
   for (const bytes of images) {
     const p = PNG.sync.read(bytes);
@@ -98,18 +119,18 @@ test.describe("Toggle Group native recipe-filter matrix", () => {
       test(`Toggle Group native pixels: ${c.name} type:${type}`, async ({
         page,
       }, info) => {
-        await page.setViewportSize({ width: 1536, height: 900 });
+        await page.setViewportSize({ height: 900, width: 1536 });
 
         const params = new URLSearchParams({
+          background: c.background,
+          checked: String(c.checked),
           component: "toggle-group",
           native: "1",
-          type,
           scale: String(c.scale),
           state: c.state,
-          checked: String(c.checked),
+          type,
           x: String(c.x),
           y: String(c.y),
-          background: c.background,
         });
 
         await page.goto(`/?${params}`);
@@ -117,7 +138,9 @@ test.describe("Toggle Group native recipe-filter matrix", () => {
         await expect(subject).toHaveAttribute("data-slot", "toggle-group-item");
         await page.mouse.move(0, 0);
 
-        if (c.state.endsWith("hover")) await subject.hover();
+        if (c.state.endsWith("hover")) {
+          await subject.hover();
+        }
 
         if (c.state === "focus") {
           await subject.focus();
@@ -126,17 +149,24 @@ test.describe("Toggle Group native recipe-filter matrix", () => {
           await expect(subject).toBeFocused();
         }
 
-        await page.evaluate(
-          async () =>
-            await new Promise<void>((resolve) =>
-              requestAnimationFrame(() =>
-                requestAnimationFrame(() => {
-                  resolve();
-                })
-              )
-            )
-        );
-        const bounds = (await subject.boundingBox())!;
+        await page.evaluate(async () => {
+          const frameCompletion: PromiseWithResolvers<void> =
+            Promise.withResolvers();
+
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          await frameCompletion.promise;
+        });
+        const bounds = await subject.boundingBox();
+        expectNotNull(bounds, "Missing required bounding box: bounds");
         expect([bounds.x, bounds.y]).toEqual([c.x * c.scale, c.y * c.scale]);
 
         const expectedBytes = readFileSync(
@@ -145,11 +175,12 @@ test.describe("Toggle Group native recipe-filter matrix", () => {
 
         expect(sha(expectedBytes)).toBe(c.sha256);
 
-        const actualBytes = await subject.screenshot(),
-          { mismatchedPixels, diff } = compare(
-            PNG.sync.read(expectedBytes),
-            PNG.sync.read(actualBytes)
-          );
+        const actualBytes = await subject.screenshot();
+
+        const { mismatchedPixels, diff } = compare(
+          PNG.sync.read(expectedBytes),
+          PNG.sync.read(actualBytes)
+        );
 
         writeFileSync(info.outputPath("actual.png"), actualBytes);
         writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));

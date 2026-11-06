@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { adventureAssets } from "./minecraft-adventure-assets";
-import { minecraftStyle } from "./minecraft-render";
+import { minecraftClasses as cn } from "./minecraft-render";
 
 type AdventureTexture = keyof typeof adventureAssets;
 
@@ -11,6 +11,7 @@ const AdventureImage = ({
   texture,
   scale = 1,
   style,
+  className,
   ...props
 }: Omit<React.ComponentProps<"img">, "src"> & {
   texture: AdventureTexture;
@@ -26,11 +27,11 @@ const AdventureImage = ({
       src={asset.src}
       width={asset.width * scale}
       height={asset.height * scale}
-      style={minecraftStyle(style, (__style) => ({
-        imageRendering: "pixelated",
-        pointerEvents: "none",
-        ...__style,
-      }))}
+      className={cn(
+        "pointer-events-none [image-rendering:pixelated]",
+        className
+      )}
+      style={style}
     />
   );
 };

@@ -1,5 +1,23 @@
 @import "./minecraft-assets.css";
+
+.mc-chart [data-mc-pixel-source] {
+  filter: opacity(0) !important;
+}
+
 @layer components {
+  .mc-chart-pixel-background {
+    background: var(--mc-chart-surface-background);
+    height: 100%;
+    width: 100%;
+  }
+  .mc-chart-pixel-canvas {
+    display: block;
+    height: calc(var(--mc-chart-surface-height) * 1px);
+    image-rendering: pixelated;
+    pointer-events: none;
+    width: calc(var(--mc-chart-surface-width) * 1px);
+  }
+
   .mc-chart-rect,
   .mc-chart-text {
     --mc-pixel: calc(1px * var(--mc-scale, 2));
@@ -29,6 +47,9 @@
     align-items: center;
     justify-content: center;
     gap: 16px;
+  }
+  .mc-chart-legend-swatch {
+    background-color: var(--mc-chart-legend-color);
   }
   .mc-chart {
     font-family: "Minecraft Bitmap", monospace;
@@ -107,5 +128,114 @@
   }
   :is(.mc-chart-data, .mc-chart-native-examples)[open] > summary::before {
     transform: rotate(90deg);
+  }
+}
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-minecraft-chart-native-1 {
+    left: 0;
+  }
+  .mc-layout-minecraft-chart-native-2 {
+    background: rgba(80, 80, 80, 0.5647058823529412);
+  }
+  .mc-layout-minecraft-chart-native-4 {
+    overflow: visible;
+    pointer-events: none;
+  }
+  .mc-layout-minecraft-chart-native-5 {
+    position: relative;
+  }
+  .mc-layout-minecraft-chart-native-6 {
+    background: rgba(80, 80, 80, 0.5647058823529412);
+    left: 0;
+  }
+  .mc-layout-minecraft-chart-native-8 {
+    background: white;
+    left: 0;
+  }
+  .mc-layout-minecraft-chart-native-9 {
+    background: white;
+  }
+  .mc-layout-minecraft-chart-native-10 {
+    overflow: visible;
+    pointer-events: none;
+  }
+  .mc-layout-minecraft-chart-native-11 {
+    position: relative;
+  }
+  .mc-layout-minecraft-chart-native-12 {
+    image-rendering: pixelated;
+    position: absolute;
+  }
+}
+
+@layer components {
+  .mc-chart-text {
+    color: var(--mc-native-color);
+    left: var(--mc-native-left);
+    top: var(--mc-native-top);
+  }
+  .mc-chart-native-paint-1 {
+    background: var(--mc-native-background);
+    height: var(--mc-native-height);
+    top: var(--mc-native-top);
+    width: var(--mc-native-width);
+  }
+  .mc-chart-native-paint-2 {
+    height: var(--mc-native-height);
+    left: var(--mc-native-left);
+    top: var(--mc-native-top);
+    width: var(--mc-native-width);
+  }
+  .mc-chart-native-paint-3 {
+    background: rgb(var(--mc-native-background-channels));
+    height: var(--mc-native-height);
+    left: var(--mc-native-left);
+    top: var(--mc-native-top);
+    width: var(--mc-native-width);
+  }
+  .mc-chart-native-paint-4 {
+    height: var(--mc-native-height);
+    width: var(--mc-native-width);
+  }
+  .mc-chart-native-paint-5 {
+    height: var(--mc-native-height);
+    top: var(--mc-native-top);
+    width: var(--mc-native-width);
+  }
+  .mc-chart-native-paint-6 {
+    background: var(--mc-native-background);
+    height: var(--mc-native-height);
+    left: var(--mc-native-left);
+    top: var(--mc-native-top);
+    width: var(--mc-native-width);
+  }
+  .mc-chart-native-paint-7 {
+    height: var(--mc-native-height);
+    top: var(--mc-native-top);
+    width: var(--mc-native-width);
+  }
+  .mc-chart-native-paint-8 {
+    height: var(--mc-native-height);
+    left: var(--mc-native-left);
+    top: var(--mc-native-top);
+    width: var(--mc-native-width);
+  }
+  .mc-chart-native-paint-9 {
+    height: var(--mc-native-height);
+    width: var(--mc-native-width);
+  }
+  .mc-chart-native-paint-10 {
+    height: var(--mc-native-height);
+    left: var(--mc-native-left);
+    top: var(--mc-native-top);
+    width: var(--mc-native-width);
+  }
+}
+
+@layer components {
+  .mc-chart.mc-chart-profiler-recipe {
+    background: rgba(80, 80, 80, 0.5647058823529412);
   }
 }

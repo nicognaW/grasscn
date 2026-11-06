@@ -1,5 +1,16 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+
+interface InputGroupPlayback {
+  rate: number;
+  src: string;
+  volume: number;
+}
+
+interface InputGroupPlaybackState {
+  sounds: InputGroupPlayback[];
+}
 
 for (const part of ["input", "textarea"]) {
   test(`Input Group ${part} supports editing, addon focus and refs`, async ({
@@ -33,15 +44,21 @@ test("Input Group addon alignment and cancelled focus remain functional", async 
     "block-start",
     "block-end",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(`/?component=input-group&align=${align}`);
 
     const addon = page.locator("[data-slot=input-group-addon]");
     const field = page.getByRole("textbox");
 
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(addon).toHaveAttribute("data-align", align);
 
-    const a = (await addon.boundingBox())!;
-    const f = (await field.boundingBox())!;
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    const a = await addon.boundingBox();
+    expectNotNull(a, "Missing required bounding box: a");
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    const f = await field.boundingBox();
+    expectNotNull(f, "Missing required bounding box: f");
 
     expect(
       align.startsWith("block") ? Math.abs(a.y - f.y) : Math.abs(a.x - f.x)
@@ -71,9 +88,14 @@ test("Input Group native buttons do not submit forms or steal focus", async ({
 
 test("Input Group plays only the original button audio", async ({ page }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
+    // SAFETY: This Input Group initScript creates sounds as an empty playback trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & InputGroupPlaybackState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The paired Input Group initializer owns sounds; this unchanged native play mock appends only rate, src and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & InputGroupPlaybackState).sounds.push({
         rate: this.playbackRate,
         src: this.src,
         volume: this.volume,
@@ -85,9 +107,21 @@ test("Input Group plays only the original button audio", async ({ page }) => {
   await page.goto("/?component=input-group");
   await page.locator("[data-slot=input-group-text]").click();
   await page.getByRole("textbox").fill("世界");
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Input Group reader follows navigation initialized with the exact paired sounds producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & InputGroupPlaybackState).sounds
+    )
+  ).toEqual([]);
   await page.getByRole("button", { exact: true, name: "Send" }).click();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([
-    { rate: 1, src: minecraftClickSound, volume: 0.25 },
-  ]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Input Group reader follows navigation initialized with the exact paired sounds producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & InputGroupPlaybackState).sounds
+    )
+  ).toEqual([{ rate: 1, src: minecraftClickSound, volume: 0.25 }]);
 });

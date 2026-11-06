@@ -17,8 +17,16 @@ import {
 } from "@grasscn/web/ui/pagination";
 import * as React from "react";
 
+import { cn } from "./utils";
+
 const p = new URLSearchParams(location.search);
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
 const kind = p.get("component") ?? "button-group";
 const state = p.get("state") ?? "normal";
 const native = p.has("native");
@@ -27,9 +35,51 @@ const width = Number(p.get("width") ?? 200);
 const height = Number(p.get("height") ?? 20);
 
 const position: React.CSSProperties = {
-  left: Number(p.get("x") ?? 16) * scale,
-  position: "absolute",
-  top: Number(p.get("y") ?? 16) * scale,
+  "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+
+  "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
+};
+
+const renderButtonGroupSubject = (
+  subject: React.JSX.Element
+): React.JSX.Element => {
+  let selectedFixtureBranch1: React.JSX.Element;
+
+  if (p.get("part") === "text") {
+    selectedFixtureBranch1 = (
+      <ButtonGroupText
+        id="subject"
+        scale={scale}
+        maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
+        align={p.get("alignment") === "center" ? "center" : "left"}
+        className="fixture-geometry-width fixture-geometry-height fixture-owner-layout-40 fixture-owner-layout-41"
+        style={{
+          "--fixture-height": `${height * scale}px`,
+          "--fixture-width": `${width * scale}px`,
+        }}
+        data-subject="true"
+      >
+        {label}
+      </ButtonGroupText>
+    );
+  } else {
+    selectedFixtureBranch1 =
+      p.get("part") === "separator" ? (
+        <ButtonGroupSeparator
+          id="subject"
+          scale={scale}
+          orientation="horizontal"
+          edge={p.get("edge") === "footer" ? "footer" : "header"}
+          className="fixture-geometry-width fixture-structural-min-width-zero"
+          style={{ "--fixture-width": `${width * scale}px` }}
+          data-subject="true"
+        />
+      ) : (
+        subject
+      );
+  }
+
+  return selectedFixtureBranch1;
 };
 
 export const StructuralFixture = () => {
@@ -49,7 +99,11 @@ export const StructuralFixture = () => {
       id="subject"
       scale={scale}
       disabled={state === "disabled"}
-      style={{ height: height * scale, width: width * scale }}
+      className="fixture-geometry-height fixture-geometry-width"
+      style={{
+        "--fixture-height": `${height * scale}px`,
+        "--fixture-width": `${width * scale}px`,
+      }}
       onClick={() => {
         setEvents((v) => v + 1);
       }}
@@ -61,36 +115,37 @@ export const StructuralFixture = () => {
 
   if (kind === "aspect-ratio") {
     return (
-      <>
-        <div
-          id="container"
-          style={{ ...position, width: Number(p.get("containerWidth") ?? 320) }}
+      <div
+        id="container"
+        className="fixture-geometry-width fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
+        style={{
+          ...position,
+          "--fixture-width": `${Number(p.get("containerWidth") ?? 320)}px`,
+        }}
+      >
+        <AspectRatio
+          id="ratio"
+          ratio={Number(p.get("ratio") ?? 16 / 9)}
+          style={{
+            // oxlint-disable-next-line shadcn/no-inline-styles -- Approved AspectRatio caller-style API probe: the existing clipping test supplies this explicit overflow override.
+            overflow: p.has("clip") ? "hidden" : "visible",
+          }}
+          ref={(node) => {
+            if (node) {
+              node.dataset.ref = "true";
+            }
+          }}
         >
-          <AspectRatio
-            id="ratio"
-            ratio={Number(p.get("ratio") ?? 16 / 9)}
-            style={{ overflow: p.has("clip") ? "hidden" : "visible" }}
-            ref={(node) => {
-              if (node) node.dataset.ref = "true";
-            }}
-          >
-            <div
-              id="art"
-              style={{
-                width: 40,
-                height: 40,
-                background: "#50a030",
-                imageRendering: "pixelated",
-              }}
-            />
-            {native ? subject : null}
-          </AspectRatio>
-        </div>
-      </>
+          <div id="art" className="fixture-structural-art" />
+          {native ? subject : null}
+        </AspectRatio>
+      </div>
     );
   }
 
   if (kind === "button-group") {
+    const selectedFixtureBranch1 = renderButtonGroupSubject(subject);
+
     return (
       <>
         <ButtonGroup
@@ -100,48 +155,25 @@ export const StructuralFixture = () => {
             p.get("orientation") === "vertical" ? "vertical" : "horizontal"
           }
           scale={scale}
+          className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
           style={position}
         >
-          {p.get("part") === "text" ? (
-            <ButtonGroupText
-              id="subject"
-              scale={scale}
-              maxWidth={
-                p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
-              }
-              align={p.get("alignment") === "center" ? "center" : "left"}
-              style={{
-                padding: 0,
-                width: width * scale,
-                height: height * scale,
-                display: "block",
-              }}
-              data-subject="true"
-            >
-              {label}
-            </ButtonGroupText>
-          ) : p.get("part") === "separator" ? (
-            <ButtonGroupSeparator
-              id="subject"
-              scale={scale}
-              orientation="horizontal"
-              edge={p.get("edge") === "footer" ? "footer" : "header"}
-              style={{ width: width * scale, minWidth: 0 }}
-              data-subject="true"
-            />
-          ) : (
-            subject
-          )}
-          {!native ? (
+          {selectedFixtureBranch1}
+          {native ? null : (
             <>
-              <ButtonGroupSeparator scale={scale} role="separator" />
+              <ButtonGroupSeparator
+                scale={scale}
+                // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This fixture exercises ButtonGroupSeparator's div-based role and scale composition; a native hr is a different component case.
+                role="separator"
+              />
               <ButtonGroupText scale={scale}>Game</ButtonGroupText>
               <ButtonGroupText render={<span id="slotted" />}>
-                {"Slotted text"}
+                Slotted text
               </ButtonGroupText>
               <Button
                 scale={scale}
-                style={{ width: 80 * scale }}
+                className="fixture-geometry-width"
+                style={{ "--fixture-width": `${80 * scale}px` }}
                 onClick={() => {
                   setEvents((v) => v + 1);
                 }}
@@ -149,9 +181,9 @@ export const StructuralFixture = () => {
                 Next
               </Button>
             </>
-          ) : null}
+          )}
         </ButtonGroup>
-        <output id="events" style={{ position: "absolute", top: 500 }}>
+        <output id="events" className="fixture-structural-events">
           {events}
         </output>
         <span
@@ -172,6 +204,7 @@ export const StructuralFixture = () => {
         scale={scale}
         aria-disabled={state.startsWith("disabled") || undefined}
         href="#next"
+        className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
         style={position}
         onClick={(event) => {
           if (p.has("cancel")) {
@@ -190,18 +223,25 @@ export const StructuralFixture = () => {
       <>
         <Pagination
           aria-label="World pages"
+          className={cn({
+            "fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width fixture-pagination-native-start":
+              native,
+          })}
           style={
             native
               ? {
                   ...position,
-                  width: width * scale,
-                  justifyContent: "flex-start",
+                  "--fixture-width": `${width * scale}px`,
                 }
               : undefined
           }
         >
           <PaginationContent>
-            <PaginationItem style={{ display: native ? "none" : undefined }}>
+            <PaginationItem
+              className={
+                native ? "fixture-pagination-native-hidden" : undefined
+              }
+            >
               <PaginationPrevious scale={scale} href="#previous" />
             </PaginationItem>
             <PaginationItem>
@@ -209,7 +249,11 @@ export const StructuralFixture = () => {
                 id="subject"
                 ref={ref}
                 scale={scale}
-                style={{ width: width * scale, height: height * scale }}
+                className="fixture-geometry-height fixture-geometry-width"
+                style={{
+                  "--fixture-height": `${height * scale}px`,
+                  "--fixture-width": `${width * scale}px`,
+                }}
                 href="#next"
                 aria-disabled={state === "disabled" || undefined}
                 isActive={p.has("active")}
@@ -228,15 +272,24 @@ export const StructuralFixture = () => {
                 {native ? label : String(page)}
               </PaginationLink>
             </PaginationItem>
-            <PaginationItem style={{ display: native ? "none" : undefined }}>
+            <PaginationItem
+              className={
+                native ? "fixture-pagination-native-hidden" : undefined
+              }
+            >
               <PaginationEllipsis scale={scale} />
             </PaginationItem>
-            <PaginationItem style={{ display: native ? "none" : undefined }}>
+            <PaginationItem
+              className={
+                native ? "fixture-pagination-native-hidden" : undefined
+              }
+            >
               <PaginationNext scale={scale} href="#next" />
             </PaginationItem>
           </PaginationContent>
         </Pagination>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setTag(ref.current?.tagName ?? "");

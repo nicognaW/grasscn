@@ -3,9 +3,6 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
 import { Toaster as Sonner } from "sonner";
-
-export { toast } from "sonner";
-
 import type { ToasterProps as SonnerProps } from "sonner";
 
 import { Button, buttonVariants } from "./button";
@@ -20,6 +17,24 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-sonner.css";
 
+const actionRender = <span aria-hidden="true" />;
+
+interface OwnedSonnerStyle extends React.CSSProperties {
+  "--mc-z-sonner-paint-1-height"?: string;
+  "--mc-z-sonner-paint-1-position"?: string;
+  "--mc-z-sonner-paint-1-z-index"?: number;
+  "--mc-z-sonner-paint-2-height"?: string;
+  "--mc-z-sonner-paint-2-left"?: string;
+  "--mc-z-sonner-paint-2-top"?: string;
+  "--mc-z-sonner-paint-2-width"?: string;
+}
+
+export { toast } from "sonner";
+
+interface SonnerScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 interface ActionModel {
   node: HTMLButtonElement;
   label: string;
@@ -28,6 +43,13 @@ interface ActionModel {
 }
 
 interface Model {
+  applyMeasurements: (
+    width: number,
+    graphicHeight: number,
+    scale: 1 | 2 | 3,
+    commitHeight: (height: number) => void
+  ) => void;
+  readDimensions: () => { height: number; width: number };
   key: number;
   node: HTMLElement;
   title: string;
@@ -44,6 +66,81 @@ interface Model {
   geometryChanged?: () => void;
 }
 
+interface ToastPresentation extends Readonly<
+  Pick<
+    Model,
+    | "applyMeasurements"
+    | "bounds"
+    | "buttons"
+    | "ghost"
+    | "key"
+    | "message"
+    | "motion"
+    | "node"
+    | "readDimensions"
+    | "rich"
+    | "title"
+  >
+> {
+  readonly initialHeight: number;
+}
+
+/** Mutable toast geometry belongs to this imperative adapter, not React props. */
+const createToastModel = function createToastModel(
+  initial: Omit<Model, "applyMeasurements" | "readDimensions">
+): Model {
+  const model: Model = {
+    ...initial,
+    applyMeasurements(width, graphicHeight, scale, commitHeight) {
+      model.width = width;
+      model.height = graphicHeight;
+      commitHeight(graphicHeight);
+
+      if (model.node.isConnected) {
+        const actions = model.node.querySelector(
+          "[data-button],[data-close-button]"
+        );
+
+        const total = graphicHeight + (actions ? 26 : 0);
+
+        model.node.style.setProperty("width", `${width * scale}px`);
+        model.node.style.setProperty("height", `${total * scale}px`);
+        model.node.style.setProperty(
+          "--mc-toast-height",
+          String(graphicHeight)
+        );
+        model.bounds = model.node.getBoundingClientRect();
+        model.geometryChanged?.();
+      }
+    },
+    readDimensions() {
+      return { height: model.height, width: model.width };
+    },
+  };
+
+  return model;
+};
+
+/** Snapshot presentation fields while retaining stable imperative capabilities. */
+const presentToastModel = function presentToastModel(
+  model: Model
+): ToastPresentation {
+  return {
+    applyMeasurements: model.applyMeasurements,
+    bounds: model.bounds,
+    buttons: model.buttons,
+    ghost: model.ghost,
+    initialHeight: model.height,
+    key: model.key,
+    message: model.message,
+    motion: model.motion,
+    node: model.node,
+    readDimensions: model.readDimensions,
+    rich: model.rich,
+    title: model.title,
+  };
+};
+
 type ToasterProps = Omit<SonnerProps, "richColors" | "expand"> & {
   richColors?: false;
   expand?: true;
@@ -51,44 +148,55 @@ type ToasterProps = Omit<SonnerProps, "richColors" | "expand"> & {
   ref?: React.Ref<HTMLElement>;
 };
 
-function ActionGraphic({
+const ActionGraphic = ({
   action,
   model,
   scale,
 }: {
   action: ActionModel;
-  model: Model;
+  model: ToastPresentation;
   scale: 1 | 2 | 3;
-}) {
+}) => {
   const [fontReady, setFontReady] = React.useState(false);
   React.useLayoutEffect(() => {
     let live = true;
-    void loadUnihex().then(() => {
+    const fontLoading = loadUnihex();
+
+    const commitFontReadiness = async () => {
+      await fontLoading;
+
       if (live) {
         setFontReady(true);
       }
-    });
+    };
+
+    void commitFontReadiness();
 
     return () => {
       live = false;
     };
   }, []);
   React.useLayoutEffect(() => {
+    const dimensions = model.readDimensions();
+
     const available = Math.max(
       20,
-      (model.width - 30 - 6 * (action.count - 1)) / action.count
+      (dimensions.width - 30 - 6 * (action.count - 1)) / action.count
     );
 
     const natural = Math.max(
       20,
-      Array.from(action.label).reduce(
-        (n, char) =>
-          n +
-          (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
-            getUnihexGlyph(char)?.advance ??
-            6),
-        0
-      ) + 12
+      Array.from(
+        action.label,
+        (char) =>
+          minecraftGlyphs[
+            // SAFETY: String Array.from iteration supplies a nonempty character. Its first code point therefore exists.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+            (char.codePointAt(0) as number) - 32
+          ]?.[2] ??
+          getUnihexGlyph(char)?.advance ??
+          6
+      ).reduce((width, advance) => width + advance, 0) + 12
     );
 
     const width = Math.min(available, natural);
@@ -100,78 +208,55 @@ function ActionGraphic({
       padding: "0",
       position: "absolute",
       right: "auto",
-      top: `${(model.height + 6) * scale}px`,
+      top: `${(dimensions.height + 6) * scale}px`,
       width: `${width * scale}px`,
     });
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Font readiness changes glyph advances outside the model; rerun action geometry when that resource becomes ready.
   }, [action, model, scale, fontReady]);
 
-  const inherited = Object.fromEntries(
-    Array.from({ length: 9 }, (_, i) => [`--mc-piece-${i}`, "inherit"])
-  );
+  const actionDisabled = action.node.disabled;
 
   return (
     <Button
-      render={<span aria-hidden="true" />}
+      render={actionRender}
       scale={scale}
-      disabled={action.node.disabled}
+      disabled={actionDisabled}
       data-mc-sonner-button-art=""
-      style={
-        {
-          ...inherited,
-          "--mc-ink": "inherit",
-          "--mc-shadow": "inherit",
-          height: "100%",
-          inset: 0,
-          pointerEvents: "none",
-          position: "absolute",
-          width: "100%",
-        } as React.CSSProperties
-      }
+      className="mc-sonner-action-paint"
     >
       {action.label}
     </Button>
   );
-}
+};
 
-function ModelGraphic({ model, scale }: { model: Model; scale: 1 | 2 | 3 }) {
-  const [height, setHeight] = React.useState(model.height);
+const ModelGraphic = ({
+  model,
+  scale,
+}: {
+  model: ToastPresentation;
+  scale: 1 | 2 | 3;
+}) => {
+  const { applyMeasurements } = model;
+  const [height, setHeight] = React.useState(model.initialHeight);
 
   const update = React.useCallback(
-    (width: number, height: number) => {
-      model.width = width;
-      model.height = height;
-      setHeight(height);
-
-      if (model.node.isConnected) {
-        const actions = model.node.querySelector(
-          "[data-button],[data-close-button]"
-        );
-
-        const total = height + (actions ? 26 : 0);
-
-        model.node.style.width = `${width * scale}px`;
-        model.node.style.height = `${total * scale}px`;
-        model.node.style.setProperty("--mc-toast-height", String(height));
-        model.bounds = model.node.getBoundingClientRect();
-        model.geometryChanged?.();
-      }
+    (width: number, graphicHeight: number) => {
+      applyMeasurements(width, graphicHeight, scale, setHeight);
     },
-    [model, scale]
+    [applyMeasurements, scale]
   );
+
+  const ownedStyle1: OwnedSonnerStyle = {
+    "--mc-z-sonner-paint-1-height": model.rich ? "100%" : `${height * scale}px`,
+    "--mc-z-sonner-paint-1-position": model.rich ? "absolute" : "relative",
+    "--mc-z-sonner-paint-1-z-index": -1,
+  };
 
   return (
     <span
       data-mc-sonner-art=""
-      style={{
-        display: "block",
-        height: model.rich ? "100%" : height * scale,
-        left: 0,
-        pointerEvents: "none",
-        position: model.rich ? "absolute" : "relative",
-        top: 0,
-        width: "100%",
-        zIndex: -1,
-      }}
+      className="mc-owned-paint-sonner-1"
+      style={ownedStyle1}
     >
       {model.rich ? (
         <MinecraftToastBackdrop scale={scale} motion={model.motion} />
@@ -186,9 +271,66 @@ function ModelGraphic({ model, scale }: { model: Model; scale: 1 | 2 | 3 }) {
       )}
     </span>
   );
-}
+};
 
-function Toaster({
+const layoutToastStack = function layoutToastStack(
+  host: HTMLElement,
+  entries: Map<HTMLElement, Model>,
+  scale: number,
+  gap: number
+) {
+  for (const list of host.querySelectorAll<HTMLElement>(
+    "[data-sonner-toaster]"
+  )) {
+    let stackOffset = 0;
+
+    const nodes = [
+      ...list.querySelectorAll<HTMLElement>("[data-sonner-toast]"),
+    ];
+
+    nodes.sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
+
+    for (const node of nodes) {
+      const model = entries.get(node);
+
+      if (!model) {
+        continue;
+      }
+
+      node.style.setProperty("--mc-native-offset", `${stackOffset}px`);
+
+      const actions = node.querySelector("[data-button],[data-close-button]");
+
+      stackOffset +=
+        (model.rich
+          ? node.offsetHeight
+          : (model.height + (actions ? 26 : 0)) * scale) + gap;
+      model.bounds = node.getBoundingClientRect();
+    }
+  }
+};
+
+// Native clicks bubbling through the owned toast host have DOM Node targets;
+// nodeType keeps that closed producer contract valid across adopted/iframe realms.
+const isSonnerClickNode = (target: EventTarget | null): target is Node =>
+  target !== null && "nodeType" in target;
+
+const isSonnerElementNode = (target: Node): target is Element =>
+  target.nodeType === Node.ELEMENT_NODE;
+
+const sonnerActionButton = (target: EventTarget | null) => {
+  let element: Element | null = null;
+
+  if (isSonnerClickNode(target)) {
+    element = isSonnerElementNode(target) ? target : target.parentElement;
+  }
+
+  return element?.closest<HTMLButtonElement>(
+    "button[data-button],button[data-close-button]"
+  );
+};
+
+const Toaster = ({
   scale = 2,
   richColors = false,
   expand = true,
@@ -201,75 +343,50 @@ function Toaster({
   toastOptions,
   ref,
   ...props
-}: ToasterProps) {
+}: ToasterProps) => {
   if (richColors || !expand) {
-    throw Error(
+    throw new Error(
       "Minecraft notifications support the native palette and expanded stack only"
     );
   }
 
   const [host, setHost] = React.useState<HTMLElement | null>(null);
-  const [models, setModels] = React.useState<Model[]>([]);
+  const [models, setModels] = React.useState<ToastPresentation[]>([]);
   const sequence = React.useRef(0);
   const entriesRef = React.useRef(new Map<HTMLElement, Model>());
 
-  React.useImperativeHandle(ref, () => host!, [host]);
+  React.useImperativeHandle<typeof host, typeof host>(ref, () => host, [host]);
   React.useLayoutEffect(
     () => () => {
       for (const model of entriesRef.current.values()) {
-        if (model.timer) clearTimeout(model.timer);
+        if (model.timer) {
+          clearTimeout(model.timer);
+        }
       }
 
       entriesRef.current.clear();
     },
     []
   );
-  React.useLayoutEffect(() => {
+  // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- Exit timers belong to retained toast models, spanning host/scale/gap observer reconnects; the preceding unmount effect clears every retained model timer and the map. Clearing them on each observer reconnect would abandon existing removedAt deadlines.
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!host) {
-      return;
+      return undefined;
     }
 
     const entries = entriesRef.current;
 
     const relayout = () => {
-      for (const list of host.querySelectorAll<HTMLElement>(
-        "[data-sonner-toaster]"
-      )) {
-        let offset = 0;
-
-        const nodes = [
-          ...list.querySelectorAll<HTMLElement>("[data-sonner-toast]"),
-        ].sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
-
-        for (const node of nodes) {
-          const model = entries.get(node);
-
-          if (!model) {
-            continue;
-          }
-
-          node.style.setProperty("--mc-native-offset", `${offset}px`);
-
-          const actions = node.querySelector(
-            "[data-button],[data-close-button]"
-          );
-
-          offset +=
-            (model.rich
-              ? node.offsetHeight
-              : (model.height + (actions ? 26 : 0)) * scale) + gap;
-          model.bounds = node.getBoundingClientRect();
-        }
-      }
+      layoutToastStack(host, entries, scale, gap);
     };
 
     const remove = (model: Model) => {
       entries.delete(model.node);
-      setModels([...entries.values()]);
+      setModels([...entries.values()].map(presentToastModel));
     };
 
     const beginExit = (model: Model) => {
-      if (model.removedAt != null) {
+      if (model.removedAt !== undefined) {
         return;
       }
 
@@ -298,25 +415,31 @@ function Toaster({
           node.querySelector<HTMLElement>("[data-description]");
 
         const rich = !!(
-          title?.childElementCount ?? description?.childElementCount
+          title?.childElementCount ??
+          description?.childElementCount ??
+          0
         );
 
         let model = entries.get(node);
 
         if (!model) {
-          model = {
-            bounds: node.getBoundingClientRect(),
+          const toastBounds = node.getBoundingClientRect();
+          const toastKey = sequence.current;
+          sequence.current = toastKey + 1;
+
+          model = createToastModel({
+            bounds: toastBounds,
             buttons: [],
             ghost: false,
             height: 32,
-            key: sequence.current++,
+            key: toastKey,
             message: description?.textContent ?? null,
             motion: { current: { phase: "entering", start: Date.now() } },
             node,
             rich,
             title: title?.textContent ?? "",
             width: 190,
-          };
+          });
           entries.set(node, model);
           playMinecraftToastSound("in");
         }
@@ -339,14 +462,12 @@ function Toaster({
           button.classList.add(...buttonVariants().split(" "));
 
           const text = [...button.childNodes]
-            .filter(
-              (n) =>
-                !(
-                  n instanceof HTMLElement &&
-                  Object.hasOwn(n.dataset, "mcSonnerButtonArt")
-                )
+            .flatMap((child) =>
+              child instanceof HTMLElement &&
+              Object.hasOwn(child.dataset, "mcSonnerButtonArt")
+                ? []
+                : (child.textContent ?? "")
             )
-            .map((n) => n.textContent ?? "")
             .join("");
 
           return {
@@ -370,15 +491,18 @@ function Toaster({
       }
 
       relayout();
-      setModels([...entries.values()]);
+      setModels([...entries.values()].map(presentToastModel));
     };
 
     const observer = new MutationObserver((records) => {
       const relevant = records.some((record) => {
+        // SAFETY: MutationObserver supplies genuine DOM Nodes; the existing ELEMENT_NODE check proves Element (including SVG), and this branch uses only closest().
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- The browser-owned MutationRecord and existing nodeType discriminator prove this exact Element projection. */
         const target =
           record.target.nodeType === Node.ELEMENT_NODE
-            ? (record.target as HTMLElement)
+            ? (record.target as Element)
             : record.target.parentElement;
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
 
         if (
           target?.closest("[data-mc-sonner-art],[data-mc-sonner-button-art]")
@@ -419,13 +543,13 @@ function Toaster({
     scan();
 
     const click = (event: MouseEvent) => {
-      const button = (event.target as Element)?.closest<HTMLButtonElement>(
-        "button[data-button],button[data-close-button]"
-      );
+      const button = sonnerActionButton(event.target);
 
       if (button && !button.disabled) {
         queueMicrotask(() => {
-          if (!event.defaultPrevented) playMinecraftClick();
+          if (!event.defaultPrevented) {
+            playMinecraftClick();
+          }
         });
       }
     };
@@ -449,55 +573,61 @@ function Toaster({
         visibleToasts={visibleToasts}
         expand={expand}
         richColors={false}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): SonnerScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         toastOptions={{ ...toastOptions, unstyled: true }}
         {...props}
       />
-      {models.map((model) =>
-        model.ghost ? (
-          <div
-            key={model.key}
-            aria-hidden="true"
-            data-mc-sonner-ghost=""
-            style={{
-              height: model.bounds.height,
-              isolation: "isolate",
-              left: model.bounds.x,
-              pointerEvents: "none",
-              position: "fixed",
-              top: model.bounds.y,
-              width: model.bounds.width,
-              zIndex: 999999999,
-            }}
-          >
-            <ModelGraphic model={model} scale={scale} />
-          </div>
-        ) : (
+      {models.map((model) => {
+        if (model.ghost) {
+          const ownedStyle2: OwnedSonnerStyle = {
+            "--mc-z-sonner-paint-2-height": `${model.bounds.height}px`,
+            "--mc-z-sonner-paint-2-left": `${model.bounds.x}px`,
+            "--mc-z-sonner-paint-2-top": `${model.bounds.y}px`,
+            "--mc-z-sonner-paint-2-width": `${model.bounds.width}px`,
+          };
+
+          return (
+            <div
+              key={model.key}
+              aria-hidden="true"
+              data-mc-sonner-ghost=""
+              className="mc-owned-paint-sonner-2 pointer-events-none fixed [isolation:isolate] z-999999999"
+              style={ownedStyle2}
+            >
+              <ModelGraphic model={model} scale={scale} />
+            </div>
+          );
+        }
+
+        return (
           <React.Fragment key={model.key}>
             {createPortal(
               <ModelGraphic model={model} scale={scale} />,
               model.node,
               String(model.key)
             )}
-            {model.buttons
-              .filter((a) => a.node.isConnected)
-              .map((action) =>
-                createPortal(
-                  <ActionGraphic action={action} model={model} scale={scale} />,
-                  action.node,
-                  `${model.key}-action-${action.index}`
-                )
-              )}
+            {model.buttons.flatMap((action) =>
+              action.node.isConnected
+                ? createPortal(
+                    <ActionGraphic
+                      action={action}
+                      model={model}
+                      scale={scale}
+                    />,
+                    action.node,
+                    `${model.key}-action-${action.index}`
+                  )
+                : []
+            )}
           </React.Fragment>
-        )
-      )}
+        );
+      })}
     </>
   );
-}
+};
 
 export type { ToasterProps };
 

@@ -17,8 +17,8 @@ import {
 import * as React from "react";
 
 const StructuralTypes = () => {
-  const div = React.createRef<HTMLDivElement>();
-  const anchor = React.createRef<HTMLAnchorElement>();
+  const div = React.useRef<HTMLDivElement>(null);
+  const anchor = React.useRef<HTMLAnchorElement>(null);
 
   return (
     <>
@@ -38,6 +38,7 @@ const StructuralTypes = () => {
         <ButtonGroupSeparator
           ref={div}
           orientation="vertical"
+          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This API case requires ButtonGroupSeparator's HTMLDivElement ref and role prop; a native hr changes the tested contract.
           role="separator"
         />
       </ButtonGroup>

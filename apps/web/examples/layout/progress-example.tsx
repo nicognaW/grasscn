@@ -9,10 +9,7 @@ const ProgressExample = () => {
   const [value, setValue] = useState(50);
 
   return (
-    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ display: "grid", gap: 24 }}
-      /* eslint-enable shadcn/no-inline-styles */
-    >
+    <div className="grid gap-6">
       <Progress aria-label="World loading" value={value} />
       <Button
         onClick={() => {

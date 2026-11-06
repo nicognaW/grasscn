@@ -1,38 +1,17 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
-import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
-import { referenceFile } from "@tests/paths";
+import {
+  recordAudioPlayback,
+  recordedAudioPlayback as voices,
+} from "@tests/harness/audio-playback";
 
-const provenance = JSON.parse(
-  readFileSync(referenceFile("sound-provenance.json"), "utf-8")
-);
-
-const voices = async (page: Page) =>
-  page.evaluate(
-    () =>
-      (window as any).__soundVoices as {
-        volume: number;
-        rate: number;
-        source: string;
-      }[]
-  );
+import provenance from "../../../fixtures/reference/sound-provenance.json";
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => {
-    (window as any).__soundVoices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).__soundVoices.push({
-        rate: this.playbackRate,
-        source: this.src,
-        volume: this.volume,
-      });
-
-      return Promise.resolve();
-    };
-  });
+  await recordAudioPlayback(page);
 });
 
 test("Click sound contains the exact original OGG and decodes in the browser", async ({
@@ -50,9 +29,9 @@ test("Click sound contains the exact original OGG and decodes in the browser", a
     const context = new AudioContext();
 
     try {
-      const audio = await context.decodeAudioData(
-        await (await fetch(source)).arrayBuffer()
-      );
+      const decodeAudioData = context.decodeAudioData.bind(context);
+      const response = await fetch(source);
+      const audio = await decodeAudioData(await response.arrayBuffer());
 
       return { channels: audio.numberOfChannels, duration: audio.duration };
     } finally {
@@ -88,7 +67,8 @@ test("Slider plays on pointer release, with no press, drag or keyboard tick soun
   page,
 }) => {
   await page.goto("/?component=slider");
-  const bounds = (await page.locator("[data-subject]").boundingBox())!;
+  const bounds = await page.locator("[data-subject]").boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.move(
     bounds.x + bounds.width / 2,
     bounds.y + bounds.height / 2

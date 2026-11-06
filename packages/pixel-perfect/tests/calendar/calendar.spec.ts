@@ -2,10 +2,30 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-function different(a: PNG, b: PNG) {
+import type CapturedData0 from "../reference/calendar-day/manifest.json";
+
+/** Consumed fields of the six retained Calendar/Date Picker constituent families. */
+interface CalendarComparisonCase extends CapturedReferenceCase {
+  x?: number;
+  y?: number;
+  label?: string;
+  background?: string;
+  alignment?: string;
+  checked?: boolean;
+  text?: string;
+  wrapWidth?: number;
+}
+
+interface CalendarComparisonManifest {
+  background: string;
+  cases: CalendarComparisonCase[];
+}
+
+const different = function different(a: PNG, b: PNG) {
   expect([a.width, a.height]).toEqual([b.width, b.height]);
   let count = 0;
 
@@ -16,16 +36,56 @@ function different(a: PNG, b: PNG) {
   }
 
   return count;
-}
+};
+
+// Native capture Case.wrapWidth is a nullable Integer; zero or absence disables wrapping.
+const calendarCaseQuery = (
+  c: CalendarComparisonCase,
+  component: string,
+  part: string,
+  alias: string,
+  manifest: CalendarComparisonManifest
+) => {
+  const q = new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background ?? manifest.background ?? "#202020",
+    checked: String(c.checked ?? false),
+    component,
+    height: String(c.height),
+    label: c.label ?? "",
+    native: "1",
+    part,
+    range: alias.startsWith("range-") ? alias.slice(6) : "",
+    scale: String(c.scale),
+    selected: String(alias === "selected"),
+    state: alias === "base" ? c.state : "normal",
+    today: String(alias === "today"),
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
+  if (c.text !== undefined) {
+    q.set("text", c.text);
+  }
+
+  if ((c.wrapWidth ?? 0) !== 0) {
+    q.set("wrapWidth", String(c.wrapWidth));
+  }
+
+  return q;
+};
 
 for (const component of ["calendar", "date-picker"]) {
   test(`${component} comparator rejects a one-pixel mutation`, () => {
+    // SAFETY: This read consumes the same pinned tests/reference/calendar-day/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const m = JSON.parse(
       readFileSync(
         pixelPerfectFile("tests/reference/calendar-day/manifest.json"),
         "utf-8"
       )
-    );
+    ) as typeof CapturedData0;
 
     const a = PNG.sync.read(
       readFileSync(
@@ -37,6 +97,7 @@ for (const component of ["calendar", "date-picker"]) {
 
     const b = PNG.sync.read(PNG.sync.write(a));
 
+    // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
     b.data[0] ^= 1;
     expect(different(a, b)).toBe(1);
   });
@@ -53,12 +114,14 @@ for (const component of ["calendar", "date-picker"]) {
         ]
       : []),
   ]) {
+    // SAFETY: The closed Calendar/Date Picker constituent routes read retained Calendar-day, Card, Label, Pagination Arrow and ASCII/CJK Button manifests with this real core, variant optionals and string header background.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve the existing fresh runtime read/parse phase.
     const manifest = JSON.parse(
       readFileSync(
         pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
         "utf-8"
       )
-    );
+    ) as CalendarComparisonManifest;
 
     test.describe(`${component} actual native ${part} constituents`, () => {
       test.describe.configure({ mode: "parallel" });
@@ -77,31 +140,11 @@ for (const component of ["calendar", "date-picker"]) {
           test(`${component} ${part} ${c.name} ${alias}`, async ({
             page,
           }, info) => {
-            await page.setViewportSize({ width: 1536, height: 900 });
+            await page.setViewportSize({ height: 900, width: 1536 });
 
-            const q = new URLSearchParams({
-              component,
-              native: "1",
-              part,
-              scale: String(c.scale),
-              width: String(c.width),
-              height: String(c.height),
-              x: String(c.x ?? 16),
-              y: String(c.y ?? 16),
-              label: c.label ?? "",
-              background: c.background ?? manifest.background ?? "#202020",
-              align: c.alignment ?? "left",
-              checked: String(c.checked ?? false),
-              state: alias === "base" ? c.state : "normal",
-              selected: String(alias === "selected"),
-              today: String(alias === "today"),
-              range: alias.startsWith("range-") ? alias.slice(6) : "",
-            });
+            const q = calendarCaseQuery(c, component, part, alias, manifest);
 
-            if (c.text != null) q.set("text", c.text);
-
-            if (c.wrapWidth) q.set("wrapWidth", String(c.wrapWidth));
-            await page.goto("/?" + q);
+            await page.goto(`/?${q}`);
             await expect(page.locator("[data-subject]")).toBeVisible();
 
             if (part === "label") {
@@ -110,39 +153,79 @@ for (const component of ["calendar", "date-picker"]) {
                 "true"
               );
 
-              for (const canvas of await page
-                .locator("[data-subject] [data-mc-label-ready]")
-                .all())
-                await expect(canvas).toHaveAttribute(
-                  "data-mc-label-ready",
-                  "true"
+              {
+                const readyElements = await page
+                  .locator("[data-subject] [data-mc-label-ready]")
+                  .all();
+
+                const readinessResults = await Promise.allSettled(
+                  readyElements.map(async (canvas) => {
+                    await expect(canvas).toHaveAttribute(
+                      "data-mc-label-ready",
+                      "true"
+                    );
+                  })
                 );
+
+                const rejectedReadiness = readinessResults.find(
+                  (result) => result.status === "rejected"
+                );
+
+                if (rejectedReadiness) {
+                  throw rejectedReadiness.reason;
+                }
+              }
             }
 
-            if (part === "trigger-cjk")
-              for (const text of await page
+            if (part === "trigger-cjk") {
+              const readyElements = await page
                 .locator("[data-subject] [data-mc-label-ready]")
-                .all())
-                await expect(text).toHaveAttribute(
-                  "data-mc-label-ready",
-                  "true"
-                );
+                .all();
+
+              const readinessResults = await Promise.allSettled(
+                readyElements.map(async (text) => {
+                  await expect(text).toHaveAttribute(
+                    "data-mc-label-ready",
+                    "true"
+                  );
+                })
+              );
+
+              const rejectedReadiness = readinessResults.find(
+                (result) => result.status === "rejected"
+              );
+
+              if (rejectedReadiness) {
+                throw rejectedReadiness.reason;
+              }
+            }
+
             await page.mouse.move(0, 0);
 
             if (
               alias === "base" &&
               (c.state === "hover" || c.state === "disabled-hover")
-            )
+            ) {
               await page.locator("[data-subject]").hover({ force: true });
+            }
 
-            if (alias === "base" && c.state === "focus")
+            if (alias === "base" && c.state === "focus") {
               await page.locator("[data-subject]").focus();
-            await page.evaluate(
-              async () =>
-                await new Promise((r) =>
-                  requestAnimationFrame(() => requestAnimationFrame(r))
-                )
-            );
+            }
+
+            await page.evaluate(async () => {
+              const frameCompletion = Promise.withResolvers();
+
+              try {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(frameCompletion.resolve);
+                });
+              } catch (error) {
+                frameCompletion.reject(error);
+              }
+
+              return await frameCompletion.promise;
+            });
 
             const bytes = readFileSync(
               pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)
@@ -153,25 +236,26 @@ for (const component of ["calendar", "date-picker"]) {
             );
 
             const actual = await page
-                .locator("[data-subject]")
-                .screenshot({ animations: "disabled" }),
-              mismatchedPixels = different(
-                PNG.sync.read(bytes),
-                PNG.sync.read(actual)
-              );
+              .locator("[data-subject]")
+              .screenshot({ animations: "disabled" });
+
+            const mismatchedPixels = different(
+              PNG.sync.read(bytes),
+              PNG.sync.read(actual)
+            );
 
             writeFileSync(
               info.outputPath("metrics.json"),
               JSON.stringify({
+                alias,
+                case: c.name,
                 component,
                 manifest:
                   dir === "."
                     ? "tests/reference/manifest.json"
                     : `tests/reference/${dir}/manifest.json`,
-                part,
-                case: c.name,
-                alias,
                 mismatchedPixels,
+                part,
                 tolerance: 0,
               })
             );

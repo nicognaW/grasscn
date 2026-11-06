@@ -11,11 +11,15 @@ interface Band {
 // SVG's channel lookup truncates; the half-unit bias reproduces GPU rounding.
 export const MinecraftDialogBackdrop = () => {
   const ref = React.useRef<SVGSVGElement>(null);
-  const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/g, "");
+  const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/gu, "");
 
   const [bands, setBands] = React.useState<Band[]>([]);
-  React.useLayoutEffect(() => {
-    const host = ref.current!.parentElement!;
+  React.useLayoutEffect((): (() => void) | undefined => {
+    const host = ref.current?.parentElement;
+
+    if (!host) {
+      return undefined;
+    }
 
     const canvas = document.createElement("canvas");
 
@@ -27,15 +31,22 @@ export const MinecraftDialogBackdrop = () => {
     });
 
     if (!gl || !CSS.supports("backdrop-filter", "url(#native)")) {
-      return;
+      return undefined;
     }
 
     const shader = (kind: number, source: string) => {
-      const value = gl.createShader(kind)!;
+      const value = gl.createShader(kind);
+
+      if (!value) {
+        throw new Error(
+          "Minecraft dialog backdrop WebGL shader could not be created"
+        );
+      }
+
       gl.shaderSource(value, source);
       gl.compileShader(value);
 
-      if (!gl.getShaderParameter(value, gl.COMPILE_STATUS)) {
+      if (gl.getShaderParameter(value, gl.COMPILE_STATUS) !== true) {
         throw new Error(gl.getShaderInfoLog(value) ?? "Backdrop shader failed");
       }
 
@@ -56,6 +67,7 @@ export const MinecraftDialogBackdrop = () => {
     gl.attachShader(program, vertex);
     gl.attachShader(program, fragment);
     gl.linkProgram(program);
+    // oxlint-disable-next-line react/hooks -- WebGL's native useProgram selects a shader program, not a React hook.
     gl.useProgram(program);
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -87,7 +99,7 @@ export const MinecraftDialogBackdrop = () => {
       gl.readPixels(0, 0, 1, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
       const next: Band[] = [];
 
-      for (let y = 0; y < height; y++) {
+      for (let y = 0; y < height; y += 1) {
         const alpha = pixels[(height - y - 1) * 4 + 3];
         const last = next.at(-1);
 
@@ -95,9 +107,9 @@ export const MinecraftDialogBackdrop = () => {
           last.height += 1 / devicePixelRatio;
         } else {
           next.push({
-            start: y / devicePixelRatio,
-            height: 1 / devicePixelRatio,
             alpha,
+            height: 1 / devicePixelRatio,
+            start: y / devicePixelRatio,
           });
         }
       }
@@ -120,8 +132,12 @@ export const MinecraftDialogBackdrop = () => {
     };
   }, []);
   React.useLayoutEffect(() => {
-    if (bands.length) {
-      ref.current!.parentElement!.dataset.mcBackdropReady = "true";
+    // SAFETY: React attaches this always-rendered <svg> before its synchronous layout effect setup reads the owned ref.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact SVGSVGElement result.
+    const host = (ref.current as SVGSVGElement).parentElement;
+
+    if (bands.length && host) {
+      host.dataset.mcBackdropReady = "true";
     }
   }, [bands]);
 
@@ -132,7 +148,7 @@ export const MinecraftDialogBackdrop = () => {
         width="0"
         height="0"
         aria-hidden="true"
-        style={{ pointerEvents: "none", position: "absolute" }}
+        className="pointer-events-none absolute"
       >
         <defs>
           {Array.from({ length: 17 }, (_, index) => 192 + index).map(
@@ -169,21 +185,26 @@ export const MinecraftDialogBackdrop = () => {
           )}
         </defs>
       </svg>
-      {bands.map((band, index) => (
-        <span
-          aria-hidden="true"
-          key={index}
-          style={{
-            backdropFilter: `url(#${id}-${band.alpha})`,
-            height: band.height,
-            left: 0,
-            pointerEvents: "none",
-            position: "absolute",
-            right: 0,
-            top: band.start,
-          }}
-        />
-      ))}
+      {bands.map((band, index) => {
+        const bandStyle: React.CSSProperties & {
+          "--mc-backdrop-filter": string;
+          "--mc-backdrop-height": string;
+          "--mc-backdrop-top": string;
+        } = {
+          "--mc-backdrop-filter": `url(#${id}-${band.alpha})`,
+          "--mc-backdrop-height": `${band.height}px`,
+          "--mc-backdrop-top": `${band.start}px`,
+        };
+
+        return (
+          <span
+            aria-hidden="true"
+            key={index}
+            className="pointer-events-none absolute top-(--mc-backdrop-top) right-0 left-0 h-(--mc-backdrop-height) [backdrop-filter:var(--mc-backdrop-filter)]"
+            style={bandStyle}
+          />
+        );
+      })}
     </>
   );
 };

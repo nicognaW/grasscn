@@ -1,6 +1,10 @@
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import {
+  recordAudioPlayback,
+  recordedAudioPlayback,
+} from "@tests/harness/audio-playback";
 
 const trigger = (page: Page) =>
   page.getByRole("button", { exact: true, name: "World details" });
@@ -96,8 +100,18 @@ test("Collapsible keeps native CJK text accessible", async ({ page }) => {
     "true"
   );
 
-  for (const glyph of await body.locator("[data-mc-label-ready]").all()) {
-    await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems12 = await body.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults12 = await Promise.allSettled(
+    readOnlyItems12.map(async (glyph) => {
+      await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult12 of readOnlyResults12) {
+    if (readOnlyResult12.status === "rejected") {
+      throw readOnlyResult12.reason;
+    }
   }
 
   await expect(body).toContainText("你好，世界");
@@ -119,21 +133,9 @@ test("Collapsible preserves form editing without closing the section", async ({
 test("Collapsible clicks use the original asset once and disabled actions are silent", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).__collapsibleVoices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).__collapsibleVoices.push({
-        rate: this.playbackRate,
-        source: this.src,
-        volume: this.volume,
-      });
+  await recordAudioPlayback(page);
 
-      return Promise.resolve();
-    };
-  });
-
-  const voices = async () =>
-    page.evaluate(() => (window as any).__collapsibleVoices);
+  const voices = async () => await recordedAudioPlayback(page);
 
   await page.goto("/?component=collapsible");
   await trigger(page).hover();
@@ -146,8 +148,11 @@ test("Collapsible clicks use the original asset once and disabled actions are si
   expect(await voices()).toHaveLength(2);
 
   for (const query of ["disabled=1", "prevent=1"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(`/?component=collapsible&${query}`);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await trigger(page).click({ force: true });
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     expect(await voices()).toEqual([]);
   }
 });

@@ -52,6 +52,8 @@ Visit [grasscn.dev/docs](https://grasscn.dev/docs) to explore the components and
 
 Found a bug or have an idea? [Open an issue](https://github.com/nicognaW/grasscn/issues).
 
+Maintainer lint and format scope is centralized in `tooling-scope.ts`. External skill packages pinned in `skills-lock.json`, plus their `.claude/skills` mirrors, are vendored and retain their installed bytes. Unlocked project skills such as `port-minecraft-ui` remain checked; vendored skills are separate from generated code.
+
 ## License
 
 Licensed under the [MIT license](./LICENSE).

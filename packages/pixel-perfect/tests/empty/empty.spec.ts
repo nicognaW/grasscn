@@ -6,15 +6,44 @@ import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData0 from "../reference/empty/manifest.json";
+import type labelReference from "../reference/label/manifest.json";
+
+type EmptySource =
+  | (typeof CapturedData0)["cases"][number]
+  | (typeof labelReference)["cases"][number];
+
+type EmptyCase = Pick<
+  EmptySource,
+  | "name"
+  | "background"
+  | "height"
+  | "scale"
+  | "width"
+  | "x"
+  | "y"
+  | "sha256"
+  | "label"
+> & {
+  alignment?: string;
+  wrapWidth?: number;
+};
+
+interface EmptyReference {
+  cases: EmptyCase[];
+}
+
 test.describe.configure({ mode: "parallel" });
 
 test("Empty comparator catches one changed pixel", () => {
+  // SAFETY: This read consumes the same pinned tests/reference/empty/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile("tests/reference/empty/manifest.json"),
       "utf-8"
     )
-  );
+  ) as typeof CapturedData0;
 
   const expected = PNG.sync.read(
     readFileSync(
@@ -26,6 +55,7 @@ test("Empty comparator catches one changed pixel", () => {
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -35,9 +65,11 @@ for (const [part, directory] of [
   ["title", "tests/reference/label"],
   ["description", "tests/reference/label"],
 ]) {
+  // SAFETY: The literal tuple selects only empty/label manifests; this local consumed protocol preserves existing optional alignment and wrapWidth lookups.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-  );
+  ) as EmptyReference;
 
   for (const c of manifest.cases) {
     test(`Empty ${part} native pixels: ${c.name}`, async ({ page }, info) => {
@@ -76,20 +108,40 @@ for (const [part, directory] of [
           : subject
       ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-      for (const line of await subject.locator("[data-mc-label-ready]").all()) {
-        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+      {
+        const glyphs = await subject.locator("[data-mc-label-ready]").all();
+
+        const glyphReadinessResults = await Promise.allSettled(
+          glyphs.map(async (line) => {
+            await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+          })
+        );
+
+        const rejectedReadiness = glyphReadinessResults.find(
+          (result) => result.status === "rejected"
+        );
+
+        if (rejectedReadiness) {
+          throw rejectedReadiness.reason;
+        }
       }
 
-      await page.evaluate(
-        async () =>
-          new Promise<void>((resolve) =>
-            requestAnimationFrame(() =>
-              requestAnimationFrame(() => {
-                resolve();
-              })
-            )
-          )
-      );
+      await page.evaluate(async () => {
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
+
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        await frameCompletion.promise;
+      });
 
       const expectedBytes = readFileSync(
         pixelPerfectFile(`${directory}/captures/${c.name}`)

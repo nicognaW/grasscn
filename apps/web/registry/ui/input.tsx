@@ -9,6 +9,10 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import "./minecraft-unifont-metrics.css";
 import "./minecraft-input.css";
 
+interface InputStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const Input = ({
   className,
   type = "text",
@@ -20,7 +24,11 @@ const Input = ({
   scale?: 1 | 2 | 3;
 }) => {
   const node = React.useRef<HTMLInputElement>(null);
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useEffect(
     () =>
       node.current ? attachMinecraftInput(node.current, scale) : undefined,
@@ -35,11 +43,10 @@ const Input = ({
       spellCheck={false}
       autoCorrect="off"
       className={cn("mc-input", className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): InputStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   );

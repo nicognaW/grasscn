@@ -15,7 +15,7 @@ interface Painter {
 let shared: Painter | null | undefined;
 const decoded = new Map<Sprite, Uint8Array>();
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
   canvas.width = 182;
   canvas.height = 5;
@@ -32,11 +32,18 @@ function create(): Painter | null {
   }
 
   const shader = (kind: number, source: string) => {
-    const result = gl.createShader(kind)!;
+    const result = gl.createShader(kind);
+
+    if (!result) {
+      throw new Error(
+        "Minecraft progress paint WebGL shader could not be created"
+      );
+    }
+
     gl.shaderSource(result, source);
     gl.compileShader(result);
 
-    if (!gl.getShaderParameter(result, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(result, gl.COMPILE_STATUS) !== true) {
       throw new Error(gl.getShaderInfoLog(result) ?? "Progress shader failed");
     }
 
@@ -96,9 +103,9 @@ function create(): Painter | null {
   gl.viewport(0, 0, 182, 5);
 
   return { canvas, gl, texture };
-}
+};
 
-function paint(
+const paint = function paint(
   canvas: HTMLCanvasElement,
   background: Sprite,
   foreground: Sprite,
@@ -106,7 +113,7 @@ function paint(
   notchForeground: Sprite,
   filled: number
 ) {
-  if (shared?.gl.isContextLost()) {
+  if (shared?.gl.isContextLost() ?? false) {
     shared = undefined;
   }
 
@@ -127,8 +134,9 @@ function paint(
     let pixels = decoded.get(name);
 
     if (!pixels) {
-      pixels = Uint8Array.from(atob(minecraftProgressRgba[name]), (char) =>
-        char.charCodeAt(0)
+      pixels = Uint8Array.from(
+        atob(minecraftProgressRgba[name]),
+        (char) => char.codePointAt(0) ?? Number.NaN
       );
       decoded.set(name, pixels);
     }
@@ -157,13 +165,20 @@ function paint(
     draw(notchForeground);
   }
 
-  const context = canvas.getContext("2d")!;
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    throw new Error(
+      "Minecraft progress paint 2D canvas context could not be created"
+    );
+  }
+
   context.clearRect(0, 0, 182, 5);
   context.imageSmoothingEnabled = false;
   context.drawImage(shared.canvas, 0, 0);
 
   return true;
-}
+};
 
 export const MinecraftProgressPaint = ({
   background,
@@ -183,7 +198,9 @@ export const MinecraftProgressPaint = ({
   React.useLayoutEffect(() => {
     setReady(
       paint(
-        canvas.current!,
+        // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned canvas ref.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+        canvas.current as HTMLCanvasElement,
         background,
         foreground,
         notchBackground,

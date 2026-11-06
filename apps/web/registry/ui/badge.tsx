@@ -7,18 +7,37 @@ import * as React from "react";
 import { minecraftBadgeAssets } from "./minecraft-badge-assets";
 import { MinecraftProse } from "./minecraft-prose";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
 } from "./minecraft-render";
-import type {
-  MinecraftProps,
-  MinecraftPolymorphicProps,
-} from "./minecraft-render";
+import type { MinecraftPolymorphicProps } from "./minecraft-render";
 import { minecraftTextWidth } from "./minecraft-tooltip-layout";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-badge.css";
+
+const requiresUnicodeGlyphs = function requiresUnicodeGlyphs(text: string) {
+  for (const character of text) {
+    if (
+      // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+      (character.codePointAt(0) as number) > 127
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+interface BadgePaintStyle extends React.CSSProperties {
+  "--mc-badge-emblem": string;
+  "--mc-badge-natural": string;
+  "--mc-badge-panel": string;
+  "--mc-scale": number;
+}
 
 const badgeVariants = cva("mc-badge", {
   defaultVariants: { variant: "default" },
@@ -33,6 +52,21 @@ type BadgeProps = MinecraftPolymorphicProps<"span"> &
     earned?: boolean;
     icon?: React.ReactNode;
   };
+
+const widthOf = (text: string) => {
+  let accumulatedGlyphAdvance = 0;
+
+  for (const advanceCharacter of text) {
+    accumulatedGlyphAdvance +=
+      // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+      (advanceCharacter.codePointAt(0) as number) < 128
+        ? minecraftTextWidth(advanceCharacter)
+        : (getUnihexGlyph(advanceCharacter)?.advance ?? 8);
+  }
+
+  return accumulatedGlyphAdvance;
+};
 
 const Badge = ({
   children,
@@ -55,66 +89,73 @@ const Badge = ({
   }
 
   const node = React.useRef<HTMLElement>(null);
+
+  const [attached, setAttached] = React.useState<HTMLElement | null>(null);
+
+  const captureNode = React.useCallback((element: HTMLElement | null) => {
+    node.current = element;
+
+    setAttached(element);
+  }, []);
+
   const [available, setAvailable] = React.useState<number>();
 
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useLayoutEffect(() => {
-    const element = node.current!;
+    const element = attached;
+    let observer: ResizeObserver | undefined;
 
-    const measure = () => {
-      setAvailable(Math.max(1, Math.floor(element.clientWidth / scale) - 37));
-    };
+    if (element !== null) {
+      const measure = () => {
+        setAvailable(Math.max(1, Math.floor(element.clientWidth / scale) - 37));
+      };
 
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(element);
+      measure();
+      observer = new ResizeObserver(measure);
+      observer.observe(element);
+    }
 
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
     };
-  }, [scale]);
+  }, [attached, scale]);
 
-  const child = null;
   const content = children;
 
-  const plain =
-    typeof content === "string" || typeof content === "number"
-      ? String(content)
-      : undefined;
+  const plain = isMinecraftTextContent(content) ? String(content) : undefined;
 
   const [, refreshFont] = React.useState(0);
-  React.useEffect(() => {
-    if (
-      plain == null ||
-      ![...plain].some((char) => char.codePointAt(0)! > 127)
-    ) {
+  React.useEffect((): ReturnType<React.EffectCallback> => {
+    if (plain === undefined || !requiresUnicodeGlyphs(plain)) {
       return;
     }
 
     let live = true;
-    void loadUnihex().then(() => {
+    const fontLoading = loadUnihex();
+
+    const commitFontReadiness = async () => {
+      await fontLoading;
+
       if (live) {
         refreshFont((v) => v + 1);
       }
-    });
+    };
+
+    void commitFontReadiness();
 
     return () => {
       live = false;
     };
   }, [plain]);
 
-  const widthOf = (text: string) =>
-    [...text].reduce(
-      (sum, char) =>
-        sum +
-        (char.codePointAt(0)! < 128
-          ? minecraftTextWidth(char)
-          : (getUnihexGlyph(char)?.advance ?? 8)),
-      0
-    );
-
   const natural =
-    plain == null ? maxWidth : Math.max(1, ...plain.split("\n").map(widthOf));
+    plain === undefined
+      ? maxWidth
+      : Math.max(1, ...plain.split("\n").map(widthOf));
 
   const textWidth = Math.max(
     1,
@@ -155,22 +196,18 @@ const Badge = ({
     <Component
       render={render}
       as="span"
-      ref={node}
+      ref={captureNode}
       data-slot="badge"
       data-achievement={achievement}
       data-earned={String(earned)}
       className={cn(badgeVariants({ variant }), className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-badge-emblem": `url("${minecraftBadgeAssets[`${achievement}_${earned ? "obtained" : "unobtained"}`]}")`,
-            "--mc-badge-natural": `${Math.min(maxWidth, natural) + 37}px`,
-            "--mc-badge-panel": `url("${earned ? minecraftBadgeAssets.obtained : minecraftBadgeAssets.unobtained}")`,
-            "--mc-scale": scale,
-            ...__style,
-          }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): BadgePaintStyle => ({
+        "--mc-badge-emblem": `url("${minecraftBadgeAssets[`${achievement}_${earned ? "obtained" : "unobtained"}`]}")`,
+        "--mc-badge-natural": `${Math.min(maxWidth, natural) + 37}px`,
+        "--mc-badge-panel": `url("${earned ? minecraftBadgeAssets.obtained : minecraftBadgeAssets.unobtained}")`,
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rendered}
@@ -178,6 +215,7 @@ const Badge = ({
   );
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the upstream shadcn component-and-variant export API used by consumer styling composition.
 export { Badge, badgeVariants };
 
 export type { BadgeProps };

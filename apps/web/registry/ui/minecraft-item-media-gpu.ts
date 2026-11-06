@@ -11,7 +11,7 @@ interface Painter {
 let painter: Painter | null | undefined;
 let users = 0;
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -26,11 +26,18 @@ function create(): Painter | null {
   }
 
   const shader = (kind: number, source: string) => {
-    const value = gl.createShader(kind)!;
+    const value = gl.createShader(kind);
+
+    if (!value) {
+      throw new Error(
+        "Minecraft item media gpu WebGL shader could not be created"
+      );
+    }
+
     gl.shaderSource(value, source);
     gl.compileShader(value);
 
-    if (!gl.getShaderParameter(value, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(value, gl.COMPILE_STATUS) !== true) {
       throw new Error(gl.getShaderInfoLog(value) ?? "Item media shader failed");
     }
 
@@ -53,7 +60,7 @@ function create(): Painter | null {
   gl.linkProgram(program);
   gl.useProgram(program);
 
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+  if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
     throw new Error(
       gl.getProgramInfoLog(program) ?? "Item media shader link failed"
     );
@@ -61,13 +68,10 @@ function create(): Painter | null {
 
   gl.deleteShader(vertex);
   gl.deleteShader(fragment);
-  const textures = {} as Painter["textures"];
 
-  for (const name of Object.keys(assets) as (keyof typeof assets)[]) {
-    const asset = assets[name];
+  const uploadTexture = (asset: (typeof assets)[keyof typeof assets]) => {
     const texture = gl.createTexture();
 
-    textures[name] = texture;
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
     for (const parameter of [gl.TEXTURE_MIN_FILTER, gl.TEXTURE_MAG_FILTER]) {
@@ -87,9 +91,20 @@ function create(): Painter | null {
       0,
       gl.RGBA,
       gl.UNSIGNED_BYTE,
-      Uint8Array.from(atob(asset.rgba), (char) => char.charCodeAt(0))
+      Uint8Array.from(
+        atob(asset.rgba),
+        (char) => char.codePointAt(0) ?? Number.NaN
+      )
     );
-  }
+
+    return texture;
+  };
+
+  const textures: Painter["textures"] = {
+    join: uploadTexture(assets.join),
+    join_highlighted: uploadTexture(assets.join_highlighted),
+    thumbnail: uploadTexture(assets.thumbnail),
+  };
 
   const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -106,13 +121,13 @@ function create(): Painter | null {
   gl.disable(gl.DITHER);
 
   return { buffer, canvas, gl, program, textures };
-}
+};
 
-export function retainItemMedia() {
+export const retainItemMedia = function retainItemMedia() {
   users += 1;
-}
+};
 
-export function releaseItemMedia() {
+export const releaseItemMedia = function releaseItemMedia() {
   users -= 1;
 
   if (users > 0) {
@@ -132,15 +147,15 @@ export function releaseItemMedia() {
   }
 
   painter = undefined;
-}
+};
 
-export function itemMediaPixels(
+export const itemMediaPixels = function itemMediaPixels(
   state: 0 | 1 | 2,
   scale: number,
   x: number,
   y: number
 ) {
-  if (painter?.gl.isContextLost()) {
+  if (painter?.gl.isContextLost() ?? false) {
     painter = undefined;
   }
 
@@ -231,5 +246,6 @@ export function itemMediaPixels(
     }
   }
 
+  // oxlint-disable-next-line typescript/consistent-return -- An unavailable native rendering resource intentionally returns undefined; explicit undefined conflicts with unicorn/no-useless-undefined, while successful rendering returns these original pixels or backdrop.
   return result;
-}
+};

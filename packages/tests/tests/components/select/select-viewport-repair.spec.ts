@@ -1,17 +1,18 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
 for (const scale of [2] as const) {
   for (const position of ["default", "popper"] as const) {
-    for (const short of [false, true])
+    for (const short of [false, true]) {
       test(`Select ${position} remains anchored during wheel scrolling GUI${scale} ${short ? "short" : "scrolled"}`, async ({
         page,
       }) => {
-        const width = 390,
-          height = short ? 280 : 844;
+        const width = 390;
+        const height = short ? 280 : 844;
 
-        await page.setViewportSize({ width, height });
+        await page.setViewportSize({ height, width });
         await page.goto(
           `${preview.replace(/\/$/u, "")}/docs/components/${position === "default" ? "chart" : "select"}`
         );
@@ -36,8 +37,10 @@ for (const scale of [2] as const) {
         await expect(popup).toBeVisible();
         await expect(popup).toHaveAttribute("data-mc-select-ready", "true");
 
-        const before = (await popup.boundingBox())!,
-          anchor = (await trigger.boundingBox())!;
+        const before = await popup.boundingBox();
+        expectNotNull(before, "Missing required bounding box: before");
+        const anchor = await trigger.boundingBox();
+        expectNotNull(anchor, "Missing required bounding box: anchor");
 
         expect(before.x).toBeGreaterThanOrEqual(0);
         expect(before.x + before.width).toBeLessThanOrEqual(width);
@@ -47,37 +50,50 @@ for (const scale of [2] as const) {
         expect(before.height % scale).toBe(0);
         const viewport = popup.locator("[data-slot=select-viewport]");
 
-        const scroll = await viewport.evaluate((n) => ({
-          top: n.scrollTop,
-          maximum: n.scrollHeight - n.clientHeight,
-        }));
+        const scroll = await viewport.evaluate((n) => {
+          const top = n.scrollTop;
 
-        if (short) expect(scroll.maximum).toBeGreaterThan(0);
+          return { maximum: n.scrollHeight - n.clientHeight, top };
+        });
+
+        if (short) {
+          expect(scroll.maximum).toBeGreaterThan(0);
+        }
+
         await viewport.hover();
         await page.mouse.wheel(0, scroll.top > 0 ? -1000 : 1000);
 
-        if (scroll.maximum > 0)
-          await expect
-            .poll(async () => viewport.evaluate((n) => n.scrollTop))
-            .not.toBe(scroll.top);
-        else
-          await expect
-            .poll(async () => viewport.evaluate((n) => n.scrollTop))
-            .toBe(0);
-        await page.evaluate(
-          async () =>
-            await new Promise<void>((r) =>
-              requestAnimationFrame(() =>
-                requestAnimationFrame(() => {
-                  r();
-                })
-              )
-            )
-        );
-        const after = (await popup.boundingBox())!;
+        await (scroll.maximum > 0
+          ? expect
+              .poll(async () => await viewport.evaluate((n) => n.scrollTop))
+              .not.toBe(scroll.top)
+          : expect
+              .poll(async () => await viewport.evaluate((n) => n.scrollTop))
+              .toBe(0));
 
-        if ((await popup.getAttribute("data-align-trigger")) !== "true")
+        await page.evaluate(async () => {
+          const frameCompletion: PromiseWithResolvers<void> =
+            Promise.withResolvers();
+
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          await frameCompletion.promise;
+        });
+        const after = await popup.boundingBox();
+        expectNotNull(after, "Missing required bounding box: after");
+
+        if ((await popup.getAttribute("data-align-trigger")) !== "true") {
           expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(scale);
+        }
+
         expect(Math.abs(after.x - before.x)).toBeLessThanOrEqual(scale);
         expect(after.y).toBeGreaterThanOrEqual(0);
         expect(after.y + after.height).toBeLessThanOrEqual(height);
@@ -90,12 +106,14 @@ for (const scale of [2] as const) {
         ).toBeLessThanOrEqual(10 * scale);
 
         const row = await popup
-            .locator("[data-slot=select-item]")
-            .last()
-            .boundingBox(),
-          bar = popup.locator(".mc-select-scrollbar");
+          .locator("[data-slot=select-item]")
+          .last()
+          .boundingBox();
 
-        expect(row!.width).toBe(
+        const bar = popup.locator(".mc-select-scrollbar");
+
+        expectNotNull(row, "Missing required bounding box: row");
+        expect(row.width).toBe(
           Math.min(270, before.width / scale - 30) * scale
         );
 
@@ -109,13 +127,18 @@ for (const scale of [2] as const) {
         );
 
         if (settledMaximum > 0) {
-          const bounds = (await bar.boundingBox())!;
+          const bounds = await bar.boundingBox();
+          expectNotNull(bounds, "Missing required bounding box: bounds");
           expect(bounds.x + bounds.width).toBeLessThanOrEqual(
             after.x + after.width
           );
-        } else await expect(bar).toBeHidden();
+        } else {
+          await expect(bar).toBeHidden();
+        }
+
         await page.keyboard.press("Escape");
         await expect(trigger).toBeFocused();
       });
+    }
   }
 }

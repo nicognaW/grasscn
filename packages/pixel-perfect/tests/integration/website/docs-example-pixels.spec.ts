@@ -126,7 +126,7 @@ test("default documentation code controls match their Minecraft reference cases"
   const directive = example.locator(".documentation-code-line").first();
   await expect(
     directive
-      .locator(".mc-code-token")
+      .locator("[data-mc-code-token]")
       .filter({ hasText: '"use client"' })
       .first()
   ).toHaveCSS("color", "rgb(85, 255, 85)");

@@ -9,11 +9,16 @@ const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/u, "/");
 
-async function focusByKeyboard(page: Page, locator: Locator) {
+const focusByKeyboard = async function focusByKeyboard(
+  page: Page,
+  locator: Locator
+) {
   for (let i = 0; i < 256; i += 1) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
     await page.keyboard.press("Tab");
 
     if (
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await locator.evaluate((element) => element === document.activeElement)
     ) {
       return;
@@ -21,15 +26,20 @@ async function focusByKeyboard(page: Page, locator: Locator) {
   }
 
   throw new Error("Preview control was not keyboard reachable");
-}
+};
 
-async function nativePixels(locator: Locator, file: string) {
+const nativePixels = async function nativePixels(
+  locator: Locator,
+  file: string
+) {
   const actual = PNG.sync.read(
     await locator.screenshot({ animations: "disabled" })
   );
+
   const expected = PNG.sync.read(
     await readFile(referenceFile(file.replace(/^tests\/reference\//u, "")))
   );
+
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -38,11 +48,11 @@ async function nativePixels(locator: Locator, file: string) {
     actual.data.equals(expected.data),
     "Preview chrome must preserve native pixels"
   ).toBe(true);
-}
+};
 
 for (const scale of [2]) {
   test(`Preview native pixels at scale ${scale}`, async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.setViewportSize({ height: 1000, width: 1440 });
     await page.goto(`${origin}docs/components/button`);
 
     const button = page
@@ -80,6 +90,7 @@ for (const scale of [2]) {
     const checkbox = page
       .locator(".documentation-playground")
       .getByRole("checkbox", { name: "Enable shadows" });
+
     await page.mouse.move(0, 0);
     await nativePixels(
       checkbox,
@@ -115,13 +126,15 @@ for (const scale of [2]) {
 
     const input = page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name: "Demo input", exact: true });
+      .getByRole("textbox", { exact: true, name: "Demo input" });
+
     await expect(input).toHaveAttribute("data-mc-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
       input,
       `tests/reference/input/captures/input-w200-normal-c39-s${scale}.png`
     );
+
     const readonly = page
       .locator(".documentation-playground")
       .getByRole("textbox", { exact: true, name: "Read-only demo input" });
@@ -131,9 +144,11 @@ for (const scale of [2]) {
       readonly,
       `tests/reference/input/captures/input-w200-readonly-c44-s${scale}.png`
     );
+
     const disabled = page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name: "Disabled demo input", exact: true });
+      .getByRole("textbox", { exact: true, name: "Disabled demo input" });
+
     await expect(disabled).toHaveAttribute("data-mc-ready", "true");
     await nativePixels(
       disabled,
@@ -143,7 +158,8 @@ for (const scale of [2]) {
 
     const textarea = page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name: "Demo textarea", exact: true });
+      .getByRole("textbox", { exact: true, name: "Demo textarea" });
+
     await expect(textarea).toHaveAttribute("data-mc-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -156,7 +172,9 @@ for (const scale of [2]) {
         .locator(".documentation-playground")
         .getByRole("textbox", { exact: true, name });
 
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await expect(field).toHaveAttribute("data-mc-ready", "true");
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
       await nativePixels(
         field,
         `tests/reference/textarea/captures/textarea-c18-s${scale}.png`
@@ -168,7 +186,7 @@ for (const scale of [2]) {
     await nativePixels(
       page
         .locator(".documentation-playground")
-        .getByRole("separator", { name: "Menu header separator", exact: true }),
+        .getByRole("separator", { exact: true, name: "Menu header separator" }),
       `tests/reference/separator/captures/separator-c6-s${scale}.png`
     );
     await nativePixels(
@@ -181,7 +199,8 @@ for (const scale of [2]) {
 
     const scrollArea = page
       .locator(".documentation-playground")
-      .getByRole("region", { name: "Demo scroll area", exact: true });
+      .getByRole("region", { exact: true, name: "Demo scroll area" });
+
     await expect(scrollArea).toHaveAttribute("data-mc-scroll-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -192,7 +211,8 @@ for (const scale of [2]) {
 
     const progress = page
       .locator(".documentation-playground")
-      .getByRole("progressbar", { name: "Demo progress", exact: true });
+      .getByRole("progressbar", { exact: true, name: "Demo progress" });
+
     await page.mouse.move(0, 0);
     await nativePixels(
       progress,
@@ -200,7 +220,7 @@ for (const scale of [2]) {
     );
     await page
       .locator(".documentation-playground")
-      .getByRole("button", { name: "Boss bar notches: None", exact: true })
+      .getByRole("button", { exact: true, name: "Boss bar notches: None" })
       .click();
     await expect(progress.locator("canvas")).toHaveAttribute(
       "data-mc-progress-painted",
@@ -219,22 +239,23 @@ test("Preview text fields share the native focused Input pixels", async ({
   await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
   await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
   await page.goto(`${origin}docs/components/button`);
+
   const fields = [
     { name: "Button label", path: "button" },
     { name: "Demo input", path: "input" },
     { name: "Find a component", path: "input" },
   ];
 
-  // Match a captured vanilla case so preview CSS cannot add a second focus ring.
-  for (const entry of fields) {
+  const verifyFocusedField = async (entry: (typeof fields)[number]) => {
     await page.goto(`${origin}docs/components/${entry.path}`);
 
     const field = page
       .locator(".documentation-playground")
       .getByLabel(entry.name, { exact: true });
+
     await field.fill("");
-    await field.evaluate((element) => {
-      const input = element as HTMLInputElement;
+    await field.evaluate((element: HTMLInputElement) => {
+      const input = element;
       input.style.width = "206px";
       input.style.height = "40px";
       input.placeholder = "";
@@ -246,6 +267,12 @@ test("Preview text fields share the native focused Input pixels", async ({
       field,
       "tests/reference/input/captures/input-w103-focus-c3-s2.png"
     );
+  };
+
+  // Match a captured vanilla case so preview CSS cannot add a second focus ring.
+  for (const entry of fields) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Assert or capture this Page state before the next route, tab, focus, or scroll transition.
+    await verifyFocusedField(entry);
   }
 });
 
@@ -253,12 +280,13 @@ for (const scale of [2]) {
   test(`Tabs preview preserves native tab bar at scale ${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     await page.goto(`${origin}docs/components/tabs`);
 
     const list = page
       .locator(".documentation-playground")
-      .getByRole("tablist", { name: "World settings", exact: true });
+      .getByRole("tablist", { exact: true, name: "World settings" });
+
     await expect(list).toHaveAttribute("data-mc-tabs-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -272,12 +300,13 @@ for (const scale of [2]) {
   test(`Select preview preserves native cycle button at scale ${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     await page.goto(`${origin}docs/components/select`);
 
     const trigger = page
       .locator(".documentation-playground")
-      .getByRole("combobox", { name: "Demo game mode", exact: true });
+      .getByRole("combobox", { exact: true, name: "Demo game mode" });
+
     await expect(trigger).toHaveText("Survival");
     await expect(trigger).toHaveAttribute("data-mc-select-ready", "true");
     await page.mouse.move(0, 0);
@@ -296,8 +325,9 @@ for (const scale of [2]) {
 
     const radio = page
       .locator(".documentation-playground")
-      .getByRole("radiogroup", { name: "Demo radio game mode", exact: true })
-      .getByRole("radio", { name: "Survival", exact: true });
+      .getByRole("radiogroup", { exact: true, name: "Demo radio game mode" })
+      .getByRole("radio", { exact: true, name: "Survival" });
+
     await expect(radio).toBeChecked();
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -315,7 +345,8 @@ for (const scale of [2]) {
 
     const control = page
       .locator(".documentation-playground")
-      .getByRole("switch", { name: "Enable clouds", exact: true });
+      .getByRole("switch", { exact: true, name: "Enable clouds" });
+
     await expect(control).not.toBeChecked();
     await page.mouse.move(0, 0);
     await nativePixels(

@@ -19,9 +19,8 @@ const ValidatedFieldExample = () => {
         event.preventDefault();
         setSubmitted(true);
       }}
-      /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ display: "grid", gap: 12 }}
-      /* eslint-enable shadcn/no-inline-styles */
+
+      className="grid gap-3"
     >
       <Field data-invalid={invalid}>
         <FieldLabel htmlFor={id}>Player name</FieldLabel>

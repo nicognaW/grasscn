@@ -7,26 +7,10 @@ import { minecraftSeparatorAssets } from "@grasscn/web/ui/minecraft-separator-as
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/separator/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    x: number;
-    y: number;
-    state: string;
-    sha256: string;
-  }[];
-};
+import type CapturedData0 from "../reference/separator/asset-provenance.json";
+import manifest from "../reference/separator/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -44,9 +28,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -54,7 +38,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Separator comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
@@ -66,6 +50,7 @@ test("Separator comparator catches a one-pixel change", async () => {
   );
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -77,12 +62,15 @@ for (const asChild of [false, true]) {
     }, testInfo) => {
       const query = new URLSearchParams({
         component: "separator",
-        width: String(c.width),
         scale: String(c.scale),
         state: c.state,
+        width: String(c.width),
       });
 
-      if (asChild) query.set("asChild", "1");
+      if (asChild) {
+        query.set("asChild", "1");
+      }
+
       await page.goto(`/?${query}`);
       await page.addStyleTag({
         content: `html,body { background: ${c.background}; } #root > :not([data-subject]) { visibility: hidden; } [data-subject] { position: fixed; left: ${c.x * c.scale}px; top: ${c.y * c.scale}px; }`,
@@ -113,8 +101,8 @@ for (const asChild of [false, true]) {
           {
             case: c.name,
             mismatchedPixels,
-            totalPixels: c.width * c.height * c.scale * c.scale,
             tolerance: 0,
+            totalPixels: c.width * c.height * c.scale * c.scale,
           },
           null,
           2
@@ -126,12 +114,14 @@ for (const asChild of [false, true]) {
 }
 
 test("Separator embeds unchanged original title and in-world textures", () => {
+  // SAFETY: This read consumes the same pinned tests/reference/separator/asset-provenance.json producer data described by the type-only import; retain the runtime read and parse phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const provenance = JSON.parse(
     readFileSync(
       pixelPerfectFile("tests/reference/separator/asset-provenance.json"),
       "utf-8"
     )
-  );
+  ) as typeof CapturedData0;
 
   for (const edge of ["header", "footer"] as const) {
     const bytes = Buffer.from(

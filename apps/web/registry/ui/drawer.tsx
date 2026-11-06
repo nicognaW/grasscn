@@ -7,17 +7,20 @@ import { Button } from "./button";
 import { minecraftCardSprite } from "./minecraft-card-sprite";
 import { CardScaleContext } from "./minecraft-card-text";
 import { MinecraftDialogBackdrop } from "./minecraft-dialog-backdrop";
-import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
 import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+  MinecraftDisclosureText,
+  MinecraftDisclosureHeading,
+} from "./minecraft-disclosure-text";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 
 import "./minecraft-card.css";
 import "./minecraft-drawer.css";
+
+interface DrawerScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const DrawerScale = React.createContext<1 | 2 | 3>(2);
 
@@ -32,17 +35,17 @@ const Drawer = ({
 }: MinecraftProps<typeof DrawerPrimitive.Root> & {
   scale?: 1 | 2 | 3;
 }) => {
+  let direction: React.ContextType<typeof DrawerDirection> = "bottom";
+
+  if (swipeDirection === "up") {
+    direction = "top";
+  } else if (swipeDirection !== "down") {
+    direction = swipeDirection;
+  }
+
   return (
     <DrawerScale.Provider value={scale}>
-      <DrawerDirection.Provider
-        value={
-          swipeDirection === "down"
-            ? "bottom"
-            : swipeDirection === "up"
-              ? "top"
-              : swipeDirection
-        }
-      >
+      <DrawerDirection.Provider value={direction}>
         <DrawerPrimitive.Root swipeDirection={swipeDirection} {...props} />
       </DrawerDirection.Provider>
     </DrawerScale.Provider>
@@ -85,9 +88,9 @@ const DrawerClose = ({
   );
 };
 
-const DrawerPortal = (props: MinecraftProps<typeof DrawerPrimitive.Portal>) => {
-  return <DrawerPrimitive.Portal {...props} />;
-};
+const DrawerPortal = (props: MinecraftProps<typeof DrawerPrimitive.Portal>) => (
+  <DrawerPrimitive.Portal {...props} />
+);
 
 const DrawerOverlay = ({
   className,
@@ -95,8 +98,6 @@ const DrawerOverlay = ({
   children,
   ...props
 }: MinecraftProps<typeof DrawerPrimitive.Backdrop>) => {
-  const child = null;
-
   const content = (
     <>
       <MinecraftDialogBackdrop />
@@ -134,8 +135,6 @@ const DrawerContent = ({
   const scale = explicit ?? inherited;
   const side = React.useContext(DrawerDirection);
 
-  const child = null;
-
   const content = (
     <>
       <MinecraftSurface sprite={minecraftCardSprite} />
@@ -149,33 +148,21 @@ const DrawerContent = ({
       <DrawerOverlay />
       <DrawerScale.Provider value={scale}>
         <CardScaleContext.Provider value={scale}>
-          <DrawerPrimitive.Viewport
-            style={{
-              inset: 0,
-              pointerEvents: "none",
-              position: "fixed",
-              zIndex: 50,
-            }}
-          >
+          <DrawerPrimitive.Viewport className="pointer-events-none fixed inset-0 z-50">
             <DrawerPrimitive.Popup
               render={render}
               data-slot="drawer-content"
               data-side={side}
               className={cn(`mc-card mc-drawer-content`, className)}
-              style={minecraftStyle(
-                style,
-                (__style) =>
-                  ({
-                    "--mc-scale": scale,
-                    pointerEvents: "auto",
-                    ...__style,
-                  }) as React.CSSProperties
-              )}
+              style={minecraftStyle(style, (__style): DrawerScaleStyle => ({
+                "--mc-scale": scale,
+                ...__style,
+              }))}
               {...props}
             >
               <DrawerPrimitive.Content
                 data-slot="drawer-body"
-                style={{ display: "contents" }}
+                className="contents"
               >
                 {content}
               </DrawerPrimitive.Content>
@@ -187,25 +174,21 @@ const DrawerContent = ({
   );
 };
 
-const DrawerHeader = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="drawer-header"
-      className={cn(`mc-drawer-header`, className)}
-      {...props}
-    />
-  );
-};
+const DrawerHeader = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="drawer-header"
+    className={cn(`mc-drawer-header`, className)}
+    {...props}
+  />
+);
 
-const DrawerFooter = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="drawer-footer"
-      className={cn(`mc-drawer-footer`, className)}
-      {...props}
-    />
-  );
-};
+const DrawerFooter = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="drawer-footer"
+    className={cn(`mc-drawer-footer`, className)}
+    {...props}
+  />
+);
 
 const DrawerTitle = ({
   render,
@@ -219,15 +202,7 @@ const DrawerTitle = ({
     <DrawerPrimitive.Title
       data-slot="drawer-title"
       className={className}
-      render={
-        render ?? (
-          <MinecraftDisclosureText
-            role="heading"
-            aria-level={2}
-            scale={scale}
-          />
-        )
-      }
+      render={render ?? <MinecraftDisclosureHeading scale={scale} />}
       {...props}
     >
       {children}

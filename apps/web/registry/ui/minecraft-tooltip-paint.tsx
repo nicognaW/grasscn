@@ -1,10 +1,15 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { MinecraftSurface } from "./minecraft-surface";
 import { gpuTooltipPixels } from "./minecraft-tooltip-gpu";
 import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
 
-function solidBackdrop(node: HTMLElement) {
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-ui-minecraft-tooltip-paint-1-visibility": string;
+}
+
+const solidBackdrop = function solidBackdrop(node: HTMLElement) {
   const bounds = node.getBoundingClientRect();
 
   const under = document
@@ -14,6 +19,7 @@ function solidBackdrop(node: HTMLElement) {
     )
     .find(
       (element) =>
+        // oxlint-disable-next-line unicorn/prefer-dom-node-dataset -- elementsFromPoint returns namespace-generic Element; hasAttribute supports arbitrary element namespaces whereas dataset is not an Element capability.
         !node.contains(element) && !element.hasAttribute("data-mc-positioner")
     );
 
@@ -34,7 +40,7 @@ function solidBackdrop(node: HTMLElement) {
       return;
     }
 
-    const rgba = style.backgroundColor.match(/[\d.]+/g)?.map(Number);
+    const rgba = style.backgroundColor.match(/[\d.]+/gu)?.map(Number);
 
     if (rgba && rgba.length >= 3) {
       const alpha = rgba[3] ?? 1;
@@ -48,7 +54,9 @@ function solidBackdrop(node: HTMLElement) {
 
   const color = [255, 255, 255];
 
-  for (const layer of [...layers].reverse()) {
+  layers.reverse();
+
+  for (const layer of layers) {
     for (let c = 0; c < 3; c += 1) {
       color[c] = Math.round(layer[c] * layer[3] + color[c] * (1 - layer[3]));
     }
@@ -56,6 +64,48 @@ function solidBackdrop(node: HTMLElement) {
 
   // Flatten only a uniform backdrop. One center sample cannot establish what
   // lies beneath the transparent padding or shadow around the native frame.
+  const isOutsideBackdropBounds = (box: DOMRect) =>
+    !box.width ||
+    !box.height ||
+    box.right <= bounds.left ||
+    box.left >= bounds.right ||
+    box.bottom <= bounds.top ||
+    box.top >= bounds.bottom;
+
+  const hasForegroundObstruction = (
+    element: Element,
+    style: CSSStyleDeclaration
+  ) => {
+    const ownText = [...element.childNodes].some(
+      (child) =>
+        child.nodeType === Node.TEXT_NODE &&
+        (child.textContent?.trim() ?? "") !== ""
+    );
+
+    const background = style.backgroundColor.match(/[\d.]+/gu)?.map(Number);
+
+    const differentColor =
+      background &&
+      (background[3] ?? 1) > 0 &&
+      background.slice(0, 3).some((channel, index) => channel !== color[index]);
+
+    return (
+      ownText ||
+      differentColor === true ||
+      style.backgroundImage !== "none" ||
+      style.boxShadow !== "none" ||
+      style.filter !== "none" ||
+      Number(style.opacity) < 1 ||
+      [
+        style.borderTopWidth,
+        style.borderRightWidth,
+        style.borderBottomWidth,
+        style.borderLeftWidth,
+      ].some((value) => Number(value) > 0) ||
+      ["IMG", "CANVAS", "INPUT", "VIDEO", "SVG"].includes(element.tagName)
+    );
+  };
+
   for (const element of document.body.querySelectorAll("*")) {
     if (
       node.contains(element) ||
@@ -68,14 +118,7 @@ function solidBackdrop(node: HTMLElement) {
 
     const box = element.getBoundingClientRect();
 
-    if (
-      !box.width ||
-      !box.height ||
-      box.right <= bounds.left ||
-      box.left >= bounds.right ||
-      box.bottom <= bounds.top ||
-      box.top >= bounds.bottom
-    ) {
+    if (isOutsideBackdropBounds(box)) {
       continue;
     }
 
@@ -85,38 +128,14 @@ function solidBackdrop(node: HTMLElement) {
       continue;
     }
 
-    const ownText = [...element.childNodes].some(
-      (child) => child.nodeType === Node.TEXT_NODE && child.textContent?.trim()
-    );
-
-    const background = style.backgroundColor.match(/[\d.]+/g)?.map(Number);
-
-    const differentColor =
-      background &&
-      (background[3] ?? 1) > 0 &&
-      background.slice(0, 3).some((channel, index) => channel !== color[index]);
-
-    if (
-      ownText ||
-      differentColor ||
-      style.backgroundImage !== "none" ||
-      style.boxShadow !== "none" ||
-      style.filter !== "none" ||
-      Number(style.opacity) < 1 ||
-      [
-        style.borderTopWidth,
-        style.borderRightWidth,
-        style.borderBottomWidth,
-        style.borderLeftWidth,
-      ].some((value) => Number(value) > 0) ||
-      ["IMG", "CANVAS", "INPUT", "VIDEO", "SVG"].includes(element.tagName)
-    ) {
+    if (hasForegroundObstruction(element, style)) {
       return;
     }
   }
 
+  // oxlint-disable-next-line typescript/consistent-return -- An unavailable native rendering resource intentionally returns undefined; explicit undefined conflicts with unicorn/no-useless-undefined, while successful rendering returns these original pixels or backdrop.
   return color;
-}
+};
 
 export const MinecraftTooltipSurface = ({
   width,
@@ -129,9 +148,17 @@ export const MinecraftTooltipSurface = ({
 }) => {
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const [painted, setPainted] = React.useState(false);
-  React.useLayoutEffect(() => {
-    const node = canvas.current!;
-    const parent = node.parentElement!;
+  React.useLayoutEffect((): (() => void) | undefined => {
+    const node =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned canvas ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      canvas.current as HTMLCanvasElement;
+
+    const parent = node.parentElement;
+
+    if (!parent) {
+      return undefined;
+    }
 
     let signature = "";
 
@@ -178,7 +205,15 @@ export const MinecraftTooltipSurface = ({
         return;
       }
 
-      node.getContext("2d")!.putImageData(new ImageData(pixels, w, h), 0, 0);
+      const context = node.getContext("2d");
+
+      if (!context) {
+        throw new Error(
+          "Minecraft tooltip paint 2D canvas context could not be created"
+        );
+      }
+
+      context.putImageData(new ImageData(pixels, w, h), 0, 0);
       node.dataset.mcBackdrop = backdrop.join(",");
       node.dataset.mcLocation = [bounds.x, bounds.y].join(",");
       setPainted(true);
@@ -205,14 +240,14 @@ export const MinecraftTooltipSurface = ({
         ref={canvas}
         aria-hidden="true"
         data-mc-tooltip-painted={painted}
-        style={{
-          height: "100%",
-          inset: 0,
-          pointerEvents: "none",
-          position: "absolute",
-          visibility: painted ? "visible" : "hidden",
-          width: "100%",
-        }}
+        className="pointer-events-none [visibility:var(--mc-intrinsic-registry-ui-minecraft-tooltip-paint-1-visibility)] absolute [inset:0] h-full w-full"
+        style={
+          // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+          {
+            "--mc-intrinsic-registry-ui-minecraft-tooltip-paint-1-visibility":
+              painted ? "visible" : "hidden",
+          } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+        }
       />
     </>
   );

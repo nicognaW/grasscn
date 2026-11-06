@@ -60,3 +60,9 @@
     text-underline-offset: calc(1px*var(--mc-scale, 2));
   }
 }
+
+@layer components {
+  .mc-owned-paint-marker-1 {
+    width: 100%;
+  }
+}

@@ -84,3 +84,43 @@
     right: calc(12px * var(--mc-scale));
   }
 }
+
+@layer components {
+  .mc-owned-paint-sonner-1 {
+    display: block;
+    height: var(--mc-z-sonner-paint-1-height);
+    left: 0;
+    pointer-events: none;
+    position: var(--mc-z-sonner-paint-1-position);
+    top: 0;
+    width: 100%;
+    z-index: var(--mc-z-sonner-paint-1-z-index);
+  }
+  .mc-owned-paint-sonner-2 {
+    height: var(--mc-z-sonner-paint-2-height);
+    left: var(--mc-z-sonner-paint-2-left);
+    top: var(--mc-z-sonner-paint-2-top);
+    width: var(--mc-z-sonner-paint-2-width);
+  }
+}
+
+@layer components {
+  .mc-sonner-action-paint {
+    --mc-ink: inherit;
+    --mc-shadow: inherit;
+    --mc-piece-0: inherit;
+    --mc-piece-1: inherit;
+    --mc-piece-2: inherit;
+    --mc-piece-3: inherit;
+    --mc-piece-4: inherit;
+    --mc-piece-5: inherit;
+    --mc-piece-6: inherit;
+    --mc-piece-7: inherit;
+    --mc-piece-8: inherit;
+    height: 100%;
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+  }
+}

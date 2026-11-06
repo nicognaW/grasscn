@@ -1,26 +1,148 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { Page } from "@playwright/test";
+import type { RecordedPitchedPlayback } from "@tests/harness/audio-playback";
+
+interface PaginationPlaybackState {
+  sounds: RecordedPitchedPlayback[];
+}
+
+interface PaginationArrowSourceState {
+  sounds: string[];
+}
+
+const verifyAspectRatioGeometry = async (
+  page: Page,
+  ratio: number,
+  width: number
+) => {
+  await page.goto(
+    `/?component=aspect-ratio&ratio=${ratio}&containerWidth=${width}`
+  );
+  const node = page.locator("#ratio");
+  await expect(node).toHaveAttribute("data-slot", "aspect-ratio");
+  await expect(node).toHaveAttribute("data-ref", "true");
+  const rect = await node.boundingBox();
+  expectNotNull(rect, "Missing required bounding box: rect");
+  expect(rect.width).toBe(width);
+  expect(rect.height).toBeCloseTo(width / ratio, 1);
+  const art = await page.locator("#art").boundingBox();
+  expectNotNull(art, "Missing required bounding box: art");
+  expect([art.width, art.height]).toEqual([40, 40]);
+};
+
+const verifyButtonGroupOrientation = async (
+  page: Page,
+  orientation: string
+) => {
+  await page.goto(`/?component=button-group&orientation=${orientation}`);
+  const group = page.getByRole("group", { name: "Game actions" });
+  await expect(group).toHaveAttribute("data-orientation", orientation);
+
+  const first = await page.locator("[data-subject]").boundingBox();
+  expectNotNull(first, "Missing required bounding box: first");
+
+  const last = await group
+    .getByRole("button", { exact: true, name: "Next" })
+    .boundingBox();
+
+  expectNotNull(last, "Missing required bounding box: last");
+
+  expect(
+    orientation === "horizontal" ? last.x > first.x : last.y > first.y
+  ).toBe(true);
+  await page.locator("[data-subject]").click();
+  await group.getByRole("button", { exact: true, name: "Next" }).click();
+  await expect(page.locator("#events")).toHaveText("2");
+  await expect(group.getByRole("separator")).toHaveAttribute(
+    "aria-orientation",
+    "vertical"
+  );
+  await expect(page.locator("#slotted")).toHaveAttribute(
+    "data-slot",
+    "button-group-text"
+  );
+  await expect(page.locator("#variant")).toHaveClass(
+    /mc-button-group-vertical/u
+  );
+};
+
+const verifyBlockedPaginationAction = async (page: Page, suffix: string) => {
+  await page.goto(`/?component=pagination&${suffix}`);
+  await page.locator("[data-subject]").dispatchEvent("click");
+  await expect(page.locator("#events")).toHaveText("0");
+  expect(new URL(page.url()).hash).toBe("");
+};
+
+const verifyCanceledPaginationAudio = async (page: Page, suffix: string) => {
+  await page.goto(`/?component=pagination&${suffix}`);
+  await page.locator("[data-subject]").dispatchEvent("click");
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationPlaybackState).sounds
+    )
+  ).toEqual([]);
+};
+
+const verifyPaginationArrowKeyboard = async (page: Page, forward: boolean) => {
+  await page.goto(`/?component=pagination&part=arrow&checked=${forward}`);
+
+  const arrow = page.getByRole("link", {
+    name: forward ? "Go to next page" : "Go to previous page",
+  });
+
+  await expect(arrow).toHaveAttribute("href", "#next");
+  await arrow.hover();
+  await arrow.focus();
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationPlaybackState).sounds
+    )
+  ).toEqual([]);
+  await page.keyboard.press("Enter");
+  expect(new URL(page.url()).hash).toBe("#next");
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationPlaybackState).sounds
+    )
+  ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
+};
+
+const verifySuppressedPaginationArrow = async (page: Page, suffix: string) => {
+  await page.goto(`/?component=pagination&part=arrow&text=World&${suffix}`);
+  const arrow = page.locator("[data-subject]");
+  await expect(arrow).toContainText("World");
+  await arrow.dispatchEvent("click");
+  expect(new URL(page.url()).hash).toBe("");
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination arrow silence reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationArrowSourceState).sounds
+    )
+  ).toEqual([]);
+};
 
 test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
   page,
 }) => {
-  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const ratio of [1, 4 / 3, 16 / 9]) {
     for (const width of [160, 320, 640]) {
-      await page.goto(
-        `/?component=aspect-ratio&ratio=${ratio}&containerWidth=${width}`
-      );
-      const node = page.locator("#ratio");
-      await expect(node).toHaveAttribute("data-slot", "aspect-ratio");
-      await expect(node).toHaveAttribute("data-ref", "true");
-      const rect = (await node.boundingBox())!;
-      expect(rect.width).toBe(width);
-      expect(rect.height).toBeCloseTo(width / ratio, 1);
-      const art = (await page.locator("#art").boundingBox())!;
-      expect([art.width, art.height]).toEqual([40, 40]);
+      // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+      await verifyAspectRatioGeometry(page, ratio, width);
     }
   }
-  /* oxlint-enable no-await-in-loop */
 });
 
 test("Aspect Ratio supports explicit clipping without resampling its content", async ({
@@ -34,46 +156,21 @@ test("Aspect Ratio supports explicit clipping without resampling its content", a
       .locator("#ratio")
       .evaluate((node) => getComputedStyle(node).overflow)
   ).toBe("hidden");
-  const art = (await page.locator("#art").boundingBox())!;
+  const art = await page.locator("#art").boundingBox();
+  expectNotNull(art, "Missing required bounding box: art");
   expect([art.width, art.height]).toEqual([40, 40]);
-  const box = (await page.locator("#ratio").boundingBox())!;
+  const box = await page.locator("#ratio").boundingBox();
+  expectNotNull(box, "Missing required bounding box: box");
   expect(box.height).toBe(10);
 });
 
 test("Button Group preserves horizontal/vertical geometry and independent activations", async ({
   page,
 }) => {
-  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const orientation of ["horizontal", "vertical"]) {
-    await page.goto(`/?component=button-group&orientation=${orientation}`);
-    const group = page.getByRole("group", { name: "Game actions" });
-    await expect(group).toHaveAttribute("data-orientation", orientation);
-
-    const first = (await page.locator("[data-subject]").boundingBox())!;
-
-    const last = (await group
-      .getByRole("button", { exact: true, name: "Next" })
-      .boundingBox())!;
-
-    expect(
-      orientation === "horizontal" ? last.x > first.x : last.y > first.y
-    ).toBe(true);
-    await page.locator("[data-subject]").click();
-    await group.getByRole("button", { exact: true, name: "Next" }).click();
-    await expect(page.locator("#events")).toHaveText("2");
-    await expect(group.getByRole("separator")).toHaveAttribute(
-      "aria-orientation",
-      "vertical"
-    );
-    await expect(page.locator("#slotted")).toHaveAttribute(
-      "data-slot",
-      "button-group-text"
-    );
-    await expect(page.locator("#variant")).toHaveClass(
-      /mc-button-group-vertical/
-    );
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyButtonGroupOrientation(page, orientation);
   }
-  /* oxlint-enable no-await-in-loop */
 });
 
 test("Button Group disabled buttons stay disabled and keyboard focus stays independent", async ({
@@ -122,23 +219,24 @@ test("Pagination preserves navigation, anchors, refs, active state and keyboard 
 test("Pagination cancellation and disabled links prevent activation and navigation", async ({
   page,
 }) => {
-  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const suffix of ["cancel=1", "state=disabled"]) {
-    await page.goto(`/?component=pagination&${suffix}`);
-    await page.locator("[data-subject]").dispatchEvent("click");
-    await expect(page.locator("#events")).toHaveText("0");
-    expect(new URL(page.url()).hash).toBe("");
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyBlockedPaginationAction(page, suffix);
   }
-  /* oxlint-enable no-await-in-loop */
 });
 
 test("Pagination uses original audio once per accepted action and stays silent when canceled", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
+    // SAFETY: Pagination action playback initializes its own empty sounds trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+    (window as typeof window & PaginationPlaybackState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: Pagination action playback initializes sounds; this unchanged media play mock records only pitch, source and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+      (window as typeof window & PaginationPlaybackState).sounds.push({
         pitch: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -150,28 +248,42 @@ test("Pagination uses original audio once per accepted action and stays silent w
   await page.goto("/?component=pagination");
   await page.locator("[data-subject]").hover();
   await page.locator("[data-subject]").focus();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationPlaybackState).sounds
+    )
+  ).toEqual([]);
   await page.locator("[data-subject]").click();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([
-    { pitch: 1, source: minecraftClickSound, volume: 0.25 },
-  ]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationPlaybackState).sounds
+    )
+  ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
 
-  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const suffix of ["cancel=1", "state=disabled"]) {
-    await page.goto(`/?component=pagination&${suffix}`);
-    await page.locator("[data-subject]").dispatchEvent("click");
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyCanceledPaginationAudio(page, suffix);
   }
-  /* oxlint-enable no-await-in-loop */
 });
 
 test("Pagination original arrows retain native links and keyboard activation with original click audio", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
+    // SAFETY: Pagination arrow playback initializes its own empty sounds trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+    (window as typeof window & PaginationPlaybackState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: Pagination arrow playback initializes sounds; this unchanged media play mock records only pitch, source and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+      (window as typeof window & PaginationPlaybackState).sounds.push({
         pitch: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -181,47 +293,33 @@ test("Pagination original arrows retain native links and keyboard activation wit
     };
   });
 
-  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const forward of [false, true]) {
-    await page.goto(`/?component=pagination&part=arrow&checked=${forward}`);
-
-    const arrow = page.getByRole("link", {
-      name: forward ? "Go to next page" : "Go to previous page",
-    });
-
-    await expect(arrow).toHaveAttribute("href", "#next");
-    await arrow.hover();
-    await arrow.focus();
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
-    await page.keyboard.press("Enter");
-    expect(new URL(page.url()).hash).toBe("#next");
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([
-      { pitch: 1, source: minecraftClickSound, volume: 0.25 },
-    ]);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyPaginationArrowKeyboard(page, forward);
   }
-  /* oxlint-enable no-await-in-loop */
 });
 
 test("Pagination original arrows preserve custom content and cancel disabled or prevented actions", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push(this.src);
+    // SAFETY: Pagination arrow silence initializes its own empty sounds trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+    (window as typeof window & PaginationArrowSourceState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: Pagination arrow silence initializes sounds; this unchanged media play mock records only source strings.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+      (window as typeof window & PaginationArrowSourceState).sounds.push(
+        this.src
+      );
 
       return Promise.resolve();
     };
   });
 
-  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const suffix of ["cancel=1", "state=disabled"]) {
-    await page.goto(`/?component=pagination&part=arrow&text=World&${suffix}`);
-    const arrow = page.locator("[data-subject]");
-    await expect(arrow).toContainText("World");
-    await arrow.dispatchEvent("click");
-    expect(new URL(page.url()).hash).toBe("");
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifySuppressedPaginationArrow(page, suffix);
   }
-  /* oxlint-enable no-await-in-loop */
 });

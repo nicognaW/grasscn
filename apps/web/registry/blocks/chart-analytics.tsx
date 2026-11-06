@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- The exported chart composition renders Recharts synchronously; a lazy boundary would introduce suspension/loading and change the existing rendering contract.
 import {
   BarChart,
   Bar,
@@ -32,6 +33,15 @@ import {
   ChartAxisTick,
 } from "@/components/ui/chart";
 import type { ChartConfig } from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
+
+interface AnalyticsScalePaint extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+interface AnalyticsRecipeStyle extends React.CSSProperties {
+  "--mc-analytics-chart-height": string;
+}
 
 export type AnalyticsChartType =
   | "bar"
@@ -52,6 +62,28 @@ const colors = [
   "#ff55ff",
 ];
 
+const AnalyticsScale = React.createContext(2);
+
+const abbreviateAnalyticsTick = function abbreviateAnalyticsTick(
+  value: string | number
+) {
+  return String(value).slice(0, 3);
+};
+
+const AnalyticsAxisTick = (
+  tickProps: React.ComponentProps<typeof ChartAxisTick>
+) => {
+  const scale = React.useContext(AnalyticsScale);
+
+  return (
+    <ChartAxisTick
+      {...tickProps}
+      tickFormatter={abbreviateAnalyticsTick}
+      dy={4 * scale}
+    />
+  );
+};
+
 /** Example gallery recipe. Consumers compose Recharts directly in ChartContainer. */
 export const AnalyticsChartExample = ({
   data,
@@ -61,6 +93,7 @@ export const AnalyticsChartExample = ({
   scale = 2,
   height = 140,
   style,
+  className,
   "aria-label": ariaLabel,
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
@@ -88,13 +121,7 @@ export const AnalyticsChartExample = ({
         dataKey="name"
         tickLine={false}
         axisLine={false}
-        tick={(props) => (
-          <ChartAxisTick
-            {...props}
-            tickFormatter={(value) => String(value).slice(0, 3)}
-            dy={4 * scale}
-          />
-        )}
+        tick={<AnalyticsAxisTick />}
       />
       <YAxis
         width={26 * scale}
@@ -113,7 +140,7 @@ export const AnalyticsChartExample = ({
       <PieChart
         accessibilityLayer
         aria-label={ariaLabel}
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
       >
         {" "}
         {tooltip}
@@ -126,7 +153,12 @@ export const AnalyticsChartExample = ({
           isAnimationActive={false}
         >
           {data.map((_, index) => (
-            <Cell key={index} fill={colors[index % colors.length]} />
+            // oxlint-disable-next-line typescript/no-deprecated -- Retain the current Recharts 3 Cell configuration contract and per-row palette precedence in sector/legend/tooltip payloads; migrating to shape/content requires a separately qualified rendering and payload change before Recharts 4 removes Cell.
+            <Cell
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- Recharts consumes these stateless Cell configurations by data ordinal; names may repeat and the public row schema has no required unique ID. Keep the palette/index binding.
+              key={index}
+              fill={colors[index % colors.length]}
+            />
           ))}
         </Pie>
         <ChartPixelSurface />
@@ -138,7 +170,7 @@ export const AnalyticsChartExample = ({
       <RadialBarChart
         accessibilityLayer
         aria-label={ariaLabel}
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
         data={data}
         innerRadius="15%"
         outerRadius="90%"
@@ -148,7 +180,12 @@ export const AnalyticsChartExample = ({
         <PolarAngleAxis type="number" domain={[0, "dataMax"]} tick={false} />
         <RadialBar dataKey={series[0]} isAnimationActive={false}>
           {data.map((_, index) => (
-            <Cell key={index} fill={colors[index % colors.length]} />
+            // oxlint-disable-next-line typescript/no-deprecated -- Retain the current Recharts 3 Cell configuration contract and per-row palette precedence in sector/legend/tooltip payloads; migrating to shape/content requires a separately qualified rendering and payload change before Recharts 4 removes Cell.
+            <Cell
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- Recharts consumes these stateless Cell configurations by data ordinal; names may repeat and the public row schema has no required unique ID. Keep the palette/index binding.
+              key={index}
+              fill={colors[index % colors.length]}
+            />
           ))}
         </RadialBar>
         <ChartPixelSurface />
@@ -162,7 +199,7 @@ export const AnalyticsChartExample = ({
         accessibilityLayer
         aria-label={ariaLabel}
         data={data}
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
       >
         {" "}
         <PolarGrid stroke="#555555" />
@@ -261,49 +298,60 @@ export const AnalyticsChartExample = ({
     );
   }
 
+  const containerStyle: AnalyticsRecipeStyle = {
+    "--mc-analytics-chart-height": `${height * scale}px`,
+    ...style,
+  };
+
   return (
-    <div data-slot="chart-example" data-chart-type={type}>
-      <ChartContainer
-        {...props}
-        config={config}
-        scale={scale}
-        style={{
-          aspectRatio: "auto",
-          height: height * scale,
-          width: "100%",
-          ...style,
-        }}
-      >
-        {chart}
-      </ChartContainer>
-      <details
-        className="mc-chart-data"
-        style={{ "--mc-scale": scale } as React.CSSProperties}
-      >
-        <summary>View chart data</summary>
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                {series.map((key) => (
-                  <th key={key}>{config[key]?.label ?? key}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row) => (
-                <tr key={row.name}>
-                  <td>{row.name}</td>
+    <AnalyticsScale.Provider value={scale}>
+      <div data-slot="chart-example" data-chart-type={type}>
+        <ChartContainer
+          {...props}
+          config={config}
+          scale={scale}
+          className={cn(
+            "aspect-auto h-(--mc-analytics-chart-height) w-full",
+            className
+          )}
+          style={containerStyle}
+        >
+          {chart}
+        </ChartContainer>
+        <details
+          className="mc-chart-data"
+          style={
+            // SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values.
+            {
+              "--mc-scale": scale,
+            } satisfies AnalyticsScalePaint as AnalyticsScalePaint
+          }
+        >
+          <summary>View chart data</summary>
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
                   {series.map((key) => (
-                    <td key={key}>{row[key]}</td>
+                    <th key={key}>{config[key]?.label ?? key}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </details>
-    </div>
+              </thead>
+              <tbody>
+                {data.map((row) => (
+                  <tr key={row.name}>
+                    <td>{row.name}</td>
+                    {series.map((key) => (
+                      <td key={key}>{row[key]}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+    </AnalyticsScale.Provider>
   );
 };

@@ -4,6 +4,8 @@ import { test, expect } from "@grasscn/tests/test";
 import { fixtureFile } from "@tests/paths";
 import { PNG } from "pngjs";
 
+import type { AdventureFixtureSample } from "../../../fixtures/renderer/fixture-query-protocol";
+
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 
@@ -27,7 +29,7 @@ for (const sample of [
     await page.setViewportSize({ height: 900, width: 1536 });
 
     const capture = async (explicit: boolean) => {
-      const c = {
+      const c: AdventureFixtureSample = {
         anchor: 0,
         element: "player-preview",
         height: 120,
@@ -35,8 +37,11 @@ for (const sample of [
         state: sample.state,
         value: 180,
         width: 80,
-        ...(explicit ? { model: sample.model } : {}),
       };
+
+      if (explicit) {
+        c.model = sample.model;
+      }
 
       await page.goto(
         `${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify(c))}`
@@ -57,8 +62,9 @@ for (const sample of [
     let differences = 0;
 
     for (let i = 0; i < a.data.length; i += 4) {
-      if (!a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4)))
-        differences++;
+      if (!a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))) {
+        differences += 1;
+      }
     }
 
     writeFileSync(info.outputPath("auto.png"), actual);
@@ -79,15 +85,19 @@ test("custom skin can fail, recover, and replace another model without remountin
   page,
 }) => {
   await page.route("https://mc-heads.net/skin/*", async (route) => {
+    const skinPathname = new URL(route.request().url()).pathname;
+
     const name = decodeURIComponent(
-      new URL(route.request().url()).pathname.split("/").pop()!
+      skinPathname.slice(skinPathname.lastIndexOf("/") + 1)
     );
 
     if (name === "Missing") {
-      return route.fulfill({ body: "", status: 404 });
+      await route.fulfill({ body: "", status: 404 });
+
+      return;
     }
 
-    return route.fulfill({
+    await route.fulfill({
       body: readFileSync(
         fixtureFile(`${name === "Dream" ? "dream" : "steve"}-skin.png`)
       ),
@@ -111,16 +121,22 @@ test("custom skin can fail, recover, and replace another model without remountin
     ["Classic", "wide"],
     ["Dream", "slim"],
   ] as const) {
+    // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
     await input.fill(name);
+    // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
     await page.getByRole("button", { exact: true, name: "Load skin" }).click();
 
     if (model === null) {
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await expect(player.getByRole("status")).toHaveText(
         "3D preview unavailable"
       );
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await expect(player).toHaveAttribute("data-ready", "false");
     } else {
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await expect(player).toHaveAttribute("data-ready", "true");
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await expect(player).toHaveAttribute("data-model", model);
     }
   }

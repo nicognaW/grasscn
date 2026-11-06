@@ -31,7 +31,6 @@ export const DocumentSearch = ({ pages }: { pages: SearchPage[] }) => {
       ? groupSearchResults(query.data, search, pages)
       : [];
 
-  /* eslint-disable react/exhaustive-effect-dependencies, react/set-state-in-effect -- The Next pathname intentionally invalidates the search session when external navigation changes. */
   useEffect(() => {
     const shortcut = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
@@ -47,7 +46,6 @@ export const DocumentSearch = ({ pages }: { pages: SearchPage[] }) => {
       window.removeEventListener("keydown", shortcut);
     };
   }, []);
-  /* eslint-enable react/exhaustive-effect-dependencies, react/set-state-in-effect */
 
   /* eslint-disable react/exhaustive-effect-dependencies, react/set-state-in-effect -- The Next pathname intentionally invalidates the search session when external navigation changes. */
   useEffect(() => {
@@ -175,6 +173,5 @@ export const DocumentSearch = ({ pages }: { pages: SearchPage[] }) => {
         )}
       </Command>
     </div>
-    /* eslint-enable jsx-a11y/no-noninteractive-element-interactions */
   );
 };

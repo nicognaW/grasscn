@@ -3,15 +3,16 @@
 import { Separator as SeparatorPrimitive } from "@base-ui/react/separator";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { minecraftSeparatorAssets } from "./minecraft-separator-assets";
 
 import "./minecraft-separator.css";
+
+interface SeparatorPaintStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-separator-texture": string;
+}
 
 type SeparatorProps = Omit<
   MinecraftProps<typeof SeparatorPrimitive>,
@@ -43,15 +44,11 @@ const Separator = ({
       role={role}
       aria-hidden={role === "none" ? true : undefined}
       className={cn(`mc-separator`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-scale": scale,
-            "--mc-separator-texture": `url("${minecraftSeparatorAssets[edge]}")`,
-            ...__style,
-          }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): SeparatorPaintStyle => ({
+        "--mc-scale": scale,
+        "--mc-separator-texture": `url("${minecraftSeparatorAssets[edge]}")`,
+        ...__style,
+      }))}
       {...props}
     />
   );

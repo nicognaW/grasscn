@@ -7,9 +7,63 @@ import { AdventureImage } from "./minecraft-adventure-image";
 import { mapAtlasPng } from "./minecraft-map-atlas";
 import { mapGpuPixels } from "./minecraft-map-gpu";
 import { minecraftMapPalette } from "./minecraft-map-palette";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  useCanvasPaintConnection,
+} from "./minecraft-render";
 
 import "./minecraft-map.css";
+
+const EMPTY_MAP_MARKERS = [] as const;
+
+interface OwnedMapDimensions1 extends React.CSSProperties {
+  "--mc-z-map-base-1-height"?: string;
+  "--mc-z-map-base-1-width"?: string;
+}
+
+interface MapLayoutStyle1 extends React.CSSProperties {
+  "--mc-dynamic-map-1-height": number;
+  "--mc-dynamic-map-1-width": number;
+}
+
+interface MapLayoutStyle2 extends React.CSSProperties {
+  "--mc-dynamic-map-2-height": number;
+  "--mc-dynamic-map-2-left": number;
+  "--mc-dynamic-map-2-top": number;
+  "--mc-dynamic-map-2-transform": string;
+  "--mc-dynamic-map-2-width": number;
+}
+
+interface MapLayoutStyle3 extends React.CSSProperties {
+  "--mc-dynamic-map-3-visibility": string;
+}
+
+interface MapLayoutStyle4 extends React.CSSProperties {
+  "--mc-dynamic-map-4-height": number;
+  "--mc-dynamic-map-4-width": number;
+}
+
+interface MapLayoutStyle5 extends React.CSSProperties {
+  "--mc-dynamic-map-5-height": number;
+  "--mc-dynamic-map-5-left": number;
+  "--mc-dynamic-map-5-top": number;
+  "--mc-dynamic-map-5-width": number;
+}
+
+interface MapLayoutStyle6 extends React.CSSProperties {
+  "--mc-dynamic-map-6-left": number;
+  "--mc-dynamic-map-6-top": number;
+}
+
+interface MapScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+
+  "--mc-z-map-base-2-border-image-source"?: string;
+  "--mc-z-map-base-2-border-image-width"?: string;
+  "--mc-z-map-base-2-height"?: string;
+  "--mc-z-map-base-2-width"?: string;
+}
 
 type MapDecoration = keyof typeof adventureAssets extends infer K
   ? K extends `map/decorations/${infer N}`
@@ -36,7 +90,7 @@ type MinecraftMapProps = React.ComponentProps<"div"> & {
 
 const MinecraftMap = ({
   pixels,
-  markers = [],
+  markers = EMPTY_MAP_MARKERS,
   scale = 2,
   onMarkerSelect,
   onMapClick,
@@ -46,12 +100,22 @@ const MinecraftMap = ({
   ...props
 }: MinecraftMapProps) => {
   if (pixels.length !== 16_384) {
-    throw Error("Minecraft maps require exactly128脳128 palette bytes");
+    throw new Error("Minecraft maps require exactly128脳128 palette bytes");
   }
 
   const ref = React.useRef<HTMLCanvasElement>(null);
-  const [gpuReady, setGpuReady] = React.useState(false);
+  const { attach, connection } = useCanvasPaintConnection(ref);
   const [revision, setRevision] = React.useState(0);
+
+  const paintInput = React.useMemo(
+    () => ({ connection, markers, pixels, revision, scale }),
+    [connection, markers, pixels, revision, scale]
+  );
+
+  const [completedPaint, setCompletedPaint] =
+    React.useState<typeof paintInput>();
+
+  const gpuReady = completedPaint === paintInput;
 
   React.useEffect(() => {
     const repaint = () => {
@@ -64,7 +128,11 @@ const MinecraftMap = ({
       }
     });
 
-    observer.observe(ref.current!);
+    observer.observe(
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement
+    );
     window.addEventListener("resize", repaint);
 
     return () => {
@@ -75,66 +143,85 @@ const MinecraftMap = ({
   React.useLayoutEffect(() => {
     let live = true;
 
-    const canvas = ref.current!;
-    const ctx = canvas.getContext("2d")!;
-    const image = ctx.createImageData(128, 128);
+    if (connection !== null) {
+      const canvas =
+        // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+        ref.current as HTMLCanvasElement;
 
-    canvas.width = 128;
-    canvas.height = 128;
-    setGpuReady(false);
+      const ctx = canvas.getContext("2d");
 
-    for (let i = 0; i < pixels.length; i++) {
-      const color = pixels[i];
-      const rgba = minecraftMapPalette[color];
-      const j = i * 4;
-
-      if (color >> 2 === 0) {
-        continue;
+      if (!ctx) {
+        throw new Error("Minecraft map 2D canvas context could not be created");
       }
 
-      image.data[j] = (rgba >>> 16) & 255;
-      image.data[j + 1] = (rgba >>> 8) & 255;
-      image.data[j + 2] = rgba & 255;
-      image.data[j + 3] = rgba >>> 24;
-    }
+      const image = ctx.createImageData(128, 128);
 
-    ctx.putImageData(image, 0, 0);
+      canvas.width = 128;
+      canvas.height = 128;
 
-    if (markers.length) {
-      Promise.all(
-        [
-          ...markers.map(
-            (marker) =>
-              adventureAssets[
-                `map/decorations/${marker.decoration ?? "player"}`
-              ].src
-          ),
-          mapAtlasPng,
-        ].map(
-          async (src) =>
-            await new Promise<HTMLImageElement>((resolve, reject) => {
-              const image = new Image();
-              image.onload = () => {
-                resolve(image);
-              };
+      for (let i = 0; i < pixels.length; i += 1) {
+        const color = pixels[i];
+        const rgba = minecraftMapPalette[color];
+        const j = i * 4;
 
-              image.onerror = reject;
-              image.src = src;
-            })
-        )
-      )
-        .then((images) => {
-          if (!live) return;
+        // oxlint-disable-next-line no-bitwise -- Map palette bytes reserve their low two bits for shade; a zero base-color field is transparent.
+        if (color >> 2 === 0) {
+          continue;
+        }
 
-          const bounds = canvas.getBoundingClientRect(),
-            output = mapGpuPixels(
-              image,
-              images,
-              markers,
-              scale,
-              bounds.x,
-              bounds.y
-            );
+        /* oxlint-disable no-bitwise -- Unpack the palette ARGB word into the four ImageData byte channels. */
+        image.data[j] = (rgba >>> 16) & 255;
+        image.data[j + 1] = (rgba >>> 8) & 255;
+        image.data[j + 2] = rgba & 255;
+        image.data[j + 3] = rgba >>> 24;
+        /* oxlint-enable no-bitwise */
+      }
+
+      ctx.putImageData(image, 0, 0);
+
+      if (markers.length) {
+        const imagesLoading = Promise.all(
+          [
+            ...markers.map(
+              (marker) =>
+                adventureAssets[
+                  `map/decorations/${marker.decoration ?? "player"}`
+                ].src
+            ),
+            mapAtlasPng,
+          ].map(
+            async (src) =>
+              // oxlint-disable-next-line promise/avoid-new -- Preserve this Image event bridge, loaded-element result and raw load-error event.
+              await new Promise<HTMLImageElement>((resolve, reject) => {
+                const loadedImage = new Image();
+                loadedImage.addEventListener("load", () => {
+                  resolve(loadedImage);
+                });
+
+                loadedImage.addEventListener("error", reject);
+                loadedImage.src = src;
+              })
+          )
+        );
+
+        const startMapRendering = async () => {
+          const images = await imagesLoading;
+
+          if (!live) {
+            return;
+          }
+
+          const bounds = canvas.getBoundingClientRect();
+
+          const output = mapGpuPixels(
+            image,
+            images,
+            markers,
+            scale,
+            bounds.x,
+            bounds.y
+          );
 
           if (output) {
             canvas.width = 128 * scale;
@@ -144,38 +231,47 @@ const MinecraftMap = ({
               0,
               0
             );
-            setGpuReady(true);
+            setCompletedPaint(paintInput);
           }
-        })
-        .catch(() => {});
+        };
+
+        startMapRendering().catch(() => {
+          // Keep the existing fallback on rendering failure; do not publish GPU readiness.
+        });
+      }
     }
 
     return () => {
       live = false;
     };
-  }, [pixels, markers, scale, revision]);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Revision is the existing viewport/intersection repaint signal; canvas GPU readback uses current page coordinates.
+  }, [connection, pixels, markers, scale, revision, paintInput]);
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- This named, caller-overridable group owns pointer-coordinate selection; keyboard users activate its actual marker buttons. Inventing a keyboard coordinate cursor is a separate interaction API.
     <div
       {...props}
       data-slot="minecraft-map"
       role={props.role ?? "group"}
       aria-label={props["aria-label"] ?? "Map"}
-      className={cn(`mc-map`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        height: 128 * scale,
-        width: 128 * scale,
+      className={cn("mc-map mc-owned-base-map-1", className)}
+      style={minecraftStyle(style, (__style): OwnedMapDimensions1 => ({
+        "--mc-z-map-base-1-height": `${128 * scale}px`,
+        "--mc-z-map-base-1-width": `${128 * scale}px`,
         ...__style,
       }))}
       onClick={(event) => {
         onClick?.(event);
 
+        // SAFETY: This DOM-forwarded React handler receives ReactDOM-normalized targets; Text dispatch is normalized to its parent Element, including SVG. Only Element.closest is consumed.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- ReactDOM synthetic-event production and standard DOM prop forwarding prove this exact Element target; native/manual event inputs are not projected. */
         if (
           event.defaultPrevented ||
-          (event.target as HTMLElement).closest("button")
+          (event.target as Element).closest("button")
         ) {
           return;
         }
+        /* oxlint-enable typescript/no-unsafe-type-assertion */
 
         const r = event.currentTarget.getBoundingClientRect();
         onMapClick?.({
@@ -191,41 +287,55 @@ const MinecraftMap = ({
       }}
     >
       <canvas
-        ref={ref}
+        ref={attach}
         width={128}
         height={128}
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This role describes the dynamically painted HTMLCanvasElement; img cannot provide the owned 2D drawing API.
         role="img"
         aria-label={props["aria-label"] ?? "Map terrain"}
-        style={{ height: 128 * scale, width: 128 * scale }}
+        className="mc-dynamic-layout-map-1"
+        style={
+          /* SAFETY: The owned mc-dynamic-layout-map-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+          {
+            "--mc-dynamic-map-1-height": 128 * scale,
+            "--mc-dynamic-map-1-width": 128 * scale,
+          } satisfies MapLayoutStyle1 as MapLayoutStyle1
+        }
       />
       {markers.map((marker) => (
         <button
           type="button"
           key={marker.id}
-          className="mc-map-marker"
+          className="mc-map-marker mc-dynamic-layout-map-2"
           aria-label={marker.label}
           onClick={(event) => {
             if (!event.defaultPrevented) {
               onMarkerSelect?.(marker.id);
             }
           }}
-          style={{
-            height: 8 * scale,
-            left: (64 + marker.x / 2 - 4) * scale,
-            top: (64 + marker.y / 2 - 4) * scale,
-            transform: `rotate(${(marker.rotation ?? 0) * 22.5}deg) translate(${-scale * 0.5}px,${scale * 0.5}px)`,
-            width: 8 * scale,
-          }}
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-map-2 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-map-2-height": 8 * scale,
+              "--mc-dynamic-map-2-left": (64 + marker.x / 2 - 4) * scale,
+              "--mc-dynamic-map-2-top": (64 + marker.y / 2 - 4) * scale,
+              "--mc-dynamic-map-2-transform": `rotate(${(marker.rotation ?? 0) * 22.5}deg) translate(${-scale * 0.5}px,${scale * 0.5}px)`,
+              "--mc-dynamic-map-2-width": 8 * scale,
+            } satisfies MapLayoutStyle2 as MapLayoutStyle2
+          }
         >
           <AdventureImage
             texture={`map/decorations/${marker.decoration ?? "player"}`}
             scale={scale}
-            style={{
-              height: "100%",
-              transform: "scaleY(-1)",
-              visibility: gpuReady ? "hidden" : "visible",
-              width: "100%",
-            }}
+            className="mc-layout-map-3 mc-dynamic-layout-map-3"
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-map-3 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-map-3-visibility": gpuReady
+                  ? "hidden"
+                  : "visible",
+              } satisfies MapLayoutStyle3 as MapLayoutStyle3
+            }
           />
         </button>
       ))}
@@ -234,25 +344,35 @@ const MinecraftMap = ({
 };
 
 const LocatorDot = ({
+  // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
   shape,
   color,
   scale,
 }: {
+  // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
   shape: "default_0" | "default_1" | "default_2" | "default_3" | "bowtie";
   color: string;
   scale: number;
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   React.useEffect(() => {
+    // SAFETY: React attaches this private, unkeyed <canvas> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLCanvasElement capture.
+    const canvas = ref.current as HTMLCanvasElement;
+
     let live = true;
     const image = new Image();
-    image.onload = () => {
+
+    const handleImageLoad = () => {
       if (!live) {
         return;
       }
 
-      const canvas = ref.current!;
-      const ctx = canvas.getContext("2d")!;
+      const ctx = canvas.getContext("2d");
+
+      if (!ctx) {
+        throw new Error("Minecraft map 2D canvas context could not be created");
+      }
 
       canvas.width = 9;
       canvas.height = 9;
@@ -261,11 +381,12 @@ const LocatorDot = ({
 
       const pixels = ctx.getImageData(0, 0, 9, 9);
 
-      const raw = /^#[0-9a-f]{6}$/i.test(color)
+      const raw = /^#[0-9a-f]{6}$/iu.test(color)
         ? Number.parseInt(color.slice(1), 16)
         : 0xff_ff_ff;
 
       for (let i = 0; i < pixels.data.length; i += 4) {
+        /* oxlint-disable no-bitwise -- Tint each texture byte with the corresponding channel of the packed RGB color. */
         pixels.data[i] = Math.round(
           (pixels.data[i] * ((raw >> 16) & 255)) / 255
         );
@@ -275,17 +396,23 @@ const LocatorDot = ({
         pixels.data[i + 2] = Math.round(
           (pixels.data[i + 2] * (raw & 255)) / 255
         );
+        /* oxlint-enable no-bitwise */
         pixels.data[i + 3] = pixels.data[i + 3];
       }
 
       ctx.putImageData(pixels, 0, 0);
     };
 
+    image.addEventListener("load", handleImageLoad);
+
+    // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
     image.src = adventureAssets[`gui/sprites/hud/locator_bar_dot/${shape}`].src;
 
     return () => {
       live = false;
+      image.removeEventListener("load", handleImageLoad);
     };
+    // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
   }, [shape, color]);
 
   return (
@@ -294,12 +421,14 @@ const LocatorDot = ({
       width={9}
       height={9}
       aria-hidden="true"
-      style={{
-        display: "block",
-        height: 9 * scale,
-        imageRendering: "pixelated",
-        width: 9 * scale,
-      }}
+      className="mc-layout-map-4 mc-dynamic-layout-map-4"
+      style={
+        /* SAFETY: The owned mc-dynamic-layout-map-4 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+        {
+          "--mc-dynamic-map-4-height": 9 * scale,
+          "--mc-dynamic-map-4-width": 9 * scale,
+        } satisfies MapLayoutStyle4 as MapLayoutStyle4
+      }
     />
   );
 };
@@ -310,6 +439,7 @@ interface LocatorMarker {
   bearing: number;
   direction?: "up" | "down";
   color?: string;
+  // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
   shape?: "default_0" | "default_1" | "default_2" | "default_3" | "bowtie";
 }
 
@@ -328,79 +458,78 @@ const LocatorBar = ({
   className,
   style,
   ...props
-}: LocatorBarProps) => {
-  return (
-    <div
-      {...props}
-      data-slot="locator-bar"
-      role={props.role ?? "group"}
-      aria-label={props["aria-label"] ?? "Locator bar"}
-      className={cn(`mc-locator-bar`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-scale": scale,
-            borderImageRepeat: "repeat",
-            borderImageSlice: "1 5 fill",
-            borderImageSource: `url("${adventureAssets["gui/sprites/hud/locator_bar_background"].src}")`,
-            borderImageWidth: `${scale}px ${5 * scale}px`,
-            height: 5 * scale,
-            width: 182 * scale,
-            ...__style,
-          }) as React.CSSProperties
-      )}
-    >
-      {markers.map((marker) => {
-        const relative =
-          ((((marker.bearing - heading) % 360) + 540) % 360) - 180;
+}: LocatorBarProps) => (
+  <div
+    {...props}
+    data-slot="locator-bar"
+    role={props.role ?? "group"}
+    aria-label={props["aria-label"] ?? "Locator bar"}
+    className={cn("mc-locator-bar mc-owned-base-map-2", className)}
+    style={minecraftStyle(style, (__style): MapScaleStyle => ({
+      "--mc-scale": scale,
+      "--mc-z-map-base-2-border-image-source": `url("${adventureAssets["gui/sprites/hud/locator_bar_background"].src}")`,
+      "--mc-z-map-base-2-border-image-width": `${scale}px ${5 * scale}px`,
+      "--mc-z-map-base-2-height": `${5 * scale}px`,
+      "--mc-z-map-base-2-width": `${182 * scale}px`,
+      ...__style,
+    }))}
+  >
+    {markers.map((marker) => {
+      const relative = ((((marker.bearing - heading) % 360) + 540) % 360) - 180;
 
-        if (relative <= -60 || relative > 60) {
-          return null;
-        }
+      if (relative <= -60 || relative > 60) {
+        return null;
+      }
 
-        const x = 87 + Math.floor((relative * 173) / 120);
+      const x = 87 + Math.floor((relative * 173) / 120);
 
-        return (
-          <button
-            type="button"
-            key={marker.id}
-            aria-label={marker.label}
-            onClick={(event) => {
-              if (!event.defaultPrevented) {
-                onMarkerSelect?.(marker.id);
-              }
-            }}
-            className="mc-locator-marker"
-            style={{
-              height: 9 * scale,
-              left: x * scale,
-              top: -2 * scale,
-              width: 9 * scale,
-            }}
-          >
-            <LocatorDot
-              shape={marker.shape ?? "default_0"}
-              color={marker.color ?? "#ffffff"}
+      return (
+        <button
+          type="button"
+          key={marker.id}
+          aria-label={marker.label}
+          onClick={(event) => {
+            if (!event.defaultPrevented) {
+              onMarkerSelect?.(marker.id);
+            }
+          }}
+          className="mc-locator-marker mc-dynamic-layout-map-5"
+          style={
+            /* SAFETY: The owned mc-dynamic-layout-map-5 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+            {
+              "--mc-dynamic-map-5-height": 9 * scale,
+              "--mc-dynamic-map-5-left": x * scale,
+              "--mc-dynamic-map-5-top": -2 * scale,
+              "--mc-dynamic-map-5-width": 9 * scale,
+            } satisfies MapLayoutStyle5 as MapLayoutStyle5
+          }
+        >
+          <LocatorDot
+            // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Locator shape is the geometric sprite variant (including bowtie) in this existing marker API, not structural metadata.
+            shape={marker.shape ?? "default_0"}
+            color={marker.color ?? "#ffffff"}
+            scale={scale}
+          />
+          {marker.direction && (
+            <AdventureImage
+              texture={`gui/sprites/hud/locator_bar_arrow_${marker.direction}`}
               scale={scale}
+              className="mc-layout-map-6 mc-dynamic-layout-map-6"
+              style={
+                /* SAFETY: The owned mc-dynamic-layout-map-6 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+                {
+                  "--mc-dynamic-map-6-left": scale,
+                  "--mc-dynamic-map-6-top":
+                    (marker.direction === "up" ? -4 : 8) * scale,
+                } satisfies MapLayoutStyle6 as MapLayoutStyle6
+              }
             />
-            {marker.direction && (
-              <AdventureImage
-                texture={`gui/sprites/hud/locator_bar_arrow_${marker.direction}`}
-                scale={scale}
-                style={{
-                  left: scale,
-                  position: "absolute",
-                  top: (marker.direction === "up" ? -4 : 8) * scale,
-                }}
-              />
-            )}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
+          )}
+        </button>
+      );
+    })}
+  </div>
+);
 
 export { MinecraftMap, LocatorBar };
 

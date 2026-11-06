@@ -6,8 +6,18 @@ import "./minecraft-code-block.css";
 import { Button } from "./button";
 import { ChatChildren, MessageScale } from "./message";
 import { minecraftLoadingGlyphs } from "./minecraft-loading-glyphs";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftDocumentText,
+  isMinecraftSelectableTextElement,
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { MinecraftSelectableText } from "./minecraft-selectable-text";
+
+interface CodeBlockScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 const CodeScale = React.createContext<1 | 2 | 3>(2);
 
@@ -37,11 +47,10 @@ const CodeBlock = ({
           data-variant={variant}
           data-size={size}
           className={cn(`mc-code-block`, className)}
-          style={minecraftStyle(
-            style,
-            (__style) =>
-              ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-          )}
+          style={minecraftStyle(style, (__style): CodeBlockScaleStyle => ({
+            "--mc-scale": scale,
+            ...__style,
+          }))}
           {...props}
         />
       </MessageScale>
@@ -52,44 +61,38 @@ const CodeBlock = ({
 const CodeBlockHeader = ({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="code-block-header"
-      className={cn(`mc-code-block-header`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="code-block-header"
+    className={cn(`mc-code-block-header`, className)}
+    {...props}
+  />
+);
 
 const CodeBlockTitle = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="code-block-title"
-      className={cn(`mc-code-block-title`, className)}
-      {...props}
-    >
-      <ChatChildren>{children}</ChatChildren>
-    </div>
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="code-block-title"
+    className={cn(`mc-code-block-title`, className)}
+    {...props}
+  >
+    <ChatChildren>{children}</ChatChildren>
+  </div>
+);
 
 const CodeBlockActions = ({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="code-block-actions"
-      className={cn(`mc-code-block-actions`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="code-block-actions"
+    className={cn(`mc-code-block-actions`, className)}
+    {...props}
+  />
+);
 
 const CodeBlockCopyButton = ({
   value,
@@ -112,9 +115,9 @@ const CodeBlockCopyButton = ({
       live.current = false;
     };
   }, []);
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
     if (!copied) {
-      return;
+      return undefined;
     }
 
     const timer = setTimeout(() => {
@@ -142,13 +145,25 @@ const CodeBlockCopyButton = ({
             return;
           }
 
-          Promise.resolve(navigator.clipboard?.writeText(value))
-            .then(() => {
-              if (live.current && navigator.clipboard) {
+          const clipboardWrite = Promise.resolve(
+            navigator.clipboard?.writeText(value)
+          );
+
+          const announceCopy = async () => {
+            await clipboardWrite;
+
+            if (live.current) {
+              const { clipboard } = navigator;
+
+              if (clipboard !== undefined && clipboard !== null) {
                 setCopied(true);
               }
-            })
-            .catch(() => {});
+            }
+          };
+
+          announceCopy().catch(() => {
+            // Copy failure intentionally leaves the copied state and announcement unchanged.
+          });
         }}
         {...props}
       >
@@ -161,25 +176,20 @@ const CodeBlockCopyButton = ({
   );
 };
 
-function selectable(value: React.ReactNode): React.ReactNode {
-  if (typeof value === "string" || typeof value === "number") {
+const selectable = function selectable(
+  value: React.ReactNode
+): React.ReactNode {
+  if (isMinecraftTextContent(value)) {
     return <MinecraftSelectableText text={String(value)} />;
   }
 
   if (Array.isArray(value)) {
-    return value.map((child, index) => (
-      <React.Fragment key={index}>{selectable(child)}</React.Fragment>
-    ));
+    // oxlint-disable-next-line react/no-react-children -- This recursive renderer adapts opaque ReactNode children; React owns supplied-key composition and nested sibling scopes. Preserve the public children ABI without fabricating IDs or reimplementing key escaping.
+    return React.Children.map(value, selectable);
   }
 
-  if (
-    React.isValidElement<{
-      children?: React.ReactNode;
-    }>(value) &&
-    (value.type === React.Fragment ||
-      (typeof value.type === "string" &&
-        ["span", "a", "strong", "em", "code", "b", "i"].includes(value.type)))
-  ) {
+  if (isMinecraftSelectableTextElement(value)) {
+    // oxlint-disable-next-line react/no-clone-element -- Selectable code adapts only the supported intrinsic formatting children, preserving each caller element key/ref/type/props while replacing its children; a wrapper or reconstructed element changes composition.
     return React.cloneElement(
       value,
       undefined,
@@ -188,47 +198,6 @@ function selectable(value: React.ReactNode): React.ReactNode {
   }
 
   return value;
-}
-
-const CodeBlockContent = ({
-  className,
-  children,
-  style,
-  wrap = false,
-  lineNumbers = false,
-  startLine = 1,
-  ...props
-}: React.ComponentProps<"pre"> & {
-  wrap?: boolean;
-  lineNumbers?: boolean;
-  startLine?: number;
-}) => {
-  return (
-    <pre
-      data-slot="code-block-content"
-      data-wrap={wrap || undefined}
-      data-numbered={lineNumbers || undefined}
-      dir="ltr"
-      tabIndex={0}
-      style={minecraftStyle(style, (__style) => ({
-        counterReset: `line ${startLine - 1}`,
-        ...__style,
-      }))}
-      className={cn(`mc-code-block-content`, className)}
-      {...props}
-    >
-      <code data-slot="code-block-code">
-        {lineNumbers && typeof children === "string"
-          ? children
-              .replace(/\n$/, "")
-              .split("\n")
-              .map((line, index) => (
-                <CodeBlockLine key={index}>{line}</CodeBlockLine>
-              ))
-          : selectable(children)}
-      </code>
-    </pre>
-  );
 };
 
 const CodeLineMarker = ({ variant }: { variant: "added" | "removed" }) => {
@@ -258,7 +227,8 @@ const CodeBlockLine = ({
   variant?: "default" | "added" | "removed" | "highlighted";
 }) => {
   const empty =
-    children == null ||
+    children === undefined ||
+    children === null ||
     children === "" ||
     (Array.isArray(children) && children.length === 0);
 
@@ -279,21 +249,72 @@ const CodeBlockLine = ({
   );
 };
 
+const CodeBlockContent = ({
+  className,
+  children,
+  style,
+  wrap = false,
+  lineNumbers = false,
+  startLine = 1,
+  ...props
+}: React.ComponentProps<"pre"> & {
+  wrap?: boolean;
+  lineNumbers?: boolean;
+  startLine?: number;
+}) => (
+  <pre
+    data-slot="code-block-content"
+    data-wrap={wrap || undefined}
+    data-numbered={lineNumbers || undefined}
+    dir="ltr"
+
+    // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- This pre is the existing keyboard-scroll entry for overflowing code; removing its tab stop or replacing its native pre structure changes that access contract.
+    tabIndex={0}
+    style={minecraftStyle(
+      style,
+      (__style): React.CSSProperties & { "--mc-code-line-reset": string } => ({
+        "--mc-code-line-reset": `line ${startLine - 1}`,
+        ...__style,
+      })
+    )}
+    className={cn(
+      "mc-code-block-content",
+      "[counter-reset:var(--mc-code-line-reset)]",
+      className
+    )}
+    {...props}
+  >
+    <code data-slot="code-block-code">
+      {lineNumbers && isMinecraftDocumentText(children)
+        ? children
+            .replace(/\n$/u, "")
+            .split("\n")
+            .map((line, index) => (
+              <CodeBlockLine
+                // oxlint-disable-next-line react-doctor/no-array-index-as-key -- This branch creates document line slots from a string only; repeated and empty lines are valid. Rich React children use the separate keyed-children path.
+                key={index}
+              >
+                {line}
+              </CodeBlockLine>
+            ))
+        : selectable(children)}
+    </code>
+  </pre>
+);
+
 const CodeBlockFooter = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="code-block-footer"
-      className={cn(`mc-code-block-footer`, className)}
-      {...props}
-    >
-      <ChatChildren>{children}</ChatChildren>
-    </div>
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="code-block-footer"
+    className={cn(`mc-code-block-footer`, className)}
+    {...props}
+  >
+    <ChatChildren>{children}</ChatChildren>
+  </div>
+);
 
 export {
   CodeBlock,

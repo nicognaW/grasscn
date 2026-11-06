@@ -1,0 +1,503 @@
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
+
+import type { Page } from "@playwright/test";
+import { chromium, expect } from "@playwright/test";
+import type { RegisteredEntryContent } from "@ppt/installed/control-capture-protocol";
+import type {
+  QuestionnaireCaptureManifest,
+  QuestionnaireCaseResult,
+  QuestionnairePartProof,
+  LabelCaptureManifest,
+} from "@ppt/installed/installed-compositions-protocol";
+import type {
+  InstalledTextRegistry,
+  InstalledTextItem,
+} from "@ppt/installed/text-verification-protocol";
+import { pixelPerfectTestRoot, webFile, pixelPerfectFile } from "@ppt/paths";
+import { PNG } from "pngjs";
+
+fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
+
+const [consumerArg, urlArg, partsArg] = process.argv.slice(2);
+const consumer = path.resolve(consumerArg);
+const hash = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
+
+// SAFETY: the authored registry owns this fresh source descriptor read.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
+const registry = JSON.parse(
+  fs.readFileSync(webFile(path.join("registry.json"))).toString()
+) as InstalledTextRegistry;
+
+// SAFETY: the authored registry uniquely declares questionnaire, selected by this existing fixed/validated route; a missing item retains its original later dereference failure.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact authored registry item producer projection; fresh read and original failure timing preserved.
+const item = registry.items.find(
+  (i) => i.name === "questionnaire"
+) as InstalledTextItem;
+
+// SAFETY: the initialized shadcn consumer components.json owns the optional rsc setting.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
+const settings = JSON.parse(
+  fs.readFileSync(path.join(consumer, "components.json")).toString()
+) as { rsc?: boolean };
+
+const canonical = (b: Buffer) => {
+  let t = b
+    .toString()
+    .replaceAll(/\/\*[\s\S]*?\*\//gu, "")
+    .trim();
+
+  if (settings.rsc === false) {
+    t = t.replace(/^["']use client["'];?\s*/u, "");
+  }
+
+  return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
+};
+
+const files = item.files.map((f) => {
+  const name = path.basename(f.path);
+  const a = fs.readFileSync(webFile(path.join(f.path)));
+  const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
+
+  assert.ok(
+    canonical(a) === canonical(b),
+    `${name} changed beyond CLI transforms`
+  );
+
+  return { installedSha256: hash(b), path: name, sourceSha256: hash(a) };
+});
+
+const pageErrors: string[] = [];
+
+const buildQuestionnaireQuery = (
+  c: QuestionnaireCaptureManifest["cases"][number],
+  part: string,
+  action: string,
+  m: QuestionnaireCaptureManifest
+) => {
+  const q = new URLSearchParams({
+    action,
+    align: c.alignment ?? "left",
+    background: c.background ?? m.background ?? "#202020",
+    checked: String(c.checked ?? false),
+    height: String(c.height ?? 20),
+    label: c.label ?? "",
+    native: "1",
+    part,
+    placeholder: c.placeholder ?? "",
+    scale: String(c.scale),
+    state: c.state,
+    text: c.text ?? "",
+    width: String(c.width),
+    x: String(c.x ?? 16),
+    y: String(c.y ?? 16),
+  });
+
+  if (action === "radio") {
+    q.set("radio", "1");
+  }
+
+  if (c.wrapWidth ?? 0) {
+    q.set("wrapWidth", String(c.wrapWidth));
+  }
+
+  const optionalMaxLength = c.maxLength;
+
+  if (optionalMaxLength !== null && optionalMaxLength !== undefined) {
+    q.set("maxLength", String(c.maxLength));
+  }
+
+  return q;
+};
+
+const captureQuestionnaireAction = async (
+  c: QuestionnaireCaptureManifest["cases"][number],
+  part: string,
+  action: string,
+  m: QuestionnaireCaptureManifest,
+  dir: string,
+  fixturePage: Page
+) => {
+  const q = buildQuestionnaireQuery(c, part, action, m);
+
+  await fixturePage.goto(`${urlArg}?${q}`);
+  const subject = fixturePage.locator("#subject");
+  await expect(subject).toBeVisible();
+
+  if (["title", "description", "error", "progress"].includes(part)) {
+    await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
+  }
+
+  if (part === "input") {
+    await expect(subject).toHaveAttribute("data-mc-ready", "true");
+  }
+
+  await fixturePage.mouse.move(0, 0);
+
+  if (c.state.startsWith("focus")) {
+    await (part === "checkbox" ? subject.locator("input") : subject).focus();
+  }
+
+  if (c.state === "hover") {
+    await (part === "checkbox" ? subject.locator("input") : subject).hover();
+  }
+
+  if (part === "input") {
+    // SAFETY: this existing entry-only route selects fixed Input/Textarea definitions, each of which owns text and caretMs; other capture kinds retain optional fields.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered entry-producer projection at the existing part dispatch; no new validation.
+    const entryCase = c as RegisteredEntryContent;
+
+    const cursor = c.cursor ?? entryCase.text.length;
+    const anchor = c.anchor ?? cursor;
+
+    await subject.evaluate(
+      (input: HTMLInputElement, p) => {
+        // SAFETY: the input constituent fixture renders #subject as an HTML input with selection support.
+        input.setSelectionRange(
+          Math.min(p.cursor, p.anchor),
+          Math.max(p.cursor, p.anchor),
+          p.cursor < p.anchor ? "backward" : "forward"
+        );
+      },
+      { anchor, cursor }
+    );
+    await fixturePage.clock.runFor(entryCase.caretMs);
+    await expect(subject).toHaveAttribute("data-mc-ready", "true");
+  } else {
+    {
+      const readyElements = await subject
+        .locator("[data-mc-label-ready]")
+        .all();
+
+      const readinessResults = await Promise.allSettled(
+        readyElements.map(async (glyph) => {
+          await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+        })
+      );
+
+      const rejectedReadiness = readinessResults.find(
+        (result) => result.status === "rejected"
+      );
+
+      if (rejectedReadiness) {
+        throw rejectedReadiness.reason;
+      }
+    }
+
+    await fixturePage.evaluate(async () => {
+      const frameCompletion = Promise.withResolvers();
+
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(frameCompletion.resolve);
+        });
+      } catch (error) {
+        frameCompletion.reject(error);
+      }
+
+      return await frameCompletion.promise;
+    });
+  }
+
+  const bytes = fs.readFileSync(
+    `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${c.name}`
+  );
+
+  if (hash(bytes) !== c.sha256) {
+    throw new Error(`Native reference hash changed ${c.name}`);
+  }
+
+  const actualBytes = await subject.screenshot({
+    animations: "disabled",
+  });
+
+  const a = PNG.sync.read(actualBytes);
+  const b = PNG.sync.read(bytes);
+
+  if (a.width !== b.width || a.height !== b.height) {
+    throw new Error(
+      `Dimensions ${part} ${c.name} ${[a.width, a.height].join(",")} expected ${[
+        b.width,
+        b.height,
+      ].join(",")}`
+    );
+  }
+
+  let n = 0;
+
+  for (let i = 0; i < b.data.length; i += 4) {
+    n += Number(!a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4)));
+  }
+
+  if (n) {
+    fs.writeFileSync(
+      path.join(pixelPerfectTestRoot, "questionnaire-actual.png"),
+      actualBytes
+    );
+    throw new Error(`${part} ${c.name} ${n} pixels`);
+  }
+
+  return a;
+};
+
+const selectedParts = partsArg ? new Set(partsArg.split(",")) : undefined;
+
+const browser = await chromium.launch({ channel: "msedge" });
+
+let count = 0;
+let page: Page | undefined;
+
+try {
+  for (const [part, dir] of [
+    ["title", "label"],
+    ["description", "label"],
+    ["error", "label"],
+    ["progress", "label"],
+    ["checkbox", "controls"],
+    ["action", "."],
+    ["action", "button-cjk"],
+    ["input", "input"],
+  ].filter(
+    ([constituentPart]) =>
+      selectedParts === undefined || selectedParts.has(constituentPart)
+  )) {
+    // SAFETY: the existing part directory table selects the Label/Controls/Button/Input capture producers.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Questionnaire constituent capture producer boundary.
+    const m = JSON.parse(
+      fs
+        .readFileSync(
+          `${pixelPerfectFile(path.join("tests/reference", dir))}/manifest.json`
+        )
+        .toString()
+    ) as QuestionnaireCaptureManifest;
+
+    const cases = [];
+
+    for (const c of m.cases) {
+      const record: QuestionnaireCaseResult = {
+        mismatchedPixels: 0,
+        name: c.name,
+      };
+
+      let questionnaireActions: readonly (
+        | "next"
+        | "previous"
+        | "skip"
+        | "submit"
+        | "radio"
+      )[];
+
+      if (part === "action") {
+        questionnaireActions = ["next", "previous", "skip", "submit"] as const;
+      } else if (part === "checkbox") {
+        questionnaireActions = ["next", "radio"] as const;
+      } else {
+        questionnaireActions = ["next"] as const;
+      }
+
+      for (const action of questionnaireActions) {
+        let shouldCreatePage = part === "input";
+
+        if (!shouldCreatePage) {
+          const previousCount = count;
+          count += 1;
+          shouldCreatePage = previousCount % 64 === 0;
+        }
+
+        if (shouldCreatePage) {
+          if (page) {
+            // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
+            await page.close();
+          }
+
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
+          page = await browser.newPage({
+            deviceScaleFactor: 1,
+            viewport: { height: 900, width: 1536 },
+          });
+          page.on("pageerror", (e) => pageErrors.push(e.message));
+
+          if (part === "input") {
+            // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
+            await page.clock.install({
+              time: new Date("2026-10-28T00:00:00Z"),
+            });
+            // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
+            await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
+          }
+        }
+
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Finish this owned Page/browser transition before reuse, rotation, or the next bounded-worker task.
+        const a = await captureQuestionnaireAction(
+          c,
+          part,
+          action,
+          m,
+          dir,
+          // SAFETY: Input actions always create a Page; the first non-input action sees count0 and rotates. Every later action retains that successful Page, and failed creation aborts before capture.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Questionnaire loop ownership contract; no extra guard or altered browser transition.
+          page as Page
+        );
+
+        const field: keyof QuestionnaireCaseResult =
+          action === "next"
+            ? "decodedRgbaSha256"
+            : `${action}DecodedRgbaSha256`;
+
+        record[field] = hash(a.data);
+      }
+
+      cases.push(record);
+
+      if (cases.length % 64 === 0) {
+        console.log(part, dir, cases.length, "exact");
+      }
+    }
+
+    const expected = PNG.sync.read(
+      fs.readFileSync(
+        pixelPerfectFile(
+          path.join("tests/reference", dir, "captures", m.cases[0].name)
+        )
+      )
+    );
+
+    const changed = PNG.sync.read(PNG.sync.write(expected));
+
+    // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
+    changed.data[0] ^= 1;
+    let n = 0;
+
+    for (let i = 0; i < expected.data.length; i += 4) {
+      n += Number(
+        !expected.data
+          .subarray(i, i + 4)
+          .equals(changed.data.subarray(i, i + 4))
+      );
+    }
+
+    assert.equal(n, 1);
+    assert.deepEqual(pageErrors, []);
+    const target = pixelPerfectFile(path.join("tests/reference/questionnaire"));
+    fs.mkdirSync(target, { recursive: true });
+
+    const report = {
+      browser: browser.version(),
+      cases,
+      command:
+        "shadcn add http://127.0.0.1:5173/r/questionnaire.json --yes --overwrite",
+      consumer:
+        "Separate initialized shadcn consumer with independent node_modules",
+      consumerRsc: settings.rsc,
+      devicePixelRatio: 1,
+      files,
+      negativeControlMismatchedPixels: 1,
+      pageErrors: [],
+      renderVerificationUrl: urlArg,
+      sourceJarSha256: m.sourceJarSha256,
+      sourceManifest: path.posix.join("tests/reference", dir, "manifest.json"),
+      viewport: { height: 900, width: 1536 },
+    };
+
+    fs.writeFileSync(
+      path.join(
+        target,
+        part === "action"
+          ? `${
+              dir === "." ? "action-ascii" : "action-cjk"
+            }-installation-verification.json`
+          : `${part}-installation-verification.json`
+      ),
+      JSON.stringify(report, null, 2)
+    );
+    console.log(part, dir, cases.length, "exact");
+  }
+} finally {
+  await browser.close();
+}
+
+// Publish the combined report consumed by the registry evidence check only after
+// all four text parts have been verified in this invocation.
+const textParts = ["title", "description", "error", "progress"];
+
+if (
+  selectedParts === undefined ||
+  textParts.every((part) => selectedParts.has(part))
+) {
+  const directory = pixelPerfectFile(
+    path.join("tests/reference/questionnaire")
+  );
+
+  const reports = textParts.map(
+    (part) =>
+      // SAFETY: the earlier loop writes each text part proof with these source, browser and case result fields.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact verifier-owned Questionnaire part report boundary.
+      JSON.parse(
+        fs.readFileSync(
+          path.join(directory, `${part}-installation-verification.json`),
+          "utf-8"
+        )
+      ) as QuestionnairePartProof
+  );
+
+  const [base] = reports;
+
+  // SAFETY: the combined text proof reads the existing Label captured-reference producer here.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Label captured-reference producer boundary.
+  const manifest = JSON.parse(
+    fs.readFileSync(
+      pixelPerfectFile(path.join("tests/reference/label/manifest.json")),
+      "utf-8"
+    )
+  ) as LabelCaptureManifest;
+
+  for (const report of reports) {
+    assert.deepEqual(report.files, files);
+    assert.deepEqual(report.pageErrors, []);
+    assert.equal(report.browser, base.browser);
+    assert.equal(report.cases.length, manifest.cases.length);
+  }
+
+  const cases = manifest.cases.map((sample) => {
+    const bytes = fs.readFileSync(
+      pixelPerfectFile(path.join("tests/reference/label/captures", sample.name))
+    );
+
+    assert.equal(hash(bytes), sample.sha256);
+    const expected = hash(PNG.sync.read(bytes).data);
+
+    const records = reports.map(
+      (report) =>
+        // SAFETY: Each earlier per-part verifier emits one case result per retained Label manifest name; this final join follows existing equal case-count, file, browser and page-error checks.
+        /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+        report.cases.find(
+          (record) => record.name === sample.name
+        ) as QuestionnaireCaseResult
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
+    );
+
+    for (const record of records) {
+      assert.equal(record.mismatchedPixels, 0);
+      assert.equal(record.decodedRgbaSha256, expected);
+    }
+
+    return {
+      ...records[0],
+      ...Object.fromEntries(
+        textParts
+          .slice(1)
+          .map((part, index) => [
+            `${part}DecodedRgbaSha256`,
+            records[index + 1].decodedRgbaSha256,
+          ])
+      ),
+    };
+  });
+
+  fs.writeFileSync(
+    path.join(directory, "text-installation-verification.json"),
+    `${JSON.stringify({ ...base, cases, parts: textParts }, null, 2)}\n`
+  );
+}

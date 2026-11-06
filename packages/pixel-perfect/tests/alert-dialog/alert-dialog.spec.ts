@@ -5,13 +5,22 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type confirmationReference from "../reference/alert-dialog/manifest.json";
+
+type ConfirmationReferenceManifest = Pick<
+  typeof confirmationReference,
+  "cases"
+>;
+
 const directory = "tests/reference/alert-dialog-backdrop";
 
+// SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as ConfirmationReferenceManifest;
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -36,14 +45,14 @@ function compare(expected: PNG, actual: PNG) {
     const different = left[i] !== right[i];
     mismatchedPixels += Number(different);
     const at = i * 4;
-    diff.data[at] = different ? 255 : expected.data[at] >> 2;
-    diff.data[at + 1] = different ? 0 : expected.data[at + 1] >> 2;
-    diff.data[at + 2] = different ? 255 : expected.data[at + 2] >> 2;
+    diff.data[at] = different ? 255 : Math.floor(expected.data[at] / 4);
+    diff.data[at + 1] = different ? 0 : Math.floor(expected.data[at + 1] / 4);
+    diff.data[at + 2] = different ? 255 : Math.floor(expected.data[at + 2] / 4);
     diff.data[at + 3] = 255;
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("AlertDialog comparator catches one changed pixel", () => {
   const expected = PNG.sync.read(
@@ -54,41 +63,51 @@ test("AlertDialog comparator catches one changed pixel", () => {
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
-for (const directory of [
+for (const constituentDirectory of [
   "tests/reference/alert-dialog-backdrop",
   "tests/reference/alert-dialog",
 ]) {
-  test.describe(`Original confirmation screen ${directory}`, () => {
-    const manifest = JSON.parse(
-      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-    );
+  test.describe(`Original confirmation screen ${constituentDirectory}`, () => {
+    // SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const constituentManifest = JSON.parse(
+      readFileSync(
+        pixelPerfectFile(`${constituentDirectory}/manifest.json`),
+        "utf-8"
+      )
+    ) as ConfirmationReferenceManifest;
 
     test.describe.configure({ mode: "parallel" });
 
-    for (const c of manifest.cases) {
+    for (const c of constituentManifest.cases) {
       test(`AlertDialog native pixels: ${c.name}`, async ({
         page,
       }, testInfo) => {
-        await page.setViewportSize({ width: 1536, height: 900 });
+        await page.setViewportSize({ height: 900, width: 1536 });
 
         const query = new URLSearchParams({
+          blur: String(c.value),
           component: "alert-dialog",
+          label: c.label,
+          labels: JSON.stringify(c.labels),
           native: "1",
           scale: String(c.scale),
-          blur: String(c.value),
-          label: c.label,
           text: c.text,
-          labels: JSON.stringify(c.labels),
         });
 
-        if (c.checked) query.set("patterned", "1");
+        if (c.checked === true) {
+          query.set("patterned", "1");
+        }
 
-        if (c.disabledIndex != null)
+        if (c.disabledIndex !== undefined) {
           query.set("disabledIndex", String(c.disabledIndex));
+        }
+
         await page.goto(`/?${query}`);
         await page.addStyleTag({
           content: `html,body{background:${c.background}} #root{opacity:0}`,
@@ -98,22 +117,40 @@ for (const directory of [
           "true"
         );
 
-        const dialog = page.getByRole("alertdialog"),
-          expectedUnicode =
-            Number(/[^\x00-\x7f]/.test(c.label)) +
-            (/[^\x00-\x7f]/.test(c.text) ? c.text.split("\n").length : 0) +
-            c.labels.filter((label: string) => /[^\x00-\x7f]/.test(label))
-              .length;
+        const dialog = page.getByRole("alertdialog");
+
+        const expectedUnicode =
+          Number(/\P{ASCII}/u.test(c.label)) +
+          (/\P{ASCII}/u.test(c.text) ? c.text.split("\n").length : 0) +
+          c.labels.filter((label: string) => /\P{ASCII}/u.test(label)).length;
 
         if (expectedUnicode) {
           await expect(dialog.locator("[data-mc-label-ready]")).toHaveCount(
             expectedUnicode
           );
 
-          for (const line of await dialog
-            .locator("[data-mc-label-ready]")
-            .all())
-            await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+          {
+            const readyElements = await dialog
+              .locator("[data-mc-label-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (line) => {
+                await expect(line).toHaveAttribute(
+                  "data-mc-label-ready",
+                  "true"
+                );
+              })
+            );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
+          }
         }
 
         await expect(
@@ -125,31 +162,43 @@ for (const directory of [
         await page.mouse.move(0, 0);
         const button = dialog.getByRole("button").nth(c.targetIndex ?? 0);
 
-        if (c.state === "hover") await button.hover();
+        if (c.state === "hover") {
+          await button.hover();
+        }
 
-        if (c.state === "focus") await button.focus();
-        await page.evaluate(
-          async () =>
-            await new Promise<void>((resolve) =>
-              requestAnimationFrame(() =>
-                requestAnimationFrame(() => {
-                  resolve();
-                })
-              )
-            )
-        );
+        if (c.state === "focus") {
+          await button.focus();
+        }
+
+        await page.evaluate(async () => {
+          const frameCompletion: PromiseWithResolvers<void> =
+            Promise.withResolvers();
+
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          await frameCompletion.promise;
+        });
 
         const bytes = readFileSync(
-          pixelPerfectFile(`${directory}/captures/${c.name}`)
+          pixelPerfectFile(`${constituentDirectory}/captures/${c.name}`)
         );
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
 
-        const actual = await page.screenshot({ animations: "disabled" }),
-          { diff, mismatchedPixels } = compare(
-            PNG.sync.read(bytes),
-            PNG.sync.read(actual)
-          );
+        const actual = await page.screenshot({ animations: "disabled" });
+
+        const { diff, mismatchedPixels } = compare(
+          PNG.sync.read(bytes),
+          PNG.sync.read(actual)
+        );
 
         writeFileSync(testInfo.outputPath("actual.png"), actual);
         writeFileSync(testInfo.outputPath("diff.png"), PNG.sync.write(diff));
@@ -158,8 +207,8 @@ for (const directory of [
           JSON.stringify({
             case: c.name,
             mismatchedPixels,
-            totalPixels: 1536 * 900,
             tolerance: 0,
+            totalPixels: 1536 * 900,
           })
         );
         expect(mismatchedPixels).toBe(0);

@@ -10,6 +10,10 @@ import { Textarea } from "./textarea";
 
 import "./minecraft-input-group.css";
 
+interface InputGroupScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type Scale = 1 | 2 | 3;
 
 const InputGroupScale = React.createContext<Scale>(2);
@@ -21,23 +25,21 @@ const InputGroup = ({
   ...props
 }: React.ComponentProps<"div"> & {
   scale?: Scale;
-}) => {
-  return (
-    <InputGroupScale.Provider value={scale}>
-      <div
-        data-slot="input-group"
-        role="group"
-        className={cn(`mc-input-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </InputGroupScale.Provider>
-  );
-};
+}) => (
+  <InputGroupScale.Provider value={scale}>
+    <div
+      data-slot="input-group"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn InputGroup's div group and div props/ref contract.
+      role="group"
+      className={cn(`mc-input-group`, className)}
+      style={minecraftStyle(style, (__style): InputGroupScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
+      {...props}
+    />
+  </InputGroupScale.Provider>
+);
 
 const InputGroupAddon = ({
   align = "inline-start",
@@ -46,39 +48,43 @@ const InputGroupAddon = ({
   ...props
 }: React.ComponentProps<"div"> & {
   align?: "inline-start" | "inline-end" | "block-start" | "block-end";
-}) => {
-  return (
-    <div
-      data-slot="input-group-addon"
-      data-align={align}
-      role="group"
-      className={cn(`mc-input-group-addon`, className)}
-      {...props}
-      onClick={(event) => {
-        onClick?.(event);
+}) => (
+  // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- Preserve upstream InputGroupAddon div grouping and pointer-padding focus delegation; keyboard users reach the real input and nested controls, not a new wrapper activation target.
+  <div
+    data-slot="input-group-addon"
+    data-align={align}
+    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn InputGroupAddon's div grouping contract.
+    role="group"
+    className={cn(`mc-input-group-addon`, className)}
+    {...props}
+    onClick={(event) => {
+      onClick?.(event);
 
-        if (
-          event.defaultPrevented ||
-          (event.target as Element).closest(
-            'button,a,input,textarea,[role="button"]'
-          )
-        ) {
-          return;
-        }
+      // SAFETY: This DOM-forwarded React handler receives ReactDOM-normalized targets; Text dispatch is normalized to its parent Element, including SVG. Only Element.closest is consumed.
+      /* oxlint-disable typescript/no-unsafe-type-assertion -- ReactDOM synthetic-event production and standard DOM prop forwarding prove this exact Element target; native/manual event inputs are not projected. */
+      if (
+        event.defaultPrevented ||
+        (event.target as Element).closest(
+          'button,a,input,textarea,[role="button"]'
+        )
+      ) {
+        return;
+      }
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
 
-        event.currentTarget.parentElement
-          ?.querySelector<HTMLInputElement | HTMLTextAreaElement>(
-            "input,textarea"
-          )
-          ?.focus();
-      }}
-    />
-  );
-};
+      event.currentTarget.parentElement
+        ?.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+          "input,textarea"
+        )
+        ?.focus();
+    }}
+  />
+);
 
 const InputGroupButton = ({
   scale: explicit,
   type = "button",
+  className,
   style,
   ...props
 }: React.ComponentProps<typeof Button>) => {
@@ -90,10 +96,8 @@ const InputGroupButton = ({
       data-slot="input-group-button"
       scale={scale}
       type={type}
-      style={minecraftStyle(style, (__style) => ({
-        width: 40 * scale,
-        ...__style,
-      }))}
+      className={cn("w-[calc(40*var(--mc-pixel))]", className)}
+      style={style}
       {...props}
     />
   );

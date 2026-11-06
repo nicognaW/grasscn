@@ -23,7 +23,7 @@ Native controls and the code directive were captured twice in independent isolat
 Minecraft Java 26.2, pinned JAR SHA256 `40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290`, Java 25.0.1, GUI scale 2, `en_us`, default font and `#202020` background. Browser: Edge 156.0.4314.58, 1280×900, DPR 1, zoom 100%.
 
 | Integrated reference case | Browser pixels | Differing RGBA pixels |
-| --- | ---: | ---: |
+| --- | --: | --: |
 | Preview/Code strip, Preview selected, normal | 29,088 | 0 |
 | Preview/Code strip, Code selected and keyboard focused | 29,088 | 0 |
 | Copy, normal, 60×20 logical | 4,800 | 0 |

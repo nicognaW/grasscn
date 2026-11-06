@@ -2,29 +2,74 @@ import * as React from "react";
 
 import { DialogUnicodeLine } from "./minecraft-dialog-unicode";
 import { minecraftGlyphs } from "./minecraft-font";
+import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-dialog-text-padding-left"?: string;
+  "--mc-dialog-text-width"?: string;
+}
+
+const hasSupportedParagraphGlyphs = function hasSupportedParagraphGlyphs(
+  text: string
+) {
+  for (const character of text) {
+    if (
+      !(
+        /^[\u0020-\u007E\n]$/u.test(character) ||
+        getUnihexGlyph(character) !== undefined
+      )
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
+
+interface DialogBoldGlyphStyle extends React.CSSProperties {
+  "--mc-advance": number;
+  "--mc-glyph-x": number;
+  "--mc-glyph-y": number;
+}
+
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the shared Dialog layout context identity used by the Dialog provider and native text receiver; accept mixed-module Fast Refresh state fallback.
 export const DialogLayoutContext = React.createContext({
   contentWidth: 214,
   scale: 2,
 });
 
-function widthOf(text: string, bold: boolean) {
-  return Math.ceil(
-    [...text].reduce((sum, char) => {
-      const ascii = minecraftGlyphs[char.codePointAt(0)! - 32];
+const widthOf = function widthOf(text: string, bold: boolean) {
+  let accumulatedGlyphAdvance = 0;
 
-      return (
-        sum +
-        (ascii?.[2] ?? getUnihexGlyph(char)?.advance ?? 0) +
-        (bold ? (ascii ? 1 : 0.5) : 0)
-      );
-    }, 0)
-  );
-}
+  for (const advanceCharacter of text) {
+    const ascii =
+      asciiGlyphs[
+        // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+        (advanceCharacter.codePointAt(0) as number) - 32
+      ];
 
-function wrap(text: string, maximum: number, bold: boolean) {
+    let boldAdvance = 0;
+
+    if (bold) {
+      boldAdvance = ascii ? 1 : 0.5;
+    }
+
+    accumulatedGlyphAdvance =
+      accumulatedGlyphAdvance +
+      (ascii?.[2] ?? getUnihexGlyph(advanceCharacter)?.advance ?? 0) +
+      boldAdvance;
+  }
+
+  return Math.ceil(accumulatedGlyphAdvance);
+};
+
+const wrap = function wrap(text: string, maximum: number, bold: boolean) {
   const lines: string[] = [];
 
   for (let remaining of text.split("\n")) {
@@ -57,7 +102,7 @@ function wrap(text: string, maximum: number, bold: boolean) {
   }
 
   return lines;
-}
+};
 
 export const MinecraftDialogText = ({
   children,
@@ -72,15 +117,24 @@ export const MinecraftDialogText = ({
   const [, loaded] = React.useReducer((n) => n + 1, 0);
 
   const unicode =
-    typeof children === "string" && /[^\x20-\x7E\n]/.test(children);
+    isMinecraftTextContent(children) &&
+    /[^\u0020-\u007E\n]/u.test(String(children));
 
   React.useEffect(() => {
     let active = true;
 
     if (unicode) {
-      void loadUnihex().then(() => {
-        if (active) loaded();
-      });
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
+        if (active) {
+          loaded();
+        }
+      };
+
+      void commitFontReadiness();
     }
 
     return () => {
@@ -89,10 +143,8 @@ export const MinecraftDialogText = ({
   }, [unicode]);
 
   if (
-    (typeof children !== "string" && typeof children !== "number") ||
-    ![...String(children)].every(
-      (char) => /^[\x20-\x7E\n]$/.test(char) || getUnihexGlyph(char)
-    )
+    !isMinecraftTextContent(children) ||
+    !hasSupportedParagraphGlyphs(String(children))
   ) {
     return <span data-mc-dialog-item={item || undefined}>{children}</span>;
   }
@@ -102,49 +154,60 @@ export const MinecraftDialogText = ({
   const widths = lines.map((line) => widthOf(line, bold));
   const widest = Math.max(0, ...widths);
 
+  const nativeTextLayout1: NativeTextLayoutStyle = {
+    "--mc-dialog-text-width": `${widest * scale}px`,
+  };
+
   return (
     <span
-      className="mc-dialog-text"
+      className="mc-dialog-text w-(--mc-dialog-text-width)"
       data-mc-dialog-item={item || undefined}
-      style={{ width: widest * scale }}
+      style={nativeTextLayout1}
     >
       <span aria-hidden="true">
-        {lines.map((line, index) => (
-          <span
-            className="mc-card-text-line"
-            key={index}
-            style={{
-              paddingLeft:
-                (Math.floor(widest / 2) - Math.floor(widths[index] / 2)) *
-                scale,
-            }}
-          >
-            {unicode ? (
+        {lines.map((line, index) => {
+          const _precedingkey = index;
+
+          const _precedingstyle: NativeTextLayoutStyle = {
+            "--mc-dialog-text-padding-left": `${
+              (Math.floor(widest / 2) - Math.floor(widths[index] / 2)) * scale
+            }px`,
+          };
+
+          let _selectedContent: React.ReactNode;
+
+          if (unicode) {
+            _selectedContent = (
               <DialogUnicodeLine
                 text={line}
                 bold={bold}
                 scale={scale}
                 width={widths[index]}
               />
-            ) : bold ? (
+            );
+          } else if (bold) {
+            _selectedContent = (
               <span className="mc-bitmap mc-card-bold">
                 <span className="mc-card-bold-pixels">
                   {Array.from(line, (char, i) => {
                     const [x, y, advance] =
-                      minecraftGlyphs[char.charCodeAt(0) - 32];
+                      minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32];
+
+                    const glyphStyle: DialogBoldGlyphStyle = {
+                      "--mc-advance": advance + 1,
+                      "--mc-glyph-x": x,
+                      "--mc-glyph-y": y,
+                    };
 
                     return (
                       <span
-                        className="mc-card-bold-glyph"
-                        key={i}
-                        style={
-                          {
-                            "--mc-advance": advance + 1,
-                            "--mc-glyph-x": x,
-                            "--mc-glyph-y": y,
-                            visibility: char === " " ? "hidden" : undefined,
-                          } as React.CSSProperties
+                        className={
+                          char === " "
+                            ? "mc-card-bold-glyph invisible"
+                            : "mc-card-bold-glyph"
                         }
+                        key={i}
+                        style={glyphStyle}
                       >
                         <i />
                         <i />
@@ -153,11 +216,21 @@ export const MinecraftDialogText = ({
                   })}
                 </span>
               </span>
-            ) : (
-              <MinecraftText>{line}</MinecraftText>
-            )}
-          </span>
-        ))}
+            );
+          } else {
+            _selectedContent = <MinecraftText>{line}</MinecraftText>;
+          }
+
+          return (
+            <span
+              className="mc-card-text-line pl-(--mc-dialog-text-padding-left)"
+              key={_precedingkey}
+              style={_precedingstyle}
+            >
+              {_selectedContent}
+            </span>
+          );
+        })}
       </span>
       <span className="mc-dialog-accessible">{text}</span>
     </span>

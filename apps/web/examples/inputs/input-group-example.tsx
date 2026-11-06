@@ -21,9 +21,8 @@ const InputGroupExample = () => {
         setSent(message);
         setMessage("");
       }}
-      /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ display: "grid", gap: 12 }}
-      /* eslint-enable shadcn/no-inline-styles */
+
+      className="grid gap-3"
     >
       <InputGroup>
         <InputGroupInput
@@ -35,11 +34,7 @@ const InputGroupExample = () => {
           placeholder="Message"
         />
         <InputGroupAddon align="inline-end">
-          <InputGroupButton
-            type="submit" /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-            style={{ width: 120 }}
-            /* eslint-enable shadcn/no-inline-styles */
-          >
+          <InputGroupButton type="submit" className="w-30">
             Send
           </InputGroupButton>
         </InputGroupAddon>

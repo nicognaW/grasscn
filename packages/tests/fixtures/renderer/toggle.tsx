@@ -1,8 +1,17 @@
 import { Toggle, toggleVariants } from "@grasscn/web/ui/toggle";
+import type { ReactNode } from "react";
 import * as React from "react";
 
+import { fixtureFallbackLabel } from "./utils";
+
 const p = new URLSearchParams(location.search);
-const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
 const state = p.get("state") ?? "normal";
 
 export const ToggleFixture = () => {
@@ -20,20 +29,37 @@ export const ToggleFixture = () => {
   const asChild = p.has("asChild");
   const anchor = p.has("anchor");
   const label = p.get("label") ?? "Recipe filter";
+  const text = p.get("text");
+
+  const accessibleLabel =
+    label.trim().length > 0
+      ? label
+      : fixtureFallbackLabel("Recipe filter", text);
+
+  let selectedFixtureBranch1: ReactNode;
+
+  if (asChild) {
+    selectedFixtureBranch1 = anchor ? (
+      <a href="#target" aria-label={accessibleLabel} />
+    ) : (
+      <button type="button" aria-label={accessibleLabel} />
+    );
+  } else {
+    selectedFixtureBranch1 = undefined;
+  }
 
   return (
     <>
       <Toggle
-        render={
-          asChild ? anchor ? <a href="#target" /> : <button /> : undefined
-        }
+        render={selectedFixtureBranch1}
         id="subject"
         ref={ref}
         scale={scale}
+        className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y"
         style={{
-          left: Number(p.get("x") ?? 16) * scale,
-          position: "absolute",
-          top: Number(p.get("y") ?? 16) * scale,
+          "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+
+          "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
         }}
         aria-label={label}
         disabled={state.startsWith("disabled")}
@@ -42,7 +68,9 @@ export const ToggleFixture = () => {
               onPressedChange: (next: boolean) => {
                 setEvents((v) => v + 1);
 
-                if (!p.has("reject")) setPressed(next);
+                if (!p.has("reject")) {
+                  setPressed(next);
+                }
               },
               pressed,
             }
@@ -60,36 +88,37 @@ export const ToggleFixture = () => {
         }}
         data-subject="true"
       >
-        {p.get("text")}
+        {text}
       </Toggle>
       <button
+        type="button"
         id="external"
         onClick={() => {
           setPressed((v) => !v);
         }}
-        style={{ position: "absolute", top: 400 }}
+        className="fixture-toggle-external-control"
       >
         External
       </button>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");
         }}
-        style={{ position: "absolute", top: 440 }}
+        className="fixture-toggle-read-control"
       >
         Read ref
       </button>
-      <output id="events" style={{ position: "absolute", top: 480 }}>
+      <output id="events" className="fixture-toggle-event-output">
         {events}
       </output>
-      <output id="tag" style={{ position: "absolute", top: 520 }}>
+      <output id="tag" className="fixture-toggle-ref-output">
         {tag}
       </output>
       <span
         id="helper"
-        className={toggleVariants()}
-        style={{ display: "none" }}
+        className={`${toggleVariants()} fixture-toggle-hidden-helper`}
       />
     </>
   );

@@ -196,6 +196,7 @@
     line-height: calc(9 * var(--mc-pixel));
   }
   .mc-select-separator {
+    background-image: var(--mc-separator-image);
     height: calc(2 * var(--mc-pixel));
     background-size: calc(32 * var(--mc-pixel)) calc(2 * var(--mc-pixel));
   }

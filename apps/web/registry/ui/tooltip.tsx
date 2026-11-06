@@ -4,9 +4,10 @@ import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 import * as React from "react";
 
 import {
+  isMinecraftTextContent,
+  isMinecraftTooltipTextElement,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
@@ -20,28 +21,31 @@ import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites"
 
 import "./minecraft-tooltip.css";
 
+interface TooltipPaintStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-tooltip-height": number | undefined;
+  "--mc-tooltip-max": number;
+  "--mc-tooltip-width": number | undefined;
+}
+
 const TooltipProvider = ({
   delay = 0,
   ...props
-}: MinecraftProps<typeof TooltipPrimitive.Provider>) => {
-  return (
-    <TooltipPrimitive.Provider
-      data-slot="tooltip-provider"
-      delay={delay}
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof TooltipPrimitive.Provider>) => (
+  <TooltipPrimitive.Provider
+    data-slot="tooltip-provider"
+    delay={delay}
+    {...props}
+  />
+);
 
-const Tooltip = (props: MinecraftProps<typeof TooltipPrimitive.Root>) => {
-  return <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
-};
+const Tooltip = (props: MinecraftProps<typeof TooltipPrimitive.Root>) => (
+  <TooltipPrimitive.Root data-slot="tooltip" {...props} />
+);
 
 const TooltipTrigger = (
   props: MinecraftProps<typeof TooltipPrimitive.Trigger>
-) => {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
-};
+) => <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
 
 const TooltipContent = ({
   className,
@@ -78,14 +82,15 @@ const TooltipContent = ({
 }) => {
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
   const [available, setAvailable] = React.useState(maxWidth);
-  React.useImperativeHandle(ref, () => node!, [node]);
-  React.useLayoutEffect(() => {
+  React.useImperativeHandle<typeof node, typeof node>(ref, () => node, [node]);
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
     const measure = () => {
       const physical =
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(
           getComputedStyle(node).getPropertyValue("--available-width")
         ) || window.innerWidth;
@@ -108,13 +113,13 @@ const TooltipContent = ({
 
   const skin = (content: React.ReactNode) => {
     const plain =
-      (typeof content === "string" || typeof content === "number") &&
-      /^[\x20-\x7E\n]*$/.test(String(content))
+      isMinecraftTextContent(content) &&
+      /^[\u0020-\u007E\n]*$/u.test(String(content))
         ? String(content)
         : undefined;
 
     const lines =
-      plain == null
+      plain === undefined
         ? undefined
         : wrapMinecraftTooltip(plain, Math.min(maxWidth, available));
 
@@ -128,7 +133,7 @@ const TooltipContent = ({
 
     return (
       <>
-        {width && height ? (
+        {width !== undefined && height !== undefined ? (
           <MinecraftTooltipSurface
             width={width}
             height={height}
@@ -143,7 +148,12 @@ const TooltipContent = ({
         <div className="mc-tooltip-lines">
           {lines
             ? lines.map((line, index) => (
-                <MinecraftText className="mc-tooltip-line" key={index}>
+                <MinecraftText
+                  className="mc-tooltip-line"
+                  /* eslint-disable react-doctor/no-array-index-as-key -- Wrapped plain-text lines occupy native layout rows; duplicate lines and width-driven reflow do not introduce consumer child identities. */
+                  key={index}
+                  /* eslint-enable react-doctor/no-array-index-as-key */
+                >
                   {line}
                 </MinecraftText>
               ))
@@ -153,19 +163,22 @@ const TooltipContent = ({
     );
   };
 
-  const plain =
-    typeof children === "string" || typeof children === "number"
-      ? String(children)
-      : render &&
-          React.isValidElement<{
-            children?: React.ReactNode;
-          }>(children) &&
-          typeof children.props.children === "string"
-        ? children.props.children
-        : undefined;
+  let selectedPlain: string | undefined;
+
+  if (isMinecraftTextContent(children)) {
+    selectedPlain = String(children);
+  } else if (render && isMinecraftTooltipTextElement(children)) {
+    selectedPlain = children.props.children;
+  } else {
+    selectedPlain = undefined;
+  }
+
+  const plain = selectedPlain;
 
   const lines =
-    plain == null || !/^[\x20-\x7E\n]*$/.test(plain)
+    plain === null ||
+    plain === undefined ||
+    !/^[\u0020-\u007E\n]*$/u.test(plain)
       ? undefined
       : wrapMinecraftTooltip(plain, Math.min(maxWidth, available));
 
@@ -183,7 +196,7 @@ const TooltipContent = ({
     <TooltipPrimitive.Portal keepMounted={keepMounted}>
       <TooltipPrimitive.Positioner
         data-mc-positioner=""
-        style={{ zIndex: 50 }}
+        className="z-50"
         side={side}
         align={align}
         sideOffset={sideOffset}
@@ -197,17 +210,13 @@ const TooltipContent = ({
           ref={setNode}
           data-slot="tooltip-content"
           className={cn("mc-tooltip", className)}
-          style={minecraftStyle(
-            style,
-            (__style) =>
-              ({
-                "--mc-scale": scale,
-                "--mc-tooltip-height": height,
-                "--mc-tooltip-max": maxWidth,
-                "--mc-tooltip-width": width,
-                ...__style,
-              }) as React.CSSProperties
-          )}
+          style={minecraftStyle(style, (__style): TooltipPaintStyle => ({
+            "--mc-scale": scale,
+            "--mc-tooltip-height": height,
+            "--mc-tooltip-max": maxWidth,
+            "--mc-tooltip-width": width,
+            ...__style,
+          }))}
           {...props}
         >
           {content}

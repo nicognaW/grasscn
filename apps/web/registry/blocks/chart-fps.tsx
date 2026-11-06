@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { BarChart, Bar, Cell, XAxis, YAxis } from "recharts";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- The exported FPS chart renders Recharts synchronously; preserve its existing render/context/readiness contract rather than introducing an async loading boundary.
+import { BarChart, Bar, XAxis, YAxis } from "recharts";
 
 import {
   ChartContainer,
@@ -11,18 +12,29 @@ import {
   ChartTooltipContent,
   chartFpsColor,
 } from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
+
+const DEFAULT_FPS_DOMAIN: [number, number] = [0, 1000 / 30];
+
+const formatFrameDuration = (value: number) => `${Math.round(value)} ms`;
+
+interface FpsRecipeStyle extends React.CSSProperties {
+  "--mc-fps-chart-height": string;
+  "--mc-fps-chart-width": string;
+}
 
 /** Example composition. Values and domains use ordinary application units. */
 export const FpsChartExample = ({
   data,
   dataKey,
-  domain = [0, 1000 / 30],
-  formatValue = (value) => `${Math.round(value)} ms`,
+  domain = DEFAULT_FPS_DOMAIN,
+  formatValue = formatFrameDuration,
   guides,
   framerateLimit = 260,
   width = 242,
   scale = 2,
   style,
+  className,
   "aria-label": ariaLabel,
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
@@ -56,18 +68,32 @@ export const FpsChartExample = ({
       )
     : [];
 
+  const containerStyle: FpsRecipeStyle = {
+    "--mc-fps-chart-height": `${69 * scale}px`,
+    "--mc-fps-chart-width": `${width * scale}px`,
+    ...style,
+  };
+  // Preserve eager color reads after the style spread. Recharts can skip
+  // rectangles before it invokes the renderer.
+
+  const fills = rows.map((row) =>
+    chartFpsColor(
+      ((Number(row[dataKey]) - domain[0]) / (domain[1] - domain[0])) *
+        (1000 / 30) *
+        1e6
+    )
+  );
+
   return (
     <ChartContainer
       {...props}
       config={{ [dataKey]: { color: "#55ff55", label: dataKey } }}
       scale={scale}
-      style={{
-        aspectRatio: "auto",
-        height: 69 * scale,
-        position: "relative",
-        width: width * scale,
-        ...style,
-      }}
+      className={cn(
+        "relative aspect-auto h-(--mc-fps-chart-height) w-(--mc-fps-chart-width)",
+        className
+      )}
+      style={containerStyle}
     >
       <BarChart
         accessibilityLayer
@@ -79,18 +105,17 @@ export const FpsChartExample = ({
       >
         <XAxis hide padding={{ left: 0, right: 0 }} />
         <YAxis hide domain={domain} allowDataOverflow />
-        <Bar dataKey={dataKey} isAnimationActive={false} shape={ChartPixelBar}>
-          {rows.map((row, index) => (
-            <Cell
-              key={index}
-              fill={chartFpsColor(
-                ((Number(row[dataKey]) - domain[0]) / (domain[1] - domain[0])) *
-                  (1000 / 30) *
-                  1e6
-              )}
+        <Bar
+          dataKey={dataKey}
+          isAnimationActive={false}
+          // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Recharts requires this renderer prop's spelling.
+          shape={(barProps) => (
+            <ChartPixelBar
+              {...barProps}
+              fill={fills[barProps.originalDataIndex]}
             />
-          ))}
-        </Bar>
+          )}
+        />
         <ChartFpsFrame
           labels={labels}
           framerateLimit={framerateLimit}

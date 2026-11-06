@@ -1,5 +1,47 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { Page } from "@playwright/test";
+
+interface TogglePlaybackState extends Window {
+  sounds?: { rate: number; src: string; volume: number }[];
+}
+
+type InitializedTogglePlaybackState = typeof window &
+  TogglePlaybackState & {
+    sounds: { rate: number; src: string; volume: number }[];
+  };
+
+const verifyDisabledToggle = async (page: Page, extra: string) => {
+  await page.goto(`/?component=toggle&state=disabled${extra}`);
+  const control = page.locator("[data-subject]");
+  await expect(control).toBeDisabled();
+  await control.dispatchEvent("click");
+  await expect(control).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator("#events")).toHaveText("0");
+};
+
+const verifyToggleComposition = async (page: Page, anchor: boolean) => {
+  await page.goto(
+    `/?component=toggle&asChild=1&text=Hello%20世界${anchor ? "&anchor=1" : ""}`
+  );
+  const control = page.locator("[data-subject]");
+  await expect(control).toContainText("Hello 世界");
+  await control.click();
+  await expect(control).toHaveAttribute("aria-pressed", "true");
+  await page.locator("#read-ref").click();
+  await expect(page.locator("#tag")).toHaveText(anchor ? "A" : "BUTTON");
+};
+
+const verifySilentToggle = async (page: Page, suffix: string) => {
+  await page.goto(`/?component=toggle&${suffix}`);
+  await page.locator("[data-subject]").dispatchEvent("click");
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(() => (window as InitializedTogglePlaybackState).sounds)
+  ).toEqual([]);
+  // oxlint-enable typescript/no-unsafe-type-assertion
+};
 
 test("Toggle supports pointer, Space and Enter with pressed semantics", async ({
   page,
@@ -64,12 +106,8 @@ test("Toggle disabled button and composed link cannot activate", async ({
   page,
 }) => {
   for (const extra of ["", "&asChild=1&anchor=1"]) {
-    await page.goto(`/?component=toggle&state=disabled${extra}`);
-    const control = page.locator("[data-subject]");
-    await expect(control).toBeDisabled();
-    await control.dispatchEvent("click");
-    await expect(control).toHaveAttribute("aria-pressed", "false");
-    await expect(page.locator("#events")).toHaveText("0");
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyDisabledToggle(page, extra);
   }
 });
 
@@ -77,15 +115,8 @@ test("Toggle retains refs, rich children and asChild composition", async ({
   page,
 }) => {
   for (const anchor of [false, true]) {
-    await page.goto(
-      `/?component=toggle&asChild=1&text=Hello%20世界${anchor ? "&anchor=1" : ""}`
-    );
-    const control = page.locator("[data-subject]");
-    await expect(control).toContainText("Hello 世界");
-    await control.click();
-    await expect(control).toHaveAttribute("aria-pressed", "true");
-    await page.locator("#read-ref").click();
-    await expect(page.locator("#tag")).toHaveText(anchor ? "A" : "BUTTON");
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifyToggleComposition(page, anchor);
   }
 });
 
@@ -115,13 +146,18 @@ test("Toggle plays original game audio once per accepted activation", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as TogglePlaybackState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async, unicorn/consistent-function-scoping -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing. Keep play inside this initializer because Playwright serializes the callback without its Node lexical scope.
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedTogglePlaybackState).sounds.push({
         rate: this.playbackRate,
         src: this.src,
         volume: this.volume,
       });
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
@@ -130,25 +166,34 @@ test("Toggle plays original game audio once per accepted activation", async ({
   const control = page.locator("[data-subject]");
   await control.hover();
   await control.focus();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(() => (window as InitializedTogglePlaybackState).sounds)
+  ).toEqual([]);
+  // oxlint-enable typescript/no-unsafe-type-assertion
   await control.click();
   await page.keyboard.press("Space");
   await page.keyboard.press("Enter");
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual(
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(() => (window as InitializedTogglePlaybackState).sounds)
+  ).toEqual(
     Array.from({ length: 3 }, () => ({
       rate: 1,
       src: minecraftClickSound,
       volume: 0.25,
     }))
   );
+  // oxlint-enable typescript/no-unsafe-type-assertion
 
   for (const suffix of [
     "cancel=1",
     "state=disabled",
     "state=disabled&asChild=1&anchor=1",
   ]) {
-    await page.goto(`/?component=toggle&${suffix}`);
-    await page.locator("[data-subject]").dispatchEvent("click");
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    await verifySilentToggle(page, suffix);
   }
 });

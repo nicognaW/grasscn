@@ -1,6 +1,9 @@
 import { minecraftGlyphs } from "./minecraft-font";
 
-export function paintSignGpu(
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
+
+export const paintSignGpu = function paintSignGpu(
   texture: HTMLImageElement,
   font: HTMLImageElement,
   lines: readonly string[],
@@ -35,11 +38,16 @@ export function paintSignGpu(
   }
 
   const shader = (kind: number, text: string) => {
-    const s = gl.createShader(kind)!;
+    const s = gl.createShader(kind);
+
+    if (!s) {
+      throw new Error("Minecraft sign gpu WebGL shader could not be created");
+    }
+
     gl.shaderSource(s, text);
     gl.compileShader(s);
 
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(s, gl.COMPILE_STATUS) !== true) {
       throw new Error(gl.getShaderInfoLog(s) ?? "Sign shader failed");
     }
 
@@ -154,6 +162,7 @@ export function paintSignGpu(
   );
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, font);
   const rgb = Number.parseInt(color.slice(1), 16);
+  /* oxlint-disable no-bitwise -- The shader tint receives the three unpacked bytes of the packed RGB sign color. */
   gl.uniform4f(
     tint,
     ((rgb >> 16) & 255) / 255,
@@ -161,40 +170,51 @@ export function paintSignGpu(
     (rgb & 255) / 255,
     1
   );
+  /* oxlint-enable no-bitwise */
   const ts = f((hanging ? 1 : f(0.9765628)) * scale);
 
-  for (const [index, line] of lines.entries()) {
-    const glyphs = [...line].map(
-      (char) => minecraftGlyphs[char.codePointAt(0)! - 32]
-    );
+  const drawSignText = () => {
+    for (const [index, line] of lines.entries()) {
+      const glyphs = Array.from(
+        line,
+        (char) =>
+          asciiGlyphs[
+            // SAFETY: String Array.from iteration supplies a nonempty character. Its first code point therefore exists.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The verified glyph-character producer proves this specific codePointAt(0) result.
+            (char.codePointAt(0) as number) - 32
+          ]
+      );
 
-    if (glyphs.some((g) => !g)) {
-      continue;
-    }
-
-    let dx = -Math.floor(glyphs.reduce((sum, g) => sum + g[2], 0) / 2);
-    const dy = index * (hanging ? 9 : 10) - (hanging ? 18 : 20);
-
-    for (let i = 0; i < glyphs.length; i += 1) {
-      const g = glyphs[i];
-      const width = g[2] - 1;
-
-      if (line[i] !== " " && width > 0) {
-        draw(
-          f(tx + f(dx * ts)),
-          f(origin + f(dy * ts)),
-          f(tx + f((dx + width) * ts)),
-          f(origin + f((dy + 8) * ts)),
-          g[0] / font.naturalWidth,
-          g[1] / font.naturalHeight,
-          (g[0] + width) / font.naturalWidth,
-          (g[1] + 8) / font.naturalHeight
-        );
+      if (!glyphs.every((g) => g !== undefined)) {
+        continue;
       }
 
-      dx += g[2];
+      let dx = -Math.floor(glyphs.reduce((sum, g) => sum + g[2], 0) / 2);
+      const dy = index * (hanging ? 9 : 10) - (hanging ? 18 : 20);
+
+      for (let i = 0; i < glyphs.length; i += 1) {
+        const g = glyphs[i];
+        const width = g[2] - 1;
+
+        if (line[i] !== " " && width > 0) {
+          draw(
+            f(tx + f(dx * ts)),
+            f(origin + f(dy * ts)),
+            f(tx + f((dx + width) * ts)),
+            f(origin + f((dy + 8) * ts)),
+            g[0] / font.naturalWidth,
+            g[1] / font.naturalHeight,
+            (g[0] + width) / font.naturalWidth,
+            (g[1] + 8) / font.naturalHeight
+          );
+        }
+
+        dx += g[2];
+      }
     }
-  }
+  };
+
+  drawSignText();
 
   const width = 120 * scale;
   const height = (hanging ? 74 : 110) * scale;
@@ -225,5 +245,6 @@ export function paintSignGpu(
   gl.deleteShader(fs);
   gl.getExtension("WEBGL_lose_context")?.loseContext();
 
+  // oxlint-disable-next-line typescript/consistent-return -- An unavailable native rendering resource intentionally returns undefined; explicit undefined conflicts with unicorn/no-useless-undefined, while successful rendering returns these original pixels or backdrop.
   return pixels;
-}
+};

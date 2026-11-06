@@ -1,5 +1,6 @@
 "use client";
 
+import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 
 import { minecraftChatAtlas } from "./minecraft-chat-atlas";
@@ -10,6 +11,15 @@ import { loadUnihex } from "./minecraft-unifont";
 import "./minecraft-unifont-metrics.css";
 import "./minecraft-selectable-text.css";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-selectable-text-left"?: string;
+  "--mc-selectable-text-top"?: string;
+}
+
+interface SelectableTextConnection {
+  element: HTMLSpanElement;
+}
+
 interface Run {
   text: string;
   x: number;
@@ -19,6 +29,7 @@ interface Run {
 const MinecraftSelectableText = ({
   text,
   className,
+  ref,
   ...props
 }: React.ComponentProps<"span"> & {
   text: string;
@@ -26,22 +37,46 @@ const MinecraftSelectableText = ({
   const root = React.useRef<HTMLSpanElement>(null);
   const raw = React.useRef<HTMLSpanElement>(null);
   const [runs, setRuns] = React.useState<Run[]>([]);
-  const [ready, setReady] = React.useState(false);
 
-  React.useLayoutEffect(() => {
+  const [connection, setConnection] =
+    React.useState<SelectableTextConnection | null>(null);
+
+  const attach = React.useCallback((element: HTMLSpanElement | null) => {
+    setConnection(element === null ? null : { element });
+  }, []);
+
+  const paintInput = React.useMemo(
+    () => ({ connection, text }),
+    [connection, text]
+  );
+
+  const [completedInput, setCompletedInput] =
+    React.useState<typeof paintInput>();
+
+  const ready = completedInput === paintInput;
+
+  React.useLayoutEffect((): (() => void) | undefined => {
+    if (connection === null) {
+      return undefined;
+    }
+
+    // SAFETY: React attaches this private, unkeyed <span> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLSpanElement capture.
+    const value = raw.current as HTMLSpanElement;
+
+    // SAFETY: useRender composes this private ref with the public ref on the same unkeyed span. Its node identity stays fixed for this effect; alive guards and RAF/ResizeObserver cleanup bound deferred measurements.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The composed intrinsic commit proves this exact HTMLSpanElement capture.
+    const element = root.current as HTMLSpanElement;
+
     let alive = true;
     let fontReady = false;
     let frame = 0;
-
-    setReady(false);
 
     const measure = () => {
       if (!fontReady) {
         return;
       }
 
-      const element = root.current!;
-      const value = raw.current!;
       const node = value.firstChild;
 
       if (!node || node.nodeType !== Node.TEXT_NODE) {
@@ -88,16 +123,22 @@ const MinecraftSelectableText = ({
       }
 
       setRuns(next);
-      setReady(true);
+      setCompletedInput(paintInput);
     };
 
-    void Promise.all([document.fonts.ready, loadUnihex()]).then(() => {
+    const glyphResources = Promise.all([document.fonts.ready, loadUnihex()]);
+
+    const paintAfterGlyphResources = async () => {
+      await glyphResources;
+
       if (alive) {
         fontReady = true;
         measure();
         frame = requestAnimationFrame(measure);
       }
-    });
+    };
+
+    void paintAfterGlyphResources();
 
     const observer = new ResizeObserver(() => {
       if (alive) {
@@ -105,40 +146,51 @@ const MinecraftSelectableText = ({
       }
     });
 
-    observer.observe(root.current!);
+    observer.observe(element);
 
     return () => {
       alive = false;
       cancelAnimationFrame(frame);
       observer.disconnect();
     };
-  }, [text]);
+  }, [connection, paintInput, text]);
 
-  return (
-    <span
-      ref={root}
-      data-mc-selectable-ready={ready ? "true" : "false"}
-      className={cn(`mc-selectable-text`, className)}
-      {...props}
-    >
-      <span ref={raw} className="mc-selectable-raw">
-        {text}
+  return useRender({
+    defaultTagName: "span",
+    ref: [root, attach, ref ?? null],
+    render: (
+      <span
+        data-mc-selectable-ready={ready ? "true" : "false"}
+        className={cn(`mc-selectable-text`, className)}
+        {...props}
+      >
+        <span ref={raw} className="mc-selectable-raw">
+          {text}
+        </span>
+        <span aria-hidden="true" className="mc-selectable-pixels">
+          {runs.map((run, index) => {
+            const nativeTextLayout1: NativeTextLayoutStyle = {
+              "--mc-selectable-text-left": `${run.x}px`,
+              "--mc-selectable-text-top": `${run.y}px`,
+            };
+
+            return (
+              <span
+                key={index}
+                className="mc-layout-minecraft-selectable-text-1 top-(--mc-selectable-text-top) left-(--mc-selectable-text-left)"
+                style={nativeTextLayout1}
+              >
+                <MinecraftColorUnicodeLabel
+                  text={run.text}
+                  atlas={minecraftChatAtlas}
+                />
+              </span>
+            );
+          })}
+        </span>
       </span>
-      <span aria-hidden="true" className="mc-selectable-pixels">
-        {runs.map((run, index) => (
-          <span
-            key={index}
-            style={{ left: run.x, position: "absolute", top: run.y }}
-          >
-            <MinecraftColorUnicodeLabel
-              text={run.text}
-              atlas={minecraftChatAtlas}
-            />
-          </span>
-        ))}
-      </span>
-    </span>
-  );
+    ),
+  });
 };
 
 export { MinecraftSelectableText };

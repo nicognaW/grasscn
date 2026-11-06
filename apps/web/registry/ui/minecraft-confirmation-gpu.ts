@@ -1,5 +1,7 @@
 // Original post/box_blur.fsh arithmetic and post_effect/blur.json pass order.
-export function createConfirmationPainter(canvas: HTMLCanvasElement) {
+export const createConfirmationPainter = function createConfirmationPainter(
+  canvas: HTMLCanvasElement
+) {
   const gl = canvas.getContext("webgl", {
     alpha: true,
     antialias: false,
@@ -13,11 +15,18 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
   }
 
   const shader = (kind: number, source: string) => {
-    const value = gl.createShader(kind)!;
+    const value = gl.createShader(kind);
+
+    if (!value) {
+      throw new Error(
+        "Minecraft confirmation gpu WebGL shader could not be created"
+      );
+    }
+
     gl.shaderSource(value, source);
     gl.compileShader(value);
 
-    if (!gl.getShaderParameter(value, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(value, gl.COMPILE_STATUS) !== true) {
       throw new Error(
         gl.getShaderInfoLog(value) ?? "Confirmation shader failed"
       );
@@ -47,7 +56,7 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
     gl.attachShader(program, pixel);
     gl.linkProgram(program);
 
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
       throw new Error(
         gl.getProgramInfoLog(program) ?? "Confirmation program failed"
       );
@@ -84,7 +93,7 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   }
 
-  const use = (program: WebGLProgram) => {
+  const activateProgram = (program: WebGLProgram) => {
     gl.useProgram(program);
     const location = gl.getAttribLocation(program, "position");
     gl.enableVertexAttribArray(location);
@@ -97,8 +106,8 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
         gl.deleteProgram(program);
       }
 
-      for (const shader of shaders) {
-        gl.deleteShader(shader);
+      for (const shaderHandle of shaders) {
+        gl.deleteShader(shaderHandle);
       }
 
       for (const texture of textures) {
@@ -107,7 +116,7 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
 
       gl.deleteFramebuffer(framebuffer);
       gl.deleteBuffer(buffer);
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      // The caller owns the canvas context and may recreate its painter after cleanup.
     },
     paint(source: HTMLCanvasElement, radius: number) {
       canvas.width = source.width;
@@ -140,7 +149,7 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
         gl.UNSIGNED_BYTE,
         source
       );
-      use(blur);
+      activateProgram(blur);
       gl.uniform1f(gl.getUniformLocation(blur, "radius"), radius);
 
       for (let pass = 0; pass < 6; pass += 1) {
@@ -162,10 +171,10 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
       }
 
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-      use(copy);
+      activateProgram(copy);
       gl.bindTexture(gl.TEXTURE_2D, textures[0]);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
-      use(shade);
+      activateProgram(shade);
       gl.enable(gl.BLEND);
       gl.blendFuncSeparate(
         gl.SRC_ALPHA,
@@ -176,4 +185,4 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     },
   };
-}
+};

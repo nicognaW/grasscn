@@ -9,56 +9,78 @@ import {
 import type { MinecraftAvatarSkin } from "@grasscn/web/ui/avatar";
 import * as React from "react";
 
+// Navigation owns this immutable fixture query; state updates keep the same document.
+const q = new URLSearchParams(location.search);
+
+declare global {
+  interface Window {
+    avatarImageRef?: HTMLImageElement | null;
+  }
+}
+
 export const AvatarFixture = () => {
-  const q = new URLSearchParams(location.search);
-  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+  const scale =
+    // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+    Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
   const [status, setStatus] = React.useState("");
   const ref = React.useRef<HTMLImageElement>(null);
 
   React.useLayoutEffect(() => {
-    document.documentElement.style.background = document.body.style.background =
-      q.get("background") ?? "#202020";
+    const chainedBackgroundOuter = document.documentElement.style;
+    const chainedBackgroundInner = document.body.style;
+    const chainedBackgroundValue = q.get("background") ?? "#202020";
+    chainedBackgroundInner.background = chainedBackgroundValue;
+    chainedBackgroundOuter.background = chainedBackgroundValue;
   }, []);
   React.useEffect(() => {
-    (window as any).avatarImageRef = ref.current;
+    window.avatarImageRef = ref.current;
   });
 
   if (q.get("native") === "1") {
     const part = q.get("part");
 
+    let selectedFixtureBranch1: "sm" | "lg" | "default";
+
+    if (Number(q.get("width")) === 12) {
+      selectedFixtureBranch1 = "sm";
+    } else {
+      selectedFixtureBranch1 = Number(q.get("width")) === 20 ? "lg" : "default";
+    }
+
     return (
       <Avatar
         id="subject"
         scale={scale}
-        size={
-          Number(q.get("width")) === 12
-            ? "sm"
-            : Number(q.get("width")) === 20
-              ? "lg"
-              : "default"
-        }
+        size={selectedFixtureBranch1}
+        className="fixture-geometry-height fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width"
         style={{
-          height: Number(q.get("height") ?? 16) * scale,
-          left: Number(q.get("x") ?? 8) * scale,
-          position: "absolute",
-          top: Number(q.get("y") ?? 8) * scale,
-          width: Number(q.get("width") ?? 16) * scale,
+          "--fixture-height": `${Number(q.get("height") ?? 16) * scale}px`,
+          "--fixture-width": `${Number(q.get("width") ?? 16) * scale}px`,
+          "--fixture-x": `${Number(q.get("x") ?? 8) * scale}px`,
+          "--fixture-y": `${Number(q.get("y") ?? 8) * scale}px`,
         }}
         data-subject="true"
       >
         {part === "label" ? (
           <AvatarFallback
-            style={{ background: "transparent", display: "block" }}
+            className="fixture-avatar-reference-fallback"
             maxWidth={
               q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined
             }
-            align={(q.get("align") ?? "left") as any}
+            align={q.get("align") === "center" ? "center" : "left"}
           >
             {q.get("text") ?? q.get("label") ?? ""}
           </AvatarFallback>
         ) : (
           <AvatarImage
-            skin={(q.get("label") ?? "wide/steve") as MinecraftAvatarSkin}
+            skin={
+              // SAFETY: owned fixture callers serialize the label option from the actual component protocol (MinecraftAvatarSkin); preserve this URL read, original default and component handling.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+              (q.get("label") ?? "wide/steve") as MinecraftAvatarSkin
+            }
             alt="Native player"
             hat={q.get("checked") !== "false"}
             upsideDown={q.get("selected") === "true"}
@@ -97,7 +119,12 @@ export const AvatarFixture = () => {
         </Avatar>
         <AvatarGroupCount>+2</AvatarGroupCount>
       </AvatarGroup>
-      <Avatar render={<a href="#player" id="linked" />}>
+      <Avatar
+        render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Avatar supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href="#player" id="linked" />
+        }
+      >
         <AvatarFallback>
           <strong>Player</strong>
         </AvatarFallback>

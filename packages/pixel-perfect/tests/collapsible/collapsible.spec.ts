@@ -2,10 +2,26 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-function compareRgba(expected: PNG, actual: PNG) {
+/** Consumed fields shared by the retained ASCII/CJK Buttons and Label routes. */
+interface CollapsibleComparisonCase extends CapturedReferenceCase {
+  label: string;
+  x?: number;
+  y?: number;
+  background?: string;
+  alignment?: string;
+  wrapWidth?: number;
+}
+
+interface CollapsibleComparisonManifest {
+  cases: CollapsibleComparisonCase[];
+}
+
+const compareRgba = function compareRgba(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -23,9 +39,9 @@ function compareRgba(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -33,7 +49,7 @@ function compareRgba(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Collapsible comparator detects one changed pixel", () => {
   const expected = PNG.sync.read(
@@ -44,6 +60,7 @@ test("Collapsible comparator detects one changed pixel", () => {
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compareRgba(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -53,9 +70,11 @@ for (const directory of [
   "tests/reference/button-cjk",
   "tests/reference/label",
 ]) {
+  // SAFETY: The closed retained ASCII Button, CJK Button and Label routes all supply required label/core fields; coordinates, alignment, background and wrapWidth are real variant optionals.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve the existing fresh runtime read/parse phase.
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-  );
+  ) as CollapsibleComparisonManifest;
 
   const body = directory.endsWith("/label");
 
@@ -67,26 +86,31 @@ for (const directory of [
         test(`Collapsible pixels: ${c.name} expanded:${expanded}`, async ({
           page,
         }, info) => {
-          await page.setViewportSize({ width: 1536, height: 900 });
+          await page.setViewportSize({ height: 900, width: 1536 });
 
           const params = new URLSearchParams({
+            align: c.alignment ?? "left",
             component: "collapsible",
+            height: String(c.height ?? 20),
+            label: c.label ?? "Button",
             native: "1",
             part: body ? "body" : "header",
-            label: c.label ?? "Button",
-            text: body ? c.label : "",
-            width: String(c.width),
-            height: String(c.height ?? 20),
             scale: String(c.scale),
             state: c.state,
+            text: body ? c.label : "",
+            width: String(c.width),
             x: String(c.x ?? 16),
             y: String(c.y ?? 16),
-            align: c.alignment ?? "left",
           });
 
-          if (c.wrapWidth != null) params.set("wrapWidth", String(c.wrapWidth));
+          if (c.wrapWidth !== undefined) {
+            params.set("wrapWidth", String(c.wrapWidth));
+          }
 
-          if (expanded) params.set("expanded", "1");
+          if (expanded) {
+            params.set("expanded", "1");
+          }
+
           await page.goto(`/?${params}`);
           const subject = page.locator("[data-subject]");
           await expect(page.locator('[data-slot="collapsible"]')).toHaveCount(
@@ -98,12 +122,14 @@ for (const directory of [
           });
           await page.mouse.move(0, 0);
 
-          if (body)
+          if (body) {
             await expect(
               subject.locator("[data-mc-label-layout-ready]")
             ).toHaveAttribute("data-mc-label-layout-ready", "true");
-          else {
-            if (c.state === "hover") await subject.hover();
+          } else {
+            if (c.state === "hover") {
+              await subject.hover();
+            }
 
             if (c.state === "focus") {
               await subject.focus();
@@ -113,21 +139,47 @@ for (const directory of [
             }
           }
 
-          for (const label of await subject
-            .locator("[data-mc-label-ready]")
-            .all())
-            await expect(label).toHaveAttribute("data-mc-label-ready", "true");
-          await page.evaluate(
-            async () =>
-              await new Promise<void>((resolve) =>
-                requestAnimationFrame(() =>
-                  requestAnimationFrame(() => {
-                    resolve();
-                  })
-                )
-              )
-          );
-          const bounds = (await subject.boundingBox())!;
+          {
+            const readyElements = await subject
+              .locator("[data-mc-label-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (label) => {
+                await expect(label).toHaveAttribute(
+                  "data-mc-label-ready",
+                  "true"
+                );
+              })
+            );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
+          }
+
+          await page.evaluate(async () => {
+            const frameCompletion: PromiseWithResolvers<void> =
+              Promise.withResolvers();
+
+            try {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  frameCompletion.resolve();
+                });
+              });
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
+
+            await frameCompletion.promise;
+          });
+          const bounds = await subject.boundingBox();
+          expectNotNull(bounds, "Missing required bounding box: bounds");
           expect([bounds.x, bounds.y]).toEqual([
             (c.x ?? 16) * c.scale,
             (c.y ?? 16) * c.scale,
@@ -141,9 +193,9 @@ for (const directory of [
             c.sha256
           );
 
-          const actualBytes = await subject.screenshot(),
-            actual = PNG.sync.read(actualBytes),
-            expected = PNG.sync.read(expectedBytes);
+          const actualBytes = await subject.screenshot();
+          const actual = PNG.sync.read(actualBytes);
+          const expected = PNG.sync.read(expectedBytes);
 
           const { mismatchedPixels, diff } = compareRgba(expected, actual);
           writeFileSync(info.outputPath("actual.png"), actualBytes);

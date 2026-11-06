@@ -1,9 +1,12 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
+
+import type { AdventureFixtureSample } from "../../../fixtures/renderer/fixture-query-protocol";
 
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 
-const url = (sample: object) =>
+const url = (sample: AdventureFixtureSample) =>
   `${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify(sample))}`;
 
 test("map terrain coordinates and keyboard markers", async ({ page }) => {
@@ -19,26 +22,30 @@ test("map terrain coordinates and keyboard markers", async ({ page }) => {
   );
 
   const subject = page.locator("[data-subject]");
-  const bounds = (await subject.boundingBox())!;
+  const bounds = await subject.boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
 
   await subject.click({ position: { x: 20, y: 40 } });
   await expect
-    .poll(async () =>
-      page.evaluate(() => document.documentElement.dataset.mapClick)
+    .poll(
+      async () =>
+        await page.evaluate(() => document.documentElement.dataset.mapClick)
     )
     .toBe(JSON.stringify({ x: 10, y: 20 }));
   const home = page.getByRole("button", { exact: true, name: "Home" });
   await home.focus();
   await home.press("Enter");
   await expect
-    .poll(async () =>
-      page.evaluate(() => document.documentElement.dataset.marker)
+    .poll(
+      async () =>
+        await page.evaluate(() => document.documentElement.dataset.marker)
     )
     .toBe("home");
   await page.getByRole("button", { exact: true, name: "Village" }).click();
   await expect
-    .poll(async () =>
-      page.evaluate(() => document.documentElement.dataset.marker)
+    .poll(
+      async () =>
+        await page.evaluate(() => document.documentElement.dataset.marker)
     )
     .toBe("village");
   expect(bounds.width).toBe(256);
@@ -54,16 +61,22 @@ test("locator limits and keyboard waypoint selection", async ({ page }) => {
     [59, true],
     [61, false],
   ] as const) {
+    // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
     await page.goto(url({ checked: true, element: "locator", value: bearing }));
     const point = page.getByRole("button", { exact: true, name: "Waypoint" });
+    // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
     await expect(point).toHaveCount(visible ? 1 : 0);
 
     if (visible) {
+      // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
       await point.focus();
+      // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
       await point.press("Enter");
+      // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
       await expect
-        .poll(async () =>
-          page.evaluate(() => document.documentElement.dataset.marker)
+        .poll(
+          async () =>
+            await page.evaluate(() => document.documentElement.dataset.marker)
         )
         .toBe("point");
     }
@@ -74,9 +87,11 @@ test("locator preserves bearings across positive and negative full turns", async
   page,
 }) => {
   for (const heading of [0, 360, 720, -360, -720]) {
+    // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
     await page.goto(
       url({ checked: true, element: "locator", heading, value: 0 })
     );
+    // oxlint-disable-next-line no-await-in-loop -- One map page is navigated for each bearing/heading query; focus/Enter and marker observations must finish before the next page replaces that document.
     await expect(
       page.getByRole("button", { exact: true, name: "Waypoint" })
     ).toHaveCount(1);

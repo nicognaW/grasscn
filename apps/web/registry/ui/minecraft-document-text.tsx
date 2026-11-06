@@ -1,43 +1,76 @@
 "use client";
 
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
-import { minecraftStyle } from "./minecraft-render";
+import {
+  useCanvasPaintConnection,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
+
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
+
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-ui-minecraft-document-text-1-visibility": string;
+}
+
+interface DocumentLayoutStyle extends React.CSSProperties {
+  "--mc-document-height": string;
+  "--mc-document-width": string;
+}
+
+interface DocumentFallbackStyle extends React.CSSProperties {
+  "--mc-document-fallback-color": string;
+}
 
 let bitmap: Promise<HTMLImageElement> | undefined;
 
-function fontImage() {
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
+const fontImage = function fontImage() {
+  // oxlint-disable-next-line promise/avoid-new -- Keep this cached Image event Promise, including its loaded-element result and rejection.
   return (bitmap ??= new Promise((resolve, reject) => {
     const image = new Image();
-    image.onload = () => {
+    image.addEventListener("load", () => {
       resolve(image);
-    };
+    });
 
-    image.onerror = reject;
+    image.addEventListener("error", reject);
     image.src = minecraftInputAssets.atlas;
   }));
-}
+};
 
-function documentTextWidth(text: string) {
-  return [...text].reduce(
-    (sum, c) =>
-      sum +
-      (minecraftGlyphs[c.codePointAt(0)! - 32]?.[2] ??
-        getUnihexGlyph(c)?.advance ??
-        6),
-    0
-  );
-}
+const documentTextWidth = function documentTextWidth(text: string) {
+  let accumulatedGlyphAdvance = 0;
 
-function documentLines(text: string, width: number) {
+  for (const advanceCharacter of text) {
+    accumulatedGlyphAdvance +=
+      asciiGlyphs[
+        // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+        (advanceCharacter.codePointAt(0) as number) - 32
+      ]?.[2] ??
+      getUnihexGlyph(advanceCharacter)?.advance ??
+      6;
+  }
+
+  return accumulatedGlyphAdvance;
+};
+
+const documentLines = function documentLines(text: string, width: number) {
   const lines: string[] = [];
 
   for (let line of text.split("\n")) {
     while (documentTextWidth(line) > width) {
-      const chars = [...line];
+      const chars: string[] = [];
+
+      for (const bufferCharacter of line) {
+        chars.push(bufferCharacter);
+      }
 
       let count = 0;
       let used = 0;
@@ -68,7 +101,7 @@ function documentLines(text: string, width: number) {
   }
 
   return lines;
-}
+};
 
 const MinecraftDocumentText = ({
   text,
@@ -89,121 +122,173 @@ const MinecraftDocumentText = ({
   wrap?: boolean;
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
-  const [ready, setReady] = React.useState(false);
+  const { attach, connection } = useCanvasPaintConnection(ref);
+
+  const paintInputs = React.useMemo(
+    () => ({ align, color, connection, scale, text, width, wrap }),
+    [text, width, scale, color, align, wrap, connection]
+  );
+
+  const [paintedInputs, setPaintedInputs] =
+    React.useState<typeof paintInputs>();
+
+  const ready = paintedInputs === paintInputs;
   const [height, setHeight] = React.useState(9);
 
-  React.useEffect(() => {
+  React.useEffect((): (() => void) | undefined => {
+    const attachment = paintInputs.connection;
+
+    if (attachment === null) {
+      return undefined;
+    }
+
+    // SAFETY: React attaches this private, unkeyed <canvas> before effect setup. The ref has one intrinsic attachment and no other writer; existing cleanup guards or cancels every deferred use.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The owned intrinsic commit and existing effect lifetime prove this exact HTMLCanvasElement capture.
+    const canvas = ref.current as HTMLCanvasElement;
+
     let live = true;
-    setReady(false);
-    Promise.all([
+
+    const glyphResources = Promise.all([
       fontImage(),
-      /[^\x20-\x7E\n]/.test(text) ? loadUnihex() : Promise.resolve(),
-    ])
-      .then(([image]) => {
-        if (!live) {
-          return;
+      /[^\u0020-\u007E\n]/u.test(paintInputs.text)
+        ? loadUnihex()
+        : Promise.resolve(),
+    ]);
+
+    const paintAfterGlyphResources = async () => {
+      const [image] = await glyphResources;
+
+      if (!live) {
+        return;
+      }
+
+      const lines = paintInputs.wrap
+        ? documentLines(paintInputs.text, paintInputs.width)
+        : [paintInputs.text];
+
+      canvas.width = paintInputs.width * paintInputs.scale;
+      canvas.height = lines.length * 9 * paintInputs.scale;
+      setHeight(lines.length * 9);
+      const ctx = canvas.getContext("2d");
+
+      if (!ctx) {
+        throw new Error(
+          "Minecraft document text 2D canvas context could not be created"
+        );
+      }
+
+      ctx.imageSmoothingEnabled = false;
+
+      for (const [lineIndex, line] of lines.entries()) {
+        let x = 0;
+
+        if (paintInputs.align === "right") {
+          x = paintInputs.width - documentTextWidth(line);
+        } else if (paintInputs.align === "center") {
+          x =
+            Math.floor(paintInputs.width / 2) -
+            Math.floor(documentTextWidth(line) / 2);
         }
 
-        const canvas = ref.current!;
-        const lines = wrap ? documentLines(text, width) : [text];
+        for (const char of line) {
+          const glyph =
+            asciiGlyphs[
+              // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+              (char.codePointAt(0) as number) - 32
+            ];
 
-        canvas.width = width * scale;
-        canvas.height = lines.length * 9 * scale;
-        setHeight(lines.length * 9);
-        const ctx = canvas.getContext("2d")!;
-        ctx.imageSmoothingEnabled = false;
+          if (glyph) {
+            if (char !== " ") {
+              ctx.drawImage(
+                image,
+                glyph[0],
+                glyph[1],
+                glyph[2],
+                8,
+                x * paintInputs.scale,
+                lineIndex * 9 * paintInputs.scale,
+                glyph[2] * paintInputs.scale,
+                8 * paintInputs.scale
+              );
+            }
 
-        for (const [lineIndex, line] of lines.entries()) {
-          let x =
-            align === "right"
-              ? width - documentTextWidth(line)
-              : align === "center"
-                ? Math.floor(width / 2) -
-                  Math.floor(documentTextWidth(line) / 2)
-                : 0;
+            x += glyph[2];
+          } else {
+            const unicodeGlyph = getUnihexGlyph(char);
 
-          for (const char of line) {
-            const glyph = minecraftGlyphs[char.codePointAt(0)! - 32];
-
-            if (glyph) {
-              if (char !== " ") {
-                ctx.drawImage(
-                  image,
-                  glyph[0],
-                  glyph[1],
-                  glyph[2],
-                  8,
-                  x * scale,
-                  lineIndex * 9 * scale,
-                  glyph[2] * scale,
-                  8 * scale
-                );
-              }
-
-              x += glyph[2];
-            } else {
-              const glyph = getUnihexGlyph(char);
-
-              if (glyph) {
-                ctx.fillStyle = color;
-                paintUnihex(ctx, glyph, x, lineIndex * 9, scale);
-                x += glyph.advance;
-              }
+            if (unicodeGlyph) {
+              ctx.fillStyle = paintInputs.color;
+              paintUnihex(
+                ctx,
+                unicodeGlyph,
+                x,
+                lineIndex * 9,
+                paintInputs.scale
+              );
+              x += unicodeGlyph.advance;
             }
           }
         }
+      }
 
-        ctx.globalCompositeOperation = "source-in";
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        setReady(true);
-      })
-      .catch(() => {
-        if (live) {
-          setReady(false);
-        }
-      });
+      ctx.globalCompositeOperation = "source-in";
+      ctx.fillStyle = paintInputs.color;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      setPaintedInputs(paintInputs);
+    };
+
+    paintAfterGlyphResources().catch(() => {
+      if (live) {
+        setPaintedInputs(undefined);
+      }
+    });
 
     return () => {
       live = false;
     };
-  }, [text, width, scale, color, align, wrap]);
+  }, [paintInputs]);
+
+  const fallbackStyle: DocumentFallbackStyle | undefined = ready
+    ? undefined
+    : {
+        "--mc-document-fallback-color": color,
+      };
 
   return (
     <span
       {...props}
       data-slot="document-text"
       data-ready={ready}
-      className={className}
-      style={minecraftStyle(style, (__style) => ({
-        display: "block",
-        height: height * scale,
-        position: "relative",
-        width: width * scale,
+      className={cn(
+        "relative block h-(--mc-document-height) w-(--mc-document-width)",
+        className
+      )}
+      style={minecraftStyle(style, (__style): DocumentLayoutStyle => ({
+        "--mc-document-height": `${height * scale}px`,
+        "--mc-document-width": `${width * scale}px`,
         ...__style,
       }))}
     >
       <canvas
-        ref={ref}
+        ref={attach}
         aria-hidden="true"
-        style={{
-          display: "block",
-          imageRendering: "pixelated",
-          visibility: ready ? "visible" : "hidden",
-        }}
+        className="[visibility:var(--mc-intrinsic-registry-ui-minecraft-document-text-1-visibility)] block [image-rendering:pixelated]"
+        style={
+          // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+          {
+            "--mc-intrinsic-registry-ui-minecraft-document-text-1-visibility":
+              ready ? "visible" : "hidden",
+          } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+        }
       />
       <span
-        style={
+        className={
           ready
-            ? {
-                clipPath: "inset(50%)",
-                height: 1,
-                overflow: "hidden",
-                position: "absolute",
-                width: 1,
-              }
-            : { color, inset: 0, position: "absolute" }
+            ? "absolute h-px w-px overflow-hidden [clip-path:inset(50%)]"
+            : "absolute inset-0 text-(--mc-document-fallback-color)"
         }
+        style={fallbackStyle}
       >
         {text}
       </span>
@@ -211,4 +296,5 @@ const MinecraftDocumentText = ({
   );
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the existing document-width measurement API consumed by Sign and PlayerList alongside Document rendering; accept mixed-module Fast Refresh state fallback.
 export { MinecraftDocumentText, documentTextWidth };

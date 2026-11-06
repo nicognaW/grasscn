@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
@@ -41,21 +42,35 @@ test("layout documentation exposes its actual examples and complete source", asy
     "trace",
   ];
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const slug of slugs) {
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     await page.goto(`${origin}/docs/components/${slug}`);
 
-    for (const id of ["preview", "usage", "composition", "installation"]) {
-      await expect(page.locator(`h2#${id}`)).toBeVisible();
+    const readOnlyItems26 = ["preview", "usage", "composition", "installation"];
+
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
+    const readOnlyResults26 = await Promise.allSettled(
+      readOnlyItems26.map(async (id) => {
+        await expect(page.locator(`h2#${id}`)).toBeVisible();
+      })
+    );
+
+    for (const readOnlyResult26 of readOnlyResults26) {
+      if (readOnlyResult26.status === "rejected") {
+        throw readOnlyResult26.reason;
+      }
     }
 
     const example = page.locator(".documentation-example").first();
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     await expect(example.locator(".minecraft-example")).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     await example
       .getByRole("tab", { exact: true, name: "Code" })
       .first()
       .click();
 
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     const source = await readFile(
       new URL(
         `../../../../apps/web/examples/layout/${slug}-example.tsx`,
@@ -64,7 +79,9 @@ test("layout documentation exposes its actual examples and complete source", asy
       "utf-8"
     );
 
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     await expect(example.locator("pre")).toContainText('"use client"');
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     await page.evaluate(() => {
       Object.defineProperty(navigator, "clipboard", {
         configurable: true,
@@ -76,17 +93,21 @@ test("layout documentation exposes its actual examples and complete source", asy
         },
       });
     });
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     await example.getByRole("button", { exact: true, name: "Copy" }).click();
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     await expect(example.getByRole("status")).toHaveText("Copied");
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     expect(await page.evaluate(() => window.copiedExample)).toBe(source);
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     await expect(
       page.getByRole("heading", { exact: true, name: "Interactive playground" })
     ).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Each layout route replaces one page and clipboard stub; copy/readback assertions are coupled to that route before next navigation.
     await expect(
       page.locator(".minecraft-prose").getByRole("alert")
     ).toHaveCount(0);
   }
-  /* eslint-enable no-await-in-loop */
 });
 
 test("default composed documentation examples retain their owned state and callbacks", async ({
@@ -156,11 +177,7 @@ test("default composed documentation examples retain their owned state and callb
   });
 
   const box = await handle.boundingBox();
-  expect(box).not.toBeNull();
-
-  if (!box) {
-    throw new Error("Resizable handle has no bounds");
-  }
+  expectNotNull(box);
 
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();

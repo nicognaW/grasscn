@@ -5,12 +5,14 @@ import { cva } from "class-variance-authority";
 import type { VariantProps } from "class-variance-authority";
 // Primitive composition: shadcn-ui/ui apps/v4/registry/bases/base/ui/button.tsx (MIT).
 import * as React from "react";
+import { isPortal } from "react-is";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
+  isMinecraftEmptyChild,
+  isMinecraftTextScalar,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
@@ -18,74 +20,97 @@ import "./minecraft-button.css";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 
-function bitmapText(content: React.ReactNode): React.ReactNode {
+interface ButtonStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+interface ButtonGlyphStyle extends React.CSSProperties {
+  "--mc-advance": number;
+  "--mc-glyph-x": number;
+  "--mc-glyph-y": number;
+}
+
+const bitmapText = function bitmapText(
+  content: React.ReactNode
+): React.ReactNode {
   if (
     Array.isArray(content) ||
     (React.isValidElement(content) && content.type === React.Fragment)
   ) {
-    const parts: React.ReactNode[] = [];
+    const parts: { child: React.ReactNode; key: string }[] = [];
     let run = "";
+    let runKey = "";
 
     const flush = () => {
       if (run) {
-        parts.push(run);
+        parts.push({ child: run, key: runKey });
         run = "";
       }
     };
 
-    const visit = (child: React.ReactNode) => {
-      if (child === null || child === undefined || typeof child === "boolean") {
+    const visit = (child: React.ReactNode, scope: string[]) => {
+      if (isMinecraftEmptyChild(child)) {
         return;
       }
 
       if (Array.isArray(child)) {
-        child.forEach(visit);
+        let position = 0;
+        // oxlint-disable-next-line unicorn/no-array-for-each -- Preserve this consumer ReactNode array's existing method dispatch and sparse/mutation behavior; indexed traversal would bypass custom forEach overrides.
+        child.forEach((entry: React.ReactNode) => {
+          const identity = `position:${position}`;
+
+          position += 1;
+          visit(entry, [...scope, identity]);
+        });
 
         return;
       }
 
-      if (
-        React.isValidElement<{
-          children?: React.ReactNode;
-        }>(child) &&
-        child.type === React.Fragment
-      ) {
-        visit(child.props.children);
+      const isElement = React.isValidElement<{
+        children?: React.ReactNode;
+      }>(child);
+
+      const childKey = isElement || isPortal(child) ? child.key : null;
+
+      const childScope =
+        childKey === null ? scope : [...scope.slice(0, -1), `key:${childKey}`];
+
+      if (isElement && child.type === React.Fragment) {
+        visit(child.props.children, [
+          ...childScope,
+          `fragment:${childKey ?? ""}`,
+        ]);
 
         return;
       }
 
-      if (
-        typeof child === "string" ||
-        typeof child === "number" ||
-        typeof child === "bigint"
-      ) {
+      if (isMinecraftTextScalar(child)) {
+        if (!run) {
+          runKey = `text:${JSON.stringify(childScope)}`;
+        }
+
         run += String(child);
       } else {
         flush();
-        parts.push(child);
+        parts.push({ child, key: `child:${JSON.stringify(childScope)}` });
       }
     };
 
-    visit(content);
+    visit(content, []);
     flush();
 
-    return parts.map((child, index) => (
-      <React.Fragment key={index}>{bitmapText(child)}</React.Fragment>
+    return parts.map(({ child, key }) => (
+      <React.Fragment key={key}>{bitmapText(child)}</React.Fragment>
     ));
   }
 
-  if (
-    typeof content !== "string" &&
-    typeof content !== "number" &&
-    typeof content !== "bigint"
-  ) {
+  if (!isMinecraftTextScalar(content)) {
     return content;
   }
 
   const text = String(content);
 
-  if (!/^[\u0020-\u007E]*$/.test(text)) {
+  if (!/^[\u0020-\u007E]*$/u.test(text)) {
     return <MinecraftUnicodeLabel text={text} />;
   }
 
@@ -101,18 +126,17 @@ function bitmapText(content: React.ReactNode): React.ReactNode {
 
           const [x, y, advance] = minecraftGlyphs[codePoint - 32];
 
+          const glyphStyle: ButtonGlyphStyle = {
+            "--mc-advance": advance,
+            "--mc-glyph-x": x,
+            "--mc-glyph-y": y,
+          };
+
           return (
             <span
               key={index}
-              className="mc-glyph"
-              style={
-                {
-                  "--mc-advance": advance,
-                  "--mc-glyph-x": x,
-                  "--mc-glyph-y": y,
-                  visibility: char === " " ? "hidden" : undefined,
-                } as React.CSSProperties
-              }
+              className={cn("mc-glyph", char === " " && "mc-glyph-space")}
+              style={glyphStyle}
             />
           );
         })}
@@ -120,7 +144,7 @@ function bitmapText(content: React.ReactNode): React.ReactNode {
       <span className="mc-text-accessible">{text}</span>
     </span>
   );
-}
+};
 
 const buttonVariants = cva(
   "mc-button relative inline-flex shrink-0 items-center justify-center whitespace-nowrap outline-none disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0",
@@ -140,6 +164,17 @@ const buttonVariants = cva(
   }
 );
 
+const skin = (content: React.ReactNode) => (
+  <>
+    <span className="mc-button-surface" aria-hidden="true">
+      {Array.from({ length: 9 }, (_, index) => (
+        <span key={index} />
+      ))}
+    </span>
+    <span className="mc-button-label">{bitmapText(content)}</span>
+  </>
+);
+
 const Button = ({
   className,
   variant = "default",
@@ -156,17 +191,6 @@ const Button = ({
   }) => {
   const Comp = ButtonPrimitive;
 
-  const skin = (content: React.ReactNode) => (
-    <>
-      <span className="mc-button-surface" aria-hidden="true">
-        {Array.from({ length: 9 }, (_, index) => (
-          <span key={index} />
-        ))}
-      </span>
-      <span className="mc-button-label">{bitmapText(content)}</span>
-    </>
-  );
-
   const content = skin(children);
 
   return (
@@ -176,18 +200,17 @@ const Button = ({
       data-variant={variant}
       data-size={size}
       className={cn(cn(buttonVariants({ size, variant }), className))}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): ButtonStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
       onClick={(event) => {
         onClick?.(event);
 
         if (
           !event.defaultPrevented &&
-          !props.disabled &&
+          !(props.disabled ?? false) &&
           !Object.hasOwn(event.currentTarget.dataset, "disabled")
         ) {
           playMinecraftClick();
@@ -199,4 +222,5 @@ const Button = ({
   );
 };
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the upstream shadcn component-and-variant export API used by consumer styling composition.
 export { Button, buttonVariants };

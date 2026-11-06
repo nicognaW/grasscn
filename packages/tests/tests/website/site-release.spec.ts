@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
-import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
+import { documentationInventory } from "@tests/checks/documentation-inventory";
 import { registryFile } from "@tests/paths";
 
 const origin = (
@@ -43,7 +43,6 @@ test("all production sections share navigation and omit internal status content"
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
 
-  /* eslint-disable no-await-in-loop -- Navigate and verify each section sequentially in the same browser page. */
   for (const path of [
     "",
     "docs",
@@ -51,15 +50,19 @@ test("all production sections share navigation and omit internal status content"
     "charts",
     "charts/line",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(`${origin}${path}`);
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(
       page.getByRole("navigation", { name: "Main navigation" })
     ).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(page.getByRole("contentinfo")).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(page.locator("h1")).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     expect(await page.locator("body").textContent()).not.toMatch(internal);
   }
-  /* eslint-enable no-await-in-loop */
 
   expect(errors).toEqual([]);
 });
@@ -310,7 +313,9 @@ test("website code uses the shared Shiki highlighter without changing source tex
   await implementation
     .getByRole("button", { exact: true, name: "Expand" })
     .click();
-  await expect(implementation.locator(".mc-code-token").first()).toBeVisible();
+  await expect(
+    implementation.locator("[data-mc-code-token]").first()
+  ).toBeVisible();
   const displayedCode = await implementation.locator("code").textContent();
   expect(displayedCode?.replaceAll("\r\n", "\n")).toBe(
     readFileSync(registryFile("ui/button.tsx"), "utf-8").replaceAll(
@@ -320,7 +325,7 @@ test("website code uses the shared Shiki highlighter without changing source tex
   );
 
   const colors = await implementation
-    .locator(".mc-code-token")
+    .locator("[data-mc-code-token]")
     .evaluateAll((tokens) => [
       ...new Set(tokens.map((token) => getComputedStyle(token).color)),
     ]);

@@ -3,12 +3,41 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { TestInfo } from "@playwright/test";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+/** Shared consumed shape of the retained Separator and Table-background captures. */
+interface TablePositionedCase extends CapturedReferenceCase {
+  background: string;
+  x: number;
+  y: number;
+}
+
+interface TableLabelCase extends TablePositionedCase {
+  label: string;
+  alignment: string;
+  wrapWidth?: number;
+}
+
+interface TableLabelManifest {
+  cases: TableLabelCase[];
+}
+
+interface TablePositionedManifest {
+  cases: TablePositionedCase[];
+}
+
 const repo = path.resolve(".");
 
-function compare(actual: PNG, expected: PNG, info: any, c: any, part: string) {
+const compare = function compare(
+  actual: PNG,
+  expected: PNG,
+  info: TestInfo,
+  c: { name: string },
+  part: string
+) {
   let mismatchedPixels = 0;
   const diff = new PNG({ height: actual.height, width: actual.width });
 
@@ -36,7 +65,7 @@ function compare(actual: PNG, expected: PNG, info: any, c: any, part: string) {
     })
   );
   expect(mismatchedPixels).toBe(0);
-}
+};
 
 const runtimeErrors = new WeakMap<object, string[]>();
 
@@ -57,12 +86,14 @@ test.afterEach(({ page, browser }, info) => {
   expect(runtimeErrors.get(page)).toEqual([]);
 });
 
+// SAFETY: The fixed retained Label manifest supplies the consumed label, alignment, geometry and identity fields; wrapWidth is a real optional number.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture boundary; existing runtime read/parse phase is preserved.
 const labelManifest = JSON.parse(
   readFileSync(
     pixelPerfectFile(path.join(repo, "tests/reference/label/manifest.json")),
     "utf-8"
   )
-);
+) as TableLabelManifest;
 
 test.describe("Table original native label constituents", () => {
   test.describe.configure({ mode: "parallel" });
@@ -70,40 +101,67 @@ test.describe("Table original native label constituents", () => {
   for (const c of labelManifest.cases) {
     for (const part of ["head", "cell", "caption"]) {
       test(`Table ${part} native label:${c.name}`, async ({ page }, info) => {
-        await page.setViewportSize({ width: 1536, height: 900 });
+        await page.setViewportSize({ height: 900, width: 1536 });
 
         const q = new URLSearchParams({
+          alignment: c.alignment ?? "left",
+          background: c.background,
+          height: String(c.height),
+          label: c.label,
           native: "1",
           part,
-          label: c.label,
-          width: String(c.width),
-          height: String(c.height),
           scale: String(c.scale),
+          width: String(c.width),
           x: String(c.x),
           y: String(c.y),
-          background: c.background,
-          alignment: c.alignment ?? "left",
         });
 
-        if (c.wrapWidth != null) q.set("wrapWidth", String(c.wrapWidth));
+        if (c.wrapWidth !== undefined) {
+          q.set("wrapWidth", String(c.wrapWidth));
+        }
+
         await page.goto(`/?component=table&${q}`);
         const subject = page.locator("[data-subject]");
         await expect(
           subject.locator("[data-mc-label-layout-ready]")
         ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-        for (const text of await subject.locator("[data-mc-label-ready]").all())
-          await expect(text).toHaveAttribute("data-mc-label-ready", "true");
-        await page.evaluate(
-          async () =>
-            await new Promise<void>((resolve) =>
-              requestAnimationFrame(() =>
-                requestAnimationFrame(() => {
-                  resolve();
-                })
-              )
-            )
-        );
+        {
+          const readyElements = await subject
+            .locator("[data-mc-label-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (text) => {
+              await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+            })
+          );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
+        }
+
+        await page.evaluate(async () => {
+          const frameCompletion: PromiseWithResolvers<void> =
+            Promise.withResolvers();
+
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          await frameCompletion.promise;
+        });
 
         const bytes = readFileSync(
           pixelPerfectFile(
@@ -113,9 +171,9 @@ test.describe("Table original native label constituents", () => {
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
 
-        const actualBytes = await subject.screenshot(),
-          actual = PNG.sync.read(actualBytes),
-          expected = PNG.sync.read(bytes);
+        const actualBytes = await subject.screenshot();
+        const actual = PNG.sync.read(actualBytes);
+        const expected = PNG.sync.read(bytes);
 
         expect([actual.width, actual.height]).toEqual([
           expected.width,
@@ -128,6 +186,8 @@ test.describe("Table original native label constituents", () => {
   }
 });
 
+// SAFETY: The fixed retained Separator manifest supplies every consumed identity, state, background and coordinate field.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture boundary; existing runtime read/parse phase is preserved.
 const separatorManifest = JSON.parse(
   readFileSync(
     pixelPerfectFile(
@@ -135,7 +195,7 @@ const separatorManifest = JSON.parse(
     ),
     "utf-8"
   )
-);
+) as TablePositionedManifest;
 
 test.describe("Table native header/footer separator artwork", () => {
   test.describe.configure({ mode: "parallel" });
@@ -181,6 +241,8 @@ test.describe("Table native header/footer separator artwork", () => {
   }
 });
 
+// SAFETY: The fixed retained six Table-background ROI captures supply the consumed identity, state, background and coordinate fields; no current generator lineage is assumed.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture boundary; existing runtime read/parse phase is preserved.
 const listBackground = JSON.parse(
   readFileSync(
     pixelPerfectFile(
@@ -188,7 +250,7 @@ const listBackground = JSON.parse(
     ),
     "utf-8"
   )
-);
+) as TablePositionedManifest;
 
 for (const c of listBackground.cases) {
   test(`Table exact native list background:${c.name}`, async ({

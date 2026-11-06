@@ -7,26 +7,10 @@ import { labelUnihexAtlas } from "@grasscn/web/ui/minecraft-label-atlas";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile("tests/reference/label/manifest.json"), "utf-8")
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    label: string;
-    wrapWidth?: number;
-    alignment?: string;
-    x: number;
-    y: number;
-    state: string;
-    sha256: string;
-  }[];
-};
+import type BoundaryReference1 from "../reference/label/glyph-atlas.json";
+import manifest from "../reference/label/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -44,9 +28,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -54,7 +38,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Label comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
@@ -66,26 +50,44 @@ test("Label comparator catches a one-pixel change", async () => {
   );
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
 test("Label uses the UVs observed in its native font-atlas context", () => {
-  const observed = JSON.parse(
-    readFileSync(
-      pixelPerfectFile("tests/reference/label/glyph-atlas.json"),
-      "utf-8"
-    )
-  );
+  const observed =
+    // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+    JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/label/glyph-atlas.json"),
+        "utf-8"
+      )
+    ) as Record<
+      string,
+      (typeof BoundaryReference1)[keyof typeof BoundaryReference1]
+    >;
 
-  expect(Object.keys(labelUnihexAtlas).sort()).toEqual(
-    Object.keys(observed).sort()
-  );
+  const atlasCodepoints = Object.keys(labelUnihexAtlas);
+
+  atlasCodepoints.sort();
+
+  const atlasComparison = expect(atlasCodepoints);
+
+  const observedCodepoints = Object.keys(observed);
+
+  observedCodepoints.sort();
+
+  atlasComparison.toEqual(observedCodepoints);
 
   for (const [code, uv] of Object.entries(labelUnihexAtlas)) {
     expect(uv).toEqual(
       Object.fromEntries(
-        ["u0", "u1", "v0", "v1"].map((key) => [key, observed[code][key]])
+        (["u0", "u1", "v0", "v1"] as const).map((key) => [
+          key,
+          observed[code][key],
+        ])
       )
     );
   }
@@ -119,8 +121,22 @@ for (const c of manifest.cases) {
     const card = page.locator('[data-slot="label"]');
     await expect(card).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-    for (const line of await card.locator("[data-mc-label-ready]").all()) {
-      await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+    {
+      const glyphs = await card.locator("[data-mc-label-ready]").all();
+
+      const glyphReadinessResults = await Promise.allSettled(
+        glyphs.map(async (line) => {
+          await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+        })
+      );
+
+      const rejectedReadiness = glyphReadinessResults.find(
+        (result) => result.status === "rejected"
+      );
+
+      if (rejectedReadiness) {
+        throw rejectedReadiness.reason;
+      }
     }
 
     const expectedBytes = await readFile(

@@ -5,22 +5,22 @@ import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 
 // Add the languages you need. Each one loads the first time it is used.
 const languages = {
-  bash: async () => import("shiki/langs/shellscript.mjs"),
-  css: async () => import("shiki/langs/css.mjs"),
-  diff: async () => import("shiki/langs/diff.mjs"),
-  html: async () => import("shiki/langs/html.mjs"),
-  javascript: async () => import("shiki/langs/javascript.mjs"),
-  json: async () => import("shiki/langs/json.mjs"),
-  jsx: async () => import("shiki/langs/jsx.mjs"),
-  markdown: async () => import("shiki/langs/markdown.mjs"),
-  python: async () => import("shiki/langs/python.mjs"),
-  sql: async () => import("shiki/langs/sql.mjs"),
-  tsx: async () => import("shiki/langs/tsx.mjs"),
-  typescript: async () => import("shiki/langs/typescript.mjs"),
-  yaml: async () => import("shiki/langs/yaml.mjs"),
+  bash: async () => await import("shiki/langs/shellscript.mjs"),
+  css: async () => await import("shiki/langs/css.mjs"),
+  diff: async () => await import("shiki/langs/diff.mjs"),
+  html: async () => await import("shiki/langs/html.mjs"),
+  javascript: async () => await import("shiki/langs/javascript.mjs"),
+  json: async () => await import("shiki/langs/json.mjs"),
+  jsx: async () => await import("shiki/langs/jsx.mjs"),
+  markdown: async () => await import("shiki/langs/markdown.mjs"),
+  python: async () => await import("shiki/langs/python.mjs"),
+  sql: async () => await import("shiki/langs/sql.mjs"),
+  tsx: async () => await import("shiki/langs/tsx.mjs"),
+  typescript: async () => await import("shiki/langs/typescript.mjs"),
+  yaml: async () => await import("shiki/langs/yaml.mjs"),
 };
 
-const aliases: Record<string, keyof typeof languages> = {
+const aliases = {
   js: "javascript",
   md: "markdown",
   py: "python",
@@ -30,7 +30,7 @@ const aliases: Record<string, keyof typeof languages> = {
   ts: "typescript",
   yml: "yaml",
   zsh: "bash",
-};
+} satisfies Record<string, keyof typeof languages>;
 
 const minecraftTheme = {
   colors: { "editor.background": "#000000", "editor.foreground": "#FFFFFF" },
@@ -71,28 +71,35 @@ const nativePalette = [
   "#FFFFFF",
 ];
 
-function nativeTokenColor(value?: string) {
-  if (!value || !/^#[0-9a-f]{6}$/i.test(value)) {
+const nativeTokenColor = function nativeTokenColor(value?: string) {
+  if (value === undefined || value === "" || !/^#[0-9a-f]{6}$/iu.test(value)) {
     return "#FFFFFF";
   }
 
   const rgb = [1, 3, 5].map((i) => Number.parseInt(value.slice(i, i + 2), 16));
 
-  return nativePalette.reduce((best, color) => {
-    const distance = (c: string) =>
-      [1, 3, 5].reduce(
-        (sum, index, i) =>
-          sum + (Number.parseInt(c.slice(index, index + 2), 16) - rgb[i]) ** 2,
-        0
-      );
+  const distance = (c: string) =>
+    [1, 3, 5].reduce(
+      (sum, index, i) =>
+        sum + (Number.parseInt(c.slice(index, index + 2), 16) - rgb[i]) ** 2,
+      0
+    );
 
-    return distance(color) < distance(best) ? color : best;
-  }, nativePalette[0]);
-}
+  let [best] = nativePalette;
+
+  for (const color of nativePalette) {
+    if (distance(color) < distance(best)) {
+      best = color;
+    }
+  }
+
+  return best;
+};
 
 let highlighter: Promise<HighlighterCore> | undefined;
 
-function getHighlighter() {
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached highlighter Promise itself; async would wrap its identity and settlement.
+const getHighlighter = function getHighlighter() {
   highlighter ??= createHighlighterCore({
     engine: createJavaScriptRegexEngine({ forgiving: true }),
     langs: [],
@@ -100,25 +107,33 @@ function getHighlighter() {
   });
 
   return highlighter;
-}
+};
 
-function getLanguage(language: string) {
+const isRegisteredLanguage = (name: string): name is keyof typeof languages =>
+  Object.hasOwn(languages, name);
+
+const isLanguageAlias = (name: string): name is keyof typeof aliases =>
+  Object.hasOwn(aliases, name);
+
+const getLanguage = function getLanguage(language: string) {
   const name = language.toLowerCase();
 
   if (name === "ansi") {
     return name;
   }
 
-  if (name in languages) {
-    return name as keyof typeof languages;
+  if (isRegisteredLanguage(name)) {
+    return name;
   }
 
-  return aliases[name] ?? null;
-}
+  return isLanguageAlias(name) ? aliases[name] : null;
+};
 
 // Loads a language and returns a highlighter for it, or null for a language
 // that is not listed.
-export async function loadHighlighter(language: string) {
+export const loadHighlighter = async function loadHighlighter(
+  language: string
+) {
   const lang = getLanguage(language);
 
   if (!lang) {
@@ -152,25 +167,35 @@ export async function loadHighlighter(language: string) {
 
       return {
         lines: tokens.map((line) =>
-          line.map((token, index) => (
-            <span
-              key={index}
-              style={{ color: nativeTokenColor(token.color) }}
-              className="mc-code-token"
-            >
-              {token.content}
-            </span>
-          ))
+          line.map((token, index) => {
+            const tokenStyle: React.CSSProperties & {
+              "--mc-token-color": string;
+            } = { "--mc-token-color": nativeTokenColor(token.color) };
+
+            return (
+              <span
+                key={index}
+                style={tokenStyle}
+                data-mc-code-token=""
+                className="text-(--mc-token-color)"
+              >
+                {token.content}
+              </span>
+            );
+          })
         ),
         state: shiki.getLastGrammarState(tokens),
       };
     },
   };
-}
+};
 
 // Returns one React node per line, or null for a language that is not listed.
-export async function highlightCode(code: string, language: string) {
-  const highlighter = await loadHighlighter(language);
+export const highlightCode = async function highlightCode(
+  code: string,
+  language: string
+) {
+  const resolvedHighlighter = await loadHighlighter(language);
 
-  return highlighter ? highlighter.highlight(code).lines : null;
-}
+  return resolvedHighlighter ? resolvedHighlighter.highlight(code).lines : null;
+};

@@ -11,14 +11,14 @@ let renderer:
     }
   | undefined;
 
-export function paintMinecraftAvatar(
+export const paintMinecraftAvatar = function paintMinecraftAvatar(
   target: HTMLCanvasElement,
   skin: MinecraftAvatarSkin,
   hat: boolean,
   upsideDown: boolean,
   scale: number
 ) {
-  if (renderer?.gl.isContextLost()) {
+  if (renderer?.gl.isContextLost() ?? false) {
     renderer = undefined;
   }
 
@@ -37,11 +37,18 @@ export function paintMinecraftAvatar(
     }
 
     const shader = (type: number, source: string) => {
-      const s = gl.createShader(type)!;
+      const s = gl.createShader(type);
+
+      if (!s) {
+        throw new Error(
+          "Minecraft avatar paint WebGL shader could not be created"
+        );
+      }
+
       gl.shaderSource(s, source);
       gl.compileShader(s);
 
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      if (gl.getShaderParameter(s, gl.COMPILE_STATUS) !== true) {
         throw new Error(gl.getShaderInfoLog(s) ?? "Avatar shader");
       }
 
@@ -148,8 +155,9 @@ export function paintMinecraftAvatar(
     0,
     gl.RGBA,
     gl.UNSIGNED_BYTE,
-    Uint8Array.from(atob(minecraftAvatarSkins[skin].rgba), (c) =>
-      c.charCodeAt(0)
+    Uint8Array.from(
+      atob(minecraftAvatarSkins[skin].rgba),
+      (c) => c.codePointAt(0) ?? Number.NaN
     )
   );
 
@@ -188,10 +196,17 @@ export function paintMinecraftAvatar(
     target.height = h;
   }
 
-  const context = target.getContext("2d")!;
+  const context = target.getContext("2d");
+
+  if (!context) {
+    throw new Error(
+      "Minecraft avatar paint 2D canvas context could not be created"
+    );
+  }
+
   context.clearRect(0, 0, w, h);
   context.imageSmoothingEnabled = false;
   context.drawImage(canvas, Math.round(b.x), Math.round(b.y), w, h, 0, 0, w, h);
 
   return true;
-}
+};

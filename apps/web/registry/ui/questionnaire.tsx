@@ -12,6 +12,18 @@ import { playMinecraftClick } from "./minecraft-sound";
 import "./minecraft-checkbox.css";
 import "./minecraft-questionnaire.css";
 
+interface QuestionnaireCheckboxStyle extends React.CSSProperties {
+  "--mc-checkbox-checked": string;
+  "--mc-checkbox-checked-focused": string;
+  "--mc-checkbox-focused": string;
+  "--mc-checkbox-normal": string;
+  "--mc-scale": number;
+}
+
+interface QuestionnaireScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const QuestionnaireScale = React.createContext<1 | 2 | 3>(2);
 
 interface TextProps {
@@ -26,22 +38,19 @@ const Questionnaire = ({
   ...props
 }: React.ComponentProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <QuestionnaireScale value={scale}>
-      <Primitive.Root
-        data-slot="questionnaire"
-        className={cn(`mc-questionnaire`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </QuestionnaireScale>
-  );
-};
+}) => (
+  <QuestionnaireScale value={scale}>
+    <Primitive.Root
+      data-slot="questionnaire"
+      className={cn(`mc-questionnaire`, className)}
+      style={minecraftStyle(style, (__style): QuestionnaireScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
+      {...props}
+    />
+  </QuestionnaireScale>
+);
 
 const QuestionnaireProgress = ({
   className,
@@ -74,15 +83,13 @@ const QuestionnaireProgress = ({
 const QuestionnaireItem = ({
   className,
   ...props
-}: React.ComponentProps<typeof Primitive.Item>) => {
-  return (
-    <Primitive.Item
-      data-slot="questionnaire-item"
-      className={cn(`mc-questionnaire-item`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<typeof Primitive.Item>) => (
+  <Primitive.Item
+    data-slot="questionnaire-item"
+    className={cn(`mc-questionnaire-item`, className)}
+    {...props}
+  />
+);
 
 const QuestionnaireTitle = ({
   className,
@@ -143,15 +150,13 @@ const QuestionnaireDescription = ({
 const QuestionnaireChoices = ({
   className,
   ...props
-}: React.ComponentProps<typeof Primitive.Choices>) => {
-  return (
-    <Primitive.Choices
-      data-slot="questionnaire-choices"
-      className={cn(`mc-questionnaire-choices`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<typeof Primitive.Choices>) => (
+  <Primitive.Choices
+    data-slot="questionnaire-choices"
+    className={cn(`mc-questionnaire-choices`, className)}
+    {...props}
+  />
+);
 
 const QuestionnaireChoice = ({
   children,
@@ -169,25 +174,25 @@ const QuestionnaireChoice = ({
       <Primitive.ChoiceInput
         data-slot="questionnaire-choice-input"
         render={(native, state) => {
+          // SAFETY: @shadcn/react ChoiceInput merges its intrinsic inputProps and input attributes, then passes that map directly to this private callback. The callback returns only a literal input and forwards its original ref, styles and handlers.
           const input = native as React.ComponentPropsWithRef<"input">;
 
           return (
             <input
               {...input}
               data-checked={state.checked ? "" : undefined}
-              className={`mc-checkbox ${input.className ?? ""}`}
+              className={`mc-checkbox appearance-none ${input.className ?? ""}`}
+              // oxlint-disable-next-line shadcn/no-inline-styles -- The SDK input render contract supplies native styles alongside its ref and handlers; retain them while adding only the owned checkbox variables.
               style={minecraftStyle(
                 input.style,
-                (__style) =>
-                  ({
-                    "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
-                    "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
-                    "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
-                    "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
-                    "--mc-scale": scale,
-                    appearance: "none",
-                    ...__style,
-                  }) as React.CSSProperties
+                (__style): QuestionnaireCheckboxStyle => ({
+                  "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
+                  "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
+                  "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
+                  "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
+                  "--mc-scale": scale,
+                  ...__style,
+                })
               )}
               onClick={(event) => {
                 input.onClick?.(event);
@@ -226,7 +231,7 @@ const QuestionnaireChoiceDescription = ({
       as="span"
       scale={scale}
       data-slot="questionnaire-choice-description"
-      className={cn(`mc-questionnaire-choice-description`, className)}
+      className={cn(className)}
       {...props}
     />
   );
@@ -284,15 +289,13 @@ const QuestionnaireError = ({
 const QuestionnaireActions = ({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="questionnaire-actions"
-      className={cn(`mc-questionnaire-actions`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="questionnaire-actions"
+    className={cn(`mc-questionnaire-actions`, className)}
+    {...props}
+  />
+);
 
 type NavigationSkin = Pick<
   React.ComponentProps<typeof Button>,

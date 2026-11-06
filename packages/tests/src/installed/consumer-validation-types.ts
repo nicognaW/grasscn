@@ -27,6 +27,7 @@ export interface WebsiteIdentity {
 
 export interface ManualManifest {
   dependencies: string[];
+  devDependencies?: string[];
   files: { destination: string; url: string }[];
   name: string;
 }
@@ -103,7 +104,6 @@ export interface CliReport {
 }
 
 // JSON parsing yields unknown until each consumed protocol field is checked.
-// eslint-disable-next-line anti-slop/no-runtime-typeof -- JSON string fields are checked at the external protocol boundary.
 const isString = (value: unknown): value is string => typeof value === "string";
 
 // eslint-disable-next-line anti-slop/no-unsafe-dictionary-type -- Raw JSON object members are unknown until the adjacent domain guards validate them.
@@ -148,6 +148,9 @@ const isManifest = (value: unknown): value is ManualManifest =>
   isString(value.name) &&
   Array.isArray(value.dependencies) &&
   value.dependencies.every(isString) &&
+  (!("devDependencies" in value) ||
+    (Array.isArray(value.devDependencies) &&
+      value.devDependencies.every(isString))) &&
   Array.isArray(value.files) &&
   value.files.every(isManualFile);
 

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- These native chart adapters call Recharts context hooks during synchronous React rendering; importing inside async paint work cannot replace those hook calls.
 import { useChartWidth, useChartHeight, useYAxisScale } from "recharts";
 
 import {
@@ -9,24 +10,51 @@ import {
 } from "./minecraft-chart-context";
 import { MinecraftColorUnicodeLabel } from "./minecraft-color-unicode";
 import { minecraftGlyphs } from "./minecraft-font";
+import { useCanvasPaintConnection } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 
 import "./minecraft-chart.css";
 
+const EMPTY_CHART_LABELS = [] as const;
+
+interface NativeChartPaintStyle extends React.CSSProperties {
+  "--mc-native-background"?: string;
+  "--mc-native-background-channels"?: string;
+  "--mc-native-color"?: string;
+  "--mc-native-height"?: string;
+  "--mc-native-left"?: string;
+  "--mc-native-top"?: string;
+  "--mc-native-width"?: string;
+}
+
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
+
+interface NativeChartTextStyle extends NativeChartPaintStyle {
+  "--mc-ink": string;
+  "--mc-shadow": string;
+}
+
 const f = Math.fround;
 
-const widthOf = (value: string) =>
-  [...value].reduce((n, c) => {
-    const codePoint = c.codePointAt(0);
+const widthOf = (value: string) => {
+  let accumulatedGlyphAdvance = 0;
+
+  for (const advanceCharacter of value) {
+    const codePoint = advanceCharacter.codePointAt(0);
 
     if (codePoint === undefined) {
       throw new Error("Expected a non-empty chart glyph character");
     }
 
-    return n + (minecraftGlyphs[codePoint - 32]?.[2] ?? 6);
-  }, 0);
+    accumulatedGlyphAdvance += asciiGlyphs[codePoint - 32]?.[2] ?? 6;
+  }
+
+  return accumulatedGlyphAdvance;
+};
 
 const cssColor = (value: number) =>
+  // oxlint-disable-next-line no-bitwise -- CSS receives only the low 24 RGB bits of the native packed color.
   `#${(value & 0xff_ff_ff).toString(16).padStart(6, "0")}`;
 
 const NativeChartText = ({
@@ -48,26 +76,25 @@ const NativeChartText = ({
 
   const shade = shadow
     ? cssColor(
+        /* oxlint-disable no-bitwise -- Quarter the packed RGB bytes and reassemble the native chart text shadow color. */
         ((((color >> 16) & 255) >> 2) << 16) |
           ((((color >> 8) & 255) >> 2) << 8) |
           ((color & 255) >> 2)
+        /* oxlint-enable no-bitwise */
       )
     : "transparent";
 
+  const textStyle: NativeChartTextStyle = {
+    "--mc-ink": ink,
+    "--mc-native-color": ink,
+    "--mc-native-left": `${x * scale}px`,
+    "--mc-native-top": `${y * scale}px`,
+    "--mc-shadow": shade,
+  };
+
   return (
-    <span
-      className="mc-chart-text"
-      style={
-        {
-          "--mc-ink": ink,
-          "--mc-shadow": shade,
-          color: ink,
-          left: x * scale,
-          top: y * scale,
-        } as React.CSSProperties
-      }
-    >
-      {/[^\x00-\x7F]/.test(text) ? (
+    <span className="mc-chart-text" style={textStyle}>
+      {/\P{ASCII}/u.test(text) ? (
         <MinecraftColorUnicodeLabel text={text} />
       ) : (
         <MinecraftText>{text}</MinecraftText>
@@ -76,19 +103,87 @@ const NativeChartText = ({
   );
 };
 
+/** Resolve chart CSS colors from their committed element, never during rendering. */
+const useCommittedChartColors = <ElementType extends HTMLElement>(
+  fills: readonly string[],
+  revision: number,
+  attachElement?: (element: ElementType | null) => void
+) => {
+  const elementRef = React.useRef<ElementType | null>(null);
+
+  const [connection, setConnection] = React.useState<{
+    element: ElementType;
+  } | null>(null);
+
+  const attach = React.useCallback(
+    (element: ElementType | null) => {
+      attachElement?.(element);
+      elementRef.current = element;
+      setConnection(element === null ? null : { element });
+    },
+    [attachElement]
+  );
+
+  const input = React.useMemo(
+    () => ({ connection, fills, revision }),
+    [connection, fills, revision]
+  );
+
+  const [snapshot, setSnapshot] = React.useState<{
+    input: typeof input;
+    channels: number[][];
+  } | null>(null);
+
+  // oxlint-disable-next-line react/rule-suppression -- This private DOM sampler intentionally forgoes React Compiler eligibility to resample committed CSS on every render.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- Sample actual committed CSS after every render; unchanged input and RGB snapshots reuse previous state to prevent an update loop.
+  React.useLayoutEffect(() => {
+    const element = elementRef.current;
+
+    if (element === null) {
+      return;
+    }
+
+    const channels = fills.map((fill) => chartColorChannels(fill, element));
+
+    setSnapshot((previous) => {
+      if (
+        previous?.input === input &&
+        previous.channels.length === channels.length &&
+        channels.every(
+          (color, index) =>
+            color.length === previous.channels[index].length &&
+            color.every((value, channel) =>
+              Object.is(value, previous.channels[index][channel])
+            )
+        )
+      ) {
+        return previous;
+      }
+
+      return { channels, input };
+    });
+  });
+
+  return {
+    attach,
+    channels: snapshot?.input === input ? snapshot.channels : undefined,
+  };
+};
+
 /** Minecraft's frame-duration gradient; input is in nanoseconds. */
-export function chartFpsColor(nanos: number) {
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the native frame-color function import path shared by Chart and its FPS block; accept mixed-module Fast Refresh state fallback.
+export const chartFpsColor = function chartFpsColor(nanos: number) {
   const ms = Math.max(0, Math.min(56, nanos / 1e6));
   const t = f(ms < 28 ? ms / 28 : (ms - 28) / 28);
   const a = ms < 28 ? [0, 255, 0] : [255, 255, 0];
   const b = ms < 28 ? [255, 255, 0] : [255, 0, 0];
 
   return `rgb(${a.map((v, i) => v + Math.floor(f(t * (b[i] - v)))).join(",")})`;
-}
+};
 
 /** Decoration inside a Recharts BarChart. The bar shape supplies engine geometry. */
 const ChartFpsFrame = ({
-  labels = [],
+  labels = EMPTY_CHART_LABELS,
   guides,
   framerateLimit = 260,
 }: {
@@ -96,89 +191,134 @@ const ChartFpsFrame = ({
   guides?: readonly { label: string; value: number }[];
   framerateLimit?: number;
 }) => {
-  const { entries, scale } = useChartGeometry();
+  const { entries, scale, revision } = useChartGeometry();
 
   const chartWidth = useChartWidth() ?? 0;
   const chartHeight = useChartHeight() ?? 0;
 
   const width = chartWidth / scale;
-  const bars = entries.filter((item) => item.kind === "bar");
-  const host = React.useRef<HTMLDivElement>(null);
+
+  const bars = React.useMemo(
+    () => entries.filter((item) => item.kind === "bar"),
+    [entries]
+  );
+
+  const fills = React.useMemo(() => bars.map((bar) => bar.fill), [bars]);
+
+  const { attach: attachHost, channels } =
+    useCommittedChartColors<HTMLDivElement>(fills, revision);
+
   const yScale = useYAxisScale();
   const presentation = guides ? { guides } : undefined;
 
-  const line = (y: number, color: string, key: string) => (
-    <span
-      key={key}
-      className="mc-chart-rect"
-      style={{
-        background: color,
-        height: scale,
-        left: 0,
-        top: y * scale,
-        width: width * scale,
-      }}
-    />
-  );
+  const line = (y: number, color: string, key: string) => {
+    const nativePaint1: NativeChartPaintStyle = {
+      "--mc-native-background": color,
+      "--mc-native-height": `${scale}px`,
+      "--mc-native-top": `${y * scale}px`,
+      "--mc-native-width": `${width * scale}px`,
+    };
 
-  const shade = (text: string, y: number) => (
-    <React.Fragment key={text}>
+    return (
       <span
-        className="mc-chart-rect"
-        style={{
-          background: "rgba(80,80,80,0.5647058823529412)",
-          height: 9 * scale,
-          left: scale,
-          top: y * scale,
-          width: (widthOf(text) + 1) * scale,
-        }}
+        key={key}
+        className="mc-chart-rect mc-layout-minecraft-chart-native-1 mc-chart-native-paint-1"
+        style={nativePaint1}
       />
-      {bars.map((bar, i) => {
-        const h = Math.round(bar.height / scale);
-        const baseline = Math.round((bar.y + bar.height) / scale);
-        const top = Math.max(y, baseline - h);
-        const bottom = Math.min(y + 9, baseline);
-        const left = Math.round(bar.x / scale);
+    );
+  };
 
-        const width = Math.min(
-          Math.round(bar.width / scale),
-          widthOf(text) + 2 - left
-        );
+  const shade = (text: string, y: number) => {
+    const nativePaint2: NativeChartPaintStyle = {
+      "--mc-native-height": `${9 * scale}px`,
+      "--mc-native-left": `${scale}px`,
+      "--mc-native-top": `${y * scale}px`,
+      "--mc-native-width": `${(widthOf(text) + 1) * scale}px`,
+    };
 
-        if (width <= 0 || bottom <= top) {
-          return null;
-        }
+    return (
+      <React.Fragment key={text}>
+        <span
+          className="mc-chart-rect mc-layout-minecraft-chart-native-2 mc-chart-native-paint-2"
+          style={nativePaint2}
+        />
+        {bars.map((bar, i) => {
+          const h = Math.round(bar.height / scale);
+          const baseline = Math.round((bar.y + bar.height) / scale);
+          const top = Math.max(y, baseline - h);
+          const bottom = Math.min(y + 9, baseline);
+          const left = Math.round(bar.x / scale);
 
-        const rgb = chartColorChannels(bar.fill, host.current);
+          const labelOverlapWidth = Math.min(
+            Math.round(bar.width / scale),
+            widthOf(text) + 2 - left
+          );
 
-        const mixed = rgb.map((v) =>
-          Math.round((80 * 144) / 255 + (v * 111) / 255)
-        );
+          if (labelOverlapWidth <= 0 || bottom <= top) {
+            return null;
+          }
 
-        return (
-          <span
-            key={i}
-            className="mc-chart-rect"
-            style={{
-              background: `rgb(${mixed.join(",")})`,
-              height: (bottom - top) * scale,
-              left: left * scale,
-              top: top * scale,
-              width: width * scale,
-            }}
-          />
-        );
-      })}
-      <NativeChartText
-        text={text}
-        x={2}
-        y={y + 1}
-        color={0xe0_e0_e0}
-        shadow={false}
-        scale={scale}
-      />
-    </React.Fragment>
-  );
+          const rgb = channels?.[i];
+
+          if (!rgb) {
+            return null;
+          }
+
+          const mixed = rgb.map((v) =>
+            Math.round((80 * 144) / 255 + (v * 111) / 255)
+          );
+
+          const nativePaint3: NativeChartPaintStyle = {
+            "--mc-native-background-channels": mixed.join(","),
+            "--mc-native-height": `${(bottom - top) * scale}px`,
+            "--mc-native-left": `${left * scale}px`,
+            "--mc-native-top": `${top * scale}px`,
+            "--mc-native-width": `${labelOverlapWidth * scale}px`,
+          };
+
+          return (
+            <span
+              key={i}
+              className="mc-chart-rect mc-chart-native-paint-3"
+              style={nativePaint3}
+            />
+          );
+        })}
+        <NativeChartText
+          text={text}
+          x={2}
+          y={y + 1}
+          color={0xe0_e0_e0}
+          shadow={false}
+          scale={scale}
+        />
+      </React.Fragment>
+    );
+  };
+
+  const nativePaint4: NativeChartPaintStyle = {
+    "--mc-native-height": `${chartHeight}px`,
+    "--mc-native-width": `${chartWidth}px`,
+  };
+
+  const nativePaint5: NativeChartPaintStyle = {
+    "--mc-native-height": `${60 * scale}px`,
+    "--mc-native-top": `${9 * scale}px`,
+    "--mc-native-width": `${width * scale}px`,
+  };
+
+  const nativePaint7: NativeChartPaintStyle = {
+    "--mc-native-height": `${59 * scale}px`,
+    "--mc-native-top": `${10 * scale}px`,
+    "--mc-native-width": `${scale}px`,
+  };
+
+  const nativePaint8: NativeChartPaintStyle = {
+    "--mc-native-height": `${59 * scale}px`,
+    "--mc-native-left": `${(width - 1) * scale}px`,
+    "--mc-native-top": `${10 * scale}px`,
+    "--mc-native-width": `${scale}px`,
+  };
 
   return (
     <foreignObject
@@ -186,79 +326,71 @@ const ChartFpsFrame = ({
       y={0}
       width={chartWidth}
       height={chartHeight}
-      style={{ overflow: "visible", pointerEvents: "none" }}
+      className="mc-layout-minecraft-chart-native-4"
     >
       <div
-        ref={host}
+        ref={attachHost}
         data-slot="chart-fps-frame"
-        data-mc-ready={bars.length > 0}
-        style={{ height: chartHeight, position: "relative", width: chartWidth }}
+        data-mc-ready={bars.length > 0 && channels !== undefined}
+        className="mc-layout-minecraft-chart-native-5 mc-chart-native-paint-4"
+        style={nativePaint4}
       >
         <span
-          className="mc-chart-rect"
-          style={{
-            background: "rgba(80,80,80,0.5647058823529412)",
-            height: 60 * scale,
-            left: 0,
-            top: 9 * scale,
-            width: width * scale,
-          }}
+          className="mc-chart-rect mc-layout-minecraft-chart-native-6 mc-chart-native-paint-5"
+          style={nativePaint5}
         />
         {bars.map((bar, i) => {
           const h = Math.round(bar.height / scale);
 
+          const nativePaint6: NativeChartPaintStyle = {
+            "--mc-native-background": bar.fill,
+            "--mc-native-height": `${h * scale}px`,
+            "--mc-native-left": `${Math.round(bar.x / scale) * scale}px`,
+            "--mc-native-top": `${(Math.round((bar.y + bar.height) / scale) - h) * scale}px`,
+            "--mc-native-width": `${Math.round(bar.width / scale) * scale}px`,
+          };
+
           return (
             <span
               key={i}
-              className="mc-chart-rect"
-              style={{
-                background: bar.fill,
-                height: h * scale,
-                left: Math.round(bar.x / scale) * scale,
-                top: (Math.round((bar.y + bar.height) / scale) - h) * scale,
-                width: Math.round(bar.width / scale) * scale,
-              }}
+              className="mc-chart-rect mc-chart-native-paint-6"
+              style={nativePaint6}
             />
           );
         })}
         {line(9, "white", "top")}
         {line(68, "white", "bottom")}
         <span
-          className="mc-chart-rect"
-          style={{
-            background: "white",
-            height: 59 * scale,
-            left: 0,
-            top: 10 * scale,
-            width: scale,
-          }}
+          className="mc-chart-rect mc-layout-minecraft-chart-native-8 mc-chart-native-paint-7"
+          style={nativePaint7}
         />
         <span
-          className="mc-chart-rect"
-          style={{
-            background: "white",
-            height: 59 * scale,
-            left: (width - 1) * scale,
-            top: 10 * scale,
-            width: scale,
-          }}
+          className="mc-chart-rect mc-layout-minecraft-chart-native-9 mc-chart-native-paint-8"
+          style={nativePaint8}
         />
-        {labels.map((text, i) => (
-          <NativeChartText
-            key={i}
-            text={text}
-            x={
-              i === 0
-                ? 2
-                : i === 1
-                  ? Math.floor(width / 2) - Math.floor(widthOf(text) / 2)
-                  : width - widthOf(text) - 2
-            }
-            y={0}
-            color={0xe0_e0_e0}
-            scale={scale}
-          />
-        ))}
+        {labels.map((text, i) => {
+          let x: number;
+
+          if (i === 0) {
+            x = 2;
+          } else if (i === 1) {
+            x = Math.floor(width / 2) - Math.floor(widthOf(text) / 2);
+          } else {
+            x = width - widthOf(text) - 2;
+          }
+
+          return (
+            <NativeChartText
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These scalar FPS labels own left, middle and right ordinal positions; duplicate or changing strings do not provide entity IDs. Retain the existing native layout slots.
+              key={i}
+              text={text}
+              x={x}
+              y={0}
+              color={0xe0_e0_e0}
+              scale={scale}
+            />
+          );
+        })}
         {presentation ? (
           presentation.guides.map((guide, index) => {
             const y = Math.max(
@@ -270,7 +402,10 @@ const ChartFpsFrame = ({
             );
 
             return (
-              <React.Fragment key={index}>
+              <React.Fragment
+                // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These scalar guide pairs retain caller order and paint stacking; repeated labels/values are allowed, and each pair has no required public entity ID.
+                key={index}
+              >
                 {line(y, "white", `guide-${index}`)}
                 {shade(guide.label, Math.min(59, y + 1))}
               </React.Fragment>
@@ -298,15 +433,18 @@ const ChartFpsFrame = ({
   );
 };
 
-export function chartProfilerColor(name: string) {
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the native UTF-16 profiler-color function import path shared by Chart and its profiler block; accept mixed-module Fast Refresh state fallback.
+export const chartProfilerColor = function chartProfilerColor(name: string) {
   let hash = 0;
 
   for (let i = 0; i < name.length; i += 1) {
+    // oxlint-disable-next-line unicorn/prefer-code-point -- The native profiler hashes successive UTF-16 code units; code points change astral-name colors.
     hash = Math.trunc(Math.imul(hash, 31) + name.charCodeAt(i));
   }
 
+  // oxlint-disable-next-line no-bitwise -- The native profiler derives its packed RGB color with these exact hash masks.
   return cssColor(((hash & 0xaa_aa_aa) + 0x44_44_44) & 0xff_ff_ff);
-}
+};
 
 const sin = new Float32Array(65_536);
 
@@ -315,12 +453,14 @@ for (let i = 0; i < sin.length; i += 1) {
 }
 
 const nativeSin = (angle: number) =>
+  // oxlint-disable-next-line no-bitwise -- Native trigonometry table addresses wrap to their low 16 bits.
   sin[Math.trunc(angle * 10_430.378350470453) & 65_535];
 
 const nativeCos = (angle: number) =>
+  // oxlint-disable-next-line no-bitwise -- Native trigonometry table addresses wrap to their low 16 bits after the cosine offset.
   sin[Math.trunc(angle * 10_430.378350470453 + 16_384) & 65_535];
 
-function paintProfiler(
+const paintProfiler = function paintProfiler(
   canvas: HTMLCanvasElement,
   data: readonly {
     name: string;
@@ -357,7 +497,7 @@ function paintProfiler(
       gl.shaderSource(s, source);
       gl.compileShader(s);
 
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      if (gl.getShaderParameter(s, gl.COMPILE_STATUS) !== true) {
         return null;
       }
 
@@ -376,7 +516,7 @@ function paintProfiler(
 
     const program = gl.createProgram();
 
-    if (!program || !vs || !fs) {
+    if (!vs || !fs) {
       return false;
     }
 
@@ -384,7 +524,7 @@ function paintProfiler(
     gl.attachShader(program, fs);
     gl.linkProgram(program);
 
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
       return false;
     }
 
@@ -534,9 +674,11 @@ function paintProfiler(
   } finally {
     gl.getExtension("WEBGL_lose_context")?.loseContext();
   }
-}
+};
 
 /** Header, legend and batched pixel surface for Recharts Pie shapes. */
+const percent = (v: number) => `${v.toFixed(2)}%`;
+
 const ChartProfilerFrame = ({
   rootName = "root",
   globalPercentage = 100,
@@ -544,48 +686,46 @@ const ChartProfilerFrame = ({
   rootName?: string;
   globalPercentage?: number;
 }) => {
-  const { entries, scale, revision } = useChartGeometry();
+  const { entries, profilerData: data, scale, revision } = useChartGeometry();
   const sectors = entries.filter((item) => item.kind === "sector");
-  const key = JSON.stringify(sectors);
 
-  const data = React.useMemo(
-    () =>
-      sectors.map((item) => ({
-        fill: item.fill,
-        globalPercentage: item.globalPercentage,
-        name: item.name,
-        percentage: item.percent * 100,
-        start: ((item.startAngle + 90) / 360) * 100,
-        sweep: ((item.endAngle - item.startAngle) / 360) * 100,
-      })),
-    [key]
-  );
-
-  const unit = sectors[0] ? sectors[0].outerRadius / 105 : scale;
+  const unit = sectors.at(0) ? sectors[0].outerRadius / 105 : scale;
 
   const width = useChartWidth() ?? 0;
   const height = useChartHeight() ?? 0;
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
-  const [ready, setReady] = React.useState(false);
+  const { attach: attachCanvas, connection } = useCanvasPaintConnection(canvas);
+  const fills = React.useMemo(() => data.map((item) => item.fill), [data]);
 
-  React.useLayoutEffect(() => {
+  const { attach: attachProfiler, channels } =
+    useCommittedChartColors<HTMLCanvasElement>(fills, revision, attachCanvas);
+
+  const paintInput = React.useMemo(
+    () => ({ connection, data, revision, unit }),
+    [connection, data, unit, revision]
+  );
+
+  const [completedInput, setCompletedInput] =
+    React.useState<typeof paintInput>();
+
+  const ready = completedInput === paintInput && channels !== undefined;
+
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!data.length) {
-      return;
+      return undefined;
     }
 
     let disposed = false;
     let frame = 0;
-
-    setReady(false);
 
     const render = () => {
       if (disposed) {
         return;
       }
 
-      if (canvas.current && paintProfiler(canvas.current, data, unit)) {
-        setReady(true);
+      if (connection && paintProfiler(connection.canvas, data, unit)) {
+        setCompletedInput(paintInput);
       } else {
         frame = requestAnimationFrame(render);
       }
@@ -597,19 +737,30 @@ const ChartProfilerFrame = ({
       disposed = true;
       cancelAnimationFrame(frame);
     };
-  }, [data, unit, revision]);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Geometry-store revision is the existing native repaint signal even when serialized sector data is unchanged.
+  }, [data, unit, revision, paintInput, connection]);
 
   if (data.some((d) => !Number.isFinite(d.percentage) || d.percentage < 0)) {
     throw new Error("Profiler percentages must be finite and nonnegative");
   }
 
-  const percent = (v: number) => `${v.toFixed(2)}%`;
-
   if (!sectors.length) {
     return null;
   }
 
-  const sector = sectors[0];
+  const [sector] = sectors;
+
+  const nativePaint9: NativeChartPaintStyle = {
+    "--mc-native-height": `${height}px`,
+    "--mc-native-width": `${width}px`,
+  };
+
+  const nativePaint10: NativeChartPaintStyle = {
+    "--mc-native-height": `${114 * unit}px`,
+    "--mc-native-left": `${sector.cx - 130 * unit}px`,
+    "--mc-native-top": `${sector.cy - 52 * unit}px`,
+    "--mc-native-width": `${260 * unit}px`,
+  };
 
   return (
     <foreignObject
@@ -617,25 +768,20 @@ const ChartProfilerFrame = ({
       y={0}
       width={width}
       height={height}
-      style={{ overflow: "visible", pointerEvents: "none" }}
+      className="mc-layout-minecraft-chart-native-10"
     >
       <div
         data-slot="chart-profiler-frame"
         data-mc-ready={ready}
-        style={{ height, position: "relative", width }}
+        className="mc-layout-minecraft-chart-native-11 mc-chart-native-paint-9"
+        style={nativePaint9}
       >
         <canvas
           key="profiler-2d-surface"
-          ref={canvas}
+          ref={attachProfiler}
           aria-hidden="true"
-          style={{
-            height: 114 * unit,
-            imageRendering: "pixelated",
-            left: sector.cx - 130 * unit,
-            position: "absolute",
-            top: sector.cy - 52 * unit,
-            width: 260 * unit,
-          }}
+          className="mc-layout-minecraft-chart-native-12 mc-chart-native-paint-10"
+          style={nativePaint10}
         />
         <NativeChartText text={rootName} x={5} y={5} scale={scale} />
         <NativeChartText
@@ -645,7 +791,13 @@ const ChartProfilerFrame = ({
           scale={scale}
         />
         {data.map((item, i) => {
-          const rgb = chartColorChannels(item.fill, canvas.current);
+          const rgb = channels?.[i];
+
+          if (!rgb) {
+            return null;
+          }
+
+          // oxlint-disable-next-line no-bitwise -- Pack the resolved chart RGB bytes into the native color word.
           const color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 
           const local = percent(item.percentage);
@@ -653,7 +805,10 @@ const ChartProfilerFrame = ({
           const y = 134 + i * 9;
 
           return (
-            <React.Fragment key={i}>
+            <React.Fragment
+              // oxlint-disable-next-line react-doctor/no-array-index-as-key -- These private profiler text rows own their native row ordinal, displayed ordinal number and y coordinate. Duplicate sector names are permitted; no entity ID is present in this projection.
+              key={i}
+            >
               <NativeChartText
                 text={`${item.name === "unspecified" ? "[?]" : `[${i + 1}]`} ${item.name}`}
                 x={5}

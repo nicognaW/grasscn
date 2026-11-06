@@ -24,32 +24,14 @@ const offers: TradeOffer[] = [
   {
     cost: {
       count: 1,
-      icon: (
-        /* eslint-disable next/no-img-element, react-doctor/nextjs-no-img-element -- Copyable Next and Vite examples retain exact native texture bytes and integer icon sizing. */
-        <img
-          src={emerald}
-          alt="" /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-          style={iconStyle}
-          /* eslint-enable shadcn/no-inline-styles */
-        />
-        /* eslint-enable next/no-img-element, react-doctor/nextjs-no-img-element */
-      ),
+      icon: <img src={emerald} alt="" style={iconStyle} />,
       label: "Emerald",
     },
     id: "bread",
     label: "Bread",
     result: {
       count: 1,
-      icon: (
-        /* eslint-disable next/no-img-element, react-doctor/nextjs-no-img-element -- Copyable Next and Vite examples retain exact native texture bytes and integer icon sizing. */
-        <img
-          src={bread}
-          alt="" /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-          style={iconStyle}
-          /* eslint-enable shadcn/no-inline-styles */
-        />
-        /* eslint-enable next/no-img-element, react-doctor/nextjs-no-img-element */
-      ),
+      icon: <img src={bread} alt="" style={iconStyle} />,
       label: "Bread",
     },
   },
@@ -59,14 +41,8 @@ const TradingExample = () => {
   const [completed, setCompleted] = useState(0);
 
   return (
-    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ display: "grid", gap: 16, maxWidth: "100%" }}
-      /* eslint-enable shadcn/no-inline-styles */
-    >
-      <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-        style={{ maxWidth: "100%", overflowX: "auto" }}
-        /* eslint-enable shadcn/no-inline-styles */
-      >
+    <div className="grid max-w-full gap-4">
+      <div className="max-w-full overflow-x-auto">
         <Trading
           title="Village market"
           offers={offers}

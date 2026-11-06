@@ -7,6 +7,7 @@ import * as React from "react";
 import { Label } from "./label";
 import type { LabelProps } from "./label";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -18,6 +19,11 @@ import type {
 import { minecraftSeparatorAssets } from "./minecraft-separator-assets";
 
 import "./minecraft-marker.css";
+
+interface MarkerPaintStyle extends React.CSSProperties {
+  "--mc-marker-separator": string;
+  "--mc-scale": number;
+}
 
 const MarkerScale = React.createContext<1 | 2 | 3>(2);
 
@@ -38,67 +44,6 @@ type MarkerProps = MinecraftPolymorphicProps<"div"> &
     separatorEdge?: "header" | "footer";
   };
 
-const Marker = ({
-  variant = "default",
-  render,
-  scale = 2,
-  separatorEdge = "header",
-  className,
-  children,
-  style,
-  ...props
-}: MarkerProps) => {
-  if (!["default", "separator", "border"].includes(variant ?? "default")) {
-    throw Error("Unsupported Minecraft marker layout");
-  }
-
-  const Root = MinecraftRender;
-  const child = null;
-  const content = children;
-
-  const contents =
-    typeof content === "string" || typeof content === "number" ? (
-      <MarkerContent>{content}</MarkerContent>
-    ) : (
-      content
-    );
-
-  return (
-    <MarkerScale value={scale}>
-      <Root
-        render={render}
-        as="div"
-        data-slot="marker"
-        data-variant={variant}
-        className={cn(markerVariants({ variant }), className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({
-              "--mc-marker-separator": `url("${minecraftSeparatorAssets[separatorEdge]}")`,
-              "--mc-scale": scale,
-              ...__style,
-            }) as React.CSSProperties
-        )}
-        {...props}
-      >
-        {contents}
-      </Root>
-    </MarkerScale>
-  );
-};
-
-const MarkerIcon = ({ className, ...props }: MinecraftProps<"span">) => {
-  return (
-    <span
-      data-slot="marker-icon"
-      aria-hidden="true"
-      className={cn(`mc-marker-icon`, className)}
-      {...props}
-    />
-  );
-};
-
 const MarkerContent = ({
   className,
   children,
@@ -114,12 +59,12 @@ const MarkerContent = ({
       className={cn(`mc-marker-content`, className)}
       {...props}
     >
-      {typeof children === "string" || typeof children === "number" ? (
+      {isMinecraftTextContent(children) ? (
         <Label
           scale={scale}
           maxWidth={maxWidth}
           align={align}
-          style={{ width: "100%" }}
+          className="mc-owned-paint-marker-1"
         >
           {children}
         </Label>
@@ -130,6 +75,61 @@ const MarkerContent = ({
   );
 };
 
+const Marker = ({
+  variant = "default",
+  render,
+  scale = 2,
+  separatorEdge = "header",
+  className,
+  children,
+  style,
+  ...props
+}: MarkerProps) => {
+  if (!["default", "separator", "border"].includes(variant ?? "default")) {
+    throw new Error("Unsupported Minecraft marker layout");
+  }
+
+  const Root = MinecraftRender;
+
+  const content = children;
+
+  const contents = isMinecraftTextContent(content) ? (
+    <MarkerContent>{content}</MarkerContent>
+  ) : (
+    content
+  );
+
+  return (
+    <MarkerScale value={scale}>
+      <Root
+        render={render}
+        as="div"
+        data-slot="marker"
+        data-variant={variant}
+        className={cn(markerVariants({ variant }), className)}
+        style={minecraftStyle(style, (__style): MarkerPaintStyle => ({
+          "--mc-marker-separator": `url("${minecraftSeparatorAssets[separatorEdge]}")`,
+          "--mc-scale": scale,
+          ...__style,
+        }))}
+        {...props}
+      >
+        {contents}
+      </Root>
+    </MarkerScale>
+  );
+};
+
+const MarkerIcon = ({ className, ...props }: MinecraftProps<"span">) => (
+  <span
+    data-slot="marker-icon"
+    aria-hidden="true"
+    className={cn(`mc-marker-icon`, className)}
+    {...props}
+  />
+);
+
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the installed Marker variant factory API exercised by the existing public type and fixture consumers; accept mixed-module Fast Refresh state fallback.
 export { Marker, MarkerIcon, MarkerContent, markerVariants };
 
 export type { MarkerProps };

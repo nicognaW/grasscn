@@ -12,9 +12,10 @@ import {
   menuTextNodes,
 } from "./minecraft-menu-text";
 import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
@@ -24,6 +25,18 @@ import { Separator } from "./separator";
 import "./minecraft-checkbox.css";
 import "./minecraft-menu.css";
 
+interface DropdownMenuCheckboxPaint extends React.CSSProperties {
+  "--mc-checkbox-checked": string;
+  "--mc-checkbox-checked-focused": string;
+  "--mc-checkbox-focused": string;
+  "--mc-checkbox-normal": string;
+  "--mc-scale": number;
+}
+
+interface DropdownMenuScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type MenuSurface = "popup" | "suggestions";
 
 const DropdownMenu = ({
@@ -31,17 +44,15 @@ const DropdownMenu = ({
   ...props
 }: MinecraftProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <MenuScaleContext.Provider value={scale}>
-      <Primitive.Root {...props} />
-    </MenuScaleContext.Provider>
-  );
-};
+}) => (
+  <MenuScaleContext.Provider value={scale}>
+    <Primitive.Root {...props} />
+  </MenuScaleContext.Provider>
+);
 
-const DropdownMenuPortal = (props: MinecraftProps<typeof Primitive.Portal>) => {
-  return <Primitive.Portal data-slot="dropdown-menu-portal" {...props} />;
-};
+const DropdownMenuPortal = (props: MinecraftProps<typeof Primitive.Portal>) => (
+  <Primitive.Portal data-slot="dropdown-menu-portal" {...props} />
+);
 
 const DropdownMenuTrigger = ({
   render,
@@ -61,7 +72,7 @@ const DropdownMenuTrigger = ({
   );
 };
 
-function useMenuFrame(
+const useMenuFrame = function useMenuFrame(
   ref: React.Ref<HTMLDivElement> | undefined,
   scale: number,
   surface: MenuSurface
@@ -69,41 +80,43 @@ function useMenuFrame(
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
 
   const forwarded = React.useCallback(
-    (element: HTMLDivElement | null) => {
+    (element: HTMLDivElement | null): (() => void) | undefined => {
       setNode(element);
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(element);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             setNode(null);
             cleanup();
           };
         }
       } else if (ref) {
+        // oxlint-disable-next-line react/immutability -- React commit forwards this mutable object ref outside render; preserve the existing callback and cleanup order.
         ref.current = element;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!node) {
-      return;
+      return undefined;
     }
 
-    const items = [...node.children].find((child) =>
-      child.classList.contains("mc-menu-items")
-    ) as HTMLElement | undefined;
+    const items = node.querySelector<HTMLDivElement>(":scope > .mc-menu-items");
 
     if (!items) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
 
     const measure = () => {
+      // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
       if (!node.clientWidth || !node.clientHeight) {
         return;
       }
@@ -115,7 +128,9 @@ function useMenuFrame(
       const style = getComputedStyle(node);
 
       const padding =
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(style.paddingTop) +
+        // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
         Number.parseFloat(style.paddingBottom);
 
       const maximum = Math.max(0, node.scrollHeight - node.clientHeight);
@@ -163,14 +178,14 @@ function useMenuFrame(
       window.removeEventListener("resize", measure);
       cancelAnimationFrame(frame);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Scale and surface alter the committed popup frame; preserve synchronous menu measurement and clipping refresh.
   }, [node, scale, surface]);
 
   return forwarded;
-}
+};
 
-function contentChildren(
+const contentChildren = function contentChildren(
   children: React.ReactNode,
-  render: unknown,
   surface: MenuSurface
 ) {
   const content = (
@@ -195,7 +210,7 @@ function contentChildren(
   );
 
   return content;
-}
+};
 
 type DropdownMenuContentProps = (MinecraftProps<typeof Primitive.Popup> &
   (Pick<
@@ -242,7 +257,7 @@ const DropdownMenuContent = ({
       <MenuScaleContext.Provider value={scale}>
         <Primitive.Positioner
           data-mc-positioner=""
-          style={{ zIndex: 50 }}
+          className="z-50"
           side={side}
           align={align}
           sideOffset={sideOffset}
@@ -257,14 +272,13 @@ const DropdownMenuContent = ({
             data-surface={surface}
             ref={forwarded}
             className={cn("mc-menu-content", className)}
-            style={minecraftStyle(
-              style,
-              (__style) =>
-                ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-            )}
+            style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
-            {contentChildren(children, render, surface)}
+            {contentChildren(children, surface)}
           </Primitive.Popup>
         </Primitive.Positioner>
       </MenuScaleContext.Provider>
@@ -272,13 +286,12 @@ const DropdownMenuContent = ({
   );
 };
 
-const DropdownMenuGroup = (props: MinecraftProps<typeof Primitive.Group>) => {
-  return <Primitive.Group data-slot="dropdown-menu-group" {...props} />;
-};
+const DropdownMenuGroup = (props: MinecraftProps<typeof Primitive.Group>) => (
+  <Primitive.Group data-slot="dropdown-menu-group" {...props} />
+);
 
-function rowChildren(
+const rowChildren = function rowChildren(
   children: React.ReactNode,
-  _render: unknown,
   before?: React.ReactNode,
   after?: React.ReactNode
 ) {
@@ -289,7 +302,7 @@ function rowChildren(
       {after}
     </>
   );
-}
+};
 
 type DropdownMenuItemProps = MinecraftProps<typeof Primitive.Item> & {
   inset?: boolean;
@@ -319,19 +332,18 @@ const DropdownMenuItem = ({
       data-slot="dropdown-menu-item"
       data-inset={inset}
       className={cn("mc-menu-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
-      {rowChildren(children, render)}
+      {rowChildren(children)}
     </Primitive.Item>
   );
 };
 
-function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
+const checkboxIcon = function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
   const Indicator = radio
     ? Primitive.RadioItemIndicator
     : Primitive.CheckboxItemIndicator;
@@ -342,20 +354,21 @@ function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
       aria-hidden="true"
       className="mc-checkbox mc-menu-check"
       style={
+        // SAFETY: --mc-checkbox-checked, --mc-checkbox-checked-focused, --mc-checkbox-focused, --mc-checkbox-normal, --mc-scale are this owner's CSS custom-property channels; this CSSProperties view passes the exact owned variable map to React without changing its values.
         {
           "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
           "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
           "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
           "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
           "--mc-scale": scale,
-        } as React.CSSProperties
+        } satisfies DropdownMenuCheckboxPaint as DropdownMenuCheckboxPaint
       }
     >
       <MinecraftMenuCheckboxSprite />
       <span className="mc-checkbox-indicator" />
     </Indicator>
   );
-}
+};
 
 const DropdownMenuCheckboxItem = ({
   children,
@@ -372,32 +385,27 @@ const DropdownMenuCheckboxItem = ({
       render={render}
       data-slot="dropdown-menu-checkbox-item"
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       onCheckedChange={(next, details) => {
         onCheckedChange?.(next, details);
 
-        if (!props.disabled) {
+        if (!(props.disabled ?? false)) {
           playMinecraftClick();
         }
       }}
       {...props}
     >
-      {rowChildren(children, render, checkboxIcon(scale))}
+      {rowChildren(children, checkboxIcon(scale))}
     </Primitive.CheckboxItem>
   );
 };
 
 const DropdownMenuRadioGroup = (
   props: MinecraftProps<typeof Primitive.RadioGroup>
-) => {
-  return (
-    <Primitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />
-  );
-};
+) => <Primitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
 
 const DropdownMenuRadioItem = ({
   children,
@@ -414,21 +422,20 @@ const DropdownMenuRadioItem = ({
       render={render}
       data-slot="dropdown-menu-radio-item"
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       onClick={(event) => {
         onClick?.(event);
 
-        if (!props.disabled) {
+        if (!(props.disabled ?? false)) {
           playMinecraftClick();
         }
       }}
       {...props}
     >
-      {rowChildren(children, render, checkboxIcon(scale, true))}
+      {rowChildren(children, checkboxIcon(scale, true))}
     </Primitive.RadioItem>
   );
 };
@@ -451,14 +458,13 @@ const DropdownMenuLabel = ({
       data-slot="dropdown-menu-label"
       data-inset={inset}
       className={cn("mc-menu-item mc-menu-label", className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
-      {rowChildren(children, render)}
+      {rowChildren(children)}
     </Primitive.GroupLabel>
   );
 };
@@ -480,7 +486,7 @@ const DropdownMenuSeparator = ({
       style={style}
       {...props}
     >
-      {render ? children : <Separator scale={scale} role="separator" />}
+      {render ? children : <Separator scale={scale} />}
     </Primitive.Separator>
   );
 };
@@ -489,23 +495,19 @@ const DropdownMenuShortcut = ({
   children,
   className,
   ...props
-}: MinecraftProps<"span">) => {
-  return (
-    <span
-      data-slot="dropdown-menu-shortcut"
-      className={cn("mc-menu-shortcut", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </span>
-  );
-};
+}: MinecraftProps<"span">) => (
+  <span
+    data-slot="dropdown-menu-shortcut"
+    className={cn("mc-menu-shortcut", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </span>
+);
 
 const DropdownMenuSub = (
   props: MinecraftProps<typeof Primitive.SubmenuRoot>
-) => {
-  return <Primitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
-};
+) => <Primitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
 
 const DropdownMenuSubTrigger = ({
   children,
@@ -536,14 +538,13 @@ const DropdownMenuSubTrigger = ({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn("mc-menu-item mc-menu-sub-trigger", className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
-      {rowChildren(children, render, undefined, arrow)}
+      {rowChildren(children, undefined, arrow)}
     </Primitive.SubmenuTrigger>
   );
 };
@@ -590,33 +591,34 @@ const DropdownMenuSubContent = ({
 
   return (
     <MenuScaleContext.Provider value={scale}>
-      <Primitive.Positioner
-        data-mc-positioner=""
-        style={{ zIndex: 50 }}
-        side={side}
-        align={align}
-        sideOffset={sideOffset}
-        alignOffset={alignOffset}
-        collisionPadding={collisionPadding}
-        collisionBoundary={collisionBoundary}
-        collisionAvoidance={collisionAvoidance}
-      >
-        <Primitive.Popup
-          render={render}
-          data-slot="dropdown-menu-sub-content"
-          data-surface={surface}
-          ref={forwarded}
-          className={cn("mc-menu-content", className)}
-          style={minecraftStyle(
-            style,
-            (__style) =>
-              ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-          )}
-          {...props}
+      <Primitive.Portal keepMounted={keepMounted}>
+        <Primitive.Positioner
+          data-mc-positioner=""
+          className="z-50"
+          side={side}
+          align={align}
+          sideOffset={sideOffset}
+          alignOffset={alignOffset}
+          collisionPadding={collisionPadding}
+          collisionBoundary={collisionBoundary}
+          collisionAvoidance={collisionAvoidance}
         >
-          {contentChildren(children, render, surface)}
-        </Primitive.Popup>
-      </Primitive.Positioner>
+          <Primitive.Popup
+            render={render}
+            data-slot="dropdown-menu-sub-content"
+            data-surface={surface}
+            ref={forwarded}
+            className={cn("mc-menu-content", className)}
+            style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
+            {...props}
+          >
+            {contentChildren(children, surface)}
+          </Primitive.Popup>
+        </Primitive.Positioner>
+      </Primitive.Portal>
     </MenuScaleContext.Provider>
   );
 };

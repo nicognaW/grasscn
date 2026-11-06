@@ -19,14 +19,14 @@ export const ExampleTabs = ({
   code,
   filename,
   title,
-  tabListWidth,
+  tabListLayout = "responsive",
   installation,
 }: {
   children: ReactNode;
   code: string;
   filename: string;
   title: string;
-  tabListWidth?: number;
+  tabListLayout?: "responsive" | "compact";
   installation: ReactNode;
 }) => {
   const ready = useSyncExternalStore(
@@ -55,9 +55,8 @@ export const ExampleTabs = ({
           /* eslint-enable shadcn/no-unknown-classes */
         >
           <TabsList
-            aria-label={`${title} view`} /* eslint-disable shadcn/no-inline-styles -- Native document rendering retains its declared pixel geometry and dynamic sizing. */
-            style={{ width: tabListWidth }}
-            /* eslint-enable shadcn/no-inline-styles */
+            aria-label={`${title} view`}
+            data-example-tabs-layout={tabListLayout}
           >
             <TabsTrigger value="preview">Preview</TabsTrigger>
             <TabsTrigger value="code">Code</TabsTrigger>

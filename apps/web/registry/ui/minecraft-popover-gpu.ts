@@ -11,14 +11,14 @@ interface Painter {
 const painters = new WeakMap<CanvasRenderingContext2D, Painter | null>();
 const origins = new WeakMap<CanvasRenderingContext2D, DOMRect>();
 
-export function positionPopoverGlyphs(
+export const positionPopoverGlyphs = function positionPopoverGlyphs(
   context: CanvasRenderingContext2D,
   bounds: DOMRect
 ) {
   origins.set(context, bounds);
-}
+};
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -33,11 +33,18 @@ function create(): Painter | null {
   }
 
   const shader = (kind: number, source: string) => {
-    const value = gl.createShader(kind)!;
+    const value = gl.createShader(kind);
+
+    if (!value) {
+      throw new Error(
+        "Minecraft popover gpu WebGL shader could not be created"
+      );
+    }
+
     gl.shaderSource(value, source);
     gl.compileShader(value);
 
-    if (!gl.getShaderParameter(value, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(value, gl.COMPILE_STATUS) !== true) {
       throw new Error(
         gl.getShaderInfoLog(value) ?? "Popover glyph shader failed"
       );
@@ -101,9 +108,9 @@ function create(): Painter | null {
   gl.disable(gl.DITHER);
 
   return { buffer, canvas, gl, program, texture };
-}
+};
 
-export function paintPopoverGlyph(
+export const paintPopoverGlyph = function paintPopoverGlyph(
   context: CanvasRenderingContext2D,
   code: number,
   pixels: Uint8Array,
@@ -146,59 +153,66 @@ export function paintPopoverGlyph(
     -2 / canvas.height
   );
 
+  // oxlint-disable-next-line typescript/no-base-to-string -- The existing Canvas context API accepts string, CanvasGradient and CanvasPattern; retain its exact String coercion and downstream color-parse fallback without narrowing the context or changing custom coercion behavior.
   const fill = String(context.fillStyle);
 
   const ink = fill.startsWith("#")
     ? Number.parseInt(fill.slice(1, 3), 16)
-    : Number(/[\d.]+/.exec(fill)?.[0] ?? 255);
+    : Number(/[\d.]+/u.exec(fill)?.[0] ?? 255);
 
   gl.uniform1f(gl.getUniformLocation(program, "ink"), ink / 255);
   gl.clearColor(0, 0, 0, 0);
   gl.clear(gl.COLOR_BUFFER_BIT);
 
-  const u0 = observed?.u0 ?? Math.fround(0.01) / 256;
-  const u1 = observed?.u1 ?? Math.fround(width - Math.fround(0.01)) / 256;
-  const v0 = observed?.v0 ?? Math.fround(0.01) / 256;
-  const v1 = observed?.v1 ?? Math.fround(height - Math.fround(0.01)) / 256;
+  const submitGlyphQuad = () => {
+    const u0 = observed?.u0 ?? Math.fround(0.01) / 256;
+    const u1 = observed?.u1 ?? Math.fround(width - Math.fround(0.01)) / 256;
+    const v0 = observed?.v0 ?? Math.fround(0.01) / 256;
+    const v1 = observed?.v1 ?? Math.fround(height - Math.fround(0.01)) / 256;
 
-  gl.texSubImage2D(
-    gl.TEXTURE_2D,
-    0,
-    Math.round(u0 * 256 - 0.01),
-    Math.round(v0 * 256 - 0.01),
-    width,
-    height,
-    gl.LUMINANCE,
-    gl.UNSIGNED_BYTE,
-    Uint8Array.from(
-      { length: width * height },
-      (_, index) => pixels[index * 4 + 3]
-    )
-  );
+    gl.texSubImage2D(
+      gl.TEXTURE_2D,
+      0,
+      Math.round(u0 * 256 - 0.01),
+      Math.round(v0 * 256 - 0.01),
+      width,
+      height,
+      gl.LUMINANCE,
+      gl.UNSIGNED_BYTE,
+      Uint8Array.from(
+        { length: width * height },
+        (_, index) => pixels[index * 4 + 3]
+      )
+    );
 
-  const oversample = code < 128 ? 1 : 2;
-  const thickness = bold ? 0.1 : 0;
+    const oversample = code < 128 ? 1 : 2;
+    const thickness = bold ? 0.1 : 0;
 
-  const left = originX + (x + (observed?.left ?? 0) - thickness) * scale;
-  const top = originY + (y + (observed?.up ?? 0) - thickness) * scale;
+    const left = originX + (x + (observed?.left ?? 0) - thickness) * scale;
+    const top = originY + (y + (observed?.up ?? 0) - thickness) * scale;
 
-  const right =
-    originX + (x + (observed?.right ?? width / oversample) + thickness) * scale;
+    const right =
+      originX +
+      (x + (observed?.right ?? width / oversample) + thickness) * scale;
 
-  const bottom =
-    originY + (y + (observed?.down ?? height / oversample) + thickness) * scale;
+    const bottom =
+      originY +
+      (y + (observed?.down ?? height / oversample) + thickness) * scale;
 
-  const a = [left, top, u0, v0];
-  const b = [left, bottom, u0, v1];
-  const c = [right, bottom, u1, v1];
-  const d = [right, top, u1, v0];
+    const a = [left, top, u0, v0];
+    const b = [left, bottom, u0, v1];
+    const c = [right, bottom, u1, v1];
+    const d = [right, top, u1, v0];
 
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([...a, ...b, ...c, ...c, ...d, ...a]),
-    gl.STREAM_DRAW
-  );
-  gl.drawArrays(gl.TRIANGLES, 0, 6);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([...a, ...b, ...c, ...c, ...d, ...a]),
+      gl.STREAM_DRAW
+    );
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  };
+
+  submitGlyphQuad();
   context.drawImage(
     canvas,
     originX,
@@ -212,9 +226,11 @@ export function paintPopoverGlyph(
   );
 
   return true;
-}
+};
 
-export function disposePopoverGlyphs(context: CanvasRenderingContext2D) {
+export const disposePopoverGlyphs = function disposePopoverGlyphs(
+  context: CanvasRenderingContext2D
+) {
   const painter = painters.get(context);
 
   if (painter) {
@@ -227,4 +243,4 @@ export function disposePopoverGlyphs(context: CanvasRenderingContext2D) {
 
   painters.delete(context);
   origins.delete(context);
-}
+};

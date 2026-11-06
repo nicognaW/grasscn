@@ -10,18 +10,12 @@ import {
 } from "@/components/ui/carousel";
 
 const Example = () => (
-  <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-    style={{ maxWidth: 500, padding: 48, width: "100%" }}
-    /* eslint-enable shadcn/no-inline-styles */
-  >
+  <div className="[width:100%] max-w-125 p-12">
     <Carousel aria-label="World gallery">
       <CarouselContent>
         {["Grasslands", "Deep Dark", "Birch Forest"].map((name) => (
           <CarouselItem key={name}>
-            <Card /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-              style={{ minHeight: 160 }}
-              /* eslint-enable shadcn/no-inline-styles */
-            >
+            <Card className="min-h-40">
               <CardHeader>
                 <CardTitle>{name}</CardTitle>
               </CardHeader>

@@ -52,12 +52,18 @@ const SidebarHook = () => {
   return null;
 };
 
+interface SidebarFixtureStyle extends React.CSSProperties {
+  "--sidebar-width": string;
+}
+
+const sidebarStyle: SidebarFixtureStyle = { "--sidebar-width": "300px" };
+
 const SidebarTypes = () => {
-  const div = React.createRef<HTMLDivElement>();
-  const button = React.createRef<HTMLButtonElement>();
-  const anchor = React.createRef<HTMLAnchorElement>();
-  const input = React.createRef<HTMLInputElement>();
-  const main = React.createRef<HTMLElement>();
+  const div = React.useRef<HTMLDivElement>(null);
+  const button = React.useRef<HTMLButtonElement>(null);
+  const anchor = React.useRef<HTMLAnchorElement>(null);
+  const input = React.useRef<HTMLInputElement>(null);
+  const main = React.useRef<HTMLElement>(null);
 
   return (
     <SidebarProvider
@@ -65,24 +71,36 @@ const SidebarTypes = () => {
       scale={3}
       defaultOpen
       open
-      onOpenChange={(next) => void next}
-      style={{ "--sidebar-width": "300px" } as React.CSSProperties}
+      onOpenChange={(next) => {
+        void next;
+      }}
+      style={sidebarStyle}
     >
       <Sidebar ref={div} variant="sidebar" side="right" collapsible="icon">
         <SidebarHeader ref={div}>
           <SidebarInput ref={input} readOnly spellCheck={false} />
         </SidebarHeader>
-        <SidebarSeparator edge="footer" role="separator" />
+        <SidebarSeparator
+          edge="footer"
+          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This verifies SidebarSeparator's forwarded Separator role API inside the sidebar composition, not a literal hr substitute.
+          role="separator"
+        />
         <SidebarContent
           ref={div}
           viewportRef={div}
-          viewportProps={{ onScroll: (e) => void e.currentTarget.scrollTop }}
-          onScroll={(e) => void e.currentTarget.scrollTop}
+          viewportProps={{
+            onScroll: (e) => {
+              void e.currentTarget.scrollTop;
+            },
+          }}
+          onScroll={(e) => {
+            void e.currentTarget.scrollTop;
+          }}
         >
           <SidebarGroup>
             <SidebarGroupLabel render={<span />}>Group</SidebarGroupLabel>
             <SidebarGroupAction
-              render={<button aria-label="Create" />}
+              render={<button type="button" aria-label="Create" />}
               ref={button}
             >
               +

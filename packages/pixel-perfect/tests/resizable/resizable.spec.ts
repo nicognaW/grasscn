@@ -5,12 +5,16 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData0 from "../reference/pagination-arrow/manifest.json";
+
+// SAFETY: This read consumes the same pinned tests/reference/pagination-arrow/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const arrowManifest = JSON.parse(
   readFileSync(
     pixelPerfectFile("tests/reference/pagination-arrow/manifest.json"),
     "utf-8"
   )
-);
+) as typeof CapturedData0;
 
 for (const c of arrowManifest.cases) {
   test(`Resizable original arrow constituent ${c.name}`, async ({

@@ -5,16 +5,9 @@
   "upstream": "https://ui.shadcn.com/docs/components/radix/typography",
   "environment": {
     "browser": "Microsoft Edge",
-    "viewport": [
-      1536,
-      900
-    ],
+    "viewport": [1536, 900],
     "devicePixelRatio": 1,
-    "guiScales": [
-      1,
-      2,
-      3
-    ]
+    "guiScales": [1, 2, 3]
   },
   "compositionAuthority": "analyst-designed webcomposition fromnativeconstituents"
 }

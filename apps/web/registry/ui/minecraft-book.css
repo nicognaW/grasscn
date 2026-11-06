@@ -1,5 +1,7 @@
 @layer components {
   .mc-book {
+    height: var(--mc-book-height);
+    width: var(--mc-book-width);
     position: relative;
     flex: none;
     overflow: hidden;
@@ -25,5 +27,38 @@
   }
   .mc-book-arrow:focus-visible {
     outline: calc(1px * var(--mc-scale)) solid #fff;
+  }
+}
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-book-1 {
+    left: 0;
+    max-width: none;
+    position: absolute;
+    top: 0;
+  }
+  .mc-layout-book-2 {
+    position: absolute;
+  }
+}
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-book-1 {
+    left: calc(var(--mc-dynamic-book-1-left) * 1px);
+    top: calc(var(--mc-dynamic-book-1-top) * 1px);
+  }
+  .mc-dynamic-layout-book-2 {
+    height: calc(var(--mc-dynamic-book-2-height) * 1px);
+    left: calc(var(--mc-dynamic-book-2-left) * 1px);
+    top: calc(var(--mc-dynamic-book-2-top) * 1px);
+    width: calc(var(--mc-dynamic-book-2-width) * 1px);
+  }
+  .mc-dynamic-layout-book-3 {
+    height: calc(var(--mc-dynamic-book-3-height) * 1px);
+    left: calc(var(--mc-dynamic-book-3-left) * 1px);
+    top: calc(var(--mc-dynamic-book-3-top) * 1px);
+    width: calc(var(--mc-dynamic-book-3-width) * 1px);
   }
 }

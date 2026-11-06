@@ -1,4 +1,7 @@
 @layer components {
+  .mc-label-heading {
+    margin: 0;
+  }
   .mc-label {
     --mc-pixel: calc(1px * var(--mc-scale, 2));
     display: inline-flex;
@@ -28,5 +31,35 @@
     clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
+  }
+}
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-label-1 {
+    padding-left: calc(var(--mc-dynamic-label-1-padding-left) * 1px);
+  }
+  .mc-dynamic-layout-minecraft-chat-text-1 {
+    padding-left: calc(
+      var(--mc-dynamic-minecraft-chat-text-1-padding-left) * 1px
+    );
+  }
+  .mc-dynamic-layout-minecraft-collapsible-text-1 {
+    padding-left: calc(
+      var(--mc-dynamic-minecraft-collapsible-text-1-padding-left) * 1px
+    );
+  }
+  .mc-dynamic-layout-minecraft-disclosure-text-1 {
+    padding-left: calc(
+      var(--mc-dynamic-minecraft-disclosure-text-1-padding-left) * 1px
+    );
+  }
+  .mc-dynamic-layout-minecraft-item-text-1 {
+    padding-left: calc(
+      var(--mc-dynamic-minecraft-item-text-1-padding-left) * 1px
+    );
+  }
+  .mc-dynamic-layout-minecraft-prose-1 {
+    padding-left: calc(var(--mc-dynamic-minecraft-prose-1-padding-left) * 1px);
   }
 }

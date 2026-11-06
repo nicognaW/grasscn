@@ -1,11 +1,23 @@
 import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
+import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 
+interface NativeTextLayoutStyle extends React.CSSProperties {
+  "--mc-card-text-padding-left"?: string;
+}
+
+interface CardBoldGlyphStyle extends React.CSSProperties {
+  "--mc-advance": number;
+  "--mc-glyph-x": number;
+  "--mc-glyph-y": number;
+}
+
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the shared Card scale context identity used by Card, Sheet, Drawer and Popover composition; accept mixed-module Fast Refresh state fallback.
 export const CardScaleContext = React.createContext(2);
 
-function wrap(text: string, width: number, bold: boolean) {
+const wrap = function wrap(text: string, width: number, bold: boolean) {
   const lines: string[] = [];
 
   const advance = (char: string) => {
@@ -19,9 +31,17 @@ function wrap(text: string, width: number, bold: boolean) {
   };
 
   for (let remaining of text.split("\n")) {
-    while (
-      [...remaining].reduce((sum, char) => sum + advance(char), 0) > width
-    ) {
+    const cardLineAdvance = function cardLineAdvance(glyphText: string) {
+      let accumulatedGlyphAdvance = 0;
+
+      for (const advanceCharacter of glyphText) {
+        accumulatedGlyphAdvance += advance(advanceCharacter);
+      }
+
+      return accumulatedGlyphAdvance;
+    };
+
+    while (cardLineAdvance(remaining) > width) {
       let count = 0;
       let used = 0;
       let space = -1;
@@ -50,7 +70,7 @@ function wrap(text: string, width: number, bold: boolean) {
   }
 
   return lines;
-}
+};
 
 export const MinecraftCardText = ({
   children,
@@ -62,11 +82,11 @@ export const MinecraftCardText = ({
   const scale = React.useContext(CardScaleContext);
   const node = React.useRef<HTMLSpanElement>(null);
   const [width, setWidth] = React.useState(200);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const element = node.current;
 
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {
@@ -80,70 +100,88 @@ export const MinecraftCardText = ({
     return () => {
       observer.disconnect();
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Children can replace the measured text span; preserve observer rebinding and width measurement for the committed content.
   }, [children, scale]);
 
   if (
-    (typeof children !== "string" && typeof children !== "number") ||
-    !/^[\x20-\x7E\n]*$/.test(String(children))
+    !isMinecraftTextContent(children) ||
+    !/^[\u0020-\u007E\n]*$/u.test(String(children))
   ) {
+    // oxlint-disable-next-line react/jsx-no-useless-fragment -- This opaque ReactNode fallback retains the existing ReactElement return and fragment boundary; directly returning arbitrary children changes the public return and reconciliation contract.
     return <>{children}</>;
   }
 
   const lines = wrap(String(children), width, bold);
 
-  const widths = lines.map((line) =>
-    [...line].reduce(
-      (sum, char) =>
-        sum + minecraftGlyphs[char.charCodeAt(0) - 32][2] + Number(bold),
-      0
-    )
-  );
+  const widths = lines.map((line) => {
+    let accumulatedGlyphAdvance2 = 0;
+
+    for (const advanceCharacter2 of line) {
+      accumulatedGlyphAdvance2 =
+        accumulatedGlyphAdvance2 +
+        minecraftGlyphs[
+          (advanceCharacter2.codePointAt(0) ?? Number.NaN) - 32
+        ][2] +
+        Number(bold);
+    }
+
+    return accumulatedGlyphAdvance2;
+  });
 
   const widest = Math.max(0, ...widths);
 
   return (
     <span ref={node} className="mc-card-text" data-mc-card-text="true">
-      {lines.map((line, index) => (
-        <span
-          className="mc-card-text-line"
-          key={index}
-          style={{
-            paddingLeft: `calc(${Math.floor((width - widest) / 2) + Math.floor(widest / 2) - Math.floor(widths[index] / 2)} * var(--mc-pixel))`,
-          }}
-        >
-          {bold ? (
-            <span className="mc-bitmap mc-card-bold">
-              <span className="mc-card-bold-pixels" aria-hidden="true">
-                {Array.from(line, (char, i) => {
-                  const [x, y, advance] =
-                    minecraftGlyphs[char.charCodeAt(0) - 32];
+      {lines.map((line, index) => {
+        const nativeTextLayout1: NativeTextLayoutStyle = {
+          "--mc-card-text-padding-left": `calc(${Math.floor((width - widest) / 2) + Math.floor(widest / 2) - Math.floor(widths[index] / 2)} * var(--mc-pixel))`,
+        };
 
-                  return (
-                    <span
-                      className="mc-card-bold-glyph"
-                      key={i}
-                      style={
-                        {
-                          "--mc-advance": advance + 1,
-                          "--mc-glyph-x": x,
-                          "--mc-glyph-y": y,
-                          visibility: char === " " ? "hidden" : undefined,
-                        } as React.CSSProperties
-                      }
-                    >
-                      <i />
-                      <i />
-                    </span>
-                  );
-                })}
+        return (
+          <span
+            className="mc-card-text-line pl-(--mc-card-text-padding-left)"
+            /* eslint-disable react-doctor/no-array-index-as-key -- Private wrapped text rows are identified by their layout position; repeated text is valid and the width observer belongs to the parent span. */
+            key={index}
+            /* eslint-enable react-doctor/no-array-index-as-key */
+            style={nativeTextLayout1}
+          >
+            {bold ? (
+              <span className="mc-bitmap mc-card-bold">
+                <span className="mc-card-bold-pixels" aria-hidden="true">
+                  {Array.from(line, (char, i) => {
+                    const [x, y, advance] =
+                      minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32];
+
+                    const glyphStyle: CardBoldGlyphStyle = {
+                      "--mc-advance": advance + 1,
+                      "--mc-glyph-x": x,
+                      "--mc-glyph-y": y,
+                    };
+
+                    return (
+                      <span
+                        className={
+                          char === " "
+                            ? "mc-card-bold-glyph invisible"
+                            : "mc-card-bold-glyph"
+                        }
+                        key={i}
+                        style={glyphStyle}
+                      >
+                        <i />
+                        <i />
+                      </span>
+                    );
+                  })}
+                </span>
+                <span className="mc-card-accessible">{line}</span>
               </span>
-              <span className="mc-card-accessible">{line}</span>
-            </span>
-          ) : (
-            <MinecraftText>{line}</MinecraftText>
-          )}
-        </span>
-      ))}
+            ) : (
+              <MinecraftText>{line}</MinecraftText>
+            )}
+          </span>
+        );
+      })}
     </span>
   );
 };

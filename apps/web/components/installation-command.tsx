@@ -49,9 +49,11 @@ const subscribeOrigin = () => () => {
 const ManagerCommand = ({
   registryName,
   packages,
+  development = false,
 }: {
   registryName?: string;
   packages?: string[];
+  development?: boolean;
 }) => {
   const manager = useSyncExternalStore(subscribe, preference, serverPreference);
 
@@ -75,11 +77,22 @@ const ManagerCommand = ({
         pnpm: `pnpm dlx shadcn@latest add ${target}`,
       }[manager]
     : {
-        Bun: `bun add ${target}`,
-        Yarn: `yarn add ${target}`,
-        npm: `npm install ${target}`,
-        pnpm: `pnpm add ${target}`,
+        Bun: `bun add${development ? " --dev" : ""} ${target}`,
+        Yarn: `yarn add${development ? " -D" : ""} ${target}`,
+        npm: `npm install${development ? " --save-dev" : ""} ${target}`,
+        pnpm: `pnpm add${development ? " -D" : ""} ${target}`,
       }[manager];
+
+  let commandLabel = "Dependencies";
+  let managerLabel = "Dependency package manager";
+
+  if (hasRegistry) {
+    commandLabel = "CLI installation";
+    managerLabel = "Installation package manager";
+  } else if (development) {
+    commandLabel = "Development dependencies";
+    managerLabel = "Development dependency package manager";
+  }
 
   return (
     <div /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
@@ -109,13 +122,7 @@ const ManagerCommand = ({
           className="documentation-tabs-scroll"
           /* eslint-enable shadcn/no-unknown-classes */
         >
-          <TabsList
-            aria-label={
-              hasRegistry
-                ? "Installation package manager"
-                : "Dependency package manager"
-            }
-          >
+          <TabsList aria-label={managerLabel}>
             {managers.map((value) => (
               <TabsTrigger key={value} value={value}>
                 {value}
@@ -129,7 +136,7 @@ const ManagerCommand = ({
           code={command}
           filename="Terminal"
           language="bash"
-          label={hasRegistry ? "CLI installation" : "Dependencies"}
+          label={commandLabel}
           collapsible={false}
         />
       ) : (
@@ -150,6 +157,10 @@ export const InstallationCommand = ({ name }: { name: string }) => (
   <ManagerCommand registryName={name} />
 );
 
-export const DependencyCommand = ({ packages }: { packages: string[] }) => (
-  <ManagerCommand packages={packages} />
-);
+export const DependencyCommand = ({
+  packages,
+  development = false,
+}: {
+  packages: string[];
+  development?: boolean;
+}) => <ManagerCommand packages={packages} development={development} />;

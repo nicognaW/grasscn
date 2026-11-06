@@ -7,6 +7,9 @@ import { pixelPerfectRoot } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
+import type BrandingProvenance from "../../../../../apps/web/branding.provenance.json";
+import type RegistryIdentityData from "../../../../../apps/web/registry.json";
+
 const differences = (left: PNG, right: PNG) => {
   let count = 0;
 
@@ -25,58 +28,88 @@ const differences = (left: PNG, right: PNG) => {
 
 test("Grasscn project identity and native branding assets are consistent", async () => {
   for (const file of ["registry.json"]) {
+    // SAFETY: This fixed registry.json input has exactly the imported producer shape; preserve its original fresh read, parse and project-name assertion.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry identity producer boundary; no additional metadata variants or runtime validation.
     const metadata = JSON.parse(
       readFileSync(evidenceFile(file, pixelPerfectRoot), "utf-8")
-    );
+    ) as typeof RegistryIdentityData;
 
     expect(metadata.name).toBe("grasscn");
-
-    if (metadata.packages?.[""]) {
-      expect(metadata.packages[""].name).toBe("grasscn");
-    }
   }
 
+  // SAFETY: evidenceFile maps this retained preview path to the exact imported branding.provenance.json, including generated SHA records and native comparison cases.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained branding producer boundary; preserve the original fresh read and parse.
   const provenance = JSON.parse(
     await readFile(
       evidenceFile("preview/branding.provenance.json", pixelPerfectRoot),
-      "utf8"
+      "utf-8"
     )
-  );
+  ) as typeof BrandingProvenance;
 
   expect(provenance.sourceJarSha256).toBe(
     "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
   );
 
-  for (const [file, record] of Object.entries(provenance.generated) as [
-    string,
-    { sha256: string },
-  ][]) {
-    const bytes = await readFile(
-      evidenceFile(`preview/assets/${file}`, pixelPerfectRoot)
-    );
+  const generatedInputs = await Promise.allSettled(
+    Object.entries(provenance.generated).map(async ([file, record]) => ({
+      bytes: await readFile(
+        evidenceFile(`preview/assets/${file}`, pixelPerfectRoot)
+      ),
+      record,
+    }))
+  );
+
+  for (const input of generatedInputs) {
+    if (input.status === "rejected") {
+      throw input.reason;
+    }
+
+    const { bytes, record } = input.value;
+
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       record.sha256
     );
   }
 
-  for (const c of provenance.cases) {
-    const one = PNG.sync.read(
-      await readFile(
-        evidenceFile(
-          `tests/reference/branding/native-one/${c.filename}`,
-          pixelPerfectRoot
-        )
-      )
-    );
+  const caseInputs = await Promise.allSettled(
+    provenance.cases.map(async (c) => {
+      const [one, two] = await Promise.allSettled([
+        readFile(
+          evidenceFile(
+            `tests/reference/branding/native-one/${c.filename}`,
+            pixelPerfectRoot
+          )
+        ),
+        readFile(
+          evidenceFile(
+            `tests/reference/branding/native-two/${c.filename}`,
+            pixelPerfectRoot
+          )
+        ),
+      ]);
 
-    const two = PNG.sync.read(
-      await readFile(
-        evidenceFile(
-          `tests/reference/branding/native-two/${c.filename}`,
-          pixelPerfectRoot
-        )
-      )
-    );
+      return { c, one, two };
+    })
+  );
+
+  for (const input of caseInputs) {
+    if (input.status === "rejected") {
+      throw input.reason;
+    }
+
+    const { c, one: oneInput, two: twoInput } = input.value;
+
+    if (oneInput.status === "rejected") {
+      throw oneInput.reason;
+    }
+
+    const one = PNG.sync.read(oneInput.value);
+
+    if (twoInput.status === "rejected") {
+      throw twoInput.reason;
+    }
+
+    const two = PNG.sync.read(twoInput.value);
 
     expect(one.data.equals(two.data)).toBe(true);
     expect(c.mismatchedPixels).toBe(0);

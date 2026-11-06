@@ -14,9 +14,8 @@ const RadioGroupExample = () => {
       {["survival", "creative"].map((value) => (
         <div
           key={value}
-          /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-          style={{ alignItems: "center", display: "flex", gap: 12 }}
-          /* eslint-enable shadcn/no-inline-styles */
+
+          className="flex items-center gap-3"
         >
           <RadioGroupItem id={`${id}-${value}`} value={value} />
           <Label htmlFor={`${id}-${value}`}>

@@ -33,10 +33,41 @@ import {
 } from "@grasscn/web/ui/typography";
 import * as React from "react";
 
+import { fixtureFallbackLabel } from "./utils";
+
 import "./native-reference.css";
 
+interface TextReferenceStyle extends React.CSSProperties {
+  "--reference-height": string | undefined;
+  "--reference-width": string | undefined;
+  "--reference-x": string;
+  "--reference-y": string;
+}
+
+interface TypographyScenarioRenderers {
+  readonly [part: string]: typeof Typography | undefined;
+  readonly blockquote: typeof TypographyBlockquote;
+  readonly code: typeof TypographyInlineCode;
+  readonly default: typeof Typography;
+  readonly h1: typeof TypographyH1;
+  readonly h2: typeof TypographyH2;
+  readonly h3: typeof TypographyH3;
+  readonly h4: typeof TypographyH4;
+  readonly large: typeof TypographyLarge;
+  readonly lead: typeof TypographyLead;
+  readonly muted: typeof TypographyMuted;
+  readonly p: typeof TypographyP;
+  readonly small: typeof TypographySmall;
+}
+
 const q = new URLSearchParams(location.search);
-const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
 const component = q.get("component") ?? "badge";
 const state = q.get("state") ?? "normal";
 const text = q.get("text") ?? q.get("label") ?? "Minecraft";
@@ -52,7 +83,12 @@ const TextComponentsFixture = () => {
 
   const [events, setEvents] = React.useState(0);
   const [tag, setTag] = React.useState("");
-  const ref = React.useRef<any>(null);
+  const ref = React.useRef<Element>(null);
+
+  const subjectRef = React.useCallback((node: Element | null) => {
+    ref.current = node;
+  }, []);
+
   const width = q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined;
   const align = q.get("align") === "center" ? "center" : "left";
 
@@ -62,6 +98,7 @@ const TextComponentsFixture = () => {
     text
   );
 
+  // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
   const common = {
     className: "native-reference-geometry",
     "data-native-height": q.has("height") || undefined,
@@ -71,43 +108,49 @@ const TextComponentsFixture = () => {
     onClick: () => {
       setEvents((n) => n + 1);
     },
-    ref,
+    ref: subjectRef,
     style: {
-      "--reference-x": Number(q.get("x") ?? 16) * scale + "px",
-      "--reference-y": Number(q.get("y") ?? 16) * scale + "px",
-      "--reference-width": q.has("width")
-        ? Number(q.get("width")) * scale + "px"
-        : undefined,
       "--reference-height": q.has("height")
-        ? Number(q.get("height")) * scale + "px"
+        ? `${Number(q.get("height")) * scale}px`
         : undefined,
-    } as React.CSSProperties,
+      "--reference-width": q.has("width")
+        ? `${Number(q.get("width")) * scale}px`
+        : undefined,
+      "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
+      "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
+    } satisfies TextReferenceStyle as TextReferenceStyle,
   };
 
-  let subject: React.ReactNode;
+  const renderTextEmptyScenario = () => {
+    if (native) {
+      if (part === "title") {
+        return (
+          <EmptyTitle {...common} scale={scale} maxWidth={width} align={align}>
+            {text}
+          </EmptyTitle>
+        );
+      } else if (part === "description") {
+        return (
+          <EmptyDescription
+            {...common}
+            scale={scale}
+            maxWidth={width}
+            align={align}
+          >
+            {text}
+          </EmptyDescription>
+        );
+      }
 
-  if (component === "empty") {
-    subject = native ? (
-      part === "title" ? (
-        <EmptyTitle {...common} scale={scale} maxWidth={width} align={align}>
-          {text}
-        </EmptyTitle>
-      ) : part === "description" ? (
-        <EmptyDescription
-          {...common}
-          scale={scale}
-          maxWidth={width}
-          align={align}
-        >
-          {text}
-        </EmptyDescription>
-      ) : (
+      return (
         <Empty {...common} scale={scale}>
           {text}
         </Empty>
-      )
-    ) : (
-      <Empty scale={scale} ref={ref}>
+      );
+    }
+
+    return (
+      <Empty scale={scale} ref={subjectRef}>
         <EmptyHeader>
           <EmptyMedia>
             <span data-testid="media">*</span>
@@ -119,6 +162,7 @@ const TextComponentsFixture = () => {
         </EmptyHeader>
         <EmptyContent>
           <button
+            type="button"
             onClick={() => {
               setEvents((n) => n + 1);
             }}
@@ -128,53 +172,63 @@ const TextComponentsFixture = () => {
         </EmptyContent>
       </Empty>
     );
-  } else if (component === "badge") {
-    subject = (
-      <Badge
-        render={q.has("asChild") ? <a href="#destination" /> : undefined}
-        scale={scale}
-        maxWidth={width}
-        {...common}
-        style={
-          native
-            ? ({
-                "--reference-x": (Number(q.get("x") ?? 16) + 8) * scale + "px",
-                "--reference-y": (Number(q.get("y") ?? 16) + 8) * scale + "px",
-                "--reference-width": q.has("width")
-                  ? (Number(q.get("width")) - 16) * scale + "px"
-                  : undefined,
-                "--reference-height": q.has("height")
-                  ? (Number(q.get("height")) - 16) * scale + "px"
-                  : undefined,
-              } as React.CSSProperties)
-            : ({
-                "--reference-x": Number(q.get("x") ?? 16) * scale + "px",
-                "--reference-y": Number(q.get("y") ?? 16) * scale + "px",
-                "--reference-width": q.has("width")
-                  ? Number(q.get("width")) * scale + "px"
-                  : undefined,
-                "--reference-height": q.has("height")
-                  ? Number(q.get("height")) * scale + "px"
-                  : undefined,
-              } as React.CSSProperties)
-        }
-      >
-        {rich}
-      </Badge>
-    );
-  } else if (component === "kbd") {
-    subject = (
-      <Kbd
-        scale={scale}
-        {...common}
-        tabIndex={q.has("tabIndex") || state === "focus" ? 0 : undefined}
-        aria-disabled={state.startsWith("disabled") ? true : undefined}
-      >
-        {rich}
-      </Kbd>
-    );
-  } else if (component === "typography") {
-    const parts: any = {
+  };
+
+  const renderTextBadgeScenario = () => (
+    // SAFETY: the existing native-reference stylesheet consumes exactly this finite CSS-variable map; satisfies checks its values before the CSSProperties view is passed to React.
+    <Badge
+      render={
+        q.has("asChild") ? (
+          <a
+            href="#destination"
+            aria-label={fixtureFallbackLabel("Text example", text)}
+          />
+        ) : undefined
+      }
+      scale={scale}
+      maxWidth={width}
+      {...common}
+      style={
+        native
+          ? ({
+              "--reference-height": q.has("height")
+                ? `${(Number(q.get("height")) - 16) * scale}px`
+                : undefined,
+              "--reference-width": q.has("width")
+                ? `${(Number(q.get("width")) - 16) * scale}px`
+                : undefined,
+              "--reference-x": `${(Number(q.get("x") ?? 16) + 8) * scale}px`,
+              "--reference-y": `${(Number(q.get("y") ?? 16) + 8) * scale}px`,
+            } satisfies TextReferenceStyle as TextReferenceStyle)
+          : ({
+              "--reference-height": q.has("height")
+                ? `${Number(q.get("height")) * scale}px`
+                : undefined,
+              "--reference-width": q.has("width")
+                ? `${Number(q.get("width")) * scale}px`
+                : undefined,
+              "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
+              "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
+            } satisfies TextReferenceStyle as TextReferenceStyle)
+      }
+    >
+      {rich}
+    </Badge>
+  );
+
+  const renderTextKbdScenario = () => (
+    <Kbd
+      scale={scale}
+      {...common}
+      tabIndex={q.has("tabIndex") || state === "focus" ? 0 : undefined}
+      aria-disabled={state.startsWith("disabled") ? true : undefined}
+    >
+      {rich}
+    </Kbd>
+  );
+
+  const renderTextTypographyScenario = () => {
+    const parts: TypographyScenarioRenderers = {
       blockquote: TypographyBlockquote,
       code: TypographyInlineCode,
       default: Typography,
@@ -191,9 +245,16 @@ const TextComponentsFixture = () => {
 
     const Component = parts[part] ?? Typography;
 
-    subject = (
+    return (
       <Component
-        render={q.has("asChild") ? <a href="#destination" /> : undefined}
+        render={
+          q.has("asChild") ? (
+            <a
+              href="#destination"
+              aria-label={fixtureFallbackLabel("Text example", text)}
+            />
+          ) : undefined
+        }
         {...common}
         scale={scale}
         maxWidth={width}
@@ -202,59 +263,81 @@ const TextComponentsFixture = () => {
         {rich}
       </Component>
     );
-  } else if (component === "breadcrumb" && native) {
-    subject =
-      part === "page" ? (
-        <BreadcrumbPage
-          {...common}
-          scale={scale}
-          maxWidth={width}
-          align={align}
-        >
-          {text}
-        </BreadcrumbPage>
-      ) : (
-        <BreadcrumbLink
-          render={q.has("asChild") ? <a /> : undefined}
-          {...common}
-          scale={scale}
-          maxWidth={width}
-          align={align}
-          href="#destination"
-        >
-          {text}
-        </BreadcrumbLink>
-      );
-  } else {
-    subject = (
-      <Breadcrumb scale={scale}>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="#home">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink render={<a href="#world" />}>
-              {"World"}
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbEllipsis />
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage ref={ref}>Current page</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+  };
+
+  const renderTextNativeBreadcrumbScenario = () =>
+    part === "page" ? (
+      <BreadcrumbPage {...common} scale={scale} maxWidth={width} align={align}>
+        {text}
+      </BreadcrumbPage>
+    ) : (
+      <BreadcrumbLink
+        render={
+          q.has("asChild") ? (
+            // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid -- The owned asChild probes supply Continue or World through BreadcrumbLink children; preserve this empty render receiver so those real forwarding assertions stay meaningful.
+            <a />
+          ) : undefined
+        }
+        {...common}
+        scale={scale}
+        maxWidth={width}
+        align={align}
+        href="#destination"
+      >
+        {text}
+      </BreadcrumbLink>
     );
+
+  const renderTextBreadcrumbScenario = () => (
+    <Breadcrumb scale={scale}>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#home">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink
+            render={
+              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- BreadcrumbLink supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+              <a href="#world" />
+            }
+          >
+            World
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbEllipsis />
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage ref={subjectRef}>Current page</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+
+  let subject: React.ReactNode;
+
+  if (component === "empty") {
+    subject = renderTextEmptyScenario();
+  } else if (component === "badge") {
+    subject = renderTextBadgeScenario();
+  } else if (component === "kbd") {
+    subject = renderTextKbdScenario();
+  } else if (component === "typography") {
+    subject = renderTextTypographyScenario();
+  } else if (component === "breadcrumb" && native) {
+    subject = renderTextNativeBreadcrumbScenario();
+  } else {
+    subject = renderTextBreadcrumbScenario();
   }
 
   return (
     <>
       {subject}
       <button
+        type="button"
         id="read-ref"
         className="native-reference-read-ref"
         onClick={() => {

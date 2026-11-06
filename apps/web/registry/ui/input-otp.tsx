@@ -10,6 +10,10 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import "./minecraft-input.css";
 import "./minecraft-input-otp.css";
 
+interface InputOtpScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type Scale = 1 | 2 | 3;
 
 const OTPStyle = React.createContext<{
@@ -32,10 +36,17 @@ const InputOTP = ({
 }: React.ComponentProps<typeof OTPInput> & {
   scale?: Scale;
 }) => {
+  const otpStyle = React.useMemo(
+    () => ({
+      disabled: props.disabled ?? false,
+      readOnly: props.readOnly ?? false,
+      scale,
+    }),
+    [props.disabled, props.readOnly, scale]
+  );
+
   return (
-    <OTPStyle.Provider
-      value={{ disabled: !!props.disabled, readOnly: !!props.readOnly, scale }}
-    >
+    <OTPStyle.Provider value={otpStyle}>
       <OTPInput
         spellCheck={spellCheck}
         autoCorrect={autoCorrect}
@@ -51,15 +62,13 @@ const InputOTP = ({
 const InputOTPGroup = ({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="input-otp-group"
-      className={cn(`mc-otp-group`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="input-otp-group"
+    className={cn(`mc-otp-group`, className)}
+    {...props}
+  />
+);
 
 const InputOTPSlot = ({
   index,
@@ -75,7 +84,10 @@ const InputOTPSlot = ({
   const node = React.useRef<HTMLInputElement>(null);
   const active = React.useRef(false);
 
-  active.current = slot?.isActive && context?.isFocused;
+  const isActive = slot?.isActive && context?.isFocused;
+  React.useLayoutEffect(() => {
+    active.current = isActive;
+  }, [isActive]);
   React.useEffect(
     () =>
       node.current
@@ -88,18 +100,18 @@ const InputOTPSlot = ({
       const pos = (slot?.char ?? "").length;
       node.current.setSelectionRange(pos, pos);
     }
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Slot activation must restore its existing caret position even when the displayed character is unchanged.
   }, [slot?.char, slot?.isActive]);
 
   return (
     <div
       data-slot="input-otp-slot"
-      data-active={active.current}
+      data-active={isActive}
       className={cn(`mc-otp-slot`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): InputOtpScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       <input
@@ -112,7 +124,9 @@ const InputOTPSlot = ({
         placeholder={slot?.placeholderChar ?? ""}
         disabled={disabled}
         readOnly={readOnly}
-        onChange={() => {}}
+        onChange={() => {
+          // The owning OTP primitive handles editing; this controlled slot proxy only displays it.
+        }}
         spellCheck={false}
         autoCorrect="off"
       />
@@ -127,7 +141,12 @@ const InputOTPSeparator = ({
   const { scale } = React.useContext(OTPStyle);
 
   return (
-    <div data-slot="input-otp-separator" role="separator" {...props}>
+    <div
+      data-slot="input-otp-separator"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn InputOTPSeparator's div separator and composition contract.
+      role="separator"
+      {...props}
+    >
       <MinecraftProse scale={scale}>{children}</MinecraftProse>
     </div>
   );

@@ -6,19 +6,33 @@ import { menuCheckboxAtlas } from "@grasscn/web/ui/minecraft-menu-checkbox-asset
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const inventory = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
-    "utf-8"
-  )
-);
+import type BoundaryReference1 from "../reference/catalog/native-inventory.json";
+import type BoundaryReference2 from "../reference/menu-parts/checkbox-atlas.json";
 
-const native = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/menu-parts/checkbox-atlas.json"),
-    "utf-8"
-  )
-);
+const inventory =
+  // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+  JSON.parse(
+    readFileSync(
+      pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
+      "utf-8"
+    )
+  ) as typeof BoundaryReference1 & {
+    assets: Record<
+      string,
+      (typeof BoundaryReference1)["assets"][keyof (typeof BoundaryReference1)["assets"]]
+    >;
+  };
+
+const native =
+  // SAFETY: this exact retained JSON input is represented by the adjacent type-only producer import; preserve the original fresh read, parse and runtime checks.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-data boundary; no runtime validation or generic JSON caster.
+  JSON.parse(
+    readFileSync(
+      pixelPerfectFile("tests/reference/menu-parts/checkbox-atlas.json"),
+      "utf-8"
+    )
+  ) as typeof BoundaryReference2;
 
 for (const [name, sprite] of Object.entries(menuCheckboxAtlas.sprites)) {
   test(`Menu embeds the original ${name} texture and native atlas coordinates`, () => {
@@ -32,9 +46,12 @@ for (const [name, sprite] of Object.entries(menuCheckboxAtlas.sprites)) {
     expect([png.width, png.height]).toEqual([20, 20]);
     expect(Buffer.from(sprite.rgba, "base64").equals(png.data)).toBe(true);
 
-    const placement = Object.entries(native).find(([key]) =>
+    // SAFETY: Each of the four generated checkbox sprite names has exactly one matching retained atlas entry; keep the same first-match selector and UV checks.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact retained checkbox-atlas producer relation; no new runtime guard. */
+    const [, placement] = Object.entries(native).find(([key]) =>
       key.includes(`texture=minecraft:widget/${name}]`)
-    )![1] as Record<string, number>;
+    ) as [string, (typeof native)[keyof typeof native]];
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
 
     for (const key of ["u0", "u1", "v0", "v1"] as const) {
       expect(Math.fround(sprite[key])).toBe(Math.fround(placement[key]));

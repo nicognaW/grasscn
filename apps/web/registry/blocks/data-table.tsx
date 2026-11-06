@@ -1,7 +1,8 @@
 "use client";
 
-import { useTable } from "@tanstack/react-table";
-import type { ColumnDef, RowData } from "@tanstack/react-table";
+import { flexRender, useTable } from "@tanstack/react-table";
+import type { CellContext, ColumnDef, RowData } from "@tanstack/react-table";
+import * as React from "react";
 
 import { MinecraftDisclosureText } from "@/components/ui/minecraft-disclosure-text";
 import {
@@ -22,6 +23,21 @@ interface DataTableProps<TData extends RowData> {
   scale?: 1 | 2 | 3;
 }
 
+const DataTableScale = React.createContext<1 | 2 | 3>(2);
+
+const DataTableValueCell = (
+  info: Pick<CellContext<DataTableFeatures, RowData>, "getValue">
+) => {
+  const scale = React.useContext(DataTableScale);
+
+  return (
+    <MinecraftDisclosureText scale={scale}>
+      {/* oxlint-disable-next-line typescript/no-base-to-string -- TanStack default cells accept opaque values; preserve standard String conversion, including caller custom coercion and the existing nullish-empty fallback. */}
+      {String(info.getValue() ?? "")}
+    </MinecraftDisclosureText>
+  );
+};
+
 export const DataTable = <TData extends RowData>({
   columns,
   data,
@@ -31,55 +47,55 @@ export const DataTable = <TData extends RowData>({
     columns,
     data,
     defaultColumn: {
-      cell: (info) => (
-        <MinecraftDisclosureText scale={scale}>
-          {String(info.getValue() ?? "")}
-        </MinecraftDisclosureText>
-      ),
+      cell: DataTableValueCell,
     },
     features,
   });
 
   return (
-    <div data-slot="data-table" className="w-full overflow-hidden">
-      <Table scale={scale}>
-        <TableHeader>
-          {table.getHeaderGroups().map((group) => (
-            <TableRow key={group.id}>
-              {group.headers.map((header) => (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder ? null : typeof header.column.columnDef
-                      .header === "string" ? (
-                    header.column.columnDef.header
-                  ) : (
-                    <table.FlexRender header={header} />
-                  )}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() ? "selected" : undefined}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    <table.FlexRender cell={cell} />
-                  </TableCell>
-                ))}
+    <DataTableScale.Provider value={scale}>
+      <div data-slot="data-table" className="w-full overflow-hidden">
+        <Table scale={scale}>
+          <TableHeader>
+            {table.getHeaderGroups().map((group) => (
+              <TableRow key={group.id}>
+                {group.headers.map((header) => {
+                  const headerId = header.id;
+
+                  const headerContent = header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      );
+
+                  return <TableHead key={headerId}>{headerContent}</TableHead>;
+                })}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length}>No results.</TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() ? "selected" : undefined}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      <table.FlexRender cell={cell} />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length}>No results.</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </DataTableScale.Provider>
   );
 };

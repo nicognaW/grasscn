@@ -4,28 +4,42 @@ const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/u, "/");
 
-for (const scale of [2])
-  for (const name of ["collapsible"])
+for (const scale of [2]) {
+  for (const name of ["collapsible"]) {
     test(`${name} editorcontrols respectGUIscale${scale}`, async ({ page }) => {
       await page.goto(`${origin}docs/components/${name}`);
       const card = page.locator(".documentation-playground");
-      for (const control of await card
+
+      const readOnlyItems21 = await card
         .locator(
           ".demo-options input,.demo-options textarea,.demo-options button"
         )
-        .all())
-        expect(
-          await control.evaluate((n) =>
-            Number(getComputedStyle(n).getPropertyValue("--mc-scale"))
-          )
-        ).toBe(scale);
+        .all();
+
+      const readOnlyResults21 = await Promise.allSettled(
+        readOnlyItems21.map(async (control) => {
+          expect(
+            await control.evaluate((n) =>
+              Number(getComputedStyle(n).getPropertyValue("--mc-scale"))
+            )
+          ).toBe(scale);
+        })
+      );
+
+      for (const readOnlyResult21 of readOnlyResults21) {
+        if (readOnlyResult21.status === "rejected") {
+          throw readOnlyResult21.reason;
+        }
+      }
     });
+  }
+}
 
 for (const scale of [2]) {
   test(`Retained Data Table and Resizable playground controls preserve behavior at scale${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.setViewportSize({ height: 1000, width: 1440 });
     await page.goto(`${origin}docs/components/data-table`);
 
     const table = page.getByRole("region", {
@@ -57,7 +71,7 @@ for (const scale of [2]) {
     await table.getByRole("button", { exact: true, name: "Next" }).click();
     await table
       .getByRole("textbox", { name: "Filter worlds" })
-      .fill("\u4f60\u597d");
+      .fill("\u4F60\u597D");
 
     const cell = table.getByRole("cell", {
       exact: true,

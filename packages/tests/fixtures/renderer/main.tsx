@@ -126,6 +126,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@grasscn/web/ui/tooltip";
+import type { ReactNode } from "react";
 import * as React from "react";
 import { createPortal } from "react-dom";
 import { createRoot } from "react-dom/client";
@@ -148,10 +149,14 @@ import { CommandFixture } from "./command";
 import { CustomApiFixture } from "./custom-api";
 import { DataTableFixture } from "./data-table";
 import { DialogFooterFixture } from "./dialog-footer";
+import type { FixtureLabels } from "./fixture-query-protocol";
+import { resolveFixtureRoute } from "./fixture-routing";
+import type { FixtureRoute } from "./fixture-routing";
 import { FormsFixture } from "./forms";
 import { InputGroupFixture } from "./input-group";
 import { InputOTPFixture } from "./input-otp";
 import { ItemFixture } from "./item";
+import { KeyedRichChildrenFixture } from "./keyed-rich-children";
 import { MarkerFixture } from "./marker";
 import { NativeSelectFixture } from "./native-select";
 import { NativeTextCompositionsFixture } from "./native-text-compositions";
@@ -167,19 +172,32 @@ import { TextWidgetsFixture } from "./text-widgets";
 import { ToastFixture } from "./toast";
 import { ToggleFixture } from "./toggle";
 import { ToggleGroupFixture } from "./toggle-group";
+import { cn, fixtureFallbackLabel } from "./utils";
 
 import "./style.css";
 
 const params = new URLSearchParams(location.search);
-const scale = Number(params.get("scale") ?? 2) as 1 | 2 | 3;
+
+// SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
+const scale =
+  // SAFETY: owned fixture callers serialize the public GUI scales 1, 2, or 3; the existing Number conversion, default and component validation remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+  Number(params.get("scale") ?? 2) as 1 | 2 | 3;
+
 const width = Number(params.get("width") ?? 200);
 const state = params.get("state") ?? "normal";
 const label = params.get("label") ?? "Button";
 
 const SelectFixture = () => {
-  const titles: string[] = params.has("labels")
-    ? JSON.parse(params.get("labels")!)
-    : ["Survival", "Creative", "Adventure"];
+  const labelsSource = params.get("labels");
+
+  // SAFETY: owned Select titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Select titles query-label producer boundary.
+  const titles: string[] =
+    labelsSource === null
+      ? ["Survival", "Creative", "Adventure"]
+      : (JSON.parse(labelsSource) as FixtureLabels);
+  // oxlint-enable typescript/no-unsafe-type-assertion
 
   const initial = Number(params.get("selectedIndex") ?? 0);
 
@@ -200,6 +218,7 @@ const SelectFixture = () => {
   const capture = params.get("component") === "select-list";
 
   const content = titles.map((title, index) => (
+    /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
     <SelectItem
       render={
         params.has("itemAsChild") && index === 0 ? <section /> : undefined
@@ -221,13 +240,88 @@ const SelectFixture = () => {
     >
       {title}
     </SelectItem>
+    /* oxlint-enable react-doctor/no-array-index-as-key */
   ));
+
+  let selectedFixtureBranch1: ReactNode;
+
+  if (params.has("contentAsChild")) {
+    selectedFixtureBranch1 = content;
+  } else {
+    selectedFixtureBranch1 = params.has("group") ? (
+      <SelectGroup>
+        <SelectLabel>Game modes</SelectLabel>
+        {content}
+        <SelectSeparator />
+      </SelectGroup>
+    ) : (
+      content
+    );
+  }
+
+  const renderSelectTrigger = () => (
+    <SelectTrigger
+      render={
+        params.has("triggerAsChild") ? (
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- SelectTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <button type="button" />
+        ) : undefined
+      }
+      id={single ? "subject" : "select-trigger"}
+      aria-label="Game mode"
+      ref={triggerRef}
+      className="fixture-geometry-width"
+      style={{ "--fixture-width": `${width * scale}px` }}
+      data-subject={
+        (single ? "subject" : "select-trigger") === "subject"
+          ? "true"
+          : undefined
+      }
+    >
+      <SelectValue
+        placeholder={params.get("placeholder") ?? "Choose game mode"}
+      >
+        {single ? (params.get("label") ?? "Survival") : undefined}
+      </SelectValue>
+    </SelectTrigger>
+  );
+
+  const renderSelectPopup = () => (
+    <SelectContent
+      render={params.has("contentAsChild") ? <section /> : undefined}
+      id={capture ? "subject" : "select-popup"}
+      ref={contentRef}
+      alignItemWithTrigger={
+        (capture || params.has("popper") ? "popper" : "item-aligned") ===
+        "item-aligned"
+      }
+      collisionAvoidance={capture ? { align: "none", side: "none" } : undefined}
+      className={cn({
+        "fixture-geometry-height fixture-geometry-width": capture,
+      })}
+      style={
+        capture
+          ? {
+              "--fixture-height": `${Number(params.get("height")) * scale}px`,
+              "--fixture-width": `${width * scale}px`,
+            }
+          : undefined
+      }
+      data-subject={
+        (capture ? "subject" : "select-popup") === "subject"
+          ? "true"
+          : undefined
+      }
+    >
+      {selectedFixtureBranch1}
+    </SelectContent>
+  );
 
   const controls = (
     <>
       <Select
-        items={titles.map((label, index) => ({
-          label,
+        items={titles.map((optionLabel, index) => ({
+          label: optionLabel,
           value: `item-${index}`,
         }))}
         name={params.has("form") ? "mode" : undefined}
@@ -255,65 +349,11 @@ const SelectFixture = () => {
           params.has("disabled") || (single && state.startsWith("disabled"))
         }
       >
-        <SelectTrigger
-          render={params.has("triggerAsChild") ? <button /> : undefined}
-          id={single ? "subject" : "select-trigger"}
-          aria-label="Game mode"
-          ref={triggerRef}
-          style={{ width: width * scale }}
-          data-subject={
-            (single ? "subject" : "select-trigger") === "subject"
-              ? "true"
-              : undefined
-          }
-        >
-          <SelectValue
-            placeholder={params.get("placeholder") ?? "Choose game mode"}
-          >
-            {single ? (params.get("label") ?? "Survival") : undefined}
-          </SelectValue>
-        </SelectTrigger>
-        {!single && (
-          <SelectContent
-            render={params.has("contentAsChild") ? <section /> : undefined}
-            id={capture ? "subject" : "select-popup"}
-            ref={contentRef}
-            alignItemWithTrigger={
-              (capture || params.has("popper") ? "popper" : "item-aligned") ===
-              "item-aligned"
-            }
-            collisionAvoidance={
-              capture ? { align: "none", side: "none" } : undefined
-            }
-            style={
-              capture
-                ? {
-                    height: Number(params.get("height")) * scale,
-                    width: width * scale,
-                  }
-                : undefined
-            }
-            data-subject={
-              (capture ? "subject" : "select-popup") === "subject"
-                ? "true"
-                : undefined
-            }
-          >
-            {params.has("contentAsChild") ? (
-              content
-            ) : params.has("group") ? (
-              <SelectGroup>
-                <SelectLabel>Game modes</SelectLabel>
-                {content}
-                <SelectSeparator />
-              </SelectGroup>
-            ) : (
-              content
-            )}
-          </SelectContent>
-        )}
+        {renderSelectTrigger()}
+        {!single && renderSelectPopup()}
       </Select>
       <button
+        type="submit"
         id="select-external"
         onClick={() => {
           setValue(`item-${titles.length - 1}`);
@@ -322,6 +362,7 @@ const SelectFixture = () => {
         Select externally
       </button>
       <button
+        type="submit"
         id="read-select-refs"
         onClick={() => {
           setRefs(
@@ -342,7 +383,10 @@ const SelectFixture = () => {
       onSubmit={(event) => {
         event.preventDefault();
         setSubmittedValue(
-          String(new FormData(event.currentTarget).get("mode") ?? "missing")
+          // SAFETY: this owned form's mode controls are RadioGroup/Select/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer boundary; no runtime check or changed read.
+          (new FormData(event.currentTarget).get("mode") as string | null) ??
+            "missing"
         );
       }}
     >
@@ -358,13 +402,17 @@ const SelectFixture = () => {
 const RadioFixture = () => {
   const single = params.get("component") === "radio-group-item";
 
-  const initial = single
-    ? params.get("checked") === "true"
-      ? "subject"
-      : "other"
-    : params.has("none")
-      ? ""
-      : (params.get("value") ?? "survival");
+  let selectedInitial: string;
+
+  if (single) {
+    selectedInitial = params.get("checked") === "true" ? "subject" : "other";
+  } else if (params.has("none")) {
+    selectedInitial = "";
+  } else {
+    selectedInitial = params.get("value") ?? "survival";
+  }
+
+  const initial = selectedInitial;
 
   const [value, setValue] = React.useState(initial);
   const [changes, setChanges] = React.useState(0);
@@ -380,53 +428,62 @@ const RadioFixture = () => {
     ? ["subject"]
     : ["survival", "creative", "adventure", "spectator"];
 
-  const items = names.map((name, index) => (
-    <div
-      key={name}
-      style={{ alignItems: "center", display: "flex", gap: 4 * scale }}
-    >
-      <RadioGroupItem
-        render={
-          params.has("itemAsChild") ? (
-            params.has("anchor") ? (
-              <a href="#radio" />
-            ) : (
-              <button />
-            )
-          ) : undefined
-        }
-        id={single ? "subject" : `radio-${name}`}
-        ref={index === 0 ? itemRef : undefined}
-        value={name}
-        aria-label={name}
-        disabled={
-          single
-            ? state === "disabled"
-            : index === Number(params.get("disabledIndex") ?? -1)
-        }
-        onClick={(event) => {
-          setEvents((current) => current + 1);
+  const items = names.map((name, index) => {
+    let selectedFixtureBranch2: ReactNode;
 
-          if (params.has("prevent")) {
-            event.preventDefault();
-            event.preventBaseUIHandler();
-          }
-        }}
-        data-subject={
-          (single ? "subject" : `radio-${name}`) === "subject"
-            ? "true"
-            : undefined
-        }
+    if (params.has("itemAsChild")) {
+      selectedFixtureBranch2 = params.has("anchor") ? (
+        // oxlint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/anchor-has-content -- RadioGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+        <a href="#radio" />
+      ) : (
+        // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- RadioGroupItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+        <button type="submit" />
+      );
+    } else {
+      selectedFixtureBranch2 = undefined;
+    }
+
+    return (
+      <div
+        key={name}
+        style={{ "--fixture-layout-7": `${4 * scale}px` }}
+        className="fixture-owner-layout-12 fixture-owner-layout-13 fixture-owner-layout-14"
       >
-        {undefined}
-      </RadioGroupItem>
-      {!single && (
-        <Label scale={scale} htmlFor={`radio-${name}`}>
-          {name[0].toUpperCase() + name.slice(1)}
-        </Label>
-      )}
-    </div>
-  ));
+        <RadioGroupItem
+          render={selectedFixtureBranch2}
+          id={single ? "subject" : `radio-${name}`}
+          ref={index === 0 ? itemRef : undefined}
+          value={name}
+          aria-label={name}
+          disabled={
+            single
+              ? state === "disabled"
+              : index === Number(params.get("disabledIndex") ?? -1)
+          }
+          onClick={(event) => {
+            setEvents((current) => current + 1);
+
+            if (params.has("prevent")) {
+              event.preventDefault();
+              event.preventBaseUIHandler();
+            }
+          }}
+          data-subject={
+            (single ? "subject" : `radio-${name}`) === "subject"
+              ? "true"
+              : undefined
+          }
+        >
+          {undefined}
+        </RadioGroupItem>
+        {!single && (
+          <Label scale={scale} htmlFor={`radio-${name}`}>
+            {name[0].toUpperCase() + name.slice(1)}
+          </Label>
+        )}
+      </div>
+    );
+  });
 
   const group = (
     <RadioGroup
@@ -458,7 +515,10 @@ const RadioFixture = () => {
         onSubmit={(event) => {
           event.preventDefault();
           setResult(
-            String(new FormData(event.currentTarget).get("mode") ?? "missing")
+            // SAFETY: this owned form's mode controls are RadioGroup/Select/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer boundary; no runtime check or changed read.
+            (new FormData(event.currentTarget).get("mode") as string | null) ??
+              "missing"
           );
         }}
       >
@@ -466,6 +526,7 @@ const RadioFixture = () => {
         {params.has("form") && <button type="submit">Save mode</button>}
       </form>
       <button
+        type="button"
         id="radio-external"
         onClick={() => {
           setValue("adventure");
@@ -474,6 +535,7 @@ const RadioFixture = () => {
         Choose externally
       </button>
       <button
+        type="button"
         id="radio-read-refs"
         onClick={() => {
           setRefs(`${rootRef.current?.tagName}/${itemRef.current?.tagName}`);
@@ -491,6 +553,8 @@ const RadioFixture = () => {
 };
 
 const SwitchFixture = () => {
+  const hasRequestedWidth = params.has("width");
+
   const [checked, setChecked] = React.useState(
     params.get("checked") === "true"
   );
@@ -502,21 +566,31 @@ const SwitchFixture = () => {
   const ref = React.useRef<HTMLButtonElement>(null);
   const [tag, setTag] = React.useState("");
 
+  let selectedFixtureBranch3: ReactNode;
+
+  if (params.has("asChild")) {
+    selectedFixtureBranch3 = params.has("anchor") ? (
+      // oxlint-disable-next-line jsx-a11y/control-has-associated-label, jsx-a11y/anchor-has-content -- Switch supplies its actual name through explicit aria-labelledby when labelled and aria-label otherwise; keep this receiver empty to verify real forwarding.
+      <a href="#switch" />
+    ) : (
+      // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Switch supplies its actual name through explicit aria-labelledby when labelled and aria-label otherwise; keep this receiver empty to verify real forwarding.
+      <button type="submit" />
+    );
+  } else {
+    selectedFixtureBranch3 = undefined;
+  }
+
   const control = (
     <Switch
-      render={
-        params.has("asChild") ? (
-          params.has("anchor") ? (
-            <a href="#switch" />
-          ) : (
-            <button />
-          )
-        ) : undefined
-      }
+      render={selectedFixtureBranch3}
       id="subject"
       ref={ref}
       scale={scale}
-      size={(params.get("size") ?? undefined) as "default" | undefined}
+      size={
+        // SAFETY: owned fixture callers serialize the size option from the actual component protocol ("default" | undefined); preserve this URL read, original default and component handling.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+        (params.get("size") ?? undefined) as "default" | undefined
+      }
       checked={params.has("controlled") ? checked : undefined}
       defaultChecked={params.get("checked") === "true"}
       disabled={state === "disabled"}
@@ -531,7 +605,15 @@ const SwitchFixture = () => {
       value={params.get("formValue") ?? "enabled"}
       required={params.has("required")}
       aria-label={params.has("labelled") ? undefined : "Test switch"}
-      style={params.has("width") ? { width: width * scale } : undefined}
+      aria-labelledby={
+        params.has("labelled") ? "switch-setting-label" : undefined
+      }
+      className={hasRequestedWidth ? "fixture-geometry-width" : undefined}
+      style={
+        hasRequestedWidth
+          ? { "--fixture-width": `${width * scale}px` }
+          : undefined
+      }
       onClick={(event) => {
         setEvents((current) => current + 1);
 
@@ -552,12 +634,15 @@ const SwitchFixture = () => {
         onSubmit={(event) => {
           event.preventDefault();
           setResult(
-            String(new FormData(event.currentTarget).get("mode") ?? "missing")
+            // SAFETY: this owned form's mode controls are RadioGroup/Select/Switch string-value inputs; there are no file controls named mode. An unsuccessful/absent control remains null, and the existing missing fallback stays unchanged. Its result is already a string, so no coercion is needed.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact named form-control producer boundary; no runtime check or changed read.
+            (new FormData(event.currentTarget).get("mode") as string | null) ??
+              "missing"
           );
         }}
       >
         {params.has("labelled") && (
-          <Label scale={scale} htmlFor="subject">
+          <Label id="switch-setting-label" scale={scale} htmlFor="subject">
             Switch setting
           </Label>
         )}
@@ -565,6 +650,7 @@ const SwitchFixture = () => {
         {params.has("form") && <button type="submit">Save switch</button>}
       </form>
       <button
+        type="button"
         id="switch-external"
         onClick={() => {
           setChecked((current) => !current);
@@ -573,6 +659,7 @@ const SwitchFixture = () => {
         Change externally
       </button>
       <button
+        type="button"
         id="switch-read-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "missing");
@@ -591,12 +678,10 @@ const SwitchFixture = () => {
 
 const ContextFixture = () => {
   const native = params.has("native");
-  const triggerPixels = params.has("triggerPixels");
+
   const [open, setOpen] = React.useState(params.has("open"));
 
-  const [menuValue, setMenuValue] = React.useState(
-    params.has("open") ? "game" : ""
-  );
+  const [, setMenuValue] = React.useState(params.has("open") ? "game" : "");
 
   const [actions, setActions] = React.useState(0);
   const [checked, setChecked] = React.useState(false);
@@ -605,11 +690,12 @@ const ContextFixture = () => {
 
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLDivElement>(null);
-  const rootRef = React.useRef<HTMLDivElement>(null);
 
+  // SAFETY: owned ContextMenu items callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact ContextMenu items query-label producer boundary.
   const labels: string[] = JSON.parse(
     params.get("labels") ?? '["Game","World","More >"]'
-  );
+  ) as FixtureLabels;
 
   const part = params.get("part");
   const nativeLabel = params.get("label") ?? "World Settings";
@@ -617,8 +703,8 @@ const ContextFixture = () => {
   const nativeChecked = params.get("checked") === "true";
 
   const choose = (event: {
-    preventDefault(): void;
-    preventBaseUIHandler?(): void;
+    preventDefault: () => void;
+    preventBaseUIHandler?: () => void;
   }) => {
     setActions((n) => n + 1);
 
@@ -628,45 +714,66 @@ const ContextFixture = () => {
     }
   };
 
-  const nativeBody =
-    part === "menu-checkbox" ? (
-      <ContextMenuCheckboxItem
-        checked={nativeChecked}
-        disabled={nativeDisabled}
-      >
-        {nativeLabel}
-      </ContextMenuCheckboxItem>
-    ) : part === "menu-radio" ? (
-      <ContextMenuRadioGroup value={nativeChecked ? "on" : "off"}>
-        <ContextMenuRadioItem value="on" disabled={nativeDisabled}>
+  const renderNativeMenuBody = () => {
+    let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
+
+    if (part === "menu-checkbox") {
+      selectedNativeBody = (
+        <ContextMenuCheckboxItem
+          checked={nativeChecked}
+          disabled={nativeDisabled}
+        >
           {nativeLabel}
-        </ContextMenuRadioItem>
-      </ContextMenuRadioGroup>
-    ) : part === "menu-label" || part === "menu-label-inset" ? (
-      <ContextMenuGroup>
-        <ContextMenuLabel inset={part === "menu-label-inset"}>
-          {nativeLabel}
-        </ContextMenuLabel>
-      </ContextMenuGroup>
-    ) : part === "menu-separator" ? (
-      <ContextMenuSeparator />
-    ) : part === "menu-sub-trigger" ? (
-      <ContextMenuSub>
-        <ContextMenuSubTrigger>{nativeLabel}</ContextMenuSubTrigger>
-      </ContextMenuSub>
-    ) : part === "menu-disabled" ? (
-      <ContextMenuItem disabled>{nativeLabel}</ContextMenuItem>
-    ) : (
-      labels.map((label, index) => (
+        </ContextMenuCheckboxItem>
+      );
+    } else if (part === "menu-radio") {
+      selectedNativeBody = (
+        <ContextMenuRadioGroup value={nativeChecked ? "on" : "off"}>
+          <ContextMenuRadioItem value="on" disabled={nativeDisabled}>
+            {nativeLabel}
+          </ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
+      );
+    } else if (part === "menu-label" || part === "menu-label-inset") {
+      selectedNativeBody = (
+        <ContextMenuGroup>
+          <ContextMenuLabel inset={part === "menu-label-inset"}>
+            {nativeLabel}
+          </ContextMenuLabel>
+        </ContextMenuGroup>
+      );
+    } else if (part === "menu-separator") {
+      selectedNativeBody = <ContextMenuSeparator />;
+    } else if (part === "menu-sub-trigger") {
+      selectedNativeBody = (
+        <ContextMenuSub>
+          <ContextMenuSubTrigger>{nativeLabel}</ContextMenuSubTrigger>
+        </ContextMenuSub>
+      );
+    } else if (part === "menu-disabled") {
+      selectedNativeBody = (
+        <ContextMenuItem disabled>{nativeLabel}</ContextMenuItem>
+      );
+    } else {
+      selectedNativeBody = labels.map((contextItemLabel, index) => (
+        /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
         <ContextMenuItem key={index} data-native-index={index}>
-          {label}
+          {contextItemLabel}
         </ContextMenuItem>
-      ))
-    );
+        /* oxlint-enable react-doctor/no-array-index-as-key */
+      ));
+    }
+
+    const nativeMenuBody = selectedNativeBody;
+
+    return nativeMenuBody;
+  };
+
+  const nativeBody = renderNativeMenuBody();
 
   const handleOpen = (
     next: boolean,
-    details: { reason: string; cancel(): void }
+    details: { reason: string; cancel: () => void }
   ) => {
     if (
       params.has("reject") ||
@@ -728,42 +835,74 @@ const ContextFixture = () => {
     </>
   );
 
-  const popup = (
-    <ContextMenuContent
-      render={params.has("contentAsChild") ? <section /> : undefined}
-      id="subject"
-      data-subject="true"
-      ref={content}
-      side={
-        (params.get("side") ?? "right") as "top" | "right" | "bottom" | "left"
-      }
-      align={(params.get("align") ?? "start") as "start" | "center" | "end"}
-      sideOffset={native ? 0 : 4}
-      surface={
-        params.get("surface") === "suggestions" ? "suggestions" : "popup"
-      }
-      style={
-        native
-          ? {
-              height: Number(params.get("height")) * scale,
-              width: Number(params.get("width")) * scale,
-            }
-          : params.has("maxHeight")
-            ? { maxHeight: Number(params.get("maxHeight")) }
-            : undefined
-      }
-    >
-      {params.has("contentAsChild") ? (
-        <ContextMenuItem render={<a href="#menu-composed" />} onClick={choose}>
+  const renderMenuPopup = () => {
+    let selectedFixtureBranch4: ReactNode;
+
+    if (params.has("contentAsChild")) {
+      selectedFixtureBranch4 = (
+        <ContextMenuItem
+          render={
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ContextMenuItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+            <a href="#menu-composed" />
+          }
+          onClick={choose}
+        >
           Composed action
         </ContextMenuItem>
-      ) : native ? (
-        nativeBody
-      ) : (
-        rows
-      )}
-    </ContextMenuContent>
-  );
+      );
+    } else {
+      selectedFixtureBranch4 = native ? nativeBody : rows;
+    }
+
+    let popupNativeHeight: string | undefined;
+    let popupNativeWidth: string | undefined;
+    let popupMaximumHeight: number | undefined;
+
+    if (native) {
+      popupNativeHeight = `${Number(params.get("height")) * scale}px`;
+      popupNativeWidth = `${Number(params.get("width")) * scale}px`;
+    } else if (params.has("maxHeight")) {
+      popupMaximumHeight = Number(params.get("maxHeight"));
+    }
+
+    const popupElement = (
+      <ContextMenuContent
+        render={params.has("contentAsChild") ? <section /> : undefined}
+        id="subject"
+        data-subject="true"
+        ref={content}
+        side={
+          // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("side") ?? "right") as "top" | "right" | "bottom" | "left"
+        }
+        align={
+          // SAFETY: owned fixture callers serialize the align option from the actual component protocol ("start" | "center" | "end"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("align") ?? "start") as "start" | "center" | "end"
+        }
+        sideOffset={native ? 0 : 4}
+        surface={
+          params.get("surface") === "suggestions" ? "suggestions" : "popup"
+        }
+        className={cn({
+          "fixture-geometry-height fixture-geometry-width": native,
+        })}
+        style={{
+          "--fixture-height": popupNativeHeight,
+          "--fixture-width": popupNativeWidth,
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the URL numeric maxHeight fallback and explicit zero; invalid CSS-variable substitution can lose the existing popup cap, and no finite-only schema or new validation is authorized.
+          maxHeight: popupMaximumHeight,
+        }}
+      >
+        {selectedFixtureBranch4}
+      </ContextMenuContent>
+    );
+
+    return popupElement;
+  };
+
+  const popup = renderMenuPopup();
 
   return (
     <>
@@ -773,18 +912,16 @@ const ContextFixture = () => {
         onOpenChange={handleOpen}
       >
         <ContextMenuTrigger
-          render={params.has("triggerAsChild") ? <button /> : undefined}
+          render={
+            params.has("triggerAsChild") ? (
+              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ContextMenuTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+              <button type="button" />
+            ) : undefined
+          }
           id="context-hit"
           ref={trigger}
-          style={
-            native
-              ? { inset: 0, position: "fixed" }
-              : {
-                  border: "2px solid #aaa",
-                  display: "block",
-                  height: 200,
-                  width: 400,
-                }
+          className={
+            native ? "fixture-context-native-hit" : "fixture-context-web-hit"
           }
           onContextMenu={
             params.has("preventTrigger")
@@ -800,8 +937,9 @@ const ContextFixture = () => {
         {popup}
       </ContextMenu>
       <button
+        type="button"
         id="context-outside"
-        style={{ bottom: 8, position: "fixed", right: 8 }}
+        className="fixture-corner-control"
         onClick={() => {
           setTags(
             [trigger.current?.tagName, content.current?.tagName].join(",")
@@ -829,87 +967,127 @@ const CollapsibleFixture = () => {
   const trigger = React.useRef<HTMLButtonElement>(null);
   const content = React.useRef<HTMLDivElement>(null);
 
-  const child = (
-    <>
-      <CollapsibleTrigger
-        render={params.has("asChild") ? <button /> : undefined}
-        ref={trigger}
-        {...(native && !body ? { "data-subject": "true", id: "subject" } : {})}
-        {...(native && !body && params.get("state") === "disabled"
-          ? { disabled: true }
-          : {})}
-        style={
-          native && body ? { left: -10_000, position: "fixed" } : undefined
-        }
-        onClick={
-          params.has("prevent")
-            ? (event) => {
-                event.preventDefault();
-                event.preventBaseUIHandler();
-              }
-            : undefined
-        }
+  let selectedFixtureBranch5: ReactNode;
+
+  if (params.has("asChild")) {
+    selectedFixtureBranch5 = "World details";
+  } else {
+    selectedFixtureBranch5 = native
+      ? (params.get("label") ?? "Button")
+      : "World details";
+  }
+
+  let selectedFixtureBranch6: ReactNode;
+
+  if (params.has("contentAsChild")) {
+    selectedFixtureBranch6 = (
+      <button
+        type="button"
+        onClick={() => {
+          setChanges((n) => n + 1);
+        }}
       >
-        {params.has("asChild")
-          ? "World details"
-          : native
-            ? (params.get("label") ?? "Button")
-            : "World details"}
-      </CollapsibleTrigger>
-      <CollapsibleContent
-        render={params.has("contentAsChild") ? <section /> : undefined}
-        ref={content}
-        {...(native && body ? { "data-subject": "true", id: "subject" } : {})}
-        wrap={!native}
-        align={params.get("align") === "center" ? "center" : "left"}
-        maxWidth={
-          params.has("wrapWidth") ? Number(params.get("wrapWidth")) : undefined
-        }
-        keepMounted={params.has("forceMount") ? true : undefined}
-        style={
-          native && body
-            ? {
-                height: Number(params.get("height")) * scale,
-                left: Number(params.get("x") ?? 16) * scale,
-                padding: 0,
-                position: "fixed",
-                top: Number(params.get("y") ?? 16) * scale,
-                width: Number(params.get("width")) * scale,
-              }
-            : undefined
-        }
+        Inside action
+      </button>
+    );
+  } else if (native) {
+    selectedFixtureBranch6 = params.get("text") ?? "";
+  } else {
+    selectedFixtureBranch6 = params.has("rich") ? (
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          setChanges((n) => n + 1);
+        }}
       >
-        {params.has("contentAsChild") ? (
-          <button
-            onClick={() => {
-              setChanges((n) => n + 1);
-            }}
-          >
-            Inside action
-          </button>
-        ) : native ? (
-          (params.get("text") ?? "")
-        ) : params.has("rich") ? (
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              setChanges((n) => n + 1);
-            }}
-          >
-            <input
-              aria-label="World name"
-              spellCheck={false}
-              autoCorrect="off"
-              defaultValue="Minecraft"
-            />
-            <Button type="submit">Save world</Button>
-          </form>
-        ) : (
-          "\u4F60\u597D\uFF0C\u4E16\u754C\nHello Minecraft"
-        )}
-      </CollapsibleContent>
-    </>
-  );
+        <input
+          aria-label="World name"
+          spellCheck={false}
+          autoCorrect="off"
+          defaultValue="Minecraft"
+        />
+        <Button type="submit">Save world</Button>
+      </form>
+    ) : (
+      "\u4F60\u597D\uFF0C\u4E16\u754C\nHello Minecraft"
+    );
+  }
+
+  const renderCollapsibleParts = () => {
+    const subjectParts = (
+      <>
+        <CollapsibleTrigger
+          render={
+            params.has("asChild") ? (
+              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- CollapsibleTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+              <button type="button" />
+            ) : undefined
+          }
+          ref={trigger}
+          {...(native && !body
+            ? { "data-subject": "true", id: "subject" }
+            : {})}
+          {...(native && !body && params.get("state") === "disabled"
+            ? { disabled: true }
+            : {})}
+          className={cn({
+            "fixture-native-collapse-hidden-trigger": native && body,
+          })}
+          onClick={
+            params.has("prevent")
+              ? (event) => {
+                  event.preventDefault();
+                  event.preventBaseUIHandler();
+                }
+              : undefined
+          }
+        >
+          {selectedFixtureBranch5}
+        </CollapsibleTrigger>
+        <CollapsibleContent
+          render={params.has("contentAsChild") ? <section /> : undefined}
+          ref={content}
+          {...(native && body ? { "data-subject": "true", id: "subject" } : {})}
+          wrap={!native}
+          align={params.get("align") === "center" ? "center" : "left"}
+          maxWidth={
+            params.has("wrapWidth")
+              ? Number(params.get("wrapWidth"))
+              : undefined
+          }
+          keepMounted={params.has("forceMount") ? true : undefined}
+          className={cn({
+            "fixture-geometry-height fixture-geometry-width fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-native-collapse-padding":
+              native && body,
+          })}
+          style={
+            native && body
+              ? {
+                  "--fixture-height": `${Number(params.get("height")) * scale}px`,
+                  "--fixture-width": `${Number(params.get("width")) * scale}px`,
+                  "--fixture-x": `${Number(params.get("x") ?? 16) * scale}px`,
+                  "--fixture-y": `${Number(params.get("y") ?? 16) * scale}px`,
+                }
+              : undefined
+          }
+        >
+          {selectedFixtureBranch6}
+        </CollapsibleContent>
+      </>
+    );
+
+    return subjectParts;
+  };
+
+  const child = renderCollapsibleParts();
+
+  let selectedFixtureBranch7: ReactNode;
+
+  if (native) {
+    selectedFixtureBranch7 = body || params.has("expanded");
+  } else {
+    selectedFixtureBranch7 = params.has("controlled") ? open : undefined;
+  }
 
   return (
     <>
@@ -917,13 +1095,7 @@ const CollapsibleFixture = () => {
         render={params.has("rootAsChild") ? <article /> : undefined}
         ref={root}
         scale={scale}
-        open={
-          native
-            ? body || params.has("expanded")
-            : params.has("controlled")
-              ? open
-              : undefined
-        }
+        open={selectedFixtureBranch7}
         defaultOpen={params.has("open")}
         disabled={params.has("disabled")}
         onOpenChange={(next) => {
@@ -933,13 +1105,13 @@ const CollapsibleFixture = () => {
             setOpen(next);
           }
         }}
+        className={cn({ "fixture-native-collapse-root": native })}
         style={
           native
             ? {
-                left: Number(params.get("x") ?? 16) * scale,
-                position: "fixed",
-                top: Number(params.get("y") ?? 16) * scale,
-                width: Number(params.get("width") ?? 200) * scale,
+                "--fixture-collapse-left": `${Number(params.get("x") ?? 16) * scale}px`,
+                "--fixture-collapse-top": `${Number(params.get("y") ?? 16) * scale}px`,
+                "--fixture-collapse-width": `${Number(params.get("width") ?? 200) * scale}px`,
               }
             : undefined
         }
@@ -947,8 +1119,9 @@ const CollapsibleFixture = () => {
         {child}
       </Collapsible>
       <button
+        type="button"
         id="collapsible-refs"
-        style={{ bottom: 8, position: "fixed", right: 8 }}
+        className="fixture-corner-control"
         onClick={() => {
           setRefs(
             [
@@ -962,6 +1135,7 @@ const CollapsibleFixture = () => {
         Read collapsible refs
       </button>
       <button
+        type="button"
         id="collapsible-external"
         onClick={() => {
           setOpen((value) => !value);
@@ -979,7 +1153,12 @@ const CollapsibleFixture = () => {
 const MenubarFixture = () => {
   const native = params.has("native");
   const triggerPixels = params.has("triggerPixels");
-  const [open, setOpen] = React.useState(params.has("open"));
+
+  const triggerLabel = triggerPixels
+    ? (params.get("label") ?? "Button")
+    : "Game menu";
+
+  const [, setOpen] = React.useState(params.has("open"));
 
   const [menuValue, setMenuValue] = React.useState(
     params.has("open") ? "game" : ""
@@ -994,9 +1173,11 @@ const MenubarFixture = () => {
   const trigger = React.useRef<HTMLButtonElement>(null);
   const rootRef = React.useRef<HTMLDivElement>(null);
 
+  // SAFETY: owned Menubar items callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Menubar items query-label producer boundary.
   const labels: string[] = JSON.parse(
     params.get("labels") ?? '["Game","World","More >"]'
-  );
+  ) as FixtureLabels;
 
   const part = params.get("part");
   const nativeLabel = params.get("label") ?? "World Settings";
@@ -1004,8 +1185,8 @@ const MenubarFixture = () => {
   const nativeChecked = params.get("checked") === "true";
 
   const choose = (event: {
-    preventDefault(): void;
-    preventBaseUIHandler?(): void;
+    preventDefault: () => void;
+    preventBaseUIHandler?: () => void;
   }) => {
     setActions((n) => n + 1);
 
@@ -1015,42 +1196,61 @@ const MenubarFixture = () => {
     }
   };
 
-  const nativeBody =
-    part === "menu-checkbox" ? (
-      <MenubarCheckboxItem checked={nativeChecked} disabled={nativeDisabled}>
-        {nativeLabel}
-      </MenubarCheckboxItem>
-    ) : part === "menu-radio" ? (
-      <MenubarRadioGroup value={nativeChecked ? "on" : "off"}>
-        <MenubarRadioItem value="on" disabled={nativeDisabled}>
+  const renderNativeMenuBody = () => {
+    let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
+
+    if (part === "menu-checkbox") {
+      selectedNativeBody = (
+        <MenubarCheckboxItem checked={nativeChecked} disabled={nativeDisabled}>
           {nativeLabel}
-        </MenubarRadioItem>
-      </MenubarRadioGroup>
-    ) : part === "menu-label" || part === "menu-label-inset" ? (
-      <MenubarGroup>
-        <MenubarLabel inset={part === "menu-label-inset"}>
-          {nativeLabel}
-        </MenubarLabel>
-      </MenubarGroup>
-    ) : part === "menu-separator" ? (
-      <MenubarSeparator />
-    ) : part === "menu-sub-trigger" ? (
-      <MenubarSub>
-        <MenubarSubTrigger>{nativeLabel}</MenubarSubTrigger>
-      </MenubarSub>
-    ) : part === "menu-disabled" ? (
-      <MenubarItem disabled>{nativeLabel}</MenubarItem>
-    ) : (
-      labels.map((label, index) => (
+        </MenubarCheckboxItem>
+      );
+    } else if (part === "menu-radio") {
+      selectedNativeBody = (
+        <MenubarRadioGroup value={nativeChecked ? "on" : "off"}>
+          <MenubarRadioItem value="on" disabled={nativeDisabled}>
+            {nativeLabel}
+          </MenubarRadioItem>
+        </MenubarRadioGroup>
+      );
+    } else if (part === "menu-label" || part === "menu-label-inset") {
+      selectedNativeBody = (
+        <MenubarGroup>
+          <MenubarLabel inset={part === "menu-label-inset"}>
+            {nativeLabel}
+          </MenubarLabel>
+        </MenubarGroup>
+      );
+    } else if (part === "menu-separator") {
+      selectedNativeBody = <MenubarSeparator />;
+    } else if (part === "menu-sub-trigger") {
+      selectedNativeBody = (
+        <MenubarSub>
+          <MenubarSubTrigger>{nativeLabel}</MenubarSubTrigger>
+        </MenubarSub>
+      );
+    } else if (part === "menu-disabled") {
+      selectedNativeBody = <MenubarItem disabled>{nativeLabel}</MenubarItem>;
+    } else {
+      selectedNativeBody = labels.map((menubarItemLabel, index) => (
+        /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
         <MenubarItem key={index} data-native-index={index}>
-          {label}
+          {menubarItemLabel}
         </MenubarItem>
-      ))
-    );
+        /* oxlint-enable react-doctor/no-array-index-as-key */
+      ));
+    }
+
+    const nativeMenuBody = selectedNativeBody;
+
+    return nativeMenuBody;
+  };
+
+  const nativeBody = renderNativeMenuBody();
 
   const handleOpen = (
     next: boolean,
-    details: { reason: string; cancel(): void }
+    details: { reason: string; cancel: () => void }
   ) => {
     if (
       params.has("reject") ||
@@ -1112,101 +1312,159 @@ const MenubarFixture = () => {
     </>
   );
 
-  const popup = (
-    <MenubarContent
-      render={params.has("contentAsChild") ? <section /> : undefined}
-      id="subject"
-      data-subject="true"
-      ref={content}
-      side={
-        (params.get("side") ?? "bottom") as "top" | "right" | "bottom" | "left"
-      }
-      align={
-        (params.get("align") ?? (native ? "start" : "center")) as
-          | "start"
-          | "center"
-          | "end"
-      }
-      sideOffset={native ? 0 : 4}
-      surface={
-        params.get("surface") === "suggestions" ? "suggestions" : "popup"
-      }
-      style={
-        native
-          ? {
-              height: Number(params.get("height")) * scale,
-              width: Number(params.get("width")) * scale,
-            }
-          : params.has("maxHeight")
-            ? { maxHeight: Number(params.get("maxHeight")) }
-            : undefined
-      }
-    >
-      {params.has("contentAsChild") ? (
-        <MenubarItem render={<a href="#menu-composed" />} onClick={choose}>
+  const renderMenuPopup = () => {
+    let selectedFixtureBranch8: ReactNode;
+
+    if (params.has("contentAsChild")) {
+      selectedFixtureBranch8 = (
+        <MenubarItem
+          render={
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- MenubarItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+            <a href="#menu-composed" />
+          }
+          onClick={choose}
+        >
           Composed action
         </MenubarItem>
-      ) : native ? (
-        nativeBody
-      ) : (
-        rows
-      )}
-    </MenubarContent>
-  );
+      );
+    } else {
+      selectedFixtureBranch8 = native ? nativeBody : rows;
+    }
+
+    let popupNativeHeight: string | undefined;
+    let popupNativeWidth: string | undefined;
+    let popupMaximumHeight: number | undefined;
+
+    if (native) {
+      popupNativeHeight = `${Number(params.get("height")) * scale}px`;
+      popupNativeWidth = `${Number(params.get("width")) * scale}px`;
+    } else if (params.has("maxHeight")) {
+      popupMaximumHeight = Number(params.get("maxHeight"));
+    }
+
+    const popupElement = (
+      <MenubarContent
+        render={params.has("contentAsChild") ? <section /> : undefined}
+        id="subject"
+        data-subject="true"
+        ref={content}
+        side={
+          // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("side") ?? "bottom") as
+            | "top"
+            | "right"
+            | "bottom"
+            | "left"
+        }
+        align={
+          // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "start" | "center" | "end"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("align") ?? (native ? "start" : "center")) as
+            | "start"
+            | "center"
+            | "end"
+        }
+        sideOffset={native ? 0 : 4}
+        surface={
+          params.get("surface") === "suggestions" ? "suggestions" : "popup"
+        }
+        className={cn({
+          "fixture-geometry-height fixture-geometry-width": native,
+        })}
+        style={{
+          "--fixture-height": popupNativeHeight,
+          "--fixture-width": popupNativeWidth,
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the URL numeric maxHeight fallback and explicit zero; invalid CSS-variable substitution can lose the existing popup cap, and no finite-only schema or new validation is authorized.
+          maxHeight: popupMaximumHeight,
+        }}
+      >
+        {selectedFixtureBranch8}
+      </MenubarContent>
+    );
+
+    return popupElement;
+  };
+
+  const popup = renderMenuPopup();
+
+  const nativeTriggerPositioned =
+    triggerPixels && (!native || params.has("nativeButtonChild"));
+
+  const readMenuOpenState = () => {
+    let requestedOpenState: ReactNode;
+
+    if (native || (triggerPixels && params.has("open"))) {
+      requestedOpenState = true;
+    } else {
+      requestedOpenState = params.has("controlled")
+        ? menuValue === "game"
+        : undefined;
+    }
+
+    return requestedOpenState;
+  };
+
+  const selectedFixtureBranch9 = readMenuOpenState();
+
+  const renderMenuTriggerReceiver = () => {
+    let triggerReceiver: ReactNode;
+
+    if (params.has("nativeButtonChild")) {
+      triggerReceiver = <Button scale={scale} />;
+    } else {
+      triggerReceiver =
+        native || params.has("triggerAsChild") ? (
+          <button
+            type="button"
+            aria-label={fixtureFallbackLabel("Game menu", triggerLabel)}
+            className={native ? "fixture-native-anchor" : undefined}
+            style={
+              native
+                ? {
+                    "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
+                    "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
+                  }
+                : undefined
+            }
+          />
+        ) : undefined;
+    }
+
+    return triggerReceiver;
+  };
+
+  const selectedFixtureBranch10 = renderMenuTriggerReceiver();
 
   return (
     <>
       <Menubar ref={rootRef} scale={scale}>
         <MenubarMenu
-          open={
-            native || (triggerPixels && params.has("open"))
-              ? true
-              : params.has("controlled")
-                ? menuValue === "game"
-                : undefined
-          }
+          open={selectedFixtureBranch9}
           defaultOpen={params.has("open")}
           onOpenChange={handleOpen}
         >
           <MenubarTrigger
-            render={
-              params.has("nativeButtonChild") ? (
-                <Button scale={scale} />
-              ) : native || params.has("triggerAsChild") ? (
-                <button
-                  style={
-                    native
-                      ? {
-                          border: 0,
-                          height: 0,
-                          left: Number(params.get("x")) * scale,
-                          padding: 0,
-                          position: "fixed",
-                          top: Number(params.get("y")) * scale,
-                          width: 0,
-                        }
-                      : undefined
-                  }
-                />
-              ) : undefined
-            }
+            render={selectedFixtureBranch10}
             ref={trigger}
             disabled={
               params.has("disabled") ||
               (triggerPixels && params.get("state") === "disabled")
             }
+            className={cn({
+              "fixture-native-menu-trigger": nativeTriggerPositioned,
+            })}
             style={
-              triggerPixels
+              nativeTriggerPositioned
                 ? {
-                    left: Number(params.get("x") ?? 16) * scale,
-                    position: "fixed",
-                    top: Number(params.get("y") ?? 16) * scale,
-                    width: Number(params.get("width") ?? 200) * scale,
+                    "--fixture-trigger-left": `${Number(params.get("x") ?? 16) * scale}px`,
+                    "--fixture-trigger-top": `${Number(params.get("y") ?? 16) * scale}px`,
+                    "--fixture-trigger-width": `${Number(params.get("width") ?? 200) * scale}px`,
                   }
                 : undefined
             }
           >
-            {triggerPixels ? (params.get("label") ?? "Button") : "Game menu"}
+            {triggerLabel}
           </MenubarTrigger>
 
           {popup}
@@ -1230,8 +1488,9 @@ const MenubarFixture = () => {
         )}
       </Menubar>
       <button
+        type="button"
         id="menubar-outside"
-        style={{ bottom: 8, position: "fixed", right: 8 }}
+        className="fixture-corner-control"
         onClick={() => {
           setTags(
             [
@@ -1255,11 +1514,14 @@ const MenubarFixture = () => {
 const DropdownFixture = () => {
   const native = params.has("native");
   const triggerPixels = params.has("triggerPixels");
+
+  const triggerLabel = triggerPixels
+    ? (params.get("label") ?? "Button")
+    : "Game menu";
+
   const [open, setOpen] = React.useState(params.has("open"));
 
-  const [menuValue, setMenuValue] = React.useState(
-    params.has("open") ? "game" : ""
-  );
+  const [, setMenuValue] = React.useState(params.has("open") ? "game" : "");
 
   const [actions, setActions] = React.useState(0);
   const [checked, setChecked] = React.useState(false);
@@ -1268,11 +1530,12 @@ const DropdownFixture = () => {
 
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLButtonElement>(null);
-  const rootRef = React.useRef<HTMLDivElement>(null);
 
+  // SAFETY: owned DropdownMenu items callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact DropdownMenu items query-label producer boundary.
   const labels: string[] = JSON.parse(
     params.get("labels") ?? '["Game","World","More >"]'
-  );
+  ) as FixtureLabels;
 
   const part = params.get("part");
   const nativeLabel = params.get("label") ?? "World Settings";
@@ -1280,8 +1543,8 @@ const DropdownFixture = () => {
   const nativeChecked = params.get("checked") === "true";
 
   const choose = (event: {
-    preventDefault(): void;
-    preventBaseUIHandler?(): void;
+    preventDefault: () => void;
+    preventBaseUIHandler?: () => void;
   }) => {
     setActions((n) => n + 1);
 
@@ -1291,45 +1554,66 @@ const DropdownFixture = () => {
     }
   };
 
-  const nativeBody =
-    part === "menu-checkbox" ? (
-      <DropdownMenuCheckboxItem
-        checked={nativeChecked}
-        disabled={nativeDisabled}
-      >
-        {nativeLabel}
-      </DropdownMenuCheckboxItem>
-    ) : part === "menu-radio" ? (
-      <DropdownMenuRadioGroup value={nativeChecked ? "on" : "off"}>
-        <DropdownMenuRadioItem value="on" disabled={nativeDisabled}>
+  const renderNativeMenuBody = () => {
+    let selectedNativeBody: React.JSX.Element | React.JSX.Element[];
+
+    if (part === "menu-checkbox") {
+      selectedNativeBody = (
+        <DropdownMenuCheckboxItem
+          checked={nativeChecked}
+          disabled={nativeDisabled}
+        >
           {nativeLabel}
-        </DropdownMenuRadioItem>
-      </DropdownMenuRadioGroup>
-    ) : part === "menu-label" || part === "menu-label-inset" ? (
-      <DropdownMenuGroup>
-        <DropdownMenuLabel inset={part === "menu-label-inset"}>
-          {nativeLabel}
-        </DropdownMenuLabel>
-      </DropdownMenuGroup>
-    ) : part === "menu-separator" ? (
-      <DropdownMenuSeparator />
-    ) : part === "menu-sub-trigger" ? (
-      <DropdownMenuSub>
-        <DropdownMenuSubTrigger>{nativeLabel}</DropdownMenuSubTrigger>
-      </DropdownMenuSub>
-    ) : part === "menu-disabled" ? (
-      <DropdownMenuItem disabled>{nativeLabel}</DropdownMenuItem>
-    ) : (
-      labels.map((label, index) => (
+        </DropdownMenuCheckboxItem>
+      );
+    } else if (part === "menu-radio") {
+      selectedNativeBody = (
+        <DropdownMenuRadioGroup value={nativeChecked ? "on" : "off"}>
+          <DropdownMenuRadioItem value="on" disabled={nativeDisabled}>
+            {nativeLabel}
+          </DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      );
+    } else if (part === "menu-label" || part === "menu-label-inset") {
+      selectedNativeBody = (
+        <DropdownMenuGroup>
+          <DropdownMenuLabel inset={part === "menu-label-inset"}>
+            {nativeLabel}
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
+      );
+    } else if (part === "menu-separator") {
+      selectedNativeBody = <DropdownMenuSeparator />;
+    } else if (part === "menu-sub-trigger") {
+      selectedNativeBody = (
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>{nativeLabel}</DropdownMenuSubTrigger>
+        </DropdownMenuSub>
+      );
+    } else if (part === "menu-disabled") {
+      selectedNativeBody = (
+        <DropdownMenuItem disabled>{nativeLabel}</DropdownMenuItem>
+      );
+    } else {
+      selectedNativeBody = labels.map((dropdownItemLabel, index) => (
+        /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
         <DropdownMenuItem key={index} data-native-index={index}>
-          {label}
+          {dropdownItemLabel}
         </DropdownMenuItem>
-      ))
-    );
+        /* oxlint-enable react-doctor/no-array-index-as-key */
+      ));
+    }
+
+    const nativeMenuBody = selectedNativeBody;
+
+    return nativeMenuBody;
+  };
+
+  const nativeBody = renderNativeMenuBody();
 
   const handleOpen = (
     next: boolean,
-    details: { reason: string; cancel(): void }
+    details: { reason: string; cancel: () => void }
   ) => {
     if (
       params.has("reject") ||
@@ -1391,103 +1675,160 @@ const DropdownFixture = () => {
     </>
   );
 
-  const popup = (
-    <DropdownMenuContent
-      render={params.has("contentAsChild") ? <section /> : undefined}
-      id="subject"
-      data-subject="true"
-      ref={content}
-      side={
-        (params.get("side") ?? "bottom") as "top" | "right" | "bottom" | "left"
-      }
-      align={
-        (params.get("align") ?? (native ? "start" : "center")) as
-          | "start"
-          | "center"
-          | "end"
-      }
-      sideOffset={native ? 0 : 4}
-      surface={
-        params.get("surface") === "suggestions" ? "suggestions" : "popup"
-      }
-      style={
-        native
-          ? {
-              height: Number(params.get("height")) * scale,
-              width: Number(params.get("width")) * scale,
-            }
-          : params.has("maxHeight")
-            ? { maxHeight: Number(params.get("maxHeight")) }
-            : undefined
-      }
-    >
-      {params.has("contentAsChild") ? (
-        <DropdownMenuItem render={<a href="#menu-composed" />} onClick={choose}>
+  const renderMenuPopup = () => {
+    let selectedFixtureBranch11: ReactNode;
+
+    if (params.has("contentAsChild")) {
+      selectedFixtureBranch11 = (
+        <DropdownMenuItem
+          render={
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- DropdownMenuItem supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+            <a href="#menu-composed" />
+          }
+          onClick={choose}
+        >
           Composed action
         </DropdownMenuItem>
-      ) : native ? (
-        nativeBody
-      ) : (
-        rows
-      )}
-    </DropdownMenuContent>
-  );
+      );
+    } else {
+      selectedFixtureBranch11 = native ? nativeBody : rows;
+    }
+
+    let popupNativeHeight: string | undefined;
+    let popupNativeWidth: string | undefined;
+    let popupMaximumHeight: number | undefined;
+
+    if (native) {
+      popupNativeHeight = `${Number(params.get("height")) * scale}px`;
+      popupNativeWidth = `${Number(params.get("width")) * scale}px`;
+    } else if (params.has("maxHeight")) {
+      popupMaximumHeight = Number(params.get("maxHeight"));
+    }
+
+    const popupElement = (
+      <DropdownMenuContent
+        render={params.has("contentAsChild") ? <section /> : undefined}
+        id="subject"
+        data-subject="true"
+        ref={content}
+        side={
+          // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "right" | "bottom" | "left"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("side") ?? "bottom") as
+            | "top"
+            | "right"
+            | "bottom"
+            | "left"
+        }
+        align={
+          // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "start" | "center" | "end"); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("align") ?? (native ? "start" : "center")) as
+            | "start"
+            | "center"
+            | "end"
+        }
+        sideOffset={native ? 0 : 4}
+        surface={
+          params.get("surface") === "suggestions" ? "suggestions" : "popup"
+        }
+        className={cn({
+          "fixture-geometry-height fixture-geometry-width": native,
+        })}
+        style={{
+          "--fixture-height": popupNativeHeight,
+          "--fixture-width": popupNativeWidth,
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the URL numeric maxHeight fallback and explicit zero; invalid CSS-variable substitution can lose the existing popup cap, and no finite-only schema or new validation is authorized.
+          maxHeight: popupMaximumHeight,
+        }}
+      >
+        {selectedFixtureBranch11}
+      </DropdownMenuContent>
+    );
+
+    return popupElement;
+  };
+
+  const popup = renderMenuPopup();
+
+  const nativeTriggerPositioned =
+    triggerPixels && (!native || params.has("nativeButtonChild"));
+
+  let selectedFixtureBranch12: ReactNode;
+
+  if (native) {
+    selectedFixtureBranch12 = true;
+  } else {
+    selectedFixtureBranch12 = params.has("controlled") ? open : undefined;
+  }
+
+  const renderMenuTriggerReceiver = () => {
+    let triggerReceiver: ReactNode;
+
+    if (params.has("nativeButtonChild")) {
+      triggerReceiver = <Button scale={scale} />;
+    } else {
+      triggerReceiver =
+        native || params.has("triggerAsChild") ? (
+          <button
+            type="button"
+            aria-label={fixtureFallbackLabel("Game menu", triggerLabel)}
+            className={native ? "fixture-native-anchor" : undefined}
+            style={
+              native
+                ? {
+                    "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
+                    "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
+                  }
+                : undefined
+            }
+          />
+        ) : undefined;
+    }
+
+    return triggerReceiver;
+  };
+
+  const selectedFixtureBranch13 = renderMenuTriggerReceiver();
 
   return (
     <>
       <DropdownMenu
         scale={scale}
-        open={native ? true : params.has("controlled") ? open : undefined}
+        open={selectedFixtureBranch12}
         defaultOpen={params.has("open")}
         modal={native || params.has("nonmodal") ? false : undefined}
         onOpenChange={handleOpen}
       >
         <DropdownMenuTrigger
-          render={
-            params.has("nativeButtonChild") ? (
-              <Button scale={scale} />
-            ) : native || params.has("triggerAsChild") ? (
-              <button
-                style={
-                  native
-                    ? {
-                        border: 0,
-                        height: 0,
-                        left: Number(params.get("x")) * scale,
-                        padding: 0,
-                        position: "fixed",
-                        top: Number(params.get("y")) * scale,
-                        width: 0,
-                      }
-                    : undefined
-                }
-              />
-            ) : undefined
-          }
+          render={selectedFixtureBranch13}
           ref={trigger}
           disabled={
             params.has("disabled") ||
             (triggerPixels && params.get("state") === "disabled")
           }
+          className={cn({
+            "fixture-native-menu-trigger": nativeTriggerPositioned,
+          })}
           style={
-            triggerPixels
+            nativeTriggerPositioned
               ? {
-                  left: Number(params.get("x") ?? 16) * scale,
-                  position: "fixed",
-                  top: Number(params.get("y") ?? 16) * scale,
-                  width: Number(params.get("width") ?? 200) * scale,
+                  "--fixture-trigger-left": `${Number(params.get("x") ?? 16) * scale}px`,
+                  "--fixture-trigger-top": `${Number(params.get("y") ?? 16) * scale}px`,
+                  "--fixture-trigger-width": `${Number(params.get("width") ?? 200) * scale}px`,
                 }
               : undefined
           }
         >
-          {triggerPixels ? (params.get("label") ?? "Button") : "Game menu"}
+          {triggerLabel}
         </DropdownMenuTrigger>
 
         {popup}
       </DropdownMenu>
       <button
+        type="button"
         id="menu-outside"
-        style={{ bottom: 8, position: "fixed", right: 8 }}
+        className="fixture-corner-control"
         onClick={() => {
           setTags(
             [trigger.current?.tagName, content.current?.tagName].join(",")
@@ -1514,6 +1855,63 @@ const PopoverFixture = () => {
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLButtonElement>(null);
   const anchor = React.useRef<HTMLDivElement>(null);
+
+  const renderPopoverBody = () =>
+    (!native || params.has("text")) && (
+      <>
+        <PopoverHeader>
+          <PopoverTitle>{params.get("label") ?? "World Settings"}</PopoverTitle>
+          <PopoverDescription>
+            {params.get("text") ?? "Configure the world."}
+          </PopoverDescription>
+        </PopoverHeader>
+        {!native && (
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setActions((n) => n + 1);
+              setOpen(false);
+            }}
+          >
+            <label htmlFor="popover-input">World name</label>
+            <Input
+              id="popover-input"
+              scale={scale}
+              defaultValue="Minecraft"
+              className="fixture-main-full-width"
+            />
+            <Button type="submit" scale={scale}>
+              Save
+            </Button>
+          </form>
+        )}
+        <div
+          style={{ "--fixture-layout-8": `${6 * scale}px` }}
+          className="fixture-owner-layout-18 fixture-owner-layout-19"
+        >
+          <PopoverClose
+            className="fixture-owner-layout-20"
+            onClick={() => {
+              setActions((n) => n + 1);
+            }}
+          >
+            Done
+          </PopoverClose>
+        </div>
+        {!native && (
+          <Button
+            scale={scale}
+            onClick={() => {
+              setRefs(
+                [trigger.current?.tagName, content.current?.tagName].join(",")
+              );
+            }}
+          >
+            Inspect popover refs
+          </Button>
+        )}
+      </>
+    );
 
   return (
     <>
@@ -1546,12 +1944,10 @@ const PopoverFixture = () => {
           <div
             ref={anchor}
             style={{
-              height: 0,
-              left: Number(params.get("x") ?? 16) * scale,
-              position: "fixed",
-              top: Number(params.get("y") ?? 16) * scale,
-              width: 0,
+              "--fixture-layout-19": `${Number(params.get("x") ?? 16) * scale}px`,
+              "--fixture-layout-20": `${Number(params.get("y") ?? 16) * scale}px`,
             }}
+            className="fixture-owner-layout-15 fixture-owner-layout-16 fixture-owner-layout-17 fixture-owner-layout-44 fixture-owner-layout-45"
           />
         )}
         <PopoverTrigger ref={trigger} disabled={params.has("disabled")}>
@@ -1563,6 +1959,8 @@ const PopoverFixture = () => {
           ref={content}
           aria-label={native ? "Test popover" : undefined}
           side={
+            // SAFETY: owned fixture callers serialize the side option from the actual component protocol (| "bottom" | "top" | "left" | "right"); preserve this URL read, original default and component handling.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
             (params.get("side") ?? "bottom") as
               | "bottom"
               | "top"
@@ -1570,81 +1968,36 @@ const PopoverFixture = () => {
               | "right"
           }
           align={
+            // SAFETY: owned fixture callers serialize the align option from the actual component protocol (| "start" | "center" | "end"); preserve this URL read, original default and component handling.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
             (params.get("align") ?? (native ? "start" : "center")) as
               | "start"
               | "center"
               | "end"
           }
           sideOffset={native ? 0 : Number(params.get("sideOffset") ?? 4)}
+          className={cn({
+            "fixture-geometry-height fixture-geometry-width": native,
+            "fixture-popover-empty-padding": native && !params.has("text"),
+          })}
           style={{
-            height: native ? Number(params.get("height")) * scale : undefined,
-            padding: native && !params.has("text") ? 0 : undefined,
-            width: native ? Number(params.get("width")) * scale : undefined,
+            "--fixture-height": native
+              ? `${Number(params.get("height")) * scale}px`
+              : undefined,
+            "--fixture-width": native
+              ? `${Number(params.get("width")) * scale}px`
+              : undefined,
           }}
           initialFocus={native ? () => content.current : undefined}
           data-subject="true"
         >
-          {(!native || params.has("text")) && (
-            <>
-              <PopoverHeader>
-                <PopoverTitle>
-                  {params.get("label") ?? "World Settings"}
-                </PopoverTitle>
-                <PopoverDescription>
-                  {params.get("text") ?? "Configure the world."}
-                </PopoverDescription>
-              </PopoverHeader>
-              {!native && (
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    setActions((n) => n + 1);
-                    setOpen(false);
-                  }}
-                >
-                  <label htmlFor="popover-input">World name</label>
-                  <Input
-                    id="popover-input"
-                    scale={scale}
-                    defaultValue="Minecraft"
-                    style={{ width: "100%" }}
-                  />
-                  <Button type="submit" scale={scale}>
-                    Save
-                  </Button>
-                </form>
-              )}
-              <div style={{ display: "flex", gap: 6 * scale }}>
-                <PopoverClose
-                  style={{ width: "100%" }}
-                  onClick={() => {
-                    setActions((n) => n + 1);
-                  }}
-                >
-                  Done
-                </PopoverClose>
-              </div>
-              {!native && (
-                <Button
-                  scale={scale}
-                  onClick={() => {
-                    setRefs(
-                      [trigger.current?.tagName, content.current?.tagName].join(
-                        ","
-                      )
-                    );
-                  }}
-                >
-                  Inspect popover refs
-                </Button>
-              )}
-            </>
-          )}
+          {renderPopoverBody()}
         </PopoverContent>
       </Popover>
       <button
+        type="button"
         id="popover-outside"
-        style={{ bottom: 8, position: "fixed", right: 8 }}
+        className="fixture-corner-control"
       >
         Outside
       </button>
@@ -1670,13 +2023,7 @@ const PopoverCompositionFixture = () => {
         <div
           ref={anchor}
           id="composed-anchor"
-          style={{
-            height: 24,
-            left: 240,
-            position: "fixed",
-            top: 180,
-            width: 32,
-          }}
+          className="fixture-layout-bulk-1"
         />
         <PopoverTrigger render={<Button scale={scale} />} ref={trigger}>
           Composed trigger
@@ -1688,7 +2035,8 @@ const PopoverCompositionFixture = () => {
           side="bottom"
           align="start"
           sideOffset={0}
-          style={{ width: 236 * scale }}
+          style={{ "--fixture-layout-9": `${236 * scale}px` }}
+          className="fixture-owner-layout-21"
         >
           <>
             <PopoverHeader>
@@ -1737,44 +2085,44 @@ const AlertDialogFixture = () => {
   const [confirmed, setConfirmed] = React.useState(0);
 
   const content = React.useRef<HTMLDivElement>(null);
-  const labels: string[] = JSON.parse(params.get("labels") ?? '["Yes","No"]');
+
+  // SAFETY: owned AlertDialog actions callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact AlertDialog actions query-label producer boundary.
+  const labels: string[] = JSON.parse(
+    params.get("labels") ?? '["Yes","No"]'
+  ) as FixtureLabels;
 
   return (
     <>
       {params.has("patterned") &&
         createPortal(
-          <div
-            data-dialog-underlay="true"
-            style={{ inset: 0, position: "fixed" }}
-          >
+          <div data-dialog-underlay="true" className="fixture-dialog-underlay">
             <div
               style={{
-                display: "flex",
-                height: 64 * scale,
-                left: 18 * scale,
-                position: "absolute",
-                top: 18 * scale,
+                "--fixture-layout-10": `${64 * scale}px`,
+                "--fixture-layout-11": `${18 * scale}px`,
+                "--fixture-layout-12": `${18 * scale}px`,
               }}
+              className="fixture-owner-layout-22 fixture-owner-layout-23 fixture-owner-layout-24 fixture-owner-layout-25 fixture-owner-layout-26"
             >
               {Array.from({ length: 256 }, (_, i) => (
                 <i
                   key={i}
+                  className="fixture-color-bar fixture-dialog-palette"
                   style={{
-                    background: `rgb(${i},${255 - i},${(i * 37) % 256})`,
-                    display: "block",
-                    height: "100%",
-                    width: scale,
+                    "--fixture-bar-width": `${scale}px`,
+                    "--fixture-dialog-palette-step": i,
                   }}
                 />
               ))}
             </div>
             <Button
               scale={scale}
+              className="fixture-dialog-underlay-button"
               style={{
-                left: 18 * scale,
-                position: "absolute",
-                top: 100 * scale,
-                width: 140 * scale,
+                "--fixture-width": `${140 * scale}px`,
+                "--fixture-x": `${18 * scale}px`,
+                "--fixture-y": `${100 * scale}px`,
               }}
             >
               Behind the dialog
@@ -1863,7 +2211,15 @@ const AlertDialogCompositionFixture = () => {
       <AlertDialogContent render={<section />} ref={content}>
         <>
           <AlertDialogHeader>
-            <AlertDialogTitle render={<h3 />}>Composed title</AlertDialogTitle>
+            <AlertDialogTitle
+              render={
+                /* oxlint-disable jsx-a11y/heading-has-content -- AlertDialogTitle must forward its real Composed title children into this empty H3 receiver; receiver content would mask that existing contract. */
+                <h3 />
+                /* oxlint-enable jsx-a11y/heading-has-content */
+              }
+            >
+              Composed title
+            </AlertDialogTitle>
             <AlertDialogDescription render={<div />}>
               Composed description
             </AlertDialogDescription>
@@ -1897,7 +2253,10 @@ const AlertDialogCompositionFixture = () => {
             <AlertDialogAction
               ref={action}
               nativeButton={false}
-              render={<a href="#confirmed" />}
+              render={
+                // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- AlertDialogAction supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+                <a href="#confirmed" />
+              }
             >
               Confirm link
             </AlertDialogAction>
@@ -1938,7 +2297,15 @@ const DialogCompositionFixture = () => {
       >
         <>
           <DialogHeader>
-            <DialogTitle render={<h3 />}>Composed title</DialogTitle>
+            <DialogTitle
+              render={
+                /* oxlint-disable jsx-a11y/heading-has-content -- DialogTitle must forward its real Composed title children into this empty H3 receiver; receiver content would mask that existing contract. */
+                <h3 />
+                /* oxlint-enable jsx-a11y/heading-has-content */
+              }
+            >
+              Composed title
+            </DialogTitle>
             <DialogDescription render={<div />}>
               Composed description
             </DialogDescription>
@@ -1986,52 +2353,57 @@ const DialogFixture = () => {
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLButtonElement>(null);
 
-  const labels: string[] = params.has("labels")
-    ? JSON.parse(params.get("labels")!)
-    : ["Cancel", "Continue"];
+  const labelsSource = params.get("labels");
 
-  const description = native
-    ? params.has("text")
-      ? params.get("text")
-      : null
-    : (params.get("text") ?? "A helpful description.");
+  // SAFETY: owned Dialog actions callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Dialog actions query-label producer boundary.
+  const labels: string[] =
+    labelsSource === null
+      ? ["Cancel", "Continue"]
+      : (JSON.parse(labelsSource) as FixtureLabels);
+  // oxlint-enable typescript/no-unsafe-type-assertion
+
+  let selectedDescription: string | null;
+
+  if (native) {
+    selectedDescription = params.has("text") ? params.get("text") : null;
+  } else {
+    selectedDescription = params.get("text") ?? "A helpful description.";
+  }
+
+  const description = selectedDescription;
 
   return (
     <>
       {params.has("patterned") &&
         createPortal(
-          <div
-            data-dialog-underlay="true"
-            style={{ inset: 0, position: "fixed" }}
-          >
+          <div data-dialog-underlay="true" className="fixture-dialog-underlay">
             <div
               style={{
-                display: "flex",
-                height: 64 * scale,
-                left: 18 * scale,
-                position: "absolute",
-                top: 18 * scale,
+                "--fixture-layout-13": `${64 * scale}px`,
+                "--fixture-layout-14": `${18 * scale}px`,
+                "--fixture-layout-15": `${18 * scale}px`,
               }}
+              className="fixture-owner-layout-27 fixture-owner-layout-28 fixture-owner-layout-29 fixture-owner-layout-30 fixture-owner-layout-31"
             >
               {Array.from({ length: 256 }, (_, i) => (
                 <i
                   key={i}
+                  className="fixture-color-bar fixture-dialog-palette"
                   style={{
-                    background: `rgb(${i},${255 - i},${(i * 37) % 256})`,
-                    display: "block",
-                    height: "100%",
-                    width: scale,
+                    "--fixture-bar-width": `${scale}px`,
+                    "--fixture-dialog-palette-step": i,
                   }}
                 />
               ))}
             </div>
             <Button
               scale={scale}
+              className="fixture-dialog-underlay-button"
               style={{
-                left: 18 * scale,
-                position: "absolute",
-                top: 100 * scale,
-                width: 140 * scale,
+                "--fixture-width": `${140 * scale}px`,
+                "--fixture-x": `${18 * scale}px`,
+                "--fixture-y": `${100 * scale}px`,
               }}
             >
               Behind the dialog
@@ -2075,7 +2447,7 @@ const DialogFixture = () => {
         >
           <DialogHeader>
             <DialogTitle>{params.get("label") ?? "World settings"}</DialogTitle>
-            {description != null && (
+            {description !== null && (
               <DialogDescription>{description}</DialogDescription>
             )}
           </DialogHeader>
@@ -2105,7 +2477,8 @@ const DialogFixture = () => {
             </form>
           )}
           <DialogFooter>
-            {labels.map((label, index) => (
+            {labels.map((actionLabel, index) => (
+              /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
               <Button
                 key={index}
                 scale={scale}
@@ -2114,14 +2487,16 @@ const DialogFixture = () => {
                   setActions((current) => current + 1);
                 }}
               >
-                {label}
+                {actionLabel}
               </Button>
+              /* oxlint-enable react-doctor/no-array-index-as-key */
             ))}
           </DialogFooter>
           {!native && <DialogClose>Done</DialogClose>}
         </DialogContent>
       </Dialog>
       <button
+        type="button"
         id="dialog-external"
         onClick={() => {
           setOpen((current) => !current);
@@ -2133,6 +2508,7 @@ const DialogFixture = () => {
       <output aria-label="Dialog changes">{changes}</output>
       <output aria-label="Dialog ref scroll top">{scrolledRef}</output>
       <button
+        type="button"
         id="dialog-read-refs"
         onClick={() => {
           setActions(
@@ -2149,244 +2525,35 @@ const DialogFixture = () => {
   );
 };
 
-const Fixture = () => {
-  if (params.get("component") === "tabs-fallback") {
-    return <TabsFallbackFixture />;
-  }
+const FixtureTabsTrigger = () => (
+  <Tabs
+    scale={scale}
+    defaultValue={params.get("selected") === "true" ? "subject" : null}
+  >
+    <TabsList
+      aria-label="Test tab trigger"
+      activateOnFocus={
+        params.get("activationMode") !== "manual" &&
+        params.get("component") !== "tabs-trigger"
+      }
+    >
+      <TabsTrigger
+        id="subject"
+        value="subject"
+        disabled={state.startsWith("disabled")}
+        className="fixture-geometry-width"
+        style={{ "--fixture-width": `${width * scale}px` }}
+        data-subject="true"
+      >
+        {params.get("label") ?? "Game"}
+      </TabsTrigger>
+    </TabsList>
+  </Tabs>
+);
 
-  if (params.get("component") === "base-ui-composition") {
-    return <BaseUICompositionFixture />;
-  }
-
-  if (params.get("component") === "collapsible-first-frame") {
-    return <CollapsibleFirstFrameFixture />;
-  }
-
-  if (params.get("component") === "badge-advancement") {
-    return <BadgeAdvancementFixture />;
-  }
-
-  if (params.get("component") === "questionnaire") {
-    return <QuestionnaireFixture />;
-  }
-
-  if (params.get("component") === "dialog-footer") {
-    return <DialogFooterFixture />;
-  }
-
-  if (params.get("component") === "alert-dialog-media") {
-    return <AlertDialogMediaFixture />;
-  }
-
-  if (params.get("component") === "combobox") {
-    return <ComboboxFixture />;
-  }
-
-  if (params.get("component") === "attachment") {
-    return <AttachmentFixture />;
-  }
-
-  if (params.get("component") === "color-painter-stress") {
-    return <ColorPainterStressFixture />;
-  }
-
-  if (params.get("component") === "marker") {
-    return <MarkerFixture />;
-  }
-
-  if (params.get("component") === "chart") {
-    return <ChartFixture />;
-  }
-
-  if (
-    ["trace", "message-scroller", "spinner"].includes(
-      params.get("component") ?? ""
-    )
-  ) {
-    return params.has("native") ? (
-      <NativeTextCompositionsFixture />
-    ) : (
-      <TextWidgetsFixture />
-    );
-  }
-
-  if (params.get("component") === "native-select") {
-    return <NativeSelectFixture />;
-  }
-
-  if (params.get("component") === "code-block") {
-    return params.has("native") ? (
-      <NativeTextCompositionsFixture />
-    ) : (
-      <CodeBlockFixture />
-    );
-  }
-
-  if (params.get("component") === "input-otp") {
-    return <InputOTPFixture />;
-  }
-
-  if (params.get("component") === "carousel") {
-    return <CarouselFixture />;
-  }
-
-  if (["form", "field"].includes(params.get("component") ?? "")) {
-    return <FormsFixture />;
-  }
-
-  if (params.get("component") === "data-table") {
-    return <DataTableFixture />;
-  }
-
-  if (params.get("component") === "input-group") {
-    return <InputGroupFixture />;
-  }
-
-  if (params.get("component") === "command") {
-    return <CommandFixture />;
-  }
-
-  if (["calendar", "date-picker"].includes(params.get("component") ?? "")) {
-    return <CalendarFixture />;
-  }
-
-  if (["message", "bubble"].includes(params.get("component") ?? "")) {
-    return <ChatFamilyFixture />;
-  }
-
-  if (params.get("component") === "resizable") {
-    return <ResizableFixture />;
-  }
-
-  if (params.get("component") === "sidebar") {
-    return <SidebarFixture />;
-  }
-
-  if (params.get("component") === "table") {
-    return <TableFixture />;
-  }
-
-  if (params.get("component") === "item") {
-    return <ItemFixture />;
-  }
-
-  if (params.get("component") === "avatar") {
-    return <AvatarFixture />;
-  }
-
-  if (["sonner", "sonner-strict"].includes(params.get("component") ?? "")) {
-    return <ToastFixture />;
-  }
-
-  if (params.get("component") === "button-composition") {
-    return <ButtonCompositionFixture />;
-  }
-
-  if (
-    ["badge", "typography", "breadcrumb", "kbd", "empty"].includes(
-      params.get("component") ?? ""
-    )
-  ) {
-    return <TextComponentsFixture />;
-  }
-
-  if (["sheet", "drawer"].includes(params.get("component") ?? "")) {
-    return <OverlayFixture />;
-  }
-
-  if (
-    ["aspect-ratio", "button-group", "pagination"].includes(
-      params.get("component") ?? ""
-    )
-  ) {
-    return <StructuralFixture />;
-  }
-
-  if (params.get("component") === "toggle-group") {
-    return <ToggleGroupFixture />;
-  }
-
-  if (params.get("component") === "toggle") {
-    return <ToggleFixture />;
-  }
-
-  if (params.get("component") === "context-menu") {
-    return <ContextFixture />;
-  }
-
-  if (params.get("component") === "collapsible") {
-    return <CollapsibleFixture />;
-  }
-
-  if (params.get("component") === "menubar") {
-    return <MenubarFixture />;
-  }
-
-  if (params.get("component") === "dropdown-menu") {
-    return <DropdownFixture />;
-  }
-
-  if (params.get("component") === "popover-composition") {
-    return <PopoverCompositionFixture />;
-  }
-
-  if (params.get("component") === "popover") {
-    return <PopoverFixture />;
-  }
-
-  if (params.get("component") === "alert-dialog-composition") {
-    return <AlertDialogCompositionFixture />;
-  }
-
-  if (params.get("component") === "alert-dialog") {
-    return <AlertDialogFixture />;
-  }
-
-  if (params.get("component") === "dialog-composition") {
-    return <DialogCompositionFixture />;
-  }
-
-  if (params.get("component") === "dialog") {
-    return <DialogFixture />;
-  }
-
-  if (params.get("component") === "switch") {
-    return <SwitchFixture />;
-  }
-
-  if (params.get("component")?.startsWith("radio-group")) {
-    return <RadioFixture />;
-  }
-
-  if (params.get("component")?.startsWith("select")) {
-    return <SelectFixture />;
-  }
-
+const FixtureTabs = () => {
   const [count, setCount] = React.useState(0);
-  const [commits, setCommits] = React.useState(0);
   const [refName, setRefName] = React.useState("");
-  const sliderRef = React.useRef<HTMLDivElement>(null);
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const cardRef = React.useRef<HTMLDivElement>(null);
-  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
-  const labelRef = React.useRef<HTMLLabelElement>(null);
-  const separatorRef = React.useRef<HTMLDivElement>(null);
-
-  const scrollAreaRef = React.useRef<HTMLDivElement>(null);
-  const viewportRef = React.useRef<HTMLDivElement>(null);
-
-  const [scrollValue, setScrollValue] = React.useState(0);
-
-  const [scrollContent, setScrollContent] = React.useState(
-    Number(params.get("contentHeight") ?? 480)
-  );
-
-  const progressRef = React.useRef<HTMLDivElement>(null);
-
-  const [progressValue, setProgressValue] = React.useState<number | null>(
-    params.has("unknown") ? null : Number(params.get("value") ?? 50)
-  );
-
   const tabsRef = React.useRef<HTMLDivElement>(null);
   const tabsListRef = React.useRef<HTMLDivElement>(null);
   const tabsTriggerRef = React.useRef<HTMLButtonElement>(null);
@@ -2396,679 +2563,768 @@ const Fixture = () => {
     `tab-${params.get("selectedIndex") ?? 0}`
   );
 
-  const [inputValue, setInputValue] = React.useState(
-    params.get("text") ?? "Hello Minecraft"
+  const labelsSource = params.get("labels");
+
+  // SAFETY: owned Tabs titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Tabs titles query-label producer boundary.
+  const titles: string[] =
+    labelsSource === null
+      ? ["Game", "World", "More"]
+      : (JSON.parse(labelsSource) as FixtureLabels);
+  // oxlint-enable typescript/no-unsafe-type-assertion
+
+  const panel = Number(params.get("contentHeight") ?? 0);
+
+  const triggers = titles.map((title, index) => (
+    /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
+    <TabsTrigger
+      render={
+        params.has("triggerAsChild") && index === 0 ? (
+          <a
+            href="#composed-tab"
+            aria-label={fixtureFallbackLabel("First tab", title)}
+          />
+        ) : undefined
+      }
+      key={index}
+      value={`tab-${index}`}
+      ref={index === 0 ? tabsTriggerRef : undefined}
+      disabled={
+        params.has("disabledIndex") &&
+        Number(params.get("disabledIndex")) === index
+      }
+    >
+      {title}
+    </TabsTrigger>
+    /* oxlint-enable react-doctor/no-array-index-as-key */
+  ));
+
+  const contents = (
+    <>
+      <TabsList
+        render={params.has("listAsChild") ? <nav /> : undefined}
+        id={panel > 0 ? "tab-list" : "subject"}
+        ref={tabsListRef}
+        aria-label="Test tabs"
+        activateOnFocus={
+          params.get("activationMode") !== "manual" &&
+          params.get("component") !== "tabs-trigger"
+        }
+        data-subject={
+          (panel > 0 ? "tab-list" : "subject") === "subject"
+            ? "true"
+            : undefined
+        }
+      >
+        {triggers}
+      </TabsList>
+      {titles.map((title, index) => (
+        /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
+        <TabsContent
+          key={index}
+          value={`tab-${index}`}
+          ref={index === 0 ? tabsContentRef : undefined}
+          keepMounted={params.has("forceMount") ? true : undefined}
+          className={cn({ "fixture-geometry-height": panel > 0 })}
+          style={{
+            "--fixture-height": panel > 0 ? `${panel * scale}px` : undefined,
+          }}
+        >
+          {panel > 0 && !params.has("panelText") ? null : (
+            <span>{title} content</span>
+          )}
+        </TabsContent>
+        /* oxlint-enable react-doctor/no-array-index-as-key */
+      ))}
+    </>
   );
 
-  const [submitted, setSubmitted] = React.useState(0);
-  const [tooltipOpen, setTooltipOpen] = React.useState(params.has("open"));
-  const tooltipRef = React.useRef<HTMLDivElement>(null);
-  React.useEffect(() => {
-    if (params.get("component") === "textarea" && textareaRef.current) {
-      textareaRef.current.scrollTop = Number(params.get("scroll") ?? 0) * scale;
-    }
-  }, []);
+  return (
+    <>
+      <Tabs
+        render={params.has("asChild") ? <section /> : undefined}
+        id={panel > 0 ? "subject" : "tabs-root"}
+        ref={tabsRef}
+        scale={scale}
+        defaultValue={`tab-${params.get("selectedIndex") ?? 0}`}
+        value={params.has("controlled") ? tabsValue : undefined}
+        dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
+        className="fixture-geometry-width"
+        style={{ "--fixture-width": `${width * scale}px` }}
+        onValueChange={(next: string) => {
+          if (!params.has("reject")) {
+            setTabsValue(next);
+          }
+
+          setCount((current) => current + 1);
+        }}
+        data-subject={
+          (panel > 0 ? "subject" : "tabs-root") === "subject"
+            ? "true"
+            : undefined
+        }
+      >
+        {contents}
+      </Tabs>
+      <output aria-label="Selected tab">{tabsValue}</output>
+      <output aria-label="Tab changes">{count}</output>
+      <button
+        type="button"
+        id="select-last-tab"
+        onClick={() => {
+          setTabsValue(`tab-${titles.length - 1}`);
+        }}
+      >
+        Select last tab externally
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(
+            `${tabsRef.current?.tagName}/${tabsListRef.current?.tagName}/${tabsTriggerRef.current?.tagName}/${tabsContentRef.current?.tagName}`
+          );
+        }}
+      >
+        Read refs
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+    </>
+  );
+};
+
+const FixtureProgress = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const progressRef = React.useRef<HTMLDivElement>(null);
+
+  const [progressValue, setProgressValue] = React.useState<number | null>(
+    params.has("unknown") ? null : Number(params.get("value") ?? 50)
+  );
+
+  return (
+    <>
+      <Progress
+        render={
+          params.has("asChild") ? (
+            <section data-testid="composed-progress" />
+          ) : undefined
+        }
+        id="subject"
+        ref={progressRef}
+        scale={scale}
+        value={progressValue}
+        max={Number(params.get("max") ?? 100)}
+        color={
+          // SAFETY: owned fixture callers serialize the color option from the actual component protocol (BossBarColor); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("color") ?? "pink") as BossBarColor
+        }
+        overlay={
+          // SAFETY: owned fixture callers serialize the overlay option from the actual component protocol (BossBarOverlay); preserve this URL read, original default and component handling.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+          (params.get("overlay") ?? "progress") as BossBarOverlay
+        }
+        aria-label="Test progress"
+        onClick={() => {
+          setCount((current) => current + 1);
+        }}
+        aria-valuetext={
+          params.has("customLabel")
+            ? `${progressValue} of ${Number(params.get("max") ?? 100)} loaded`
+            : undefined
+        }
+        data-subject="true"
+      >
+        {undefined}
+      </Progress>
+      <button
+        type="button"
+        id="update-progress"
+        onClick={() => {
+          setProgressValue(Number(params.get("next") ?? 100));
+        }}
+      >
+        Update progress
+      </button>
+      <button
+        type="button"
+        id="unknown-progress"
+        onClick={() => {
+          setProgressValue(null);
+        }}
+      >
+        Unknown progress
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(progressRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Activations">{count}</output>
+    </>
+  );
+};
+
+const FixtureScrollArea = () => {
+  const [count, setCount] = React.useState(0);
+  const [commits, setCommits] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const scrollAreaRef = React.useRef<HTMLDivElement>(null);
+  const viewportRef = React.useRef<HTMLDivElement>(null);
+  const [scrollValue, setScrollValue] = React.useState(0);
+
+  const [scrollContent, setScrollContent] = React.useState(
+    Number(params.get("contentHeight") ?? 480)
+  );
+
   React.useEffect(() => {
     if (params.get("component") === "scroll-area" && viewportRef.current) {
       viewportRef.current.scrollTop = Number(params.get("scroll") ?? 0) * scale;
     }
   }, []);
 
-  if (params.get("component") === "tabs-trigger") {
-    return (
-      <Tabs
-        scale={scale}
-        defaultValue={params.get("selected") === "true" ? "subject" : null}
-      >
-        <TabsList
-          aria-label="Test tab trigger"
-          activateOnFocus={
-            params.get("activationMode") !== "manual" &&
-            params.get("component") !== "tabs-trigger"
-          }
+  const rows = (
+    <div
+      key="rows"
+      style={{ "--fixture-layout-16": `${scrollContent * scale}px` }}
+      className="fixture-owner-layout-32 fixture-owner-layout-33"
+    >
+      {Array.from({ length: Math.ceil(scrollContent / 24) }, (_, index) => (
+        /* oxlint-disable react-doctor/no-array-index-as-key -- These permanent Row N positions only gain or lose a tail when content height changes; there is no reorder/filter/middle insertion. Preserve the actual ordinal row identity. */
+        <div
+          key={index}
+          style={{ "--fixture-layout-17": `${24 * scale}px` }}
+          className="fixture-owner-layout-34 fixture-owner-layout-35 fixture-owner-layout-36"
         >
-          <TabsTrigger
-            id="subject"
-            value="subject"
-            disabled={state.startsWith("disabled")}
-            style={{ width: width * scale }}
-            data-subject="true"
-          >
-            {params.get("label") ?? "Game"}
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
-    );
-  }
-
-  if (params.get("component") === "tabs") {
-    const titles: string[] = params.has("labels")
-      ? JSON.parse(params.get("labels")!)
-      : ["Game", "World", "More"];
-
-    const panel = Number(params.get("contentHeight") ?? 0);
-
-    const triggers = titles.map((title, index) => (
-      <TabsTrigger
-        render={
-          params.has("triggerAsChild") && index === 0 ? (
-            <a href="#composed-tab" />
-          ) : undefined
-        }
-        key={index}
-        value={`tab-${index}`}
-        ref={index === 0 ? tabsTriggerRef : undefined}
-        disabled={
-          params.has("disabledIndex") &&
-          Number(params.get("disabledIndex")) === index
-        }
-      >
-        {title}
-      </TabsTrigger>
-    ));
-
-    const contents = (
-      <>
-        <TabsList
-          render={params.has("listAsChild") ? <nav /> : undefined}
-          id={panel > 0 ? "tab-list" : "subject"}
-          ref={tabsListRef}
-          aria-label="Test tabs"
-          activateOnFocus={
-            params.get("activationMode") !== "manual" &&
-            params.get("component") !== "tabs-trigger"
-          }
-          data-subject={
-            (panel > 0 ? "tab-list" : "subject") === "subject"
-              ? "true"
-              : undefined
-          }
-        >
-          {triggers}
-        </TabsList>
-        {titles.map((title, index) => (
-          <TabsContent
-            key={index}
-            value={`tab-${index}`}
-            ref={index === 0 ? tabsContentRef : undefined}
-            keepMounted={params.has("forceMount") ? true : undefined}
-            style={{ height: panel > 0 ? panel * scale : undefined }}
-          >
-            {panel > 0 && !params.has("panelText") ? null : (
-              <span>{title} content</span>
-            )}
-          </TabsContent>
-        ))}
-      </>
-    );
-
-    return (
-      <>
-        <Tabs
-          render={params.has("asChild") ? <section /> : undefined}
-          id={panel > 0 ? "subject" : "tabs-root"}
-          ref={tabsRef}
-          scale={scale}
-          defaultValue={`tab-${params.get("selectedIndex") ?? 0}`}
-          value={params.has("controlled") ? tabsValue : undefined}
-          dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
-          style={{ width: width * scale }}
-          onValueChange={(next) => {
-            if (!params.has("reject")) {
-              setTabsValue(next);
-            }
-
-            setCount((current) => current + 1);
-          }}
-          data-subject={
-            (panel > 0 ? "subject" : "tabs-root") === "subject"
-              ? "true"
-              : undefined
-          }
-        >
-          {contents}
-        </Tabs>
-        <output aria-label="Selected tab">{tabsValue}</output>
-        <output aria-label="Tab changes">{count}</output>
-        <button
-          id="select-last-tab"
-          onClick={() => {
-            setTabsValue(`tab-${titles.length - 1}`);
-          }}
-        >
-          Select last tab externally
-        </button>
-        <button
-          id="read-ref"
-          onClick={() => {
-            setRefName(
-              `${tabsRef.current?.tagName}/${tabsListRef.current?.tagName}/${tabsTriggerRef.current?.tagName}/${tabsContentRef.current?.tagName}`
-            );
-          }}
-        >
-          Read refs
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-      </>
-    );
-  }
-
-  if (params.get("component") === "progress") {
-    return (
-      <>
-        <Progress
-          render={
-            params.has("asChild") ? (
-              <section data-testid="composed-progress" />
-            ) : undefined
-          }
-          id="subject"
-          ref={progressRef}
-          scale={scale}
-          value={progressValue}
-          max={Number(params.get("max") ?? 100)}
-          color={(params.get("color") ?? "pink") as BossBarColor}
-          overlay={(params.get("overlay") ?? "progress") as BossBarOverlay}
-          aria-label="Test progress"
-          onClick={() => {
-            setCount((current) => current + 1);
-          }}
-          aria-valuetext={
-            params.has("customLabel")
-              ? `${progressValue} of ${Number(params.get("max") ?? 100)} loaded`
-              : undefined
-          }
-          data-subject="true"
-        >
-          {undefined}
-        </Progress>
-        <button
-          id="update-progress"
-          onClick={() => {
-            setProgressValue(Number(params.get("next") ?? 100));
-          }}
-        >
-          Update progress
-        </button>
-        <button
-          id="unknown-progress"
-          onClick={() => {
-            setProgressValue(null);
-          }}
-        >
-          Unknown progress
-        </button>
-        <button
-          id="read-ref"
-          onClick={() => {
-            setRefName(progressRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Activations">{count}</output>
-      </>
-    );
-  }
-
-  if (params.get("component") === "scroll-area") {
-    const rows = (
-      <div
-        key="rows"
-        style={{ height: scrollContent * scale, overflow: "hidden" }}
-      >
-        {Array.from({ length: Math.ceil(scrollContent / 24) }, (_, index) => (
-          <div
-            key={index}
-            style={{
-              alignItems: "flex-start",
-              display: "flex",
-              height: 24 * scale,
-            }}
-          >
-            <Button
-              scale={scale}
-              style={{ width: "100%" }}
-              onClick={() => {
-                setCount((current) => current + 1);
-              }}
-            >{`Row ${index + 1}`}</Button>
-          </div>
-        ))}
-      </div>
-    );
-
-    const customBar = params.has("customBar") ? (
-      <ScrollBar key="bar" data-testid="custom-scrollbar" />
-    ) : null;
-
-    return (
-      <>
-        <ScrollArea
-          render={params.has("asChild") ? <section /> : undefined}
-          id="subject"
-          ref={scrollAreaRef}
-          viewportRef={viewportRef}
-          role="region"
-          aria-label="Test scroll area"
-          disabled={state === "disabled"}
-          scale={scale}
-          onPointerDown={() => {
-            setCommits((current) => current + 1);
-          }}
-          viewportProps={{
-            "aria-label": "Scrollable content",
-            onScroll: (event) => {
-              setScrollValue(event.currentTarget.scrollTop);
-            },
-          }}
-          style={
-            params.has("defaults")
-              ? undefined
-              : {
-                  height: Number(params.get("height") ?? 80) * scale,
-                  width: width * scale,
-                }
-          }
-          data-subject="true"
-        >
-          {params.has("asChild") ? (
-            <>
-              {rows}
-              {customBar}
-            </>
-          ) : (
-            [rows, customBar]
-          )}
-        </ScrollArea>
-        <button
-          id="read-ref"
-          onClick={() => {
-            setRefName(
-              `${scrollAreaRef.current?.tagName}/${viewportRef.current?.tagName}`
-            );
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Scroll offset">{scrollValue}</output>
-        <output aria-label="Activations">{count}</output>
-        <output aria-label="Pointer events">{commits}</output>
-        <button
-          id="shrink-content"
-          onClick={() => {
-            setScrollContent(24);
-          }}
-        >
-          Shrink content
-        </button>
-        <button
-          id="grow-content"
-          onClick={() => {
-            setScrollContent(480);
-          }}
-        >
-          Grow content
-        </button>
-      </>
-    );
-  }
-
-  if (params.get("component") === "separator") {
-    return (
-      <>
-        <button id="before">Before separator</button>
-        <Separator
-          render={params.has("asChild") ? <hr /> : undefined}
-          id="subject"
-          ref={separatorRef}
-          scale={scale}
-          edge={state === "footer" ? "footer" : "header"}
-          role={params.has("semantic") ? "separator" : "none"}
-          aria-label={params.has("semantic") ? "Settings sections" : undefined}
-          data-testid="native-separator"
-          style={{ width: width * scale }}
-          onClick={() => {
-            setCount((current) => current + 1);
-          }}
-          data-subject="true"
-        >
-          {undefined}
-        </Separator>
-        <button id="after">After separator</button>
-        <button
-          id="read-ref"
-          onClick={() => {
-            setRefName(separatorRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Activations">{count}</output>
-      </>
-    );
-  }
-
-  if (params.get("component") === "label") {
-    return (
-      <>
-        <Label
-          id="subject"
-          ref={labelRef}
-          htmlFor="label-input"
-          scale={scale}
-          aria-disabled={state === "disabled" || undefined}
-          maxWidth={
-            params.has("wrapWidth")
-              ? Number(params.get("wrapWidth"))
-              : undefined
-          }
-          align={params.get("alignment") === "center" ? "center" : "left"}
-          style={{
-            height: Number(params.get("height") ?? 9) * scale,
-            width: width * scale,
-          }}
-          onClick={() => {
-            setCount((current) => current + 1);
-          }}
-          data-subject="true"
-        >
-          {params.has("rich") ? <strong>Rich label</strong> : label}
-        </Label>
-        <Input
-          id="label-input"
-          disabled={state === "disabled"}
-          defaultValue="Minecraft"
-        />
-        <button
-          id="read-ref"
-          onClick={() => {
-            setRefName(labelRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Activations">{count}</output>
-      </>
-    );
-  }
-
-  if (params.get("component") === "textarea") {
-    return (
-      <>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            setSubmitted((current) => current + 1);
-          }}
-        >
-          <Textarea
-            id="subject"
-            ref={textareaRef}
-            name="message"
-            aria-label="Test textarea"
+          <Button
             scale={scale}
-            value={params.has("uncontrolled") ? undefined : inputValue}
-            defaultValue={
-              params.has("uncontrolled")
-                ? (params.get("text") ?? "")
-                : undefined
-            }
-            disabled={state === "disabled"}
-            readOnly={state.includes("readonly")}
-            placeholder={params.get("placeholder") ?? ""}
-            style={{
-              height: Number(params.get("height") ?? 80) * scale,
-              width: width * scale,
-            }}
-            onChange={(event) => {
-              setInputValue(event.target.value);
+            className="fixture-main-full-width"
+            onClick={() => {
               setCount((current) => current + 1);
             }}
-            data-subject="true"
-          />
-          <button type="submit" id="submit">
-            Submit
-          </button>
-          <button type="reset" id="reset">
-            Reset
-          </button>
-        </form>
-        <output aria-label="Textarea value">{inputValue}</output>
-        <output aria-label="Textarea changes">{count}</output>
-        <output aria-label="Submissions">{submitted}</output>
-        <button
-          id="read-ref"
-          onClick={() => {
-            setRefName(textareaRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-      </>
-    );
-  }
+          >{`Row ${index + 1}`}</Button>
+        </div>
+        /* oxlint-enable react-doctor/no-array-index-as-key */
+      ))}
+    </div>
+  );
 
-  if (params.get("component") === "card") {
-    return (
-      <>
-        <Card
+  const customBar = params.has("customBar") ? (
+    <ScrollBar key="bar" data-testid="custom-scrollbar" />
+  ) : null;
+
+  return (
+    <>
+      <ScrollArea
+        render={params.has("asChild") ? <section /> : undefined}
+        id="subject"
+        ref={scrollAreaRef}
+        viewportRef={viewportRef}
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- This fixture covers ScrollArea's default div and section render receivers with the explicit region and root/viewport ref contract.
+        role="region"
+        aria-label="Test scroll area"
+        disabled={state === "disabled"}
+        scale={scale}
+        onPointerDown={() => {
+          setCommits((current) => current + 1);
+        }}
+        viewportProps={{
+          "aria-label": "Scrollable content",
+          onScroll: (event) => {
+            setScrollValue(event.currentTarget.scrollTop);
+          },
+        }}
+        className={
+          params.has("defaults")
+            ? undefined
+            : "fixture-geometry-height fixture-geometry-width"
+        }
+        style={
+          params.has("defaults")
+            ? undefined
+            : {
+                "--fixture-height": `${Number(params.get("height") ?? 80) * scale}px`,
+                "--fixture-width": `${width * scale}px`,
+              }
+        }
+        data-subject="true"
+      >
+        {params.has("asChild") ? (
+          <>
+            {rows}
+            {customBar}
+          </>
+        ) : (
+          [rows, customBar]
+        )}
+      </ScrollArea>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(
+            `${scrollAreaRef.current?.tagName}/${viewportRef.current?.tagName}`
+          );
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Scroll offset">{scrollValue}</output>
+      <output aria-label="Activations">{count}</output>
+      <output aria-label="Pointer events">{commits}</output>
+      <button
+        type="button"
+        id="shrink-content"
+        onClick={() => {
+          setScrollContent(24);
+        }}
+      >
+        Shrink content
+      </button>
+      <button
+        type="button"
+        id="grow-content"
+        onClick={() => {
+          setScrollContent(480);
+        }}
+      >
+        Grow content
+      </button>
+    </>
+  );
+};
+
+const FixtureSeparator = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const separatorRef = React.useRef<HTMLDivElement>(null);
+
+  return (
+    <>
+      <button type="button" id="before">
+        Before separator
+      </button>
+      <Separator
+        render={params.has("asChild") ? <hr /> : undefined}
+        id="subject"
+        ref={separatorRef}
+        scale={scale}
+        edge={state === "footer" ? "footer" : "header"}
+        role={params.has("semantic") ? "separator" : "none"}
+        aria-label={params.has("semantic") ? "Settings sections" : undefined}
+        data-testid="native-separator"
+        className="fixture-geometry-width"
+        style={{ "--fixture-width": `${width * scale}px` }}
+        onClick={() => {
+          setCount((current) => current + 1);
+        }}
+        data-subject="true"
+      >
+        {undefined}
+      </Separator>
+      <button type="button" id="after">
+        After separator
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(separatorRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Activations">{count}</output>
+    </>
+  );
+};
+
+const FixtureLabel = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const labelRef = React.useRef<HTMLLabelElement>(null);
+
+  return (
+    <>
+      <Label
+        id="subject"
+        ref={labelRef}
+        htmlFor="label-input"
+        scale={scale}
+        aria-disabled={state === "disabled" || undefined}
+        maxWidth={
+          params.has("wrapWidth") ? Number(params.get("wrapWidth")) : undefined
+        }
+        align={params.get("alignment") === "center" ? "center" : "left"}
+        className="fixture-geometry-height"
+        style={{
+          "--fixture-height": `${Number(params.get("height") ?? 9) * scale}px`,
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the numeric caller-width fallback contract: zero and rejected invalid widths retain the original Label wrapping behavior; the measured class migration changed this boundary.
+          width: width * scale,
+        }}
+        onClick={() => {
+          setCount((current) => current + 1);
+        }}
+        data-subject="true"
+      >
+        {params.has("rich") ? <strong>Rich label</strong> : label}
+      </Label>
+      <Input
+        id="label-input"
+        disabled={state === "disabled"}
+        defaultValue="Minecraft"
+      />
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(labelRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Activations">{count}</output>
+    </>
+  );
+};
+
+const FixtureTextarea = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+
+  const [inputValue, setInputValue] = React.useState(
+    params.get("text") ?? "Hello Minecraft"
+  );
+
+  const [submitted, setSubmitted] = React.useState(0);
+  React.useEffect(() => {
+    if (params.get("component") === "textarea" && textareaRef.current) {
+      textareaRef.current.scrollTop = Number(params.get("scroll") ?? 0) * scale;
+    }
+  }, []);
+
+  return (
+    <>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          setSubmitted((current) => current + 1);
+        }}
+      >
+        <Textarea
           id="subject"
-          ref={cardRef}
-          aria-label="Test card"
+          ref={textareaRef}
+          name="message"
+          aria-label="Test textarea"
           scale={scale}
+          value={params.has("uncontrolled") ? undefined : inputValue}
+          defaultValue={
+            params.has("uncontrolled") ? (params.get("text") ?? "") : undefined
+          }
+          disabled={state === "disabled"}
+          readOnly={state.includes("readonly")}
+          placeholder={params.get("placeholder") ?? ""}
+          className="fixture-geometry-width fixture-geometry-height"
           style={{
-            height: Number(params.get("height") ?? 200) * scale,
-            padding: params.has("text") ? undefined : 0,
-            width: width * scale,
+            "--fixture-height": `${Number(params.get("height") ?? 80) * scale}px`,
+            "--fixture-width": `${width * scale}px`,
+          }}
+          onChange={(event) => {
+            setInputValue(event.target.value);
+            setCount((current) => current + 1);
           }}
           data-subject="true"
-        >
-          {params.has("text") && (
-            <>
-              <CardHeader>
-                <CardTitle>{params.get("label") ?? "World Settings"}</CardTitle>
-                <CardDescription>{params.get("text")}</CardDescription>
-                {params.has("action") && (
-                  <CardAction>
-                    <button
-                      onClick={() => {
-                        setCount((current) => current + 1);
-                      }}
-                    >
-                      Action
-                    </button>
-                  </CardAction>
-                )}
-              </CardHeader>
-              {params.has("content") && (
-                <CardContent>
-                  <label htmlFor="card-input">Name</label>
-                  <Input id="card-input" defaultValue="Minecraft" />
-                </CardContent>
-              )}
-              <CardFooter>
-                <Button
-                  scale={scale}
-                  onClick={() => {
-                    setCount((current) => current + 1);
-                  }}
-                >
-                  Done
-                </Button>
-              </CardFooter>
-            </>
-          )}
-        </Card>
-        <button
-          id="read-ref"
-          onClick={() => {
-            setRefName(cardRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
+        />
+        <button type="submit" id="submit">
+          Submit
         </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Activations">{count}</output>
-      </>
-    );
-  }
+        <button type="reset" id="reset">
+          Reset
+        </button>
+      </form>
+      <output aria-label="Textarea value">{inputValue}</output>
+      <output aria-label="Textarea changes">{count}</output>
+      <output aria-label="Submissions">{submitted}</output>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(textareaRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+    </>
+  );
+};
 
-  if (params.get("component") === "tooltip") {
-    return (
-      <TooltipProvider delay={Number(params.get("delay") ?? 0)}>
-        <Tooltip
-          open={params.has("controlled") ? tooltipOpen : undefined}
-          defaultOpen={params.has("open")}
-          onOpenChange={setTooltipOpen}
-        >
-          <TooltipTrigger
-            render={
-              <button
-                id="tooltip-trigger"
-                style={{
-                  marginLeft: params.get("edge") === "left" ? 0 : 300,
-                  marginTop: params.get("edge") === "top" ? 0 : 240,
-                }}
+const FixtureCard = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const cardRef = React.useRef<HTMLDivElement>(null);
+
+  return (
+    <>
+      <Card
+        id="subject"
+        ref={cardRef}
+        aria-label="Test card"
+        scale={scale}
+        style={{
+          "--fixture-layout-18": `${width * scale}px`,
+          "--fixture-layout-21": `${Number(params.get("height") ?? 200) * scale}px`,
+        }}
+        className={cn("fixture-owner-layout-37 fixture-owner-layout-46", {
+          "fixture-card-empty-padding": !params.has("text"),
+        })}
+        data-subject="true"
+      >
+        {params.has("text") && (
+          <>
+            <CardHeader>
+              <CardTitle>{params.get("label") ?? "World Settings"}</CardTitle>
+              <CardDescription>{params.get("text")}</CardDescription>
+              {params.has("action") && (
+                <CardAction>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCount((current) => current + 1);
+                    }}
+                  >
+                    Action
+                  </button>
+                </CardAction>
+              )}
+            </CardHeader>
+            {params.has("content") && (
+              <CardContent>
+                <label htmlFor="card-input">Name</label>
+                <Input id="card-input" defaultValue="Minecraft" />
+              </CardContent>
+            )}
+            <CardFooter>
+              <Button
+                scale={scale}
                 onClick={() => {
                   setCount((current) => current + 1);
                 }}
-              />
-            }
-          >
-            Inspect
-          </TooltipTrigger>
-          <TooltipContent
-            render={params.has("asChild") ? <div /> : undefined}
-            id="subject"
-            ref={tooltipRef}
-            scale={scale}
-            maxWidth={Number(params.get("wrapWidth") ?? 170)}
-            side={
-              (params.get("side") ?? "top") as
-                | "top"
-                | "bottom"
-                | "left"
-                | "right"
-            }
-            sideOffset={Number(params.get("offset") ?? 0)}
-            data-subject="true"
-          >
-            {params.has("asChild") ? (
-              (params.get("text") ?? "Tooltip")
-            ) : params.has("rich") ? (
-              <strong>Rich tooltip</strong>
-            ) : (
-              (params.get("text") ?? "Tooltip")
-            )}
-          </TooltipContent>
-        </Tooltip>
-        <button id="next">Next focus target</button>
-        <button
-          id="external-open"
-          onClick={() => {
-            setTooltipOpen(true);
-          }}
-        >
-          Open externally
-        </button>
-        <button
-          id="read-ref"
-          onClick={() => {
-            setRefName(tooltipRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Tooltip open">{String(tooltipOpen)}</output>
-        <output aria-label="Activations">{count}</output>
-      </TooltipProvider>
-    );
-  }
-
-  if (params.get("component") === "input") {
-    return (
-      <>
-        <form
-          id="input-form"
-          onSubmit={(event) => {
-            event.preventDefault();
-            setSubmitted((current) => current + 1);
-          }}
-        >
-          <Input
-            ref={inputRef}
-            id="subject"
-            name="message"
-            aria-label="Test input"
-            scale={scale}
-            style={{ width: width * scale }}
-            value={params.has("uncontrolled") ? undefined : inputValue}
-            defaultValue={
-              params.has("uncontrolled")
-                ? (params.get("text") ?? "Hello Minecraft")
-                : undefined
-            }
-            type={params.get("type") ?? "text"}
-            placeholder={params.get("placeholder") ?? undefined}
-            disabled={state === "disabled"}
-            readOnly={state.includes("readonly")}
-            required={params.has("required")}
-            pattern={params.get("pattern") ?? undefined}
-            maxLength={
-              params.has("maxLength")
-                ? Number(params.get("maxLength"))
-                : undefined
-            }
-            onChange={(event) => {
-              setInputValue(event.target.value);
-              setCount((current) => current + 1);
-            }}
-            data-subject="true"
-          />
-          <button id="submit">Submit</button>
-          <button type="reset" id="reset">
-            Reset
-          </button>
-        </form>
-        <output aria-label="Input changes">{count}</output>
-        <output aria-label="Input value">{inputValue}</output>
-        <output aria-label="Submissions">{submitted}</output>
-        <button id="next">Next focus target</button>
-        <button
-          id="read-ref"
-          onClick={() => {
-            setRefName(inputRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <button
-          id="imperative"
-          onClick={() => {
-            if (inputRef.current) {
-              inputRef.current.value = "Done";
-            }
-          }}
-        >
-          Set through ref
-        </button>
-      </>
-    );
-  }
-
-  const [checked, setChecked] = React.useState<boolean | "indeterminate">(
-    params.get("checked") === "mixed"
-      ? "indeterminate"
-      : params.get("checked") === "true"
+              >
+                Done
+              </Button>
+            </CardFooter>
+          </>
+        )}
+      </Card>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(cardRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Activations">{count}</output>
+    </>
   );
+};
+
+const FixtureTooltip = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const [tooltipOpen, setTooltipOpen] = React.useState(params.has("open"));
+  const tooltipRef = React.useRef<HTMLDivElement>(null);
+
+  let selectedFixtureBranch14: ReactNode;
+
+  if (params.has("asChild")) {
+    selectedFixtureBranch14 = params.get("text") ?? "Tooltip";
+  } else {
+    selectedFixtureBranch14 = params.has("rich") ? (
+      <strong>Rich tooltip</strong>
+    ) : (
+      (params.get("text") ?? "Tooltip")
+    );
+  }
+
+  return (
+    <TooltipProvider delay={Number(params.get("delay") ?? 0)}>
+      <Tooltip
+        open={params.has("controlled") ? tooltipOpen : undefined}
+        defaultOpen={params.has("open")}
+        onOpenChange={setTooltipOpen}
+      >
+        <TooltipTrigger
+          render={
+            // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- TooltipTrigger supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+            <button
+              type="button"
+              id="tooltip-trigger"
+              className="fixture-edge-anchor"
+              style={{
+                "--fixture-edge-left": `${params.get("edge") === "left" ? 0 : 300}px`,
+                "--fixture-edge-top": `${params.get("edge") === "top" ? 0 : 240}px`,
+              }}
+              onClick={() => {
+                setCount((current) => current + 1);
+              }}
+            />
+          }
+        >
+          Inspect
+        </TooltipTrigger>
+        <TooltipContent
+          render={params.has("asChild") ? <div /> : undefined}
+          id="subject"
+          ref={tooltipRef}
+          scale={scale}
+          maxWidth={Number(params.get("wrapWidth") ?? 170)}
+          side={
+            // SAFETY: owned fixture callers serialize the side option from the actual component protocol ("top" | "bottom" | "left" | "right"); preserve this URL read, original default and component handling.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned fixture URL producer boundary; no runtime narrowing or validation added.
+            (params.get("side") ?? "top") as "top" | "bottom" | "left" | "right"
+          }
+          sideOffset={Number(params.get("offset") ?? 0)}
+          data-subject="true"
+        >
+          {selectedFixtureBranch14}
+        </TooltipContent>
+      </Tooltip>
+      <button type="button" id="next">
+        Next focus target
+      </button>
+      <button
+        type="button"
+        id="external-open"
+        onClick={() => {
+          setTooltipOpen(true);
+        }}
+      >
+        Open externally
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(tooltipRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Tooltip open">{String(tooltipOpen)}</output>
+      <output aria-label="Activations">{count}</output>
+    </TooltipProvider>
+  );
+};
+
+const FixtureInput = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  const [inputValue, setInputValue] = React.useState(
+    params.get("text") ?? "Hello Minecraft"
+  );
+
+  const [submitted, setSubmitted] = React.useState(0);
+
+  return (
+    <>
+      <form
+        id="input-form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          setSubmitted((current) => current + 1);
+        }}
+      >
+        <Input
+          ref={inputRef}
+          id="subject"
+          name="message"
+          aria-label="Test input"
+          scale={scale}
+          className="fixture-geometry-width"
+          style={{ "--fixture-width": `${width * scale}px` }}
+          value={params.has("uncontrolled") ? undefined : inputValue}
+          defaultValue={
+            params.has("uncontrolled")
+              ? (params.get("text") ?? "Hello Minecraft")
+              : undefined
+          }
+          type={params.get("type") ?? "text"}
+          placeholder={params.get("placeholder") ?? undefined}
+          disabled={state === "disabled"}
+          readOnly={state.includes("readonly")}
+          required={params.has("required")}
+          pattern={params.get("pattern") ?? undefined}
+          maxLength={
+            params.has("maxLength")
+              ? Number(params.get("maxLength"))
+              : undefined
+          }
+          onChange={(event) => {
+            setInputValue(event.target.value);
+            setCount((current) => current + 1);
+          }}
+          data-subject="true"
+        />
+        <button type="submit" id="submit">
+          Submit
+        </button>
+        <button type="reset" id="reset">
+          Reset
+        </button>
+      </form>
+      <output aria-label="Input changes">{count}</output>
+      <output aria-label="Input value">{inputValue}</output>
+      <output aria-label="Submissions">{submitted}</output>
+      <button type="button" id="next">
+        Next focus target
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(inputRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <button
+        type="button"
+        id="imperative"
+        onClick={() => {
+          if (inputRef.current) {
+            inputRef.current.value = "Done";
+          }
+        }}
+      >
+        Set through ref
+      </button>
+    </>
+  );
+};
+
+const FixtureSlider = () => {
+  const [count, setCount] = React.useState(0);
+  const [commits, setCommits] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const sliderRef = React.useRef<HTMLDivElement>(null);
 
   const [values, setValues] = React.useState(
     (params.get("values") ?? params.get("value") ?? "500")
@@ -3076,89 +3332,109 @@ const Fixture = () => {
       .map(Number)
   );
 
-  if (params.get("component") === "slider") {
-    return (
-      <>
-        <form id="slider-form">
-          <Slider
-            ref={sliderRef}
-            id="subject"
-            name="volume"
-            scale={scale}
-            aria-label="Volume"
-            label={params.get("label") ?? undefined}
-            value={
-              params.has("uncontrolled") || params.has("default-range")
-                ? undefined
-                : values
-            }
-            defaultValue={params.has("default-range") ? undefined : values}
-            min={0}
-            max={1000}
-            step={1}
-            disabled={state === "disabled"}
-            dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
-            orientation={
-              params.get("orientation") === "vertical"
-                ? "vertical"
-                : "horizontal"
-            }
-            style={
-              params.get("orientation") === "vertical"
-                ? undefined
-                : { width: width * scale }
-            }
-            onValueCommitted={() => {
-              setCommits((current) => current + 1);
-            }}
-            onValueChange={(next) => {
-              setValues(typeof next === "number" ? [next] : [...next]);
-              setCount((current) => current + 1);
-            }}
-            data-subject="true"
-          />
-        </form>
-        <output aria-label="Values">{values.join(",")}</output>
-        <output aria-label="Changes">{count}</output>
-        <output aria-label="Commits">{commits}</output>
-        <output aria-label="Root ref">{refName}</output>
-        <button id="next">Next focus target</button>
-        <button
-          id="read-ref"
-          onClick={() => {
-            setRefName(sliderRef.current?.id ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <button type="reset" form="slider-form" id="reset">
-          Reset
-        </button>
-      </>
-    );
-  }
-
-  if (params.get("component") === "checkbox") {
-    return (
-      <>
-        <Checkbox
+  return (
+    <>
+      <form id="slider-form">
+        <Slider
+          ref={sliderRef}
           id="subject"
-          aria-label="Test checkbox"
+          name="volume"
           scale={scale}
-          checked={checked === true}
-          indeterminate={checked === "indeterminate"}
+          aria-label="Volume"
+          label={params.get("label") ?? undefined}
+          value={
+            params.has("uncontrolled") || params.has("default-range")
+              ? undefined
+              : values
+          }
+          defaultValue={params.has("default-range") ? undefined : values}
+          min={0}
+          max={1000}
+          step={1}
           disabled={state === "disabled"}
-          onCheckedChange={(value) => {
-            setChecked(value);
-            setCount(count + 1);
+          dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
+          orientation={
+            params.get("orientation") === "vertical" ? "vertical" : "horizontal"
+          }
+          className="fixture-main-slider-width"
+          style={
+            params.get("orientation") === "vertical"
+              ? undefined
+              : { "--fixture-width": `${width * scale}px` }
+          }
+          onValueCommitted={() => {
+            setCommits((current) => current + 1);
+          }}
+          onValueChange={(next) => {
+            setValues([
+              // SAFETY: this fixture always supplies the parsed values array or the wrapper's default [min,max] array. Base UI's range mode returns an array for these producers, including uncontrolled/reset paths.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned Slider array-mode callback boundary; preserve the original array copy and notifications.
+              ...(next as readonly number[]),
+            ]);
+            setCount((current) => current + 1);
           }}
           data-subject="true"
         />
-        <output aria-label="Changes">{count}</output>
-        <button id="next">Next focus target</button>
-      </>
-    );
-  }
+      </form>
+      <output aria-label="Values">{values.join(",")}</output>
+      <output aria-label="Changes">{count}</output>
+      <output aria-label="Commits">{commits}</output>
+      <output aria-label="Root ref">{refName}</output>
+      <button type="button" id="next">
+        Next focus target
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(sliderRef.current?.id ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <button type="reset" form="slider-form" id="reset">
+        Reset
+      </button>
+    </>
+  );
+};
+
+const FixtureCheckbox = () => {
+  const [count, setCount] = React.useState(0);
+
+  const [checked, setChecked] = React.useState<boolean | "indeterminate">(
+    params.get("checked") === "mixed"
+      ? "indeterminate"
+      : params.get("checked") === "true"
+  );
+
+  return (
+    <>
+      <Checkbox
+        id="subject"
+        aria-label="Test checkbox"
+        scale={scale}
+        checked={checked === true}
+        indeterminate={checked === "indeterminate"}
+        disabled={state === "disabled"}
+        onCheckedChange={(value) => {
+          setChecked(value);
+          setCount(count + 1);
+        }}
+        data-subject="true"
+      />
+      <output aria-label="Changes">{count}</output>
+      <button type="button" id="next">
+        Next focus target
+      </button>
+    </>
+  );
+};
+
+const FixtureButton = () => {
+  const hasRequestedWidth = params.has("width");
+
+  const [count, setCount] = React.useState(0);
 
   return (
     <>
@@ -3166,7 +3442,12 @@ const Fixture = () => {
         id="subject"
         scale={scale}
         disabled={state === "disabled"}
-        style={params.has("width") ? { width: width * scale } : undefined}
+        className={hasRequestedWidth ? "fixture-geometry-width" : undefined}
+        style={
+          hasRequestedWidth
+            ? { "--fixture-width": `${width * scale}px` }
+            : undefined
+        }
         onClick={() => {
           setCount(count + 1);
         }}
@@ -3175,7 +3456,14 @@ const Fixture = () => {
         {label}
       </Button>
       <output aria-label="Activations">{count}</output>
-      <Button render={<a href="#destination" />}>Continue</Button>
+      <Button
+        render={
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- Button supplies the existing accessible name through its real children or labeling props; retain this empty render receiver to test that forwarding contract.
+          <a href="#destination" />
+        }
+      >
+        Continue
+      </Button>
       <Button
         disabled
         onClick={() => {
@@ -3191,16 +3479,344 @@ const Fixture = () => {
   );
 };
 
-createRoot(document.querySelector("#root")!).render(
-  params.get("component") === "custom-api" ? (
-    <CustomApiFixture />
-  ) : (
-    <BaseDirectionProvider
-      direction={
-        params.has("rtl") || params.get("dir") === "rtl" ? "rtl" : "ltr"
-      }
-    >
-      <Fixture />
-    </BaseDirectionProvider>
-  )
+const fixtureRoutes: readonly FixtureRoute[] = [
+  {
+    fixture: KeyedRichChildrenFixture,
+    kind: "name",
+    name: "keyed-rich-children",
+  },
+  {
+    fixture: TabsFallbackFixture,
+    kind: "name",
+    name: "tabs-fallback",
+  },
+  {
+    fixture: BaseUICompositionFixture,
+    kind: "name",
+    name: "base-ui-composition",
+  },
+  {
+    fixture: CollapsibleFirstFrameFixture,
+    kind: "name",
+    name: "collapsible-first-frame",
+  },
+  {
+    fixture: BadgeAdvancementFixture,
+    kind: "name",
+    name: "badge-advancement",
+  },
+  {
+    fixture: QuestionnaireFixture,
+    kind: "name",
+    name: "questionnaire",
+  },
+  {
+    fixture: DialogFooterFixture,
+    kind: "name",
+    name: "dialog-footer",
+  },
+  {
+    fixture: AlertDialogMediaFixture,
+    kind: "name",
+    name: "alert-dialog-media",
+  },
+  {
+    fixture: ComboboxFixture,
+    kind: "name",
+    name: "combobox",
+  },
+  {
+    fixture: AttachmentFixture,
+    kind: "name",
+    name: "attachment",
+  },
+  {
+    fixture: ColorPainterStressFixture,
+    kind: "name",
+    name: "color-painter-stress",
+  },
+  {
+    fixture: MarkerFixture,
+    kind: "name",
+    name: "marker",
+  },
+  {
+    fixture: ChartFixture,
+    kind: "name",
+    name: "chart",
+  },
+  {
+    fixture: TextWidgetsFixture,
+    kind: "aliases",
+    names: ["trace", "message-scroller", "spinner"],
+    nativeFixture: NativeTextCompositionsFixture,
+  },
+  {
+    fixture: NativeSelectFixture,
+    kind: "name",
+    name: "native-select",
+  },
+  {
+    fixture: CodeBlockFixture,
+    kind: "name",
+    name: "code-block",
+    nativeFixture: NativeTextCompositionsFixture,
+  },
+  {
+    fixture: InputOTPFixture,
+    kind: "name",
+    name: "input-otp",
+  },
+  {
+    fixture: CarouselFixture,
+    kind: "name",
+    name: "carousel",
+  },
+  {
+    fixture: FormsFixture,
+    kind: "aliases",
+    names: ["form", "field"],
+  },
+  {
+    fixture: DataTableFixture,
+    kind: "name",
+    name: "data-table",
+  },
+  {
+    fixture: InputGroupFixture,
+    kind: "name",
+    name: "input-group",
+  },
+  {
+    fixture: CommandFixture,
+    kind: "name",
+    name: "command",
+  },
+  {
+    fixture: CalendarFixture,
+    kind: "aliases",
+    names: ["calendar", "date-picker"],
+  },
+  {
+    fixture: ChatFamilyFixture,
+    kind: "aliases",
+    names: ["message", "bubble"],
+  },
+  {
+    fixture: ResizableFixture,
+    kind: "name",
+    name: "resizable",
+  },
+  {
+    fixture: SidebarFixture,
+    kind: "name",
+    name: "sidebar",
+  },
+  {
+    fixture: TableFixture,
+    kind: "name",
+    name: "table",
+  },
+  {
+    fixture: ItemFixture,
+    kind: "name",
+    name: "item",
+  },
+  {
+    fixture: AvatarFixture,
+    kind: "name",
+    name: "avatar",
+  },
+  {
+    fixture: ToastFixture,
+    kind: "aliases",
+    names: ["sonner", "sonner-strict"],
+  },
+  {
+    fixture: ButtonCompositionFixture,
+    kind: "name",
+    name: "button-composition",
+  },
+  {
+    fixture: TextComponentsFixture,
+    kind: "aliases",
+    names: ["badge", "typography", "breadcrumb", "kbd", "empty"],
+  },
+  {
+    fixture: OverlayFixture,
+    kind: "aliases",
+    names: ["sheet", "drawer"],
+  },
+  {
+    fixture: StructuralFixture,
+    kind: "aliases",
+    names: ["aspect-ratio", "button-group", "pagination"],
+  },
+  {
+    fixture: ToggleGroupFixture,
+    kind: "name",
+    name: "toggle-group",
+  },
+  {
+    fixture: ToggleFixture,
+    kind: "name",
+    name: "toggle",
+  },
+  {
+    fixture: ContextFixture,
+    kind: "name",
+    name: "context-menu",
+  },
+  {
+    fixture: CollapsibleFixture,
+    kind: "name",
+    name: "collapsible",
+  },
+  {
+    fixture: MenubarFixture,
+    kind: "name",
+    name: "menubar",
+  },
+  {
+    fixture: DropdownFixture,
+    kind: "name",
+    name: "dropdown-menu",
+  },
+  {
+    fixture: PopoverCompositionFixture,
+    kind: "name",
+    name: "popover-composition",
+  },
+  {
+    fixture: PopoverFixture,
+    kind: "name",
+    name: "popover",
+  },
+  {
+    fixture: AlertDialogCompositionFixture,
+    kind: "name",
+    name: "alert-dialog-composition",
+  },
+  {
+    fixture: AlertDialogFixture,
+    kind: "name",
+    name: "alert-dialog",
+  },
+  {
+    fixture: DialogCompositionFixture,
+    kind: "name",
+    name: "dialog-composition",
+  },
+  {
+    fixture: DialogFixture,
+    kind: "name",
+    name: "dialog",
+  },
+  {
+    fixture: SwitchFixture,
+    kind: "name",
+    name: "switch",
+  },
+  {
+    fixture: RadioFixture,
+    kind: "prefix",
+    prefix: "radio-group",
+  },
+  {
+    fixture: SelectFixture,
+    kind: "prefix",
+    prefix: "select",
+  },
+  {
+    fixture: FixtureTabsTrigger,
+    kind: "name",
+    name: "tabs-trigger",
+  },
+  {
+    fixture: FixtureTabs,
+    kind: "name",
+    name: "tabs",
+  },
+  {
+    fixture: FixtureProgress,
+    kind: "name",
+    name: "progress",
+  },
+  {
+    fixture: FixtureScrollArea,
+    kind: "name",
+    name: "scroll-area",
+  },
+  {
+    fixture: FixtureSeparator,
+    kind: "name",
+    name: "separator",
+  },
+  {
+    fixture: FixtureLabel,
+    kind: "name",
+    name: "label",
+  },
+  {
+    fixture: FixtureTextarea,
+    kind: "name",
+    name: "textarea",
+  },
+  {
+    fixture: FixtureCard,
+    kind: "name",
+    name: "card",
+  },
+  {
+    fixture: FixtureTooltip,
+    kind: "name",
+    name: "tooltip",
+  },
+  {
+    fixture: FixtureInput,
+    kind: "name",
+    name: "input",
+  },
+  {
+    fixture: FixtureSlider,
+    kind: "name",
+    name: "slider",
+  },
+  {
+    fixture: FixtureCheckbox,
+    kind: "name",
+    name: "checkbox",
+  },
+];
+
+const Fixture = ({ view: ActiveFixture }: { view: React.ComponentType }) => (
+  <ActiveFixture />
 );
+
+const fixtureRoot3 = document.querySelector("#root");
+
+if (fixtureRoot3 === null) {
+  throw new Error("Missing required mandatory fixture html root");
+}
+
+const fixtureRenderer = createRoot(fixtureRoot3);
+
+if (params.get("component") === "custom-api") {
+  fixtureRenderer.render(<CustomApiFixture />);
+} else {
+  const direction =
+    params.has("rtl") || params.get("dir") === "rtl" ? "rtl" : "ltr";
+
+  // Navigation owns this immutable query; React state updates retain this fixture type.
+  const ActiveFixture = resolveFixtureRoute(
+    params,
+    fixtureRoutes,
+    FixtureButton
+  );
+
+  fixtureRenderer.render(
+    <BaseDirectionProvider direction={direction}>
+      <Fixture view={ActiveFixture} />
+    </BaseDirectionProvider>
+  );
+}

@@ -7,9 +7,11 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
@@ -21,23 +23,52 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-tabs.css";
 
+interface TabsTextureStyle extends React.CSSProperties {
+  "--mc-tabs-image": string;
+}
+
+const tabLabelAdvance = function tabLabelAdvance(glyphText: string) {
+  let accumulatedGlyphAdvance = 0;
+
+  for (const advanceCharacter of glyphText) {
+    accumulatedGlyphAdvance +=
+      minecraftGlyphs[
+        // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+        (advanceCharacter.codePointAt(0) as number) - 32
+      ]?.[2] ??
+      getUnihexGlyph(advanceCharacter)?.advance ??
+      6;
+  }
+
+  return accumulatedGlyphAdvance;
+};
+
+interface TabsHeaderStyle extends React.CSSProperties {
+  "--mc-tab-header": string;
+}
+
+interface TabsScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext(2);
 
-function useLocalRef<T extends HTMLElement>(
+const useLocalRef = function useLocalRef<T extends HTMLElement>(
   forwarded: React.Ref<T> | undefined
 ) {
   const local = React.useRef<T>(null);
   const [element, setElement] = React.useState<T | null>(null);
 
   const callback = React.useCallback(
-    (node: T | null) => {
+    (node: T | null): (() => void) | undefined => {
       local.current = node;
       setElement(node);
 
-      if (typeof forwarded === "function") {
+      if (isMinecraftRefCallback(forwarded)) {
         const cleanup = forwarded(node);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             local.current = null;
             setElement(null);
@@ -45,14 +76,17 @@ function useLocalRef<T extends HTMLElement>(
           };
         }
       } else if (forwarded) {
+        // oxlint-disable-next-line react/immutability -- React commit forwards this mutable object ref outside render; preserve the existing callback and cleanup order.
         forwarded.current = node;
       }
+
+      return undefined;
     },
     [forwarded]
   );
 
   return [local, callback, element] as const;
-}
+};
 
 type TabsProps = Omit<
   MinecraftProps<typeof TabsPrimitive.Root>,
@@ -77,14 +111,14 @@ const Tabs = ({
 
   const [, forwarded, element] = useLocalRef(ref);
 
-  const requested = React.useRef<string | undefined>(undefined);
+  const requested = React.useRef<unknown>(undefined);
   const expiry = React.useRef(0);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const root = element;
 
     if (!root) {
-      return;
+      return undefined;
     }
 
     const current = () =>
@@ -129,11 +163,10 @@ const Tabs = ({
         data-slot="tabs"
         orientation={orientation}
         className={cn(`mc-tabs`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
+        style={minecraftStyle(style, (__style): TabsScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         onValueChange={(next, details) => {
           requested.current = details.reason === "none" ? next : undefined;
           cancelAnimationFrame(expiry.current);
@@ -150,7 +183,7 @@ const Tabs = ({
 
 const tabsListVariants = cva("mc-tabs-list", {
   defaultVariants: { variant: "default" },
-  variants: { variant: { default: "mc-tabs-list-default" } },
+  variants: { variant: { default: "" } },
 });
 
 type TabsListProps = MinecraftProps<typeof TabsPrimitive.List> &
@@ -172,12 +205,13 @@ const TabsList = ({
   const scale = React.useContext(ScaleContext);
   const [, forwarded, element] = useLocalRef(ref);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     if (!element) {
-      return;
+      return undefined;
     }
 
     const measure = () => {
+      // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
       const width = Math.floor(element.clientWidth / scale);
 
       const count = Math.max(
@@ -219,14 +253,10 @@ const TabsList = ({
       data-slot="tabs-list"
       data-variant={variant}
       className={cn(`${tabsListVariants({ variant })} `, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-tab-header": assets.textures.header_separator,
-            ...__style,
-          }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): TabsHeaderStyle => ({
+        "--mc-tab-header": assets.textures.header_separator,
+        ...__style,
+      }))}
       {...props}
     >
       {content}
@@ -234,17 +264,28 @@ const TabsList = ({
   );
 };
 
-const TabSurface = ({ name }: { name: keyof typeof assets.sprites }) => {
-  return (
-    <span className="mc-tab-surface" data-sprite={name} aria-hidden="true">
-      {assets.sprites[name].pieces.map((image, index) => (
-        <i key={index} style={{ backgroundImage: image }} />
-      ))}
-    </span>
-  );
-};
+const TabSurface = ({ name }: { name: keyof typeof assets.sprites }) => (
+  <span className="mc-tab-surface" data-sprite={name} aria-hidden="true">
+    {assets.sprites[name].pieces.map((image, index) => (
+      <i
+        key={index}
+        style={
+          // SAFETY: The owned texture value is a string checked by TabsTextureStyle; the assertion supplies React’s CSSProperties view of its required custom property.
+          {
+            "--mc-tabs-image": image,
+          } satisfies TabsTextureStyle as TabsTextureStyle
+        }
+      />
+    ))}
+  </span>
+);
 
-type TabsTriggerProps = MinecraftProps<typeof TabsPrimitive.Tab>;
+type TabsTriggerProps = Omit<
+  MinecraftProps<typeof TabsPrimitive.Tab>,
+  "value"
+> & {
+  value: unknown;
+};
 
 const TabsTrigger = ({
   className,
@@ -260,39 +301,27 @@ const TabsTrigger = ({
 
   const content = children;
 
-  const text =
-    typeof content === "string" || typeof content === "number"
-      ? String(content)
-      : null;
+  const text = isMinecraftTextContent(content) ? String(content) : null;
 
-  React.useLayoutEffect(() => {
-    let cancelled = false,
-      frame = 0;
+  React.useLayoutEffect((): (() => void) | undefined => {
+    let cancelled = false;
+    let frame = 0;
 
     if (!element) {
-      return;
+      return undefined;
     }
 
     const update = () => {
       const width = Math.floor(element.clientWidth / scale);
 
       const textWidth =
-        text == null
+        text === null
           ? Math.ceil(
               (element
                 .querySelector<HTMLElement>("[data-mc-tabs-rich]")
                 ?.getBoundingClientRect().width ?? 0) / scale
             )
-          : Math.ceil(
-              [...text].reduce(
-                (sum, char) =>
-                  sum +
-                  (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
-                    getUnihexGlyph(char)?.advance ??
-                    6),
-                0
-              )
-            );
+          : Math.ceil(tabLabelAdvance(text));
 
       const overflow = textWidth - (width - 2);
       let left = Math.floor(width / 2) - Math.floor(textWidth / 2);
@@ -326,12 +355,20 @@ const TabsTrigger = ({
       }
     };
 
-    const unicode = text != null && /[^\x00-\x7F]/.test(text);
+    const unicode = text !== null && /\P{ASCII}/u.test(text);
 
     if (unicode) {
-      void loadUnihex().then(() => {
-        if (!cancelled) update();
-      });
+      const fontLoading = loadUnihex();
+
+      const commitFontReadiness = async () => {
+        await fontLoading;
+
+        if (!cancelled) {
+          update();
+        }
+      };
+
+      void commitFontReadiness();
     } else {
       update();
     }
@@ -342,6 +379,16 @@ const TabsTrigger = ({
     };
   }, [text, scale, element]);
 
+  let label: React.ReactNode;
+
+  if (text === null) {
+    label = <span data-mc-tabs-rich="">{content}</span>;
+  } else if (/^[\u0020-\u007E]*$/u.test(text)) {
+    label = <MinecraftText>{text}</MinecraftText>;
+  } else {
+    label = <MinecraftUnicodeLabel text={text} atlas={tabsUnihexAtlas} />;
+  }
+
   const artwork = (
     <>
       <TabSurface name="tab" />
@@ -351,19 +398,16 @@ const TabsTrigger = ({
       <span
         className="mc-tab-menu"
         aria-hidden="true"
-        style={{ backgroundImage: assets.textures.menu_background }}
+        style={
+          // SAFETY: The owned texture value is a string checked by TabsTextureStyle; the assertion supplies React’s CSSProperties view of its required custom property.
+          {
+            "--mc-tabs-image": assets.textures.menu_background,
+          } satisfies TabsTextureStyle as TabsTextureStyle
+        }
       />
       <span className="mc-tab-underline" aria-hidden="true" />
       <span className="mc-tab-label-window">
-        <span className="mc-tab-label">
-          {text == null ? (
-            <span data-mc-tabs-rich="">{content}</span>
-          ) : /^[\x20-\x7E]*$/.test(text) ? (
-            <MinecraftText>{text}</MinecraftText>
-          ) : (
-            <MinecraftUnicodeLabel text={text} atlas={tabsUnihexAtlas} />
-          )}
-        </span>
+        <span className="mc-tab-label">{label}</span>
       </span>
     </>
   );
@@ -388,20 +432,19 @@ const TabsContent = ({
   className,
   style,
   ...props
-}: MinecraftProps<typeof TabsPrimitive.Panel>) => {
-  return (
-    <TabsPrimitive.Panel
-      data-slot="tabs-content"
-      className={cn(`mc-tabs-content`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        backgroundImage: assets.textures.menu_background,
-        ...__style,
-      }))}
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof TabsPrimitive.Panel>) => (
+  <TabsPrimitive.Panel
+    data-slot="tabs-content"
+    className={cn(`mc-tabs-content`, className)}
+    style={minecraftStyle(style, (__style): TabsTextureStyle => ({
+      "--mc-tabs-image": assets.textures.menu_background,
+      ...__style,
+    }))}
+    {...props}
+  />
+);
 
+// oxlint-disable-next-line react-doctor/only-export-components -- Preserve the upstream shadcn component-and-variant export API used by consumer styling composition.
 export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants };
 
 export type { TabsProps, TabsListProps, TabsTriggerProps };

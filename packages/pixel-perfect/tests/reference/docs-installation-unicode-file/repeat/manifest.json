@@ -1,0 +1,42 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "74a2b097f89a6bb08826248ebc9e1e66b1677be8c82a9a29cee1bf03bd2640df",
+  "caseDefinitionSha256": "047377195d5563bdab84a7116e220a1bc4f895891ba01ed04c25ddbe5f43753b",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    2
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-s2.png",
+      "sha256": "3e292df475fee9a7c929cfdc3bf0d271e55bbed4ecfb0b0109d68284d0934d46"
+    }
+  ],
+  "cases": [
+    {
+      "name": "install-file-minecraft-unicode-css-s2.png",
+      "element": "button",
+      "label": "minecraft-unicode.css",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "0c0d0e3ae13570af694f87e261f7506701bcaabbecd6f178ee0a8abf8c5012c7"
+    }
+  ],
+  "sourceDirectory": "source",
+  "captureRunnerSha256": "6a6ec741762fb1ac10770bc8426d927d20d39f472159e27e8c779cca814d9e6a"
+}

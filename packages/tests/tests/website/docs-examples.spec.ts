@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { webRoot } from "@tests/paths";
 
@@ -119,7 +120,7 @@ test("Button documentation connects its executable example, complete code and im
     .locator("[data-example-installation]")
     .getAttribute("data-example-installation");
 
-  expect(filename).not.toBeNull();
+  expectNotNull(filename);
 
   if (filename === null || filename === "" || path.isAbsolute(filename)) {
     throw new Error("Example must declare an owner-relative executable file");

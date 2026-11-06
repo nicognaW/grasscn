@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 test("Textarea preserves controlled multiline editing, events and Enter behavior", async ({
@@ -27,23 +28,24 @@ test("Textarea keeps its native ref, uncontrolled form data and reset repaint", 
   const area = page.getByRole("textbox", { name: "Test textarea" });
   await expect(area).toHaveAttribute("data-mc-ready", "true");
 
-  const original = await area.evaluate((node) =>
-    (node as HTMLElement).style.getPropertyValue("--mc-textarea-image")
+  const original = await area.evaluate((node: HTMLElement) =>
+    node.style.getPropertyValue("--mc-textarea-image")
   );
 
   await area.fill("New\nvalue");
   expect(
     await page
       .locator("form")
-      .evaluate((node) => new FormData(node as HTMLFormElement).get("message"))
+      .evaluate((node: HTMLFormElement) => new FormData(node).get("message"))
   ).toBe("New\nvalue");
   await page.locator("#reset").click();
   await expect(area).toHaveValue("Hello");
   await expect
-    .poll(async () =>
-      area.evaluate((node) =>
-        (node as HTMLElement).style.getPropertyValue("--mc-textarea-image")
-      )
+    .poll(
+      async () =>
+        await area.evaluate((node: HTMLElement) =>
+          node.style.getPropertyValue("--mc-textarea-image")
+        )
     )
     .toBe(original);
   await page.locator("#read-ref").click();
@@ -87,13 +89,14 @@ test("Textarea scrollbar can be dragged and wheel scrolling remains native", asy
   );
   const area = page.getByRole("textbox", { name: "Test textarea" });
   await expect(area).toHaveAttribute("data-mc-scrollbar", "true");
-  const bounds = (await area.boundingBox())!;
+  const bounds = await area.boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.move(bounds.x + bounds.width - 6, bounds.y + 20);
   await page.mouse.down();
   await page.mouse.move(bounds.x + bounds.width - 6, bounds.y + 50);
   await page.mouse.up();
   await expect
-    .poll(async () => area.evaluate((node) => node.scrollTop))
+    .poll(async () => await area.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
   await area.evaluate((node) => {
     node.scrollTop = 0;
@@ -101,6 +104,6 @@ test("Textarea scrollbar can be dragged and wheel scrolling remains native", asy
   await area.hover();
   await page.mouse.wheel(0, 100);
   await expect
-    .poll(async () => area.evaluate((node) => node.scrollTop))
+    .poll(async () => await area.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
 });

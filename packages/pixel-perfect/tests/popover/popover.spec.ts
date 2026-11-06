@@ -2,10 +2,29 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-function compare(expected: PNG, actual: PNG) {
+interface PopoverComparisonCase extends CapturedReferenceCase {
+  background: string;
+  x: number;
+  y: number;
+  label?: string;
+  text?: string;
+}
+
+interface PopoverTextCase extends PopoverComparisonCase {
+  label: string;
+  text: string;
+}
+
+interface PopoverComparisonManifest {
+  cases: PopoverComparisonCase[];
+}
+
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -23,9 +42,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[at] >> 2,
-            expected.data[at + 1] >> 2,
-            expected.data[at + 2] >> 2,
+            Math.floor(expected.data[at] / 4),
+            Math.floor(expected.data[at + 1] / 4),
+            Math.floor(expected.data[at + 2] / 4),
             255,
           ],
       at
@@ -33,7 +52,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Popover comparator catches one changed pixel", () => {
   const expected = PNG.sync.read(
@@ -44,38 +63,45 @@ test("Popover comparator catches one changed pixel", () => {
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
 for (const directory of [
   "tests/reference/card",
-  ...(process.env.POPOVER_SURFACE_ONLY ? [] : ["tests/reference/popover"]),
+  ...((process.env.POPOVER_SURFACE_ONLY ?? "") === ""
+    ? ["tests/reference/popover"]
+    : []),
 ]) {
   test.describe(`Popover original surface ${directory}`, () => {
     test.describe.configure({ mode: "parallel" });
 
+    // SAFETY: The closed retained Card/Popover routes supply this shared identity/geometry/background and real optional label/text; their co-presence is projected only under the existing text guard.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture boundary; preserve the original fresh runtime read/parse phase.
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-    );
+    ) as PopoverComparisonManifest;
 
     for (const c of manifest.cases) {
       test(`Popover native pixels: ${c.name}`, async ({ page }, testInfo) => {
-        await page.setViewportSize({ width: 1536, height: 900 });
+        await page.setViewportSize({ height: 900, width: 1536 });
 
         const query = new URLSearchParams({
           component: "popover",
+          height: String(c.height),
           native: "1",
           scale: String(c.scale),
           width: String(c.width),
-          height: String(c.height),
           x: String(c.x),
           y: String(c.y),
         });
 
-        if (c.text != null) {
+        if (c.text !== undefined) {
           query.set("text", c.text);
-          query.set("label", c.label);
+          // SAFETY: Every retained Card/Popover case with non-null text also has a string label; this original text guard identifies that actual co-present variant.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained field co-presence under the existing guard; no new check, fallback or property read.
+          query.set("label", (c as PopoverTextCase).label);
         }
 
         await page.goto(`/?${query}`);
@@ -89,24 +115,47 @@ for (const directory of [
           subject.locator('[data-mc-popover-text-ready="false"]')
         ).toHaveCount(0);
 
-        for (const line of await subject
-          .locator("[data-mc-popover-unicode-ready]")
-          .all())
-          await expect(line).toHaveAttribute(
-            "data-mc-popover-unicode-ready",
-            "true"
+        {
+          const readyElements = await subject
+            .locator("[data-mc-popover-unicode-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (line) => {
+              await expect(line).toHaveAttribute(
+                "data-mc-popover-unicode-ready",
+                "true"
+              );
+            })
           );
-        await page.evaluate(
-          async () =>
-            await new Promise<void>((resolve) =>
-              requestAnimationFrame(() =>
-                requestAnimationFrame(() => {
-                  resolve();
-                })
-              )
-            )
-        );
-        const bounds = (await subject.boundingBox())!;
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
+        }
+
+        await page.evaluate(async () => {
+          const frameCompletion: PromiseWithResolvers<void> =
+            Promise.withResolvers();
+
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          await frameCompletion.promise;
+        });
+        const bounds = await subject.boundingBox();
+        expectNotNull(bounds, "Missing required bounding box: bounds");
         expect(bounds.x).toBe(c.x * c.scale);
         expect(bounds.y).toBe(c.y * c.scale);
 
@@ -116,11 +165,12 @@ for (const directory of [
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
 
-        const actual = await subject.screenshot({ animations: "disabled" }),
-          { mismatchedPixels, diff } = compare(
-            PNG.sync.read(bytes),
-            PNG.sync.read(actual)
-          );
+        const actual = await subject.screenshot({ animations: "disabled" });
+
+        const { mismatchedPixels, diff } = compare(
+          PNG.sync.read(bytes),
+          PNG.sync.read(actual)
+        );
 
         writeFileSync(testInfo.outputPath("actual.png"), actual);
         writeFileSync(testInfo.outputPath("diff.png"), PNG.sync.write(diff));
@@ -129,8 +179,8 @@ for (const directory of [
           JSON.stringify({
             case: c.name,
             mismatchedPixels,
-            totalPixels: c.width * c.height * c.scale * c.scale,
             tolerance: 0,
+            totalPixels: c.width * c.height * c.scale * c.scale,
           })
         );
         expect(mismatchedPixels).toBe(0);

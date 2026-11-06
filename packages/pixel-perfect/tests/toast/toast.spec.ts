@@ -5,13 +5,17 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type toastReference from "../reference/toast/manifest.json";
+
 const directory = "tests/reference/toast";
 
+// SAFETY: this read consumes retained toast/manifest.json with its exact imported shape; preserve the original runtime read/parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as typeof toastReference;
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -29,9 +33,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -39,7 +43,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 for (const component of ["sonner"]) {
   test(`${component} pixel comparator catches a changed pixel`, () => {
@@ -51,6 +55,7 @@ for (const component of ["sonner"]) {
 
     const actual = PNG.sync.read(PNG.sync.write(expected));
 
+    // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
     actual.data[0] ^= 1;
     expect(compare(expected, actual).mismatchedPixels).toBe(1);
   });
@@ -108,16 +113,33 @@ for (const component of ["sonner"]) {
           c.selectedIndex ?? 1
         );
 
-        for (const canvas of await page
-          .locator("[data-mc-toast-ready]")
-          .all()) {
-          await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
+        {
+          const readyElements = await page
+            .locator("[data-mc-toast-ready]")
+            .all();
+
+          const readinessResults = await Promise.allSettled(
+            readyElements.map(async (canvas) => {
+              await expect(canvas).toHaveAttribute(
+                "data-mc-toast-ready",
+                "true"
+              );
+            })
+          );
+
+          const rejectedReadiness = readinessResults.find(
+            (result) => result.status === "rejected"
+          );
+
+          if (rejectedReadiness) {
+            throw rejectedReadiness.reason;
+          }
         }
 
         if (c.state === "exiting") {
           await page.clock.fastForward(600);
-          await page.locator("#close").evaluate((node) => {
-            (node as HTMLElement).click();
+          await page.locator("#close").evaluate((node: HTMLElement) => {
+            node.click();
           });
           await page.clock.fastForward(component === "sonner" ? 16 : 0);
           await expect(
@@ -141,10 +163,27 @@ for (const component of ["sonner"]) {
             c.selectedIndex ?? 1
           );
 
-          for (const canvas of await page
-            .locator("[data-mc-toast-ready]")
-            .all()) {
-            await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
+          {
+            const readyElements = await page
+              .locator("[data-mc-toast-ready]")
+              .all();
+
+            const readinessResults = await Promise.allSettled(
+              readyElements.map(async (canvas) => {
+                await expect(canvas).toHaveAttribute(
+                  "data-mc-toast-ready",
+                  "true"
+                );
+              })
+            );
+
+            const rejectedReadiness = readinessResults.find(
+              (result) => result.status === "rejected"
+            );
+
+            if (rejectedReadiness) {
+              throw rejectedReadiness.reason;
+            }
           }
         }
 

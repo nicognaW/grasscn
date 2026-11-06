@@ -8,6 +8,10 @@ import type { MinecraftPolymorphicProps } from "./minecraft-render";
 
 import "./minecraft-breadcrumb.css";
 
+interface BreadcrumbScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const BreadcrumbScale = React.createContext<1 | 2 | 3>(2);
 
 const Breadcrumb = ({
@@ -16,48 +20,41 @@ const Breadcrumb = ({
   ...props
 }: React.ComponentProps<"nav"> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <BreadcrumbScale value={scale}>
-      <nav
-        aria-label="Breadcrumb"
-        data-slot="breadcrumb"
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </BreadcrumbScale>
-  );
-};
+}) => (
+  <BreadcrumbScale value={scale}>
+    <nav
+      aria-label="Breadcrumb"
+      data-slot="breadcrumb"
+      style={minecraftStyle(style, (__style): BreadcrumbScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
+      {...props}
+    />
+  </BreadcrumbScale>
+);
 
 const BreadcrumbList = ({
   className,
   ...props
-}: React.ComponentProps<"ol">) => {
-  return (
-    <ol
-      data-slot="breadcrumb-list"
-      className={cn(`mc-breadcrumb-list`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"ol">) => (
+  <ol
+    data-slot="breadcrumb-list"
+    className={cn(`mc-breadcrumb-list`, className)}
+    {...props}
+  />
+);
 
 const BreadcrumbItem = ({
   className,
   ...props
-}: React.ComponentProps<"li">) => {
-  return (
-    <li
-      data-slot="breadcrumb-item"
-      className={cn(`mc-breadcrumb-item`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"li">) => (
+  <li
+    data-slot="breadcrumb-item"
+    className={cn(`mc-breadcrumb-item`, className)}
+    {...props}
+  />
+);
 
 type BreadcrumbLinkProps = MinecraftPolymorphicProps<"a"> & {
   scale?: 1 | 2 | 3;
@@ -110,10 +107,11 @@ const BreadcrumbPage = ({
     <MinecraftProse
       as="span"
       data-slot="breadcrumb-page"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn BreadcrumbPage's disabled span link semantics.
       role="link"
       aria-disabled="true"
       aria-current="page"
-      className={cn(`mc-breadcrumb-page`, className)}
+      className={cn(className)}
       scale={scale ?? inherited}
       maxWidth={maxWidth}
       align={align}
@@ -136,7 +134,7 @@ const BreadcrumbSeparator = ({
       data-slot="breadcrumb-separator"
       role="presentation"
       aria-hidden="true"
-      className={cn(`mc-breadcrumb-separator`, className)}
+      className={cn(className)}
       {...props}
     >
       {children ?? <MinecraftProse scale={scale}>{">"}</MinecraftProse>}

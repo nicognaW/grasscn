@@ -1,30 +1,37 @@
-import { test, expect, type Locator, type Page } from "@grasscn/tests/test";
+import { expectNotNull } from "@grasscn/tests/assertions";
+import type { Locator, Page } from "@grasscn/tests/test";
+import { test, expect } from "@grasscn/tests/test";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/u, "/");
 
-async function open(page: Page, name: string) {
+const open = async function open(page: Page, name: string) {
   await page.goto(`${origin}docs/components/${name}`);
 
   return page.locator(".documentation-playground");
-}
+};
 
-async function labelFits(button: Locator) {
+const labelFits = async function labelFits(button: Locator) {
   await expect
-    .poll(async () =>
-      button.evaluate((node) => {
-        const box = node.getBoundingClientRect();
+    .poll(
+      async () =>
+        await button.evaluate((node) => {
+          const box = node.getBoundingClientRect();
 
-        const label = node
-          .querySelector(".mc-button-label")!
-          .getBoundingClientRect();
+          const requiredElement29 = node.querySelector(".mc-button-label");
 
-        return label.left >= box.left - 0.5 && label.right <= box.right + 0.5;
-      })
+          if (requiredElement29 === null) {
+            throw new Error("Missing required dom query");
+          }
+
+          const label = requiredElement29.getBoundingClientRect();
+
+          return label.left >= box.left - 0.5 && label.right <= box.right + 0.5;
+        })
     )
     .toBe(true);
-}
+};
 
 test("Kbd texture fits ASCII, CJK and shortcut labels at every GUI scale", async ({
   page,
@@ -32,20 +39,44 @@ test("Kbd texture fits ASCII, CJK and shortcut labels at every GUI scale", async
   const card = await open(page, "kbd");
   {
     for (const text of ["Space", "跳跃 Space", "Ctrl + Shift + P"]) {
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await card
         .getByRole("textbox", { name: "Keyboard key label" })
         .fill(text);
       const key = card.locator('[data-slot="kbd"]').first();
 
-      for (const glyph of await key.locator("[data-mc-label-ready]").all()) {
-        await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
+      const readOnlyItems33 = await key.locator("[data-mc-label-ready]").all();
+
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
+      const readOnlyResults33 = await Promise.allSettled(
+        readOnlyItems33.map(async (glyph) => {
+          await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+        })
+      );
+
+      for (const readOnlyResult33 of readOnlyResults33) {
+        if (readOnlyResult33.status === "rejected") {
+          throw readOnlyResult33.reason;
+        }
       }
 
+      // oxlint-disable-next-line no-await-in-loop -- Changes the same live form/input state and completes its dependent checks before the next value replaces it.
       await labelFits(key);
     }
 
-    for (const key of await card.locator('[data-slot="kbd"]').all()) {
-      await labelFits(key);
+    const readOnlyItems34 = await card.locator('[data-slot="kbd"]').all();
+
+    const readOnlyResults34 = await Promise.allSettled(
+      readOnlyItems34.map(async (key) => {
+        await labelFits(key);
+      })
+    );
+
+    for (const readOnlyResult34 of readOnlyResults34) {
+      if (readOnlyResult34.status === "rejected") {
+        throw readOnlyResult34.reason;
+      }
     }
   }
 });
@@ -57,10 +88,20 @@ test("Questionnaire action labels fit, CJK submission works and restart clears t
   await card.getByRole("radio", { exact: true, name: "Survival" }).check();
   await card.getByRole("button", { exact: true, name: "Next" }).click();
   {
-    for (const button of await card
+    const readOnlyItems35 = await card
       .locator('[data-slot="questionnaire-actions"] button:visible')
-      .all()) {
-      await labelFits(button);
+      .all();
+
+    const readOnlyResults35 = await Promise.allSettled(
+      readOnlyItems35.map(async (button) => {
+        await labelFits(button);
+      })
+    );
+
+    for (const readOnlyResult35 of readOnlyResults35) {
+      if (readOnlyResult35.status === "rejected") {
+        throw readOnlyResult35.reason;
+      }
     }
 
     expect(
@@ -79,7 +120,9 @@ test("Questionnaire action labels fit, CJK submission works and restart clears t
   );
   await card.getByRole("button", { exact: true, name: "Save world" }).click();
   await expect
-    .poll(async () => card.getByLabel("World setup result").ariaSnapshot())
+    .poll(
+      async () => await card.getByLabel("World setup result").ariaSnapshot()
+    )
     .toContain("World created: 你好 世界");
   await card.getByRole("button", { exact: true, name: "Start again" }).click();
   await expect(
@@ -123,9 +166,11 @@ test("Attachment supports CJK filenames, preview, removal and restoration inside
     const row = card.locator('[data-slot="attachment"]');
 
     await expect(row).toContainText("世界存档.zip");
-    expect((await row.boundingBox())!.width).toBeLessThanOrEqual(
-      (await stage.boundingBox())!.width
-    );
+    const requiredBounds30 = await row.boundingBox();
+    expectNotNull(requiredBounds30, "Missing required bounding box");
+    const requiredBounds31 = await stage.boundingBox();
+    expectNotNull(requiredBounds31, "Missing required bounding box");
+    expect(requiredBounds30.width).toBeLessThanOrEqual(requiredBounds31.width);
   }
 
   await card
@@ -153,24 +198,34 @@ test("MessageScroller footer texture stays bound to its button and never covers 
     const latest = card.getByRole("button", { exact: true, name: "Latest" });
 
     await expect(latest).toBeVisible();
-    expect((await latest.boundingBox())!.y).toBeGreaterThanOrEqual(
-      (await viewport.boundingBox())!.y + (await viewport.boundingBox())!.height
+    const requiredBounds32 = await latest.boundingBox();
+    expectNotNull(requiredBounds32, "Missing required bounding box");
+    const requiredBounds33 = await viewport.boundingBox();
+    expectNotNull(requiredBounds33, "Missing required bounding box");
+    const requiredBounds34 = await viewport.boundingBox();
+    expectNotNull(requiredBounds34, "Missing required bounding box");
+    expect(requiredBounds32.y).toBeGreaterThanOrEqual(
+      requiredBounds33.y + requiredBounds34.height
     );
     const skin = latest.locator(".mc-button-surface");
-    expect((await skin.boundingBox())!.height).toBeCloseTo(
-      (await latest.boundingBox())!.height,
-      0
-    );
-    expect((await skin.boundingBox())!.width).toBeCloseTo(
-      (await latest.boundingBox())!.width,
-      0
-    );
+    const requiredBounds35 = await skin.boundingBox();
+    expectNotNull(requiredBounds35, "Missing required bounding box");
+    const requiredBounds36 = await latest.boundingBox();
+    expectNotNull(requiredBounds36, "Missing required bounding box");
+    expect(requiredBounds35.height).toBeCloseTo(requiredBounds36.height, 0);
+    const requiredBounds37 = await skin.boundingBox();
+    expectNotNull(requiredBounds37, "Missing required bounding box");
+    const requiredBounds38 = await latest.boundingBox();
+    expectNotNull(requiredBounds38, "Missing required bounding box");
+    expect(requiredBounds37.width).toBeCloseTo(requiredBounds38.width, 0);
     await latest.click();
     await expect
-      .poll(async () =>
-        viewport.evaluate(
-          (node) => node.scrollTop + node.clientHeight >= node.scrollHeight - 2
-        )
+      .poll(
+        async () =>
+          await viewport.evaluate(
+            (node) =>
+              node.scrollTop + node.clientHeight >= node.scrollHeight - 2
+          )
       )
       .toBe(true);
   }
@@ -185,10 +240,11 @@ test("MessageScroller footer texture stays bound to its button and never covers 
   ).toContainText("<You> 你好，矿工！");
   const viewport = card.getByRole("region", { name: "Player chat" });
   await expect
-    .poll(async () =>
-      viewport.evaluate(
-        (node) => node.scrollTop + node.clientHeight >= node.scrollHeight - 2
-      )
+    .poll(
+      async () =>
+        await viewport.evaluate(
+          (node) => node.scrollTop + node.clientHeight >= node.scrollHeight - 2
+        )
     )
     .toBe(true);
   await card.getByRole("button", { exact: true, name: "First" }).click();
@@ -197,6 +253,6 @@ test("MessageScroller footer texture stays bound to its button and never covers 
     .fill("Keep reading older messages");
   await card.getByRole("button", { exact: true, name: "Send" }).click();
   await expect
-    .poll(async () => viewport.evaluate((node) => node.scrollTop))
+    .poll(async () => await viewport.evaluate((node) => node.scrollTop))
     .toBe(0);
 });

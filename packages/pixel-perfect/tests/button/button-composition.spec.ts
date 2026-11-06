@@ -4,16 +4,21 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData1 from "../reference/button-cjk/manifest.json";
+import type CapturedData0 from "../reference/manifest.json";
+
+// SAFETY: This read consumes the same pinned tests/reference/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile("tests/reference/manifest.json"), "utf-8")
-);
+) as typeof CapturedData0;
 
 for (const mode of ["split", "fragments", "empty", "numeric"]) {
   for (const c of manifest.cases.filter(
-    (c: { width: number; label: string }) =>
+    (buttonCase: { width: number; label: string }) =>
       mode === "numeric"
-        ? c.width === 103 && c.label.endsWith("09")
-        : c.width === 200 && c.label === "Button"
+        ? buttonCase.width === 103 && buttonCase.label.endsWith("09")
+        : buttonCase.width === 200 && buttonCase.label === "Button"
   )) {
     test(`Button${mode}composed native label:${c.name}`, async ({
       page,
@@ -22,16 +27,18 @@ for (const mode of ["split", "fragments", "empty", "numeric"]) {
         component: "button-composition",
         composition: mode,
         label: c.label,
-        width: String(c.width),
         scale: String(c.scale),
         state: c.state,
+        width: String(c.width),
       });
 
       await page.goto(`/?${params}`);
       const button = page.locator("[data-subject]");
       await page.mouse.move(0, 0);
 
-      if (c.state === "hover") await button.hover();
+      if (c.state === "hover") {
+        await button.hover();
+      }
 
       if (c.state === "focus") {
         await button.focus();
@@ -44,18 +51,19 @@ for (const mode of ["split", "fragments", "empty", "numeric"]) {
       writeFileSync(
         info.outputPath("metrics.json"),
         JSON.stringify({
+          alias: mode,
+          case: c.name,
           component: "button",
           manifest: "tests/reference/manifest.json",
-          case: c.name,
           part: "label",
-          alias: mode,
         })
       );
 
-      const actual = PNG.sync.read(actualBytes),
-        expected = PNG.sync.read(
-          readFileSync(pixelPerfectFile(`tests/reference/captures/${c.name}`))
-        );
+      const actual = PNG.sync.read(actualBytes);
+
+      const expected = PNG.sync.read(
+        readFileSync(pixelPerfectFile(`tests/reference/captures/${c.name}`))
+      );
 
       expect([actual.width, actual.height]).toEqual([
         expected.width,
@@ -66,25 +74,27 @@ for (const mode of ["split", "fragments", "empty", "numeric"]) {
   }
 }
 
+// SAFETY: This read consumes the same pinned tests/reference/button-cjk/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const cjk = JSON.parse(
   readFileSync(
     pixelPerfectFile("tests/reference/button-cjk/manifest.json"),
     "utf-8"
   )
-);
+) as typeof CapturedData1;
 
 for (const mode of ["split", "fragments", "empty"]) {
   for (const c of cjk.cases) {
     test(`Button ${mode} CJK runs: ${c.name}`, async ({ page }, info) => {
-      await page.setViewportSize({ width: 1536, height: 900 });
+      await page.setViewportSize({ height: 900, width: 1536 });
 
       const params = new URLSearchParams({
         component: "button-composition",
         composition: mode,
         label: c.label,
-        width: String(c.width),
         scale: String(c.scale),
         state: c.state,
+        width: String(c.width),
         x: String(c.x ?? 16),
         y: String(c.y ?? 16),
       });
@@ -93,7 +103,9 @@ for (const mode of ["split", "fragments", "empty"]) {
       const button = page.locator("[data-subject]");
       await page.mouse.move(0, 0);
 
-      if (c.state === "hover") await button.hover();
+      if (c.state === "hover") {
+        await button.hover();
+      }
 
       if (c.state === "focus") {
         await button.focus();
@@ -111,20 +123,21 @@ for (const mode of ["split", "fragments", "empty"]) {
       writeFileSync(
         info.outputPath("metrics.json"),
         JSON.stringify({
+          alias: mode,
+          case: c.name,
           component: "button",
           manifest: "tests/reference/button-cjk/manifest.json",
-          case: c.name,
           part: "label",
-          alias: mode,
         })
       );
 
-      const a = PNG.sync.read(actualBytes),
-        e = PNG.sync.read(
-          readFileSync(
-            pixelPerfectFile(`tests/reference/button-cjk/captures/${c.name}`)
-          )
-        );
+      const a = PNG.sync.read(actualBytes);
+
+      const e = PNG.sync.read(
+        readFileSync(
+          pixelPerfectFile(`tests/reference/button-cjk/captures/${c.name}`)
+        )
+      );
 
       expect([a.width, a.height]).toEqual([e.width, e.height]);
       expect(a.data.equals(e.data)).toBe(true);

@@ -19,7 +19,11 @@ const valid = (
   />
 );
 
-const composed = <Switch render={<button />}>{undefined}</Switch>;
+const composed = (
+  <Switch render={<button type="button" aria-label="Mode" />}>
+    {undefined}
+  </Switch>
+);
 
 // @ts-expect-error The native on/off button has no small visual variant.
 const small = <Switch size="sm" />;

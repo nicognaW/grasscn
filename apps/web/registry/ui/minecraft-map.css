@@ -46,3 +46,66 @@
     outline: calc(1px * var(--mc-scale)) solid white;
   }
 }
+
+/* Component-owned layout defaults; caller classes and inline styles retain shadcn precedence. */
+@layer components {
+  .mc-layout-map-3 {
+    height: 100%;
+    transform: scaleY(-1);
+    width: 100%;
+  }
+  .mc-layout-map-4 {
+    display: block;
+    image-rendering: pixelated;
+  }
+  .mc-layout-map-6 {
+    position: absolute;
+  }
+}
+
+/* Dynamic component layout channels retain the original arithmetic at their owning elements. */
+@layer components {
+  .mc-dynamic-layout-map-1 {
+    height: calc(var(--mc-dynamic-map-1-height) * 1px);
+    width: calc(var(--mc-dynamic-map-1-width) * 1px);
+  }
+  .mc-dynamic-layout-map-2 {
+    height: calc(var(--mc-dynamic-map-2-height) * 1px);
+    left: calc(var(--mc-dynamic-map-2-left) * 1px);
+    top: calc(var(--mc-dynamic-map-2-top) * 1px);
+    transform: var(--mc-dynamic-map-2-transform);
+    width: calc(var(--mc-dynamic-map-2-width) * 1px);
+  }
+  .mc-dynamic-layout-map-3 {
+    visibility: var(--mc-dynamic-map-3-visibility);
+  }
+  .mc-dynamic-layout-map-4 {
+    height: calc(var(--mc-dynamic-map-4-height) * 1px);
+    width: calc(var(--mc-dynamic-map-4-width) * 1px);
+  }
+  .mc-dynamic-layout-map-5 {
+    height: calc(var(--mc-dynamic-map-5-height) * 1px);
+    left: calc(var(--mc-dynamic-map-5-left) * 1px);
+    top: calc(var(--mc-dynamic-map-5-top) * 1px);
+    width: calc(var(--mc-dynamic-map-5-width) * 1px);
+  }
+  .mc-dynamic-layout-map-6 {
+    left: calc(var(--mc-dynamic-map-6-left) * 1px);
+    top: calc(var(--mc-dynamic-map-6-top) * 1px);
+  }
+}
+
+@layer components {
+  .mc-owned-base-map-1 {
+    height: var(--mc-z-map-base-1-height);
+    width: var(--mc-z-map-base-1-width);
+  }
+  .mc-owned-base-map-2 {
+    border-image-repeat: repeat;
+    border-image-slice: 1 5 fill;
+    border-image-source: var(--mc-z-map-base-2-border-image-source);
+    border-image-width: var(--mc-z-map-base-2-border-image-width);
+    height: var(--mc-z-map-base-2-height);
+    width: var(--mc-z-map-base-2-width);
+  }
+}

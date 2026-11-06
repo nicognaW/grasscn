@@ -9,25 +9,48 @@ import {
 } from "./minecraft-dialog-gpu";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
+import { useCanvasPaintConnection } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
+
+interface DialogUnicodeStyle extends React.CSSProperties {
+  "--mc-dialog-unicode-height": string;
+  "--mc-dialog-unicode-width": string;
+}
+
+const asciiGlyphs: readonly ((typeof minecraftGlyphs)[number] | undefined)[] =
+  minecraftGlyphs;
 
 let alpha: Promise<Uint8ClampedArray> | undefined;
 
-function loadAlpha() {
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
+const loadAlpha = function loadAlpha() {
+  // oxlint-disable-next-line promise/avoid-new -- Preserve the cached Image load/error bridge and its onload alpha-extraction phase.
   return (alpha ??= new Promise((resolve, reject) => {
     const image = new Image();
-    image.onload = () => {
+    image.addEventListener("load", () => {
       const c = document.createElement("canvas");
-      c.width = c.height = 128;
-      const context = c.getContext("2d")!;
+      c.height = 128;
+      c.width = 128;
+      const context = c.getContext("2d");
+
+      if (!context) {
+        reject(
+          new Error(
+            "Minecraft dialog unicode 2D canvas context could not be created"
+          )
+        );
+
+        return;
+      }
+
       context.drawImage(image, 0, 0);
       resolve(context.getImageData(0, 0, 128, 128).data);
-    };
+    });
 
-    image.onerror = reject;
+    image.addEventListener("error", reject);
     image.src = minecraftInputAssets.atlas;
   }));
-}
+};
 
 export const DialogUnicodeLine = ({
   text,
@@ -41,22 +64,68 @@ export const DialogUnicodeLine = ({
   width: number;
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
-  const [ready, setReady] = React.useState(false);
+  const { attach, connection } = useCanvasPaintConnection(ref);
 
-  React.useLayoutEffect(() => {
+  const paintInput = React.useMemo(
+    () => ({ bold, connection, scale, text, width }),
+    [bold, scale, text, width, connection]
+  );
+
+  const [completedInput, setCompletedInput] =
+    React.useState<typeof paintInput>();
+
+  const ready = completedInput === paintInput;
+
+  React.useLayoutEffect((): (() => void) | undefined => {
+    if (connection === null) {
+      return undefined;
+    }
+
     let disposed = false;
     let frame = 0;
     let signature = "";
 
-    const canvas = ref.current!;
-    const context = canvas.getContext("2d")!;
+    const canvas =
+      // SAFETY: React attaches this always-rendered <canvas> before its synchronous layout effect setup reads the owned ref.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- React commit ordering and this intrinsic ref attachment prove the exact HTMLCanvasElement result.
+      ref.current as HTMLCanvasElement;
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error(
+        "Minecraft dialog unicode 2D canvas context could not be created"
+      );
+    }
 
     setUnihexAtlas(context, dialogUnihexAtlas);
-    setReady(false);
-    void Promise.all([loadUnihex(), loadAlpha()]).then(([, pixels]) => {
+    const glyphResources = Promise.all([loadUnihex(), loadAlpha()]);
+
+    const paintAfterGlyphResources = async () => {
+      const [, pixels] = await glyphResources;
+
       if (disposed) {
         return;
       }
+
+      const paintAsciiGlyph = (
+        glyph: (typeof minecraftGlyphs)[number],
+        dx: number,
+        dy: number
+      ) => {
+        for (let y = 0; y < 8; y += 1) {
+          for (let px = 0; px < 8; px += 1) {
+            if (pixels[((glyph[1] + y) * 128 + glyph[0] + px) * 4 + 3]) {
+              context.fillRect(
+                (dx + px) * scale,
+                (dy + y) * scale,
+                scale,
+                scale
+              );
+            }
+          }
+        }
+      };
 
       const tick = () => {
         if (disposed) {
@@ -84,27 +153,23 @@ export const DialogUnicodeLine = ({
             let x = 0;
 
             for (const char of text) {
-              const ascii = minecraftGlyphs[char.codePointAt(0)! - 32];
+              const ascii =
+                asciiGlyphs[
+                  // SAFETY: String iteration supplies a nonempty character, so its first code point exists.
+                  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The intrinsic string iterator proves this specific codePointAt(0) result.
+                  (char.codePointAt(0) as number) - 32
+                ];
+
               const uni = getUnihexGlyph(char);
               const offset = ascii ? 1 : 0.5;
 
-              for (let copy = 0; copy < (bold ? 2 : 1); copy++) {
+              for (let copy = 0; copy < (bold ? 2 : 1); copy += 1) {
                 const dx = x + copy * offset + (shadow ? offset : 0);
                 const dy = shadow ? offset : 0;
 
                 if (ascii) {
                   if (char !== " ") {
-                    for (let y = 0; y < 8; y++)
-                      for (let px = 0; px < 8; px++)
-                        if (
-                          pixels[((ascii[1] + y) * 128 + ascii[0] + px) * 4 + 3]
-                        )
-                          context.fillRect(
-                            (dx + px) * scale,
-                            (dy + y) * scale,
-                            scale,
-                            scale
-                          );
+                    paintAsciiGlyph(ascii, dx, dy);
                   }
                 } else if (uni) {
                   paintUnihexGPU(context, uni, dx, dy, scale, bold ? 0.1 : 0);
@@ -115,28 +180,36 @@ export const DialogUnicodeLine = ({
             }
           }
 
-          setReady(true);
+          setCompletedInput(paintInput);
         }
 
         frame = requestAnimationFrame(tick);
       };
 
       tick();
-    });
+    };
+
+    void paintAfterGlyphResources();
 
     return () => {
       disposed = true;
       cancelAnimationFrame(frame);
       disposeUnihex(context);
     };
-  }, [text, bold, scale, width]);
+  }, [text, bold, scale, width, paintInput, connection]);
+
+  const canvasStyle: DialogUnicodeStyle = {
+    "--mc-dialog-unicode-height": `${9 * scale}px`,
+    "--mc-dialog-unicode-width": `${width * scale}px`,
+  };
 
   return (
     <canvas
-      ref={ref}
+      ref={attach}
       data-mc-dialog-unicode-ready={ready}
       aria-hidden="true"
-      style={{ display: "block", height: 9 * scale, width: width * scale }}
+      className="block h-(--mc-dialog-unicode-height) w-(--mc-dialog-unicode-width)"
+      style={canvasStyle}
     />
   );
 };

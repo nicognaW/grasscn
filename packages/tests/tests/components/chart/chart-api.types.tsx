@@ -6,10 +6,10 @@ import {
   ChartLegendContent,
   ChartPixelBar,
   ChartFpsFrame,
-  ChartProfilerFrame,
 } from "@grasscn/web/ui/chart";
 import type { ChartConfig } from "@grasscn/web/ui/chart";
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- This compiler-owned JSX API contract checks the real synchronous Recharts component types; it is not an application entrypoint or page-load bundle.
 import { BarChart, Bar } from "recharts";
 
 const config: ChartConfig = {
@@ -28,14 +28,19 @@ export const api = (
     aria-label="Activity"
   >
     <BarChart data={[{ count: 1 }]}>
-      <Bar dataKey="count" shape={ChartPixelBar} isAnimationActive={false} />
+      <Bar
+        dataKey="count"
+        // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- This contract exercises Recharts' actual renderer prop.
+        shape={ChartPixelBar}
+        isAnimationActive={false}
+      />
       <ChartFpsFrame labels={["1 min", "1 avg", "1 max"]} />
       <ChartTooltip
         content={
           <ChartTooltipContent
             hideIndicator
             indicator="dashed"
-            formatter={(value, name) => <b>{`${name}:${value}`}</b>}
+            formatter={(value, name) => <b>{`${name}:${String(value)}`}</b>}
           />
         }
       />

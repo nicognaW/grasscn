@@ -47,6 +47,7 @@ const transitionSchema = z.object({
   classification: z.enum([
     "preexisting-main-source-drift",
     "owned-behavior-repair",
+    "reviewed-source-transition",
   ]),
   currentSha256: z.string(),
   historicalSha256: z.string(),
@@ -365,14 +366,22 @@ export const validateHistoricalEvidence = async ({
   const expected = historicalBindings(parsedMap);
   const requested = unique(expected, key, "map binding");
 
+  const sortedBindingKeys = [...bindings.keys()];
+  sortedBindingKeys.sort(compare);
+  const sortedRequestedKeys = [...requested.keys()];
+  sortedRequestedKeys.sort(compare);
   assert.deepEqual(
-    [...bindings.keys()].toSorted(compare),
-    [...requested.keys()].toSorted(compare),
+    sortedBindingKeys,
+    sortedRequestedKeys,
     "Historical report binding set differs from the declared map"
   );
+  const sortedPolicyKeys = [...policies.keys()];
+  sortedPolicyKeys.sort(compare);
+  const sortedBlobKeys = [...blobs.keys()];
+  sortedBlobKeys.sort(compare);
   assert.deepEqual(
-    [...policies.keys()].toSorted(compare),
-    [...blobs.keys()].toSorted(compare),
+    sortedPolicyKeys,
+    sortedBlobKeys,
     "Current transition policy must cover exactly the archived source set"
   );
 
@@ -437,9 +446,11 @@ export const validateHistoricalEvidence = async ({
     );
     assert.match(policy.currentSha256, /^[a-f0-9]{64}$/u);
     assert.ok(
-      ["preexisting-main-source-drift", "owned-behavior-repair"].includes(
-        policy.classification
-      )
+      [
+        "preexisting-main-source-drift",
+        "owned-behavior-repair",
+        "reviewed-source-transition",
+      ].includes(policy.classification)
     );
 
     archived.set(entry.sourcePath, entry.sourceSha256);
@@ -506,9 +517,13 @@ export const validateHistoricalEvidence = async ({
       "report source"
     );
 
+    const sortedDeclaredKeys = [...declared.keys()];
+    sortedDeclaredKeys.sort(compare);
+    const sortedOriginalKeys = [...originals.keys()];
+    sortedOriginalKeys.sort(compare);
     assert.deepEqual(
-      [...declared.keys()].toSorted(compare),
-      [...originals.keys()].toSorted(compare),
+      sortedDeclaredKeys,
+      sortedOriginalKeys,
       `Incomplete historical source binding: ${request.reportPath}`
     );
 
@@ -593,9 +608,13 @@ export const validateHistoricalEvidence = async ({
     });
   }
 
+  const sortedUsedSources = [...used];
+  sortedUsedSources.sort(compare);
+  const sortedArchivedSources = [...blobs.keys()];
+  sortedArchivedSources.sort(compare);
   assert.deepEqual(
-    [...used].toSorted(compare),
-    [...blobs.keys()].toSorted(compare),
+    sortedUsedSources,
+    sortedArchivedSources,
     "Unused historical archive source binding"
   );
 
@@ -657,9 +676,13 @@ export const historicalMapComponents = (text: string, evidence: Evidence) => {
     historicalScope,
     "Summary requires historical scope"
   );
+  const sortedMapBindings = bindings.map(key);
+  sortedMapBindings.sort(compare);
+  const sortedEvidenceBindings = evidence.reports.map(key);
+  sortedEvidenceBindings.sort(compare);
   assert.deepEqual(
-    bindings.map(key).toSorted(compare),
-    evidence.reports.map(key).toSorted(compare),
+    sortedMapBindings,
+    sortedEvidenceBindings,
     "Summary map must match its authenticated historical report bindings"
   );
 
@@ -685,9 +708,13 @@ export const assertHistoricalUtilitySources = (
     behavior.files.length,
     "Duplicate utility behavior source"
   );
+  const sortedVersionPaths = [...versions.keys()];
+  sortedVersionPaths.sort(compare);
+  const sortedInstallationPaths = installation.files.map((file) => file.path);
+  sortedInstallationPaths.sort(compare);
   assert.deepEqual(
-    [...versions.keys()].toSorted(compare),
-    installation.files.map((file) => file.path).toSorted(compare),
+    sortedVersionPaths,
+    sortedInstallationPaths,
     "Utility source sets differ"
   );
 

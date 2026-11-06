@@ -2,11 +2,20 @@
 
 import * as React from "react";
 
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftRefCallback,
+  isMinecraftRefCleanup,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { Select, SelectTrigger } from "./select";
 
 import "./minecraft-native-select.css";
+
+interface NativeSelectScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
 
 type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
   size?: "default";
@@ -29,7 +38,7 @@ const NativeSelect = ({
   ...props
 }: NativeSelectProps) => {
   if (size !== "default") {
-    throw Error(
+    throw new Error(
       "Minecraft native select supports the original default CycleButton height only"
     );
   }
@@ -38,34 +47,36 @@ const NativeSelect = ({
   const [label, setLabel] = React.useState("");
 
   const forwarded = React.useCallback(
-    (element: HTMLSelectElement | null) => {
+    (element: HTMLSelectElement | null): (() => void) | undefined => {
       node.current = element;
 
-      if (typeof ref === "function") {
+      if (isMinecraftRefCallback(ref)) {
         const cleanup = ref(element);
 
-        if (typeof cleanup === "function") {
+        if (isMinecraftRefCleanup(cleanup)) {
           return () => {
             node.current = null;
             cleanup();
           };
         }
 
-        return;
+        return undefined;
       }
 
       if (ref) {
         ref.current = element;
       }
+
+      return undefined;
     },
     [ref]
   );
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): (() => void) | undefined => {
     const element = node.current;
 
     if (!element) {
-      return;
+      return undefined;
     }
 
     let frame = 0;
@@ -97,17 +108,21 @@ const NativeSelect = ({
       observer.disconnect();
       element.form?.removeEventListener("reset", deferred);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Controlled/default values and form/options/multiple change native selectedOptions; refresh the painted label and reset association after commit.
   }, [props.value, props.defaultValue, props.form, children, multiple]);
 
   return (
     <div
       {...wrapperProps}
       data-slot="native-select-wrapper"
-      className={`mc-native-select-wrapper ${multiple ? "mc-native-select-multiple" : ""} ${wrapperProps?.className ?? ""}`}
+      className={`mc-native-select-wrapper ${(multiple ?? false) ? "mc-native-select-multiple" : ""} ${wrapperProps?.className ?? ""}`}
+      // oxlint-disable-next-line shadcn/no-inline-styles -- Preserve the supported caller wrapper style API; this factory adds only the owned scale variable and forwards caller properties unchanged.
       style={minecraftStyle(
         wrapperProps?.style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): NativeSelectScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        })
       )}
     >
       <select
@@ -123,7 +138,7 @@ const NativeSelect = ({
           queueMicrotask(() => {
             if (node.current) {
               setLabel(
-                Array.from(node.current.selectedOptions)
+                [...node.current.selectedOptions]
                   .map((option) => option.label)
                   .join(", ")
               );
@@ -135,7 +150,7 @@ const NativeSelect = ({
 
           if (
             !event.defaultPrevented &&
-            !props.disabled &&
+            !(props.disabled ?? false) &&
             event.button === 0
           ) {
             playMinecraftClick();
@@ -146,7 +161,7 @@ const NativeSelect = ({
 
           if (
             !event.defaultPrevented &&
-            !props.disabled &&
+            !(props.disabled ?? false) &&
             !event.repeat &&
             (event.key === "Enter" ||
               event.key === " " ||
@@ -158,7 +173,7 @@ const NativeSelect = ({
       >
         {children}
       </select>
-      {!multiple && (
+      {!(multiple ?? false) && (
         <div className="mc-native-select-art" aria-hidden="true" inert>
           <Select
             scale={scale}
@@ -169,7 +184,7 @@ const NativeSelect = ({
             <SelectTrigger
               aria-disabled={props.disabled ?? undefined}
               tabIndex={-1}
-              style={{ height: "100%", width: "100%" }}
+              className="h-full w-full"
             >
               {label}
             </SelectTrigger>
@@ -183,28 +198,24 @@ const NativeSelect = ({
 const NativeSelectOption = ({
   className,
   ...props
-}: React.ComponentProps<"option">) => {
-  return (
-    <option
-      data-slot="native-select-option"
-      className={cn(`mc-native-select-option`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"option">) => (
+  <option
+    data-slot="native-select-option"
+    className={cn(`mc-native-select-option`, className)}
+    {...props}
+  />
+);
 
 const NativeSelectOptGroup = ({
   className,
   ...props
-}: React.ComponentProps<"optgroup">) => {
-  return (
-    <optgroup
-      data-slot="native-select-optgroup"
-      className={cn(`mc-native-select-optgroup`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"optgroup">) => (
+  <optgroup
+    data-slot="native-select-optgroup"
+    className={cn(`mc-native-select-optgroup`, className)}
+    {...props}
+  />
+);
 
 export { NativeSelect, NativeSelectOption, NativeSelectOptGroup };
 

@@ -4,6 +4,13 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+const capturedBackdropPixels = (name: string) =>
+  PNG.sync.read(
+    readFileSync(
+      pixelPerfectFile(`tests/reference/alert-dialog-backdrop/captures/${name}`)
+    )
+  ).data;
+
 test("AlertDialog refreshes native backdrop pixels when the underlying background changes without repaint loops", async ({
   page,
 }) => {
@@ -16,17 +23,8 @@ test("AlertDialog refreshes native backdrop pixels when the underlying backgroun
   });
   const overlay = page.locator('[data-slot="alert-dialog-overlay"]');
 
-  const expected = (name: string) =>
-    PNG.sync.read(
-      readFileSync(
-        pixelPerfectFile(
-          `tests/reference/alert-dialog-backdrop/captures/${name}`
-        )
-      )
-    ).data;
-
-  const dark = expected("alert-smoke-c2-s3.png");
-  const light = expected("alert-smoke-c3-s3.png");
+  const dark = capturedBackdropPixels("alert-smoke-c2-s3.png");
+  const light = capturedBackdropPixels("alert-smoke-c3-s3.png");
 
   await expect(overlay).toHaveAttribute(
     "data-mc-confirmation-gpu-ready",
@@ -46,7 +44,13 @@ test("AlertDialog refreshes native backdrop pixels when the underlying backgroun
   );
   const frame = await overlay.getAttribute("data-mc-confirmation-frame");
   await page.waitForTimeout(650);
-  await expect(overlay).toHaveAttribute("data-mc-confirmation-frame", frame!);
+  await expect(overlay).toHaveAttribute(
+    "data-mc-confirmation-frame",
+    // SAFETY: This existing blur=5 fixture has positive blur radius; its painter sets the frame string before the already-asserted gpu-ready=true state.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+    frame as string
+    /* oxlint-enable typescript/no-unsafe-type-assertion */
+  );
 });
 
 test("AlertDialog preserves fixed native UI while the page underneath scrolls", async ({
@@ -77,10 +81,14 @@ test("AlertDialog preserves fixed native UI while the page underneath scrolls", 
   await page.evaluate(() => {
     const spacer = document.createElement("div");
     spacer.style.height = "2200px";
-    document.querySelector("#root")!.append(spacer);
+    // SAFETY: The controlled renderer fixture mounts its HTML root before page.goto completes; the existing injected spacer targets that same fixture-owned root.
+    /* oxlint-disable typescript/no-unsafe-type-assertion -- Exact owned producer/API boundary; no additional runtime guard. */
+    (document.querySelector("#root") as HTMLElement)
+      /* oxlint-enable typescript/no-unsafe-type-assertion */
+      .append(spacer);
     scrollTo(0, 400);
   });
-  await expect.poll(async () => page.evaluate(() => scrollY)).toBe(400);
+  await expect.poll(async () => await page.evaluate(() => scrollY)).toBe(400);
   await expect
     .poll(async () =>
       PNG.sync.read(await page.screenshot()).data.equals(expected)

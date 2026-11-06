@@ -2,16 +2,23 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { ToggleReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+interface SwitchCaptureManifest {
+  cases: ToggleReferenceCase[];
+}
+
 const directory = "tests/reference/switch";
 
+// SAFETY: The fixed retained switch manifest supplies every consumed shared capture field, numeric x/y, string background and boolean checked required by ToggleReferenceCase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve this original runtime read/parse phase.
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as SwitchCaptureManifest;
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -29,9 +36,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[i] >> 2,
-            expected.data[i + 1] >> 2,
-            expected.data[i + 2] >> 2,
+            Math.floor(expected.data[i] / 4),
+            Math.floor(expected.data[i + 1] / 4),
+            Math.floor(expected.data[i + 2] / 4),
             255,
           ],
       i
@@ -39,7 +46,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Switch comparator catches a changed pixel", () => {
   const expected = PNG.sync.read(
@@ -50,6 +57,7 @@ test("Switch comparator catches a changed pixel", () => {
 
   const actual = PNG.sync.read(PNG.sync.write(expected));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
@@ -66,11 +74,11 @@ test.describe("Switch native matrix", () => {
       const subject = page.locator("[data-subject]");
       await expect(subject).toBeVisible();
       await subject.evaluate(
-        (node, c) =>
+        (node, switchCase) =>
           Object.assign(node.style, {
-            left: `${c.x * c.scale}px`,
+            left: `${switchCase.x * switchCase.scale}px`,
             position: "fixed",
-            top: `${c.y * c.scale}px`,
+            top: `${switchCase.y * switchCase.scale}px`,
           }),
         c
       );

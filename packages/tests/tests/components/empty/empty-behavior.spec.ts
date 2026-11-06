@@ -1,5 +1,14 @@
 import { test, expect } from "@grasscn/tests/test";
 
+interface EmptyPlaybackState extends Window {
+  sounds?: string[];
+}
+
+type InitializedEmptyPlaybackState = typeof window &
+  EmptyPlaybackState & {
+    sounds: string[];
+  };
+
 test("Empty keeps scalar native-row text, CJK rendering, refs and events", async ({
   page,
 }) => {
@@ -13,8 +22,18 @@ test("Empty keeps scalar native-row text, CJK rendering, refs and events", async
     "true"
   );
 
-  for (const line of await subject.locator("[data-mc-label-ready]").all()) {
-    await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  const readOnlyItems13 = await subject.locator("[data-mc-label-ready]").all();
+
+  const readOnlyResults13 = await Promise.allSettled(
+    readOnlyItems13.map(async (line) => {
+      await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+    })
+  );
+
+  for (const readOnlyResult13 of readOnlyResults13) {
+    if (readOnlyResult13.status === "rejected") {
+      throw readOnlyResult13.reason;
+    }
   }
 
   await subject.click();
@@ -69,9 +88,14 @@ test("Empty static surfaces do not synthesize interaction sounds", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
+    // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
+    (window as EmptyPlaybackState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async, unicorn/consistent-function-scoping -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing. Keep play inside this initializer because Playwright serializes the callback without its Node lexical scope.
     HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push(this.src);
+      // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+      // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+      (window as InitializedEmptyPlaybackState).sounds.push(this.src);
+      // oxlint-enable typescript/no-unsafe-type-assertion
 
       return Promise.resolve();
     };
@@ -79,5 +103,10 @@ test("Empty static surfaces do not synthesize interaction sounds", async ({
   await page.goto("/?component=empty&native=1&text=No%20worlds%20found");
   await page.locator("[data-subject]").hover();
   await page.locator("[data-subject]").click();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+  expect(
+    await page.evaluate(() => (window as InitializedEmptyPlaybackState).sounds)
+  ).toEqual([]);
+  // oxlint-enable typescript/no-unsafe-type-assertion
 });

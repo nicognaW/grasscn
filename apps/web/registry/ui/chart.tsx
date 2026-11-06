@@ -1,20 +1,24 @@
 "use client";
 
 import * as React from "react";
+// oxlint-disable-next-line react-doctor/prefer-dynamic-import -- Preserve upstream synchronous Recharts exports, identity and initialization; a lazy component changes the public boundary.
+import * as RechartsPrimitive from "recharts";
+import type { TooltipValueType } from "recharts";
 
-import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftSurface } from "./minecraft-surface";
-import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
+import { ChartGeometryProvider } from "./minecraft-chart-context";
 
 import "./minecraft-chart.css";
 
-export {
-  ChartFpsFrame,
-  ChartProfilerFrame,
-  chartFpsColor,
-  chartProfilerColor,
-} from "./minecraft-chart-native";
+// Preserve the original native painter initialization before later component imports.
+import "./minecraft-chart-native";
+import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
+import { MinecraftSurface } from "./minecraft-surface";
+import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
 
 export {
   ChartPixelBar,
@@ -23,10 +27,21 @@ export {
   ChartAxisTick,
 } from "./minecraft-chart-context";
 
-import * as RechartsPrimitive from "recharts";
-import type { TooltipValueType } from "recharts";
+export {
+  ChartFpsFrame,
+  ChartProfilerFrame,
+  chartFpsColor,
+  chartProfilerColor,
+} from "./minecraft-chart-native";
 
-import { ChartGeometryProvider } from "./minecraft-chart-context";
+interface ChartScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+interface ChartIndicatorStyle extends React.CSSProperties {
+  "--color-bg": unknown;
+  "--color-border": unknown;
+}
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { dark: ".dark", light: "" } as const;
@@ -58,7 +73,7 @@ interface ChartContextProps {
 
 const ChartContext = React.createContext<ChartContextProps | null>(null);
 
-function useChart() {
+const useChart = function useChart() {
   const context = React.useContext(ChartContext);
 
   if (!context) {
@@ -66,7 +81,44 @@ function useChart() {
   }
 
   return context;
+};
+
+const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
+  const colorConfig = Object.entries(config).filter(([, seriesConfig]) =>
+    Boolean(seriesConfig.theme ?? seriesConfig.color)
+  );
+
+  if (!colorConfig.length) {
+    return null;
+  }
+
+  return (
+    // oxlint-disable-next-line shadcn/no-inline-styles -- Upstream ChartStyle emits scoped theme variables for runtime ChartConfig series names.
+    <style
+      // oxlint-disable-next-line react/no-danger -- Preserve upstream ChartStyle's per-chart theme-variable stylesheet.
+      dangerouslySetInnerHTML={{
+        __html:
+          // SAFETY: this private literal has exactly the two ChartConfig theme keys; Object.entries erases those keys.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Restore the exact keys of the owned theme literal without changing its entries.
+          (Object.entries(THEMES) as [keyof typeof THEMES, string][])
+            .map(
+              ([theme, prefix]) => `
+${prefix} [data-chart=${id}] {
+${colorConfig
+  .map(([key, itemConfig]) => {
+    const color = itemConfig.theme?.[theme] ?? itemConfig.color;
+
+    return (color ?? "") === "" ? null : `  --color-${key}: ${color};`;
+  })
+  .join("\n")}
 }
+`
+            )
+            .join("\n"),
+      }}
+    />
+  );
+};
 
 const ChartContainer = ({
   id,
@@ -90,23 +142,31 @@ const ChartContainer = ({
   };
 }) => {
   const host = React.useRef<HTMLDivElement>(null);
-  React.useImperativeHandle(ref, () => host.current!, []);
+  React.useImperativeHandle<typeof host.current, typeof host.current>(
+    ref,
+    () => host.current,
+    []
+  );
   const uniqueId = React.useId();
   const chartId = `chart-${id ?? uniqueId.replaceAll(":", "")}`;
 
+  const chartContext = React.useMemo(
+    () => ({ config, scale }),
+    [config, scale]
+  );
+
   return (
-    <ChartContext.Provider value={{ config, scale }}>
+    <ChartContext.Provider value={chartContext}>
       <ChartGeometryProvider scale={scale} host={host} colors={config}>
         <div
           ref={host}
           id={id}
           data-slot="chart"
           data-chart={chartId}
-          style={minecraftStyle(
-            style,
-            (__style) =>
-              ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-          )}
+          style={minecraftStyle(style, (__style): ChartScaleStyle => ({
+            "--mc-scale": scale,
+            ...__style,
+          }))}
           className={cn(
             "mc-chart [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
             className
@@ -125,40 +185,6 @@ const ChartContainer = ({
   );
 };
 
-const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.theme ?? config.color
-  );
-
-  if (!colorConfig.length) {
-    return null;
-  }
-
-  return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ??
-      itemConfig.color;
-
-    return color ? `  --color-${key}: ${color};` : null;
-  })
-  .join("\n")}
-}
-`
-          )
-          .join("\n"),
-      }}
-    />
-  );
-};
-
 const ChartText = ({
   children,
   scale: explicitScale,
@@ -168,7 +194,7 @@ const ChartText = ({
 }): React.ReactNode => {
   const { scale } = useChart();
 
-  return typeof children === "string" || typeof children === "number" ? (
+  return isMinecraftTextContent(children) ? (
     <MinecraftDisclosureText scale={explicitScale ?? scale}>
       {children}
     </MinecraftDisclosureText>
@@ -178,6 +204,116 @@ const ChartText = ({
 };
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
+
+type ChartTooltipItem = Omit<
+  NonNullable<
+    RechartsPrimitive.DefaultTooltipContentProps<
+      TooltipValueType,
+      TooltipNameType
+    >["payload"]
+  >[number],
+  "payload"
+> & { payload?: unknown };
+
+type ChartPayloadItem =
+  | ChartTooltipItem
+  | NonNullable<RechartsPrimitive.DefaultLegendContentProps["payload"]>[number];
+
+const isChartObjectValue = <Value,>(
+  value: Value
+): value is Value & (object | null) => typeof value === "object";
+
+const isChartLabelText = <Value,>(value: Value): value is Value & string =>
+  typeof value === "string";
+
+const isChartNumber = (value: TooltipValueType): value is number =>
+  typeof value === "number";
+
+const isChartValuePresent = (
+  value: TooltipValueType | null | undefined
+): value is TooltipValueType => value !== null && value !== undefined;
+
+const hasChartProperty = <Value extends object, Key extends string>(
+  candidate: Value,
+  key: Key
+): candidate is Value &
+  /* oxlint-disable anti-slop/no-unsafe-dictionary-type -- This dynamic-key boundary proves presence only; the existing following value predicate checks the selected unknown property without claiming every key is string. */ Record<
+    Key,
+    unknown
+  > /* oxlint-enable anti-slop/no-unsafe-dictionary-type */ => key in candidate;
+
+// Helper to extract item config from a payload.
+const getPayloadConfigFromPayload = function getPayloadConfigFromPayload(
+  config: ChartConfig,
+  payload: ChartPayloadItem | undefined,
+  key: string
+) {
+  let selectedConfig: ChartConfig[string] | undefined;
+
+  if (isChartObjectValue(payload) && payload !== null) {
+    const payloadPayload =
+      "payload" in payload &&
+      isChartObjectValue(payload.payload) &&
+      payload.payload !== null
+        ? payload.payload
+        : undefined;
+
+    let configLabelKey: string = key;
+
+    if (hasChartProperty(payload, key) && isChartLabelText(payload[key])) {
+      configLabelKey = payload[key];
+    } else if (
+      payloadPayload &&
+      hasChartProperty(payloadPayload, key) &&
+      isChartLabelText(payloadPayload[key])
+    ) {
+      configLabelKey = payloadPayload[key];
+    }
+
+    selectedConfig =
+      configLabelKey in config ? config[configLabelKey] : config[key];
+  }
+
+  return selectedConfig;
+};
+
+interface ChartTooltipIndicatorProps {
+  itemConfig: ChartConfig[string] | undefined;
+  hideIndicator: boolean;
+  indicator: "line" | "dot" | "dashed";
+  nestLabel: boolean;
+  indicatorColor: unknown;
+}
+
+const renderChartTooltipIndicator = ({
+  itemConfig,
+  hideIndicator,
+  indicator,
+  nestLabel,
+  indicatorColor,
+}: ChartTooltipIndicatorProps) =>
+  itemConfig?.icon ? (
+    <itemConfig.icon />
+  ) : (
+    !hideIndicator && (
+      <div
+        className={cn("shrink-0 border-(--color-border) bg-(--color-bg)", {
+          "h-2.5 w-2.5": indicator === "dot",
+          "my-0.5": nestLabel && indicator === "dashed",
+          "w-0 border-[1.5px] border-dashed bg-transparent":
+            indicator === "dashed",
+          "w-1": indicator === "line",
+        })}
+        style={
+          // SAFETY: these owned custom-property channels retain the raw SDK values; React performs the same CSS serialization as before.
+          {
+            "--color-bg": indicatorColor,
+            "--color-border": indicatorColor,
+          } as ChartIndicatorStyle
+        }
+      />
+    )
+  );
 
 const ChartTooltipContent = ({
   active,
@@ -214,49 +350,52 @@ const ChartTooltipContent = ({
     "--mc-scale": tooltipScale,
   };
 
-  const tooltipLabel = React.useMemo(() => {
-    if (hideLabel || !payload?.length) {
-      return null;
-    }
+  const tooltipLabel =
+    /* oxlint-disable react-doctor/rerender-memo-before-early-return -- Preserve upstream unconditional memo and existing labelFormatter calls on inactive payloads; moving it after the return changes callbacks. */ React.useMemo(() => {
+      if (hideLabel || !payload || payload.length === 0) {
+        return null;
+      }
 
-    const [item] = payload;
-    const key = `${labelKey ?? item?.dataKey ?? item?.name ?? "value"}`;
-    const itemConfig = getPayloadConfigFromPayload(config, item, key);
+      const [item] = payload;
+      const key = String(labelKey ?? item?.dataKey ?? item?.name ?? "value");
+      const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
-    const value =
-      !labelKey && typeof label === "string"
-        ? (config[label]?.label ?? label)
-        : itemConfig?.label;
+      const value =
+        !(labelKey ?? "") && isChartLabelText(label)
+          ? (config[label]?.label ?? label)
+          : itemConfig?.label;
 
-    if (labelFormatter) {
+      if (labelFormatter) {
+        return (
+          <div className={cn("font-medium", labelClassName)}>
+            {labelFormatter(value, payload)}
+          </div>
+        );
+      }
+
+      const showLabel = Boolean(value);
+
+      if (!showLabel) {
+        return null;
+      }
+
       return (
         <div className={cn("font-medium", labelClassName)}>
-          {labelFormatter(value, payload)}
+          <ChartText scale={tooltipScale}>{value}</ChartText>
         </div>
       );
-    }
+    }, [
+      label,
+      labelFormatter,
+      payload,
+      hideLabel,
+      labelClassName,
+      config,
+      labelKey,
+      tooltipScale,
+    ]); /* oxlint-enable react-doctor/rerender-memo-before-early-return */
 
-    if (!value) {
-      return null;
-    }
-
-    return (
-      <div className={cn("font-medium", labelClassName)}>
-        <ChartText scale={tooltipScale}>{value}</ChartText>
-      </div>
-    );
-  }, [
-    label,
-    labelFormatter,
-    payload,
-    hideLabel,
-    labelClassName,
-    config,
-    labelKey,
-    tooltipScale,
-  ]);
-
-  if (!active || !payload?.length) {
+  if (!(active ?? false) || !payload || payload.length === 0) {
     return null;
   }
 
@@ -274,80 +413,80 @@ const ChartTooltipContent = ({
       <MinecraftSurface sprite={sprites.frame} />
       {nestLabel ? null : tooltipLabel}
       <div className="grid gap-1.5">
-        {payload
-          .filter((item) => item.type !== "none")
-          .map((item, index) => {
-            const key = `${nameKey ?? item.name ?? item.dataKey ?? "value"}`;
-            const itemConfig = getPayloadConfigFromPayload(config, item, key);
-            const indicatorColor = color ?? item.payload?.fill ?? item.color;
+        {
+          /* oxlint-disable react-doctor/js-combine-iterations -- Preserve upstream filtering before rendering callbacks and filtered positional indexes, including getter and formatter order. */ payload
+            .filter((item) => item.type !== "none")
+            .map((item, index) => {
+              const key = String(
+                nameKey ?? item.name ?? item.dataKey ?? "value"
+              );
 
-            return (
-              <div
-                key={index}
-                className={cn(
-                  "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
-                  indicator === "dot" && "items-center"
-                )}
-              >
-                {formatter && item?.value !== undefined && item.name != null ? (
-                  formatter(item.value, item.name, item, index, item.payload)
-                ) : (
-                  <>
-                    {itemConfig?.icon ? (
-                      <itemConfig.icon />
-                    ) : (
-                      !hideIndicator && (
-                        <div
-                          className={cn(
-                            "shrink-0 border-(--color-border) bg-(--color-bg)",
-                            {
-                              "h-2.5 w-2.5": indicator === "dot",
-                              "my-0.5": nestLabel && indicator === "dashed",
-                              "w-0 border-[1.5px] border-dashed bg-transparent":
-                                indicator === "dashed",
-                              "w-1": indicator === "line",
-                            }
-                          )}
-                          style={
-                            {
-                              "--color-bg": indicatorColor,
-                              "--color-border": indicatorColor,
-                            } as React.CSSProperties
-                          }
-                        />
-                      )
-                    )}
-                    <div
-                      className={cn(
-                        "flex flex-1 justify-between gap-[calc(4*var(--mc-pixel))] leading-none",
-                        nestLabel ? "items-end" : "items-center"
-                      )}
-                    >
-                      <div className="grid gap-1.5">
-                        {nestLabel ? tooltipLabel : null}
-                        <span className="text-muted-foreground">
-                          <ChartText scale={tooltipScale}>
-                            {itemConfig?.label ?? item.name}
-                          </ChartText>
-                        </span>
+              const itemConfig = getPayloadConfigFromPayload(config, item, key);
+
+              const indicatorColor: unknown =
+                color ??
+                /* oxlint-disable typescript/no-unsafe-member-access -- Recharts declares the original datum as any; retain its existing optional fill read and raw CSS value without new validation/coercion. */ item
+                  .payload
+                  ?.fill /* oxlint-enable typescript/no-unsafe-member-access */ ??
+                item.color;
+
+              return (
+                /* oxlint-disable react-doctor/no-array-index-as-key -- Preserve upstream filtered positional identity; SDK series names and data keys can repeat, so no unique replacement is guaranteed. */ <div
+                  key={index}
+                  className={cn(
+                    "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
+                    indicator === "dot" && "items-center"
+                  )}
+                >
+                  {formatter &&
+                  item?.value !== undefined &&
+                  isChartValuePresent(item.name) ? (
+                    formatter(
+                      item.value,
+                      item.name,
+                      item,
+                      index,
+                      /* oxlint-disable typescript/no-unsafe-argument -- Preserve upstream formatter fifth-argument datum identity; casting this SDK any to the declared payload-array type would be false. */ item.payload /* oxlint-enable typescript/no-unsafe-argument */
+                    )
+                  ) : (
+                    <>
+                      {renderChartTooltipIndicator({
+                        hideIndicator,
+                        indicator,
+                        indicatorColor,
+                        itemConfig,
+                        nestLabel,
+                      })}
+                      <div
+                        className={cn(
+                          "flex flex-1 justify-between gap-[calc(4*var(--mc-pixel))] leading-none",
+                          nestLabel ? "items-end" : "items-center"
+                        )}
+                      >
+                        <div className="grid gap-1.5">
+                          {nestLabel ? tooltipLabel : null}
+                          <span className="text-muted-foreground">
+                            <ChartText scale={tooltipScale}>
+                              {itemConfig?.label ?? item.name}
+                            </ChartText>
+                          </span>
+                        </div>
+                        {isChartValuePresent(item.value) && (
+                          <span className="text-foreground tabular-nums">
+                            <ChartText scale={tooltipScale}>
+                              {isChartNumber(item.value)
+                                ? item.value.toLocaleString()
+                                : String(item.value)}
+                            </ChartText>
+                          </span>
+                        )}
                       </div>
-                      {item.value != null && (
-                        <span className="text-foreground tabular-nums">
-                          <ChartText scale={tooltipScale}>
-                            {/* eslint-disable anti-slop/no-runtime-typeof -- Recharts' declared public value union formats numbers by locale; other supported values retain their string representation. */}
-                            {typeof item.value === "number"
-                              ? item.value.toLocaleString()
-                              : String(item.value)}
-                            {/* eslint-enable anti-slop/no-runtime-typeof */}
-                          </ChartText>
-                        </span>
-                      )}
-                    </div>
-                  </>
-                )}
-              </div>
-            );
-          })}
+                    </>
+                  )}
+                </div> /* oxlint-enable react-doctor/no-array-index-as-key */
+              );
+            }) /* oxlint-enable react-doctor/js-combine-iterations */
+        }
       </div>
     </div>
   );
@@ -367,7 +506,7 @@ const ChartLegendContent = ({
 } & RechartsPrimitive.DefaultLegendContentProps) => {
   const { config } = useChart();
 
-  if (!payload?.length) {
+  if (!payload || payload.length === 0) {
     return null;
   }
 
@@ -379,71 +518,45 @@ const ChartLegendContent = ({
         className
       )}
     >
-      {payload
-        .filter((item) => item.type !== "none")
-        .map((item, index) => {
-          const key = `${nameKey ?? item.dataKey ?? "value"}`;
-          const itemConfig = getPayloadConfigFromPayload(config, item, key);
+      {
+        /* oxlint-disable react-doctor/js-combine-iterations -- Preserve upstream filtering before rendering callbacks and filtered positional indexes, including getter and formatter order. */ payload
+          .filter((item) => item.type !== "none")
+          .map((item, index) => {
+            const key = String(nameKey ?? item.dataKey ?? "value");
+            const itemConfig = getPayloadConfigFromPayload(config, item, key);
+            let icon: React.ReactNode;
 
-          return (
-            <div
-              key={index}
-              className={cn(
-                "[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3"
-              )}
-            >
-              {itemConfig?.icon && !hideIcon ? (
-                <itemConfig.icon />
-              ) : (
+            if (itemConfig?.icon && !hideIcon) {
+              icon = <itemConfig.icon />;
+            } else {
+              const swatchStyle: React.CSSProperties & {
+                "--mc-chart-legend-color": string | undefined;
+              } = { "--mc-chart-legend-color": item.color };
+
+              icon = (
                 <div
-                  className="h-2 w-2 shrink-0"
-                  style={{
-                    backgroundColor: item.color,
-                  }}
+                  className="mc-chart-legend-swatch h-2 w-2 shrink-0"
+                  style={swatchStyle}
                 />
-              )}
-              <ChartText>{itemConfig?.label}</ChartText>
-            </div>
-          );
-        })}
+              );
+            }
+
+            return (
+              /* oxlint-disable react-doctor/no-array-index-as-key -- Preserve upstream filtered positional identity; SDK series names and data keys can repeat, so no unique replacement is guaranteed. */ <div
+                key={index}
+                className={cn(
+                  "[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3"
+                )}
+              >
+                {icon}
+                <ChartText>{itemConfig?.label}</ChartText>
+              </div> /* oxlint-enable react-doctor/no-array-index-as-key */
+            );
+          }) /* oxlint-enable react-doctor/js-combine-iterations */
+      }
     </div>
   );
 };
-
-// Helper to extract item config from a payload.
-function getPayloadConfigFromPayload(
-  config: ChartConfig,
-  payload: unknown,
-  key: string
-) {
-  if (typeof payload !== "object" || payload === null) {
-    return;
-  }
-
-  const payloadPayload =
-    "payload" in payload &&
-    typeof payload.payload === "object" &&
-    payload.payload !== null
-      ? payload.payload
-      : undefined;
-
-  let configLabelKey: string = key;
-
-  if (
-    key in payload &&
-    typeof payload[key as keyof typeof payload] === "string"
-  ) {
-    configLabelKey = payload[key as keyof typeof payload];
-  } else if (
-    payloadPayload &&
-    key in payloadPayload &&
-    typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
-  ) {
-    configLabelKey = payloadPayload[key as keyof typeof payloadPayload];
-  }
-
-  return configLabelKey in config ? config[configLabelKey] : config[key];
-}
 
 export {
   ChartContainer,

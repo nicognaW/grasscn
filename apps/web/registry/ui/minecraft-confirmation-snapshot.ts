@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { createConfirmationPainter } from "./minecraft-confirmation-gpu";
+import { useCanvasPaintConnection } from "./minecraft-render";
 
 interface FixedPseudo {
   element: HTMLElement;
@@ -11,6 +12,9 @@ interface FixedPseudo {
   insets: Record<"top" | "right" | "bottom" | "left", string>;
   transform: string;
 }
+
+const opaque = (value: string) =>
+  value !== "transparent" && !/rgba\([^)]*,\s*0\s*\)/u.test(value);
 
 // Pseudo-elements use their originating element's containing block; real elements start at their parent.
 const viewportAnchored = (start: HTMLElement | null) => {
@@ -31,15 +35,33 @@ const viewportAnchored = (start: HTMLElement | null) => {
   return true;
 };
 
-export function useConfirmationSnapshot(
+export const useConfirmationSnapshot = function useConfirmationSnapshot(
   canvas: React.RefObject<HTMLCanvasElement | null>,
   identity: string,
   radius: number
 ) {
-  const [ready, setReady] = React.useState(false);
-  React.useLayoutEffect(() => {
-    const node = canvas.current!;
-    const host = node.parentElement!;
+  const { attach, connection } = useCanvasPaintConnection(canvas);
+
+  const request = React.useMemo(
+    () => ({ connection, identity, radius }),
+    [connection, identity, radius]
+  );
+
+  const [completed, setCompleted] = React.useState<typeof request | null>(null);
+  // oxlint-disable-next-line react-doctor/effect-needs-cleanup -- This capture owner clears its latest timer and disconnects all observers/listeners on cleanup. Its recursive async finally only reschedules while !disposed, and every schedule clears the preceding timer; early exits precede all timer allocations.
+  React.useLayoutEffect((): ReturnType<React.EffectCallback> => {
+    if (connection === null) {
+      return;
+    }
+
+    // SAFETY: This internal hook has one caller, MinecraftConfirmationBlur, which always renders its private canvas; layout setup follows commit and existing disposal guards deferred work.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The sole owned intrinsic canvas producer and existing effect lifetime prove this exact HTMLCanvasElement capture.
+    const node = canvas.current as HTMLCanvasElement;
+    const host = node.parentElement;
+
+    if (!host) {
+      return;
+    }
 
     let busy = false;
     let disposed = false;
@@ -48,7 +70,7 @@ export function useConfirmationSnapshot(
     let timer = 0;
     let version = 0;
 
-    setReady(false);
+    // oxlint-disable-next-line react/immutability -- This layout-effect painter owns committed DOM measurement/readiness/style updates, not React state or props.
     host.dataset.mcConfirmationGpuReady = "false";
 
     if (radius <= 0) {
@@ -79,7 +101,7 @@ export function useConfirmationSnapshot(
       target.height === "0" &&
       target.style.visibility === "hidden";
 
-    const capture = async () => {
+    const capture = async (reschedule: () => void) => {
       if (disposed || !Object.hasOwn(host.dataset, "open")) {
         return;
       }
@@ -105,7 +127,9 @@ export function useConfirmationSnapshot(
       }[] = [];
 
       const pseudos: FixedPseudo[] = [];
+
       try {
+        // oxlint-disable-next-line react/todo -- The compiler cannot lower this valid dynamic import; capture owns the existing asynchronous screenshot dependency/load phase and cancellation checks. React Compiler is not integrated into this application; retain real async resource ownership instead of eagerly importing or changing capture timing.
         const { domToCanvas } = await import("modern-screenshot");
         await document.fonts.ready;
 
@@ -119,97 +143,106 @@ export function useConfirmationSnapshot(
 
         const bodyColor = getComputedStyle(document.body).backgroundColor;
 
-        const opaque = (value: string) =>
-          value !== "transparent" && !/rgba\([^)]*,\s*0\s*\)/.test(value);
-
         const offsetX = scrollX;
         const offsetY = scrollY;
         const ratio = devicePixelRatio;
         const bodyStyle = getComputedStyle(document.body);
 
-        if (offsetX || offsetY) {
-          for (const element of document.body.querySelectorAll<HTMLElement>(
-            "*"
-          )) {
-            if (
-              !(element instanceof HTMLElement) ||
-              belongs(element) ||
-              getComputedStyle(element).position !== "fixed"
-            ) {
-              continue;
-            }
-
-            if (viewportAnchored(element.parentElement)) {
-              const previous = element.getAttribute("data-mc-snapshot-fixed"),
-                key = `${identity}-${fixed.length}`,
-                style = getComputedStyle(element);
-
-              fixed.push({
-                element,
-                insets: {
-                  bottom: style.bottom,
-                  left: style.left,
-                  right: style.right,
-                  top: style.top,
-                },
-                key,
-                layoutLeft:
-                  element.offsetLeft - (parseFloat(style.marginLeft) || 0),
-                layoutTop:
-                  element.offsetTop - (parseFloat(style.marginTop) || 0),
-                previous,
-                transform: style.transform,
-              });
-              element.dataset.mcSnapshotFixed = key;
-            }
-          }
-        }
-
-        if (offsetX || offsetY) {
-          for (const element of document.body.querySelectorAll<HTMLElement>(
-            "*"
-          )) {
-            if (!(element instanceof HTMLElement) || belongs(element)) {
-              continue;
-            }
-
-            for (const pseudo of ["::before", "::after"] as const) {
-              const style = getComputedStyle(element, pseudo);
-
+        const markViewportFixedElements = () => {
+          if (offsetX || offsetY) {
+            for (const element of document.body.querySelectorAll<HTMLElement>(
+              "*"
+            )) {
               if (
-                style.position !== "fixed" ||
-                style.display === "none" ||
-                style.content === "none" ||
-                style.content === "normal" ||
-                !viewportAnchored(element)
+                !(element instanceof HTMLElement) ||
+                belongs(element) ||
+                getComputedStyle(element).position !== "fixed"
               ) {
                 continue;
               }
 
-              const attribute =
-                pseudo === "::before"
-                  ? "data-mc-snapshot-before"
-                  : "data-mc-snapshot-after";
+              if (viewportAnchored(element.parentElement)) {
+                const previous = element.dataset.mcSnapshotFixed ?? null;
+                const key = `${identity}-${fixed.length}`;
+                const style = getComputedStyle(element);
 
-              const key = `${identity}-pseudo-${pseudos.length}`;
-              pseudos.push({
-                attribute,
-                element,
-                insets: {
-                  bottom: style.bottom,
-                  left: style.left,
-                  right: style.right,
-                  top: style.top,
-                },
-                key,
-                previous: element.getAttribute(attribute),
-                pseudo,
-                transform: style.transform,
-              });
-              element.setAttribute(attribute, key);
+                fixed.push({
+                  element,
+                  insets: {
+                    bottom: style.bottom,
+                    left: style.left,
+                    right: style.right,
+                    top: style.top,
+                  },
+                  key,
+                  layoutLeft:
+                    element.offsetLeft -
+                    // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+                    (Number.parseFloat(style.marginLeft) || 0),
+                  layoutTop:
+                    element.offsetTop -
+                    // oxlint-disable-next-line unicorn/prefer-number-coercion -- CSS lengths intentionally retain unit suffixes; parseFloat extracts the numeric prefix while Number would reject px values.
+                    (Number.parseFloat(style.marginTop) || 0),
+                  previous,
+                  transform: style.transform,
+                });
+                element.dataset.mcSnapshotFixed = key;
+              }
             }
           }
-        }
+        };
+
+        markViewportFixedElements();
+
+        const markViewportFixedPseudos = () => {
+          if (offsetX || offsetY) {
+            for (const element of document.body.querySelectorAll<HTMLElement>(
+              "*"
+            )) {
+              if (!(element instanceof HTMLElement) || belongs(element)) {
+                continue;
+              }
+
+              for (const pseudo of ["::before", "::after"] as const) {
+                const style = getComputedStyle(element, pseudo);
+
+                if (
+                  style.position !== "fixed" ||
+                  style.display === "none" ||
+                  style.content === "none" ||
+                  style.content === "normal" ||
+                  !viewportAnchored(element)
+                ) {
+                  continue;
+                }
+
+                const attribute =
+                  pseudo === "::before"
+                    ? "data-mc-snapshot-before"
+                    : "data-mc-snapshot-after";
+
+                const key = `${identity}-pseudo-${pseudos.length}`;
+                pseudos.push({
+                  attribute,
+                  element,
+                  insets: {
+                    bottom: style.bottom,
+                    left: style.left,
+                    right: style.right,
+                    top: style.top,
+                  },
+                  key,
+                  previous: element.getAttribute(attribute),
+                  pseudo,
+                  transform: style.transform,
+                });
+                element.setAttribute(attribute, key);
+              }
+            }
+          }
+        };
+
+        markViewportFixedPseudos();
 
         const fixedRecords = new Map(fixed.map((item) => [item.key, item]));
 
@@ -229,75 +262,92 @@ export function useConfirmationSnapshot(
 
         const elements = [...document.body.querySelectorAll<HTMLElement>("*")];
 
-        for (const element of elements) {
-          if (belongs(element)) {
-            continue;
-          }
+        const collectVisibleAncestors = () => {
+          for (const element of elements) {
+            if (belongs(element)) {
+              continue;
+            }
 
-          const bounds = element.getBoundingClientRect();
+            const bounds = element.getBoundingClientRect();
 
-          const generated = ["::before", "::after"].some((pseudo) => {
-            const style = getComputedStyle(element, pseudo);
+            const generated = ["::before", "::after"].some((pseudo) => {
+              const style = getComputedStyle(element, pseudo);
 
-            return (
-              style.content !== "none" &&
-              style.content !== "normal" &&
-              style.display !== "none"
-            );
-          });
+              return (
+                style.content !== "none" &&
+                style.content !== "normal" &&
+                style.display !== "none"
+              );
+            });
 
-          if (
-            generated ||
-            (bounds.width > 0 &&
-              bounds.height > 0 &&
-              bounds.right >= -guard &&
-              bounds.left <= innerWidth + guard &&
-              bounds.bottom >= -guard &&
-              bounds.top <= innerHeight + guard)
-          ) {
-            for (
-              let ancestor: Node | null = element;
-              ancestor && !visibleAncestors.has(ancestor);
-              ancestor = ancestor.parentNode
+            if (
+              generated ||
+              (bounds.width > 0 &&
+                bounds.height > 0 &&
+                bounds.right >= -guard &&
+                bounds.left <= innerWidth + guard &&
+                bounds.bottom >= -guard &&
+                bounds.top <= innerHeight + guard)
             ) {
-              visibleAncestors.add(ancestor);
+              for (
+                let ancestor: Node | null = element;
+                ancestor && !visibleAncestors.has(ancestor);
+                ancestor = ancestor.parentNode
+              ) {
+                visibleAncestors.add(ancestor);
+              }
             }
           }
-        }
+        };
 
-        for (const element of elements) {
-          if (
-            visibleAncestors.has(element) ||
-            belongs(element) ||
-            !(element instanceof HTMLElement)
-          ) {
-            continue;
+        collectVisibleAncestors();
+
+        const collectPrunedElements = () => {
+          for (const element of elements) {
+            if (
+              visibleAncestors.has(element) ||
+              belongs(element) ||
+              !(element instanceof HTMLElement)
+            ) {
+              continue;
+            }
+
+            const bounds = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+
+            if (
+              bounds.width > 0 &&
+              bounds.height > 0 &&
+              style.width.endsWith("px") &&
+              style.height.endsWith("px")
+            ) {
+              pruned.add(element);
+            }
           }
+        };
 
-          const bounds = element.getBoundingClientRect();
-          const style = getComputedStyle(element);
+        collectPrunedElements();
 
-          if (
-            bounds.width > 0 &&
-            bounds.height > 0 &&
-            style.width.endsWith("px") &&
-            style.height.endsWith("px")
-          ) {
-            pruned.add(element);
-          }
+        let backgroundColor = "#fff";
+
+        if (opaque(rootColor)) {
+          backgroundColor = rootColor;
+        } else if (opaque(bodyColor)) {
+          backgroundColor = bodyColor;
         }
 
         const source = await domToCanvas(document.body, {
-          backgroundColor: opaque(rootColor)
-            ? rootColor
-            : opaque(bodyColor)
-              ? bodyColor
-              : "#fff",
+          backgroundColor,
           features: { restoreScrollPosition: true },
-          filter: (target) =>
-            !belongs(target) &&
-            !sandbox(target) &&
-            !pruned.has(target.parentNode!),
+          filter: (target) => {
+            if (belongs(target) || sandbox(target)) {
+              return false;
+            }
+
+            const parent = target.parentNode;
+
+            return parent === null || !pruned.has(parent);
+          },
           height: innerHeight,
           includeStyleProperties,
           onCloneEachNode: (cloned) => {
@@ -439,40 +489,46 @@ export function useConfirmationSnapshot(
           capturedVersion === version
         );
         delete host.dataset.mcConfirmationGpuError;
-        setReady(true);
+        setCompleted(request);
       } catch (error) {
         if (!disposed) {
           host.dataset.mcConfirmationGpuError =
             error instanceof Error ? error.message : String(error);
         }
+        // oxlint-disable-next-line react/todo -- The compiler cannot lower a try statement with finally; this valid async capture must restore temporary viewport markers and release busy/queued ownership on success, rejection and cancellation. Preserve the real finally lifetime barrier.
       } finally {
-        for (const item of pseudos) {
-          if (item.element.getAttribute(item.attribute) !== item.key) {
-            continue;
+        const restoreViewportMarkers = () => {
+          for (const item of pseudos) {
+            if (item.element.getAttribute(item.attribute) !== item.key) {
+              continue;
+            }
+
+            if (item.previous === null) {
+              item.element.removeAttribute(item.attribute);
+            } else {
+              item.element.setAttribute(item.attribute, item.previous);
+            }
           }
 
-          if (item.previous === null) {
-            item.element.removeAttribute(item.attribute);
-          } else {
-            item.element.setAttribute(item.attribute, item.previous);
-          }
-        }
-        for (const item of fixed) {
-          if (item.element.dataset.mcSnapshotFixed !== item.key) {
-            continue;
-          }
+          for (const item of fixed) {
+            if (item.element.dataset.mcSnapshotFixed !== item.key) {
+              continue;
+            }
 
-          if (item.previous === null) {
-            delete item.element.dataset.mcSnapshotFixed;
-          } else {
-            item.element.dataset.mcSnapshotFixed = item.previous;
+            if (item.previous === null) {
+              delete item.element.dataset.mcSnapshotFixed;
+            } else {
+              item.element.dataset.mcSnapshotFixed = item.previous;
+            }
           }
-        }
+        };
+
+        restoreViewportMarkers();
 
         busy = false;
 
         if (queued && !disposed) {
-          schedule();
+          reschedule();
         }
       }
     };
@@ -487,7 +543,7 @@ export function useConfirmationSnapshot(
       version += 1;
       host.dataset.mcConfirmationGpuReady = "false";
       timer = window.setTimeout(() => {
-        void capture();
+        void capture(schedule);
       }, 100);
     };
 
@@ -544,7 +600,7 @@ export function useConfirmationSnapshot(
         version += 1;
         queued = false;
         clearTimeout(timer);
-        setReady(false);
+        setCompleted(null);
         host.dataset.mcConfirmationGpuReady = "false";
       }
     });
@@ -558,7 +614,7 @@ export function useConfirmationSnapshot(
     document.fonts.addEventListener("loadingdone", schedule);
     // Let modal autofocus and hover leave the underlying controls first.
     timer = window.setTimeout(() => {
-      void capture();
+      void capture(schedule);
     }, 0);
 
     return () => {
@@ -574,7 +630,7 @@ export function useConfirmationSnapshot(
       delete host.dataset.mcConfirmationGpuError;
       delete host.dataset.mcConfirmationFrame;
     };
-  }, [canvas, identity, radius]);
+  }, [canvas, connection, identity, radius, request]);
 
-  return ready;
-}
+  return { attach, ready: completed === request };
+};

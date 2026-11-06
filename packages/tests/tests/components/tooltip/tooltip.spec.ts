@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 test("Tooltip supports hover, keyboard focus, Escape and trigger activation", async ({
@@ -30,8 +31,8 @@ test("Tooltip preserves controlled state, asChild and the real content ref", asy
   await page.locator("#external-open").click();
   const content = page.locator('[data-slot="tooltip-content"]');
   await expect(content).toBeVisible();
-  await page.locator("#read-ref").evaluate((element) => {
-    (element as HTMLButtonElement).click();
+  await page.locator("#read-ref").evaluate((element: HTMLButtonElement) => {
+    element.click();
   });
   await expect(page.getByLabel("Root ref", { exact: true })).toHaveText("DIV");
   await expect(content.locator(".mc-tooltip-line")).toHaveCount(1);
@@ -50,7 +51,8 @@ test("Tooltip honors hover delay and accepts rich children", async ({
   await page.goto("/?component=tooltip&delay=500&rich=1");
   const trigger = page.locator("#tooltip-trigger");
   await expect(trigger).toBeVisible();
-  const bounds = (await trigger.boundingBox())!;
+  const bounds = await trigger.boundingBox();
+  expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.move(
     bounds.x + bounds.width / 2,
     bounds.y + bounds.height / 2
@@ -69,14 +71,18 @@ test("Tooltip wraps and stays inside a mobile viewport at each edge", async ({
   await page.setViewportSize({ height: 844, width: 390 });
 
   for (const side of ["top", "bottom", "left", "right"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await page.goto(
       `/?component=tooltip&open=1&scale=3&side=${side}&edge=${side}&text=${encodeURIComponent("Use this component to show a helpful description.")}`
     );
     const content = page.locator('[data-slot="tooltip-content"]');
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect(content).toBeVisible();
+    // oxlint-disable-next-line no-await-in-loop -- Runs the current fixture case on one shared page; its navigation, interactions and observations finish before the next case replaces that page.
     await expect
       .poll(async () => {
-        const box = (await content.boundingBox())!;
+        const box = await content.boundingBox();
+        expectNotNull(box, "Missing required bounding box: box");
 
         return (
           box.x >= 0 &&
