@@ -57,6 +57,8 @@ Browser snapshots and reconstructed renderers may supplement debugging, but they
 
 For glyph-cache, atlas, transparency, projection or float-precision issues, read [rendering investigations](references/rendering.md).
 
+For world renderings (blocks, particles, entities, their sounds) or an off-by-one level on software GL, read [world captures](references/world-captures.md).
+
 For generated terrain or profile-driven visuals, read [dynamic data](references/dynamic-data.md). Independently verify data generation and rendering; freeze sufficient read-only inputs and preserve source saves.
 
 **Ready when:** independent native captures are valid, repeatable, and traceable to the selected artifact.

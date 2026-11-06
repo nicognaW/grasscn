@@ -2348,6 +2348,7 @@ const DialogFixture = () => {
   const [open, setOpen] = React.useState(params.has("open") || native);
   const [actions, setActions] = React.useState(0);
   const [changes, setChanges] = React.useState(0);
+  const [scrolledRef, setScrolledRef] = React.useState(-1);
 
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLButtonElement>(null);
@@ -2440,6 +2441,9 @@ const DialogFixture = () => {
           ref={content}
           width={Number(params.get("wrapWidth") ?? 250)}
           initialFocus={native ? () => content.current : undefined}
+          onScroll={() => {
+            setScrolledRef(content.current?.scrollTop ?? -1);
+          }}
         >
           <DialogHeader>
             <DialogTitle>{params.get("label") ?? "World settings"}</DialogTitle>
@@ -2447,6 +2451,31 @@ const DialogFixture = () => {
               <DialogDescription>{description}</DialogDescription>
             )}
           </DialogHeader>
+          {params.has("scrollForm") && (
+            <form className="flex flex-col gap-4">
+              {Array.from(
+                { length: 14 },
+                (_, index) => `entry ${index + 1}`
+              ).map((entry) => (
+                <fieldset key={entry} className="flex flex-col gap-2">
+                  <Input
+                    aria-label={`${entry} address`}
+                    defaultValue="127.0.0.1"
+                    scale={scale}
+                  />
+                  <Button
+                    scale={scale}
+                    type="button"
+                    onClick={() => {
+                      setActions((current) => current + 1);
+                    }}
+                  >
+                    {`Inspect ${entry}`}
+                  </Button>
+                </fieldset>
+              ))}
+            </form>
+          )}
           <DialogFooter>
             {labels.map((actionLabel, index) => (
               /* oxlint-disable react-doctor/no-array-index-as-key -- This navigation-owned immutable query list permits duplicate labels; its ordinal also owns native indices, item/tab values or first-ref slots. No insertion/reorder/filter occurs within the document. */
@@ -2477,6 +2506,7 @@ const DialogFixture = () => {
       </button>
       <output aria-label="Dialog actions">{actions}</output>
       <output aria-label="Dialog changes">{changes}</output>
+      <output aria-label="Dialog ref scroll top">{scrolledRef}</output>
       <button
         type="button"
         id="dialog-read-refs"
